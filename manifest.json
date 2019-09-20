@@ -1,0 +1,27 @@
+{
+  "name": "Privacy Redirect",
+  "description": "Redirects Twitter & Youtube requests to privacy friendly alternatives (Nitter & Invideus).",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "icons": {
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "*://twitter.com/*",
+    "*://www.twitter.com/*",
+    "*://mobile.twitter.com/*",
+    "*://youtube.com/*",
+    "*://www.youtube.com/*",
+    "*://youtube-nocookie.com/*",
+    "*://www.youtube-nocookie.com/*",
+    "*://m.youtube.com/"
+  ]
+}
