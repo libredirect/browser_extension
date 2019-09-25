@@ -3,7 +3,7 @@
 -  [Chrome Extension](https://chrome.google.com/webstore/detail/privacy-redirect/pmcmeagblkinmogikoikkdjiligflglb)
 -  [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/privacy-redirect/)
 
-A simple browser extension to redirect Twitter & Youtube requests to [Nitter](https://nitter.net/about) & [Invideus](https://www.invidio.us/), works when navigating to the site, or opening links.
+A simple browser extension to redirect Twitter & Youtube requests to [Nitter](https://nitter.net/about) & [Invidious](https://www.invidio.us/), works when navigating to the site, or opening links.
 
 ## Build
 

@@ -1,6 +1,6 @@
 {
   "name": "Privacy Redirect",
-  "description": "Redirects Twitter & Youtube requests to privacy friendly alternatives (Nitter & Invideus).",
+  "description": "Redirects Twitter & Youtube requests to privacy friendly alternatives (Nitter & Invidious).",
   "version": "1.0.0",
   "manifest_version": 2,
   "background": {
