@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link href="./popup.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="../../images/logo.png" alt="Privacy Redirect logo">
+    </div>
+    <small>
+      <span>Version</span>: 1.0.2</span>
+    </small>
+  </header>
+
+  <section id="disableNitter" class="options settings_block">
+    <div class="onoffswitch switch" aria-label="Toggle Nitter redirects">
+      <h1 id="onoffswitch_label">Nitter Redirects</h1>
+      <span class="slider round"></span>
+      <input aria-hidden="true" id="onoffnitter" type="checkbox" checked> <label id="onoffnitter__label"
+        for="onoffnitter">
+      </label>
+    </div>
+  </section>
+
+  <section id="disableInvidious" class="options settings_block">
+    <div class="onoffswitch switch" aria-label="Toggle Invidious redirects">
+      <h1 id="onoffinvidious_label">Invidious Redirects</h1>
+      <span class="slider round"></span>
+      <input aria-hidden="true" id="onoffinvidious" type="checkbox" checked> <label id="onoffinvidious_label"
+        for="onoffinvidious">
+      </label>
+    </div>
+  </section>
+
+  <footer>
+    <a class="button" id="options" target="_blank">Options</a>
+  </footer>
+
+  <script src="./popup.js"></script>
+</body>
+
+</html>
