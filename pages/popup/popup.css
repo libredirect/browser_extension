@@ -1,0 +1,140 @@
+:root {
+  --text-main: #FFF;
+  --text-secondary: #000;
+  --dark-grey: #3C4043;
+  --white: #FFF;
+  --active: #FF5B56;
+  --space: 5px;
+}
+
+body {
+  color: var(--text-secondary);
+  margin: 0;
+  max-width: 400px;
+  min-width: 240px;
+  background-color: var(--dark-grey)
+}
+
+header {
+  background-color: var(--white);
+  color: var(--text-secondary);
+  display: flex;
+  padding: var(--space);
+}
+
+header h1 {
+  font-size: 2em;
+}
+
+header .logo-container {
+  margin: var(--space);
+}
+
+header .logo-container img {
+  width: 100%;
+}
+
+header small {
+  display: block;
+  font-size: .70em;
+  font-weight: bold;
+  margin: 1%;
+  width: 100%;
+  text-align: right;
+}
+
+h1 {
+  font-size: 14px;
+  margin: var(--space) auto
+}
+
+h2 {
+  clear: both;
+  font-size: 12px;
+  font-weight: normal;
+  margin: 0;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+h1,
+h2 {
+  color: var(--text-main);
+}
+
+footer {
+  width: 100%;
+}
+
+footer a.button {
+  margin: var(--space);
+}
+
+/* Elements */
+input[type=checkbox] {
+  opacity: 0;
+}
+
+label {
+  background: grey;
+  border-radius: 25px;
+  color: var(--text-main);
+  cursor: pointer;
+  display: block;
+  float: right;
+  font-weight: bold;
+  height: 30px;
+  position: relative;
+  text-indent: -400px;
+  width: 50px;
+}
+
+label:after {
+  background: #fff;
+  border-radius: 90px;
+  content: '';
+  height: 20px;
+  left: 5px;
+  position: absolute;
+  top: 5px;
+  transition: 0.3s; /* Acts on transform below */
+  width: 20px;
+}
+input:checked+label {
+  background: var(--active);
+}
+/* position  when active*/
+input:checked+label:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+
+.settings_block {
+  display: block;
+  padding: 5px 1em 20px 1em;
+  border-bottom: var(--dark-grey) solid 1px;
+}
+
+.settings_block h1 {
+  float: left;
+}
+
+.button {
+  border: var(--active) solid 1px;
+  color: var(--text-main);
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  margin: var(--space) auto;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: var(--active);
+  color: #fff
+}
+
