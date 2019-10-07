@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link href="../styles.css" rel="stylesheet">
+  <title>Privacy Redirect Options</title>
+</head>
+
+<body>
+
+  <section class="options settings_block">
+    <div class="onoffswitch switch" aria-label="Toggle Nitter redirects">
+      <h1>Nitter Redirects</h1>
+      <input aria-hidden="true" id="disableNitter" type="checkbox" checked>&nbsp;
+      <label for="disableNitter" class="checkbox-label">
+      </label>
+    </div>
+  </section>
+
+  <section class="options settings_block">
+    <div class="onoffswitch switch" aria-label="Toggle Invidious redirects">
+      <h1>Invidious Redirects</h1>
+      <input aria-hidden="true" id="disableInvidious" type="checkbox" checked>&nbsp;
+      <label for="disableInvidious" class="checkbox-label">
+      </label>
+    </div>
+  </section>
+
+  <section class="options settings_block">
+    <h1>Nitter Instance</h1>
+    <input id="nitterInstance" type="url" placeholder="https://nitter.net">
+    <h1>Invidious Instance</h1>
+    <input id="invidiousInstance" type="url" placeholder="https://invidio.us">
+  </section>
+
+  <footer>
+    <a class="button" id="save">Save</a>
+  </footer>
+
+  <script src="./options.js"></script>
+
+</body>
+
+</html>
