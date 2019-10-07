@@ -1,12 +1,13 @@
 {
   "name": "Privacy Redirect",
   "description": "Redirects Twitter & Youtube requests to privacy friendly alternatives (Nitter & Invidious).",
-  "version": "1.0.2",
+  "version": "1.1.1",
   "manifest_version": 2,
   "background": {
     "scripts": [
       "background.js"
-    ]
+    ],
+    "persistent": true
   },
   "icons": {
     "16": "images/icon16.png",
@@ -39,5 +40,10 @@
   "options_ui": {
     "page": "pages/options/options.html",
     "open_in_tab": false
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{b7f9d2cd-d772-4302-8c3f-eb941af36f76}"
+    }
   }
 }

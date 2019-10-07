@@ -73,11 +73,17 @@ footer a.button {
 }
 
 /* Elements */
+
+input[type=url] {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
 input[type=checkbox] {
   opacity: 0;
 }
 
-label {
+.checkbox-label {
   background: grey;
   border-radius: 25px;
   color: var(--text-main);
@@ -91,7 +97,7 @@ label {
   width: 50px;
 }
 
-label:after {
+.checkbox-label:after {
   background: #fff;
   border-radius: 90px;
   content: '';
