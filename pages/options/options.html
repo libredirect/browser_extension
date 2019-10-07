@@ -2,26 +2,46 @@
 <html>
 
 <head>
-  <title>My Test Extension Options</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link href="../styles.css" rel="stylesheet">
+  <title>Privacy Redirect Options</title>
 </head>
 
 <body>
 
-  Favorite color:
-  <select id="color">
-    <option value="red">red</option>
-    <option value="green">green</option>
-    <option value="blue">blue</option>
-    <option value="yellow">yellow</option>
-  </select>
+  <section class="options settings_block">
+    <div class="onoffswitch switch" aria-label="Toggle Nitter redirects">
+      <h1>Nitter Redirects</h1>
+      <input aria-hidden="true" id="disableNitter" type="checkbox" checked>&nbsp;
+      <label for="disableNitter" class="checkbox-label">
+      </label>
+    </div>
+  </section>
 
-  <label>
-    <input type="checkbox" id="like">
-    I like colors.
-  </label>
+  <section class="options settings_block">
+    <div class="onoffswitch switch" aria-label="Toggle Invidious redirects">
+      <h1>Invidious Redirects</h1>
+      <input aria-hidden="true" id="disableInvidious" type="checkbox" checked>&nbsp;
+      <label for="disableInvidious" class="checkbox-label">
+      </label>
+    </div>
+  </section>
 
-  <div id="status"></div>
-  <button id="save">Save</button>
+  <section class="options settings_block">
+    <h1>Nitter Instance</h1>
+    <input id="nitterInstance" type="url" placeholder="https://nitter.net">
+    <h1>Invidious Instance</h1>
+    <input id="invidiousInstance" type="url" placeholder="https://invidio.us">
+  </section>
+
+  <footer>
+    <a class="button" id="save">Save</a>
+  </footer>
+
+  <script src="./options.js"></script>
+
 </body>
 
 </html>

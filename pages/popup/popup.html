@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title></title>
-  <link href="./popup.css" rel="stylesheet">
+  <link href="../styles.css" rel="stylesheet">
 </head>
 
 <body>
@@ -14,26 +14,24 @@
       <img src="../../images/logo.png" alt="Privacy Redirect logo">
     </div>
     <small>
-      <span>Version</span>: 1.0.2</span>
+      <span>Version</span>: 1.1.1</span>
     </small>
   </header>
 
-  <section id="disableNitter" class="options settings_block">
+  <section class="options settings_block">
     <div class="onoffswitch switch" aria-label="Toggle Nitter redirects">
-      <h1 id="onoffswitch_label">Nitter Redirects</h1>
-      <span class="slider round"></span>
-      <input aria-hidden="true" id="onoffnitter" type="checkbox" checked> <label id="onoffnitter__label"
-        for="onoffnitter">
+      <h1>Nitter Redirects</h1>
+      <input aria-hidden="true" id="disableNitter" type="checkbox" checked>&nbsp;
+      <label for="disableNitter" class="checkbox-label">
       </label>
     </div>
   </section>
 
-  <section id="disableInvidious" class="options settings_block">
+  <section class="options settings_block">
     <div class="onoffswitch switch" aria-label="Toggle Invidious redirects">
-      <h1 id="onoffinvidious_label">Invidious Redirects</h1>
-      <span class="slider round"></span>
-      <input aria-hidden="true" id="onoffinvidious" type="checkbox" checked> <label id="onoffinvidious_label"
-        for="onoffinvidious">
+      <h1>Invidious Redirects</h1>
+      <input aria-hidden="true" id="disableInvidious" type="checkbox" checked>&nbsp;
+      <label for="disableInvidious" class="checkbox-label">
       </label>
     </div>
   </section>
@@ -43,6 +41,7 @@
   </footer>
 
   <script src="./popup.js"></script>
+
 </body>
 
 </html>
