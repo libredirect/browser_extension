@@ -3,7 +3,11 @@
 -  [Chrome Extension](https://chrome.google.com/webstore/detail/privacy-redirect/pmcmeagblkinmogikoikkdjiligflglb)
 -  [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/privacy-redirect/)
 
-A simple browser extension to redirect Twitter & Youtube requests to [Nitter](https://nitter.net/about) & [Invidious](https://www.invidio.us/), works when navigating to the site, or opening links.
+A simple browser extension that redirects Twitter & Youtube requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter) & [Invidious](https://github.com/omarroth/invidious).
+
+No unnecessary permissions required, only listens for and redirects requests made to twitter.com, www.twitter.com, mobile.twitter.com, youtube.com, www.youtube.com, youtube-nocookie.com, www.youtube-nocookie.com, and m.youtube.com, nothing else. 
+
+Allows for setting custom [Nitter](https://github.com/zedeus/nitter/wiki/Instances) & [Invidious](https://github.com/omarroth/invidious/wiki/Invidious-Instances) instances and toggling redirects on & off.
 
 ## Build
 
