@@ -3,6 +3,7 @@
 const nitterDefault = 'https://nitter.net';
 const invidiousDefault = 'https://invidio.us';
 const youtubeRegex = /((www|m)\.)?youtube(-nocookie)?\.com/;
+const twitterRegex = /((www|mobile)\.)?twitter\.com/;
 const pathRegex = /^https?:\/\/[^\/]+([\S\s]*)/;
 
 let nitterInstance;
@@ -12,7 +13,7 @@ let disableInvidious;
 
 chrome.storage.sync.get(
   ['disableNitter', 'disableInvidious', 'nitterInstance', 'invidiousInstance'],
-  (result) => {
+  result => {
     disableNitter = result.disableNitter;
     disableInvidious = result.disableInvidious;
     nitterInstance = result.nitterInstance || nitterDefault;
@@ -20,7 +21,7 @@ chrome.storage.sync.get(
   }
 );
 
-chrome.storage.onChanged.addListener(function (changes) {
+chrome.storage.onChanged.addListener(changes => {
   if ('nitterInstance' in changes) {
     nitterInstance = changes.nitterInstance.newValue || nitterDefault;
   }
@@ -36,44 +37,30 @@ chrome.storage.onChanged.addListener(function (changes) {
 });
 
 chrome.webRequest.onBeforeRequest.addListener(
-  function (details) {
+  details => {
+    let redirect;
     if (details.url.match(youtubeRegex)) {
       if (!disableInvidious) {
-        return {
-          redirectUrl:
-            invidiousInstance + details.url.match(pathRegex)[1]
+        redirect = {
+          redirectUrl: invidiousInstance + details.url.match(pathRegex)[1]
         };
       }
-    } else {
+    } else if (details.url.match(twitterRegex)) {
       if (!disableNitter) {
-        return {
-          redirectUrl:
-            nitterInstance + details.url.match(pathRegex)[1]
+        redirect = {
+          redirectUrl: nitterInstance + details.url.match(pathRegex)[1]
         };
       }
     }
+    if (redirect) {
+      console.log('Redirecting', `"${details.url}"`, '=>', `"${redirect.redirectUrl}"`);
+      console.log('Details', details);
+    }
+    return redirect;
   },
   {
-    urls: [
-      "*://twitter.com/*",
-      "*://www.twitter.com/*",
-      "*://mobile.twitter.com/*",
-      "*://youtube.com/*",
-      "*://www.youtube.com/*",
-      "*://youtube-nocookie.com/*",
-      "*://www.youtube-nocookie.com/*",
-      "*://m.youtube.com/"
-    ],
-    types: [
-      "main_frame",
-      "sub_frame",
-      "stylesheet",
-      "script",
-      "image",
-      "object",
-      "xmlhttprequest",
-      "other"
-    ]
+    urls: ["<all_urls>"],
+    types: ['main_frame', 'sub_frame',]
   },
-  ["blocking"]
+  ['blocking']
 );

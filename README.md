@@ -5,7 +5,7 @@
 
 A simple browser extension that redirects Twitter & Youtube requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter) & [Invidious](https://github.com/omarroth/invidious).
 
-No unnecessary permissions required, only listens for and redirects requests made to twitter.com, www.twitter.com, mobile.twitter.com, youtube.com, www.youtube.com, youtube-nocookie.com, www.youtube-nocookie.com, and m.youtube.com, nothing else. 
+Listens for and redirects requests made to `twitter.com`, `www.twitter.com`, `mobile.twitter.com`, `youtube.com`, `www.youtube.com`, `youtube-nocookie.com`, `www.youtube-nocookie.com`, and `m.youtube.com`. 
 
 Allows for setting custom [Nitter](https://github.com/zedeus/nitter/wiki/Instances) & [Invidious](https://github.com/omarroth/invidious/wiki/Invidious-Instances) instances and toggling redirects on & off.
 
