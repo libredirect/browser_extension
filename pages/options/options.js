@@ -7,7 +7,7 @@ let invidiousInstance = document.querySelector('#invidiousInstance');
 
 chrome.storage.sync.get(
   ['disableNitter', 'disableInvidious', 'nitterInstance', 'invidiousInstance'],
-  (result) => {
+  result => {
     disableNitter.checked = !result.disableNitter;
     disableInvidious.checked = !result.disableInvidious;
     nitterInstance.value = result.nitterInstance || '';

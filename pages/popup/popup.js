@@ -17,9 +17,9 @@ chrome.storage.sync.get(
 
 function debounce(func, wait, immediate) {
   let timeout;
-  return function () {
+  return () => {
     let context = this, args = arguments;
-    let later = function () {
+    let later = () => {
       timeout = null;
       if (!immediate) func.apply(context, args);
     };
