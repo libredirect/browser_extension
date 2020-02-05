@@ -57,10 +57,10 @@ chrome.storage.onChanged.addListener(changes => {
 
 function redirectBibliogram(url) {
   if (url.pathname === '/' || url.pathname.match(instagramPathsRegex)) {
-    return bibliogramInstance + url.pathname;
+    return bibliogramInstance + url.pathname + url.search;
   } else {
     // Redirect user profile requests to '/u/...'
-    return `${bibliogramInstance}/u${url.pathname}`;
+    return `${bibliogramInstance}/u${url.pathname}${url.search}`;
   }
 }
 
@@ -71,13 +71,13 @@ chrome.webRequest.onBeforeRequest.addListener(
     if (url.host.match(youtubeRegex)) {
       if (!disableInvidious) {
         redirect = {
-          redirectUrl: invidiousInstance + url.pathname
+          redirectUrl: invidiousInstance + url.pathname + url.search
         };
       }
     } else if (url.host.match(twitterRegex)) {
       if (!disableNitter) {
         redirect = {
-          redirectUrl: nitterInstance + url.pathname
+          redirectUrl: nitterInstance + url.pathname + url.search
         };
       }
     } else if (url.host.match(instagramRegex)) {
@@ -89,7 +89,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     }
     if (redirect) {
       console.log(
-        'Redirecting', `"${url.host}"`, '=>', `"${redirect.redirectUrl}"`
+        'Redirecting', `"${url.toString()}"`, '=>', `"${redirect.redirectUrl}"`
       );
       console.log('Details', details);
     }
