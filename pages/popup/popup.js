@@ -6,6 +6,7 @@ let bibliogramInstance = document.querySelector('#bibliogramInstance');
 let disableNitter = document.querySelector('#disableNitter');
 let disableInvidious = document.querySelector('#disableInvidious');
 let disableBibliogram = document.querySelector('#disableBibliogram');
+let version = document.querySelector('#version');
 
 chrome.storage.sync.get(
   [
@@ -26,6 +27,8 @@ chrome.storage.sync.get(
   }
 );
 
+version.textContent = chrome.runtime.getManifest().version;
+
 function debounce(func, wait, immediate) {
   let timeout;
   return () => {
@@ -42,21 +45,30 @@ function debounce(func, wait, immediate) {
 };
 
 let nitterInstanceChange = debounce(() => {
-  chrome.storage.sync.set({ nitterInstance: nitterInstance.value });
+  if (nitterInstance.checkValidity()) {
+    chrome.storage.sync.set({
+      nitterInstance: nitterInstance.value ? new URL(nitterInstance.value).origin : ''
+    });
+  }
 }, 500);
-
 nitterInstance.addEventListener('input', nitterInstanceChange);
 
 let invidiousInstanceChange = debounce(() => {
-  chrome.storage.sync.set({ invidiousInstance: invidiousInstance.value });
+  if (invidiousInstance.checkValidity()) {
+    chrome.storage.sync.set({
+      invidiousInstance: invidiousInstance.value ? new URL(invidiousInstance.value).origin : ''
+    });
+  }
 }, 500);
-
 invidiousInstance.addEventListener('input', invidiousInstanceChange);
 
 let bibliogramInstanceChange = debounce(() => {
-  chrome.storage.sync.set({ bibliogramInstance: bibliogramInstance.value });
+  if (bibliogramInstance.checkValidity()) {
+    chrome.storage.sync.set({
+      bibliogramInstance: bibliogramInstance.value ? new URL(bibliogramInstance.value).origin : ''
+    });
+  }
 }, 500);
-
 bibliogramInstance.addEventListener('input', bibliogramInstanceChange);
 
 disableNitter.addEventListener('change', event => {

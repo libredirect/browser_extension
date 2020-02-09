@@ -5,6 +5,8 @@
   --white: #FFF;
   --active: #FF5B56;
   --space: 5px;
+  --danger: #f04141;
+  --danger-light: #F9D0D5;
 }
 
 body {
@@ -31,7 +33,7 @@ header .logo-container {
 }
 
 header .logo-container img {
-  width: 100%;
+  max-width: 100%;
 }
 
 header small {
@@ -137,10 +139,25 @@ input:checked+label:after {
   padding: 10px;
   text-align: center;
   text-decoration: none;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
 }
 
 .button:hover {
   background-color: var(--active);
-  color: #fff
+  color: #fff;
+}
+
+.button:active {
+  background-color: var(--active);
+  box-shadow: 0 5px var(--dark-grey);
+  transform: translateY(4px);
+}
+
+input[type="url"]:invalid {
+  color: var(--danger);
+  border-color: var(--danger);
+  background-color: var(--danger-light);
 }
 

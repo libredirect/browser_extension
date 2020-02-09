@@ -28,9 +28,9 @@ chrome.storage.sync.get(
 
 document.querySelector('#save').addEventListener('click', () => {
   chrome.storage.sync.set({
-    nitterInstance: nitterInstance.value,
-    invidiousInstance: invidiousInstance.value,
-    bibliogramInstance: bibliogramInstance.value,
+    nitterInstance: nitterInstance.value && nitterInstance.checkValidity() ? new URL(nitterInstance.value).origin : '',
+    invidiousInstance: invidiousInstance.value && invidiousInstance.checkValidity() ? new URL(invidiousInstance.value).origin : '',
+    bibliogramInstance: bibliogramInstance.value && bibliogramInstance.checkValidity() ? new URL(bibliogramInstance.value).origin : '',
     disableNitter: !disableNitter.checked,
     disableInvidious: !disableInvidious.checked,
     disableBibliogram: !disableBibliogram.checked

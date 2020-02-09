@@ -1,7 +1,7 @@
 {
   "name": "Privacy Redirect",
-  "description": "Redirects Twitter, Youtube & Instagram requests to privacy friendly alternatives - Nitter, Invidious, & Bibliogram.",
-  "version": "1.1.5",
+  "description": "Redirects Twitter, YouTube & Instagram requests to privacy friendly alternatives - Nitter, Invidious, & Bibliogram.",
+  "version": "1.1.6",
   "manifest_version": 2,
   "background": {
     "scripts": [

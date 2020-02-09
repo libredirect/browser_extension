@@ -55,9 +55,22 @@ chrome.storage.onChanged.addListener(changes => {
   }
 });
 
-function redirectBibliogram(url) {
+function redirectYouTube(url) {
+  if (url.host.split('.')[0] === 'studio') {
+    // Avoid redirecting `studio.youtube.com`
+    return null;
+  } else {
+    return `${invidiousInstance}${url.pathname}${url.search}`;
+  }
+}
+
+function redirectTwitter(url) {
+  return `${nitterInstance}${url.pathname}${url.search}`
+}
+
+function redirectInstagram(url) {
   if (url.pathname === '/' || url.pathname.match(instagramPathsRegex)) {
-    return bibliogramInstance + url.pathname + url.search;
+    return `${bibliogramInstance}${url.pathname}${url.search}`;
   } else {
     // Redirect user profile requests to '/u/...'
     return `${bibliogramInstance}/u${url.pathname}${url.search}`;
@@ -71,23 +84,23 @@ chrome.webRequest.onBeforeRequest.addListener(
     if (url.host.match(youtubeRegex)) {
       if (!disableInvidious) {
         redirect = {
-          redirectUrl: invidiousInstance + url.pathname + url.search
+          redirectUrl: redirectYouTube(url)
         };
       }
     } else if (url.host.match(twitterRegex)) {
       if (!disableNitter) {
         redirect = {
-          redirectUrl: nitterInstance + url.pathname + url.search
+          redirectUrl: redirectTwitter(url)
         };
       }
     } else if (url.host.match(instagramRegex)) {
       if (!disableBibliogram) {
         redirect = {
-          redirectUrl: redirectBibliogram(url)
+          redirectUrl: redirectInstagram(url)
         };
       }
     }
-    if (redirect) {
+    if (redirect && redirect.redirectUrl) {
       console.log(
         'Redirecting', `"${url.toString()}"`, '=>', `"${redirect.redirectUrl}"`
       );
