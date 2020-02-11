@@ -47,7 +47,11 @@ header small {
 
 h1 {
   font-size: 14px;
-  margin: var(--space) auto
+  margin: var(--space) auto;
+}
+
+i {
+  font-size: 12px;
 }
 
 h2 {
@@ -159,5 +163,9 @@ input[type="url"]:invalid {
   color: var(--danger);
   border-color: var(--danger);
   background-color: var(--danger-light);
+}
+
+.margin-bottom {
+  margin-bottom: 20px;
 }
 

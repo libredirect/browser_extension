@@ -1,11 +1,11 @@
 'use strict';
 
-let nitterInstance = document.querySelector('#nitterInstance');
-let invidiousInstance = document.querySelector('#invidiousInstance');
-let bibliogramInstance = document.querySelector('#bibliogramInstance');
-let disableNitter = document.querySelector('#disableNitter');
-let disableInvidious = document.querySelector('#disableInvidious');
-let disableBibliogram = document.querySelector('#disableBibliogram');
+let nitterInstance = document.querySelector('#nitter-instance');
+let invidiousInstance = document.querySelector('#invidious-instance');
+let bibliogramInstance = document.querySelector('#bibliogram-instance');
+let disableNitter = document.querySelector('#disable-nitter');
+let disableInvidious = document.querySelector('#disable-invidious');
+let disableBibliogram = document.querySelector('#disable-bibliogram');
 let version = document.querySelector('#version');
 
 chrome.storage.sync.get(

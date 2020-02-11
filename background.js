@@ -1,9 +1,9 @@
 'use strict';
 
-const nitterDefault = 'https://nitter.net';
-const twitterRegex = /((www|mobile)\.)?twitter\.com/;
 const invidiousDefault = 'https://invidio.us';
 const youtubeRegex = /((www|m)\.)?youtube(-nocookie)?\.com/;
+const nitterDefault = 'https://nitter.net';
+const twitterRegex = /((www|mobile)\.)?twitter\.com/;
 const bibliogramDefault = 'https://bibliogram.art';
 const instagramRegex = /((www|about|help)\.)?instagram\.com/;
 const instagramPathsRegex = /(\/a|\/admin|\/api|\/favicon.ico|\/static|\/imageproxy|\/p|\/u|\/developer|\/about|\/legal|\/explore|\/director)/;
@@ -22,7 +22,7 @@ chrome.storage.sync.get(
     'bibliogramInstance',
     'disableNitter',
     'disableInvidious',
-    'disableBibliogram'
+    'disableBibliogram',
   ],
   result => {
     disableNitter = result.disableNitter;
@@ -65,7 +65,12 @@ function redirectYouTube(url) {
 }
 
 function redirectTwitter(url) {
-  return `${nitterInstance}${url.pathname}${url.search}`
+  if (url.host.split('.')[0] === 'tweetdeck') {
+    // Avoid redirecting `tweetdeck.twitter.com`
+    return null;
+  } else {
+    return `${nitterInstance}${url.pathname}${url.search}`;
+  }
 }
 
 function redirectInstagram(url) {
@@ -102,7 +107,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     }
     if (redirect && redirect.redirectUrl) {
       console.log(
-        'Redirecting', `"${url.toString()}"`, '=>', `"${redirect.redirectUrl}"`
+        'Redirecting', `"${url.href}"`, '=>', `"${redirect.redirectUrl}"`
       );
       console.log('Details', details);
     }
