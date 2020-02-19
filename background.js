@@ -1,7 +1,7 @@
 'use strict';
 
 const invidiousDefault = 'https://invidio.us';
-const youtubeRegex = /((www|m)\.)?youtube(-nocookie)?\.com/;
+const youtubeRegex = /((www|m)\.)?youtube|ytimg(-nocookie)?\.com/;
 const nitterDefault = 'https://nitter.net';
 const twitterRegex = /((www|mobile)\.)?twitter\.com/;
 const bibliogramDefault = 'https://bibliogram.art';
@@ -59,6 +59,12 @@ function redirectYouTube(url) {
   if (url.host.split('.')[0] === 'studio') {
     // Avoid redirecting `studio.youtube.com`
     return null;
+  } else if (url.pathname.match(/iframe_api/)) {
+    // Redirect requests for YouTube Player API to local files instead
+    return chrome.runtime.getURL('assets/iframe_api.js');
+  } else if (url.pathname.match(/www-widgetapi/)) {
+    // Redirect requests for YouTube Player API to local files instead
+    return chrome.runtime.getURL('assets/www-widgetapi.js');
   } else {
     return `${invidiousInstance}${url.pathname}${url.search}`;
   }
@@ -115,7 +121,11 @@ chrome.webRequest.onBeforeRequest.addListener(
   },
   {
     urls: ["<all_urls>"],
-    types: ['main_frame', 'sub_frame',]
+    types: [
+      "main_frame",
+      "sub_frame",
+      "script"
+    ]
   },
   ['blocking']
 );

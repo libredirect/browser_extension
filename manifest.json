@@ -1,7 +1,7 @@
 {
   "name": "Privacy Redirect",
   "description": "Redirects Twitter, YouTube & Instagram requests to privacy friendly alternatives - Nitter, Invidious, & Bibliogram.",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "manifest_version": 2,
   "background": {
     "scripts": [
@@ -34,6 +34,10 @@
     "page": "pages/options/options.html",
     "open_in_tab": false
   },
+  "web_accessible_resources": [
+    "assets/iframe_api.js",
+    "assets/www-widgetapi.js"
+  ],
   "browser_specific_settings": {
     "gecko": {
       "id": "{b7f9d2cd-d772-4302-8c3f-eb941af36f76}"
