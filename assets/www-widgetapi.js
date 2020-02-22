@@ -1,3 +1,7 @@
+/*
+  Retrieved February 19, 2020, from https://s.ytimg.com/yts/jsbin/www-widgetapi-vflYl14TA/www-widgetapi.js
+*/
+
 (function () {/*
 
  Copyright The Closure Library Authors.
