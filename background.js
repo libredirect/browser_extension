@@ -66,6 +66,8 @@ function redirectYouTube(url) {
     // Redirect requests for YouTube Player API to local files instead
     return chrome.runtime.getURL('assets/www-widgetapi.js');
   } else {
+    // Proxy video through the server
+    url.searchParams.append('local', true);
     return `${invidiousInstance}${url.pathname}${url.search}`;
   }
 }
