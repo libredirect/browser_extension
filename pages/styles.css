@@ -13,8 +13,8 @@ body {
   color: var(--text-secondary);
   margin: 0;
   max-width: 400px;
-  min-width: 240px;
-  background-color: var(--dark-grey)
+  min-width: 300px;
+  background-color: var(--dark-grey);
 }
 
 header {
