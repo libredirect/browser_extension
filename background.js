@@ -8,7 +8,7 @@ const bibliogramDefault = 'https://bibliogram.art';
 const instagramRegex = /((www|about|help)\.)?instagram\.com/;
 const instagramPathsRegex = /(\/a|\/admin|\/api|\/favicon.ico|\/static|\/imageproxy|\/p|\/u|\/developer|\/about|\/legal|\/explore|\/director)/;
 const osmDefault = 'https://openstreetmap.org';
-const googleMapsRegex = /https?:\/\/((www|maps)\.)?(google).*(\/maps)/;
+const googleMapsRegex = /https?:\/\/(((www|maps)\.)?(google).*(\/maps)|maps\.(google).*)/;
 const latLngZoomRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
 const dataLatLngRegex = /(!3d|!4d)(-?[0-9]{1,10}.[0-9]{1,10})/g;
 
@@ -113,18 +113,20 @@ function redirectGoogleMaps(url) {
   if (url.pathname.includes('/embed')) {
     return;
   }
-  let lat = '';
-  let lon = '';
-  let zoom = '';
+  let mapCentre = '';
   if (url.pathname.match(latLngZoomRegex)) {
     [, lat, lon, zoom] = url.pathname.match(latLngZoomRegex);
+    mapCentre = `#map=${zoom}/${lat}/${lon}`;
   }
   if (url.pathname.includes('data=')) {
     const [mlat, mlon] = url.pathname.match(dataLatLngRegex);
-    return `${osmInstance}/?mlat=${mlat.replace('!3d', '')}&mlon=${mlon.replace('!4d', '')}#map=${zoom}/${lat}/${lon}`;
+    return `${osmInstance}/?mlat=${mlat.replace('!3d', '')}&mlon=${mlon.replace('!4d', '')}${mapCentre}`;
+  } else if (url.search.includes('ll=')) {
+    const [mlat, mlon] = url.searchParams.get('ll').split(',');
+    return `${osmInstance}/?mlat=${mlat}&mlon=${mlon}${mapCentre}`;
   } else {
-    const query = encodeURI(url.searchParams.get('q')) || url.pathname.split('/')[3];
-    return `${osmInstance}/search?query=${query}#map=${zoom}/${lat}/${lon}`;
+    const query = url.searchParams.get('q') || url.searchParams.get('query') || url.pathname.split('/')[3];
+    return `${osmInstance}/search?query=${encodeURI(query)}${mapCentre}`;
   }
 }
 
