@@ -10,7 +10,9 @@ let disableBibliogram = document.querySelector('#disable-bibliogram');
 let disableOsm = document.querySelector('#disable-osm');
 let version = document.querySelector('#version');
 
-chrome.storage.sync.get(
+window.browser = window.browser || window.chrome;
+
+browser.storage.sync.get(
   [
     'nitterInstance',
     'invidiousInstance',
@@ -33,7 +35,7 @@ chrome.storage.sync.get(
   }
 );
 
-version.textContent = chrome.runtime.getManifest().version;
+version.textContent = browser.runtime.getManifest().version;
 
 function debounce(func, wait, immediate) {
   let timeout;
@@ -52,7 +54,7 @@ function debounce(func, wait, immediate) {
 
 let nitterInstanceChange = debounce(() => {
   if (nitterInstance.checkValidity()) {
-    chrome.storage.sync.set({
+    browser.storage.sync.set({
       nitterInstance: nitterInstance.value ? new URL(nitterInstance.value).origin : ''
     });
   }
@@ -61,7 +63,7 @@ nitterInstance.addEventListener('input', nitterInstanceChange);
 
 let invidiousInstanceChange = debounce(() => {
   if (invidiousInstance.checkValidity()) {
-    chrome.storage.sync.set({
+    browser.storage.sync.set({
       invidiousInstance: invidiousInstance.value ? new URL(invidiousInstance.value).origin : ''
     });
   }
@@ -70,7 +72,7 @@ invidiousInstance.addEventListener('input', invidiousInstanceChange);
 
 let bibliogramInstanceChange = debounce(() => {
   if (bibliogramInstance.checkValidity()) {
-    chrome.storage.sync.set({
+    browser.storage.sync.set({
       bibliogramInstance: bibliogramInstance.value ? new URL(bibliogramInstance.value).origin : ''
     });
   }
@@ -79,7 +81,7 @@ bibliogramInstance.addEventListener('input', bibliogramInstanceChange);
 
 let osmInstanceChange = debounce(() => {
   if (osmInstance.checkValidity()) {
-    chrome.storage.sync.set({
+    browser.storage.sync.set({
       osmInstance: osmInstance.value ? new URL(osmInstance.value).origin : ''
     });
   }
@@ -87,17 +89,17 @@ let osmInstanceChange = debounce(() => {
 osmInstance.addEventListener('input', osmInstanceChange);
 
 disableNitter.addEventListener('change', event => {
-  chrome.storage.sync.set({ disableNitter: !event.target.checked });
+  browser.storage.sync.set({ disableNitter: !event.target.checked });
 });
 
 disableInvidious.addEventListener('change', event => {
-  chrome.storage.sync.set({ disableInvidious: !event.target.checked });
+  browser.storage.sync.set({ disableInvidious: !event.target.checked });
 });
 
 disableBibliogram.addEventListener('change', event => {
-  chrome.storage.sync.set({ disableBibliogram: !event.target.checked });
+  browser.storage.sync.set({ disableBibliogram: !event.target.checked });
 });
 
 disableOsm.addEventListener('change', event => {
-  chrome.storage.sync.set({ disableOsm: !event.target.checked });
+  browser.storage.sync.set({ disableOsm: !event.target.checked });
 });

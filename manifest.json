@@ -22,6 +22,7 @@
     "<all_urls>"
   ],
   "browser_action": {
+    "default_title": "Privacy Redirect",
     "default_popup": "pages/popup/popup.html",
     "default_icon": {
       "16": "images/icon16.png",
