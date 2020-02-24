@@ -3,14 +3,9 @@
 -  [Chrome Extension](https://chrome.google.com/webstore/detail/privacy-redirect/pmcmeagblkinmogikoikkdjiligflglb)
 -  [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/privacy-redirect/)
 
-A simple browser extension that redirects Twitter, YouTube & Instagram requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/omarroth/invidious) & [Bibliogram](https://github.com/cloudrac3r/bibliogram).
+A simple web extension that redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/omarroth/invidious), [Bibliogram](https://github.com/cloudrac3r/bibliogram) & [OpenStreetMap](https://www.openstreetmap.org/).
 
-Listens for and redirects requests made to the following: 
-  - **Twitter -** `twitter.com`, `www.twitter.com`, `mobile.twitter.com` 
-  - **YouTube -** `youtube.com`, `www.youtube.com`, `youtube-nocookie.com`, `www.youtube-nocookie.com`, `m.youtube.com`
-  - **Instagram -** `instagram.com`, `www.instagram.com`, `help.instagram.com`, `about.instagram.com`.
-
-Allows for setting custom [Nitter](https://github.com/zedeus/nitter/wiki/Instances), [Invidious](https://github.com/omarroth/invidious/wiki/Invidious-Instances) & [Bibliogram](https://github.com/cloudrac3r/bibliogram/wiki/Instances) instances and toggling redirects on & off.
+Allows for setting custom [Nitter](https://github.com/zedeus/nitter/wiki/Instances), [Invidious](https://github.com/omarroth/invidious/wiki/Invidious-Instances), [Bibliogram](https://github.com/cloudrac3r/bibliogram/wiki/Instances) & OpenStreetMap instances and toggling all redirects on & off.
 
 ## Build
 

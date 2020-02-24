@@ -7,7 +7,9 @@ let disableNitter = document.querySelector('#disable-nitter');
 let disableInvidious = document.querySelector('#disable-invidious');
 let disableBibliogram = document.querySelector('#disable-bibliogram');
 
-chrome.storage.sync.get(
+window.browser = window.browser || window.chrome;
+
+browser.storage.sync.get(
   [
     'nitterInstance',
     'invidiousInstance',
@@ -27,7 +29,7 @@ chrome.storage.sync.get(
 );
 
 document.querySelector('#save').addEventListener('click', () => {
-  chrome.storage.sync.set({
+  browser.storage.sync.set({
     nitterInstance: nitterInstance.value && nitterInstance.checkValidity() ? new URL(nitterInstance.value).origin : '',
     invidiousInstance: invidiousInstance.value && invidiousInstance.checkValidity() ? new URL(invidiousInstance.value).origin : '',
     bibliogramInstance: bibliogramInstance.value && bibliogramInstance.checkValidity() ? new URL(bibliogramInstance.value).origin : '',
