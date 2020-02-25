@@ -5,7 +5,7 @@
 
 A simple web extension that redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/omarroth/invidious), [Bibliogram](https://github.com/cloudrac3r/bibliogram) & [OpenStreetMap](https://www.openstreetmap.org/).
 
-Allows for setting custom [Nitter](https://github.com/zedeus/nitter/wiki/Instances), [Invidious](https://github.com/omarroth/invidious/wiki/Invidious-Instances), [Bibliogram](https://github.com/cloudrac3r/bibliogram/wiki/Instances) & OpenStreetMap instances and toggling all redirects on & off.
+Allows for setting custom [Nitter](https://github.com/zedeus/nitter/wiki/Instances), [Invidious](https://github.com/omarroth/invidious/wiki/Invidious-Instances), [Bibliogram](https://github.com/cloudrac3r/bibliogram/wiki/Instances) & [OpenStreetMap](https://wiki.openstreetmap.org/wiki/Tile_servers) instances and toggling all redirects on & off.
 
 ## Build
 

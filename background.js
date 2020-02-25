@@ -6,11 +6,18 @@ const nitterDefault = 'https://nitter.net';
 const twitterRegex = /((www|mobile)\.)?twitter\.com/;
 const bibliogramDefault = 'https://bibliogram.art';
 const instagramRegex = /((www|about|help)\.)?instagram\.com/;
-const instagramPathsRegex = /(\/a|\/admin|\/api|\/favicon.ico|\/static|\/imageproxy|\/p|\/u|\/developer|\/about|\/legal|\/explore|\/director)/;
+const instagramPathsRegex = /\/(a|admin|api|favicon.ico|static|imageproxy|p|u|developer|about|legal|explore|director)/;
 const osmDefault = 'https://openstreetmap.org';
 const googleMapsRegex = /https?:\/\/(((www|maps)\.)?(google).*(\/maps)|maps\.(google).*)/;
 const latLngZoomRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
 const dataLatLngRegex = /(!3d|!4d)(-?[0-9]{1,10}.[0-9]{1,10})/g;
+const latLngRegex = /-?[0-9]{1,10}.[0-9]{1,10}/;
+const travelModes = {
+  'driving': 'fossgis_osrm_car',
+  'walking': 'fossgis_osrm_foot',
+  'bicycling': 'fossgis_osrm_bike',
+  'transit': 'fossgis_osrm_car' // not implemented on OSM, default to car.
+};
 
 let nitterInstance;
 let invidiousInstance;
@@ -73,6 +80,29 @@ browser.storage.onChanged.addListener(changes => {
   }
 });
 
+function addressToLatLon(address, callback) {
+  const xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = () => {
+    if (xmlhttp.readyState === XMLHttpRequest.DONE) {
+      if (xmlhttp.status === 200) {
+        const json = JSON.parse(xmlhttp.responseText)[0];
+        if (json) {
+          callback(`${json.lat}%2C${json.lon}`, json.boundingbox.join('%2C'));
+        }
+      }
+      else {
+        console.info("Error: Status is " + xmlhttp.status);
+      }
+    }
+  };
+  xmlhttp.open(
+    'GET',
+    `https://nominatim.openstreetmap.org/search/${address}?format=json&limit=1`,
+    false
+  );
+  xmlhttp.send();
+}
+
 function redirectYouTube(url) {
   if (url.host.split('.')[0] === 'studio') {
     // Avoid redirecting `studio.youtube.com`
@@ -109,16 +139,34 @@ function redirectInstagram(url) {
 }
 
 function redirectGoogleMaps(url) {
-  // Do not redirect embedded maps
-  if (url.pathname.includes('/embed')) {
-    return;
-  }
   let mapCentre = '';
   if (url.pathname.match(latLngZoomRegex)) {
-    [, lat, lon, zoom] = url.pathname.match(latLngZoomRegex);
+    const [, lat, lon, zoom] = url.pathname.match(latLngZoomRegex);
     mapCentre = `#map=${zoom}/${lat}/${lon}`;
+  } else if (url.search.includes('center=')) {
+    const [lat, lon] = url.searchParams.get('center').split(',');
+    mapCentre = `#map=${url.searchParams.get('zoom')}/${lat}/${lon}`;
   }
-  if (url.pathname.includes('data=')) {
+  if (url.pathname.includes('/embed')) {
+    const query = url.searchParams.get('q') || url.searchParams.get('query') || url.pathname.split('/')[3];
+    let marker, bbox;
+    addressToLatLon(query, (coords, boundingbox) => {
+      marker = coords;
+      bbox = boundingbox;
+    });
+    return `${osmInstance}/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${marker}`;
+  } else if (url.pathname.includes('/dir')) {
+    const travelMode = travelModes[url.searchParams.get('travelmode')] || travelModes['driving'];
+    let origin;
+    addressToLatLon(url.searchParams.get('origin'), coords => {
+      origin = coords;
+    });
+    let destination;
+    addressToLatLon(url.searchParams.get('destination'), coords => {
+      destination = coords;
+    });
+    return `${osmInstance}/directions?engine=${travelMode}&route=${origin}%3B${destination}${mapCentre}`;
+  } else if (url.pathname.includes('data=')) {
     const [mlat, mlon] = url.pathname.match(dataLatLngRegex);
     return `${osmInstance}/?mlat=${mlat.replace('!3d', '')}&mlon=${mlon.replace('!4d', '')}${mapCentre}`;
   } else if (url.search.includes('ll=')) {
@@ -126,7 +174,7 @@ function redirectGoogleMaps(url) {
     return `${osmInstance}/?mlat=${mlat}&mlon=${mlon}${mapCentre}`;
   } else {
     const query = url.searchParams.get('q') || url.searchParams.get('query') || url.pathname.split('/')[3];
-    return `${osmInstance}/search?query=${encodeURI(query)}${mapCentre}`;
+    return `${osmInstance}/${query ? 'search?query=' + query : ''}${mapCentre || '#'}`;
   }
 }
 
@@ -160,10 +208,10 @@ browser.webRequest.onBeforeRequest.addListener(
       }
     }
     if (redirect && redirect.redirectUrl) {
-      console.log(
+      console.info(
         'Redirecting', `"${url.href}"`, '=>', `"${redirect.redirectUrl}"`
       );
-      console.log('Details', details);
+      console.info('Details', details);
     }
     return redirect;
   },
