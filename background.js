@@ -87,7 +87,10 @@ function addressToLatLon(address, callback) {
       if (xmlhttp.status === 200) {
         const json = JSON.parse(xmlhttp.responseText)[0];
         if (json) {
-          callback(`${json.lat}%2C${json.lon}`, json.boundingbox.join('%2C'));
+          callback(
+            `${json.lat}%2C${json.lon}`,
+            `${json.boundingbox[2]},${json.boundingbox[1]},${json.boundingbox[3]},${json.boundingbox[0]}`
+          );
         }
       }
       else {
@@ -139,6 +142,7 @@ function redirectInstagram(url) {
 }
 
 function redirectGoogleMaps(url) {
+  let redirect;
   let mapCentre = '';
   if (url.pathname.match(latLngZoomRegex)) {
     const [, lat, lon, zoom] = url.pathname.match(latLngZoomRegex);
@@ -154,7 +158,7 @@ function redirectGoogleMaps(url) {
       marker = coords;
       bbox = boundingbox;
     });
-    return `${osmInstance}/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${marker}`;
+    redirect = `${osmInstance}/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${marker}`;
   } else if (url.pathname.includes('/dir')) {
     const travelMode = travelModes[url.searchParams.get('travelmode')] || travelModes['driving'];
     let origin;
@@ -165,17 +169,24 @@ function redirectGoogleMaps(url) {
     addressToLatLon(url.searchParams.get('destination'), coords => {
       destination = coords;
     });
-    return `${osmInstance}/directions?engine=${travelMode}&route=${origin}%3B${destination}${mapCentre}`;
+    redirect = `${osmInstance}/directions?engine=${travelMode}&route=${origin}%3B${destination}${mapCentre}`;
   } else if (url.pathname.includes('data=')) {
     const [mlat, mlon] = url.pathname.match(dataLatLngRegex);
-    return `${osmInstance}/?mlat=${mlat.replace('!3d', '')}&mlon=${mlon.replace('!4d', '')}${mapCentre}`;
+    redirect = `${osmInstance}/?mlat=${mlat.replace('!3d', '')}&mlon=${mlon.replace('!4d', '')}${mapCentre}`;
   } else if (url.search.includes('ll=')) {
     const [mlat, mlon] = url.searchParams.get('ll').split(',');
-    return `${osmInstance}/?mlat=${mlat}&mlon=${mlon}${mapCentre}`;
+    redirect = `${osmInstance}/?mlat=${mlat}&mlon=${mlon}${mapCentre}`;
   } else {
     const query = url.searchParams.get('q') || url.searchParams.get('query') || url.pathname.split('/')[3];
-    return `${osmInstance}/${query ? 'search?query=' + query : ''}${mapCentre || '#'}`;
+    redirect = `${osmInstance}/${query ? 'search?query=' + query : ''}${mapCentre || '#'}`;
   }
+  // Set default zoom if mapCentre not present
+  if (!mapCentre) {
+    const redirectUrl = new URL(redirect);
+    redirectUrl.searchParams.set('zoom', '17');
+    redirect = redirectUrl.href;
+  }
+  return redirect;
 }
 
 browser.webRequest.onBeforeRequest.addListener(
