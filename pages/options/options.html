@@ -39,6 +39,15 @@
   </section>
 
   <section class="options settings_block">
+    <div class="onoffswitch switch" aria-label="Toggle OpenStreetMap redirects">
+      <h1>OpenStreetMap Redirects</h1>
+      <input aria-hidden="true" id="disable-osm" type="checkbox" checked>&nbsp;
+      <label for="disable-osm" class="checkbox-label">
+      </label>
+    </div>
+  </section>
+
+  <section class="options settings_block">
     <h1>Nitter Instance</h1>
     <input id="nitter-instance" list="nitter-instance-list" type="url" placeholder="https://nitter.net">
     <datalist id="nitter-instance-list">
@@ -66,6 +75,11 @@
       <option value="https://bibliogram.art">
       <option value="https://bibliogram.snopyta.org">
       <option value="https://bibliogram.dsrev.ru">
+    </datalist>
+    <h1>OpenStreetMap Instance</h1>
+    <input id="osm-instance" list="osm-instance-list" type="url" placeholder="https://openstreetmap.org">
+    <datalist id="osm-instance-list">
+      <option value="https://openstreetmap.org">
     </datalist>
   </section>
 

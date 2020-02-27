@@ -1,7 +1,7 @@
 'use strict';
 
 const invidiousDefault = 'https://invidio.us';
-const youtubeRegex = /((www|m)\.)?youtube|ytimg(-nocookie)?\.com/;
+const youtubeRegex = /((www|m)\.)?(youtube|ytimg(-nocookie)?\.com|youtu.be)/;
 const nitterDefault = 'https://nitter.net';
 const twitterRegex = /((www|mobile)\.)?twitter\.com/;
 const bibliogramDefault = 'https://bibliogram.art';
@@ -9,15 +9,21 @@ const instagramRegex = /((www|about|help)\.)?instagram\.com/;
 const instagramPathsRegex = /\/(a|admin|api|favicon.ico|static|imageproxy|p|u|developer|about|legal|explore|director)/;
 const osmDefault = 'https://openstreetmap.org';
 const googleMapsRegex = /https?:\/\/(((www|maps)\.)?(google).*(\/maps)|maps\.(google).*)/;
-const latLngZoomRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
+const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
 const dataLatLngRegex = /(!3d|!4d)(-?[0-9]{1,10}.[0-9]{1,10})/g;
-const latLngRegex = /-?[0-9]{1,10}.[0-9]{1,10}/;
+const placeRegex = /\/place\/(.*)\//;
 const travelModes = {
   'driving': 'fossgis_osrm_car',
   'walking': 'fossgis_osrm_foot',
   'bicycling': 'fossgis_osrm_bike',
   'transit': 'fossgis_osrm_car' // not implemented on OSM, default to car.
 };
+const layers = {
+  'none': 'S',
+  'transit': 'T',
+  'traffic': 'S', // not implemented on OSM, default to standard.
+  'bicycling': 'C'
+}
 
 let nitterInstance;
 let invidiousInstance;
@@ -80,7 +86,7 @@ browser.storage.onChanged.addListener(changes => {
   }
 });
 
-function addressToLatLon(address, callback) {
+function addressToLatLng(address, callback) {
   const xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = () => {
     if (xmlhttp.readyState === XMLHttpRequest.DONE) {
@@ -144,48 +150,66 @@ function redirectInstagram(url) {
 function redirectGoogleMaps(url) {
   let redirect;
   let mapCentre = '';
-  if (url.pathname.match(latLngZoomRegex)) {
-    const [, lat, lon, zoom] = url.pathname.match(latLngZoomRegex);
+  let params = '';
+  // Set map centre if present
+  if (url.pathname.match(mapCentreRegex)) {
+    const [, lat, lon, zoom] = url.pathname.match(mapCentreRegex);
     mapCentre = `#map=${zoom}/${lat}/${lon}`;
   } else if (url.search.includes('center=')) {
     const [lat, lon] = url.searchParams.get('center').split(',');
-    mapCentre = `#map=${url.searchParams.get('zoom')}/${lat}/${lon}`;
+    mapCentre = `#map=${url.searchParams.get('zoom') || '17'}/${lat}/${lon}`;
+    // Set default zoom if mapCentre not present
+  } else {
+    params = '&zoom=17';
   }
+  // Set map layer
+  params = `${params}&layers=${layers[url.searchParams.get('layer')] || layers['none']}`;
+  // Handle Google Maps Embed API
   if (url.pathname.includes('/embed')) {
-    const query = url.searchParams.get('q') || url.searchParams.get('query') || url.pathname.split('/')[3];
+    const query = url.searchParams.get('q') || url.searchParams.get('query');
     let marker, bbox;
-    addressToLatLon(query, (coords, boundingbox) => {
+    addressToLatLng(query, (coords, boundingbox) => {
       marker = coords;
       bbox = boundingbox;
     });
     redirect = `${osmInstance}/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${marker}`;
+    // Handle Google Maps Directions
   } else if (url.pathname.includes('/dir')) {
     const travelMode = travelModes[url.searchParams.get('travelmode')] || travelModes['driving'];
     let origin;
-    addressToLatLon(url.searchParams.get('origin'), coords => {
+    addressToLatLng(url.searchParams.get('origin'), coords => {
       origin = coords;
     });
     let destination;
-    addressToLatLon(url.searchParams.get('destination'), coords => {
+    addressToLatLng(url.searchParams.get('destination'), coords => {
       destination = coords;
     });
-    redirect = `${osmInstance}/directions?engine=${travelMode}&route=${origin}%3B${destination}${mapCentre}`;
-  } else if (url.pathname.includes('data=')) {
+    redirect = `${osmInstance}/directions?engine=${travelMode}&route=${origin}%3B${destination}${mapCentre}${params}`;
+    // Get marker from data attribute
+  } else if (url.pathname.includes('data=') && url.pathname.match(dataLatLngRegex)) {
     const [mlat, mlon] = url.pathname.match(dataLatLngRegex);
-    redirect = `${osmInstance}/?mlat=${mlat.replace('!3d', '')}&mlon=${mlon.replace('!4d', '')}${mapCentre}`;
-  } else if (url.search.includes('ll=')) {
+    redirect = `${osmInstance}/?mlat=${mlat.replace('!3d', '')}&mlon=${mlon.replace('!4d', '')}${mapCentre}${params}`;
+    // Get marker from ll param
+  } else if (url.searchParams.has('ll')) {
     const [mlat, mlon] = url.searchParams.get('ll').split(',');
-    redirect = `${osmInstance}/?mlat=${mlat}&mlon=${mlon}${mapCentre}`;
+    redirect = `${osmInstance}/?mlat=${mlat}&mlon=${mlon}${mapCentre}${params}`;
+    // Get marker from viewpoint param.
+  } else if (url.searchParams.has('viewpoint')) {
+    const [mlat, mlon] = url.searchParams.get('viewpoint').split(',');
+    redirect = `${osmInstance}/?mlat=${mlat}&mlon=${mlon}${mapCentre}${params}`;
+    // Use query as search if present.
   } else {
-    const query = url.searchParams.get('q') || url.searchParams.get('query') || url.pathname.split('/')[3];
-    redirect = `${osmInstance}/${query ? 'search?query=' + query : ''}${mapCentre || '#'}`;
+    let query;
+    if (url.searchParams.has('q')) {
+      query = url.searchParams.get('q');
+    } else if (url.searchParams.has('query')) {
+      query = url.searchParams.get('query');
+    } else if (url.pathname.match(placeRegex)) {
+      query = url.pathname.match(placeRegex)[1];
+    }
+    redirect = `${osmInstance}/${query ? 'search?query=' + query : ''}${mapCentre || '#'}${params}`;
   }
-  // Set default zoom if mapCentre not present
-  if (!mapCentre) {
-    const redirectUrl = new URL(redirect);
-    redirectUrl.searchParams.set('zoom', '17');
-    redirect = redirectUrl.href;
-  }
+
   return redirect;
 }
 
