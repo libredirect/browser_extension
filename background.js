@@ -25,14 +25,15 @@ const layers = {
   'bicycling': 'C'
 }
 
-let nitterInstance;
-let invidiousInstance;
-let bibliogramInstance;
-let osmInstance;
 let disableNitter;
 let disableInvidious;
 let disableBibliogram;
 let disableOsm;
+let nitterInstance;
+let invidiousInstance;
+let bibliogramInstance;
+let osmInstance;
+let alwaysProxy;
 
 window.browser = window.browser || window.chrome;
 
@@ -56,6 +57,7 @@ browser.storage.sync.get(
     invidiousInstance = result.invidiousInstance || invidiousDefault;
     bibliogramInstance = result.bibliogramInstance || bibliogramDefault;
     osmInstance = result.osmInstance || osmDefault;
+    alwaysProxy = result.alwaysProxy;
   }
 );
 
@@ -83,6 +85,9 @@ browser.storage.onChanged.addListener(changes => {
   }
   if ('disableOsm' in changes) {
     disableOsm = changes.disableOsm.newValue;
+  }
+  if ('alwaysProxy' in changes) {
+    alwaysProxy = changes.alwaysProxy.newValue;
   }
 });
 
@@ -123,8 +128,10 @@ function redirectYouTube(url) {
     // Redirect requests for YouTube Player API to local files instead
     return browser.runtime.getURL('assets/www-widgetapi.js');
   } else {
-    // Proxy video through the server
-    url.searchParams.append('local', true);
+    // Proxy video through the server if enabled by user
+    if (alwaysProxy) {
+      url.searchParams.append('local', true);
+    }
     return `${invidiousInstance}${url.pathname}${url.search}`;
   }
 }
@@ -217,7 +224,7 @@ browser.webRequest.onBeforeRequest.addListener(
   details => {
     const url = new URL(details.url);
     let redirect;
-    if (url.host.match(youtubeRegex)) {
+    if (url.host.match(youtubeRegex) && !url.host.includes('youtube-dl.org')) {
       if (!disableInvidious) {
         redirect = {
           redirectUrl: redirectYouTube(url)

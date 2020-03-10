@@ -8,6 +8,7 @@ let disableNitter = document.querySelector('#disable-nitter');
 let disableInvidious = document.querySelector('#disable-invidious');
 let disableBibliogram = document.querySelector('#disable-bibliogram');
 let disableOsm = document.querySelector('#disable-osm');
+let alwaysProxy = document.querySelector('#always-proxy');
 
 window.browser = window.browser || window.chrome;
 
@@ -20,7 +21,8 @@ browser.storage.sync.get(
     'disableNitter',
     'disableInvidious',
     'disableBibliogram',
-    'disableOsm'
+    'disableOsm',
+    'alwaysProxy'
   ],
   result => {
     nitterInstance.value = result.nitterInstance || '';
@@ -31,6 +33,7 @@ browser.storage.sync.get(
     disableInvidious.checked = !result.disableInvidious;
     disableBibliogram.checked = !result.disableBibliogram;
     disableOsm.checked = !result.disableOsm;
+    alwaysProxy.checked = result.alwaysProxy;
   }
 );
 
@@ -43,7 +46,8 @@ document.querySelector('#save').addEventListener('click', () => {
     disableNitter: !disableNitter.checked,
     disableInvidious: !disableInvidious.checked,
     disableBibliogram: !disableBibliogram.checked,
-    disableOsm: !disableOsm.checked
+    disableOsm: !disableOsm.checked,
+    alwaysProxy: alwaysProxy.checked
   });
   window.close();
 });
