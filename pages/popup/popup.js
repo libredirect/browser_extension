@@ -103,3 +103,7 @@ disableBibliogram.addEventListener('change', event => {
 disableOsm.addEventListener('change', event => {
   browser.storage.sync.set({ disableOsm: !event.target.checked });
 });
+
+document.querySelector('#more-options').addEventListener('click', () => {
+  browser.runtime.openOptionsPage();
+});

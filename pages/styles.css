@@ -12,9 +12,13 @@
 body {
   color: var(--text-secondary);
   margin: 0;
+  background-color: var(--dark-grey);
+}
+
+.popup {
   max-width: 400px;
   min-width: 300px;
-  background-color: var(--dark-grey);
+  overflow: hidden;
 }
 
 header {
@@ -80,7 +84,7 @@ footer a.button {
 
 /* Elements */
 
-input[type=url] {
+input[type=url], select {
   width: 100%;
   margin-bottom: 5px;
 }
@@ -148,6 +152,10 @@ input:checked+label:after {
   transition-duration: 0.4s;
 }
 
+.button * {
+  vertical-align: middle;
+}
+
 .button:hover {
   background-color: var(--active);
   color: #fff;
@@ -168,4 +176,3 @@ input[type="url"]:invalid {
 .margin-bottom {
   margin-bottom: 20px;
 }
-

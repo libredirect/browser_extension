@@ -92,9 +92,24 @@
     </div>
   </section>
 
-  <footer>
-    <a class="button" id="save">Save</a>
-  </footer>
+  <section class="options settings_block">
+    <div class="onoffswitch switch" aria-label="Only redirect embedded video to Invidious">
+      <h1>Only redirect embedded video to Invidious?</h1>
+      <input aria-hidden="true" id="only-embed" type="checkbox" checked>&nbsp;
+      <label for="only-embed" class="checkbox-label">
+      </label>
+    </div>
+  </section>
+
+  <section class="options settings_block">
+    <h1>Invidious Video Quality</h1>
+    <select id="video-quality">
+      <option value="">Default</option>
+      <option value="hd720">720p</option>
+      <option value="medium">480p</option>
+      <option value="dash">DASH (Dynamic Adaptive Streaming over HTTP)</option>
+    </select>
+  </section>
 
   <script src="./options.js"></script>
 

@@ -1,9 +1,24 @@
 'use strict';
 
 const invidiousDefault = 'https://invidio.us';
-const youtubeRegex = /((www|m)\.)?(youtube|ytimg(-nocookie)?\.com|youtu.be)/;
+const youtubeDomains = [
+  'm.youtube.com',
+  'youtube.com',
+  'img.youtube.com',
+  'www.youtube.com',
+  'youtube-nocookie.com',
+  'www.youtube-nocookie.com',
+  'youtu.be',
+  's.ytimg.com',
+];
 const nitterDefault = 'https://nitter.net';
-const twitterRegex = /((www|mobile)\.)?twitter\.com/;
+const twitterDomains = [
+  'twitter.com',
+  'www.twitter.com',
+  'mobile.twitter.com',
+  'pbs.twimg.com',
+  'video.twimg.com',
+];
 const bibliogramDefault = 'https://bibliogram.art';
 const instagramRegex = /((www|about|help)\.)?instagram\.com/;
 const instagramPathsRegex = /\/(a|admin|api|favicon.ico|static|imageproxy|p|u|developer|about|legal|explore|director)/;
@@ -34,6 +49,8 @@ let invidiousInstance;
 let bibliogramInstance;
 let osmInstance;
 let alwaysProxy;
+let onlyEmbeddedVideo;
+let videoQuality;
 
 window.browser = window.browser || window.chrome;
 
@@ -46,7 +63,10 @@ browser.storage.sync.get(
     'disableNitter',
     'disableInvidious',
     'disableBibliogram',
-    'disableOsm'
+    'disableOsm',
+    'alwaysProxy',
+    'onlyEmbeddedVideo',
+    'videoQuality'
   ],
   result => {
     disableNitter = result.disableNitter;
@@ -58,6 +78,8 @@ browser.storage.sync.get(
     bibliogramInstance = result.bibliogramInstance || bibliogramDefault;
     osmInstance = result.osmInstance || osmDefault;
     alwaysProxy = result.alwaysProxy;
+    onlyEmbeddedVideo = result.onlyEmbeddedVideo;
+    videoQuality = result.videoQuality;
   }
 );
 
@@ -89,6 +111,12 @@ browser.storage.onChanged.addListener(changes => {
   if ('alwaysProxy' in changes) {
     alwaysProxy = changes.alwaysProxy.newValue;
   }
+  if ('onlyEmbeddedVideo' in changes) {
+    onlyEmbeddedVideo = changes.onlyEmbeddedVideo.newValue;
+  }
+  if ('videoQuality' in changes) {
+    videoQuality = changes.videoQuality.newValue;
+  }
 });
 
 function addressToLatLng(address, callback) {
@@ -117,11 +145,11 @@ function addressToLatLng(address, callback) {
   xmlhttp.send();
 }
 
-function redirectYouTube(url) {
-  if (url.host.split('.')[0] === 'studio') {
-    // Avoid redirecting `studio.youtube.com`
+function redirectYouTube(url, type) {
+  if (disableInvidious) {
     return null;
-  } else if (url.pathname.match(/iframe_api/)) {
+  }
+  if (url.pathname.match(/iframe_api/)) {
     // Redirect requests for YouTube Player API to local files instead
     return browser.runtime.getURL('assets/iframe_api.js');
   } else if (url.pathname.match(/www-widgetapi/)) {
@@ -132,20 +160,33 @@ function redirectYouTube(url) {
     if (alwaysProxy) {
       url.searchParams.append('local', true);
     }
+    if (videoQuality) {
+      url.searchParams.append('quality', videoQuality);
+    }
+    if (onlyEmbeddedVideo && type !== 'sub_frame') {
+      return null;
+    }
     return `${invidiousInstance}${url.pathname}${url.search}`;
   }
 }
 
 function redirectTwitter(url) {
-  if (url.host.split('.')[0] === 'tweetdeck') {
-    // Avoid redirecting `tweetdeck.twitter.com`
+  if (disableNitter) {
     return null;
+  }
+  if (url.host.split('.')[0] === 'pbs') {
+    return `${nitterInstance}/pic/${encodeURIComponent(url.href)}`;
+  } else if (url.host.split('.')[0] === 'video') {
+    return `${nitterInstance}/gif/${encodeURIComponent(url.href)}`;
   } else {
     return `${nitterInstance}${url.pathname}${url.search}`;
   }
 }
 
 function redirectInstagram(url) {
+  if (disableBibliogram) {
+    return null;
+  }
   if (url.pathname === '/' || url.pathname.match(instagramPathsRegex)) {
     return `${bibliogramInstance}${url.pathname}${url.search}`;
   } else {
@@ -155,6 +196,9 @@ function redirectInstagram(url) {
 }
 
 function redirectGoogleMaps(url) {
+  if (disableOsm) {
+    return null;
+  }
   let redirect;
   let mapCentre = '';
   let params = '';
@@ -224,30 +268,22 @@ browser.webRequest.onBeforeRequest.addListener(
   details => {
     const url = new URL(details.url);
     let redirect;
-    if (url.host.match(youtubeRegex) && !url.host.includes('youtube-dl.org')) {
-      if (!disableInvidious) {
-        redirect = {
-          redirectUrl: redirectYouTube(url)
-        };
-      }
-    } else if (url.host.match(twitterRegex)) {
-      if (!disableNitter) {
-        redirect = {
-          redirectUrl: redirectTwitter(url)
-        };
-      }
+    if (youtubeDomains.includes(url.host)) {
+      redirect = {
+        redirectUrl: redirectYouTube(url, details.type)
+      };
+    } else if (twitterDomains.includes(url.host)) {
+      redirect = {
+        redirectUrl: redirectTwitter(url)
+      };
     } else if (url.host.match(instagramRegex)) {
-      if (!disableBibliogram) {
-        redirect = {
-          redirectUrl: redirectInstagram(url)
-        };
-      }
+      redirect = {
+        redirectUrl: redirectInstagram(url)
+      };
     } else if (url.href.match(googleMapsRegex)) {
-      if (!disableOsm) {
-        redirect = {
-          redirectUrl: redirectGoogleMaps(url)
-        };
-      }
+      redirect = {
+        redirectUrl: redirectGoogleMaps(url)
+      };
     }
     if (redirect && redirect.redirectUrl) {
       console.info(
