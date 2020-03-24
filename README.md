@@ -1,4 +1,6 @@
-# Privacy Redirect
+# ![nitter-redirect](images/icon32.png) Privacy Redirect
+
+[![Buy me a coffee](images/buy-me-a-coffee.png)](https://www.buymeacoffee.com/SimonBrazell)
 
 -  [Chrome Extension](https://chrome.google.com/webstore/detail/privacy-redirect/pmcmeagblkinmogikoikkdjiligflglb)
 -  [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/privacy-redirect/)
