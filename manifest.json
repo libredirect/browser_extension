@@ -1,7 +1,7 @@
 {
   "name": "Privacy Redirect",
   "description": "Redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives.",
-  "version": "1.1.16",
+  "version": "1.1.17",
   "manifest_version": 2,
   "background": {
     "scripts": [
@@ -31,6 +31,21 @@
       "128": "images/icon128.png"
     }
   },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://twitter.com/*",
+        "*://www.twitter.com/*",
+        "*://mobile.twitter.com/*",
+        "*://pbs.twimg.com/*",
+        "*://video.twimg.com/*"
+      ],
+      "js": [
+        "content-script.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
   "options_ui": {
     "page": "pages/options/options.html",
     "open_in_tab": false
