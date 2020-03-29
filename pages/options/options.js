@@ -11,6 +11,7 @@ let disableOsm = document.querySelector('#disable-osm');
 let alwaysProxy = document.querySelector('#always-proxy');
 let onlyEmbeddedVideo = document.querySelector('#only-embed');
 let videoQuality = document.querySelector('#video-quality');
+let removeTwitterSW = document.querySelector('#remove-twitter-sw');
 
 window.browser = window.browser || window.chrome;
 
@@ -26,7 +27,8 @@ browser.storage.sync.get(
     'disableOsm',
     'alwaysProxy',
     'onlyEmbeddedVideo',
-    'videoQuality'
+    'videoQuality',
+    'removeTwitterSW'
   ],
   result => {
     nitterInstance.value = result.nitterInstance || '';
@@ -40,6 +42,7 @@ browser.storage.sync.get(
     alwaysProxy.checked = result.alwaysProxy;
     onlyEmbeddedVideo.checked = result.onlyEmbeddedVideo;
     videoQuality.value = result.videoQuality || '';
+    removeTwitterSW.checked = !result.removeTwitterSW;
   }
 );
 
@@ -122,4 +125,8 @@ videoQuality.addEventListener('change', event => {
   browser.storage.sync.set({
     videoQuality: event.target.options[videoQuality.selectedIndex].value
   });
+});
+
+removeTwitterSW.addEventListener('change', event => {
+  browser.storage.sync.set({ removeTwitterSW: !event.target.checked });
 });
