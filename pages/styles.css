@@ -86,11 +86,19 @@ footer a.button {
 
 input[type=url], select {
   width: 100%;
+  box-sizing: border-box;
   margin-bottom: 5px;
+}
+
+input[type=url] {
+  padding: 1px 2px;
 }
 
 input[type=checkbox] {
   opacity: 0;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .checkbox-label {
