@@ -145,8 +145,11 @@ function addressToLatLng(address, callback) {
   xmlhttp.send();
 }
 
-function redirectYouTube(url, type) {
+function redirectYouTube(url, initiator, type) {
   if (disableInvidious) {
+    return null;
+  }
+  if (initiator && (initiator.origin === invidiousInstance || youtubeDomains.includes(initiator.host))) {
     return null;
   }
   if (url.pathname.match(/iframe_api/)) {
@@ -170,8 +173,11 @@ function redirectYouTube(url, type) {
   }
 }
 
-function redirectTwitter(url) {
+function redirectTwitter(url, initiator) {
   if (disableNitter) {
+    return null;
+  }
+  if (initiator && (initiator.origin === nitterInstance || twitterDomains.includes(initiator.host))) {
     return null;
   }
   if (url.host.split('.')[0] === 'pbs') {
@@ -183,8 +189,11 @@ function redirectTwitter(url) {
   }
 }
 
-function redirectInstagram(url) {
+function redirectInstagram(url, initiator) {
   if (disableBibliogram) {
+    return null;
+  }
+  if (initiator && (initiator.origin === bibliogramInstance || initiator.host.match(instagramRegex))) {
     return null;
   }
   if (url.pathname === '/' || url.pathname.match(instagramPathsRegex)) {
@@ -217,7 +226,19 @@ function redirectGoogleMaps(url) {
   params = `${params}&layers=${layers[url.searchParams.get('layer')] || layers['none']}`;
   // Handle Google Maps Embed API
   if (url.pathname.includes('/embed')) {
-    const query = url.searchParams.get('q') || url.searchParams.get('query');
+    let query = '';
+    if (url.searchParams.has('q')) {
+      query = url.searchParams.get('q');
+    } else if (url.searchParams.has('query')) {
+      query = url.searchParams.has('query');
+    } else if (url.searchParams.has('pb')) {
+      try {
+        query = url.searchParams.get('pb').split(/!2s(.*?)!/)[1];
+      } catch (error) {
+        console.error(error);
+        // Unable to find map marker in URL.
+      }
+    }
     let marker, bbox;
     addressToLatLng(query, (coords, boundingbox) => {
       marker = coords;
@@ -267,18 +288,19 @@ function redirectGoogleMaps(url) {
 browser.webRequest.onBeforeRequest.addListener(
   details => {
     const url = new URL(details.url);
+    let initiator = details.initiator && new URL(details.initiator);
     let redirect;
     if (youtubeDomains.includes(url.host)) {
       redirect = {
-        redirectUrl: redirectYouTube(url, details.type)
+        redirectUrl: redirectYouTube(url, initiator, details.type)
       };
     } else if (twitterDomains.includes(url.host)) {
       redirect = {
-        redirectUrl: redirectTwitter(url)
+        redirectUrl: redirectTwitter(url, initiator)
       };
     } else if (url.host.match(instagramRegex)) {
       redirect = {
-        redirectUrl: redirectInstagram(url)
+        redirectUrl: redirectInstagram(url, initiator)
       };
     } else if (url.href.match(googleMapsRegex)) {
       redirect = {
