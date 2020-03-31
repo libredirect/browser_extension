@@ -173,11 +173,8 @@ function redirectYouTube(url, initiator, type) {
   }
 }
 
-function redirectTwitter(url, initiator) {
+function redirectTwitter(url) {
   if (disableNitter) {
-    return null;
-  }
-  if (initiator && (initiator.origin === nitterInstance || twitterDomains.includes(initiator.host))) {
     return null;
   }
   if (url.host.split('.')[0] === 'pbs') {
@@ -288,7 +285,12 @@ function redirectGoogleMaps(url) {
 browser.webRequest.onBeforeRequest.addListener(
   details => {
     const url = new URL(details.url);
-    let initiator = details.initiator && new URL(details.initiator);
+    let initiator;
+    if (details.initiator) {
+      initiator = new URL(details.initiator);
+    } else if (details.originUrl) {
+      initiator = new URL(details.originUrl);
+    }
     let redirect;
     if (youtubeDomains.includes(url.host)) {
       redirect = {
@@ -296,7 +298,7 @@ browser.webRequest.onBeforeRequest.addListener(
       };
     } else if (twitterDomains.includes(url.host)) {
       redirect = {
-        redirectUrl: redirectTwitter(url, initiator)
+        redirectUrl: redirectTwitter(url)
       };
     } else if (url.host.match(instagramRegex)) {
       redirect = {
