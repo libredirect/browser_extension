@@ -13,12 +13,21 @@ body {
   color: var(--text-secondary);
   margin: 0;
   background-color: var(--dark-grey);
+  max-width: 400px;
+  margin: auto;
 }
 
+
+
 .popup {
-  max-width: 400px;
   min-width: 300px;
   overflow: hidden;
+}
+
+input {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
 }
 
 header {
@@ -96,9 +105,6 @@ input[type=url] {
 
 input[type=checkbox] {
   opacity: 0;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
 }
 
 .checkbox-label {
