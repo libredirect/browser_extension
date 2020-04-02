@@ -1,4 +1,4 @@
-# ![nitter-redirect](images/icon32.png) Privacy Redirect
+# ![privacy-redirect](images/icon32.png) Privacy Redirect
 
 [![Donate](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/SimonBrazell/donate) [![Buy me a coffee](images/buy-me-a-coffee.png)](https://www.buymeacoffee.com/SimonBrazell)
 
