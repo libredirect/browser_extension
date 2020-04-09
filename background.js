@@ -20,8 +20,18 @@ const twitterDomains = [
   'video.twimg.com',
 ];
 const bibliogramDefault = 'https://bibliogram.art';
-const instagramRegex = /((www|about|help)\.)?instagram\.com/;
-const instagramPathsRegex = /\/(a|admin|api|favicon.ico|static|imageproxy|p|u|developer|about|legal|explore|director)/;
+const instagramDomains = [
+  "instagram.com",
+  "www.instagram.com",
+  "help.instagram.com",
+  "about.instagram.com",
+];
+const instagramReservedPaths = /\/(p|favicon.ico|developer|legal|about|explore|support|press|api|privacy|safety|admin|help|terms|contact|blog|igtv)/;
+const bibliogramBypassPaths = /\/(accounts\/|embeds?.js)/;
+const bibliogramInstances = [
+  'https://bibliogram.art',
+  'https://bibliogram.snopyta.org'
+];
 const osmDefault = 'https://openstreetmap.org';
 const googleMapsRegex = /https?:\/\/(((www|maps)\.)?(google).*(\/maps)|maps\.(google).*)/;
 const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
@@ -186,14 +196,19 @@ function redirectTwitter(url) {
   }
 }
 
-function redirectInstagram(url, initiator) {
+function redirectInstagram(url, initiator, type) {
   if (disableBibliogram) {
     return null;
   }
-  if (initiator && (initiator.origin === bibliogramInstance || initiator.host.match(instagramRegex))) {
+  // Do not redirect Bibliogram view on Instagram links
+  if (initiator && (initiator.origin === bibliogramInstance || instagramDomains.includes(initiator.host))) {
     return null;
   }
-  if (url.pathname === '/' || url.pathname.match(instagramPathsRegex)) {
+  // Do not redirect /accounts, /embeds.js, or anything other than main_frame
+  if (url.pathname.match(bibliogramBypassPaths) || type !== 'main_frame') {
+    return null;
+  }
+  if (url.pathname === '/' || url.pathname.match(instagramReservedPaths)) {
     return `${bibliogramInstance}${url.pathname}${url.search}`;
   } else {
     // Redirect user profile requests to '/u/...'
@@ -300,9 +315,9 @@ browser.webRequest.onBeforeRequest.addListener(
       redirect = {
         redirectUrl: redirectTwitter(url)
       };
-    } else if (url.host.match(instagramRegex)) {
+    } else if (instagramDomains.includes(url.host)) {
       redirect = {
-        redirectUrl: redirectInstagram(url, initiator)
+        redirectUrl: redirectInstagram(url, initiator, details.type)
       };
     } else if (url.href.match(googleMapsRegex)) {
       redirect = {
@@ -321,4 +336,14 @@ browser.webRequest.onBeforeRequest.addListener(
     urls: ["<all_urls>"]
   },
   ['blocking']
+);
+
+browser.runtime.onInstalled.addListener(
+  details => {
+    if (details.reason === 'install') {
+      browser.storage.sync.set({
+        bibliogramInstance: bibliogramInstances[~~(bibliogramInstances.length * Math.random())]
+      });
+    }
+  }
 );
