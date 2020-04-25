@@ -14,9 +14,9 @@ body {
   color: var(--text-secondary);
   margin: 0;
   background-color: var(--darker-grey);
-  max-width: 400px;
+  width: 400px;
   margin: auto;
-  min-height: 460px;
+  min-height: 572px;
 }
 
 .popup {
@@ -95,7 +95,7 @@ footer a.button {
 
 /* Elements */
 
-input[type=url], select {
+input[type=url], input[type=text], select {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 5px;
@@ -183,7 +183,7 @@ input:checked+label:after {
   transform: translateY(4px);
 }
 
-input[type="url"]:invalid {
+input:invalid {
   color: var(--danger);
   border-color: var(--danger);
   background-color: var(--danger-light);
@@ -227,5 +227,49 @@ input[type="url"]:invalid {
   display: none;
   border: solid 1px var(--dark-grey);
   background-color: var(--dark-grey);
-  min-height: 403px;
+  min-height: 510px;
+}
+
+div.whitelist {
+  clear: left;
+}
+
+div.whitelist > input {
+  width: 240px;
+  float: left;
+}
+
+#add-to-whitelist {
+  width: 120px;
+  float: right;
+  border: var(--active) solid 1px;
+  background-color: var(--active);
+  color: var(--text-main);
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 25px;
+}
+
+ul {
+  padding: 0;
+  list-style-type: none;
+  color: var(--text-main);
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+li {
+  border-bottom: solid 0.5px var(--darker-grey);
+  padding: 20px 0px 20px 20px;
+}
+
+#whitelist-items button {
+  float: right;
+  margin-right: -5px;
+  border: var(--active) solid 1px;
+  background-color: var(--active);
+  color: var(--text-main);
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 50%;
 }

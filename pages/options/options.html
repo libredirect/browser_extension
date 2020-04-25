@@ -12,15 +12,9 @@
 <body>
 
   <div class="tab">
-    <button class="tablinks" id="generalTab">
-      General
-    </button>
-    <button class="tablinks" id="advancedTab">
-      Advanced
-    </button>
-    <button class="tablinks" id="whitelistTab">
-      Whitelist
-    </button>
+    <button class="tablinks" id="general-tab">General</button>
+    <button class="tablinks" id="advanced-tab">Advanced</button>
+    <button class="tablinks" id="whitelist-tab">Whitelist</button>
   </div>
 
   <div id="general" class="tabcontent">
@@ -70,6 +64,14 @@
         <option value="https://nitter.nixnet.xyz">
         <option value="https://nitter.13ad.de">
         <option value="https://tw.openalgeria.org">
+        <option value="https://nitter.pussthecat.org">
+        <option value="https://nitter.mastodont.cat">
+        <option value="https://nitter.dark.fail">
+        <option value="https://nitter.tedomum.net">
+        <option value="https://t.maisputain.ovh">
+        <option value="http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion">
+        <option value="http://nitter.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd.onion">
+        <option value="http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion">
       </datalist>
       <h1>Invidious Instance</h1>
       <input id="invidious-instance" list="invidious-instances-list" type="url" placeholder="https://invidio.us">
@@ -78,9 +80,16 @@
         <option value="https://invidious.snopyta.org">
         <option value="https://invidiou.sh">
         <option value="https://yewtu.be">
-        <option value="https://invidious.zapashcanon.fr">
+        <option value="https://yt.maisputain.ovh">
         <option value="https://invidious.toot.koeln">
         <option value="https://invidious.ggc-project.de">
+        <option value="https://invidious.toot.koeln">
+        <option value="http://kgg2m7yk5aybusll.onion">
+        <option value="http://axqzx4s6s54s32yentfqojs3x5i7faxza6xo3ehd4bzzsg2ii4fv2iid.onion">
+        <option value="http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion">
+        <option value="http://qklhadlycap4cnod.onion">
+        <option value="http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion">
+        <option value="http://mfqczy4mysscub2s.onion">
       </datalist>
       <h1>Bibliogram Instance</h1>
       <input id="bibliogram-instance" list="bibliogram-instance-list" type="url" placeholder="https://bibliogram.art">
@@ -88,6 +97,8 @@
         <option value="https://bibliogram.art">
         <option value="https://bibliogram.snopyta.org">
         <option value="https://bibliogram.pussthecat.org">
+        <option value="https://insta.maisputain.ovh">
+        <option value="https://bibliogram.nixnet.services">
       </datalist>
       <h1>OpenStreetMap Instance</h1>
       <input id="osm-instance" list="osm-instance-list" type="url" placeholder="https://openstreetmap.org">
@@ -137,7 +148,14 @@
   </div>
 
   <div id="whitelist" class="tabcontent">
-
+    <section class="options settings_block">
+      <h1>Whitelisted Sites</h1>
+      <div class="whitelist">
+        <input id="new-whitelist-item" type="text" placeholder="URL (RegExp accepted)">
+        <button id="add-to-whitelist">Add to Whitelist</button>
+      </div>
+    </section>
+    <ul id="whitelist-items"></ul>
   </div>
 
   <script src="./options.js"></script>

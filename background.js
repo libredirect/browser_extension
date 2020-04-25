@@ -61,6 +61,7 @@ let osmInstance;
 let alwaysProxy;
 let onlyEmbeddedVideo;
 let videoQuality;
+let whitelist;
 
 window.browser = window.browser || window.chrome;
 
@@ -76,7 +77,8 @@ browser.storage.sync.get(
     'disableOsm',
     'alwaysProxy',
     'onlyEmbeddedVideo',
-    'videoQuality'
+    'videoQuality',
+    'whitelist'
   ],
   result => {
     disableNitter = result.disableNitter;
@@ -90,6 +92,8 @@ browser.storage.sync.get(
     alwaysProxy = result.alwaysProxy;
     onlyEmbeddedVideo = result.onlyEmbeddedVideo;
     videoQuality = result.videoQuality;
+    whitelist = result.whitelist.map(e => new RegExp(e));
+    console.log(whitelist);
   }
 );
 
@@ -127,6 +131,10 @@ browser.storage.onChanged.addListener(changes => {
   if ('videoQuality' in changes) {
     videoQuality = changes.videoQuality.newValue;
   }
+  if ('whitelist' in changes) {
+    whitelist = changes.whitelist.newValue.map(e => new RegExp(e));
+    console.log(whitelist);
+  }
 });
 
 function addressToLatLng(address, callback) {
@@ -155,8 +163,12 @@ function addressToLatLng(address, callback) {
   xmlhttp.send();
 }
 
+function isWhitelisted(initiator) {
+  return initiator && whitelist.some(regex => (regex.test(initiator.href)));
+}
+
 function redirectYouTube(url, initiator, type) {
-  if (disableInvidious) {
+  if (disableInvidious || isWhitelisted(initiator)) {
     return null;
   }
   if (initiator && (initiator.origin === invidiousInstance || youtubeDomains.includes(initiator.host))) {
@@ -183,8 +195,8 @@ function redirectYouTube(url, initiator, type) {
   }
 }
 
-function redirectTwitter(url) {
-  if (disableNitter) {
+function redirectTwitter(url, initiator) {
+  if (disableNitter || isWhitelisted(initiator)) {
     return null;
   }
   if (url.host.split('.')[0] === 'pbs') {
@@ -197,7 +209,7 @@ function redirectTwitter(url) {
 }
 
 function redirectInstagram(url, initiator, type) {
-  if (disableBibliogram) {
+  if (disableBibliogram || isWhitelisted(initiator)) {
     return null;
   }
   // Do not redirect Bibliogram view on Instagram links
@@ -216,8 +228,8 @@ function redirectInstagram(url, initiator, type) {
   }
 }
 
-function redirectGoogleMaps(url) {
-  if (disableOsm) {
+function redirectGoogleMaps(url, initiator) {
+  if (disableOsm || isWhitelisted(initiator)) {
     return null;
   }
   let redirect;
@@ -313,7 +325,7 @@ browser.webRequest.onBeforeRequest.addListener(
       };
     } else if (twitterDomains.includes(url.host)) {
       redirect = {
-        redirectUrl: redirectTwitter(url)
+        redirectUrl: redirectTwitter(url, initiator)
       };
     } else if (instagramDomains.includes(url.host)) {
       redirect = {
@@ -321,7 +333,7 @@ browser.webRequest.onBeforeRequest.addListener(
       };
     } else if (url.href.match(googleMapsRegex)) {
       redirect = {
-        redirectUrl: redirectGoogleMaps(url)
+        redirectUrl: redirectGoogleMaps(url, initiator)
       };
     }
     if (redirect && redirect.redirectUrl) {

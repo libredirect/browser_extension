@@ -12,8 +12,25 @@ let alwaysProxy = document.getElementById('always-proxy');
 let onlyEmbeddedVideo = document.getElementById('only-embed');
 let videoQuality = document.getElementById('video-quality');
 let removeTwitterSW = document.getElementById('remove-twitter-sw');
+let whitelist;
 
 window.browser = window.browser || window.chrome;
+
+function prependWhitelistItem(item, index) {
+  const li = document.createElement('li');
+  li.appendChild(document.createTextNode(item.toString()));
+  const button = document.createElement('button');
+  button.appendChild(document.createTextNode('X'));
+  button.addEventListener('click', () => {
+    li.remove();
+    whitelist.splice(index, 1);
+    browser.storage.sync.set({
+      whitelist: whitelist
+    });
+  });
+  li.appendChild(button);
+  document.getElementById('whitelist-items').prepend(li);
+}
 
 browser.storage.sync.get(
   [
@@ -28,7 +45,8 @@ browser.storage.sync.get(
     'alwaysProxy',
     'onlyEmbeddedVideo',
     'videoQuality',
-    'removeTwitterSW'
+    'removeTwitterSW',
+    'whitelist'
   ],
   result => {
     nitterInstance.value = result.nitterInstance || '';
@@ -43,6 +61,8 @@ browser.storage.sync.get(
     onlyEmbeddedVideo.checked = result.onlyEmbeddedVideo;
     videoQuality.value = result.videoQuality || '';
     removeTwitterSW.checked = !result.removeTwitterSW;
+    whitelist = result.whitelist || [];
+    whitelist.forEach(prependWhitelistItem);
   }
 );
 
@@ -60,17 +80,40 @@ function openTab(tab, event) {
   event.currentTarget.className += ' active';
 }
 
-document.getElementById('generalTab').addEventListener(
+document.getElementById('general-tab').addEventListener(
   'click', openTab.bind(null, 'general')
 );
-document.getElementById('advancedTab').addEventListener(
+document.getElementById('advanced-tab').addEventListener(
   'click', openTab.bind(null, 'advanced')
 );
-document.getElementById('whitelistTab').addEventListener(
+document.getElementById('whitelist-tab').addEventListener(
   'click', openTab.bind(null, 'whitelist')
 );
 
-document.getElementById('generalTab').click();
+document.getElementById('general-tab').click();
+
+function addToWhitelist() {
+  const input = document.getElementById('new-whitelist-item');
+  if (input.value) {
+    try {
+      new RegExp(input.value);
+      const index = whitelist.push(input.value);
+      prependWhitelistItem(input.value, index);
+      browser.storage.sync.set({
+        whitelist: whitelist
+      });
+      input.value = '';
+    } catch (error) {
+      input.setCustomValidity('Invalid RegExp');
+    }
+  } else {
+    input.setCustomValidity('Invalid RegExp');
+  }
+}
+
+document.getElementById('add-to-whitelist').addEventListener(
+  'click', addToWhitelist
+);
 
 function debounce(func, wait, immediate) {
   let timeout;
