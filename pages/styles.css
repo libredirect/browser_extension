@@ -2,6 +2,7 @@
   --text-main: #FFF;
   --text-secondary: #000;
   --dark-grey: #3C4043;
+  --darker-grey: #292A2D;
   --white: #FFF;
   --active: #FF5B56;
   --space: 5px;
@@ -12,16 +13,17 @@
 body {
   color: var(--text-secondary);
   margin: 0;
-  background-color: var(--dark-grey);
+  background-color: var(--darker-grey);
   max-width: 400px;
   margin: auto;
+  min-height: 460px;
 }
 
-
-
 .popup {
-  min-width: 300px;
+  width: 300px;
+  height: auto;
   overflow: hidden;
+  background-color: var(--dark-grey);
 }
 
 input {
@@ -189,4 +191,41 @@ input[type="url"]:invalid {
 
 .margin-bottom {
   margin-bottom: 20px;
+}
+
+.tab {
+  overflow: hidden;
+  background-color: var(--darker-grey);
+}
+
+.tab button {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  color: var(--text-main);
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  border: solid 1px var(--dark-grey);
+  width: 33.333%;
+  font-size: 14px;
+}
+
+.tab button:hover {
+  background-color: var(--active);
+}
+
+.tab button.active {
+  background-color: var(--dark-grey);
+}
+
+.tabcontent {
+  padding-top: 10px;
+  display: none;
+  border: solid 1px var(--dark-grey);
+  background-color: var(--dark-grey);
+  min-height: 403px;
 }

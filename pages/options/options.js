@@ -1,17 +1,17 @@
 'use strict';
 
-let nitterInstance = document.querySelector('#nitter-instance');
-let invidiousInstance = document.querySelector('#invidious-instance');
-let bibliogramInstance = document.querySelector('#bibliogram-instance');
-let osmInstance = document.querySelector('#osm-instance');
-let disableNitter = document.querySelector('#disable-nitter');
-let disableInvidious = document.querySelector('#disable-invidious');
-let disableBibliogram = document.querySelector('#disable-bibliogram');
-let disableOsm = document.querySelector('#disable-osm');
-let alwaysProxy = document.querySelector('#always-proxy');
-let onlyEmbeddedVideo = document.querySelector('#only-embed');
-let videoQuality = document.querySelector('#video-quality');
-let removeTwitterSW = document.querySelector('#remove-twitter-sw');
+let nitterInstance = document.getElementById('nitter-instance');
+let invidiousInstance = document.getElementById('invidious-instance');
+let bibliogramInstance = document.getElementById('bibliogram-instance');
+let osmInstance = document.getElementById('osm-instance');
+let disableNitter = document.getElementById('disable-nitter');
+let disableInvidious = document.getElementById('disable-invidious');
+let disableBibliogram = document.getElementById('disable-bibliogram');
+let disableOsm = document.getElementById('disable-osm');
+let alwaysProxy = document.getElementById('always-proxy');
+let onlyEmbeddedVideo = document.getElementById('only-embed');
+let videoQuality = document.getElementById('video-quality');
+let removeTwitterSW = document.getElementById('remove-twitter-sw');
 
 window.browser = window.browser || window.chrome;
 
@@ -45,6 +45,32 @@ browser.storage.sync.get(
     removeTwitterSW.checked = !result.removeTwitterSW;
   }
 );
+
+function openTab(tab, event) {
+  let i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName('tabcontent');
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = 'none';
+  }
+  tablinks = document.getElementsByClassName('tablinks');
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(' active', '');
+  }
+  document.getElementById(tab).style.display = 'block';
+  event.currentTarget.className += ' active';
+}
+
+document.getElementById('generalTab').addEventListener(
+  'click', openTab.bind(null, 'general')
+);
+document.getElementById('advancedTab').addEventListener(
+  'click', openTab.bind(null, 'advanced')
+);
+document.getElementById('whitelistTab').addEventListener(
+  'click', openTab.bind(null, 'whitelist')
+);
+
+document.getElementById('generalTab').click();
 
 function debounce(func, wait, immediate) {
   let timeout;

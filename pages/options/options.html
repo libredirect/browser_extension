@@ -11,114 +11,134 @@
 
 <body>
 
-  <section class="options settings_block">
-    <div class="onoffswitch switch" aria-label="Toggle Nitter redirects">
-      <h1>Nitter Redirects</h1>
-      <input aria-hidden="true" id="disable-nitter" type="checkbox" checked>&nbsp;
-      <label for="disable-nitter" class="checkbox-label">
-      </label>
-    </div>
-  </section>
+  <div class="tab">
+    <button class="tablinks" id="generalTab">
+      General
+    </button>
+    <button class="tablinks" id="advancedTab">
+      Advanced
+    </button>
+    <button class="tablinks" id="whitelistTab">
+      Whitelist
+    </button>
+  </div>
 
-  <section class="options settings_block">
-    <div class="onoffswitch switch" aria-label="Toggle Invidious redirects">
-      <h1>Invidious Redirects</h1>
-      <input aria-hidden="true" id="disable-invidious" type="checkbox" checked>&nbsp;
-      <label for="disable-invidious" class="checkbox-label">
-      </label>
-    </div>
-  </section>
+  <div id="general" class="tabcontent">
+    <section class="options settings_block">
+      <div class="onoffswitch switch" aria-label="Toggle Nitter redirects">
+        <h1>Nitter Redirects</h1>
+        <input aria-hidden="true" id="disable-nitter" type="checkbox" checked>&nbsp;
+        <label for="disable-nitter" class="checkbox-label">
+        </label>
+      </div>
+    </section>
 
-  <section class="options settings_block">
-    <div class="onoffswitch switch" aria-label="Toggle Bibliogram redirects">
-      <h1>Bibliogram Redirects</h1>
-      <input aria-hidden="true" id="disable-bibliogram" type="checkbox" checked>&nbsp;
-      <label for="disable-bibliogram" class="checkbox-label">
-      </label>
-    </div>
-  </section>
+    <section class="options settings_block">
+      <div class="onoffswitch switch" aria-label="Toggle Invidious redirects">
+        <h1>Invidious Redirects</h1>
+        <input aria-hidden="true" id="disable-invidious" type="checkbox" checked>&nbsp;
+        <label for="disable-invidious" class="checkbox-label">
+        </label>
+      </div>
+    </section>
 
-  <section class="options settings_block">
-    <div class="onoffswitch switch" aria-label="Toggle OpenStreetMap redirects">
-      <h1>OpenStreetMap Redirects</h1>
-      <input aria-hidden="true" id="disable-osm" type="checkbox" checked>&nbsp;
-      <label for="disable-osm" class="checkbox-label">
-      </label>
-    </div>
-  </section>
+    <section class="options settings_block">
+      <div class="onoffswitch switch" aria-label="Toggle Bibliogram redirects">
+        <h1>Bibliogram Redirects</h1>
+        <input aria-hidden="true" id="disable-bibliogram" type="checkbox" checked>&nbsp;
+        <label for="disable-bibliogram" class="checkbox-label">
+        </label>
+      </div>
+    </section>
 
-  <section class="options settings_block">
-    <h1>Nitter Instance</h1>
-    <input id="nitter-instance" list="nitter-instance-list" type="url" placeholder="https://nitter.net">
-    <datalist id="nitter-instance-list">
-      <option value="https://nitter.net">
-      <option value="https://nitter.snopyta.org">
-      <option value="https://nitter.42l.fr">
-      <option value="https://nitter.nixnet.xyz">
-      <option value="https://nitter.13ad.de">
-      <option value="https://tw.openalgeria.org">
-    </datalist>
-    <h1>Invidious Instance</h1>
-    <input id="invidious-instance" list="invidious-instances-list" type="url" placeholder="https://invidio.us">
-    <datalist id="invidious-instances-list">
-      <option value="https://invidio.us">
-      <option value="https://invidious.snopyta.org">
-      <option value="https://invidiou.sh">
-      <option value="https://yewtu.be">
-      <option value="https://invidious.zapashcanon.fr">
-      <option value="https://invidious.toot.koeln">
-      <option value="https://invidious.ggc-project.de">
-    </datalist>
-    <h1>Bibliogram Instance</h1>
-    <input id="bibliogram-instance" list="bibliogram-instance-list" type="url" placeholder="https://bibliogram.art">
-    <datalist id="bibliogram-instance-list">
-      <option value="https://bibliogram.art">
-      <option value="https://bibliogram.snopyta.org">
-      <option value="https://bibliogram.pussthecat.org">
-    </datalist>
-    <h1>OpenStreetMap Instance</h1>
-    <input id="osm-instance" list="osm-instance-list" type="url" placeholder="https://openstreetmap.org">
-    <datalist id="osm-instance-list">
-      <option value="https://openstreetmap.org">
-    </datalist>
-  </section>
+    <section class="options settings_block">
+      <div class="onoffswitch switch" aria-label="Toggle OpenStreetMap redirects">
+        <h1>OpenStreetMap Redirects</h1>
+        <input aria-hidden="true" id="disable-osm" type="checkbox" checked>&nbsp;
+        <label for="disable-osm" class="checkbox-label">
+        </label>
+      </div>
+    </section>
 
-  <section class="options settings_block">
-    <div class="onoffswitch switch" aria-label="Always proxy videos through Invidious">
-      <h1>Always proxy videos through Invidious?</h1>
-      <input aria-hidden="true" id="always-proxy" type="checkbox" checked>&nbsp;
-      <label for="always-proxy" class="checkbox-label">
-      </label>
-    </div>
-  </section>
+    <section class="options settings_block">
+      <h1>Nitter Instance</h1>
+      <input id="nitter-instance" list="nitter-instance-list" type="url" placeholder="https://nitter.net">
+      <datalist id="nitter-instance-list">
+        <option value="https://nitter.net">
+        <option value="https://nitter.snopyta.org">
+        <option value="https://nitter.42l.fr">
+        <option value="https://nitter.nixnet.xyz">
+        <option value="https://nitter.13ad.de">
+        <option value="https://tw.openalgeria.org">
+      </datalist>
+      <h1>Invidious Instance</h1>
+      <input id="invidious-instance" list="invidious-instances-list" type="url" placeholder="https://invidio.us">
+      <datalist id="invidious-instances-list">
+        <option value="https://invidio.us">
+        <option value="https://invidious.snopyta.org">
+        <option value="https://invidiou.sh">
+        <option value="https://yewtu.be">
+        <option value="https://invidious.zapashcanon.fr">
+        <option value="https://invidious.toot.koeln">
+        <option value="https://invidious.ggc-project.de">
+      </datalist>
+      <h1>Bibliogram Instance</h1>
+      <input id="bibliogram-instance" list="bibliogram-instance-list" type="url" placeholder="https://bibliogram.art">
+      <datalist id="bibliogram-instance-list">
+        <option value="https://bibliogram.art">
+        <option value="https://bibliogram.snopyta.org">
+        <option value="https://bibliogram.pussthecat.org">
+      </datalist>
+      <h1>OpenStreetMap Instance</h1>
+      <input id="osm-instance" list="osm-instance-list" type="url" placeholder="https://openstreetmap.org">
+      <datalist id="osm-instance-list">
+        <option value="https://openstreetmap.org">
+      </datalist>
+    </section>
+  </div>
 
-  <section class="options settings_block">
-    <div class="onoffswitch switch" aria-label="Only redirect embedded video to Invidious">
-      <h1>Only redirect embedded video to Invidious?</h1>
-      <input aria-hidden="true" id="only-embed" type="checkbox" checked>&nbsp;
-      <label for="only-embed" class="checkbox-label">
-      </label>
-    </div>
-  </section>
+  <div id="advanced" class="tabcontent">
+    <section class="options settings_block">
+      <div class="onoffswitch switch" aria-label="Always proxy videos through Invidious">
+        <h1>Always proxy videos through Invidious</h1>
+        <input aria-hidden="true" id="always-proxy" type="checkbox" checked>&nbsp;
+        <label for="always-proxy" class="checkbox-label">
+        </label>
+      </div>
+    </section>
 
-  <section class="options settings_block">
-    <h1>Invidious Video Quality</h1>
-    <select id="video-quality">
-      <option value="">Default</option>
-      <option value="hd720">720p</option>
-      <option value="medium">480p</option>
-      <option value="dash">DASH (Dynamic Adaptive Streaming over HTTP)</option>
-    </select>
-  </section>
+    <section class="options settings_block">
+      <div class="onoffswitch switch" aria-label="Only redirect embedded video to Invidious">
+        <h1>Only redirect embedded video to Invidious</h1>
+        <input aria-hidden="true" id="only-embed" type="checkbox" checked>&nbsp;
+        <label for="only-embed" class="checkbox-label">
+        </label>
+      </div>
+    </section>
 
-  <section class="options settings_block">
-    <div class="onoffswitch switch" aria-label="Proactively remove Twitter service worker">
-      <h1>Proactively remove Twitter service worker</h1>
-      <input aria-hidden="true" id="remove-twitter-sw" type="checkbox" checked>&nbsp;
-      <label for="remove-twitter-sw" class="checkbox-label">
-      </label>
-    </div>
-  </section>
+    <section class="options settings_block">
+      <h1>Invidious Video Quality</h1>
+      <select id="video-quality">
+        <option value="">Default</option>
+        <option value="hd720">720p</option>
+        <option value="medium">480p</option>
+        <option value="dash">DASH (Dynamic Adaptive Streaming over HTTP)</option>
+      </select>
+    </section>
+
+    <section class="options settings_block">
+      <div class="onoffswitch switch" aria-label="Proactively remove Twitter service worker">
+        <h1>Proactively remove Twitter service worker</h1>
+        <input aria-hidden="true" id="remove-twitter-sw" type="checkbox" checked>&nbsp;
+        <label for="remove-twitter-sw" class="checkbox-label">
+        </label>
+      </div>
+    </section>
+  </div>
+
+  <div id="whitelist" class="tabcontent">
+
+  </div>
 
   <script src="./options.js"></script>
 
