@@ -92,8 +92,7 @@ browser.storage.sync.get(
     alwaysProxy = result.alwaysProxy;
     onlyEmbeddedVideo = result.onlyEmbeddedVideo;
     videoQuality = result.videoQuality;
-    whitelist = result.whitelist.map(e => new RegExp(e));
-    console.log(whitelist);
+    whitelist = result.whitelist ? result.whitelist.map(e => new RegExp(e)) : [];
   }
 );
 
@@ -133,7 +132,6 @@ browser.storage.onChanged.addListener(changes => {
   }
   if ('whitelist' in changes) {
     whitelist = changes.whitelist.newValue.map(e => new RegExp(e));
-    console.log(whitelist);
   }
 });
 
