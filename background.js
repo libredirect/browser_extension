@@ -26,7 +26,7 @@ const instagramDomains = [
   "help.instagram.com",
   "about.instagram.com",
 ];
-const instagramReservedPaths = /\/(p|favicon.ico|developer|legal|about|explore|support|press|api|privacy|safety|admin|help|terms|contact|blog|igtv)/;
+const instagramReservedPaths = /^\/(p|favicon.ico|developer|legal|about|explore|support|press|api|privacy|safety|admin|help|terms|contact|blog|igtv)\/?$/;
 const bibliogramBypassPaths = /\/(accounts\/|embeds?.js)/;
 const bibliogramInstances = [
   'https://bibliogram.art',
