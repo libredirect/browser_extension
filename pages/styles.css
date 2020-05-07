@@ -280,3 +280,10 @@ body, body.popup, header, h1, input, a#more-options.button, div#general.tabconte
   color: #bfbfbf;
 }
 }
+
+@media (prefers-color-scheme: light) {
+body, body.popup, header, h1, input, a#more-options.button, div#general.tabcontent, div#advanced.tabcontent, select, div#whitelist.tabcontent, button#general-tab.tablinks.active, button#advanced-tab.tablinks.active, button#whitelist-tab.tablinks.active {
+  background-color: #ffffff;
+  color: #000000;
+}
+}
