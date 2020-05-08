@@ -12,6 +12,8 @@ let alwaysProxy = document.getElementById('always-proxy');
 let onlyEmbeddedVideo = document.getElementById('only-embed');
 let videoQuality = document.getElementById('video-quality');
 let removeTwitterSW = document.getElementById('remove-twitter-sw');
+let invidiousDarkMode = document.getElementById('invidious-dark-mode');
+let persistInvidiousPrefs = document.getElementById('persist-invidious-prefs');
 let whitelist;
 
 window.browser = window.browser || window.chrome;
@@ -46,7 +48,9 @@ browser.storage.sync.get(
     'onlyEmbeddedVideo',
     'videoQuality',
     'removeTwitterSW',
-    'whitelist'
+    'whitelist',
+    'invidiousDarkMode',
+    'persistInvidiousPrefs'
   ],
   result => {
     nitterInstance.value = result.nitterInstance || '';
@@ -61,6 +65,8 @@ browser.storage.sync.get(
     onlyEmbeddedVideo.checked = result.onlyEmbeddedVideo;
     videoQuality.value = result.videoQuality || '';
     removeTwitterSW.checked = !result.removeTwitterSW;
+    invidiousDarkMode.checked = result.invidiousDarkMode;
+    persistInvidiousPrefs.checked = result.persistInvidiousPrefs;
     whitelist = result.whitelist || [];
     whitelist.forEach(prependWhitelistItem);
   }
@@ -198,4 +204,12 @@ videoQuality.addEventListener('change', event => {
 
 removeTwitterSW.addEventListener('change', event => {
   browser.storage.sync.set({ removeTwitterSW: !event.target.checked });
+});
+
+invidiousDarkMode.addEventListener('change', event => {
+  browser.storage.sync.set({ invidiousDarkMode: event.target.checked });
+});
+
+persistInvidiousPrefs.addEventListener('change', event => {
+  browser.storage.sync.set({ persistInvidiousPrefs: event.target.checked });
 });

@@ -26,7 +26,29 @@ const instagramDomains = [
   "help.instagram.com",
   "about.instagram.com",
 ];
-const instagramReservedPaths = /^\/(p|favicon.ico|developer|legal|about|explore|support|press|api|privacy|safety|admin|help|terms|contact|blog|igtv)\/?$/;
+const instagramReservedPaths = [
+  'about',
+  'explore',
+  'support',
+  'press',
+  'api',
+  'privacy',
+  'safety',
+  'admin',
+  'graphql',
+  'accounts',
+  'help',
+  'terms',
+  'contact',
+  'blog',
+  'igtv',
+  'u',
+  'p',
+  'fragment',
+  'imageproxy',
+  'videoproxy',
+  '.well-known'
+];
 const bibliogramBypassPaths = /\/(accounts\/|embeds?.js)/;
 const bibliogramInstances = [
   'https://bibliogram.art',
@@ -61,6 +83,7 @@ let osmInstance;
 let alwaysProxy;
 let onlyEmbeddedVideo;
 let videoQuality;
+let invidiousDarkMode;
 let whitelist;
 
 window.browser = window.browser || window.chrome;
@@ -78,6 +101,7 @@ browser.storage.sync.get(
     'alwaysProxy',
     'onlyEmbeddedVideo',
     'videoQuality',
+    'invidiousDarkMode',
     'whitelist'
   ],
   result => {
@@ -92,6 +116,7 @@ browser.storage.sync.get(
     alwaysProxy = result.alwaysProxy;
     onlyEmbeddedVideo = result.onlyEmbeddedVideo;
     videoQuality = result.videoQuality;
+    invidiousDarkMode = result.invidiousDarkMode;
     whitelist = result.whitelist ? result.whitelist.map(e => new RegExp(e)) : [];
   }
 );
@@ -129,6 +154,9 @@ browser.storage.onChanged.addListener(changes => {
   }
   if ('videoQuality' in changes) {
     videoQuality = changes.videoQuality.newValue;
+  }
+  if ('invidiousDarkMode' in changes) {
+    invidiousDarkMode = changes.invidiousDarkMode.newValue;
   }
   if ('whitelist' in changes) {
     whitelist = changes.whitelist.newValue.map(e => new RegExp(e));
@@ -189,6 +217,9 @@ function redirectYouTube(url, initiator, type) {
     if (onlyEmbeddedVideo && type !== 'sub_frame') {
       return null;
     }
+    if (invidiousDarkMode) {
+      url.searchParams.append('dark_mode', invidiousDarkMode);
+    }
     return `${invidiousInstance}${url.pathname}${url.search}`;
   }
 }
@@ -215,13 +246,13 @@ function redirectInstagram(url, initiator, type) {
     return null;
   }
   // Do not redirect /accounts, /embeds.js, or anything other than main_frame
-  if (url.pathname.match(bibliogramBypassPaths) || type !== 'main_frame') {
+  if (type !== 'main_frame' || url.pathname.match(bibliogramBypassPaths)) {
     return null;
   }
-  if (url.pathname === '/' || url.pathname.match(instagramReservedPaths)) {
+  if (url.pathname === '/' || instagramReservedPaths.includes(url.pathname.split('/')[1])) {
     return `${bibliogramInstance}${url.pathname}${url.search}`;
   } else {
-    // Redirect user profile requests to '/u/...'
+    // Likely a user profile, redirect to '/u/...'
     return `${bibliogramInstance}/u${url.pathname}${url.search}`;
   }
 }

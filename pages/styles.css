@@ -21,7 +21,7 @@ body {
 
 .popup {
   width: 300px;
-  height: auto;
+  min-height: auto;
   overflow: hidden;
   background-color: var(--dark-grey);
 }
@@ -145,7 +145,7 @@ input:checked+label:after {
 
 .settings_block {
   display: block;
-  padding: 5px 1em 20px 1em;
+  padding: 10px 1em 1em 1em;
   border-bottom: var(--dark-grey) solid 1px;
 }
 
