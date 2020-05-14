@@ -6,9 +6,9 @@ All aspects of the extension work locally on your device. With the exception of
 OpenStreetMap (OSM) reverse geocoding, done via the [OSM Nomantim API](https://nominatim.org/release-docs/latest/), 
 used as part of OSM redirects, the extension does not connect to any other
 third-party web services and it doesn’t collect or transmit 
-any infromation about you, your browsing habits, or your device.
+any information about you, your browsing habits, or your device.
 
-The extension requires access to you data for **all websites** in order 
+The extension requires access to request data for **all websites** in order 
 to intercept requests made to targeted services (Twitter, YouTube, Instagram & 
 Google Maps) so that they may be redirected to the appropriate privacy 
 respecting alternative, all other requests are ignored.
