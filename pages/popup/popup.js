@@ -52,10 +52,28 @@ function debounce(func, wait, immediate) {
   };
 };
 
+function parseURL(urlString) {
+  if (urlString) {
+    try {
+      const url = new URL(urlString);
+      if (url.username && url.password) {
+        return `${url.protocol}//${url.username}:${url.password}@${url.host}`
+      } else {
+        return url.origin;
+      }
+    } catch (error) {
+      console.log(error);
+      return '';
+    }
+  } else {
+    return '';
+  }
+}
+
 let nitterInstanceChange = debounce(() => {
   if (nitterInstance.checkValidity()) {
     browser.storage.sync.set({
-      nitterInstance: nitterInstance.value ? new URL(nitterInstance.value).origin : ''
+      nitterInstance: parseURL(nitterInstance.value)
     });
   }
 }, 500);
@@ -64,7 +82,7 @@ nitterInstance.addEventListener('input', nitterInstanceChange);
 let invidiousInstanceChange = debounce(() => {
   if (invidiousInstance.checkValidity()) {
     browser.storage.sync.set({
-      invidiousInstance: invidiousInstance.value ? new URL(invidiousInstance.value).origin : ''
+      invidiousInstance: parseURL(invidiousInstance.value)
     });
   }
 }, 500);
@@ -73,7 +91,7 @@ invidiousInstance.addEventListener('input', invidiousInstanceChange);
 let bibliogramInstanceChange = debounce(() => {
   if (bibliogramInstance.checkValidity()) {
     browser.storage.sync.set({
-      bibliogramInstance: bibliogramInstance.value ? new URL(bibliogramInstance.value).origin : ''
+      bibliogramInstance: parseURL(bibliogramInstance.value)
     });
   }
 }, 500);
@@ -82,7 +100,7 @@ bibliogramInstance.addEventListener('input', bibliogramInstanceChange);
 let osmInstanceChange = debounce(() => {
   if (osmInstance.checkValidity()) {
     browser.storage.sync.set({
-      osmInstance: osmInstance.value ? new URL(osmInstance.value).origin : ''
+      osmInstance: parseURL(osmInstance.value)
     });
   }
 }, 500);
