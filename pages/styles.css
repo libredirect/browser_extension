@@ -61,14 +61,16 @@ header .logo-container h1 {
   font-weight: normal;
 }
 
-.privacy {
+header .privacy {
   letter-spacing: 0.13em;
 }
 
-header small {
+header .version {
   font-size: 8.5px;
   font-weight: bold;
-  float: right;
+  position: absolute;
+  top: var(--space);
+  right: var(--space);
 }
 
 h1 {
@@ -109,7 +111,7 @@ footer a.button {
 input[type=url], input[type=text], select {
   width: 100%;
   box-sizing: border-box;
-  margin-bottom: 5px;
+  margin-bottom: var(--space);
 }
 
 input[type=url] {
@@ -139,9 +141,9 @@ input[type=checkbox] {
   border-radius: 90px;
   content: '';
   height: 20px;
-  left: 5px;
+  left: var(--space);
   position: absolute;
-  top: 5px;
+  top: var(--space);
   transition: 0.3s; /* Acts on transform below */
   width: 20px;
 }
@@ -150,7 +152,7 @@ input:checked+label {
 }
 /* position  when active*/
 input:checked+label:after {
-  left: calc(100% - 5px);
+  left: calc(100% - var(--space));
   transform: translateX(-100%);
 }
 
@@ -189,7 +191,7 @@ input:checked+label:after {
 
 .button:active {
   background-color: var(--active);
-  box-shadow: 0 5px var(--dark);
+  box-shadow: 0 var(--space) var(--dark);
   transform: translateY(4px);
 }
 

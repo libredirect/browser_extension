@@ -232,6 +232,8 @@ function redirectTwitter(url, initiator) {
     return `${nitterInstance}/pic/${encodeURIComponent(url.href)}`;
   } else if (url.host.split('.')[0] === 'video') {
     return `${nitterInstance}/gif/${encodeURIComponent(url.href)}`;
+  } else if (url.pathname.includes('tweets')) {
+    return `${nitterInstance}${url.pathname.replace('/tweets', '')}${url.search}`;
   } else {
     return `${nitterInstance}${url.pathname}${url.search}`;
   }
