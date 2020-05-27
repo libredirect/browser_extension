@@ -55,7 +55,7 @@ const bibliogramInstances = [
   'https://bibliogram.snopyta.org'
 ];
 const osmDefault = 'https://openstreetmap.org';
-const googleMapsRegex = /https?:\/\/(((www|maps)\.)?(google).*(\/maps)|maps\.(google).*)/;
+const googleMapsRegex = /https?:\/\/(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
 const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
 const dataLatLngRegex = /(!3d|!4d)(-?[0-9]{1,10}.[0-9]{1,10})/g;
 const placeRegex = /\/place\/(.*)\//;
