@@ -137,7 +137,7 @@ input[type=checkbox] {
 }
 
 .checkbox-label:after {
-  background: #fff;
+  background: var(--text-main);
   border-radius: 90px;
   content: '';
   height: 20px;
@@ -168,6 +168,7 @@ input:checked+label:after {
 .button {
   border: var(--active) solid 1px;
   color: var(--text-main);
+  stroke: var(--text-main);
   display: block;
   font-size: 12px;
   font-weight: bold;
@@ -186,7 +187,8 @@ input:checked+label:after {
 
 .button:hover {
   background-color: var(--active);
-  color: #fff;
+  color: var(--text-main);
+  stroke: var(--text-main);
 }
 
 .button:active {
@@ -237,7 +239,6 @@ input:invalid {
 .tabcontent {
   padding-top: 10px;
   display: none;
-  border: solid 1px var(--dark);
   background-color: var(--dark);
   min-height: 510px;
 }
@@ -286,6 +287,11 @@ li {
   border-radius: 50%;
 }
 
+.button svg {
+  height: 18px;
+  width: 18px;
+}
+
 @media (prefers-color-scheme: dark) {
 
   body.popup, header, h1, input, select, div.tabcontent, button.tablinks.active {
@@ -321,6 +327,7 @@ li {
 
   a.button {
     color: var(--text-secondary);
+    stroke: var(--text-secondary);
   }
 
   button.tablinks {
@@ -333,4 +340,11 @@ li {
     opacity: 0.7;
   }
 
+  .tab button {
+    border-bottom: solid 1px var(--light);
+  }
+
+  button.tablinks.active {
+    border-bottom: solid 1px var(--lighter);
+  }
 }

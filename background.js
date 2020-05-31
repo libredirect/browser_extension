@@ -200,28 +200,24 @@ function redirectYouTube(url, initiator, type) {
   if (initiator && (initiator.origin === invidiousInstance || youtubeDomains.includes(initiator.host))) {
     return null;
   }
-  if (url.pathname.match(/iframe_api/)) {
-    // Redirect requests for YouTube Player API to local files instead
-    return browser.runtime.getURL('assets/iframe_api.js');
-  } else if (url.pathname.match(/www-widgetapi/)) {
-    // Redirect requests for YouTube Player API to local files instead
-    return browser.runtime.getURL('assets/www-widgetapi.js');
-  } else {
-    // Proxy video through the server if enabled by user
-    if (alwaysProxy) {
-      url.searchParams.append('local', true);
-    }
-    if (videoQuality) {
-      url.searchParams.append('quality', videoQuality);
-    }
-    if (onlyEmbeddedVideo && type !== 'sub_frame') {
-      return null;
-    }
-    if (invidiousDarkMode) {
-      url.searchParams.append('dark_mode', invidiousDarkMode);
-    }
-    return `${invidiousInstance}${url.pathname}${url.search}`;
+  if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) {
+    // Don't redirect YouTube Player API.
+    return null;
   }
+  // Proxy video through the server if enabled by user
+  if (alwaysProxy) {
+    url.searchParams.append('local', true);
+  }
+  if (videoQuality) {
+    url.searchParams.append('quality', videoQuality);
+  }
+  if (onlyEmbeddedVideo && type !== 'sub_frame') {
+    return null;
+  }
+  if (invidiousDarkMode) {
+    url.searchParams.append('dark_mode', invidiousDarkMode);
+  }
+  return `${invidiousInstance}${url.pathname}${url.search}`;
 }
 
 function redirectTwitter(url, initiator) {
