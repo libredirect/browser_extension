@@ -18,7 +18,7 @@ function redirectTwitter(url) {
 }
 
 browser.storage.sync.get(
-  ['nitterInstance', 'disableNitter', 'removeTwitterSW'],
+  ['nitterInstance', 'disableNitter', 'removeTwitterSW', 'redirectBypassFlag'],
   (result) => {
     if (!result.removeTwitterSW) {
       disableNitter = result.disableNitter;
@@ -32,7 +32,11 @@ browser.storage.sync.get(
         }
       });
       const url = new URL(window.location);
-      if (!disableNitter && url.host !== nitterInstance) {
+      const redirectBypassFlag = result.redirectBypassFlag;
+      browser.storage.sync.set({
+        redirectBypassFlag: false
+      });
+      if (!redirectBypassFlag && !disableNitter && url.host !== nitterInstance) {
         const redirect = redirectTwitter(url);
         console.info(
           'Redirecting', `"${url.href}"`, '=>', `"${redirect}"`

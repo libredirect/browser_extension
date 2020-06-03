@@ -204,6 +204,10 @@ function redirectYouTube(url, initiator, type) {
     // Don't redirect YouTube Player API.
     return null;
   }
+  if (url.host.split('.')[0] === 'studio') {
+    // Avoid redirecting `studio.youtube.com`
+    return null;
+  }
   // Proxy video through the server if enabled by user
   if (alwaysProxy) {
     url.searchParams.append('local', true);
@@ -222,6 +226,12 @@ function redirectYouTube(url, initiator, type) {
 
 function redirectTwitter(url, initiator) {
   if (disableNitter || isWhitelisted(initiator)) {
+    return null;
+  }
+  if (initiator && (initiator.origin === nitterInstance || twitterDomains.includes(initiator.host))) {
+    browser.storage.sync.set({
+      redirectBypassFlag: true
+    });
     return null;
   }
   if (url.host.split('.')[0] === 'pbs') {
