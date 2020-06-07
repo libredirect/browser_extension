@@ -10,6 +10,7 @@ const youtubeDomains = [
   'www.youtube-nocookie.com',
   'youtu.be',
   's.ytimg.com',
+  'music.youtube.com'
 ];
 const nitterDefault = 'https://nitter.net';
 const twitterDomains = [
@@ -85,6 +86,7 @@ let onlyEmbeddedVideo;
 let videoQuality;
 let invidiousDarkMode;
 let whitelist;
+let redirectBypassFlag;
 
 window.browser = window.browser || window.chrome;
 
@@ -161,6 +163,9 @@ browser.storage.onChanged.addListener(changes => {
   if ('whitelist' in changes) {
     whitelist = changes.whitelist.newValue.map(e => new RegExp(e));
   }
+  if ('redirectBypassFlag' in changes) {
+    redirectBypassFlag = changes.redirectBypassFlag.newValue;
+  }
 });
 
 function addressToLatLng(address, callback) {
@@ -193,6 +198,10 @@ function isWhitelisted(initiator) {
   return initiator && whitelist.some(regex => (regex.test(initiator.href)));
 }
 
+function isFirefox() {
+  return typeof InstallTrigger !== 'undefined';
+}
+
 function redirectYouTube(url, initiator, type) {
   if (disableInvidious || isWhitelisted(initiator)) {
     return null;
@@ -208,15 +217,15 @@ function redirectYouTube(url, initiator, type) {
     // Avoid redirecting `studio.youtube.com`
     return null;
   }
-  // Proxy video through the server if enabled by user
+  if (onlyEmbeddedVideo && type !== 'sub_frame') {
+    return null;
+  }
+  // Apply settings
   if (alwaysProxy) {
     url.searchParams.append('local', true);
   }
   if (videoQuality) {
     url.searchParams.append('quality', videoQuality);
-  }
-  if (onlyEmbeddedVideo && type !== 'sub_frame') {
-    return null;
   }
   if (invidiousDarkMode) {
     url.searchParams.append('dark_mode', invidiousDarkMode);
@@ -228,7 +237,10 @@ function redirectTwitter(url, initiator) {
   if (disableNitter || isWhitelisted(initiator)) {
     return null;
   }
-  if (initiator && (initiator.origin === nitterInstance || twitterDomains.includes(initiator.host))) {
+  if (url.pathname.includes('/home')) {
+    return null;
+  }
+  if (isFirefox() && initiator && (initiator.origin === nitterInstance || twitterDomains.includes(initiator.host))) {
     browser.storage.sync.set({
       redirectBypassFlag: true
     });
