@@ -86,7 +86,6 @@ let onlyEmbeddedVideo;
 let videoQuality;
 let invidiousDarkMode;
 let whitelist;
-let redirectBypassFlag;
 
 window.browser = window.browser || window.chrome;
 
@@ -119,7 +118,9 @@ browser.storage.sync.get(
     onlyEmbeddedVideo = result.onlyEmbeddedVideo;
     videoQuality = result.videoQuality;
     invidiousDarkMode = result.invidiousDarkMode;
-    whitelist = result.whitelist ? result.whitelist.map(e => new RegExp(e)) : [];
+    whitelist = result.whitelist ? result.whitelist.map(e => {
+      return new RegExp(e.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
+    }) : [];
   }
 );
 
@@ -161,10 +162,9 @@ browser.storage.onChanged.addListener(changes => {
     invidiousDarkMode = changes.invidiousDarkMode.newValue;
   }
   if ('whitelist' in changes) {
-    whitelist = changes.whitelist.newValue.map(e => new RegExp(e));
-  }
-  if ('redirectBypassFlag' in changes) {
-    redirectBypassFlag = changes.redirectBypassFlag.newValue;
+    whitelist = changes.whitelist.newValue.map(e => {
+      return new RegExp(e.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
+    });
   }
 });
 
@@ -194,8 +194,9 @@ function addressToLatLng(address, callback) {
   xmlhttp.send();
 }
 
-function isWhitelisted(initiator) {
-  return initiator && whitelist.some(regex => (regex.test(initiator.href)));
+function isWhitelisted(url, initiator) {
+  return whitelist.some(regex => (regex.test(url.href))) ||
+    (initiator && whitelist.some(regex => (regex.test(initiator.href))));
 }
 
 function isFirefox() {
@@ -203,7 +204,7 @@ function isFirefox() {
 }
 
 function redirectYouTube(url, initiator, type) {
-  if (disableInvidious || isWhitelisted(initiator)) {
+  if (disableInvidious || isWhitelisted(url, initiator)) {
     return null;
   }
   if (initiator && (initiator.origin === invidiousInstance || youtubeDomains.includes(initiator.host))) {
@@ -234,7 +235,7 @@ function redirectYouTube(url, initiator, type) {
 }
 
 function redirectTwitter(url, initiator) {
-  if (disableNitter || isWhitelisted(initiator)) {
+  if (disableNitter || isWhitelisted(url, initiator)) {
     return null;
   }
   if (url.pathname.includes('/home')) {
@@ -258,7 +259,7 @@ function redirectTwitter(url, initiator) {
 }
 
 function redirectInstagram(url, initiator, type) {
-  if (disableBibliogram || isWhitelisted(initiator)) {
+  if (disableBibliogram || isWhitelisted(url, initiator)) {
     return null;
   }
   // Do not redirect Bibliogram view on Instagram links
@@ -278,7 +279,7 @@ function redirectInstagram(url, initiator, type) {
 }
 
 function redirectGoogleMaps(url, initiator) {
-  if (disableOsm || isWhitelisted(initiator)) {
+  if (disableOsm || isWhitelisted(url, initiator)) {
     return null;
   }
   let redirect;

@@ -316,7 +316,7 @@ li {
 
 @media (prefers-color-scheme: light) {
 
-  body.popup, header, h1, input, select, div.tabcontent, button.tablinks.active {
+  body.popup, header, h1, input, select, div.tabcontent, button.tablinks.active, ul {
     background-color: var(--lighter);
     color: var(--text-secondary);
   }

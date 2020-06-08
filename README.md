@@ -12,7 +12,7 @@ Allows for setting custom [Nitter](https://github.com/zedeus/nitter/wiki/Instanc
 ## Build
 
 1.  `npm install --global web-ext`
-2.  `web-ext build`
+2.  `web-ext build --overwrite-dest`
 3.  See `web-ext-artifacts/` for outputs.
 
 ## License
