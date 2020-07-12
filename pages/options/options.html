@@ -12,124 +12,136 @@
 <body>
 
   <div class="tab">
-    <button class="tablinks" id="general-tab">General</button>
-    <button class="tablinks" id="advanced-tab">Advanced</button>
-    <button class="tablinks" id="whitelist-tab">Whitelist</button>
+    <button class="tablinks" id="general-tab" data-localize="__MSG_generalTab__">General</button>
+    <button class="tablinks" id="advanced-tab" data-localize="__MSG_advancedTab__">Advanced</button>
+    <button class="tablinks" id="exceptions-tab" data-localize="__MSG_exceptionsTab__">Exceptions</button>
   </div>
 
   <div id="general" class="tabcontent">
-    <section class="options settings_block">
-      <div class="onoffswitch switch" aria-label="Toggle Nitter redirects">
-        <h1>Nitter Redirects</h1>
-        <input aria-hidden="true" id="disable-nitter" type="checkbox" checked>&nbsp;
-        <label for="disable-nitter" class="checkbox-label">
-        </label>
+    <section class="settings-block">
+      <table class="option" aria-label="Toggle Nitter redirects">
+        <tbody>
+          <tr>
+            <td>
+              <h1 data-localize="__MSG_disableNitter__">Nitter Redirects</h1>
+            </td>
+            <td>
+              <input aria-hidden="true" id="disable-nitter" type="checkbox" checked>&nbsp;
+              <label for="disable-nitter" class="checkbox-label"></label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="settings-block">
+      <table class="option" aria-label="Toggle Invidious redirects">
+        <tbody>
+          <tr>
+            <td>
+              <h1 data-localize="__MSG_disableInvidious__">Invidious Redirects</h1>
+            </td>
+            <td>
+              <input aria-hidden="true" id="disable-invidious" type="checkbox" checked>&nbsp;
+              <label for="disable-invidious" class="checkbox-label">
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="settings-block">
+      <table class="option" aria-label="Toggle Bibliogram redirects">
+        <tbody>
+          <tr>
+            <td>
+              <h1 data-localize="__MSG_disableBibliogram__">Bibliogram Redirects</h1>
+            </td>
+            <td>
+              <input aria-hidden="true" id="disable-bibliogram" type="checkbox" checked>&nbsp;
+              <label for="disable-bibliogram" class="checkbox-label">
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="settings-block">
+      <table class="option" aria-label="Toggle OpenStreetMap redirects">
+        <tbody>
+          <tr>
+            <td>
+              <h1 data-localize="__MSG_disableOsm__">OpenStreetMap Redirects</h1>
+            </td>
+            <td>
+              <input aria-hidden="true" id="disable-osm" type="checkbox" checked>&nbsp;
+              <label for="disable-osm" class="checkbox-label">
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="settings-block">
+      <h1 data-localize="__MSG_nitterInstance__">Nitter Instance</h1>
+      <div class="autocomplete">
+        <input id="nitter-instance" type="url" name="nitter-instance" placeholder="https://nitter.net">
       </div>
     </section>
-
-    <section class="options settings_block">
-      <div class="onoffswitch switch" aria-label="Toggle Invidious redirects">
-        <h1>Invidious Redirects</h1>
-        <input aria-hidden="true" id="disable-invidious" type="checkbox" checked>&nbsp;
-        <label for="disable-invidious" class="checkbox-label">
-        </label>
+    <section class="settings-block">
+      <h1 data-localize="__MSG_invidiousInstance__">Invidious Instance</h1>
+      <div class="autocomplete">
+        <input id="invidious-instance" type="url" placeholder="https://invidio.us">
       </div>
     </section>
-
-    <section class="options settings_block">
-      <div class="onoffswitch switch" aria-label="Toggle Bibliogram redirects">
-        <h1>Bibliogram Redirects</h1>
-        <input aria-hidden="true" id="disable-bibliogram" type="checkbox" checked>&nbsp;
-        <label for="disable-bibliogram" class="checkbox-label">
-        </label>
+    <section class="settings-block">
+      <h1 data-localize="__MSG_bibliogramInstance__">Bibliogram Instance</h1>
+      <div class="autocomplete">
+        <input id="bibliogram-instance" type="url" placeholder="https://bibliogram.art">
       </div>
     </section>
-
-    <section class="options settings_block">
-      <div class="onoffswitch switch" aria-label="Toggle OpenStreetMap redirects">
-        <h1>OpenStreetMap Redirects</h1>
-        <input aria-hidden="true" id="disable-osm" type="checkbox" checked>&nbsp;
-        <label for="disable-osm" class="checkbox-label">
-        </label>
+    <sections class="settings-block">
+      <h1 data-localize="__MSG_osmInstance__">OpenStreetMap Instance</h1>
+      <div class="autocomplete">
+        <input id="osm-instance" type="url" placeholder="https://openstreetmap.org">
       </div>
-    </section>
-
-    <section class="options settings_block">
-      <h1>Nitter Instance</h1>
-      <input id="nitter-instance" list="nitter-instance-list" type="url" placeholder="https://nitter.net">
-      <datalist id="nitter-instance-list">
-        <option value="https://nitter.net">
-        <option value="https://nitter.snopyta.org">
-        <option value="https://nitter.42l.fr">
-        <option value="https://nitter.nixnet.services">
-        <option value="https://nitter.13ad.de">
-        <option value="https://nitter.pussthecat.org">
-        <option value="https://nitter.mastodont.cat">
-        <option value="https://nitter.dark.fail">
-        <option value="https://nitter.tedomum.net">
-        <option value="https://t.maisputain.ovh">
-        <option value="http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion">
-        <option value="http://nitter.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd.onion">
-      </datalist>
-      <h1>Invidious Instance</h1>
-      <input id="invidious-instance" list="invidious-instances-list" type="url" placeholder="https://invidio.us">
-      <datalist id="invidious-instances-list">
-        <option value="https://invidio.us">
-        <option value="https://invidious.snopyta.org">
-        <option value="https://invidious.fdn.fr">
-        <option value="https://invidious.13ad.de">
-        <option value="https://watch.nettohikari.com">
-        <option value="https://yewtu.be">
-        <option value="https://yt.maisputain.ovh">
-        <option value="https://invidious.toot.koeln">
-        <option value="https://invidious.ggc-project.de">
-        <option value="http://kgg2m7yk5aybusll.onion">
-        <option value="http://axqzx4s6s54s32yentfqojs3x5i7faxza6xo3ehd4bzzsg2ii4fv2iid.onion">
-        <option value="http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion">
-        <option value="http://qklhadlycap4cnod.onion">
-        <option value="http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion">
-        <option value="http://mfqczy4mysscub2s.onion">
-      </datalist>
-      <h1>Bibliogram Instance</h1>
-      <input id="bibliogram-instance" list="bibliogram-instance-list" type="url" placeholder="https://bibliogram.art">
-      <datalist id="bibliogram-instance-list">
-        <option value="https://bibliogram.art">
-        <option value="https://bibliogram.snopyta.org">
-        <option value="https://bibliogram.pussthecat.org">
-        <option value="https://bibliogram.nixnet.services">
-        <option value="https://bibliogram.hamster.dance">
-        <option value="https://insta.maisputain.ovh">
-        <option value="https://bibliogram.ggc-project.de">
-      </datalist>
-      <h1>OpenStreetMap Instance</h1>
-      <input id="osm-instance" list="osm-instance-list" type="url" placeholder="https://openstreetmap.org">
-      <datalist id="osm-instance-list">
-        <option value="https://openstreetmap.org">
-      </datalist>
-    </section>
+    </sections>
   </div>
 
   <div id="advanced" class="tabcontent">
-    <section class="options settings_block">
-      <div class="onoffswitch switch" aria-label="Always proxy videos through Invidious">
-        <h1>Always proxy videos through Invidious</h1>
-        <input aria-hidden="true" id="always-proxy" type="checkbox" checked>&nbsp;
-        <label for="always-proxy" class="checkbox-label">
-        </label>
-      </div>
+    <section class="settings-block">
+      <table class="option" aria-label="Always proxy videos through Invidious">
+        <tbody>
+          <tr>
+            <td>
+              <h1 data-localize="__MSG_alwaysProxy__">Always proxy videos through Invidious</h1>
+            </td>
+            <td>
+              <input aria-hidden="true" id="always-proxy" type="checkbox" checked>&nbsp;
+              <label for="always-proxy" class="checkbox-label">
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </section>
-
-    <section class="options settings_block">
-      <div class="onoffswitch switch" aria-label="Only redirect embedded video to Invidious">
-        <h1>Only redirect embedded video to Invidious</h1>
-        <input aria-hidden="true" id="only-embed" type="checkbox" checked>&nbsp;
-        <label for="only-embed" class="checkbox-label">
-        </label>
-      </div>
+    <section class="settings-block">
+      <table class="option" aria-label="Only redirect embedded video to Invidious">
+        <tbody>
+          <tr>
+            <td>
+              <h1 data-localize="__MSG_onlyEmbeddedVideo__">Only redirect embedded video to Invidious</h1>
+            </td>
+            <td>
+              <input aria-hidden="true" id="only-embed" type="checkbox" checked>&nbsp;
+              <label for="only-embed" class="checkbox-label">
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </section>
-
-    <section class="options settings_block">
-      <h1>Invidious Video Quality</h1>
+    <section class="settings-block">
+      <h1 data-localize="__MSG_videoQuality__">Invidious Video Quality</h1>
       <select id="video-quality">
         <option value="">Default</option>
         <option value="hd720">720p</option>
@@ -137,48 +149,138 @@
         <option value="dash">DASH (Dynamic Adaptive Streaming over HTTP)</option>
       </select>
     </section>
-
-    <section class="options settings_block">
-      <div class="onoffswitch switch" aria-label="Invidious dark mode aways on">
-        <h1>Invidious dark mode always on</h1>
-        <input aria-hidden="true" id="invidious-dark-mode" type="checkbox" checked>&nbsp;
-        <label for="invidious-dark-mode" class="checkbox-label">
-        </label>
-      </div>
+    <section class="settings-block">
+      <table class="option" aria-label="Invidious dark mode aways on">
+        <tbody>
+          <tr>
+            <td>
+              <h1 data-localize="__MSG_invidiousDarkMode__">Invidious dark mode always on</h1>
+            </td>
+            <td>
+              <input aria-hidden="true" id="invidious-dark-mode" type="checkbox" checked>&nbsp;
+              <label for="invidious-dark-mode" class="checkbox-label">
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </section>
-
-    <section class="options settings_block">
-      <div class="onoffswitch switch" aria-label="Persist Invidious preferences">
-        <h1>Persist Invidious preferences (as cookie)</h1>
-        <input aria-hidden="true" id="persist-invidious-prefs" type="checkbox" checked>&nbsp;
-        <label for="persist-invidious-prefs" class="checkbox-label">
-        </label>
-      </div>
+    <section class="settings-block">
+      <h1 data-localize="__MSG_invidiousVolume__">Invidious Volume</h1>
+      <input id="invidious-volume" name="invidious-volume" type="range" min="0" max="100" step="1">
     </section>
-
-    <section class="options settings_block">
-      <div class="onoffswitch switch" aria-label="Proactively remove Twitter service worker">
-        <h1>Proactively remove Twitter service worker</h1>
-        <input aria-hidden="true" id="remove-twitter-sw" type="checkbox" checked>&nbsp;
-        <label for="remove-twitter-sw" class="checkbox-label">
-        </label>
-      </div>
+    <section class="settings-block">
+      <h1 data-localize="__MSG_invidiousPlayerStyle__">Invidious Player Style</h1>
+      <select id="invidious-player-style">
+        <option value="invidious">Invidious</option>
+        <option value="youtube">YouTube</option>
+      </select>
+    </section>
+    <section class="settings-block">
+      <h1 data-localize="__MSG_invidiousSubtitles__">Invidious Subtitles - language codes (comma-separated)</h1>
+      <input id="invidious-subtitles" name="invidious-subtitles" type="text">
+    </section>
+    <section class="settings-block">
+      <table class="option" aria-label="Invidious automatically play video on load">
+        <tbody>
+          <tr>
+            <td>
+              <h1 data-localize="__MSG_invidiousAutoplay__">Invidious automatically play video on load</h1>
+            </td>
+            <td>
+              <input aria-hidden="true" id="invidious-autoplay" type="checkbox" checked>&nbsp;
+              <label for="invidious-autoplay" class="checkbox-label">
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="settings-block">
+      <table class="option" aria-label="Persist Invidious preferences">
+        <tbody>
+          <tr>
+            <td>
+              <h1 data-localize="__MSG_persistInvidiousPrefs__">Persist Invidious preferences (as cookie)</h1>
+            </td>
+            <td>
+              <input aria-hidden="true" id="persist-invidious-prefs" type="checkbox" checked>&nbsp;
+              <label for="persist-invidious-prefs" class="checkbox-label">
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="settings-block">
+      <table class="option" aria-label="Proactively remove Twitter service worker">
+        <tbody>
+          <tr>
+            <td>
+              <h1 data-localize="__MSG_removeTwitterSW__">Proactively remove Twitter service worker</h1>
+            </td>
+            <td>
+              <input aria-hidden="true" id="remove-twitter-sw" type="checkbox" checked>&nbsp;
+              <label for="remove-twitter-sw" class="checkbox-label">
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   </div>
 
-  <div id="whitelist" class="tabcontent">
-    <section class="options settings_block">
-      <h1>Whitelisted Sites</h1>
-      <div class="whitelist">
-        <input id="new-whitelist-item" type="text" placeholder="URL (RegExp accepted)">
-        <button id="add-to-whitelist">Add to Whitelist</button>
-      </div>
+  <div id="exceptions" class="tabcontent">
+    <section class="settings-block" data-localize="__MSG_exceptionsDescription__">
+      <p>
+        Enter a URL or Regular Expression to be excluded from redirects.
+      </p>
+      <p>
+        All requests for or initiating from a URL that matches your exception
+        will be excluded from redirects.
+      </p>
+      <p>
+        <b>Note -</b> Supports JavaScript regular expressions, excluding
+        the enclosing forward slashes.
+      </p>
     </section>
-    <ul id="whitelist-items"></ul>
+    <section class="settings-block">
+      <table class="exceptions option">
+        <tbody>
+          <tr>
+            <td>
+              <h1 data-localize="__MSG_addException__">Add Exception</h1>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input id="new-exceptions-item" type="text" placeholder="URL or RegExp">
+            </td>
+            <td>
+              <input type="radio" id="url" name="type" value="URL" checked>
+              <label class="radio" for="url">URL</label>
+              <input type="radio" id="regExp" name="type" value="RegExp">
+              <label class="radio" for="regExp">RegExp</label>
+            </td>
+            <td>
+              <button id="add-to-exceptions">
+                <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'>
+                  <line x1='256' y1='112' x2='256' y2='400'
+                    style='fill:none;stroke:#FFF;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px' />
+                  <line x1='400' y1='256' x2='112' y2='256'
+                    style='fill:none;stroke:#FFF;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px' />
+                </svg>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <ul id="exceptions-items"></ul>
   </div>
 
   <script src="./options.js"></script>
-
+  <script src="../../assets/javascript/localise.js"></script>
 </body>
 
 </html>

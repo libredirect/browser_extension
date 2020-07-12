@@ -5,17 +5,17 @@ const nitterDefault = 'https://nitter.net';
 let disableNitter;
 let nitterInstance;
 let redirectBypassFlag;
-let whitelist;
+let exceptions;
 
 window.browser = window.browser || window.chrome;
 
-function isNotWhitelisted(url) {
-  return !whitelist.some(regex => (regex.test(url.href)));
+function isNotException(url) {
+  return !exceptions.some(regex => (regex.test(url.href)));
 }
 
 function shouldRedirect(url) {
   return !redirectBypassFlag &&
-    isNotWhitelisted(url) &&
+    isNotException(url) &&
     !disableNitter &&
     url.host !== nitterInstance &&
     !url.pathname.includes('/home');
@@ -32,7 +32,13 @@ function redirectTwitter(url) {
 }
 
 browser.storage.sync.get(
-  ['nitterInstance', 'disableNitter', 'removeTwitterSW', 'redirectBypassFlag'],
+  [
+    'nitterInstance',
+    'disableNitter',
+    'removeTwitterSW',
+    'redirectBypassFlag',
+    'exceptions'
+  ],
   (result) => {
     redirectBypassFlag = result.redirectBypassFlag;
     browser.storage.sync.set({
@@ -41,8 +47,8 @@ browser.storage.sync.get(
     if (!result.removeTwitterSW) {
       disableNitter = result.disableNitter;
       nitterInstance = result.nitterInstance || nitterDefault;
-      whitelist = result.whitelist ? result.whitelist.map(e => {
-        return new RegExp(e.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
+      exceptions = result.exceptions ? result.exceptions.map(e => {
+        return new RegExp(e);
       }) : [];
       navigator.serviceWorker.getRegistrations().then(registrations => {
         for (let registration of registrations) {

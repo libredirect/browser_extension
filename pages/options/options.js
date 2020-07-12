@@ -1,5 +1,55 @@
 'use strict';
 
+const nitterInstances = [
+  'https://nitter.net',
+  'https://nitter.snopyta.org',
+  'https://nitter.42l.fr',
+  'https://nitter.nixnet.services',
+  'https://nitter.13ad.de',
+  'https://nitter.pussthecat.org',
+  'https://nitter.mastodont.cat',
+  'https://nitter.dark.fail',
+  'https://nitter.tedomum.net',
+  'https://t.maisputain.ovh',
+  'http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion',
+  'http://nitter.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd.onion'
+];
+const invidiousInstances = [
+  'https://invidio.us',
+  'https://invidious.snopyta.org',
+  'https://invidious.fdn.fr',
+  'https://invidious.13ad.de',
+  'https://watch.nettohikari.com',
+  'https://yewtu.be',
+  'https://yt.maisputain.ovh',
+  'https://invidious.toot.koeln',
+  'https://invidious.ggc-project.de',
+  'http://kgg2m7yk5aybusll.onion',
+  'http://axqzx4s6s54s32yentfqojs3x5i7faxza6xo3ehd4bzzsg2ii4fv2iid.onion',
+  'http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion',
+  'http://qklhadlycap4cnod.onion',
+  'http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion',
+  'http://mfqczy4mysscub2s.onion'
+];
+const bibliogramInstances = [
+  'https://bibliogram.art',
+  'https://bibliogram.snopyta.org',
+  'https://bibliogram.pussthecat.org',
+  'https://bibliogram.nixnet.services',
+  'https://bibliogram.hamster.dance',
+  'https://insta.maisputain.ovh',
+  'https://bibliogram.ggc-project.de'
+];
+const osmInstances = [
+  'https://openstreetmap.org'
+];
+const autocompletes = [
+  { id: 'nitter-instance', instances: nitterInstances },
+  { id: 'invidious-instance', instances: invidiousInstances },
+  { id: 'bibliogram-instance', instances: bibliogramInstances },
+  { id: 'osm-instance', instances: osmInstances }
+];
+
 let nitterInstance = document.getElementById('nitter-instance');
 let invidiousInstance = document.getElementById('invidious-instance');
 let bibliogramInstance = document.getElementById('bibliogram-instance');
@@ -14,24 +64,35 @@ let videoQuality = document.getElementById('video-quality');
 let removeTwitterSW = document.getElementById('remove-twitter-sw');
 let invidiousDarkMode = document.getElementById('invidious-dark-mode');
 let persistInvidiousPrefs = document.getElementById('persist-invidious-prefs');
-let whitelist;
+let invidiousVolume = document.getElementById('invidious-volume');
+let invidiousPlayerStyle = document.getElementById('invidious-player-style');
+let invidiousSubtitles = document.getElementById('invidious-subtitles');
+let invidiousAutoplay = document.getElementById('invidious-autoplay');
+let exceptions;
 
 window.browser = window.browser || window.chrome;
 
-function prependWhitelistItem(item, index) {
+function prependExceptionsItem(item, index) {
   const li = document.createElement('li');
   li.appendChild(document.createTextNode(item.toString()));
   const button = document.createElement('button');
-  button.appendChild(document.createTextNode('X'));
-  button.addEventListener('click', () => {
-    li.remove();
-    whitelist.splice(index, 1);
-    browser.storage.sync.set({
-      whitelist: whitelist
-    });
-  });
   li.appendChild(button);
-  document.getElementById('whitelist-items').prepend(li);
+  document.getElementById('exceptions-items').prepend(li);
+  const svg =
+    `<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 512 512'>
+      <line x1='368' y1='368' x2='144' y2='144'
+        style='fill:none;stroke:#FFF;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px' />
+      <line x1='368' y1='144' x2='144' y2='368'
+        style='fill:none;stroke:#FFF;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px' />
+    </svg>`;
+  button.innerHTML = svg;
+  button.addEventListener('click', () => {
+    exceptions.splice(index, 1);
+    browser.storage.sync.set({
+      exceptions: exceptions
+    });
+    li.remove();
+  });
 }
 
 browser.storage.sync.get(
@@ -48,9 +109,13 @@ browser.storage.sync.get(
     'onlyEmbeddedVideo',
     'videoQuality',
     'removeTwitterSW',
-    'whitelist',
     'invidiousDarkMode',
-    'persistInvidiousPrefs'
+    'persistInvidiousPrefs',
+    'invidiousVolume',
+    'invidiousPlayerStyle',
+    'invidiousSubtitles',
+    'invidiousAutoplay',
+    'exceptions'
   ],
   result => {
     nitterInstance.value = result.nitterInstance || '';
@@ -67,8 +132,12 @@ browser.storage.sync.get(
     removeTwitterSW.checked = !result.removeTwitterSW;
     invidiousDarkMode.checked = result.invidiousDarkMode;
     persistInvidiousPrefs.checked = result.persistInvidiousPrefs;
-    whitelist = result.whitelist || [];
-    whitelist.forEach(prependWhitelistItem);
+    exceptions = result.exceptions || [];
+    exceptions.forEach(prependExceptionsItem);
+    invidiousVolume.value = result.invidiousVolume;
+    invidiousPlayerStyle.value = result.invidiousPlayerStyle;
+    invidiousSubtitles.value = result.invidiousSubtitles || '';
+    invidiousAutoplay.checked = !result.invidiousAutoplay;
   }
 );
 
@@ -92,22 +161,27 @@ document.getElementById('general-tab').addEventListener(
 document.getElementById('advanced-tab').addEventListener(
   'click', openTab.bind(null, 'advanced')
 );
-document.getElementById('whitelist-tab').addEventListener(
-  'click', openTab.bind(null, 'whitelist')
+document.getElementById('exceptions-tab').addEventListener(
+  'click', openTab.bind(null, 'exceptions')
 );
 
 document.getElementById('general-tab').click();
 
-function addToWhitelist() {
-  const input = document.getElementById('new-whitelist-item');
+function addToExceptions() {
+  const input = document.getElementById('new-exceptions-item');
+  const type = document.querySelector('input[name="type"]:checked').value;
   if (input.value) {
     try {
+      let value = input.value;
       new RegExp(input.value);
-      const index = whitelist.push(input.value);
-      prependWhitelistItem(input.value, index);
+      if (type === 'URL') {
+        value = value.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      }
+      exceptions.push(value);
       browser.storage.sync.set({
-        whitelist: whitelist
+        exceptions: exceptions
       });
+      prependExceptionsItem(value, exceptions.indexOf(value));
       input.value = '';
     } catch (error) {
       input.setCustomValidity('Invalid RegExp');
@@ -117,8 +191,8 @@ function addToWhitelist() {
   }
 }
 
-document.getElementById('add-to-whitelist').addEventListener(
-  'click', addToWhitelist
+document.getElementById('add-to-exceptions').addEventListener(
+  'click', addToExceptions
 );
 
 function debounce(func, wait, immediate) {
@@ -231,3 +305,112 @@ invidiousDarkMode.addEventListener('change', event => {
 persistInvidiousPrefs.addEventListener('change', event => {
   browser.storage.sync.set({ persistInvidiousPrefs: event.target.checked });
 });
+
+let invidiousVolumeChange = debounce(() => {
+  if (invidiousInstance.checkValidity()) {
+    browser.storage.sync.set({
+      invidiousVolume: invidiousVolume.value
+    });
+  }
+}, 500);
+invidiousVolume.addEventListener('input', invidiousVolumeChange);
+
+invidiousPlayerStyle.addEventListener('change', event => {
+  browser.storage.sync.set({
+    invidiousPlayerStyle: event.target.options[invidiousPlayerStyle.selectedIndex].value
+  });
+});
+
+let invidiousSubtitlesChange = debounce(() => {
+  if (invidiousInstance.checkValidity()) {
+    browser.storage.sync.set({
+      invidiousSubtitles: invidiousSubtitles.value
+    });
+  }
+}, 500);
+invidiousSubtitles.addEventListener('input', invidiousSubtitlesChange);
+
+invidiousAutoplay.addEventListener('change', event => {
+  browser.storage.sync.set({ invidiousAutoplay: !event.target.checked });
+});
+
+
+function autocomplete(input, list) {
+  let currentFocus;
+  input.addEventListener("focus", (e) => {
+    showOptions(e);
+  });
+  input.addEventListener("input", (e) => {
+    const val = e.target.value;
+    if (!val) { return false; }
+    currentFocus = -1;
+    showOptions(e);
+  });
+  input.addEventListener("keydown", function (e) {
+    let x = document.getElementById(this.id + "autocomplete-list");
+    if (x) x = x.getElementsByTagName("div");
+    if (e.keyCode == 40) {
+      currentFocus++;
+      addActive(x);
+    } else if (e.keyCode == 38) {
+      currentFocus--;
+      addActive(x);
+    } else if (e.keyCode == 13) {
+      e.preventDefault();
+      if (currentFocus > -1) {
+        if (x) x[currentFocus].click();
+      }
+    }
+  });
+  function showOptions(e) {
+    let a, b, i, val = e.target.value;
+    closeAllLists();
+    a = document.createElement("div");
+    a.setAttribute("id", e.target.id + "autocomplete-list");
+    a.setAttribute("class", "autocomplete-items");
+    e.target.parentNode.appendChild(a);
+    for (i = 0; i < list.length; i++) {
+      if (list[i].toLowerCase().indexOf(val.toLowerCase()) > -1) {
+        b = document.createElement("div");
+        b.innerHTML = "<strong>" + list[i].substr(0, val.length) + "</strong>";
+        b.innerHTML += list[i].substr(val.length);
+        b.innerHTML += "<input type='hidden' value='" + list[i] + "'>";
+        b.addEventListener("click", function (e) {
+          input.value = e.target.getElementsByTagName("input")[0].value;
+          input.dispatchEvent(new Event('input'));
+          closeAllLists();
+        });
+        a.appendChild(b);
+      }
+    }
+  }
+  function addActive(x) {
+    if (!x) return false;
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    for (let i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    let x = document.getElementsByClassName("autocomplete-items");
+    for (let i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != input) {
+        x[i].parentNode.removeChild(x[i]);
+      }
+    }
+  }
+  document.addEventListener("click", (e) => {
+    if (!autocompletes.find(element => element.id === e.target.id)) {
+      closeAllLists(e.target);
+    }
+  });
+}
+
+autocompletes.forEach((value) => {
+  autocomplete(document.getElementById(value.id), value.instances);
+})

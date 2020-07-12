@@ -1,7 +1,7 @@
 {
-  "name": "Privacy Redirect",
-  "description": "Redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives.",
-  "version": "1.1.34",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "1.1.35",
   "manifest_version": 2,
   "background": {
     "scripts": [
@@ -9,11 +9,12 @@
     ],
     "persistent": true
   },
+  "default_locale": "en",
   "icons": {
-    "16": "images/icon16.png",
-    "32": "images/icon32.png",
-    "48": "images/icon48.png",
-    "128": "images/icon128.png"
+    "16": "assets/images/icon16.png",
+    "32": "assets/images/icon32.png",
+    "48": "assets/images/icon48.png",
+    "128": "assets/images/icon128.png"
   },
   "permissions": [
     "storage",
@@ -25,10 +26,10 @@
     "default_title": "Privacy Redirect",
     "default_popup": "pages/popup/popup.html",
     "default_icon": {
-      "16": "images/icon16.png",
-      "32": "images/icon32.png",
-      "48": "images/icon48.png",
-      "128": "images/icon128.png"
+      "16": "assets/images/icon16.png",
+      "32": "assets/images/icon32.png",
+      "48": "assets/images/icon48.png",
+      "128": "assets/images/icon128.png"
     }
   },
   "content_scripts": [
@@ -41,7 +42,7 @@
         "*://video.twimg.com/*"
       ],
       "js": [
-        "assets/remove-twitter-sw.js"
+        "assets/javascript/remove-twitter-sw.js"
       ],
       "run_at": "document_start"
     },
@@ -64,7 +65,7 @@
         "*://mfqczy4mysscub2s.onio/*n"
       ],
       "js": [
-        "assets/persist-invidious-prefs.js"
+        "assets/javascript/persist-invidious-prefs.js"
       ],
       "run_at": "document_start"
     }

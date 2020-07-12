@@ -85,7 +85,11 @@ let alwaysProxy;
 let onlyEmbeddedVideo;
 let videoQuality;
 let invidiousDarkMode;
-let whitelist;
+let invidiousVolume;
+let invidiousPlayerStyle;
+let invidiousSubtitles;
+let invidiousAutoplay;
+let exceptions;
 
 window.browser = window.browser || window.chrome;
 
@@ -103,7 +107,11 @@ browser.storage.sync.get(
     'onlyEmbeddedVideo',
     'videoQuality',
     'invidiousDarkMode',
-    'whitelist'
+    'invidiousVolume',
+    'invidiousPlayerStyle',
+    'invidiousSubtitles',
+    'invidiousAutoplay',
+    'exceptions'
   ],
   result => {
     disableNitter = result.disableNitter;
@@ -118,9 +126,13 @@ browser.storage.sync.get(
     onlyEmbeddedVideo = result.onlyEmbeddedVideo;
     videoQuality = result.videoQuality;
     invidiousDarkMode = result.invidiousDarkMode;
-    whitelist = result.whitelist ? result.whitelist.map(e => {
-      return new RegExp(e.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
+    exceptions = result.exceptions ? result.exceptions.map(e => {
+      return new RegExp(e);
     }) : [];
+    invidiousVolume = result.invidiousVolume;
+    invidiousPlayerStyle = result.invidiousPlayerStyle;
+    invidiousSubtitles = result.invidiousSubtitles || '';
+    invidiousAutoplay = !result.invidiousAutoplay;
   }
 );
 
@@ -161,9 +173,21 @@ browser.storage.onChanged.addListener(changes => {
   if ('invidiousDarkMode' in changes) {
     invidiousDarkMode = changes.invidiousDarkMode.newValue;
   }
-  if ('whitelist' in changes) {
-    whitelist = changes.whitelist.newValue.map(e => {
-      return new RegExp(e.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
+  if ('invidiousVolume' in changes) {
+    invidiousVolume = changes.invidiousVolume.newValue;
+  }
+  if ('invidiousPlayerStyle' in changes) {
+    invidiousPlayerStyle = changes.invidiousPlayerStyle.newValue;
+  }
+  if ('invidiousSubtitles' in changes) {
+    invidiousSubtitles = changes.invidiousSubtitles.newValue;
+  }
+  if ('invidiousAutoplay' in changes) {
+    invidiousAutoplay = changes.invidiousAutoplay.newValue;
+  }
+  if ('exceptions' in changes) {
+    exceptions = changes.exceptions.newValue.map(e => {
+      return new RegExp(e);
     });
   }
 });
@@ -194,9 +218,9 @@ function addressToLatLng(address, callback) {
   xmlhttp.send();
 }
 
-function isWhitelisted(url, initiator) {
-  return whitelist.some(regex => (regex.test(url.href))) ||
-    (initiator && whitelist.some(regex => (regex.test(initiator.href))));
+function isException(url, initiator) {
+  return exceptions.some(regex => (regex.test(url.href))) ||
+    (initiator && exceptions.some(regex => (regex.test(initiator.href))));
 }
 
 function isFirefox() {
@@ -204,7 +228,7 @@ function isFirefox() {
 }
 
 function redirectYouTube(url, initiator, type) {
-  if (disableInvidious || isWhitelisted(url, initiator)) {
+  if (disableInvidious || isException(url, initiator)) {
     return null;
   }
   if (initiator && (initiator.origin === invidiousInstance || youtubeDomains.includes(initiator.host))) {
@@ -231,11 +255,24 @@ function redirectYouTube(url, initiator, type) {
   if (invidiousDarkMode) {
     url.searchParams.append('dark_mode', invidiousDarkMode);
   }
+  if (invidiousVolume) {
+    url.searchParams.append('volume', invidiousVolume);
+  }
+  if (invidiousPlayerStyle) {
+    url.searchParams.append('player_style', invidiousPlayerStyle);
+  }
+  if (invidiousSubtitles) {
+    url.searchParams.append('subtitles', invidiousSubtitles);
+  }
+  if (invidiousAutoplay) {
+    url.searchParams.append('autoplay', invidiousAutoplay);
+  }
+
   return `${invidiousInstance}${url.pathname}${url.search}`;
 }
 
 function redirectTwitter(url, initiator) {
-  if (disableNitter || isWhitelisted(url, initiator)) {
+  if (disableNitter || isException(url, initiator)) {
     return null;
   }
   if (url.pathname.includes('/home')) {
@@ -259,7 +296,7 @@ function redirectTwitter(url, initiator) {
 }
 
 function redirectInstagram(url, initiator, type) {
-  if (disableBibliogram || isWhitelisted(url, initiator)) {
+  if (disableBibliogram || isException(url, initiator)) {
     return null;
   }
   // Do not redirect Bibliogram view on Instagram links
@@ -279,7 +316,7 @@ function redirectInstagram(url, initiator, type) {
 }
 
 function redirectGoogleMaps(url, initiator) {
-  if (disableOsm || isWhitelisted(url, initiator)) {
+  if (disableOsm || isException(url, initiator)) {
     return null;
   }
   let redirect;
@@ -363,10 +400,10 @@ browser.webRequest.onBeforeRequest.addListener(
   details => {
     const url = new URL(details.url);
     let initiator;
-    if (details.initiator) {
-      initiator = new URL(details.initiator);
-    } else if (details.originUrl) {
+    if (details.originUrl) {
       initiator = new URL(details.originUrl);
+    } else if (details.initiator) {
+      initiator = new URL(details.initiator);
     }
     let redirect;
     if (youtubeDomains.includes(url.host)) {
@@ -406,6 +443,20 @@ browser.runtime.onInstalled.addListener(
       browser.storage.sync.set({
         bibliogramInstance: bibliogramInstances[~~(bibliogramInstances.length * Math.random())]
       });
+    } else if (details.reason === 'update') {
+      browser.storage.sync.get(['whitelist', 'exceptions'],
+        result => {
+          if (result.whitelist) {
+            let whitelist = result.whitelist.map(
+              e => e.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+            );
+            browser.storage.sync.set({
+              exceptions: result.exceptions.concat(whitelist),
+              whitelist: null
+            });
+          }
+        }
+      );
     }
   }
 );

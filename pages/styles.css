@@ -75,7 +75,7 @@ header .version {
 
 h1 {
   font-size: 14px;
-  margin: var(--space) auto;
+  margin: 7px auto;
 }
 
 i {
@@ -122,7 +122,18 @@ input[type=checkbox] {
   opacity: 0;
 }
 
+input[type=radio] {
+  appearance: radio;
+  -moz-appearance: radio;
+  -webkit-appearance: radio;
+}
+
+input[type=radio]:checked+label {
+  background: transparent;
+}
+
 .checkbox-label {
+  margin-left: 5px;
   background: grey;
   border-radius: 25px;
   color: var(--text-main);
@@ -156,12 +167,12 @@ input:checked+label:after {
   transform: translateX(-100%);
 }
 
-.settings_block {
+.settings-block {
   display: block;
-  padding: 10px 1em 1em 1em;
+  padding: 5px 10px 5px 10px;
 }
 
-.settings_block h1 {
+.settings-block h1 {
   float: left;
 }
 
@@ -243,32 +254,37 @@ input:invalid {
   min-height: 510px;
 }
 
-div.whitelist {
+div.exceptions {
   clear: left;
 }
 
-div.whitelist > input {
+div.exceptions > input {
   width: 240px;
   float: left;
 }
 
-#add-to-whitelist {
-  width: 120px;
+#add-to-exceptions {
   float: right;
   border: var(--active) solid 1px;
   background-color: var(--active);
   color: var(--text-main);
   font-weight: bold;
   cursor: pointer;
-  border-radius: 25px;
+  border-radius: 50%;
+  padding: 1px 1px 0px 1px;
+  margin-right: 5px;
+}
+
+#add-to-exceptions svg {
+  height: 20px;
+  width: 20px;
 }
 
 ul {
   padding: 0;
   list-style-type: none;
   color: var(--text-main);
-  margin-right: 20px;
-  margin-left: 20px;
+  margin: 20px 20px 0 20px;
 }
 
 li {
@@ -276,7 +292,7 @@ li {
   padding: 20px 0px 20px 20px;
 }
 
-#whitelist-items button {
+#exceptions-items button {
   float: right;
   margin-right: -5px;
   border: var(--active) solid 1px;
@@ -285,11 +301,115 @@ li {
   font-weight: bold;
   cursor: pointer;
   border-radius: 50%;
+  padding: 2px 2px 0px 2px;
 }
 
 .button svg {
   height: 18px;
   width: 18px;
+}
+
+.autocomplete {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.autocomplete input {
+  background: url(../assets/images/chevron-down.svg) right no-repeat;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid var(--dark);
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  top: 100%;
+  left: 0;
+  right: 0;
+  overflow: auto;
+  max-height: 175px;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: var(--darker);
+  border-bottom: 1px solid var(--dark);
+}
+
+.autocomplete-items div:hover {
+  background-color: var(--active);
+}
+
+.autocomplete-active {
+  background-color: var(--active);
+  color: var(--lighter);
+}
+
+.option {
+  width: 100%;
+}
+
+.option td {
+  vertical-align: middle;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  margin: 18px 0;
+  width: 100%;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: var(--light);
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: var(--active);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -14px;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: var(--light);
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  background: var(--light);
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+
+input[type=range]::-moz-range-thumb {
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: var(--active);
+  cursor: pointer;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -311,7 +431,6 @@ li {
     color: var(--text-main);
     opacity: 0.7;
   }
-
 }
 
 @media (prefers-color-scheme: light) {
@@ -346,5 +465,9 @@ li {
 
   button.tablinks.active {
     border-bottom: solid 1px var(--lighter);
+  }
+
+  .autocomplete-items div {
+    background-color: var(--light);
   }
 }

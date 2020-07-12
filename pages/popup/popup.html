@@ -11,107 +11,88 @@
 <body class="popup">
   <header>
     <div class="logo-container">
-      <img src="../../images/icon128.png" alt="Privacy Redirect logo">
-      <h1><span class="privacy">Privacy</span><br>Redirect</h1>
+      <img src="../../assets/images/icon128.png" alt="Privacy Redirect logo">
+      <h1><span data-localize="__MSG_privacy__" class="privacy">Privacy</span><br><span
+          data-localize="__MSG_redirect__">Redirect</span></h1>
     </div>
     <div class="version">
       <span>Version:&nbsp;<span id="version"></span></span>
     </div>
   </header>
 
-  <section class="options settings_block">
-    <div class="onoffswitch switch" aria-label="Toggle Nitter redirects">
-      <h1>Nitter Redirects</h1>
-      <input aria-hidden="true" id="disable-nitter" type="checkbox" checked>&nbsp;
-      <label for="disable-nitter" class="checkbox-label">
-      </label>
-    </div>
+  <section class="settings-block">
+    <table class="option" aria-label="Toggle Nitter redirects">
+      <tbody>
+        <tr>
+          <td>
+            <h1 data-localize="__MSG_disableNitter__">Nitter Redirects</h1>
+          </td>
+          <td>
+            <input aria-hidden="true" id="disable-nitter" type="checkbox" checked>&nbsp;
+            <label for="disable-nitter" class="checkbox-label"></label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
-  <section class="options settings_block">
-    <div class="onoffswitch switch" aria-label="Toggle Invidious redirects">
-      <h1>Invidious Redirects</h1>
-      <input aria-hidden="true" id="disable-invidious" type="checkbox" checked>&nbsp;
-      <label for="disable-invidious" class="checkbox-label">
-      </label>
-    </div>
+  <section class="settings-block">
+    <table class="option" aria-label="Toggle Invidious redirects">
+      <tbody>
+        <tr>
+          <td>
+            <h1 data-localize="__MSG_disableInvidious__">Invidious Redirects</h1>
+          </td>
+          <td>
+            <input aria-hidden="true" id="disable-invidious" type="checkbox" checked>&nbsp;
+            <label for="disable-invidious" class="checkbox-label">
+            </label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
-  <section class="options settings_block">
-    <div class="onoffswitch switch" aria-label="Toggle Bibliogram redirects">
-      <h1>Bibliogram Redirects</h1>
-      <input aria-hidden="true" id="disable-bibliogram" type="checkbox" checked>&nbsp;
-      <label for="disable-bibliogram" class="checkbox-label">
-      </label>
-    </div>
+  <section class="settings-block">
+    <table class="option" aria-label="Toggle Bibliogram redirects">
+      <tbody>
+        <tr>
+          <td>
+            <h1 data-localize="__MSG_disableBibliogram__">Bibliogram Redirects</h1>
+          </td>
+          <td>
+            <input aria-hidden="true" id="disable-bibliogram" type="checkbox" checked>&nbsp;
+            <label for="disable-bibliogram" class="checkbox-label">
+            </label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
-  <section class="options settings_block">
-    <div class="onoffswitch switch" aria-label="Toggle OpenStreetMap redirects">
-      <h1>OpenStreetMap Redirects</h1>
-      <input aria-hidden="true" id="disable-osm" type="checkbox" checked>&nbsp;
-      <label for="disable-osm" class="checkbox-label">
-      </label>
-    </div>
+  <section class="settings-block">
+    <table class="option" aria-label="Toggle OpenStreetMap redirects">
+      <tbody>
+        <tr>
+          <td>
+            <h1 data-localize="__MSG_disableOsm__">OpenStreetMap Redirects</h1>
+          </td>
+          <td>
+            <input aria-hidden="true" id="disable-osm" type="checkbox" checked>&nbsp;
+            <label for="disable-osm" class="checkbox-label">
+            </label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
-  <section class="options settings_block">
-    <h1>Nitter Instance</h1>
-    <input id="nitter-instance" list="nitter-instance-list" type="url" placeholder="https://nitter.net">
-    <datalist id="nitter-instance-list">
-      <option value="https://nitter.net">
-      <option value="https://nitter.snopyta.org">
-      <option value="https://nitter.42l.fr">
-      <option value="https://nitter.nixnet.services">
-      <option value="https://nitter.13ad.de">
-      <option value="https://nitter.pussthecat.org">
-      <option value="https://nitter.mastodont.cat">
-      <option value="https://nitter.dark.fail">
-      <option value="https://nitter.tedomum.net">
-      <option value="https://t.maisputain.ovh">
-      <option value="http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion">
-      <option value="http://nitter.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd.onion">
-    </datalist>
-    <h1>Invidious Instance</h1>
-    <input id="invidious-instance" list="invidious-instances-list" type="url" placeholder="https://invidio.us">
-    <datalist id="invidious-instances-list">
-      <option value="https://invidio.us">
-      <option value="https://invidious.snopyta.org">
-      <option value="https://invidious.fdn.fr">
-      <option value="https://invidious.13ad.de">
-      <option value="https://watch.nettohikari.com">
-      <option value="https://yewtu.be">
-      <option value="https://yt.maisputain.ovh">
-      <option value="https://invidious.toot.koeln">
-      <option value="https://invidious.ggc-project.de">
-      <option value="http://kgg2m7yk5aybusll.onion">
-      <option value="http://axqzx4s6s54s32yentfqojs3x5i7faxza6xo3ehd4bzzsg2ii4fv2iid.onion">
-      <option value="http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion">
-      <option value="http://qklhadlycap4cnod.onion">
-      <option value="http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion">
-      <option value="http://mfqczy4mysscub2s.onion">
-    </datalist>
-    <h1>Bibliogram Instance</h1>
-    <input id="bibliogram-instance" list="bibliogram-instance-list" type="url" placeholder="https://bibliogram.art">
-    <datalist id="bibliogram-instance-list">
-      <option value="https://bibliogram.art">
-      <option value="https://bibliogram.snopyta.org">
-      <option value="https://bibliogram.pussthecat.org">
-      <option value="https://bibliogram.nixnet.services">
-      <option value="https://bibliogram.hamster.dance">
-      <option value="https://insta.maisputain.ovh">
-      <option value="https://bibliogram.ggc-project.de">
-    </datalist>
-    <h1>OpenStreetMap Instance</h1>
-    <input id="osm-instance" list="osm-instance-list" type="url" placeholder="https://openstreetmap.org">
-    <datalist id="osm-instance-list">
-      <option value="https://openstreetmap.org">
-    </datalist>
+  <section class="settings-block">
   </section>
 
   <footer>
     <a class="button" id="more-options">
-      <span>More Options&nbsp;</span>
+      <span data-localize="__MSG_moreOptions__">More Options&nbsp;</span>
       <svg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'>
         <path d='M384,224V408a40,40,0,0,1-40,40H104a40,40,0,0,1-40-40V168a40,40,0,0,1,40-40H271.48'
           style='fill:none;stroke:inherit;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px' />
@@ -124,7 +105,7 @@
   </footer>
 
   <script src="./popup.js"></script>
-
+  <script src="../../assets/javascript/localise.js"></script>
 </body>
 
 </html>

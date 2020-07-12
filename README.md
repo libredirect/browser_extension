@@ -1,9 +1,8 @@
-# ![privacy-redirect](images/icon32.png) Privacy Redirect
+# ![privacy-redirect](assets/images/logo-small.png)
 
-[![Donate](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/SimonBrazell/donate) [![Buy me a coffee](images/buy-me-a-coffee.png)](https://www.buymeacoffee.com/SimonBrazell)
+[![Donate](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/SimonBrazell/donate) [![Buy me a coffee](assets/images/buy-me-a-coffee.png)](https://www.buymeacoffee.com/SimonBrazell)
 
--  [Chrome Extension](https://chrome.google.com/webstore/detail/privacy-redirect/pmcmeagblkinmogikoikkdjiligflglb)
--  [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/privacy-redirect/)
+[![Firefox Add-on](assets/images/amo-badge.png)](https://addons.mozilla.org/en-US/firefox/addon/privacy-redirect/) [![Chrome Extension](assets/images/chrome-badge.png)](https://chrome.google.com/webstore/detail/privacy-redirect/pmcmeagblkinmogikoikkdjiligflglb)
 
 A web extension that redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/omarroth/invidious), [Bibliogram](https://github.com/cloudrac3r/bibliogram) & [OpenStreetMap](https://www.openstreetmap.org/).
 
