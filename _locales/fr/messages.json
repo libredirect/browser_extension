@@ -88,11 +88,11 @@
     "description": "Boutton des options supplémentaires (pop-up)."
   },
   "privacy": {
-    "message": "Vie privée",
+    "message": "Privacy",
     "description": "Titre du module complémentaire - Vie privée (pop-up)."
   },
   "redirect": {
-    "message": "Redirection",
+    "message": "Redirect",
     "description": "Titre du module complémentaire - Redirection (pop-up)."
   }
 }
