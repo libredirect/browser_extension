@@ -23,9 +23,10 @@ Le code de cette extension Web est disponible sur <a href="https://github.com/Si
 <b>★ Faire un don: 👨🏻‍💻</b>
 Si vous aimez ce module complémentaire et si vous avez une bonne situation financière, pensez à <a href="https://www.buymeacoffee.com/SimonBrazell">m'acheter un café</a> ☕️ pour montrer que vous appréciez et soutenez la poursuite du projet.
 
-<b>★ Nouveautés de cette version (`VERSION_NUMBER`) 🆕</b>
+<b>★ What's New in This Version (v1.1.36) 🆕</b>
 <ul>
-<li>`VERSION_DESCRIPTION`</li>
+  <li>Added Russian language translation.</li>
+  <li>Fix Invidious autoplay parameter.</li>
 </ul>
 
 <b>★ Autorisations: ℹ️</b>

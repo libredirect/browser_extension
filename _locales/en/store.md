@@ -23,9 +23,10 @@ The code for this web extension is available on <a href='https://github.com/Simo
 <b>★ Donate: 👨🏻‍💻</b>
 If you like this extension and are financially able please consider <a href='https://www.buymeacoffee.com/SimonBrazell'>buying me a coffee</a> ☕️ to show your appreciation and support the continuation of the project.
 
-<b>★ What's New in This Version (`VERSION_NUMBER`) 🆕</b>
+<b>★ What's New in This Version (v1.1.36) 🆕</b>
 <ul>
-  <li>`VERSION_DESCRIPTION`</li>
+  <li>Added Russian language translation.</li>
+  <li>Fix Invidious autoplay parameter.</li>
 </ul>
 
 <b>★ Permissions: ℹ️</b>
