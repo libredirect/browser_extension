@@ -1,11 +1,11 @@
 # Extension Store (AMO & Chrome Web Store) Listing
 
 ## Summary:
-
+```
 A simple web extension that redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives.
-
+```
 ## Description:
-
+```
 Redirects Twitter, YouTube, Instagram, & Google Maps requests to privacy friendly alternatives - <a href='https://nitter.net/'>Nitter</a>, <a href='https://invidio.us/'>Invidious</a>, <a href='https://bibliogram.art/'>Bibliogram</a>, & <a href='https://www.openstreetmap.org'>OpenStreetMap</a>.
 
 Allows for setting custom instances, toggling all redirects on/off and more.
@@ -33,3 +33,4 @@ If you like this extension and are financially able please consider <a href='htt
 <ul>
   <li>Please note, access to all website navigation events ( all URLs), not just the target domains, is required toallow embedded video redirects to occur. At this time I know of no other way to achieve iframe redirects, happy to hear some suggestions on this though 🙂</li>
 </ul>
+```
