@@ -2,15 +2,15 @@
 
 ## Summary:
 ```
-A simple web extension that redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives.
+Простое расширение для браузера, которое перенаправляет запросы к Twitter, YouTube, Instagram & Google Maps на альтернативные сервисы, дружелюбные к приватности.
 ```
 ## Description:
 ```
-Redirects Twitter, YouTube, Instagram, & Google Maps requests to privacy friendly alternatives - <a href='https://nitter.net/'>Nitter</a>, <a href='https://invidio.us/'>Invidious</a>, <a href='https://bibliogram.art/'>Bibliogram</a>, & <a href='https://www.openstreetmap.org'>OpenStreetMap</a>.
+Перенаправляет запросы к Twitter, YouTube, Instagram, & Google Maps на альтернативные сервисы, дружелюбные к приватности - <a href='https://nitter.net/'>Nitter</a>, <a href='https://invidio.us/'>Invidious</a>, <a href='https://bibliogram.art/'>Bibliogram</a>, & <a href='https://www.openstreetmap.org'>OpenStreetMap</a>.
 
-Allows for setting custom instances, toggling all redirects on/off and more.
+Позволяет настраивать пользовательские сервисы, включать/выключать все перенаправления и т.д.
 
-<b>★ More Info: ℹ️</b>
+<b>★ Дополнительная информация: </b>
 <ul>
   <li><a href='https://github.com/zedeus/nitter#nitter-wip'>Nitter</a></li>
   <li><a href='https://github.com/omarroth/invidious#invidious'>Invidious</a></li>
@@ -18,19 +18,19 @@ Allows for setting custom instances, toggling all redirects on/off and more.
   <li><a href='https://wiki.openstreetmap.org/'>OpenStreetMap</a></li>
 </ul>
 
-The code for this web extension is available on <a href='https://github.com/SimonBrazell/privacy-redirect'>Github</a>.
+Исходный код данного расширения доступен на <a href='https://github.com/SimonBrazell/privacy-redirect'>Github</a>.
 
-<b>★ Donate: 👨🏻‍💻</b>
-If you like this extension and are financially able please consider <a href='https://www.buymeacoffee.com/SimonBrazell'>buying me a coffee</a> ☕️ to show your appreciation and support the continuation of the project.
+<b>★ Пожертвовать: </b>
+Если вам нравится это расширение и вы можете помочь финансово, пожалуйста, <a href='https://www.buymeacoffee.com/SimonBrazell'>купите мне кофе</a>, покажите ваше одобрение и поддержку развития проекта.
 
-<b>★ What's New in This Version (v1.1.36) 🆕</b>
+<b>★ Что нового в этой версии (v1.1.36) </b>
 <ul>
-  <li>Added Russian language translation.</li>
-  <li>Fix Invidious autoplay parameter.</li>
+  <li>Добавлен перевод на русский язык.</li>
+  <li>Исправлен параметр автоматического воспроизведения Invidious.</li>
 </ul>
 
-<b>★ Permissions: ℹ️</b>
+<b>★ Разрешения: </b>
 <ul>
-  <li>Please note, access to all website navigation events ( all URLs), not just the target domains, is required toallow embedded video redirects to occur. At this time I know of no other way to achieve iframe redirects, happy to hear some suggestions on this though 🙂</li>
+  <li>Важно: доступ ко всем сайтам (URL), не только к целевым, требуется для разрешения перенаправления встроенных видео. В данный момент я не знаю, как осуществить перенаправление iframe, буду рад выслушать ваши предложения.</li>
 </ul>
 ```
