@@ -1,12 +1,10 @@
 {
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.1.36",
+  "version": "1.1.37",
   "manifest_version": 2,
   "background": {
-    "scripts": [
-      "background.js"
-    ],
+    "scripts": ["background.js"],
     "persistent": true
   },
   "default_locale": "en",
@@ -16,12 +14,7 @@
     "48": "assets/images/icon48.png",
     "128": "assets/images/icon128.png"
   },
-  "permissions": [
-    "storage",
-    "webRequest",
-    "webRequestBlocking",
-    "<all_urls>"
-  ],
+  "permissions": ["storage", "webRequest", "webRequestBlocking", "<all_urls>"],
   "browser_action": {
     "default_title": "Privacy Redirect",
     "default_popup": "pages/popup/popup.html",
@@ -41,9 +34,7 @@
         "*://pbs.twimg.com/*",
         "*://video.twimg.com/*"
       ],
-      "js": [
-        "assets/javascript/remove-twitter-sw.js"
-      ],
+      "js": ["assets/javascript/remove-twitter-sw.js"],
       "run_at": "document_start"
     },
     {
@@ -64,9 +55,7 @@
         "*://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion/*",
         "*://mfqczy4mysscub2s.onio/*n"
       ],
-      "js": [
-        "assets/javascript/persist-invidious-prefs.js"
-      ],
+      "js": ["assets/javascript/persist-invidious-prefs.js"],
       "run_at": "document_start"
     }
   ],

@@ -1,21 +1,23 @@
-'use strict';
+"use strict";
 
-let disableNitter = document.querySelector('#disable-nitter');
-let disableInvidious = document.querySelector('#disable-invidious');
-let disableBibliogram = document.querySelector('#disable-bibliogram');
-let disableOsm = document.querySelector('#disable-osm');
-let version = document.querySelector('#version');
+let disableNitter = document.querySelector("#disable-nitter");
+let disableInvidious = document.querySelector("#disable-invidious");
+let disableBibliogram = document.querySelector("#disable-bibliogram");
+let disableOsm = document.querySelector("#disable-osm");
+let version = document.querySelector("#version");
 
 window.browser = window.browser || window.chrome;
 
 browser.storage.sync.get(
   [
-    'disableNitter',
-    'disableInvidious',
-    'disableBibliogram',
-    'disableOsm'
+    "disableNitter",
+    "disableInvidious",
+    "disableBibliogram",
+    "disableOsm",
+    "theme",
   ],
-  result => {
+  (result) => {
+    document.body.classList.add(result.theme);
     disableNitter.checked = !result.disableNitter;
     disableInvidious.checked = !result.disableInvidious;
     disableBibliogram.checked = !result.disableBibliogram;
@@ -25,22 +27,22 @@ browser.storage.sync.get(
 
 version.textContent = browser.runtime.getManifest().version;
 
-disableNitter.addEventListener('change', event => {
+disableNitter.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableNitter: !event.target.checked });
 });
 
-disableInvidious.addEventListener('change', event => {
+disableInvidious.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableInvidious: !event.target.checked });
 });
 
-disableBibliogram.addEventListener('change', event => {
+disableBibliogram.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableBibliogram: !event.target.checked });
 });
 
-disableOsm.addEventListener('change', event => {
+disableOsm.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableOsm: !event.target.checked });
 });
 
-document.querySelector('#more-options').addEventListener('click', () => {
+document.querySelector("#more-options").addEventListener("click", () => {
   browser.runtime.openOptionsPage();
 });

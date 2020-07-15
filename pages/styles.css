@@ -1,31 +1,41 @@
-:root {
-  --text-main: #fff;
-  --text-secondary: #000;
-  --dark: #3c4043;
-  --darker: #292a2d;
-  --light: #e3e7ea;
-  --lighter: #fff;
+body {
+  --text: #fff;
+  --bg-main: #3c4043;
+  --bg-secondary: #292a2d;
   --active: #ff5b56;
   --space: 5px;
   --danger: #f04141;
   --danger-light: #f9d0d5;
+  --dark-grey: #767676;
+  --light-grey: #c3c3c3;
+}
+
+body.light-theme {
+  --text: #000;
+  --bg-main: #e3e7ea;
+  --bg-secondary: #fff;
+}
+
+.light-theme.popup,
+.light-theme .popup {
+  background-color: var(--bg-secondary);
 }
 
 body {
-  color: var(--text-secondary);
   margin: 0;
   max-width: 400px;
   margin: auto;
   min-height: 572px;
   font-family: Sans-Serif;
-  background-color: var(--darker);
+  background-color: var(--bg-secondary);
+  color: var(--text);
 }
 
 .popup {
   width: 300px;
   min-height: auto;
   overflow: hidden;
-  background-color: var(--dark);
+  background-color: var(--bg-main);
 }
 
 input {
@@ -35,8 +45,8 @@ input {
 }
 
 header {
-  background-color: var(--lighter);
-  color: var(--text-secondary);
+  background-color: var(--bg-main);
+  color: var(--text);
   display: flex;
   padding: var(--space);
 }
@@ -95,7 +105,7 @@ h3 {
 
 h1,
 h2 {
-  color: var(--text-main);
+  color: var(--text);
 }
 
 footer {
@@ -112,6 +122,9 @@ select {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: var(--space);
+  background-color: var(--bg-main);
+  border-style: inset;
+  color: var(--text);
 }
 
 input[type="url"] {
@@ -136,7 +149,7 @@ input[type="radio"]:checked + label {
   margin-left: 5px;
   background: grey;
   border-radius: 25px;
-  color: var(--text-main);
+  color: var(--text);
   cursor: pointer;
   display: block;
   float: right;
@@ -148,7 +161,7 @@ input[type="radio"]:checked + label {
 }
 
 .checkbox-label:after {
-  background: var(--text-main);
+  background: white;
   border-radius: 90px;
   content: "";
   height: 20px;
@@ -179,8 +192,8 @@ input:checked + label:after {
 
 .button {
   border: var(--active) solid 1px;
-  color: var(--text-main);
-  stroke: var(--text-main);
+  color: var(--text);
+  stroke: var(--text);
   display: block;
   font-size: 12px;
   font-weight: bold;
@@ -199,13 +212,13 @@ input:checked + label:after {
 
 .button:hover {
   background-color: var(--active);
-  color: var(--text-main);
-  stroke: var(--text-main);
+  color: var(--text);
+  stroke: var(--text);
 }
 
 .button:active {
   background-color: var(--active);
-  box-shadow: 0 var(--space) var(--dark);
+  box-shadow: 0 var(--space) var(--bg-main);
   transform: translateY(4px);
 }
 
@@ -221,13 +234,13 @@ input:invalid {
 
 .tab {
   overflow: hidden;
-  background-color: var(--darker);
+  background-color: var(--bg-secondary);
 }
 
 .tab button {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  color: var(--text-main);
+  color: var(--text);
   background-color: inherit;
   float: left;
   border: none;
@@ -235,7 +248,7 @@ input:invalid {
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
-  border: solid 1px var(--dark);
+  border: solid 1px var(--bg-main);
   width: 33.333%;
   font-size: 14px;
 }
@@ -245,13 +258,13 @@ input:invalid {
 }
 
 .tab button.active {
-  background-color: var(--dark);
+  background-color: var(--bg-main);
 }
 
 .tabcontent {
   padding-top: 10px;
   display: none;
-  background-color: var(--dark);
+  background-color: var(--bg-main);
   min-height: 510px;
 }
 
@@ -268,7 +281,7 @@ div.exceptions > input {
   float: right;
   border: var(--active) solid 1px;
   background-color: var(--active);
-  color: var(--text-main);
+  color: var(--text);
   font-weight: bold;
   cursor: pointer;
   border-radius: 50%;
@@ -284,12 +297,12 @@ div.exceptions > input {
 ul {
   padding: 0;
   list-style-type: none;
-  color: var(--text-main);
+  color: var(--text);
   margin: 20px 20px 0 20px;
 }
 
 li {
-  border-bottom: solid 0.5px var(--darker);
+  border-bottom: solid 0.5px var(--bg-secondary);
   padding: 20px 0px 20px 20px;
 }
 
@@ -298,7 +311,7 @@ li {
   margin-right: -5px;
   border: var(--active) solid 1px;
   background-color: var(--active);
-  color: var(--text-main);
+  color: var(--text);
   font-weight: bold;
   cursor: pointer;
   border-radius: 50%;
@@ -322,22 +335,25 @@ li {
 
 .autocomplete-items {
   position: absolute;
-  border: 1px solid var(--dark);
+  border: 1px solid var(--bg-main);
   border-bottom: none;
   border-top: none;
   z-index: 99;
   top: 85%;
   left: 0;
   right: 0;
-  overflow: auto;
+  overflow-y: auto;
   max-height: 175px;
+  color: var(--text);
+  overflow-x: hidden;
+  max-width: 380px;
 }
 
 .autocomplete-items div {
   padding: 10px;
   cursor: pointer;
-  background-color: var(--darker);
-  border-bottom: 1px solid var(--dark);
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--bg-main);
 }
 
 .autocomplete-items div:hover {
@@ -346,7 +362,7 @@ li {
 
 .autocomplete-active {
   background-color: var(--active);
-  color: var(--lighter);
+  color: var(--text);
 }
 
 .option {
@@ -371,15 +387,15 @@ input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 8.4px;
   cursor: pointer;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: var(--light);
+  border-color: var(--dark-grey), var(--light-grey);
+  background: var(--bg-main);
   border-radius: 1.3px;
-  border: 0.2px solid #010101;
+  border: 0.2px inset var(--dark-grey);
 }
 
 input[type="range"]::-webkit-slider-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
+  border-color: var(--active);
+  border: 1px solid var(--dark-grey);
   height: 36px;
   width: 16px;
   border-radius: 3px;
@@ -390,22 +406,22 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 input[type="range"]:focus::-webkit-slider-runnable-track {
-  background: var(--light);
+  background: var(--bg-main);
 }
 
 input[type="range"]::-moz-range-track {
   width: 100%;
   height: 8.4px;
   cursor: pointer;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: var(--light);
+  border-color: var(--dark-grey), var(--light-grey);
+  background: var(--bg-main);
   border-radius: 1.3px;
-  border: 0.2px solid #010101;
+  border: 0.2px inset var(--dark-grey);
 }
 
 input[type="range"]::-moz-range-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #000000;
+  border-color: var(--active);
+  border: 1px solid var(--dark-grey);
   height: 36px;
   width: 16px;
   border-radius: 3px;
@@ -413,73 +429,31 @@ input[type="range"]::-moz-range-thumb {
   cursor: pointer;
 }
 
-@media (prefers-color-scheme: dark) {
-  body.popup,
-  header,
-  h1,
-  input,
-  select,
-  div.tabcontent,
-  button.tablinks.active {
-    background-color: var(--dark);
-    color: var(--text-main);
-  }
+::placeholder {
+  color: var(--text);
+  opacity: 0.7;
+}
 
-  body {
-    background-color: var(--darker);
-  }
-
-  a.button {
-    color: var(--text-main);
-  }
-
-  ::placeholder {
-    color: var(--text-main);
-    opacity: 0.7;
-  }
+*:focus {
+  outline: var(--active) solid 2px;
 }
 
 @media (prefers-color-scheme: light) {
-  body.popup,
-  header,
-  h1,
-  input,
-  select,
-  div.tabcontent,
-  button.tablinks.active,
-  ul {
-    background-color: var(--lighter);
-    color: var(--text-secondary);
-  }
-
   body {
-    background-color: var(--light);
+    --text: #000;
+    --text-secondary: #fff;
+    --bg-main: #e3e7ea;
+    --bg-secondary: #fff;
   }
 
-  a.button {
-    color: var(--text-secondary);
-    stroke: var(--text-secondary);
+  body.dark-theme {
+    --text: #fff;
+    --text-secondary: #000;
+    --bg-main: #3c4043;
+    --bg-secondary: #292a2d;
   }
 
-  button.tablinks {
-    background-color: var(--light);
-    color: var(--text-secondary);
-  }
-
-  ::placeholder {
-    color: var(--text-secondary);
-    opacity: 0.7;
-  }
-
-  .tab button {
-    border-bottom: solid 1px var(--light);
-  }
-
-  button.tablinks.active {
-    border-bottom: solid 1px var(--lighter);
-  }
-
-  .autocomplete-items div {
-    background-color: var(--light);
+  .popup {
+    background-color: var(--bg-secondary);
   }
 }
