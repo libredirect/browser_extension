@@ -21,7 +21,7 @@ Allows for setting custom instances, toggling all redirects on/off and more.
 The code for this web extension is available on <a href='https://github.com/SimonBrazell/privacy-redirect'>Github</a>.
 
 <b>★ Donate: 👨🏻‍💻</b>
-If you like this extension and are financially able please consider <a href='https://www.buymeacoffee.com/SimonBrazell'>buying me a coffee</a> ☕️ to show your appreciation and support the continuation of the project.
+If you like this extension and are financially able please consider <a href='https://www.buymeacoffee.com/SimonBrazell'>buying me a coffee</a> ☕️ ️to show your appreciation and support the continuation of the project.
 
 <b>★ What's New in This Version (v1.1.36) 🆕</b>
 <ul>
@@ -31,6 +31,6 @@ If you like this extension and are financially able please consider <a href='htt
 
 <b>★ Permissions: ℹ️</b>
 <ul>
-  <li>Please note, access to all website navigation events ( all URLs), not just the target domains, is required toallow embedded video redirects to occur. At this time I know of no other way to achieve iframe redirects, happy to hear some suggestions on this though 🙂</li>
+  <li>Please note, access to all website navigation events ( all URLs), not just the target domains, is required to allow embedded video redirects to occur. At this time I know of no other way to achieve iframe redirects, happy to hear some suggestions on this though 🙂</li>
 </ul>
 ```
