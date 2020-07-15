@@ -1,20 +1,20 @@
 :root {
-  --text-main: #FFF;
+  --text-main: #fff;
   --text-secondary: #000;
-  --dark: #3C4043;
-  --darker: #292A2D;
-  --light: #E3E7EA;
-  --lighter: #FFF;
-  --active: #FF5B56;
+  --dark: #3c4043;
+  --darker: #292a2d;
+  --light: #e3e7ea;
+  --lighter: #fff;
+  --active: #ff5b56;
   --space: 5px;
   --danger: #f04141;
-  --danger-light: #F9D0D5;
+  --danger-light: #f9d0d5;
 }
 
 body {
   color: var(--text-secondary);
   margin: 0;
-  width: 400px;
+  max-width: 400px;
   margin: auto;
   min-height: 572px;
   font-family: Sans-Serif;
@@ -45,7 +45,7 @@ header .logo-container {
   width: 100%;
   margin: var(--space) 0 var(--space) 0;
   display: flex;
-  align-items:center;
+  align-items: center;
 }
 
 header .logo-container img {
@@ -106,29 +106,29 @@ footer a.button {
   margin: var(--space);
 }
 
-/* Elements */
-
-input[type=url], input[type=text], select {
+input[type="url"],
+input[type="text"],
+select {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: var(--space);
 }
 
-input[type=url] {
+input[type="url"] {
   padding: 1px 2px;
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   opacity: 0;
 }
 
-input[type=radio] {
+input[type="radio"] {
   appearance: radio;
   -moz-appearance: radio;
   -webkit-appearance: radio;
 }
 
-input[type=radio]:checked+label {
+input[type="radio"]:checked + label {
   background: transparent;
 }
 
@@ -150,19 +150,20 @@ input[type=radio]:checked+label {
 .checkbox-label:after {
   background: var(--text-main);
   border-radius: 90px;
-  content: '';
+  content: "";
   height: 20px;
   left: var(--space);
   position: absolute;
   top: var(--space);
-  transition: 0.3s; /* Acts on transform below */
+  transition: 0.3s;
   width: 20px;
 }
-input:checked+label {
+
+input:checked + label {
   background: var(--active);
 }
-/* position  when active*/
-input:checked+label:after {
+
+input:checked + label:after {
   left: calc(100% - var(--space));
   transform: translateX(-100%);
 }
@@ -325,7 +326,7 @@ li {
   border-bottom: none;
   border-top: none;
   z-index: 99;
-  top: 100%;
+  top: 85%;
   left: 0;
   right: 0;
   overflow: auto;
@@ -356,17 +357,17 @@ li {
   vertical-align: middle;
 }
 
-input[type=range] {
+input[type="range"] {
   -webkit-appearance: none;
   margin: 18px 0;
   width: 100%;
 }
 
-input[type=range]:focus {
+input[type="range"]:focus {
   outline: none;
 }
 
-input[type=range]::-webkit-slider-runnable-track {
+input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
   height: 8.4px;
   cursor: pointer;
@@ -376,7 +377,7 @@ input[type=range]::-webkit-slider-runnable-track {
   border: 0.2px solid #010101;
 }
 
-input[type=range]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
   border: 1px solid #000000;
   height: 36px;
@@ -388,11 +389,11 @@ input[type=range]::-webkit-slider-thumb {
   margin-top: -14px;
 }
 
-input[type=range]:focus::-webkit-slider-runnable-track {
+input[type="range"]:focus::-webkit-slider-runnable-track {
   background: var(--light);
 }
 
-input[type=range]::-moz-range-track {
+input[type="range"]::-moz-range-track {
   width: 100%;
   height: 8.4px;
   cursor: pointer;
@@ -402,7 +403,7 @@ input[type=range]::-moz-range-track {
   border: 0.2px solid #010101;
 }
 
-input[type=range]::-moz-range-thumb {
+input[type="range"]::-moz-range-thumb {
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
   border: 1px solid #000000;
   height: 36px;
@@ -413,8 +414,13 @@ input[type=range]::-moz-range-thumb {
 }
 
 @media (prefers-color-scheme: dark) {
-
-  body.popup, header, h1, input, select, div.tabcontent, button.tablinks.active {
+  body.popup,
+  header,
+  h1,
+  input,
+  select,
+  div.tabcontent,
+  button.tablinks.active {
     background-color: var(--dark);
     color: var(--text-main);
   }
@@ -434,8 +440,14 @@ input[type=range]::-moz-range-thumb {
 }
 
 @media (prefers-color-scheme: light) {
-
-  body.popup, header, h1, input, select, div.tabcontent, button.tablinks.active, ul {
+  body.popup,
+  header,
+  h1,
+  input,
+  select,
+  div.tabcontent,
+  button.tablinks.active,
+  ul {
     background-color: var(--lighter);
     color: var(--text-secondary);
   }
