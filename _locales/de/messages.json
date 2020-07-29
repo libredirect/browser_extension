@@ -56,7 +56,7 @@
     "description": "Label for 'Proactively remove Twitter service worker' option (options)."
   },
   "invidiousDarkMode": {
-    "message": "Dunkler Modus auf Invidious immer anschalten",
+    "message": "Dunklen Modus auf Invidious immer anschalten",
     "description": "Label for 'Invidious dark mode always on' option (options)."
   },
   "persistInvidiousPrefs": {
