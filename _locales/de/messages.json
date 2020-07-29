@@ -88,11 +88,11 @@
     "description": "More Options button (pop-up)."
   },
   "privacy": {
-    "message": "Datenschutz",
+    "message": "Privacy",
     "description": "Extension title - Privacy (pop-up)."
   },
   "redirect": {
-    "message": "Weiterleiten",
+    "message": "Redirect",
     "description": "Extension title - Redirect (pop-up)."
   }
 }
