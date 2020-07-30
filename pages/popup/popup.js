@@ -17,7 +17,7 @@ browser.storage.sync.get(
     "theme",
   ],
   (result) => {
-    document.body.classList.add(result.theme);
+    if (result.theme) document.body.classList.add(result.theme);
     disableNitter.checked = !result.disableNitter;
     disableInvidious.checked = !result.disableInvidious;
     disableBibliogram.checked = !result.disableBibliogram;

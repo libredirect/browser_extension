@@ -75,9 +75,17 @@
     "message": "Ausnahmen",
     "description": "Exceptions tab (options)."
   },
-  "exceptionsDescription": {
-    "message": "<p>Gib eine URL oder einen regulären Ausdruck (Regex) ein, die/der von Weiterleitungen ausgeschlossen werden soll.</p><p>Alle Anfragen für oder ausgehend von einer URL, die auf die Ausnahme zutrifft, werden von Weiterleitungen ausgeschlossen.</p><p><b>Hinweis –</b> Unterstützt reguläre JavaScript-Ausdrücke (Regex), mit Ausnahme der einschließenden Schrägstriche.</p>",
-    "description": "A description of the 'Exceptions' feature (options)."
+  "exceptionsDescriptionP1": {
+    "message": "Gib eine URL oder einen regulären Ausdruck (Regex) ein, die/der von Weiterleitungen ausgeschlossen werden soll.",
+    "description": "A description of the 'Exceptions' feature paragraph 1 (options)."
+  },
+  "exceptionsDescriptionP2": {
+    "message": "Alle Anfragen für oder ausgehend von einer URL, die auf die Ausnahme zutrifft, werden von Weiterleitungen ausgeschlossen.",
+    "description": "A description of the 'Exceptions' feature paragraph 2 (options)."
+  },
+  "exceptionsDescriptionP3": {
+    "message": "Hinweis – Unterstützt reguläre JavaScript-Ausdrücke (Regex), mit Ausnahme der einschließenden Schrägstriche.",
+    "description": "A description of the 'Exceptions' feature paragraph 3 (options)."
   },
   "addException": {
     "message": "Ausnahme hinzufügen",
@@ -94,5 +102,9 @@
   "redirect": {
     "message": "Redirect",
     "description": "Extension title - Redirect (pop-up)."
+  },
+  "version": {
+    "message": "Version",
+    "description": "Version"
   }
 }

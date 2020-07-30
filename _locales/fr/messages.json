@@ -75,8 +75,16 @@
     "message": "Exceptions",
     "description": "Onglet des Exceptions dans les options."
   },
-  "exceptionsDescription": {
-    "message": "<p>Entrez une adresse URL ou une expression régulière qui sera exclue des redirections.</p><p>All requests for or initiating from a URL that matches the exception will be excluded from redirects.</p><p><b>Note -</b> Supports JavaScript regular expressions, excluding the enclosing forward slashes.</p>",
+  "exceptionsDescriptionP1": {
+    "message": "Entrez une adresse URL ou une expression régulière qui sera exclue des redirections.",
+    "description": "Description pour la rubrique 'Exceptions' dans les options."
+  },
+  "exceptionsDescriptionP2": {
+    "message": "All requests for or initiating from a URL that matches the exception will be excluded from redirects.",
+    "description": "Description pour la rubrique 'Exceptions' dans les options."
+  },
+  "exceptionsDescriptionP3": {
+    "message": "Note - Supports JavaScript regular expressions, excluding the enclosing forward slashes.",
     "description": "Description pour la rubrique 'Exceptions' dans les options."
   },
   "addException": {
@@ -94,5 +102,9 @@
   "redirect": {
     "message": "Redirect",
     "description": "Titre du module complémentaire - Redirection (pop-up)."
+  },
+  "version": {
+    "message": "Version",
+    "description": "Version"
   }
 }

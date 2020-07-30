@@ -75,9 +75,17 @@
     "message": "Exceptions",
     "description": "Exceptions tab (options)."
   },
-  "exceptionsDescription": {
-    "message": "<p>Enter a URL or Regular Expression to be excluded from redirects.</p><p>All requests for or initiating from a URL that matches the exception will be excluded from redirects.</p><p><b>Note -</b> Supports JavaScript regular expressions, excluding the enclosing forward slashes.</p>",
-    "description": "A description of the 'Exceptions' feature (options)."
+  "exceptionsDescriptionP1": {
+    "message": "Enter a URL or Regular Expression to be excluded from redirects.",
+    "description": "A description of the 'Exceptions' feature paragraph 1 (options)."
+  },
+  "exceptionsDescriptionP2": {
+    "message": "All requests for or initiating from a URL that matches the exception will be excluded from redirects.",
+    "description": "A description of the 'Exceptions' feature paragraph 2 (options)."
+  },
+  "exceptionsDescriptionP3": {
+    "message": "Note - Supports JavaScript regular expressions, excluding the enclosing forward slashes.",
+    "description": "A description of the 'Exceptions' feature paragraph 3 (options)."
   },
   "addException": {
     "message": "Add Exception",
@@ -94,5 +102,9 @@
   "redirect": {
     "message": "Redirect",
     "description": "Extension title - Redirect (pop-up)."
+  },
+  "version": {
+    "message": "Version",
+    "description": "Version"
   }
 }
