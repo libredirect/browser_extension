@@ -39,6 +39,10 @@
     "message": "Перенаправление на OpenStreetMap",
     "description": "Название настройки для включения/выключения перенаправления на OSM (в настройках и всплывающем окне)."
   },
+  "theme": {
+    "message": "Тема",
+    "description": "Название настройки для 'Тема' (в настройках)."
+  },
   "alwaysProxy": {
     "message": "Всегда проксировать видео через Invidious",
     "description": "Название настройки для 'Всегда проксировать видео через Invidious' (в настройках)."
@@ -120,7 +124,7 @@
     "description": "Название расширения - Redirect (во всплывающем окне)."
   },
   "version": {
-    "message": "Version",
-    "description": "Version"
+    "message": "Версия",
+    "description": "Версия."
   }
 }
