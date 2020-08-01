@@ -80,11 +80,11 @@
     "description": "Description pour la rubrique 'Exceptions' dans les options."
   },
   "exceptionsDescriptionP2": {
-    "message": "All requests for or initiating from a URL that matches the exception will be excluded from redirects.",
+    "message": "Toutes les demandes émanant d'une adresse URL et correspondant à l'exception seront exclues des redirections.",
     "description": "Description pour la rubrique 'Exceptions' dans les options."
   },
   "exceptionsDescriptionP3": {
-    "message": "Note - Supports JavaScript regular expressions, excluding the enclosing forward slashes.",
+    "message": "Remarque - Prend en charge les expressions régulières JavaScript, à l'exclusion des barres slash.",
     "description": "Description pour la rubrique 'Exceptions' dans les options."
   },
   "addException": {
@@ -96,11 +96,11 @@
     "description": "Boutton des options supplémentaires (pop-up)."
   },
   "privacy": {
-    "message": "Privacy",
+    "message": "Vie privée",
     "description": "Titre du module complémentaire - Vie privée (pop-up)."
   },
   "redirect": {
-    "message": "Redirect",
+    "message": "Redirection",
     "description": "Titre du module complémentaire - Redirection (pop-up)."
   },
   "version": {
