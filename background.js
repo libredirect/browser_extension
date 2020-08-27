@@ -144,7 +144,7 @@ browser.storage.sync.get(
     invidiousVolume = result.invidiousVolume;
     invidiousPlayerStyle = result.invidiousPlayerStyle;
     invidiousSubtitles = result.invidiousSubtitles || "";
-    invidiousAutoplay = !result.invidiousAutoplay;
+    invidiousAutoplay = result.invidiousAutoplay;
   }
 );
 

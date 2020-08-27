@@ -142,7 +142,7 @@ browser.storage.sync.get(
     invidiousVolume.value = result.invidiousVolume;
     invidiousPlayerStyle.value = result.invidiousPlayerStyle || "";
     invidiousSubtitles.value = result.invidiousSubtitles || "";
-    invidiousAutoplay.checked = !result.invidiousAutoplay;
+    invidiousAutoplay.checked = result.invidiousAutoplay;
   }
 );
 
@@ -338,7 +338,7 @@ let invidiousSubtitlesChange = debounce(() => {
 invidiousSubtitles.addEventListener("input", invidiousSubtitlesChange);
 
 invidiousAutoplay.addEventListener("change", (event) => {
-  browser.storage.sync.set({ invidiousAutoplay: !event.target.checked });
+  browser.storage.sync.set({ invidiousAutoplay: event.target.checked });
 });
 
 theme.addEventListener("change", (event) => {
@@ -364,7 +364,7 @@ theme.addEventListener("change", (event) => {
 function autocomplete(input, list) {
   let currentFocus;
   input.addEventListener("focus", (e) => {
-    showOptions(e);
+    showOptions(e, true);
   });
   input.addEventListener("input", (e) => {
     const val = e.target.value;
@@ -390,30 +390,34 @@ function autocomplete(input, list) {
       }
     }
   });
-  function showOptions(e) {
-    let a,
-      b,
+  function showOptions(event, showAll = false) {
+    let div,
       i,
-      val = e.target.value;
+      val = event.target.value;
     closeAllLists();
-    a = document.createElement("div");
-    a.setAttribute("id", e.target.id + "autocomplete-list");
-    a.setAttribute("class", "autocomplete-items");
-    e.target.parentNode.appendChild(a);
+    div = document.createElement("div");
+    div.setAttribute("id", event.target.id + "autocomplete-list");
+    div.setAttribute("class", "autocomplete-items");
+    event.target.parentNode.appendChild(div);
     for (i = 0; i < list.length; i++) {
       if (list[i].toLowerCase().indexOf(val.toLowerCase()) > -1) {
-        b = document.createElement("div");
-        b.innerHTML = "<strong>" + list[i].substr(0, val.length) + "</strong>";
-        b.innerHTML += list[i].substr(val.length);
-        b.innerHTML += "<input type='hidden' value='" + list[i] + "'>";
-        b.addEventListener("click", function (e) {
-          input.value = e.target.getElementsByTagName("input")[0].value;
-          input.dispatchEvent(new Event("input"));
-          closeAllLists();
-        });
-        a.appendChild(b);
+        div.appendChild(getItem(list[i], val));
+      } else if (showAll) {
+        div.appendChild(getItem(list[i], val));
       }
     }
+  }
+  function getItem(item, val) {
+    let div = document.createElement("div");
+    div.innerHTML = "<strong>" + item.substr(0, val.length) + "</strong>";
+    div.innerHTML += item.substr(val.length);
+    div.innerHTML += "<input type='hidden' value='" + item + "'>";
+    div.addEventListener("click", function (e) {
+      input.value = e.target.getElementsByTagName("input")[0].value;
+      input.dispatchEvent(new Event("input"));
+      closeAllLists();
+    });
+    return div;
   }
   function addActive(x) {
     if (!x) return false;
