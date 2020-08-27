@@ -40,20 +40,22 @@
     {
       "matches": [
         "*://invidio.us/*",
-        "*://invidio.us/*",
         "*://invidious.snopyta.org/*",
-        "*://invidiou.sh/*",
         "*://yewtu.be/*",
-        "*://yt.maisputain.ovh/*",
-        "*://invidious.toot.koeln/*",
         "*://invidious.ggc-project.de/*",
+        "*://invidious.13ad.de/*",
         "*://invidious.toot.koeln/*",
+        "*://invidious.fdn.fr/*",
+        "*://watch.nettohikari.com/*",
+        "*://yt.iswleuven.be/*",
+        "*://yt.maisputain.ovh/*",
         "*://kgg2m7yk5aybusll.onion/*",
         "*://axqzx4s6s54s32yentfqojs3x5i7faxza6xo3ehd4bzzsg2ii4fv2iid.onion/*",
         "*://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion/*",
         "*://qklhadlycap4cnod.onion/*",
         "*://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion/*",
-        "*://mfqczy4mysscub2s.onio/*n"
+        "*://mfqczy4mysscub2s.onion/*"
+        "*://4l2dgddgsrkf2ous66i6seeyi6etzfgrue332grh2n7madpwopotugyd.onion/*",
       ],
       "js": ["assets/javascript/persist-invidious-prefs.js"],
       "run_at": "document_start"
