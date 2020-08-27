@@ -15,12 +15,14 @@ const nitterInstances = [
   "http://nitter.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd.onion",
 ];
 const invidiousInstances = [
-  "https://invidio.us",
   "https://invidious.snopyta.org",
   "https://yewtu.be",
   "https://invidious.ggc-project.de",
   "https://invidious.13ad.de",
+  "https://invidious.xyz",
   "https://invidious.toot.koeln",
+  "https://invidious.site",
+  "https://invidiou.site",
   "https://invidious.fdn.fr",
   "https://watch.nettohikari.com",
   "https://yt.iswleuven.be",

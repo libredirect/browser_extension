@@ -1,7 +1,7 @@
 {
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.1.39",
+  "version": "1.1.40",
   "manifest_version": 2,
   "background": {
     "scripts": ["background.js"],
@@ -39,9 +39,11 @@
     },
     {
       "matches": [
-        "*://invidio.us/*",
         "*://invidious.snopyta.org/*",
         "*://yewtu.be/*",
+        "*://invidious.xyz/*",
+        "*://invidious.site/*",
+        "*://invidiou.site/*",
         "*://invidious.ggc-project.de/*",
         "*://invidious.13ad.de/*",
         "*://invidious.toot.koeln/*",
@@ -54,8 +56,8 @@
         "*://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion/*",
         "*://qklhadlycap4cnod.onion/*",
         "*://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion/*",
-        "*://mfqczy4mysscub2s.onion/*"
-        "*://4l2dgddgsrkf2ous66i6seeyi6etzfgrue332grh2n7madpwopotugyd.onion/*",
+        "*://mfqczy4mysscub2s.onion/*",
+        "*://4l2dgddgsrkf2ous66i6seeyi6etzfgrue332grh2n7madpwopotugyd.onion/*"
       ],
       "js": ["assets/javascript/persist-invidious-prefs.js"],
       "run_at": "document_start"
