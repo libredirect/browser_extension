@@ -1,6 +1,5 @@
 "use strict";
 
-const invidiousDefault = "https://invidious.snopyta.org";
 const youtubeDomains = [
   "m.youtube.com",
   "youtube.com",
@@ -22,7 +21,6 @@ const invidiousInstances = [
   "https://invidious.fdn.fr",
   "https://invidious.toot.koeln",
 ];
-const nitterDefault = "https://nitter.net";
 const twitterDomains = [
   "twitter.com",
   "www.twitter.com",
@@ -30,7 +28,20 @@ const twitterDomains = [
   "pbs.twimg.com",
   "video.twimg.com",
 ];
-const bibliogramDefault = "https://bibliogram.art";
+const nitterInstances = [
+  "https://nitter.net",
+  "https://nitter.snopyta.org",
+  "https://nitter.42l.fr",
+  "https://nitter.nixnet.services",
+  "https://nitter.13ad.de",
+  "https://nitter.pussthecat.org",
+  "https://nitter.mastodont.cat",
+  "https://nitter.tedomum.net",
+  "https://nitter.cattube.org",
+  "https://nitter.fdn.fr",
+  "https://nitter.1d4.us",
+  "https://nitter.kavin.rocks",
+];
 const instagramDomains = [
   "instagram.com",
   "www.instagram.com",
@@ -64,6 +75,13 @@ const bibliogramBypassPaths = /\/(accounts\/|embeds?.js)/;
 const bibliogramInstances = [
   "https://bibliogram.art",
   "https://bibliogram.snopyta.org",
+  "https://bibliogram.pussthecat.org",
+  "https://bibliogram.nixnet.services",
+  "https://bg.endl.site",
+  "https://bibliogram.13ad.de	",
+  "https://bibliogram.stemy.me	",
+  "https://bibliogram.hamster.dance",
+  "https://bibliogram.ggc-project.de",
 ];
 const osmDefault = "https://openstreetmap.org";
 const googleMapsRegex = /https?:\/\/(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
@@ -128,9 +146,9 @@ browser.storage.sync.get(
     disableInvidious = result.disableInvidious;
     disableBibliogram = result.disableBibliogram;
     disableOsm = result.disableOsm;
-    nitterInstance = result.nitterInstance || nitterDefault;
-    invidiousInstance = result.invidiousInstance || invidiousDefault;
-    bibliogramInstance = result.bibliogramInstance || bibliogramDefault;
+    nitterInstance = result.nitterInstance;
+    invidiousInstance = result.invidiousInstance;
+    bibliogramInstance = result.bibliogramInstance;
     osmInstance = result.osmInstance || osmDefault;
     alwaysProxy = result.alwaysProxy;
     onlyEmbeddedVideo = result.onlyEmbeddedVideo;
@@ -150,14 +168,13 @@ browser.storage.sync.get(
 
 browser.storage.onChanged.addListener((changes) => {
   if ("nitterInstance" in changes) {
-    nitterInstance = changes.nitterInstance.newValue || nitterDefault;
+    nitterInstance = changes.nitterInstance.newValue;
   }
   if ("invidiousInstance" in changes) {
-    invidiousInstance = changes.invidiousInstance.newValue || invidiousDefault;
+    invidiousInstance = changes.invidiousInstance.newValue;
   }
   if ("bibliogramInstance" in changes) {
-    bibliogramInstance =
-      changes.bibliogramInstance.newValue || bibliogramDefault;
+    bibliogramInstance = changes.bibliogramInstance.newValue;
   }
   if ("osmInstance" in changes) {
     osmInstance = changes.osmInstance.newValue || osmDefault;
@@ -205,6 +222,10 @@ browser.storage.onChanged.addListener((changes) => {
   }
 });
 
+function getRandomInstance(instanceList) {
+  return instanceList[~~(instanceList.length * Math.random())];
+}
+
 function addressToLatLng(address, callback) {
   const xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = () => {
@@ -248,6 +269,7 @@ function redirectYouTube(url, initiator, type) {
   if (
     initiator &&
     (initiator.origin === invidiousInstance ||
+      invidiousInstances.includes(initiator.origin) ||
       youtubeDomains.includes(initiator.host))
   ) {
     return null;
@@ -284,7 +306,9 @@ function redirectYouTube(url, initiator, type) {
   }
   url.searchParams.append("autoplay", invidiousAutoplay ? 1 : 0);
 
-  return `${invidiousInstance}${url.pathname}${url.search}`;
+  return `${invidiousInstance || getRandomInstance(invidiousInstances)}${
+    url.pathname
+  }${url.search}`;
 }
 
 function redirectTwitter(url, initiator) {
@@ -298,6 +322,7 @@ function redirectTwitter(url, initiator) {
     isFirefox() &&
     initiator &&
     (initiator.origin === nitterInstance ||
+      nitterInstances.includes(initiator.origin) ||
       twitterDomains.includes(initiator.host))
   ) {
     browser.storage.sync.set({
@@ -306,15 +331,21 @@ function redirectTwitter(url, initiator) {
     return null;
   }
   if (url.host.split(".")[0] === "pbs") {
-    return `${nitterInstance}/pic/${encodeURIComponent(url.href)}`;
+    return `${
+      nitterInstance || getRandomInstance(nitterInstances)
+    }/pic/${encodeURIComponent(url.href)}`;
   } else if (url.host.split(".")[0] === "video") {
-    return `${nitterInstance}/gif/${encodeURIComponent(url.href)}`;
+    return `${
+      nitterInstance || getRandomInstance(nitterInstances)
+    }/gif/${encodeURIComponent(url.href)}`;
   } else if (url.pathname.includes("tweets")) {
-    return `${nitterInstance}${url.pathname.replace("/tweets", "")}${
-      url.search
-    }`;
+    return `${
+      nitterInstance || getRandomInstance(nitterInstances)
+    }${url.pathname.replace("/tweets", "")}${url.search}`;
   } else {
-    return `${nitterInstance}${url.pathname}${url.search}`;
+    return `${nitterInstance || getRandomInstance(nitterInstances)}${
+      url.pathname
+    }${url.search}`;
   }
 }
 
@@ -326,6 +357,7 @@ function redirectInstagram(url, initiator, type) {
   if (
     initiator &&
     (initiator.origin === bibliogramInstance ||
+      bibliogramInstances.includes(initiator.origin) ||
       instagramDomains.includes(initiator.host))
   ) {
     return null;
@@ -338,10 +370,14 @@ function redirectInstagram(url, initiator, type) {
     url.pathname === "/" ||
     instagramReservedPaths.includes(url.pathname.split("/")[1])
   ) {
-    return `${bibliogramInstance}${url.pathname}${url.search}`;
+    return `${bibliogramInstance || getRandomInstance(bibliogramInstances)}${
+      url.pathname
+    }${url.search}`;
   } else {
     // Likely a user profile, redirect to '/u/...'
-    return `${bibliogramInstance}/u${url.pathname}${url.search}`;
+    return `${bibliogramInstance || getRandomInstance(bibliogramInstances)}/u${
+      url.pathname
+    }${url.search}`;
   }
 }
 
@@ -482,14 +518,7 @@ browser.webRequest.onBeforeRequest.addListener(
 );
 
 browser.runtime.onInstalled.addListener((details) => {
-  if (details.reason === "install") {
-    browser.storage.sync.set({
-      bibliogramInstance:
-        bibliogramInstances[~~(bibliogramInstances.length * Math.random())],
-      invidiousInstance:
-        invidiousInstances[~~(invidiousInstances.length * Math.random())],
-    });
-  } else if (details.reason === "update") {
+  if (details.reason === "update") {
     browser.storage.sync.get(
       ["whitelist", "exceptions", "invidiousInstance"],
       (result) => {
@@ -502,13 +531,9 @@ browser.runtime.onInstalled.addListener((details) => {
             whitelist: null,
           });
         }
-        if (
-          result.invidiousInstance === "https://invidio.us" ||
-          result.invidiousInstance === null
-        ) {
+        if (result.invidiousInstance === "https://invidio.us") {
           browser.storage.sync.set({
-            invidiousInstance:
-              invidiousInstances[~~(invidiousInstances.length * Math.random())],
+            invidiousInstance: null,
           });
         }
       }

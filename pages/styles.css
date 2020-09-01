@@ -457,3 +457,7 @@ input[type="range"]::-moz-range-thumb {
     background-color: var(--bg-secondary);
   }
 }
+
+#volume-value {
+  float: right;
+}

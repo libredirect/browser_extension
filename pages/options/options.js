@@ -140,6 +140,9 @@ browser.storage.sync.get(
     exceptions = result.exceptions || [];
     exceptions.forEach(prependExceptionsItem);
     invidiousVolume.value = result.invidiousVolume;
+    document.querySelector("#volume-value").textContent = result.invidiousVolume
+      ? `${result.invidiousVolume}%`
+      : " - ";
     invidiousPlayerStyle.value = result.invidiousPlayerStyle || "";
     invidiousSubtitles.value = result.invidiousSubtitles || "";
     invidiousAutoplay.checked = result.invidiousAutoplay;
@@ -313,11 +316,12 @@ persistInvidiousPrefs.addEventListener("change", (event) => {
 });
 
 let invidiousVolumeChange = debounce(() => {
-  if (invidiousInstance.checkValidity()) {
-    browser.storage.sync.set({
-      invidiousVolume: invidiousVolume.value,
-    });
-  }
+  document.querySelector(
+    "#volume-value"
+  ).textContent = `${invidiousVolume.value}%`;
+  browser.storage.sync.set({
+    invidiousVolume: invidiousVolume.value,
+  });
 }, 500);
 invidiousVolume.addEventListener("input", invidiousVolumeChange);
 

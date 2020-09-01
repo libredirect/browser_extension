@@ -127,7 +127,7 @@
             id="nitter-instance"
             type="url"
             name="nitter-instance"
-            placeholder="https://nitter.net"
+            placeholder="Random instance (none selected)"
           />
         </div>
       </section>
@@ -137,7 +137,7 @@
           <input
             id="invidious-instance"
             type="url"
-            placeholder="https://invidious.snopyta.org"
+            placeholder="Random instance (none selected)"
           />
         </div>
       </section>
@@ -147,7 +147,7 @@
           <input
             id="bibliogram-instance"
             type="url"
-            placeholder="https://bibliogram.art"
+            placeholder="Random instance (none selected)"
           />
         </div>
       </section>
@@ -228,9 +228,8 @@
           <option value="">Default</option>
           <option value="hd720">720p</option>
           <option value="medium">480p</option>
-          <option value="dash"
-            >DASH (Dynamic Adaptive Streaming over HTTP)</option
-          >
+          <option value="dash">DASH (Dynamic Adaptive Streaming over HTTP)</option>
+          </option>
         </select>
       </section>
       <section class="settings-block">
@@ -257,7 +256,9 @@
         </table>
       </section>
       <section class="settings-block">
-        <h1 data-localise="__MSG_invidiousVolume__">Invidious Volume</h1>
+        <h1 data-localise="__MSG_invidiousVolume__">
+          Invidious Volume
+        </h1>
         <input
           id="invidious-volume"
           name="invidious-volume"
@@ -265,7 +266,7 @@
           min="0"
           max="100"
           step="1"
-        />
+        /><span id="volume-value"></span>
       </section>
       <section class="settings-block">
         <h1 data-localise="__MSG_invidiousPlayerStyle__">
