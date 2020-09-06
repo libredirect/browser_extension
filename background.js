@@ -505,7 +505,7 @@ function redirectReddit(url, initiator, type) {
   if (initiator && initiator.origin === oldRedditView || url.origin === oldRedditView) {
     return null;
   }
-  // Do not redirect anything other than main_frame
+  // Do not redirect exclusions nor anything other than main_frame
   if (type !== "main_frame" || url.pathname.match(redditBypassPaths)) {
     return null;
   }
