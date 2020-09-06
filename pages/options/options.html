@@ -121,6 +121,28 @@
         </table>
       </section>
       <section class="settings-block">
+        <table class="option" aria-label="Toggle Reddit version redirects">
+          <tbody>
+            <tr>
+              <td>
+                <h1 data-localise="__MSG_disableRedditVersion__">
+                  Reddit Version Redirects
+                </h1>
+              </td>
+              <td>
+                <input
+                  aria-hidden="true"
+                  id="disable-reddit-version"
+                  type="checkbox"
+                  checked
+                />&nbsp;
+                <label for="disable-reddit-version" class="checkbox-label"> </label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="settings-block">
         <h1 data-localise="__MSG_nitterInstance__">Nitter Instance</h1>
         <div class="autocomplete">
           <input
@@ -158,6 +180,16 @@
             id="osm-instance"
             type="url"
             placeholder="https://openstreetmap.org"
+          />
+        </div>
+      </section>
+      <section class="settings-block">
+        <h1 data-localise="__MSG_redditVersion__">Reddit Version</h1>
+        <div class="autocomplete">
+          <input
+            id="reddit-version"
+            type="url"
+            placeholder="https://old.reddit.com"
           />
         </div>
       </section>
