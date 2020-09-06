@@ -95,7 +95,7 @@ const oldRedditViews = [
   "https://old.reddit.com", // desktop
   "https://i.reddit.com" // mobile
 ];
-const redditDefault = oldRedditViews[0];
+const oldRedditDefaultView = oldRedditViews[0];
 const googleMapsRegex = /https?:\/\/(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
 const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
 const dataLatLngRegex = /(!3d|!4d)(-?[0-9]{1,10}.[0-9]{1,10})/g;
@@ -167,7 +167,7 @@ browser.storage.sync.get(
     invidiousInstance = result.invidiousInstance;
     bibliogramInstance = result.bibliogramInstance;
     osmInstance = result.osmInstance || osmDefault;
-    oldRedditView = result.oldRedditView || redditDefault;
+    oldRedditView = result.oldRedditView || oldRedditDefaultView;
     alwaysProxy = result.alwaysProxy;
     onlyEmbeddedVideo = result.onlyEmbeddedVideo;
     videoQuality = result.videoQuality;
@@ -198,7 +198,7 @@ browser.storage.onChanged.addListener((changes) => {
     osmInstance = changes.osmInstance.newValue || osmDefault;
   }
   if ("oldRedditView" in changes) {
-    oldRedditView = changes.oldRedditView.newValue || redditDefault;
+    oldRedditView = changes.oldRedditView.newValue || oldRedditDefaultView;
   }
   if ("disableNitter" in changes) {
     disableNitter = changes.disableNitter.newValue;
