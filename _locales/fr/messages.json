@@ -52,16 +52,16 @@
     "description": "Libellé pour l'option 'Qualité des vidéos Invidious' (options)."
   },
   "removeTwitterSW": {
-    "message": "Supprimer proactivement le service Twitter",
-    "description": "Libellé pour l'option 'Supprimer proactivement le service Twitter' (options)."
+    "message": "Supprimer proactivement le service worker de Twitter",
+    "description": "Libellé pour l'option 'Supprimer proactivement le service worker de Twitter' (options)."
   },
   "invidiousDarkMode": {
     "message": "Mode sombre toujours activé pour Invidious",
     "description": "Libellé pour l'option 'Mode sombre toujours activé pour Invidious' (options)."
   },
   "persistInvidiousPrefs": {
-    "message": "Conserver les préférences malveillantes (sous forme de cookie)",
-    "description": "Libellé pour 'Conserver les préférences malveillantes (sous forme de cookie)' option (options)."
+    "message": "Conserver les préférences d’Invidious (sous forme de cookie)",
+    "description": "Libellé pour 'Conserver les préférences d’Invidious (sous forme de cookie)' option (options)."
   },
   "generalTab": {
     "message": "Général",
