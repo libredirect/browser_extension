@@ -14,12 +14,14 @@ const youtubeDomains = [
 const invidiousInstances = [
   "https://invidious.snopyta.org",
   "https://yewtu.be",
-  "https://invidious.13ad.de",
   "https://invidious.xyz",
   "https://invidious.site",
   "https://invidiou.site",
   "https://invidious.fdn.fr",
-  "https://invidious.toot.koeln",
+  "https://invidious.glie.town",
+  "https://invidious.tube",
+  "https://vid.mint.lgbt",
+  "https://invidious.ggc-project.de",
 ];
 const twitterDomains = [
   "twitter.com",
@@ -41,6 +43,8 @@ const nitterInstances = [
   "https://nitter.fdn.fr",
   "https://nitter.1d4.us",
   "https://nitter.kavin.rocks",
+  "https://nitter.dark.fail",
+  "https://tweet.lambda.dance",
 ];
 const instagramDomains = [
   "instagram.com",
@@ -78,9 +82,10 @@ const bibliogramInstances = [
   "https://bibliogram.pussthecat.org",
   "https://bibliogram.nixnet.services",
   "https://bg.endl.site",
-  "https://bibliogram.13ad.de	",
-  "https://bibliogram.stemy.me	",
+  "https://bibliogram.13ad.de",
+  "https://bibliogram.pixelfed.uno",
   "https://bibliogram.hamster.dance",
+  "https://bibliogram.kavin.rocks",
   "https://bibliogram.ggc-project.de",
 ];
 const osmDefault = "https://openstreetmap.org";
