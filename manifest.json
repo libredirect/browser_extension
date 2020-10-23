@@ -1,34 +1,28 @@
 {
-  "name": "Privacy Redirect",
-  "description": "Redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives.",
-  "version": "1.1.29",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "1.1.41",
   "manifest_version": 2,
   "background": {
-    "scripts": [
-      "background.js"
-    ],
+    "scripts": ["background.js"],
     "persistent": true
   },
+  "default_locale": "en",
   "icons": {
-    "16": "images/icon16.png",
-    "32": "images/icon32.png",
-    "48": "images/icon48.png",
-    "128": "images/icon128.png"
+    "16": "assets/images/icon16.png",
+    "32": "assets/images/icon32.png",
+    "48": "assets/images/icon48.png",
+    "128": "assets/images/icon128.png"
   },
-  "permissions": [
-    "storage",
-    "webRequest",
-    "webRequestBlocking",
-    "<all_urls>"
-  ],
+  "permissions": ["storage", "webRequest", "webRequestBlocking", "<all_urls>"],
   "browser_action": {
     "default_title": "Privacy Redirect",
     "default_popup": "pages/popup/popup.html",
     "default_icon": {
-      "16": "images/icon16.png",
-      "32": "images/icon32.png",
-      "48": "images/icon48.png",
-      "128": "images/icon128.png"
+      "16": "assets/images/icon16.png",
+      "32": "assets/images/icon32.png",
+      "48": "assets/images/icon48.png",
+      "128": "assets/images/icon128.png"
     }
   },
   "content_scripts": [
@@ -40,32 +34,32 @@
         "*://pbs.twimg.com/*",
         "*://video.twimg.com/*"
       ],
-      "js": [
-        "assets/remove-twitter-sw.js"
-      ],
+      "js": ["assets/javascript/remove-twitter-sw.js"],
       "run_at": "document_start"
     },
     {
       "matches": [
-        "*://invidio.us/*",
-        "*://invidio.us/*",
         "*://invidious.snopyta.org/*",
-        "*://invidiou.sh/*",
         "*://yewtu.be/*",
-        "*://yt.maisputain.ovh/*",
-        "*://invidious.toot.koeln/*",
+        "*://invidious.xyz/*",
+        "*://invidious.site/*",
+        "*://invidiou.site/*",
         "*://invidious.ggc-project.de/*",
+        "*://invidious.13ad.de/*",
         "*://invidious.toot.koeln/*",
+        "*://invidious.fdn.fr/*",
+        "*://watch.nettohikari.com/*",
+        "*://yt.iswleuven.be/*",
+        "*://yt.maisputain.ovh/*",
         "*://kgg2m7yk5aybusll.onion/*",
         "*://axqzx4s6s54s32yentfqojs3x5i7faxza6xo3ehd4bzzsg2ii4fv2iid.onion/*",
         "*://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion/*",
         "*://qklhadlycap4cnod.onion/*",
         "*://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion/*",
-        "*://mfqczy4mysscub2s.onio/*n"
+        "*://mfqczy4mysscub2s.onion/*",
+        "*://4l2dgddgsrkf2ous66i6seeyi6etzfgrue332grh2n7madpwopotugyd.onion/*"
       ],
-      "js": [
-        "assets/persist-invidious-prefs.js"
-      ],
+      "js": ["assets/javascript/persist-invidious-prefs.js"],
       "run_at": "document_start"
     }
   ],
@@ -73,10 +67,6 @@
     "page": "pages/options/options.html",
     "open_in_tab": false
   },
-  "web_accessible_resources": [
-    "assets/iframe_api.js",
-    "assets/www-widgetapi.js"
-  ],
   "browser_specific_settings": {
     "gecko": {
       "id": "{b7f9d2cd-d772-4302-8c3f-eb941af36f76}"

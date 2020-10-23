@@ -1,0 +1,110 @@
+{
+  "extensionName": {
+    "message": "Privacy Redirect",
+    "description": "Nom du module complémentaire."
+  },
+  "extensionDescription": {
+    "message": "Redirige les requêtes les demandes Twitter, YouTube, Instagram et Google Maps vers des alternatives respectueuses de la vie privée. pour Twitter, YouTube, Instagram et Google Maps vers des alternatives respectueuses de la vie privée.",
+    "description": "Description du module complémentaire."
+  },
+  "nitterInstance": {
+    "message": "Instance de Nitter",
+    "description": "Étiquette pour l'option de champ d'instance Nitter (options)."
+  },
+  "invidiousInstance": {
+    "message": "Instance de Invidious",
+    "description": "Étiquette pour l'option de champ d'instance Invidious (options)."
+  },
+  "bibliogramInstance": {
+    "message": "Instance de Bibliogram",
+    "description": "Étiquette pour l'option de champ d'instance Bibliogram (options)."
+  },
+  "osmInstance": {
+    "message": "Instance de OpenStreetMap",
+    "description": "Étiquette pour l'option de champ d'instance OpenStreetMap (options)."
+  },
+  "disableNitter": {
+    "message": "Redirection vers Nitter",
+    "description": "Étiquette pour activer / désactiver l'option de redirection vers Nitter (options et pop-up)."
+  },
+  "disableInvidious": {
+    "message": "Redirection vers Invidious",
+    "description": "Étiquette pour activer / désactiver l'option de redirection vers Invidious (options et pop-up)."
+  },
+  "disableBibliogram": {
+    "message": "Redirection vers Bibliogram",
+    "description": "Étiquette pour activer / désactiver l'option de redirection vers Bibliogram (options et pop-up)."
+  },
+  "disableOsm": {
+    "message": "Redirection vers OpenStreetMap",
+    "description": "Étiquette pour activer / désactiver l'option de redirection vers OpenStreetMap (options et pop-up)."
+  },
+  "alwaysProxy": {
+    "message": "Toujours transiter par proxy les vidéos via Invidious",
+    "description": "Libellé pour l'option 'Toujours transiter par proxy les vidéos via Invidious' (options)."
+  },
+  "onlyEmbeddedVideo": {
+    "message": "Rediriger uniquement les vidéos intégrées vers Invidious",
+    "description": "Libellé pour l'option 'Rediriger uniquement les vidéos intégrées vers Invidious' (options)."
+  },
+  "videoQuality": {
+    "message": "Qualité des vidéos Invidious",
+    "description": "Libellé pour l'option 'Qualité des vidéos Invidious' (options)."
+  },
+  "removeTwitterSW": {
+    "message": "Supprimer proactivement le service worker de Twitter",
+    "description": "Libellé pour l'option 'Supprimer proactivement le service worker de Twitter' (options)."
+  },
+  "invidiousDarkMode": {
+    "message": "Mode sombre toujours activé pour Invidious",
+    "description": "Libellé pour l'option 'Mode sombre toujours activé pour Invidious' (options)."
+  },
+  "persistInvidiousPrefs": {
+    "message": "Conserver les préférences d’Invidious (sous forme de cookie)",
+    "description": "Libellé pour 'Conserver les préférences d’Invidious (sous forme de cookie)' option (options)."
+  },
+  "generalTab": {
+    "message": "Général",
+    "description": "Onglet général (options)."
+  },
+  "advancedTab": {
+    "message": "Avancé",
+    "description": "Onglet avancé (options)."
+  },
+  "exceptionsTab": {
+    "message": "Exceptions",
+    "description": "Onglet des Exceptions dans les options."
+  },
+  "exceptionsDescriptionP1": {
+    "message": "Entrez une adresse URL ou une expression régulière qui sera exclue des redirections.",
+    "description": "Description pour la rubrique 'Exceptions' dans les options."
+  },
+  "exceptionsDescriptionP2": {
+    "message": "Toutes les demandes émanant d'une adresse URL et correspondant à l'exception seront exclues des redirections.",
+    "description": "Description pour la rubrique 'Exceptions' dans les options."
+  },
+  "exceptionsDescriptionP3": {
+    "message": "Remarque - Prend en charge les expressions régulières JavaScript, à l'exclusion des barres slash.",
+    "description": "Description pour la rubrique 'Exceptions' dans les options."
+  },
+  "addException": {
+    "message": "Ajoutez une exception",
+    "description": "boutton 'Ajoutez une exception' dans les options."
+  },
+  "moreOptions": {
+    "message": "Options supplémentaires",
+    "description": "Boutton des options supplémentaires (pop-up)."
+  },
+  "privacy": {
+    "message": "Vie privée",
+    "description": "Titre du module complémentaire - Vie privée (pop-up)."
+  },
+  "redirect": {
+    "message": "Redirection",
+    "description": "Titre du module complémentaire - Redirection (pop-up)."
+  },
+  "version": {
+    "message": "Version",
+    "description": "Version"
+  }
+}

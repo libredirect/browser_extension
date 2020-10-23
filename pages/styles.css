@@ -1,31 +1,41 @@
-:root {
-  --text-main: #FFF;
-  --text-secondary: #000;
-  --dark: #3C4043;
-  --darker: #292A2D;
-  --light: #E3E7EA;
-  --lighter: #FFF;
-  --active: #FF5B56;
+body {
+  --text: #fff;
+  --bg-main: #3c4043;
+  --bg-secondary: #292a2d;
+  --active: #ff5b56;
   --space: 5px;
   --danger: #f04141;
-  --danger-light: #F9D0D5;
+  --danger-light: #f9d0d5;
+  --dark-grey: #767676;
+  --light-grey: #c3c3c3;
+}
+
+body.light-theme {
+  --text: #000;
+  --bg-main: #e3e7ea;
+  --bg-secondary: #fff;
+}
+
+.light-theme.popup,
+.light-theme .popup {
+  background-color: var(--bg-secondary);
 }
 
 body {
-  color: var(--text-secondary);
   margin: 0;
-  width: 400px;
+  max-width: 400px;
   margin: auto;
   min-height: 572px;
   font-family: Sans-Serif;
-  background-color: var(--darker);
+  background-color: var(--bg-secondary);
+  color: var(--text);
 }
 
 .popup {
   width: 300px;
   min-height: auto;
   overflow: hidden;
-  background-color: var(--dark);
+  background-color: var(--bg-main);
 }
 
 input {
@@ -35,8 +45,8 @@ input {
 }
 
 header {
-  background-color: var(--lighter);
-  color: var(--text-secondary);
+  background-color: var(--bg-main);
+  color: var(--text);
   display: flex;
   padding: var(--space);
 }
@@ -45,7 +55,7 @@ header .logo-container {
   width: 100%;
   margin: var(--space) 0 var(--space) 0;
   display: flex;
-  align-items:center;
+  align-items: center;
 }
 
 header .logo-container img {
@@ -75,7 +85,7 @@ header .version {
 
 h1 {
   font-size: 14px;
-  margin: var(--space) auto;
+  margin: 7px auto;
 }
 
 i {
@@ -95,7 +105,7 @@ h3 {
 
 h1,
 h2 {
-  color: var(--text-main);
+  color: var(--text);
 }
 
 footer {
@@ -106,26 +116,40 @@ footer a.button {
   margin: var(--space);
 }
 
-/* Elements */
-
-input[type=url], input[type=text], select {
+input[type="url"],
+input[type="text"],
+select {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: var(--space);
+  background-color: var(--bg-main);
+  border-style: inset;
+  color: var(--text);
 }
 
-input[type=url] {
+input[type="url"] {
   padding: 1px 2px;
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   opacity: 0;
 }
 
+input[type="radio"] {
+  appearance: radio;
+  -moz-appearance: radio;
+  -webkit-appearance: radio;
+}
+
+input[type="radio"]:checked + label {
+  background: transparent;
+}
+
 .checkbox-label {
+  margin-left: 5px;
   background: grey;
   border-radius: 25px;
-  color: var(--text-main);
+  color: var(--text);
   cursor: pointer;
   display: block;
   float: right;
@@ -137,37 +161,39 @@ input[type=checkbox] {
 }
 
 .checkbox-label:after {
-  background: #fff;
+  background: white;
   border-radius: 90px;
-  content: '';
+  content: "";
   height: 20px;
   left: var(--space);
   position: absolute;
   top: var(--space);
-  transition: 0.3s; /* Acts on transform below */
+  transition: 0.3s;
   width: 20px;
 }
-input:checked+label {
+
+input:checked + label {
   background: var(--active);
 }
-/* position  when active*/
-input:checked+label:after {
+
+input:checked + label:after {
   left: calc(100% - var(--space));
   transform: translateX(-100%);
 }
 
-.settings_block {
+.settings-block {
   display: block;
-  padding: 10px 1em 1em 1em;
+  padding: 5px 10px 5px 10px;
 }
 
-.settings_block h1 {
+.settings-block h1 {
   float: left;
 }
 
 .button {
   border: var(--active) solid 1px;
-  color: var(--text-main);
+  color: var(--text);
+  stroke: var(--text);
   display: block;
   font-size: 12px;
   font-weight: bold;
@@ -186,12 +212,13 @@ input:checked+label:after {
 
 .button:hover {
   background-color: var(--active);
-  color: #fff;
+  color: var(--text);
+  stroke: var(--text);
 }
 
 .button:active {
   background-color: var(--active);
-  box-shadow: 0 var(--space) var(--dark);
+  box-shadow: 0 var(--space) var(--bg-main);
   transform: translateY(4px);
 }
 
@@ -207,13 +234,13 @@ input:invalid {
 
 .tab {
   overflow: hidden;
-  background-color: var(--darker);
+  background-color: var(--bg-secondary);
 }
 
 .tab button {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  color: var(--text-main);
+  color: var(--text);
   background-color: inherit;
   float: left;
   border: none;
@@ -221,7 +248,7 @@ input:invalid {
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
-  border: solid 1px var(--dark);
+  border: solid 1px var(--bg-main);
   width: 33.333%;
   font-size: 14px;
 }
@@ -231,106 +258,206 @@ input:invalid {
 }
 
 .tab button.active {
-  background-color: var(--dark);
+  background-color: var(--bg-main);
 }
 
 .tabcontent {
   padding-top: 10px;
   display: none;
-  border: solid 1px var(--dark);
-  background-color: var(--dark);
+  background-color: var(--bg-main);
   min-height: 510px;
 }
 
-div.whitelist {
+div.exceptions {
   clear: left;
 }
 
-div.whitelist > input {
+div.exceptions > input {
   width: 240px;
   float: left;
 }
 
-#add-to-whitelist {
-  width: 120px;
+#add-to-exceptions {
   float: right;
   border: var(--active) solid 1px;
   background-color: var(--active);
-  color: var(--text-main);
+  color: var(--text);
   font-weight: bold;
   cursor: pointer;
-  border-radius: 25px;
+  border-radius: 50%;
+  padding: 1px 1px 0px 1px;
+  margin-right: 5px;
+}
+
+#add-to-exceptions svg {
+  height: 20px;
+  width: 20px;
 }
 
 ul {
   padding: 0;
   list-style-type: none;
-  color: var(--text-main);
-  margin-right: 20px;
-  margin-left: 20px;
+  color: var(--text);
+  margin: 20px 20px 0 20px;
 }
 
 li {
-  border-bottom: solid 0.5px var(--darker);
+  border-bottom: solid 0.5px var(--bg-secondary);
   padding: 20px 0px 20px 20px;
 }
 
-#whitelist-items button {
+#exceptions-items button {
   float: right;
   margin-right: -5px;
   border: var(--active) solid 1px;
   background-color: var(--active);
-  color: var(--text-main);
+  color: var(--text);
   font-weight: bold;
   cursor: pointer;
   border-radius: 50%;
+  padding: 2px 2px 0px 2px;
 }
 
-@media (prefers-color-scheme: dark) {
+.button svg {
+  height: 18px;
+  width: 18px;
+}
 
-  body.popup, header, h1, input, select, div.tabcontent, button.tablinks.active {
-    background-color: var(--dark);
-    color: var(--text-main);
-  }
+.autocomplete {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
 
-  body {
-    background-color: var(--darker);
-  }
+.autocomplete input {
+  background: url(../assets/images/chevron-down.svg) right no-repeat;
+}
 
-  a.button {
-    color: var(--text-main);
-  }
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid var(--bg-main);
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  top: 85%;
+  left: 0;
+  right: 0;
+  overflow-y: auto;
+  max-height: 175px;
+  color: var(--text);
+  overflow-x: hidden;
+  max-width: 380px;
+}
 
-  ::placeholder {
-    color: var(--text-main);
-    opacity: 0.7;
-  }
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--bg-main);
+}
 
+.autocomplete-items div:hover {
+  background-color: var(--active);
+}
+
+.autocomplete-active {
+  background-color: var(--active);
+  color: var(--text);
+}
+
+.option {
+  width: 100%;
+}
+
+.option td {
+  vertical-align: middle;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  margin: 18px 0;
+  width: 100%;
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  border-color: var(--dark-grey), var(--light-grey);
+  background: var(--bg-main);
+  border-radius: 1.3px;
+  border: 0.2px inset var(--dark-grey);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  border-color: var(--active);
+  border: 1px solid var(--dark-grey);
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: var(--active);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -14px;
+}
+
+input[type="range"]:focus::-webkit-slider-runnable-track {
+  background: var(--bg-main);
+}
+
+input[type="range"]::-moz-range-track {
+  width: 100%;
+  height: 8.4px;
+  cursor: pointer;
+  border-color: var(--dark-grey), var(--light-grey);
+  background: var(--bg-main);
+  border-radius: 1.3px;
+  border: 0.2px inset var(--dark-grey);
+}
+
+input[type="range"]::-moz-range-thumb {
+  border-color: var(--active);
+  border: 1px solid var(--dark-grey);
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: var(--active);
+  cursor: pointer;
+}
+
+::placeholder {
+  color: var(--text);
+  opacity: 0.7;
+}
+
+*:focus {
+  outline: var(--active) solid 2px;
 }
 
 @media (prefers-color-scheme: light) {
-
-  body.popup, header, h1, input, select, div.tabcontent, button.tablinks.active {
-    background-color: var(--lighter);
-    color: var(--text-secondary);
-  }
-
   body {
-    background-color: var(--light);
+    --text: #000;
+    --text-secondary: #fff;
+    --bg-main: #e3e7ea;
+    --bg-secondary: #fff;
   }
 
-  a.button {
-    color: var(--text-secondary);
+  body.dark-theme {
+    --text: #fff;
+    --text-secondary: #000;
+    --bg-main: #3c4043;
+    --bg-secondary: #292a2d;
   }
 
-  button.tablinks {
-    background-color: var(--light);
-    color: var(--text-secondary);
+  .popup {
+    background-color: var(--bg-secondary);
   }
+}
 
-  ::placeholder {
-    color: var(--text-secondary);
-    opacity: 0.7;
-  }
-
+#volume-value {
+  float: right;
 }

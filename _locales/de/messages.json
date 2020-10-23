@@ -1,0 +1,110 @@
+{
+  "extensionName": {
+    "message": "Privacy Redirect",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Leitet Anfragen von Twitter, YouTube, Instagram & Google Maps auf datenschutzfreundliche Alternativen weiter.",
+    "description": "Description of the extension."
+  },
+  "nitterInstance": {
+    "message": "Nitter-Instanz",
+    "description": "Label for Nitter instance field option (options)."
+  },
+  "invidiousInstance": {
+    "message": "Invidious-Instanz",
+    "description": "Label for Invidious instance field option (options)."
+  },
+  "bibliogramInstance": {
+    "message": "Bibliogram-Instanz",
+    "description": "Label for Bibliogram instance field option (options)."
+  },
+  "osmInstance": {
+    "message": "OpenStreetMap-Instanz",
+    "description": "Label for OSM instance field option (options)."
+  },
+  "disableNitter": {
+    "message": "Nitter-Weiterleitungen",
+    "description": "Label for enable/disable Nitter redirects option (options & pop-up)."
+  },
+  "disableInvidious": {
+    "message": "Invidious-Weiterleitungen",
+    "description": "Label for enable/disable Invidious redirects option (options & pop-up)."
+  },
+  "disableBibliogram": {
+    "message": "Bibliogram-Weiterleitungen",
+    "description": "Label for enable/disable Bibliogram redirects option (options & pop-up)."
+  },
+  "disableOsm": {
+    "message": "OpenStreetMap-Weiterleitungen",
+    "description": "Label for enable/disable OSM redirects option (options & pop-up)."
+  },
+  "alwaysProxy": {
+    "message": "Videos immer durch Invidious-Proxy leiten",
+    "description": "Label for 'Always proxy videos through Invidious' option (options)."
+  },
+  "onlyEmbeddedVideo": {
+    "message": "Nur eingebettete Videos zu Invidious weiterleiten",
+    "description": "Label for 'Only redirect embedded video to Invidious' option (options)."
+  },
+  "videoQuality": {
+    "message": "Videoqualität bei Invidious",
+    "description": "Label for 'Invidious Video Quality' option (options)."
+  },
+  "removeTwitterSW": {
+    "message": "Twitter-Serviceworker proaktiv entfernen",
+    "description": "Label for 'Proactively remove Twitter service worker' option (options)."
+  },
+  "invidiousDarkMode": {
+    "message": "Dunklen Modus auf Invidious immer anschalten",
+    "description": "Label for 'Invidious dark mode always on' option (options)."
+  },
+  "persistInvidiousPrefs": {
+    "message": "Invidious-Einstellungen dauerhaft beibehalten (als Cookie)",
+    "description": "Label for 'Persist Invidious preferences (as cookie)' option (options)."
+  },
+  "generalTab": {
+    "message": "Allgmein",
+    "description": "General tab (options)."
+  },
+  "advancedTab": {
+    "message": "Erweitert",
+    "description": "Advanced tab (options)."
+  },
+  "exceptionsTab": {
+    "message": "Ausnahmen",
+    "description": "Exceptions tab (options)."
+  },
+  "exceptionsDescriptionP1": {
+    "message": "Gib eine URL oder einen regulären Ausdruck (Regex) ein, die/der von Weiterleitungen ausgeschlossen werden soll.",
+    "description": "A description of the 'Exceptions' feature paragraph 1 (options)."
+  },
+  "exceptionsDescriptionP2": {
+    "message": "Alle Anfragen für oder ausgehend von einer URL, die auf die Ausnahme zutrifft, werden von Weiterleitungen ausgeschlossen.",
+    "description": "A description of the 'Exceptions' feature paragraph 2 (options)."
+  },
+  "exceptionsDescriptionP3": {
+    "message": "Hinweis – Unterstützt reguläre JavaScript-Ausdrücke (Regex), mit Ausnahme der einschließenden Schrägstriche.",
+    "description": "A description of the 'Exceptions' feature paragraph 3 (options)."
+  },
+  "addException": {
+    "message": "Ausnahme hinzufügen",
+    "description": "'Add Exceptions' button (options)."
+  },
+  "moreOptions": {
+    "message": "Weitere Optionen",
+    "description": "More Options button (pop-up)."
+  },
+  "privacy": {
+    "message": "Privacy",
+    "description": "Extension title - Privacy (pop-up)."
+  },
+  "redirect": {
+    "message": "Redirect",
+    "description": "Extension title - Redirect (pop-up)."
+  },
+  "version": {
+    "message": "Version",
+    "description": "Version"
+  }
+}

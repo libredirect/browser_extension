@@ -1,0 +1,110 @@
+{
+  "extensionName": {
+    "message": "Privacy Redirect",
+    "description": "Nazwa rozszerzenia."
+  },
+  "extensionDescription": {
+    "message": "Przekierowuje serwisy takie jak: Twitter, YouTube, Instagram i Google Maps do alternatyw sprzyjających prywatności.",
+    "description": "Opis rozszerzenia."
+  },
+  "nitterInstance": {
+    "message": "Instancja Nitter",
+    "description": "Etykieta dla pola wyboru instancji Nitter (opcje)."
+  },
+  "invidiousInstance": {
+    "message": "Instancja Invidious",
+    "description": "Etykieta dla pola wyboru instancji Invidious (opcje)."
+  },
+  "bibliogramInstance": {
+    "message": "Instancja Bibliogram",
+    "description": "Etykieta dla pola wyboru instancji Bibliogram (opcje)."
+  },
+  "osmInstance": {
+    "message": "Instancja OpenStreetMap",
+    "description": "Etykieta dla pola wyboru instancji OpenStreetMap (opcje)."
+  },
+  "disableNitter": {
+    "message": "Przekierowanie Nitter",
+    "description": "Etykieta dla włączenia/wyłączenia opcji przekierowania Nitter (opcje i okno pop-up)."
+  },
+  "disableInvidious": 
+    "message": "Przekierowanie Invidious ",
+    "description": "Etykieta dla włączenia/wyłączenia opcji przekierowania Invidious (opcje i okno pop-up)."
+  },
+  "disableBibliogram": {
+    "message": "Przekierowanie Bibliogram",
+    "description": "Etykieta dla włączenia/wyłączenia opcji przekierowania Bibliogram (opcje i okno pop-up)."
+  },
+  "disableOsm": {
+    "message": "Przekierowanie OpenStreetMap",
+    "description": "Etykieta dla włączenia/wyłączenia opcji przekierowania OpenStreetMap (opcje i okno pop-up)."
+  },
+  "alwaysProxy": {
+    "message": "Zawsze buforuj i wyświetlaj odnośniki wideo z YouTube poprzez Invidious",
+    "description": "Etykieta dla opcji 'Zawsze buforuj i wyświetlaj odnośniki wideo poprzez Invidious'."
+  },
+  "onlyEmbeddedVideo": {
+    "message": "Jedynie przekieruj odnośniki wideo do instancji Invidious",
+    "description": "Etykieta dla opcji 'Jedynie przekieruj odnośniki wideo do instancji Invidious'."
+  },
+  "videoQuality": {
+    "message": "Jakość wideo Invidious",
+    "description": "Etykieta dla opcji 'Jakość wideo Invidious'."
+  },
+  "removeTwitterSW": {
+    "message": "Proaktywnie usuwaj skrypty serwisowe (service worker) Twittera",
+    "description": "Etykieta dla opcji 'Proaktywnie usuwaj skrypty serwisowe (service worker) Twittera'."
+  },
+  "invidiousDarkMode": {
+    "message": "Tryb ciemny dla Invidious zawsze włączony",
+    "description": "Etykieta dla opcji 'Tryb ciemny dla Invidious zawsze włączony'."
+  },
+  "persistInvidiousPrefs": {
+    "message": "Zapisz ustawienia Invidious (jako plik cookie)",
+    "description": "Etykieta dla 'Zapisz ustawienia Invidious (jako plik cookie)'."
+  },
+  "generalTab": {
+    "message": "Główne",
+    "description": "Zakładka Główne (opcje)."
+  },
+  "advancedTab": {
+    "message": "Advanced",
+    "description": "Zakładka zaawansowane (opcje)."
+  },
+  "exceptionsTab": {
+    "message": "Wyjątki",
+    "description": "Zakładka wyjątki (opcje)."
+  },
+  "exceptionsDescriptionP1": {
+    "message": "Wprowadź adres URL lub wyrażenie regularne, które zostanie wyłączone z przekierowania. ",
+    "description": "Opis funkcji 'Wyjątki' paragraf 1 (opcje)."
+  },
+  "exceptionsDescriptionP2": {
+    "message": "Wszystkie żądania dla lub inicjalizujące z adresu URL które spełniają wyjątek zostaną wyłączone z przekierowania.",
+    "description": "Opis funkcji 'Wyjątki' paragraf 2 (opcje)."
+  },
+  "exceptionsDescriptionP3": {
+    "message": "Informacja - Wspierane są  wyrażenia regularne JavaScript, wyłączając ukośniki lewe zamykające.",
+    "description": "Opis funkcji 'Wyjątki' paragraf 3 (opcje)."
+  },
+  "addException": {
+    "message": "Dodaj wyjątek",
+    "description": "Przycisk 'Dodaj wyjątek' (opcje)."
+  },
+  "moreOptions": {
+    "message": "Więcej opcji",
+    "description": "Przycisk 'Więcej opcji' (okno pop-up)."
+  },
+  "privacy": {
+    "message": "Prywatność",
+    "description": "Tytuł rozszerzenia - Privacy (okno pop-up)."
+  },
+  "redirect": {
+    "message": "Redirect",
+    "description": "Tytuł rozszerzenia - Redirect (pop-up)."
+  },
+  "version": {
+    "message": "Version",
+    "description": "Wersja"
+  }
+}
