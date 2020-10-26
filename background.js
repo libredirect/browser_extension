@@ -307,7 +307,7 @@ function redirectYouTube(url, initiator, type) {
   url.searchParams.append("autoplay", invidiousAutoplay ? 1 : 0);
 
   return `${invidiousInstance || getRandomInstance(invidiousInstances)}${
-    url.pathname
+    url.pathname.replace("/shorts","")
   }${url.search}`;
 }
 
