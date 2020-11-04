@@ -13,15 +13,12 @@ const youtubeDomains = [
 ];
 const invidiousInstances = [
   "https://invidious.snopyta.org",
-  "https://yewtu.be",
-  "https://invidious.xyz",
   "https://invidious.site",
+  "https://invidious.zapashcanon.fr",
   "https://invidiou.site",
-  "https://invidious.fdn.fr",
-  "https://invidious.glie.town",
-  "https://invidious.tube",
-  "https://vid.mint.lgbt",
-  "https://invidious.ggc-project.de",
+  "https://invidious.kavin.rocks",
+  "https://tube.connect.cafe",
+  "https://yewtu.be",
 ];
 const twitterDomains = [
   "twitter.com",
@@ -311,9 +308,9 @@ function redirectYouTube(url, initiator, type) {
   }
   url.searchParams.append("autoplay", invidiousAutoplay ? 1 : 0);
 
-  return `${invidiousInstance || getRandomInstance(invidiousInstances)}${
-    url.pathname.replace("/shorts","")
-  }${url.search}`;
+  return `${
+    invidiousInstance || getRandomInstance(invidiousInstances)
+  }${url.pathname.replace("/shorts", "")}${url.search}`;
 }
 
 function redirectTwitter(url, initiator) {

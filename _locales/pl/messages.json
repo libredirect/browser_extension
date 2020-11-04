@@ -27,7 +27,7 @@
     "message": "Przekierowanie Nitter",
     "description": "Etykieta dla włączenia/wyłączenia opcji przekierowania Nitter (opcje i okno pop-up)."
   },
-  "disableInvidious": 
+  "disableInvidious": {
     "message": "Przekierowanie Invidious ",
     "description": "Etykieta dla włączenia/wyłączenia opcji przekierowania Invidious (opcje i okno pop-up)."
   },
