@@ -296,7 +296,7 @@ function redirectYouTube(url, initiator, type) {
   if (onlyEmbeddedVideo && type !== "sub_frame") {
     return null;
   }
-  if (useFreeTube) {
+  if (useFreeTube && type !== "sub_frame") {
     return `freetube://${url}`;
   }
   // Apply settings
