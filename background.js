@@ -87,6 +87,18 @@ const bibliogramInstances = [
   "https://bibliogram.ggc-project.de",
 ];
 const osmDefault = "https://openstreetmap.org";
+const redditDomains = [
+  "www.reddit.com",
+  "np.reddit.com",
+  "new.reddit.com",
+  "amp.reddit.com",
+];
+const redditBypassPaths = /\/(gallery\/poll\/rpan\/settings\/topics)/;
+const oldRedditViews = [
+  "https://old.reddit.com", // desktop
+  "https://i.reddit.com" // mobile
+];
+const oldRedditDefaultView = oldRedditViews[0];
 const googleMapsRegex = /https?:\/\/(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
 const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
 const dataLatLngRegex = /(!3d|!4d)(-?[0-9]{1,10}.[0-9]{1,10})/g;
@@ -108,10 +120,12 @@ let disableNitter;
 let disableInvidious;
 let disableBibliogram;
 let disableOsm;
+let disableOldReddit;
 let nitterInstance;
 let invidiousInstance;
 let bibliogramInstance;
 let osmInstance;
+let oldRedditView;
 let alwaysProxy;
 let onlyEmbeddedVideo;
 let videoQuality;
@@ -131,10 +145,12 @@ browser.storage.sync.get(
     "invidiousInstance",
     "bibliogramInstance",
     "osmInstance",
+    "oldRedditView",
     "disableNitter",
     "disableInvidious",
     "disableBibliogram",
     "disableOsm",
+    "disableOldReddit",
     "alwaysProxy",
     "onlyEmbeddedVideo",
     "videoQuality",
@@ -151,10 +167,12 @@ browser.storage.sync.get(
     disableInvidious = result.disableInvidious;
     disableBibliogram = result.disableBibliogram;
     disableOsm = result.disableOsm;
+    disableOldReddit = result.disableOldReddit;
     nitterInstance = result.nitterInstance;
     invidiousInstance = result.invidiousInstance;
     bibliogramInstance = result.bibliogramInstance;
     osmInstance = result.osmInstance || osmDefault;
+    oldRedditView = result.oldRedditView || oldRedditDefaultView;
     alwaysProxy = result.alwaysProxy;
     onlyEmbeddedVideo = result.onlyEmbeddedVideo;
     videoQuality = result.videoQuality;
@@ -185,6 +203,9 @@ browser.storage.onChanged.addListener((changes) => {
   if ("osmInstance" in changes) {
     osmInstance = changes.osmInstance.newValue || osmDefault;
   }
+  if ("oldRedditView" in changes) {
+    oldRedditView = changes.oldRedditView.newValue || oldRedditDefaultView;
+  }
   if ("disableNitter" in changes) {
     disableNitter = changes.disableNitter.newValue;
   }
@@ -196,6 +217,9 @@ browser.storage.onChanged.addListener((changes) => {
   }
   if ("disableOsm" in changes) {
     disableOsm = changes.disableOsm.newValue;
+  }
+  if ("disableOldReddit" in changes) {
+    disableOldReddit = changes.disableOldReddit.newValue;
   }
   if ("alwaysProxy" in changes) {
     alwaysProxy = changes.alwaysProxy.newValue;
@@ -485,6 +509,21 @@ function redirectGoogleMaps(url, initiator) {
   return redirect;
 }
 
+function redirectReddit(url, initiator, type) {
+  if (disableOldReddit || isException(url, initiator)) {
+    return null;
+  }
+  // Do not redirect when already on the selected view
+  if (initiator && initiator.origin === oldRedditView || url.origin === oldRedditView) {
+    return null;
+  }
+  // Do not redirect exclusions nor anything other than main_frame
+  if (type !== "main_frame" || url.pathname.match(redditBypassPaths)) {
+    return null;
+  }
+  return `${oldRedditView}${url.pathname}${url.search}`;
+}
+
 browser.webRequest.onBeforeRequest.addListener(
   (details) => {
     const url = new URL(details.url);
@@ -511,6 +550,10 @@ browser.webRequest.onBeforeRequest.addListener(
       redirect = {
         redirectUrl: redirectGoogleMaps(url, initiator),
       };
+    } else if (redditDomains.includes(url.host) || oldRedditViews.includes(url.origin)) {
+      redirect = {
+        redirectUrl: redirectReddit(url, initiator, details.type),
+      }
     }
     if (redirect && redirect.redirectUrl) {
       console.info(

@@ -121,6 +121,28 @@
         </table>
       </section>
       <section class="settings-block">
+        <table class="option" aria-label="Toggle old Reddit redirects">
+          <tbody>
+            <tr>
+              <td>
+                <h1 data-localise="__MSG_disableOldReddit__">
+                  Old Reddit Redirects
+                </h1>
+              </td>
+              <td>
+                <input
+                  aria-hidden="true"
+                  id="disable-old-reddit"
+                  type="checkbox"
+                  checked
+                />&nbsp;
+                <label for="disable-old-reddit" class="checkbox-label"> </label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="settings-block">
         <h1 data-localise="__MSG_nitterInstance__">Nitter Instance</h1>
         <div class="autocomplete">
           <input
@@ -158,6 +180,16 @@
             id="osm-instance"
             type="url"
             placeholder="https://openstreetmap.org"
+          />
+        </div>
+      </section>
+      <section class="settings-block">
+        <h1 data-localise="__MSG_oldRedditView__">Old Reddit View (Desktop or Mobile)</h1>
+        <div class="autocomplete">
+          <input
+            id="old-reddit-view"
+            type="url"
+            placeholder="https://old.reddit.com"
           />
         </div>
       </section>

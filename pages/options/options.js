@@ -45,21 +45,28 @@ const bibliogramInstances = [
   "https://bibliogram.ggc-project.de",
 ];
 const osmInstances = ["https://openstreetmap.org"];
+const oldRedditViews = [
+  "https://old.reddit.com", // desktop
+  "https://i.reddit.com" // mobile
+];
 const autocompletes = [
   { id: "nitter-instance", instances: nitterInstances },
   { id: "invidious-instance", instances: invidiousInstances },
   { id: "bibliogram-instance", instances: bibliogramInstances },
   { id: "osm-instance", instances: osmInstances },
+  { id: "old-reddit-view", instances: oldRedditViews },
 ];
 
 let nitterInstance = document.getElementById("nitter-instance");
 let invidiousInstance = document.getElementById("invidious-instance");
 let bibliogramInstance = document.getElementById("bibliogram-instance");
 let osmInstance = document.getElementById("osm-instance");
+let oldRedditView = document.getElementById("old-reddit-view");
 let disableNitter = document.getElementById("disable-nitter");
 let disableInvidious = document.getElementById("disable-invidious");
 let disableBibliogram = document.getElementById("disable-bibliogram");
 let disableOsm = document.getElementById("disable-osm");
+let disableOldReddit = document.getElementById("disable-old-reddit");
 let alwaysProxy = document.getElementById("always-proxy");
 let onlyEmbeddedVideo = document.getElementById("only-embed");
 let videoQuality = document.getElementById("video-quality");
@@ -104,10 +111,12 @@ browser.storage.sync.get(
     "invidiousInstance",
     "bibliogramInstance",
     "osmInstance",
+    "oldRedditView",
     "disableNitter",
     "disableInvidious",
     "disableBibliogram",
     "disableOsm",
+    "disableOldReddit",
     "alwaysProxy",
     "onlyEmbeddedVideo",
     "videoQuality",
@@ -129,10 +138,12 @@ browser.storage.sync.get(
     invidiousInstance.value = result.invidiousInstance || "";
     bibliogramInstance.value = result.bibliogramInstance || "";
     osmInstance.value = result.osmInstance || "";
+    oldRedditView.value = result.oldRedditView || "";
     disableNitter.checked = !result.disableNitter;
     disableInvidious.checked = !result.disableInvidious;
     disableBibliogram.checked = !result.disableBibliogram;
     disableOsm.checked = !result.disableOsm;
+    disableOldReddit.checked = !result.disableOldReddit;
     alwaysProxy.checked = result.alwaysProxy;
     onlyEmbeddedVideo.checked = result.onlyEmbeddedVideo;
     videoQuality.value = result.videoQuality || "";
@@ -276,6 +287,15 @@ let osmInstanceChange = debounce(() => {
 }, 500);
 osmInstance.addEventListener("input", osmInstanceChange);
 
+let oldRedditViewChange = debounce(() => {
+  if (oldRedditView.checkValidity()) {
+    browser.storage.sync.set({
+      oldRedditView: parseURL(oldRedditView.value),
+    });
+  }
+}, 500);
+oldRedditView.addEventListener("input", oldRedditViewChange);
+
 disableNitter.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableNitter: !event.target.checked });
 });
@@ -290,6 +310,10 @@ disableBibliogram.addEventListener("change", (event) => {
 
 disableOsm.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableOsm: !event.target.checked });
+});
+
+disableOldReddit.addEventListener("change", (event) => {
+  browser.storage.sync.set({ disableOldReddit: !event.target.checked });
 });
 
 alwaysProxy.addEventListener("change", (event) => {

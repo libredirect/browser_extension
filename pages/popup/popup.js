@@ -4,6 +4,7 @@ let disableNitter = document.querySelector("#disable-nitter");
 let disableInvidious = document.querySelector("#disable-invidious");
 let disableBibliogram = document.querySelector("#disable-bibliogram");
 let disableOsm = document.querySelector("#disable-osm");
+let disableOldReddit = document.querySelector("#disable-old-reddit");
 let version = document.querySelector("#version");
 
 window.browser = window.browser || window.chrome;
@@ -14,6 +15,7 @@ browser.storage.sync.get(
     "disableInvidious",
     "disableBibliogram",
     "disableOsm",
+    "disableOldReddit",
     "theme",
   ],
   (result) => {
@@ -22,6 +24,7 @@ browser.storage.sync.get(
     disableInvidious.checked = !result.disableInvidious;
     disableBibliogram.checked = !result.disableBibliogram;
     disableOsm.checked = !result.disableOsm;
+    disableOldReddit.checked = !result.disableOldReddit;
   }
 );
 
@@ -41,6 +44,10 @@ disableBibliogram.addEventListener("change", (event) => {
 
 disableOsm.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableOsm: !event.target.checked });
+});
+
+disableOldReddit.addEventListener("change", (event) => {
+  browser.storage.sync.set({ disableOldReddit: !event.target.checked });
 });
 
 document.querySelector("#more-options").addEventListener("click", () => {
