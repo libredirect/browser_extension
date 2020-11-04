@@ -32,6 +32,7 @@ If you like this extension and are financially able please consider <a href='htt
   <li>Added Chinese language translation.</li>
   <li>Pruned the Invidious random instances list.</li>
   <li>Added support for FreeTube redirects (where possible).</li>
+  <li>Handle /igtv/, /tv/ and /reel/ redirects to Bibliogram correctly.</li>
 </ul>
 
 <b>★ Permissions: ℹ️</b>

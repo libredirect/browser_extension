@@ -1,10 +1,13 @@
 # Extension Store (AMO & Chrome Web Store) Listing
 
 ## Summary:
+
 ```
 Prosta wtyczka która przekierowuje żądania Twitter, YouTube, Instagram oraz Google Maps na odpowiedniki przyjazne dla prywatności.
 ```
+
 ## Description:
+
 ```
 Przekierowuje żądania Twitter, YouTube, Instagram oraz Google Maps na odpowiedniki przyjazne dla prywatności - <a href='https://nitter.net/'>Nitter</a>, <a href='https://invidio.us/'>Invidious</a>, <a href='https://bibliogram.art/'>Bibliogram</a>, & <a href='https://www.openstreetmap.org'>OpenStreetMap</a>.
 
@@ -21,12 +24,6 @@ Kod źródłowy tego rozszerzenia jest dostępny na: <a href='https://github.com
 
 <b>★ Donate: 👨🏻‍💻</b>
 Jeżeli lubisz to rozszerzenie i chcesz wesprzeć autora finanosowo, proszę pomyśl o <a href='https://www.buymeacoffee.com/SimonBrazell'>zaserwowaniu małej czarnej</a> ☕️ ️aby pokazać swoją wdzięczność i wesprzeć możliwości kontynuowania projektu.
-
-<b>★ Co nowego w tej wersji (v1.1.36) 🆕</b>
-<ul>
-  <li>Dodano tłumaczenie w wersji Rosyjskiej</li>
-  <li>Naprawiono parametr autoodtwarzania Invidious</li>
-</ul>
 
 <b>★ Uprawnienia: ℹ️</b>
 <ul>

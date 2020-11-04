@@ -1,10 +1,13 @@
 # Extension Store (AMO & Chrome Web Store) Listing
 
 ## Summary:
+
 ```
 一个简单的扩展程序来将 Twitter、YouTube、Instagram 和 Google地图重定向至尊重隐私的替代品。
 ```
+
 ## Description:
+
 ```
 将 Twitter、YouTube、Instagram 和 Google地图重定向至尊重隐私的替代品： <a href='https://nitter.net/'>Nitter</a>、<a href='https://invidio.us/'>Invidious</a>、<a href='https://bibliogram.art/'>Bibliogram</a> 和 <a href='https://www.openstreetmap.org'>OpenStreetMap</a>。
 
@@ -22,12 +25,6 @@
 
 <b>★ 捐赠：👨🏻‍💻</b>
 若您喜欢本扩展程序，且有闲钱，不妨<a href='https://www.buymeacoffee.com/SimonBrazell'>给我买杯咖啡</a>来表达您对这个项目的感谢与支持。
-
-<b>★ What's New in This Version (v1.1.36) 🆕</b>
-<ul>
-  <li>Added Russian language translation.</li>
-  <li>Fix Invidious autoplay parameter.</li>
-</ul>
 
 <b>★ 权限：ℹ️</b>
 <ul>
