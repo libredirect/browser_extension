@@ -81,7 +81,7 @@ browser.storage.sync.get(
         }
       });
       const url = new URL(window.location);
-      if (shouldRedirect()) {
+      if (shouldRedirect(url)) {
         const redirect = redirectTwitter(url);
         console.info("Redirecting", `"${url.href}"`, "=>", `"${redirect}"`);
         window.location = redirect;
