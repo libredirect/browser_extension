@@ -119,6 +119,7 @@ let invidiousVolume;
 let invidiousPlayerStyle;
 let invidiousSubtitles;
 let invidiousAutoplay;
+let useFreeTube;
 let exceptions;
 
 window.browser = window.browser || window.chrome;
@@ -141,6 +142,7 @@ browser.storage.sync.get(
     "invidiousPlayerStyle",
     "invidiousSubtitles",
     "invidiousAutoplay",
+    "useFreeTube",
     "exceptions",
   ],
   (result) => {
@@ -165,6 +167,7 @@ browser.storage.sync.get(
     invidiousPlayerStyle = result.invidiousPlayerStyle;
     invidiousSubtitles = result.invidiousSubtitles || "";
     invidiousAutoplay = result.invidiousAutoplay;
+    useFreeTube = result.useFreeTube;
   }
 );
 
@@ -216,6 +219,9 @@ browser.storage.onChanged.addListener((changes) => {
   }
   if ("invidiousAutoplay" in changes) {
     invidiousAutoplay = changes.invidiousAutoplay.newValue;
+  }
+  if ("useFreeTube" in changes) {
+    useFreeTube = changes.useFreeTube.newValue;
   }
   if ("exceptions" in changes) {
     exceptions = changes.exceptions.newValue.map((e) => {
@@ -286,6 +292,9 @@ function redirectYouTube(url, initiator, type) {
   }
   if (onlyEmbeddedVideo && type !== "sub_frame") {
     return null;
+  }
+  if (useFreeTube) {
+    return `freetube://${url}`;
   }
   // Apply settings
   if (alwaysProxy) {

@@ -71,6 +71,7 @@ let invidiousPlayerStyle = document.getElementById("invidious-player-style");
 let invidiousSubtitles = document.getElementById("invidious-subtitles");
 let invidiousAutoplay = document.getElementById("invidious-autoplay");
 let theme = document.getElementById("theme");
+let useFreeTube = document.getElementById("useFreeTube");
 let exceptions;
 
 window.browser = window.browser || window.chrome;
@@ -119,6 +120,7 @@ browser.storage.sync.get(
     "invidiousAutoplay",
     "exceptions",
     "theme",
+    "useFreeTube",
   ],
   (result) => {
     theme.value = result.theme || "";
@@ -146,6 +148,7 @@ browser.storage.sync.get(
     invidiousPlayerStyle.value = result.invidiousPlayerStyle || "";
     invidiousSubtitles.value = result.invidiousSubtitles || "";
     invidiousAutoplay.checked = result.invidiousAutoplay;
+    useFreeTube.checked = result.useFreeTube;
   }
 );
 
@@ -313,6 +316,10 @@ invidiousDarkMode.addEventListener("change", (event) => {
 
 persistInvidiousPrefs.addEventListener("change", (event) => {
   browser.storage.sync.set({ persistInvidiousPrefs: event.target.checked });
+});
+
+useFreeTube.addEventListener("change", (event) => {
+  browser.storage.sync.set({ useFreeTube: event.target.checked });
 });
 
 let invidiousVolumeChange = debounce(() => {

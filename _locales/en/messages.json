@@ -106,5 +106,9 @@
   "version": {
     "message": "Version",
     "description": "Version"
+  },
+  "useFreeTube": {
+    "message": "Use FreeTube over Invidious when possible",
+    "description": "Label for 'Use FreeTube over Invidious when possible' option (options)."
   }
 }

@@ -1,10 +1,13 @@
 # Extension Store (AMO & Chrome Web Store) Listing
 
 ## Summary:
+
 ```
 A simple web extension that redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives.
 ```
+
 ## Description:
+
 ```
 Redirects Twitter, YouTube, Instagram, & Google Maps requests to privacy friendly alternatives - <a href='https://nitter.net/'>Nitter</a>, <a href='https://invidio.us/'>Invidious</a>, <a href='https://bibliogram.art/'>Bibliogram</a>, & <a href='https://www.openstreetmap.org'>OpenStreetMap</a>.
 
@@ -23,10 +26,12 @@ The code for this web extension is available on <a href='https://github.com/Simo
 <b>★ Donate: 👨🏻‍💻</b>
 If you like this extension and are financially able please consider <a href='https://www.buymeacoffee.com/SimonBrazell'>buying me a coffee</a> ☕️ ️to show your appreciation and support the continuation of the project.
 
-<b>★ What's New in This Version (v1.1.36) 🆕</b>
+<b>★ What's New in This Version (v1.1.42) 🆕</b>
 <ul>
-  <li>Added Russian language translation.</li>
-  <li>Fix Invidious autoplay parameter.</li>
+  <li>Added Polish language translation.</li>
+  <li>Added Chinese language translation.</li>
+  <li>Pruned the Invidious random instances list.</li>
+  <li>Added support for FreeTube redirects (where possible).</li>
 </ul>
 
 <b>★ Permissions: ℹ️</b>
