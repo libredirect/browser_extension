@@ -18,7 +18,6 @@ const invidiousInstances = [
   "https://invidiou.site",
   "https://invidious.kavin.rocks",
   "https://tube.connect.cafe",
-  "https://yewtu.be",
 ];
 const twitterDomains = [
   "twitter.com",
