@@ -71,6 +71,9 @@ const instagramReservedPaths = [
   "imageproxy",
   "videoproxy",
   ".well-known",
+  "igtv",
+  "tv",
+  "reel",
 ];
 const bibliogramBypassPaths = /\/(accounts\/|embeds?.js)/;
 const bibliogramInstances = [
