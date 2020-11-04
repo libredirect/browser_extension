@@ -70,7 +70,6 @@ const instagramReservedPaths = [
   "imageproxy",
   "videoproxy",
   ".well-known",
-  "igtv",
   "tv",
   "reel",
 ];
