@@ -4,11 +4,22 @@
 
 [![Donate](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/SimonBrazell/donate) [![Buy me a coffee](assets/images/buy-me-a-coffee.png)](https://www.buymeacoffee.com/SimonBrazell)
 
-[![Firefox Add-on](assets/images/badge-amo.png)](https://addons.mozilla.org/en-US/firefox/addon/privacy-redirect/) [![Chrome Extension](assets/images/badge-chrome.png)](https://chrome.google.com/webstore/detail/privacy-redirect/pmcmeagblkinmogikoikkdjiligflglb) [![Edge Extension](assets/images/badge-ms.png)](https://microsoftedge.microsoft.com/addons/detail/privacy-redirect/elnabkhcgpajchapppkhiaifkgikgihj)
+## Get
+[![Firefox Add-on](assets/images/badge-amo.png)](https://addons.mozilla.org/en-US/firefox/addon/privacy-redirect/) 
+[![Chrome Extension](assets/images/badge-chrome.png)](https://chrome.google.com/webstore/detail/privacy-redirect/pmcmeagblkinmogikoikkdjiligflglb) 
+[![Edge Extension](assets/images/badge-ms.png)](https://microsoftedge.microsoft.com/addons/detail/privacy-redirect/elnabkhcgpajchapppkhiaifkgikgihj)
 
-A web extension that redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/omarroth/invidious), [Bibliogram](https://sr.ht/~cadence/bibliogram/) & [OpenStreetMap](https://www.openstreetmap.org/).
+## About
+A web extension that redirects *Twitter, YouTube, Instagram & Google Maps* requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/iv-org/invidious), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Bibliogram](https://sr.ht/~cadence/bibliogram/) & [OpenStreetMap](https://www.openstreetmap.org/).
 
-Allows for setting custom [Nitter](https://github.com/zedeus/nitter/wiki/Instances), [Invidious](https://github.com/omarroth/invidious/wiki/Invidious-Instances), [Bibliogram](https://git.sr.ht/~cadence/bibliogram-docs/tree/master/docs/Instances.md) & [OpenStreetMap](https://wiki.openstreetmap.org/wiki/Tile_servers) instances and toggling all redirects on & off.
+It's possible to toggle all redirects on and off. The extension will default to using random instances if none are selected. If these instances are not working, you can try and set a custom instance from the list below.
+
+### Custom instances
+Privacy Redirect allows setting custom instances, instances can be found here:
+- [Nitter instances](https://github.com/zedeus/nitter/wiki/Instances)
+- [Invidious instances](https://github.com/iv-org/invidious/wiki/Invidious-Instances)
+- [Bibliogram instances](https://git.sr.ht/~cadence/bibliogram-docs/tree/master/docs/Instances.md)
+- [OpenStreetMap tile servers](https://wiki.openstreetmap.org/wiki/Tile_servers)
 
 ## Build
 
@@ -18,7 +29,11 @@ Allows for setting custom [Nitter](https://github.com/zedeus/nitter/wiki/Instanc
 
 ## License
 
-Code released under [the MIT license](LICENSE.txt).
+Code released under the free and open-source [MIT license](LICENSE.txt).
+
+## Permissions
+
+Please note, access to all website navigation events ( all URLs), not just the target domains, is required to allow embedded video redirects to occur. At this time I know of no other way to achieve iframe redirects, happy to hear some suggestions on this though 🙂
 
 ## Privacy Policy
 
