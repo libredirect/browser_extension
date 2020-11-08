@@ -10,45 +10,48 @@ const nitterInstances = [
   "https://nitter.mastodont.cat",
   "https://nitter.dark.fail",
   "https://nitter.tedomum.net",
-  "https://t.maisputain.ovh",
+  "https://nitter.cattube.org",
+  "https://nitter.fdn.fr",
+  "https://nitter.1d4.us",
+  "https://nitter.kavin.rocks",
+  "https://tweet.lambda.dance",
+  "https://nitter.cc",
+  "https://nitter.weaponizedhumiliation.com",
+  "https://nitter.vxempire.xyz",
   "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
   "http://nitter.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd.onion",
+  "http://nitterlgj3n5fgwesu3vxc5h67ruku33nqaoeoocae2mvlzhsu6k7fqd.onion",
+  "http://npf37k3mtzwxreiw52ccs5ay4e6qt2fkcs2ndieurdyn2cuzzsfyfvid.onion",
 ];
 const invidiousInstances = [
   "https://invidious.snopyta.org",
-  "https://yewtu.be",
-  "https://invidious.ggc-project.de",
-  "https://invidious.13ad.de",
   "https://invidious.xyz",
-  "https://invidious.toot.koeln",
-  "https://invidious.site",
+  "https://invidious.kavin.rocks",
+  "https://tube.connect.cafe",
+  "https://invidious.zapashcanon.fr",
   "https://invidiou.site",
-  "https://invidious.fdn.fr",
-  "https://watch.nettohikari.com",
-  "https://yt.iswleuven.be",
-  "https://yt.maisputain.ovh",
-  "http://kgg2m7yk5aybusll.onion",
-  "http://axqzx4s6s54s32yentfqojs3x5i7faxza6xo3ehd4bzzsg2ii4fv2iid.onion",
+  "https://vid.mint.lgbt",
+  "https://invidious.site",
   "http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion",
   "http://qklhadlycap4cnod.onion",
   "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
-  "http://mfqczy4mysscub2s.onion",
-  "http://4l2dgddgsrkf2ous66i6seeyi6etzfgrue332grh2n7madpwopotugyd.onion",
+  "http://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
 ];
 const bibliogramInstances = [
   "https://bibliogram.art",
   "https://bibliogram.snopyta.org",
   "https://bibliogram.pussthecat.org",
   "https://bibliogram.nixnet.services",
+  "https://bg.endl.site",
+  "https://bibliogram.13ad.de",
+  "https://bibliogram.pixelfed.uno",
+  "https://bibliogram.ethibox.fr",
   "https://bibliogram.hamster.dance",
-  "https://insta.maisputain.ovh",
+  "https://bibliogram.kavin.rocks",
   "https://bibliogram.ggc-project.de",
 ];
 const osmInstances = ["https://openstreetmap.org"];
-const oldRedditViews = [
-  "https://old.reddit.com", // desktop
-  "https://i.reddit.com" // mobile
-];
+const oldRedditViews = ["https://old.reddit.com", "https://i.reddit.com"];
 const autocompletes = [
   { id: "nitter-instance", instances: nitterInstances },
   { id: "invidious-instance", instances: invidiousInstances },
@@ -78,7 +81,10 @@ let invidiousPlayerStyle = document.getElementById("invidious-player-style");
 let invidiousSubtitles = document.getElementById("invidious-subtitles");
 let invidiousAutoplay = document.getElementById("invidious-autoplay");
 let theme = document.getElementById("theme");
-let useFreeTube = document.getElementById("useFreeTube");
+let useFreeTube = document.getElementById("use-freetube");
+let nitterRandomPool = document.getElementById("nitter-random-pool");
+let invidiousRandomPool = document.getElementById("invidious-random-pool");
+let bibliogramRandomPool = document.getElementById("bibliogram-random-pool");
 let exceptions;
 
 window.browser = window.browser || window.chrome;
@@ -103,6 +109,10 @@ function prependExceptionsItem(item, index) {
     });
     li.remove();
   });
+}
+
+function filterInstances(instances) {
+  return instances.filter((instance) => !instance.includes(".onion")).join();
 }
 
 browser.storage.sync.get(
@@ -130,6 +140,9 @@ browser.storage.sync.get(
     "exceptions",
     "theme",
     "useFreeTube",
+    "nitterRandomPool",
+    "invidiousRandomPool",
+    "bibliogramRandomPool",
   ],
   (result) => {
     theme.value = result.theme || "";
@@ -160,6 +173,12 @@ browser.storage.sync.get(
     invidiousSubtitles.value = result.invidiousSubtitles || "";
     invidiousAutoplay.checked = result.invidiousAutoplay;
     useFreeTube.checked = result.useFreeTube;
+    nitterRandomPool.value =
+      result.nitterRandomPool || filterInstances(nitterInstances);
+    invidiousRandomPool.value =
+      result.invidiousRandomPool || filterInstances(invidiousInstances);
+    bibliogramRandomPool.value =
+      result.bibliogramRandomPool || filterInstances(bibliogramInstances);
   }
 );
 
@@ -364,17 +383,30 @@ invidiousPlayerStyle.addEventListener("change", (event) => {
 });
 
 let invidiousSubtitlesChange = debounce(() => {
-  if (invidiousInstance.checkValidity()) {
-    browser.storage.sync.set({
-      invidiousSubtitles: invidiousSubtitles.value,
-    });
-  }
+  browser.storage.sync.set({ invidiousSubtitles: invidiousSubtitles.value });
 }, 500);
 invidiousSubtitles.addEventListener("input", invidiousSubtitlesChange);
 
 invidiousAutoplay.addEventListener("change", (event) => {
   browser.storage.sync.set({ invidiousAutoplay: event.target.checked });
 });
+
+let nitterRandomPoolChange = debounce(() => {
+  browser.storage.sync.set({ nitterRandomPool: nitterRandomPool.value });
+}, 500);
+nitterRandomPool.addEventListener("input", nitterRandomPoolChange);
+
+let invidiousRandomPoolChange = debounce(() => {
+  browser.storage.sync.set({ invidiousRandomPool: invidiousRandomPool.value });
+}, 500);
+invidiousRandomPool.addEventListener("input", invidiousRandomPoolChange);
+
+let bibliogramRandomPoolChange = debounce(() => {
+  browser.storage.sync.set({
+    bibliogramRandomPool: bibliogramRandomPool.value,
+  });
+}, 500);
+bibliogramRandomPool.addEventListener("input", bibliogramRandomPoolChange);
 
 theme.addEventListener("change", (event) => {
   const value = event.target.options[theme.selectedIndex].value;

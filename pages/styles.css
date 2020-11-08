@@ -237,7 +237,7 @@ input:invalid {
   background-color: var(--bg-secondary);
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 400px;
   z-index: 2;
 }
 
@@ -464,4 +464,18 @@ input[type="range"]::-moz-range-thumb {
 
 #volume-value {
   float: right;
+}
+
+.subheading {
+  padding: 0 10px;
+}
+
+.subheading h1 {
+  color: var(--active);
+}
+
+.subheading hr {
+  height: 1px;
+  background-color: var(--active);
+  border: none;
 }

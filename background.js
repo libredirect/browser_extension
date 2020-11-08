@@ -11,21 +11,6 @@ const youtubeDomains = [
   "s.ytimg.com",
   "music.youtube.com",
 ];
-const invidiousInstances = [
-  "https://invidious.snopyta.org",
-  "https://invidious.site",
-  "https://invidious.zapashcanon.fr",
-  "https://invidiou.site",
-  "https://invidious.kavin.rocks",
-  "https://tube.connect.cafe",
-];
-const twitterDomains = [
-  "twitter.com",
-  "www.twitter.com",
-  "mobile.twitter.com",
-  "pbs.twimg.com",
-  "video.twimg.com",
-];
 const nitterInstances = [
   "https://nitter.net",
   "https://nitter.snopyta.org",
@@ -34,13 +19,41 @@ const nitterInstances = [
   "https://nitter.13ad.de",
   "https://nitter.pussthecat.org",
   "https://nitter.mastodont.cat",
+  "https://nitter.dark.fail",
   "https://nitter.tedomum.net",
   "https://nitter.cattube.org",
   "https://nitter.fdn.fr",
   "https://nitter.1d4.us",
   "https://nitter.kavin.rocks",
-  "https://nitter.dark.fail",
   "https://tweet.lambda.dance",
+  "https://nitter.cc",
+  "https://nitter.weaponizedhumiliation.com",
+  "https://nitter.vxempire.xyz",
+  "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
+  "http://nitter.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd.onion",
+  "http://nitterlgj3n5fgwesu3vxc5h67ruku33nqaoeoocae2mvlzhsu6k7fqd.onion",
+  "http://npf37k3mtzwxreiw52ccs5ay4e6qt2fkcs2ndieurdyn2cuzzsfyfvid.onion",
+];
+const twitterDomains = [
+  "twitter.com",
+  "www.twitter.com",
+  "mobile.twitter.com",
+  "pbs.twimg.com",
+  "video.twimg.com",
+];
+const invidiousInstances = [
+  "https://invidious.snopyta.org",
+  "https://invidious.xyz",
+  "https://invidious.kavin.rocks",
+  "https://tube.connect.cafe",
+  "https://invidious.zapashcanon.fr",
+  "https://invidiou.site",
+  "https://vid.mint.lgbt",
+  "https://invidious.site",
+  "http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion",
+  "http://qklhadlycap4cnod.onion",
+  "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
+  "http://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
 ];
 const instagramDomains = [
   "instagram.com",
@@ -82,6 +95,7 @@ const bibliogramInstances = [
   "https://bg.endl.site",
   "https://bibliogram.13ad.de",
   "https://bibliogram.pixelfed.uno",
+  "https://bibliogram.ethibox.fr",
   "https://bibliogram.hamster.dance",
   "https://bibliogram.kavin.rocks",
   "https://bibliogram.ggc-project.de",
@@ -96,7 +110,7 @@ const redditDomains = [
 const redditBypassPaths = /\/(gallery\/poll\/rpan\/settings\/topics)/;
 const oldRedditViews = [
   "https://old.reddit.com", // desktop
-  "https://i.reddit.com" // mobile
+  "https://i.reddit.com", // mobile
 ];
 const oldRedditDefaultView = oldRedditViews[0];
 const googleMapsRegex = /https?:\/\/(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
@@ -135,9 +149,16 @@ let invidiousPlayerStyle;
 let invidiousSubtitles;
 let invidiousAutoplay;
 let useFreeTube;
+let nitterRandomPool;
+let invidiousRandomPool;
+let bibliogramRandomPool;
 let exceptions;
 
 window.browser = window.browser || window.chrome;
+
+function filterInstances(instances) {
+  return instances.filter((instance) => !instance.includes(".onion"));
+}
 
 browser.storage.sync.get(
   [
@@ -160,6 +181,9 @@ browser.storage.sync.get(
     "invidiousSubtitles",
     "invidiousAutoplay",
     "useFreeTube",
+    "nitterRandomPool",
+    "invidiousRandomPool",
+    "bibliogramRandomPool",
     "exceptions",
   ],
   (result) => {
@@ -187,6 +211,15 @@ browser.storage.sync.get(
     invidiousSubtitles = result.invidiousSubtitles || "";
     invidiousAutoplay = result.invidiousAutoplay;
     useFreeTube = result.useFreeTube;
+    nitterRandomPool = result.nitterRandomPool
+      ? result.nitterRandomPool.split(",")
+      : filterInstances(nitterInstances);
+    invidiousRandomPool = result.invidiousRandomPool
+      ? result.invidiousRandomPool.split(",")
+      : filterInstances(invidiousInstances);
+    bibliogramRandomPool = result.bibliogramRandomPool
+      ? result.bibliogramRandomPool.split(",")
+      : filterInstances(bibliogramInstances);
   }
 );
 
@@ -247,6 +280,15 @@ browser.storage.onChanged.addListener((changes) => {
   }
   if ("useFreeTube" in changes) {
     useFreeTube = changes.useFreeTube.newValue;
+  }
+  if ("nitterRandomPool" in changes) {
+    nitterRandomPool = changes.nitterRandomPool.newValue.split(",");
+  }
+  if ("invidiousRandomPool" in changes) {
+    invidiousRandomPool = changes.invidiousRandomPool.newValue.split(",");
+  }
+  if ("bibliogramRandomPool" in changes) {
+    bibliogramRandomPool = changes.bibliogramRandomPool.newValue.split(",");
   }
   if ("exceptions" in changes) {
     exceptions = changes.exceptions.newValue.map((e) => {
@@ -318,7 +360,7 @@ function redirectYouTube(url, initiator, type) {
   if (onlyEmbeddedVideo && type !== "sub_frame") {
     return null;
   }
-  if (useFreeTube && type !== "sub_frame") {
+  if (useFreeTube && type === "main_frame") {
     return `freetube://${url}`;
   }
   // Apply settings
@@ -343,7 +385,7 @@ function redirectYouTube(url, initiator, type) {
   url.searchParams.append("autoplay", invidiousAutoplay ? 1 : 0);
 
   return `${
-    invidiousInstance || getRandomInstance(invidiousInstances)
+    invidiousInstance || getRandomInstance(invidiousRandomPool)
   }${url.pathname.replace("/shorts", "")}${url.search}`;
 }
 
@@ -368,18 +410,18 @@ function redirectTwitter(url, initiator) {
   }
   if (url.host.split(".")[0] === "pbs") {
     return `${
-      nitterInstance || getRandomInstance(nitterInstances)
+      nitterInstance || getRandomInstance(nitterRandomPool)
     }/pic/${encodeURIComponent(url.href)}`;
   } else if (url.host.split(".")[0] === "video") {
     return `${
-      nitterInstance || getRandomInstance(nitterInstances)
+      nitterInstance || getRandomInstance(nitterRandomPool)
     }/gif/${encodeURIComponent(url.href)}`;
   } else if (url.pathname.includes("tweets")) {
     return `${
-      nitterInstance || getRandomInstance(nitterInstances)
+      nitterInstance || getRandomInstance(nitterRandomPool)
     }${url.pathname.replace("/tweets", "")}${url.search}`;
   } else {
-    return `${nitterInstance || getRandomInstance(nitterInstances)}${
+    return `${nitterInstance || getRandomInstance(nitterRandomPool)}${
       url.pathname
     }${url.search}`;
   }
@@ -406,12 +448,12 @@ function redirectInstagram(url, initiator, type) {
     url.pathname === "/" ||
     instagramReservedPaths.includes(url.pathname.split("/")[1])
   ) {
-    return `${bibliogramInstance || getRandomInstance(bibliogramInstances)}${
+    return `${bibliogramInstance || getRandomInstance(bibliogramRandomPool)}${
       url.pathname
     }${url.search}`;
   } else {
     // Likely a user profile, redirect to '/u/...'
-    return `${bibliogramInstance || getRandomInstance(bibliogramInstances)}/u${
+    return `${bibliogramInstance || getRandomInstance(bibliogramRandomPool)}/u${
       url.pathname
     }${url.search}`;
   }
@@ -514,7 +556,10 @@ function redirectReddit(url, initiator, type) {
     return null;
   }
   // Do not redirect when already on the selected view
-  if (initiator && initiator.origin === oldRedditView || url.origin === oldRedditView) {
+  if (
+    (initiator && initiator.origin === oldRedditView) ||
+    url.origin === oldRedditView
+  ) {
     return null;
   }
   // Do not redirect exclusions nor anything other than main_frame
@@ -550,10 +595,13 @@ browser.webRequest.onBeforeRequest.addListener(
       redirect = {
         redirectUrl: redirectGoogleMaps(url, initiator),
       };
-    } else if (redditDomains.includes(url.host) || oldRedditViews.includes(url.origin)) {
+    } else if (
+      redditDomains.includes(url.host) ||
+      oldRedditViews.includes(url.origin)
+    ) {
       redirect = {
         redirectUrl: redirectReddit(url, initiator, details.type),
-      }
+      };
     }
     if (redirect && redirect.redirectUrl) {
       console.info(
