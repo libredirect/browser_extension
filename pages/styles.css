@@ -235,6 +235,10 @@ input:invalid {
 .tab {
   overflow: hidden;
   background-color: var(--bg-secondary);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
 }
 
 .tab button {
@@ -262,7 +266,7 @@ input:invalid {
 }
 
 .tabcontent {
-  padding-top: 10px;
+  padding-top: 50px;
   display: none;
   background-color: var(--bg-main);
   min-height: 510px;
