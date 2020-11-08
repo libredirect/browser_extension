@@ -10,9 +10,9 @@
 [![Edge Extension](assets/images/badge-ms.png)](https://microsoftedge.microsoft.com/addons/detail/privacy-redirect/elnabkhcgpajchapppkhiaifkgikgihj)
 
 ## About
-A web extension that redirects *Twitter, YouTube, Instagram & Google Maps* requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/iv-org/invidious), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Bibliogram](https://sr.ht/~cadence/bibliogram/) & [OpenStreetMap](https://www.openstreetmap.org/).
+A web extension that redirects *Twitter, YouTube, Instagram, Google Maps & Non-Private Searches* requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/iv-org/invidious), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Bibliogram](https://sr.ht/~cadence/bibliogram/), [OpenStreetMap](https://www.openstreetmap.org/) & Private Search Engines like [DuckDuckGo](https://duckduckgo.com) and [Startpage](https://startpage.com).
 
-It's possible to toggle all redirects on and off. The extension will default to using random instances if none are selected. If these instances are not working, you can try and set a custom instance from the list below.
+It's possible to toggle all redirects on and off. The extension will default to using random instances if none are selected. If these instances are not working, you can try and set a custom instance from the list below. \*Instance for Search Engine redirect cannot be chosen at the moment.
 
 ### Custom instances
 Privacy Redirect allows setting custom instances, instances can be found here:
@@ -20,6 +20,11 @@ Privacy Redirect allows setting custom instances, instances can be found here:
 - [Invidious instances](https://github.com/iv-org/invidious/wiki/Invidious-Instances)
 - [Bibliogram instances](https://git.sr.ht/~cadence/bibliogram-docs/tree/master/docs/Instances.md)
 - [OpenStreetMap tile servers](https://wiki.openstreetmap.org/wiki/Tile_servers)
+- Private Search Engine list
+    - [DuckDuckGo](https://duckduckgo.com)
+    - [Startpage](https://startpage.com)
+    - [Qwant](https://www.qwant.com)
+    - [Mojeek](https://www.mojeek.com)
 
 ## Build
 
