@@ -129,12 +129,7 @@ const layers = {
   traffic: "S", // not implemented on OSM, default to standard.
   bicycling: "C",
 };
-const notPrivateSearchEngine = [
-  "google.com",
-  "google.co.jp",
-  "www.google.com",
-  "www.google.co.jp",
-];
+const googleSearchRegex = /https?:\/\/(((www|maps)\.)?(google\.).*(\/search)|search\.(google\.).*)/;
 const privateSearchEngine = [
   { link: "https://duckduckgo.com", q: "/" },
   { link: "https://startpage.com", q: "/search/" },
@@ -642,7 +637,7 @@ browser.webRequest.onBeforeRequest.addListener(
       redirect = {
         redirectUrl: redirectReddit(url, initiator, details.type),
       };
-    } else if (notPrivateSearchEngine.includes(url.host)) {
+    } else if (url.href.match(googleSearchRegex)) {
       redirect = {
         redirectUrl: redirectSearchEngine(url, initiator),
       };
