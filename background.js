@@ -586,22 +586,17 @@ function redirectSearchEngine(url, initiator) {
   if (disableSearchEngine || isException(url, initiator)) {
     return null;
   }
-  if (url.pathname.includes("/home")) {
-    return null;
-  }
-  if (url.pathname.includes("search")) {
-    searchEngine =
-      searchEngineInstance || getRandomInstance(privateSearchEngine);
-    search = "";
-    url.search
-      .slice(1)
-      .split("&")
-      .forEach(function (input) {
-        if (input.startsWith("q=")) search = input;
-      });
-    console.log("search: ", search);
-    return `${searchEngine.link}${searchEngine.q}?${search}`;
-  }
+
+  let searchEngine = getRandomInstance(privateSearchEngine);
+  let search = "";
+  url.search
+    .slice(1)
+    .split("&")
+    .forEach(function (input) {
+      if (input.startsWith("q=")) search = input;
+    });
+  console.log("search: ", search);
+  return `${searchEngine.link}${searchEngine.q}?${search}`;
 }
 
 browser.webRequest.onBeforeRequest.addListener(
