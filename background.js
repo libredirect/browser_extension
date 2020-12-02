@@ -110,8 +110,10 @@ const redditDomains = [
 ];
 const redditBypassPaths = /\/(gallery\/poll\/rpan\/settings\/topics)/;
 const oldRedditViews = [
+  "https://teddit.net", // privacy
+  "https://snew.notabug.io", // anti-censorship
   "https://old.reddit.com", // desktop
-  "https://i.reddit.com", // mobile
+  "https://i.reddit.com" // mobile
 ];
 const oldRedditDefaultView = oldRedditViews[0];
 const googleMapsRegex = /https?:\/\/(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
