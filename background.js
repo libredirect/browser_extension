@@ -132,12 +132,20 @@ const layers = {
   traffic: "S", // not implemented on OSM, default to standard.
   bicycling: "C",
 };
+const googleSearchRegex = /https?:\/\/(((www|maps)\.)?(google\.).*(\/search)|search\.(google\.).*)/;
+const privateSearchEngine = [
+  { link: "https://duckduckgo.com", q: "/" },
+  { link: "https://startpage.com", q: "/search/" },
+  { link: "https://www.qwant.com", q: "/" },
+  { link: "https://www.mojeek.com", q: "/search" },
+];
 
 let disableNitter;
 let disableInvidious;
 let disableBibliogram;
 let disableOsm;
 let disableOldReddit;
+let disableSearchEngine;
 let nitterInstance;
 let invidiousInstance;
 let bibliogramInstance;
@@ -175,6 +183,7 @@ browser.storage.sync.get(
     "disableBibliogram",
     "disableOsm",
     "disableOldReddit",
+    "disableSearchEngine",
     "alwaysProxy",
     "onlyEmbeddedVideo",
     "videoQuality",
@@ -195,6 +204,7 @@ browser.storage.sync.get(
     disableBibliogram = result.disableBibliogram;
     disableOsm = result.disableOsm;
     disableOldReddit = result.disableOldReddit;
+    disableSearchEngine = result.disableSearchEngine;
     nitterInstance = result.nitterInstance;
     invidiousInstance = result.invidiousInstance;
     bibliogramInstance = result.bibliogramInstance;
@@ -256,6 +266,9 @@ browser.storage.onChanged.addListener((changes) => {
   }
   if ("disableOldReddit" in changes) {
     disableOldReddit = changes.disableOldReddit.newValue;
+  }
+  if ("disableSearchEngine" in changes) {
+    disableSearchEngine = changes.disableSearchEngine.newValue;
   }
   if ("alwaysProxy" in changes) {
     alwaysProxy = changes.alwaysProxy.newValue;
@@ -572,6 +585,23 @@ function redirectReddit(url, initiator, type) {
   return `${oldRedditView}${url.pathname}${url.search}`;
 }
 
+function redirectSearchEngine(url, initiator) {
+  if (disableSearchEngine || isException(url, initiator)) {
+    return null;
+  }
+
+  let searchEngine = getRandomInstance(privateSearchEngine);
+  let search = "";
+  url.search
+    .slice(1)
+    .split("&")
+    .forEach(function (input) {
+      if (input.startsWith("q=")) search = input;
+    });
+  console.log("search: ", search);
+  return `${searchEngine.link}${searchEngine.q}?${search}`;
+}
+
 browser.webRequest.onBeforeRequest.addListener(
   (details) => {
     const url = new URL(details.url);
@@ -604,6 +634,10 @@ browser.webRequest.onBeforeRequest.addListener(
     ) {
       redirect = {
         redirectUrl: redirectReddit(url, initiator, details.type),
+      };
+    } else if (url.href.match(googleSearchRegex)) {
+      redirect = {
+        redirectUrl: redirectSearchEngine(url, initiator),
       };
     }
     if (redirect && redirect.redirectUrl) {

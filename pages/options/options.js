@@ -70,6 +70,7 @@ let disableInvidious = document.getElementById("disable-invidious");
 let disableBibliogram = document.getElementById("disable-bibliogram");
 let disableOsm = document.getElementById("disable-osm");
 let disableOldReddit = document.getElementById("disable-old-reddit");
+let disableSearchEngine = document.getElementById("disable-searchEngine");
 let alwaysProxy = document.getElementById("always-proxy");
 let onlyEmbeddedVideo = document.getElementById("only-embed");
 let videoQuality = document.getElementById("video-quality");
@@ -127,6 +128,7 @@ browser.storage.sync.get(
     "disableBibliogram",
     "disableOsm",
     "disableOldReddit",
+    "disableSearchEngine",
     "alwaysProxy",
     "onlyEmbeddedVideo",
     "videoQuality",
@@ -157,6 +159,7 @@ browser.storage.sync.get(
     disableBibliogram.checked = !result.disableBibliogram;
     disableOsm.checked = !result.disableOsm;
     disableOldReddit.checked = !result.disableOldReddit;
+    disableSearchEngine.checked = !result.disableSearchEngine;
     alwaysProxy.checked = result.alwaysProxy;
     onlyEmbeddedVideo.checked = result.onlyEmbeddedVideo;
     videoQuality.value = result.videoQuality || "";
@@ -333,6 +336,10 @@ disableOsm.addEventListener("change", (event) => {
 
 disableOldReddit.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableOldReddit: !event.target.checked });
+});
+
+disableSearchEngine.addEventListener("change", (event) => {
+  browser.storage.sync.set({ disableSearchEngine: !event.target.checked });
 });
 
 alwaysProxy.addEventListener("change", (event) => {
