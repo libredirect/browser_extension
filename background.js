@@ -110,8 +110,9 @@ const redditDomains = [
 ];
 const redditBypassPaths = /\/(gallery\/poll\/rpan\/settings\/topics)/;
 const oldRedditViews = [
-  "https://teddit.net", // privacy
+  "https://teddit.net", // privacy w/ old UI
   "https://snew.notabug.io", // anti-censorship
+  "https://libredd.it", // privacy w/ modern UI
   "https://old.reddit.com", // desktop
   "https://i.reddit.com" // mobile
 ];
