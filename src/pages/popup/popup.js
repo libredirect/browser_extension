@@ -4,7 +4,7 @@ let disableNitter = document.querySelector("#disable-nitter");
 let disableInvidious = document.querySelector("#disable-invidious");
 let disableBibliogram = document.querySelector("#disable-bibliogram");
 let disableOsm = document.querySelector("#disable-osm");
-let disableOldReddit = document.querySelector("#disable-old-reddit");
+let disableReddit = document.querySelector("#disable-reddit");
 let disableSearchEngine = document.querySelector("#disable-searchEngine");
 let version = document.querySelector("#version");
 
@@ -16,7 +16,7 @@ browser.storage.sync.get(
     "disableInvidious",
     "disableBibliogram",
     "disableOsm",
-    "disableOldReddit",
+    "disableReddit",
     "disableSearchEngine",
     "theme",
   ],
@@ -26,7 +26,7 @@ browser.storage.sync.get(
     disableInvidious.checked = !result.disableInvidious;
     disableBibliogram.checked = !result.disableBibliogram;
     disableOsm.checked = !result.disableOsm;
-    disableOldReddit.checked = !result.disableOldReddit;
+    disableReddit.checked = !result.disableReddit;
     disableSearchEngine.checked = !result.disableSearchEngine;
   }
 );
@@ -49,8 +49,8 @@ disableOsm.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableOsm: !event.target.checked });
 });
 
-disableOldReddit.addEventListener("change", (event) => {
-  browser.storage.sync.set({ disableOldReddit: !event.target.checked });
+disableReddit.addEventListener("change", (event) => {
+  browser.storage.sync.set({ disableReddit: !event.target.checked });
 });
 
 disableSearchEngine.addEventListener("change", (event) => {

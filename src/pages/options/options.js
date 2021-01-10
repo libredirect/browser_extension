@@ -1,77 +1,43 @@
 "use strict";
 
-const nitterInstances = [
-  "https://nitter.net",
-  "https://nitter.snopyta.org",
-  "https://nitter.42l.fr",
-  "https://nitter.nixnet.services",
-  "https://nitter.13ad.de",
-  "https://nitter.pussthecat.org",
-  "https://nitter.mastodont.cat",
-  "https://nitter.dark.fail",
-  "https://nitter.tedomum.net",
-  "https://nitter.cattube.org",
-  "https://nitter.fdn.fr",
-  "https://nitter.1d4.us",
-  "https://nitter.kavin.rocks",
-  "https://tweet.lambda.dance",
-  "https://nitter.cc",
-  "https://nitter.weaponizedhumiliation.com",
-  "https://nitter.vxempire.xyz",
-  "https://nitter.unixfox.eu",
-  "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
-  "http://nitter.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd.onion",
-  "http://nitterlgj3n5fgwesu3vxc5h67ruku33nqaoeoocae2mvlzhsu6k7fqd.onion",
-  "http://npf37k3mtzwxreiw52ccs5ay4e6qt2fkcs2ndieurdyn2cuzzsfyfvid.onion",
-];
-const invidiousInstances = [
-  "https://invidious.snopyta.org",
-  "https://invidious.xyz",
-  "https://invidious.kavin.rocks",
-  "https://tube.connect.cafe",
-  "https://invidious.zapashcanon.fr",
-  "https://invidiou.site",
-  "https://vid.mint.lgbt",
-  "https://invidious.site",
-  "http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion",
-  "http://qklhadlycap4cnod.onion",
-  "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
-  "http://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
-];
-const bibliogramInstances = [
-  "https://bibliogram.art",
-  "https://bibliogram.snopyta.org",
-  "https://bibliogram.pussthecat.org",
-  "https://bibliogram.nixnet.services",
-  "https://bg.endl.site",
-  "https://bibliogram.13ad.de",
-  "https://bibliogram.pixelfed.uno",
-  "https://bibliogram.ethibox.fr",
-  "https://bibliogram.hamster.dance",
-  "https://bibliogram.kavin.rocks",
-  "https://bibliogram.ggc-project.de",
-];
-const osmInstances = ["https://openstreetmap.org"];
-const oldRedditViews = ["https://old.reddit.com", "https://i.reddit.com"];
+import commonHelper from "../../assets/javascripts/helpers/common.js";
+import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
+import youtubeHelper from "../../assets/javascripts/helpers/youtube.js";
+import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
+import mapsHelper from "../../assets/javascripts/helpers/google-maps.js";
+import redditHelper from "../../assets/javascripts/helpers/reddit.js";
+import searchHelper from "../../assets/javascripts/helpers/google-search.js";
+
+const nitterInstances = twitterHelper.redirects;
+const invidiousInstances = youtubeHelper.redirects;
+const bibliogramInstances = instagramHelper.redirects;
+const osmInstances = mapsHelper.redirects;
+const redditInstances = redditHelper.redirects;
+const searchEngineInstances = searchHelper.redirects;
 const autocompletes = [
   { id: "nitter-instance", instances: nitterInstances },
   { id: "invidious-instance", instances: invidiousInstances },
   { id: "bibliogram-instance", instances: bibliogramInstances },
   { id: "osm-instance", instances: osmInstances },
-  { id: "old-reddit-view", instances: oldRedditViews },
+  { id: "reddit-instance", instances: redditInstances },
+  {
+    id: "search-engine-instance",
+    instances: searchEngineInstances.map((instance) => instance.link),
+  },
 ];
 
 let nitterInstance = document.getElementById("nitter-instance");
 let invidiousInstance = document.getElementById("invidious-instance");
 let bibliogramInstance = document.getElementById("bibliogram-instance");
 let osmInstance = document.getElementById("osm-instance");
-let oldRedditView = document.getElementById("old-reddit-view");
+let redditInstance = document.getElementById("reddit-instance");
+let searchEngineInstance = document.getElementById("search-engine-instance");
 let disableNitter = document.getElementById("disable-nitter");
 let disableInvidious = document.getElementById("disable-invidious");
 let disableBibliogram = document.getElementById("disable-bibliogram");
 let disableOsm = document.getElementById("disable-osm");
-let disableOldReddit = document.getElementById("disable-old-reddit");
-let disableSearchEngine = document.getElementById("disable-searchEngine");
+let disableReddit = document.getElementById("disable-reddit");
+let disableSearchEngine = document.getElementById("disable-search-engine");
 let alwaysProxy = document.getElementById("always-proxy");
 let onlyEmbeddedVideo = document.getElementById("only-embed");
 let videoQuality = document.getElementById("video-quality");
@@ -113,22 +79,19 @@ function prependExceptionsItem(item, index) {
   });
 }
 
-function filterInstances(instances) {
-  return instances.filter((instance) => !instance.includes(".onion")).join();
-}
-
 browser.storage.sync.get(
   [
     "nitterInstance",
     "invidiousInstance",
     "bibliogramInstance",
     "osmInstance",
-    "oldRedditView",
+    "redditInstance",
+    "searchEngineInstance",
     "disableNitter",
     "disableInvidious",
     "disableBibliogram",
     "disableOsm",
-    "disableOldReddit",
+    "disableReddit",
     "disableSearchEngine",
     "alwaysProxy",
     "onlyEmbeddedVideo",
@@ -154,12 +117,14 @@ browser.storage.sync.get(
     invidiousInstance.value = result.invidiousInstance || "";
     bibliogramInstance.value = result.bibliogramInstance || "";
     osmInstance.value = result.osmInstance || "";
-    oldRedditView.value = result.oldRedditView || "";
+    redditInstance.value = result.redditInstance || "";
+    searchEngineInstance.value =
+      (result.searchEngineInstance && result.searchEngineInstance.link) || "";
     disableNitter.checked = !result.disableNitter;
     disableInvidious.checked = !result.disableInvidious;
     disableBibliogram.checked = !result.disableBibliogram;
     disableOsm.checked = !result.disableOsm;
-    disableOldReddit.checked = !result.disableOldReddit;
+    disableReddit.checked = !result.disableReddit;
     disableSearchEngine.checked = !result.disableSearchEngine;
     alwaysProxy.checked = result.alwaysProxy;
     onlyEmbeddedVideo.checked = result.onlyEmbeddedVideo;
@@ -178,11 +143,13 @@ browser.storage.sync.get(
     invidiousAutoplay.checked = result.invidiousAutoplay;
     useFreeTube.checked = result.useFreeTube;
     nitterRandomPool.value =
-      result.nitterRandomPool || filterInstances(nitterInstances);
+      result.nitterRandomPool || commonHelper.filterInstances(nitterInstances);
     invidiousRandomPool.value =
-      result.invidiousRandomPool || filterInstances(invidiousInstances);
+      result.invidiousRandomPool ||
+      commonHelper.filterInstances(invidiousInstances);
     bibliogramRandomPool.value =
-      result.bibliogramRandomPool || filterInstances(bibliogramInstances);
+      result.bibliogramRandomPool ||
+      commonHelper.filterInstances(bibliogramInstances);
   }
 );
 
@@ -274,7 +241,7 @@ function parseURL(urlString) {
   }
 }
 
-let nitterInstanceChange = debounce(() => {
+const nitterInstanceChange = debounce(() => {
   if (nitterInstance.checkValidity()) {
     browser.storage.sync.set({
       nitterInstance: parseURL(nitterInstance.value),
@@ -283,7 +250,7 @@ let nitterInstanceChange = debounce(() => {
 }, 500);
 nitterInstance.addEventListener("input", nitterInstanceChange);
 
-let invidiousInstanceChange = debounce(() => {
+const invidiousInstanceChange = debounce(() => {
   if (invidiousInstance.checkValidity()) {
     browser.storage.sync.set({
       invidiousInstance: parseURL(invidiousInstance.value),
@@ -292,7 +259,7 @@ let invidiousInstanceChange = debounce(() => {
 }, 500);
 invidiousInstance.addEventListener("input", invidiousInstanceChange);
 
-let bibliogramInstanceChange = debounce(() => {
+const bibliogramInstanceChange = debounce(() => {
   if (bibliogramInstance.checkValidity()) {
     browser.storage.sync.set({
       bibliogramInstance: parseURL(bibliogramInstance.value),
@@ -301,7 +268,7 @@ let bibliogramInstanceChange = debounce(() => {
 }, 500);
 bibliogramInstance.addEventListener("input", bibliogramInstanceChange);
 
-let osmInstanceChange = debounce(() => {
+const osmInstanceChange = debounce(() => {
   if (osmInstance.checkValidity()) {
     browser.storage.sync.set({
       osmInstance: parseURL(osmInstance.value),
@@ -310,14 +277,28 @@ let osmInstanceChange = debounce(() => {
 }, 500);
 osmInstance.addEventListener("input", osmInstanceChange);
 
-let oldRedditViewChange = debounce(() => {
-  if (oldRedditView.checkValidity()) {
+const redditInstanceChange = debounce(() => {
+  if (redditInstance.checkValidity()) {
     browser.storage.sync.set({
-      oldRedditView: parseURL(oldRedditView.value),
+      redditInstance: parseURL(redditInstance.value),
     });
   }
 }, 500);
-oldRedditView.addEventListener("input", oldRedditViewChange);
+redditInstance.addEventListener("input", redditInstanceChange);
+
+const searchEngineInstanceChange = debounce(() => {
+  const instance = searchEngineInstances.find(
+    (instance) => instance.link === searchEngineInstance.value
+  );
+  if (instance || !searchEngineInstance.value) {
+    browser.storage.sync.set({
+      searchEngineInstance: instance || searchEngineInstance.value,
+    });
+  } else {
+    searchEngineInstance.setCustomValidity("Must be an instance from the list");
+  }
+}, 500);
+searchEngineInstance.addEventListener("input", searchEngineInstanceChange);
 
 disableNitter.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableNitter: !event.target.checked });
@@ -335,8 +316,8 @@ disableOsm.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableOsm: !event.target.checked });
 });
 
-disableOldReddit.addEventListener("change", (event) => {
-  browser.storage.sync.set({ disableOldReddit: !event.target.checked });
+disableReddit.addEventListener("change", (event) => {
+  browser.storage.sync.set({ disableReddit: !event.target.checked });
 });
 
 disableSearchEngine.addEventListener("change", (event) => {
@@ -373,7 +354,7 @@ useFreeTube.addEventListener("change", (event) => {
   browser.storage.sync.set({ useFreeTube: event.target.checked });
 });
 
-let invidiousVolumeChange = debounce(() => {
+const invidiousVolumeChange = debounce(() => {
   document.querySelector(
     "#volume-value"
   ).textContent = `${invidiousVolume.value}%`;
@@ -390,7 +371,7 @@ invidiousPlayerStyle.addEventListener("change", (event) => {
   });
 });
 
-let invidiousSubtitlesChange = debounce(() => {
+const invidiousSubtitlesChange = debounce(() => {
   browser.storage.sync.set({ invidiousSubtitles: invidiousSubtitles.value });
 }, 500);
 invidiousSubtitles.addEventListener("input", invidiousSubtitlesChange);
@@ -399,17 +380,17 @@ invidiousAutoplay.addEventListener("change", (event) => {
   browser.storage.sync.set({ invidiousAutoplay: event.target.checked });
 });
 
-let nitterRandomPoolChange = debounce(() => {
+const nitterRandomPoolChange = debounce(() => {
   browser.storage.sync.set({ nitterRandomPool: nitterRandomPool.value });
 }, 500);
 nitterRandomPool.addEventListener("input", nitterRandomPoolChange);
 
-let invidiousRandomPoolChange = debounce(() => {
+const invidiousRandomPoolChange = debounce(() => {
   browser.storage.sync.set({ invidiousRandomPool: invidiousRandomPool.value });
 }, 500);
 invidiousRandomPool.addEventListener("input", invidiousRandomPoolChange);
 
-let bibliogramRandomPoolChange = debounce(() => {
+const bibliogramRandomPoolChange = debounce(() => {
   browser.storage.sync.set({
     bibliogramRandomPool: bibliogramRandomPool.value,
   });
@@ -524,3 +505,18 @@ function autocomplete(input, list) {
 autocompletes.forEach((value) => {
   autocomplete(document.getElementById(value.id), value.instances);
 });
+
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function () {
+    this.classList.toggle("collapsible-active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}

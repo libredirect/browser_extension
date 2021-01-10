@@ -1,166 +1,47 @@
 "use strict";
 
-const youtubeDomains = [
-  "m.youtube.com",
-  "youtube.com",
-  "img.youtube.com",
-  "www.youtube.com",
-  "youtube-nocookie.com",
-  "www.youtube-nocookie.com",
-  "youtu.be",
-  "s.ytimg.com",
-  "music.youtube.com",
-];
-const nitterInstances = [
-  "https://nitter.net",
-  "https://nitter.snopyta.org",
-  "https://nitter.42l.fr",
-  "https://nitter.nixnet.services",
-  "https://nitter.13ad.de",
-  "https://nitter.pussthecat.org",
-  "https://nitter.mastodont.cat",
-  "https://nitter.dark.fail",
-  "https://nitter.tedomum.net",
-  "https://nitter.cattube.org",
-  "https://nitter.fdn.fr",
-  "https://nitter.1d4.us",
-  "https://nitter.kavin.rocks",
-  "https://tweet.lambda.dance",
-  "https://nitter.cc",
-  "https://nitter.weaponizedhumiliation.com",
-  "https://nitter.vxempire.xyz",
-  "https://nitter.unixfox.eu",
-  "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
-  "http://nitter.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd.onion",
-  "http://nitterlgj3n5fgwesu3vxc5h67ruku33nqaoeoocae2mvlzhsu6k7fqd.onion",
-  "http://npf37k3mtzwxreiw52ccs5ay4e6qt2fkcs2ndieurdyn2cuzzsfyfvid.onion",
-];
-const twitterDomains = [
-  "twitter.com",
-  "www.twitter.com",
-  "mobile.twitter.com",
-  "pbs.twimg.com",
-  "video.twimg.com",
-];
-const invidiousInstances = [
-  "https://invidious.snopyta.org",
-  "https://invidious.xyz",
-  "https://invidious.kavin.rocks",
-  "https://tube.connect.cafe",
-  "https://invidious.zapashcanon.fr",
-  "https://invidiou.site",
-  "https://vid.mint.lgbt",
-  "https://invidious.site",
-  "https://yewtu.be",
-  "http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion",
-  "http://qklhadlycap4cnod.onion",
-  "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
-  "http://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
-];
-const instagramDomains = [
-  "instagram.com",
-  "www.instagram.com",
-  "help.instagram.com",
-  "about.instagram.com",
-];
-const instagramReservedPaths = [
-  "about",
-  "explore",
-  "support",
-  "press",
-  "api",
-  "privacy",
-  "safety",
-  "admin",
-  "graphql",
-  "accounts",
-  "help",
-  "terms",
-  "contact",
-  "blog",
-  "igtv",
-  "u",
-  "p",
-  "fragment",
-  "imageproxy",
-  "videoproxy",
-  ".well-known",
-  "tv",
-  "reel",
-];
-const bibliogramBypassPaths = /\/(accounts\/|embeds?.js)/;
-const bibliogramInstances = [
-  "https://bibliogram.art",
-  "https://bibliogram.snopyta.org",
-  "https://bibliogram.pussthecat.org",
-  "https://bibliogram.nixnet.services",
-  "https://bg.endl.site",
-  "https://bibliogram.13ad.de",
-  "https://bibliogram.pixelfed.uno",
-  "https://bibliogram.ethibox.fr",
-  "https://bibliogram.hamster.dance",
-  "https://bibliogram.kavin.rocks",
-  "https://bibliogram.ggc-project.de",
-];
-const osmDefault = "https://openstreetmap.org";
-const redditDomains = [
-  "www.reddit.com",
-  "np.reddit.com",
-  "new.reddit.com",
-  "amp.reddit.com",
-];
-const redditBypassPaths = /\/(gallery\/poll\/rpan\/settings\/topics)/;
-const oldRedditViews = [
-  // teddit: privacy w/ old UI
-  "https://teddit.net", 
-  "https://teddit.ggc-project.de",
-  "https://teddit.kavin.rocks",
-  "https://snew.notabug.io", // anti-censorship
-  // libreddit: privacy w/ modern UI
-  "https://libredd.it", 
-  "https://libreddit.spike.codes",
-  "https://libreddit.kavin.rocks",
-  "https://libreddit.insanity.wtf",
-  "https://libreddit.dothq.co",
-  "https://old.reddit.com", // desktop
-  "https://i.reddit.com" // mobile
-];
-const oldRedditDefaultView = oldRedditViews[0];
-const googleMapsRegex = /https?:\/\/(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
-const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
-const dataLatLngRegex = /(!3d|!4d)(-?[0-9]{1,10}.[0-9]{1,10})/g;
-const placeRegex = /\/place\/(.*)\//;
-const travelModes = {
-  driving: "fossgis_osrm_car",
-  walking: "fossgis_osrm_foot",
-  bicycling: "fossgis_osrm_bike",
-  transit: "fossgis_osrm_car", // not implemented on OSM, default to car.
-};
-const layers = {
-  none: "S",
-  transit: "T",
-  traffic: "S", // not implemented on OSM, default to standard.
-  bicycling: "C",
-};
-const googleSearchRegex = /https?:\/\/(((www|maps)\.)?(google\.).*(\/search)|search\.(google\.).*)/;
-const privateSearchEngine = [
-  { link: "https://duckduckgo.com", q: "/" },
-  { link: "https://startpage.com", q: "/search/" },
-  { link: "https://www.qwant.com", q: "/" },
-  { link: "https://www.mojeek.com", q: "/search" },
-];
+import commonHelper from "../../assets/javascripts/helpers/common.js";
+import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
+import youtubeHelper from "../../assets/javascripts/helpers/youtube.js";
+import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
+import mapsHelper from "../../assets/javascripts/helpers/google-maps.js";
+import redditHelper from "../../assets/javascripts/helpers/reddit.js";
+import searchHelper from "../../assets/javascripts/helpers/google-search.js";
+
+const nitterInstances = twitterHelper.redirects;
+const twitterDomains = twitterHelper.targets;
+const youtubeDomains = youtubeHelper.targets;
+const invidiousInstances = youtubeHelper.redirects;
+const instagramDomains = instagramHelper.targets;
+const bibliogramInstances = instagramHelper.redirects;
+const instagramReservedPaths = instagramHelper.reservedPaths;
+const bibliogramBypassPaths = instagramHelper.bypassPaths;
+const osmDefault = mapsHelper.redirects[0];
+const googleMapsRegex = mapsHelper.targets;
+const mapCentreRegex = mapsHelper.mapCentreRegex;
+const dataLatLngRegex = mapsHelper.dataLatLngRegex;
+const placeRegex = mapsHelper.placeRegex;
+const travelModes = mapsHelper.travelModes;
+const layers = mapsHelper.layers;
+const redditInstances = redditHelper.redirects;
+const redditDomains = redditHelper.targets;
+const redditBypassPaths = redditHelper.bypassPaths;
+const redditDefault = redditHelper.redirects[0];
+const googleSearchRegex = searchHelper.targets;
+const searchEngineInstances = searchHelper.redirects;
 
 let disableNitter;
 let disableInvidious;
 let disableBibliogram;
 let disableOsm;
-let disableOldReddit;
+let disableReddit;
 let disableSearchEngine;
 let nitterInstance;
 let invidiousInstance;
 let bibliogramInstance;
 let osmInstance;
-let oldRedditView;
+let redditInstance;
+let searchEngineInstance;
 let alwaysProxy;
 let onlyEmbeddedVideo;
 let videoQuality;
@@ -177,22 +58,19 @@ let exceptions;
 
 window.browser = window.browser || window.chrome;
 
-function filterInstances(instances) {
-  return instances.filter((instance) => !instance.includes(".onion"));
-}
-
 browser.storage.sync.get(
   [
     "nitterInstance",
     "invidiousInstance",
     "bibliogramInstance",
     "osmInstance",
-    "oldRedditView",
+    "redditInstance",
+    "searchEngineInstance",
     "disableNitter",
     "disableInvidious",
     "disableBibliogram",
     "disableOsm",
-    "disableOldReddit",
+    "disableReddit",
     "disableSearchEngine",
     "alwaysProxy",
     "onlyEmbeddedVideo",
@@ -209,17 +87,18 @@ browser.storage.sync.get(
     "exceptions",
   ],
   (result) => {
-    disableNitter = result.disableNitter;
-    disableInvidious = result.disableInvidious;
-    disableBibliogram = result.disableBibliogram;
-    disableOsm = result.disableOsm;
-    disableOldReddit = result.disableOldReddit;
-    disableSearchEngine = result.disableSearchEngine;
     nitterInstance = result.nitterInstance;
     invidiousInstance = result.invidiousInstance;
     bibliogramInstance = result.bibliogramInstance;
     osmInstance = result.osmInstance || osmDefault;
-    oldRedditView = result.oldRedditView || oldRedditDefaultView;
+    redditInstance = result.redditInstance || redditDefault;
+    searchEngineInstance = result.searchEngineInstance;
+    disableNitter = result.disableNitter;
+    disableInvidious = result.disableInvidious;
+    disableBibliogram = result.disableBibliogram;
+    disableOsm = result.disableOsm;
+    disableReddit = result.disableReddit;
+    disableSearchEngine = result.disableSearchEngine;
     alwaysProxy = result.alwaysProxy;
     onlyEmbeddedVideo = result.onlyEmbeddedVideo;
     videoQuality = result.videoQuality;
@@ -236,13 +115,13 @@ browser.storage.sync.get(
     useFreeTube = result.useFreeTube;
     nitterRandomPool = result.nitterRandomPool
       ? result.nitterRandomPool.split(",")
-      : filterInstances(nitterInstances);
+      : commonHelper.filterInstances(nitterInstances);
     invidiousRandomPool = result.invidiousRandomPool
       ? result.invidiousRandomPool.split(",")
-      : filterInstances(invidiousInstances);
+      : commonHelper.filterInstances(invidiousInstances);
     bibliogramRandomPool = result.bibliogramRandomPool
       ? result.bibliogramRandomPool.split(",")
-      : filterInstances(bibliogramInstances);
+      : commonHelper.filterInstances(bibliogramInstances);
   }
 );
 
@@ -259,8 +138,11 @@ browser.storage.onChanged.addListener((changes) => {
   if ("osmInstance" in changes) {
     osmInstance = changes.osmInstance.newValue || osmDefault;
   }
-  if ("oldRedditView" in changes) {
-    oldRedditView = changes.oldRedditView.newValue || oldRedditDefaultView;
+  if ("redditInstance" in changes) {
+    redditInstance = changes.redditInstance.newValue || redditDefault;
+  }
+  if ("searchEngineInstance" in changes) {
+    searchEngineInstance = changes.searchEngineInstance.newValue;
   }
   if ("disableNitter" in changes) {
     disableNitter = changes.disableNitter.newValue;
@@ -274,8 +156,8 @@ browser.storage.onChanged.addListener((changes) => {
   if ("disableOsm" in changes) {
     disableOsm = changes.disableOsm.newValue;
   }
-  if ("disableOldReddit" in changes) {
-    disableOldReddit = changes.disableOldReddit.newValue;
+  if ("disableReddit" in changes) {
+    disableReddit = changes.disableReddit.newValue;
   }
   if ("disableSearchEngine" in changes) {
     disableSearchEngine = changes.disableSearchEngine.newValue;
@@ -322,35 +204,6 @@ browser.storage.onChanged.addListener((changes) => {
     });
   }
 });
-
-function getRandomInstance(instanceList) {
-  return instanceList[~~(instanceList.length * Math.random())];
-}
-
-function addressToLatLng(address, callback) {
-  const xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = () => {
-    if (xmlhttp.readyState === XMLHttpRequest.DONE) {
-      if (xmlhttp.status === 200) {
-        const json = JSON.parse(xmlhttp.responseText)[0];
-        if (json) {
-          callback(
-            `${json.lat}%2C${json.lon}`,
-            `${json.boundingbox[2]},${json.boundingbox[1]},${json.boundingbox[3]},${json.boundingbox[0]}`
-          );
-        }
-      } else {
-        console.info("Error: Status is " + xmlhttp.status);
-      }
-    }
-  };
-  xmlhttp.open(
-    "GET",
-    `https://nominatim.openstreetmap.org/search/${address}?format=json&limit=1`,
-    false
-  );
-  xmlhttp.send();
-}
 
 function isException(url, initiator) {
   return (
@@ -411,7 +264,7 @@ function redirectYouTube(url, initiator, type) {
   url.searchParams.append("autoplay", invidiousAutoplay ? 1 : 0);
 
   return `${
-    invidiousInstance || getRandomInstance(invidiousRandomPool)
+    invidiousInstance || commonHelper.getRandomInstance(invidiousRandomPool)
   }${url.pathname.replace("/shorts", "")}${url.search}`;
 }
 
@@ -436,20 +289,20 @@ function redirectTwitter(url, initiator) {
   }
   if (url.host.split(".")[0] === "pbs") {
     return `${
-      nitterInstance || getRandomInstance(nitterRandomPool)
+      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
     }/pic/${encodeURIComponent(url.href)}`;
   } else if (url.host.split(".")[0] === "video") {
     return `${
-      nitterInstance || getRandomInstance(nitterRandomPool)
+      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
     }/gif/${encodeURIComponent(url.href)}`;
   } else if (url.pathname.includes("tweets")) {
     return `${
-      nitterInstance || getRandomInstance(nitterRandomPool)
+      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
     }${url.pathname.replace("/tweets", "")}${url.search}`;
   } else {
-    return `${nitterInstance || getRandomInstance(nitterRandomPool)}${
-      url.pathname
-    }${url.search}`;
+    return `${
+      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
+    }${url.pathname}${url.search}`;
   }
 }
 
@@ -474,14 +327,14 @@ function redirectInstagram(url, initiator, type) {
     url.pathname === "/" ||
     instagramReservedPaths.includes(url.pathname.split("/")[1])
   ) {
-    return `${bibliogramInstance || getRandomInstance(bibliogramRandomPool)}${
-      url.pathname
-    }${url.search}`;
+    return `${
+      bibliogramInstance || commonHelper.getRandomInstance(bibliogramRandomPool)
+    }${url.pathname}${url.search}`;
   } else {
     // Likely a user profile, redirect to '/u/...'
-    return `${bibliogramInstance || getRandomInstance(bibliogramRandomPool)}/u${
-      url.pathname
-    }${url.search}`;
+    return `${
+      bibliogramInstance || commonHelper.getRandomInstance(bibliogramRandomPool)
+    }/u${url.pathname}${url.search}`;
   }
 }
 
@@ -523,7 +376,7 @@ function redirectGoogleMaps(url, initiator) {
       }
     }
     let marker, bbox;
-    addressToLatLng(query, (coords, boundingbox) => {
+    mapsHelper.addressToLatLng(query, (coords, boundingbox) => {
       marker = coords;
       bbox = boundingbox;
     });
@@ -533,13 +386,16 @@ function redirectGoogleMaps(url, initiator) {
     const travelMode =
       travelModes[url.searchParams.get("travelmode")] || travelModes["driving"];
     let origin;
-    addressToLatLng(url.searchParams.get("origin"), (coords) => {
+    mapsHelper.addressToLatLng(url.searchParams.get("origin"), (coords) => {
       origin = coords;
     });
     let destination;
-    addressToLatLng(url.searchParams.get("destination"), (coords) => {
-      destination = coords;
-    });
+    mapsHelper.addressToLatLng(
+      url.searchParams.get("destination"),
+      (coords) => {
+        destination = coords;
+      }
+    );
     redirect = `${osmInstance}/directions?engine=${travelMode}&route=${origin}%3B${destination}${mapCentre}${params}`;
     // Get marker from data attribute
   } else if (
@@ -578,13 +434,13 @@ function redirectGoogleMaps(url, initiator) {
 }
 
 function redirectReddit(url, initiator, type) {
-  if (disableOldReddit || isException(url, initiator)) {
+  if (disableReddit || isException(url, initiator)) {
     return null;
   }
   // Do not redirect when already on the selected view
   if (
-    (initiator && initiator.origin === oldRedditView) ||
-    url.origin === oldRedditView
+    (initiator && initiator.origin === redditInstance) ||
+    url.origin === redditInstance
   ) {
     return null;
   }
@@ -592,7 +448,7 @@ function redirectReddit(url, initiator, type) {
   if (type !== "main_frame" || url.pathname.match(redditBypassPaths)) {
     return null;
   }
-  return `${oldRedditView}${url.pathname}${url.search}`;
+  return `${redditInstance}${url.pathname}${url.search}`;
 }
 
 function redirectSearchEngine(url, initiator) {
@@ -600,7 +456,9 @@ function redirectSearchEngine(url, initiator) {
     return null;
   }
 
-  let searchEngine = getRandomInstance(privateSearchEngine);
+  const searchEngine =
+    searchEngineInstance ||
+    commonHelper.getRandomInstance(searchEngineInstances);
   let search = "";
   url.search
     .slice(1)
@@ -608,7 +466,6 @@ function redirectSearchEngine(url, initiator) {
     .forEach(function (input) {
       if (input.startsWith("q=")) search = input;
     });
-  console.log("search: ", search);
   return `${searchEngine.link}${searchEngine.q}?${search}`;
 }
 
@@ -640,7 +497,7 @@ browser.webRequest.onBeforeRequest.addListener(
       };
     } else if (
       redditDomains.includes(url.host) ||
-      oldRedditViews.includes(url.origin)
+      redditInstances.includes(url.origin)
     ) {
       redirect = {
         redirectUrl: redirectReddit(url, initiator, details.type),

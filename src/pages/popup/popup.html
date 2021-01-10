@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title></title>
-    <link href="../styles.css" rel="stylesheet" />
+    <link href="../../assets/stylesheets/styles.css" rel="stylesheet" />
   </head>
 
   <body class="popup">
@@ -121,30 +121,30 @@
         <tbody>
           <tr>
             <td>
-              <h1 data-localise="__MSG_disableOldReddit__">
-                Old Reddit Redirects
-              </h1>
+              <h1 data-localise="__MSG_disableReddit__">Reddit Redirects</h1>
             </td>
             <td>
               <input
                 aria-hidden="true"
-                id="disable-old-reddit"
+                id="disable-reddit"
                 type="checkbox"
                 checked
               />&nbsp;
-              <label for="disable-old-reddit" class="checkbox-label"> </label>
+              <label for="disable-reddit" class="checkbox-label"> </label>
             </td>
           </tr>
         </tbody>
       </table>
     </section>
-    
+
     <section class="settings-block">
       <table class="option" aria-label="Toggle Search Engine redirects">
         <tbody>
           <tr>
             <td>
-              <h1 data-localise="__MSG_disableSearchEngine__">Search Engine Redirects</h1>
+              <h1 data-localise="__MSG_disableSearchEngine__">
+                Search Engine Redirects
+              </h1>
             </td>
             <td>
               <input
@@ -208,7 +208,7 @@
       </a>
     </footer>
 
-    <script src="./popup.js"></script>
-    <script src="../../assets/javascript/localise.js"></script>
+    <script type="module" src="./popup.js"></script>
+    <script src="../../assets/javascripts/localise.js"></script>
   </body>
 </html>

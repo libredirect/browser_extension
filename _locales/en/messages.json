@@ -23,6 +23,14 @@
     "message": "OpenStreetMap Instance",
     "description": "Label for OSM instance field option (options)."
   },
+  "redditInstance": {
+    "message": "Reddit Instance",
+    "description": "Label for Reddit instance field option (options)."
+  },
+  "searchEngineInstance": {
+    "message": "Search Engine Instance",
+    "description": "Label for Search Engine instance field option (options)."
+  },
   "disableNitter": {
     "message": "Nitter Redirects",
     "description": "Label for enable/disable Nitter redirects option (options & pop-up)."
@@ -38,6 +46,14 @@
   "disableOsm": {
     "message": "OpenStreetMap Redirects",
     "description": "Label for enable/disable OSM redirects option (options & pop-up)."
+  },
+  "disableReddit": {
+    "message": "Reddit Redirects",
+    "description": "Label for enable/disable Reddit redirects option (options & pop-up)."
+  },
+  "disableSearchEngine": {
+    "message": "Search Engine Redirects",
+    "description": "Label for enable/disable Search Engine redirects option (options & pop-up)."
   },
   "alwaysProxy": {
     "message": "Always proxy videos through Invidious",

@@ -1,28 +1,28 @@
 {
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.1.43",
+  "version": "1.1.44",
   "manifest_version": 2,
   "background": {
-    "scripts": ["background.js"],
+    "page": "src/pages/background/background.html",
     "persistent": true
   },
   "default_locale": "en",
   "icons": {
-    "16": "assets/images/icon16.png",
-    "32": "assets/images/icon32.png",
-    "48": "assets/images/icon48.png",
-    "128": "assets/images/icon128.png"
+    "16": "src/assets/images/icon16.png",
+    "32": "src/assets/images/icon32.png",
+    "48": "src/assets/images/icon48.png",
+    "128": "src/assets/images/icon128.png"
   },
   "permissions": ["storage", "webRequest", "webRequestBlocking", "<all_urls>"],
   "browser_action": {
     "default_title": "Privacy Redirect",
-    "default_popup": "pages/popup/popup.html",
+    "default_popup": "src/pages/popup/popup.html",
     "default_icon": {
-      "16": "assets/images/icon16.png",
-      "32": "assets/images/icon32.png",
-      "48": "assets/images/icon48.png",
-      "128": "assets/images/icon128.png"
+      "16": "src/assets/images/icon16.png",
+      "32": "src/assets/images/icon32.png",
+      "48": "src/assets/images/icon48.png",
+      "128": "src/assets/images/icon128.png"
     }
   },
   "content_scripts": [
@@ -34,39 +34,34 @@
         "*://pbs.twimg.com/*",
         "*://video.twimg.com/*"
       ],
-      "js": ["assets/javascript/remove-twitter-sw.js"],
+      "js": ["src/assets/javascripts/remove-twitter-sw.js"],
       "run_at": "document_start"
     },
     {
       "matches": [
         "*://invidious.snopyta.org/*",
-        "*://yewtu.be/*",
         "*://invidious.xyz/*",
-        "*://invidious.site/*",
+        "*://invidious.kavin.rocks/*",
+        "*://tube.connect.cafe/*",
+        "*://invidious.zapashcanon.fr/*",
         "*://invidiou.site/*",
-        "*://invidious.ggc-project.de/*",
-        "*://invidious.13ad.de/*",
-        "*://invidious.toot.koeln/*",
-        "*://invidious.fdn.fr/*",
-        "*://watch.nettohikari.com/*",
-        "*://yt.iswleuven.be/*",
-        "*://yt.maisputain.ovh/*",
-        "*://kgg2m7yk5aybusll.onion/*",
-        "*://axqzx4s6s54s32yentfqojs3x5i7faxza6xo3ehd4bzzsg2ii4fv2iid.onion/*",
+        "*://vid.mint.lgbt/*",
+        "*://invidious.site/*",
+        "*://yewtu.be/*",
         "*://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion/*",
         "*://qklhadlycap4cnod.onion/*",
         "*://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion/*",
-        "*://mfqczy4mysscub2s.onion/*",
-        "*://4l2dgddgsrkf2ous66i6seeyi6etzfgrue332grh2n7madpwopotugyd.onion/*"
+        "*://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion/*"
       ],
-      "js": ["assets/javascript/persist-invidious-prefs.js"],
+      "js": ["src/assets/javascripts/persist-invidious-prefs.js"],
       "run_at": "document_start"
     }
   ],
   "options_ui": {
-    "page": "pages/options/options.html",
+    "page": "src/pages/options/options.html",
     "open_in_tab": false
   },
+  "web_accessible_resources": ["src/assets/javascripts/helpers/*"],
   "browser_specific_settings": {
     "gecko": {
       "id": "{b7f9d2cd-d772-4302-8c3f-eb941af36f76}"

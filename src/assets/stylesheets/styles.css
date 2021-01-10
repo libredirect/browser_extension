@@ -23,7 +23,7 @@ body.light-theme {
 
 body {
   margin: 0;
-  max-width: 400px;
+  width: 400px;
   margin: auto;
   min-height: 572px;
   font-family: Sans-Serif;
@@ -334,7 +334,7 @@ li {
 }
 
 .autocomplete input {
-  background: url(../assets/images/chevron-down.svg) right no-repeat;
+  background: url(../images/chevron-down.svg) right no-repeat;
 }
 
 .autocomplete-items {
@@ -466,16 +466,51 @@ input[type="range"]::-moz-range-thumb {
   float: right;
 }
 
-.subheading {
-  padding: 0 10px;
-}
-
-.subheading h1 {
+.collapsible {
+  background-color: var(--bg-main);
+  cursor: pointer;
   color: var(--active);
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  border-bottom: solid var(--active);
+  font-weight: bold;
 }
 
-.subheading hr {
-  height: 1px;
+.collapsible:after {
+  content: "\002B";
+  color: var(--active);
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.collapsible-active,
+.collapsible:hover,
+.collapsible:hover::after {
+  background-color: var(--active);
+  color: var(--text-secondary);
+}
+
+.collapsible-active:after {
+  content: "\002D";
+  color: var(--text-secondary);
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.collapsible-content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+}
+
+hr {
+  height: 2px;
   background-color: var(--active);
   border: none;
 }
