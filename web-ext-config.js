@@ -1,8 +1,8 @@
 module.exports = {
   ignoreFiles: [
-    'assets/images/Screen Shot*.png',
-    'assets/images/buy-me-a-coffee.png',
-    'assets/images/logo*.png',
-    'assets/images/badge*.png'
+    "src/assets/images/Screen Shot*.png",
+    "src/assets/images/buy-me-a-coffee.png",
+    "src/assets/images/logo*.png",
+    "src/assets/images/badge*.png",
   ],
 };
