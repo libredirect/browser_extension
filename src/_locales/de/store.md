@@ -1,10 +1,13 @@
 # Extension Store (AMO & Chrome Web Store) Listing
 
 ## Summary:
+
 ```
 Eine einfache Browser-Erweiterung, die Anfragen an Twitter, YouTube, Instagram & Google Maps zu datenschutzfreundlichen Alternativen weiterleitet.
 ```
+
 ## Description:
+
 ```
 Leitet Anfragen an Twitter, YouTube, Instagram & Google Maps zu datenschutzfreundlichen Alternativen weiter – <a href='https://nitter.net/'>Nitter</a>, <a href='https://invidio.us/'>Invidious</a>, <a href='https://bibliogram.art/'>Bibliogram</a>, & <a href='https://www.openstreetmap.org'>OpenStreetMap</a>.
 
@@ -22,12 +25,6 @@ Der Code dieser Browser-Erweiterung ist verfügbar auf <a href='https://github.c
 
 <b>★ Spenden: 👨🏻‍💻</b>
 Wenn Ihnen diese Erweiterung gefällt und Sie finanziell in der Lage sind, erwägen Sie bitte <a href='https://www.buymeacoffee.com/SimonBrazell'> mir auf BuyMeACoffee einen Kaffee zu kaufen</a> ☕️ ️ um Ihre Wertschätzung zu zeigen und die Fortsetzung des Projekts zu unterstützen.
-
-<b>★ Was ist neu in dieser Version (v1.1.36) 🆕</b>
-<ul>
-  <li>Russische Übersetzung hinzugefügt</li>
-  <li>Invidious-Autoplay-Parameter gefixt</li>
-</ul>
 
 <b>★ Berechtigungen: ℹ️</b>
 <ul>

@@ -1,10 +1,13 @@
 # Extension Store (AMO & Chrome Web Store) Listing
 
 ## Summary:
+
 ```
 Redirige les requêtes les demandes Twitter, YouTube, Instagram et Google Maps vers des alternatives respectueuses de la vie privée. pour Twitter, YouTube, Instagram et Google Maps vers des alternatives respectueuses de la vie privée.
 ```
+
 ## Description:
+
 ```
 Redirige les requètes pour Twitter, YouTube, Instagram et Google Maps vers des alternatives respectueuses de la confidentialité - <a href="https://nitter.net/">Nitter</a>, <a href="https://invidio.us/">Invidious</a>, <a href="https://bibliogram.art/">Bibliogram</a>, & <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 
@@ -22,12 +25,6 @@ Le code de cette extension Web est disponible sur <a href="https://github.com/Si
 
 <b>★ Faire un don: 👨🏻‍💻</b>
 Si vous aimez ce module complémentaire et si vous avez une bonne situation financière, pensez à <a href="https://www.buymeacoffee.com/SimonBrazell">m'acheter un café</a> ☕️ pour montrer que vous appréciez et soutenez la poursuite du projet.
-
-<b>★ Nouveautés de cette version (v1.1.36) 🆕</b>
-<ul>
-  <li>Added Russian language translation.</li>
-  <li>Fix Invidious autoplay parameter.</li>
-</ul>
 
 <b>★ Autorisations: ℹ️</b>
 <ul>

@@ -1,0 +1,25 @@
+{
+  "name": "privacy-redirect",
+  "description": "Redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives.",
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=5.6.0"
+  },
+  "scripts": {
+    "build": "web-ext build --overwrite-dest --source-dir ./src/",
+    "test": "web-ext lint --source-dir ./src/ || true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimonBrazell/privacy-redirect.git"
+  },
+  "author": "SimonBrazell",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/SimonBrazell/privacy-redirect/issues"
+  },
+  "homepage": "https://github.com/SimonBrazell/privacy-redirect#readme",
+  "devDependencies": {
+    "web-ext": "^5.4.1"
+  }
+}

@@ -467,11 +467,15 @@ function autocomplete(input, list) {
     }
   }
   function getItem(item, val) {
-    let div = document.createElement("div");
-    let html = `<strong>${item.substr(0, val.length)}</strong>${item.substr(
-      val.length
-    )}<input type='hidden' value='${item}'>`;
-    div.appendChild(parser.parseFromString(html, "text/html").documentElement);
+    const div = document.createElement("div");
+    const strong = document.createElement("strong");
+    strong.textContent = item.substr(0, val.length);
+    div.innerText = item.substr(val.length);
+    const hiddenInput = document.createElement("input");
+    hiddenInput.type = "hidden";
+    hiddenInput.value = item;
+    div.prepend(strong);
+    div.appendChild(hiddenInput);
     div.addEventListener("click", function (e) {
       input.value = e.target.getElementsByTagName("input")[0].value;
       input.dispatchEvent(new Event("input"));

@@ -26,15 +26,6 @@ The code for this web extension is available on <a href='https://github.com/Simo
 <b>★ Donate: 👨🏻‍💻</b>
 If you like this extension and are financially able please consider <a href='https://www.buymeacoffee.com/SimonBrazell'>buying me a coffee</a> ☕️ ️to show your appreciation and support the continuation of the project.
 
-<b>★ What's New in This Version (v1.1.42) 🆕</b>
-<ul>
-  <li>Added Polish language translation.</li>
-  <li>Added Chinese language translation.</li>
-  <li>Pruned the Invidious random instances list.</li>
-  <li>Added support for FreeTube redirects (where possible).</li>
-  <li>Handle /igtv/, /tv/ and /reel/ redirects to Bibliogram correctly.</li>
-</ul>
-
 <b>★ Permissions: ℹ️</b>
 <ul>
   <li>Please note, access to all website navigation events ( all URLs), not just the target domains, is required to allow embedded video redirects to occur. At this time I know of no other way to achieve iframe redirects, happy to hear some suggestions on this though 🙂</li>

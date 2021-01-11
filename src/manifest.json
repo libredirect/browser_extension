@@ -1,28 +1,28 @@
 {
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.1.44",
+  "version": "1.1.45",
   "manifest_version": 2,
   "background": {
-    "page": "src/pages/background/background.html",
+    "page": "pages/background/background.html",
     "persistent": true
   },
   "default_locale": "en",
   "icons": {
-    "16": "src/assets/images/icon16.png",
-    "32": "src/assets/images/icon32.png",
-    "48": "src/assets/images/icon48.png",
-    "128": "src/assets/images/icon128.png"
+    "16": "assets/images/icon16.png",
+    "32": "assets/images/icon32.png",
+    "48": "assets/images/icon48.png",
+    "128": "assets/images/icon128.png"
   },
   "permissions": ["storage", "webRequest", "webRequestBlocking", "<all_urls>"],
   "browser_action": {
     "default_title": "Privacy Redirect",
-    "default_popup": "src/pages/popup/popup.html",
+    "default_popup": "pages/popup/popup.html",
     "default_icon": {
-      "16": "src/assets/images/icon16.png",
-      "32": "src/assets/images/icon32.png",
-      "48": "src/assets/images/icon48.png",
-      "128": "src/assets/images/icon128.png"
+      "16": "assets/images/icon16.png",
+      "32": "assets/images/icon32.png",
+      "48": "assets/images/icon48.png",
+      "128": "assets/images/icon128.png"
     }
   },
   "content_scripts": [
@@ -34,7 +34,7 @@
         "*://pbs.twimg.com/*",
         "*://video.twimg.com/*"
       ],
-      "js": ["src/assets/javascripts/remove-twitter-sw.js"],
+      "js": ["assets/javascripts/remove-twitter-sw.js"],
       "run_at": "document_start"
     },
     {
@@ -53,19 +53,19 @@
         "*://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion/*",
         "*://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion/*"
       ],
-      "js": ["src/assets/javascripts/persist-invidious-prefs.js"],
+      "js": ["assets/javascripts/persist-invidious-prefs.js"],
       "run_at": "document_start"
     }
   ],
   "options_ui": {
-    "page": "src/pages/options/options.html",
+    "page": "pages/options/options.html",
     "open_in_tab": false
   },
-  "web_accessible_resources": ["src/assets/javascripts/helpers/*"],
+  "web_accessible_resources": ["assets/javascripts/helpers/*"],
   "browser_specific_settings": {
     "gecko": {
       "id": "{b7f9d2cd-d772-4302-8c3f-eb941af36f76}",
-      "strict_min_version": "67.0"
+      "strict_min_version": "60.0"
     }
   }
 }
