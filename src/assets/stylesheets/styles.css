@@ -481,7 +481,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .collapsible:after {
-  content: "\002B";
+  content: "\25BE";
   color: var(--active);
   font-weight: bold;
   float: right;
@@ -496,7 +496,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .collapsible-active:after {
-  content: "\002D";
+  content: "\25B4";
   color: var(--text-secondary);
   font-weight: bold;
   float: right;

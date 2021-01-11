@@ -2,7 +2,9 @@
 
 [![Awesome Humane Tech](https://raw.githubusercontent.com/humanetech-community/awesome-humane-tech/main/humane-tech-badge.svg?sanitize=true)](https://github.com/humanetech-community/awesome-humane-tech)
 
-[![Donate](https://liberapay.com/src/assets/widgets/donate.svg)](https://liberapay.com/SimonBrazell/donate) [![Buy me a coffee](src/assets/images/buy-me-a-coffee.png)](https://www.buymeacoffee.com/SimonBrazell)
+[![Donate](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/SimonBrazell/donate) [![Buy me a coffee](src/assets/images/buy-me-a-coffee.png)](https://www.buymeacoffee.com/SimonBrazell)
+
+<img src="https://img.shields.io/liberapay/receives/SimonBrazell.svg?logo=liberapay">
 
 ## Get
 

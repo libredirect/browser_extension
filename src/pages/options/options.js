@@ -25,6 +25,7 @@ const autocompletes = [
     instances: searchEngineInstances.map((instance) => instance.link),
   },
 ];
+const domparser = new DOMParser();
 
 let nitterInstance = document.getElementById("nitter-instance");
 let invidiousInstance = document.getElementById("invidious-instance");
@@ -69,7 +70,9 @@ function prependExceptionsItem(item, index) {
       <line x1='368' y1='144' x2='144' y2='368'
         style='fill:none;stroke:#FFF;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px' />
     </svg>`;
-  button.innerHTML = svg;
+  button.appendChild(
+    domparser.parseFromString(svg, "image/svg+xml").documentElement
+  );
   button.addEventListener("click", () => {
     exceptions.splice(index, 1);
     browser.storage.sync.set({
@@ -465,9 +468,10 @@ function autocomplete(input, list) {
   }
   function getItem(item, val) {
     let div = document.createElement("div");
-    div.innerHTML = "<strong>" + item.substr(0, val.length) + "</strong>";
-    div.innerHTML += item.substr(val.length);
-    div.innerHTML += "<input type='hidden' value='" + item + "'>";
+    let html = `<strong>${item.substr(0, val.length)}</strong>${item.substr(
+      val.length
+    )}<input type='hidden' value='${item}'>`;
+    div.appendChild(parser.parseFromString(html, "text/html").documentElement);
     div.addEventListener("click", function (e) {
       input.value = e.target.getElementsByTagName("input")[0].value;
       input.dispatchEvent(new Event("input"));
