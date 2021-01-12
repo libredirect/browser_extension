@@ -138,5 +138,9 @@
   "bibliogramRandomPool": {
     "message": "Bibliogram random instance pool (comma-separated)",
     "description": "Label for 'Bibliogram random instance pool (comma-separated)' option (options)."
+  },
+  "randomInstancePlaceholder": {
+    "message": "Random instance (none selected)",
+    "description": "Input placeholder for provider instance settings that select a random instance from a pool when none is selected"
   }
 }
