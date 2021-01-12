@@ -525,9 +525,16 @@ browser.webRequest.onBeforeRequest.addListener(
 );
 
 browser.runtime.onInstalled.addListener((details) => {
+  browser.storage.sync.get(["disableSearchEngine"], (result) => {
+    if (result.disableSearchEngine === undefined) {
+      browser.storage.sync.set({
+        disableSearchEngine: true,
+      });
+    }
+  });
   if (details.reason === "update") {
     browser.storage.sync.get(
-      ["whitelist", "exceptions", "invidiousInstance"],
+      ["whitelist", "exceptions", "invidiousInstance", "disableSearchEngine"],
       (result) => {
         if (result.whitelist) {
           let whitelist = result.whitelist.map((e) =>

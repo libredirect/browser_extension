@@ -514,3 +514,25 @@ hr {
   background-color: var(--active);
   border: none;
 }
+
+.new-badge {
+  position: relative;
+}
+
+.new-badge[data-new-badge]:after {
+  content: "New!";
+  position: absolute;
+  top: -10px;
+  right: -42px;
+  font-size: 0.9em;
+  background: var(--active);
+  color: white;
+  width: 35px;
+  height: 18px;
+  text-align: center;
+  line-height: 18px;
+  border-radius: 25px;
+  padding: 2px;
+  box-shadow: 0 0 1px var(--bg-secondary);
+  font-weight: bold;
+}
