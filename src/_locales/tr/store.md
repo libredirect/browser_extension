@@ -3,17 +3,17 @@
 ## Summary:
 
 ```
-A simple web extension that redirects Twitter, YouTube, Instagram & Google Maps requests to privacy friendly alternatives.
+Twitter, YouTube, Instagram & Google Haritalar bağlantılarını gizlilik dostu alternatiflerine yönlendiren basit bir web uzantısı.
 ```
 
 ## Description:
 
 ```
-Redirects Twitter, YouTube, Instagram, & Google Maps requests to privacy friendly alternatives - <a href='https://nitter.net/'>Nitter</a>, <a href='https://invidio.us/'>Invidious</a>, <a href='https://bibliogram.art/'>Bibliogram</a>, & <a href='https://www.openstreetmap.org'>OpenStreetMap</a>.
+Twitter, YouTube, Instagram, & Google Haritalar bağlantılarını gizlilik dostu alternatiflerine yönlendirir - <a href='https://nitter.net/'>Nitter</a>, <a href='https://invidio.us/'>Invidious</a>, <a href='https://bibliogram.art/'>Bibliogram</a>, & <a href='https://www.openstreetmap.org'>OpenStreetMap</a>.
 
 Allows for setting custom instances, toggling all redirects on/off and more.
 
-<b>★ More Info: ℹ️</b>
+<b>★ Daha Fazla Bilgi: ℹ️</b>
 <ul>
   <li><a href='https://github.com/zedeus/nitter#nitter-wip'>Nitter</a></li>
   <li><a href='https://github.com/omarroth/invidious#invidious'>Invidious</a></li>
@@ -21,13 +21,13 @@ Allows for setting custom instances, toggling all redirects on/off and more.
   <li><a href='https://wiki.openstreetmap.org/'>OpenStreetMap</a></li>
 </ul>
 
-The code for this web extension is available on <a href='https://github.com/SimonBrazell/privacy-redirect'>Github</a>.
+Bu web uzantısının kaynak kodu <a href='https://github.com/SimonBrazell/privacy-redirect'>Github</a>'da mevcut'.
 
-<b>★ Donate: 👨🏻‍💻</b>
-If you like this extension and are financially able please consider <a href='https://www.buymeacoffee.com/SimonBrazell'>buying me a coffee</a> ☕️ ️to show your appreciation and support the continuation of the project.
+<b>★ Bağış At: 👨🏻‍💻</b>
+Eğer bu uzantıyı seviyorsan ve minnettarlığını gösterip projenin devamını destekliyorsan ve bana bir <a href='https://www.buymeacoffee.com/SimonBrazell'>kahve alıcak</a> ☕️ kadar maddi durumun varsa.
 
-<b>★ Permissions: ℹ️</b>
+<b>★ İzinler: ℹ️</b>
 <ul>
-  <li>Please note, access to all website navigation events ( all URLs), not just the target domains, is required to allow embedded video redirects to occur. At this time I know of no other way to achieve iframe redirects, happy to hear some suggestions on this though 🙂</li>
+  <li>Lütfen aklınızda bulundurun, siteye gömülü video yönlendirmelerinin çalışması için bütün website dolaşım etkinliklerine, sadece hedef alan adlarına değil, erişim gereklidir. Şu anda çerçeve yönlendirmenin başka hiçbir yolunu bilmiyorum, bununla ilgili bazı öneriler duymaya sevinirim 🙂</li>
 </ul>
 ```

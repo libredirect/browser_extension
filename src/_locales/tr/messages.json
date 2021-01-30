@@ -1,146 +1,146 @@
 {
   "extensionName": {
     "message": "Privacy Redirect",
-    "description": "Name of the extension."
+    "description": "Uzantı ismi."
   },
   "extensionDescription": {
-    "message": "Redirects Twitter, YouTube, Instagram, Google Maps, Reddit & Google Search requests to privacy friendly alternatives.",
-    "description": "Description of the extension."
+    "message": "Twitter, YouTube, Instagram, Google Haritalar, Reddit & Google Arama bağlantılarını gizlilik dostu alternatiflerine yönlendirir.",
+    "description": "Uzantı açıklaması."
   },
   "nitterInstance": {
-    "message": "Nitter Instance",
-    "description": "Label for Nitter instance field option (options)."
+    "message": "Nitter Servisi",
+    "description": "Nitter Servisi seçeneği için etiket (seçenekler)."
   },
   "invidiousInstance": {
-    "message": "Invidious Instance",
-    "description": "Label for Invidious instance field option (options)."
+    "message": "Invidious Servisi",
+    "description": "Invidious Servisi seçeneği için etiket (seçenekler)."
   },
   "bibliogramInstance": {
-    "message": "Bibliogram Instance",
-    "description": "Label for Bibliogram instance field option (options)."
+    "message": "Bibliogram Servisi",
+    "description": "Bibliogram Servisi seçeneği için etiket (seçenekler)."
   },
   "osmInstance": {
-    "message": "OpenStreetMap Instance",
-    "description": "Label for OSM instance field option (options)."
+    "message": "OpenStreetMap Servisi",
+    "description": "OSM Servisi seçeneği için etiket (seçenekler)."
   },
   "redditInstance": {
-    "message": "Reddit Instance",
-    "description": "Label for Reddit instance field option (options)."
+    "message": "Reddit Servisi",
+    "description": "Reddit Servisi seçeneği için etiket (seçenekler)."
   },
   "searchEngineInstance": {
-    "message": "Search Engine Instance",
-    "description": "Label for Search Engine instance field option (options)."
+    "message": "Arama Motoru Servisi",
+    "description": "Arama Motoru Servisi seçeneği için etiket (seçenekler)."
   },
   "disableNitter": {
-    "message": "Nitter Redirects",
-    "description": "Label for enable/disable Nitter redirects option (options & pop-up)."
+    "message": "Nitter Yönlendirmesi",
+    "description": "Nitter Yönlendirmesi'ni etkinleştirme/devre dışı bırakma seçeneği için etiket (seçenekler & açılır pencere)."
   },
   "disableInvidious": {
-    "message": "Invidious Redirects",
-    "description": "Label for enable/disable Invidious redirects option (options & pop-up)."
+    "message": "Invidious Yönlendirmesi",
+    "description": "Invidious Yönlendirmesi'ni etkinleştirme/devre dışı bırakma seçeneği için etiket (seçenekler & açılır pencere)."
   },
   "disableBibliogram": {
-    "message": "Bibliogram Redirects",
-    "description": "Label for enable/disable Bibliogram redirects option (options & pop-up)."
+    "message": "Bibliogram Yönlendirmesi",
+    "description": "Bibliogram Yönlendirmesi'ni etkinleştirme/devre dışı bırakma seçeneği için etiket (seçenekler & açılır pencere)."
   },
   "disableOsm": {
-    "message": "OpenStreetMap Redirects",
-    "description": "Label for enable/disable OSM redirects option (options & pop-up)."
+    "message": "OpenStreetMap Yönlendirmesi",
+    "description": "OSM Yönlendirmesi'ni etkinleştirme/devre dışı bırakma seçeneği için etiket (seçenekler & açılır pencere)."
   },
   "disableReddit": {
-    "message": "Reddit Redirects",
-    "description": "Label for enable/disable Reddit redirects option (options & pop-up)."
+    "message": "Reddit Yönlendirmesi",
+    "description": "Reddit Yönlendirmesi'ni etkinleştirme/devre dışı bırakma seçeneği için etiket (seçenekler & açılır pencere)."
   },
   "disableSearchEngine": {
-    "message": "Search Engine Redirects",
-    "description": "Label for enable/disable Search Engine redirects option (options & pop-up)."
+    "message": "Arama Motoru Yönlendirmesi",
+    "description": "Arama Motoru Yönlendirmesi'ni etkinleştirme/devre dışı bırakma seçeneği için etiket (seçenekler & açılır pencere)."
   },
   "alwaysProxy": {
-    "message": "Always proxy videos through Invidious",
-    "description": "Label for 'Always proxy videos through Invidious' option (options)."
+    "message": "Videoları her zaman Invidious üzerinden geçir",
+    "description": "'Videoları her zaman Invidious üzerinden geçir' seçeneği için etiket (seçenekler)."
   },
   "onlyEmbeddedVideo": {
-    "message": "Only redirect embedded video to Invidious",
-    "description": "Label for 'Only redirect embedded video to Invidious' option (options)."
+    "message": "Sadece siteye gömülü videoları Invidious'a yönlendir",
+    "description": "'Sadece siteye gömülü videoları Invidious'a yönlendir' seçeneği için etiket (seçenekler)."
   },
   "videoQuality": {
-    "message": "Invidious Video Quality",
-    "description": "Label for 'Invidious Video Quality' option (options)."
+    "message": "Invidious Video Kalitesi",
+    "description": "'Invidious Video Kalitesi' seçeneği için etiket (seçenekler)."
   },
   "removeTwitterSW": {
-    "message": "Proactively remove Twitter service worker",
-    "description": "Label for 'Proactively remove Twitter service worker' option (options)."
+    "message": "Twitter servis çalışanını proaktif olarak kaldır",
+    "description": "'Twitter servis çalışanını proaktif olarak kaldır' seçeneği için etiket (seçenekler)."
   },
   "invidiousDarkMode": {
-    "message": "Invidious dark mode always on",
-    "description": "Label for 'Invidious dark mode always on' option (options)."
+    "message": "Invidious her zaman açık karanlık mod",
+    "description": "'Invidious her zaman açık karanlık mod' seçeneği için etiket (seçenekler)."
   },
   "persistInvidiousPrefs": {
-    "message": "Persist Invidious preferences (as cookie)",
-    "description": "Label for 'Persist Invidious preferences (as cookie)' option (options)."
+    "message": "Invidious tercihlerini kaydet (çerez olarak)",
+    "description": "'Persist Invidious preferences (as cookie)' option (seçenekler)."
   },
   "generalTab": {
-    "message": "General",
-    "description": "General tab (options)."
+    "message": "Genel",
+    "description": "Genel sekme (seçenekler)."
   },
   "advancedTab": {
-    "message": "Advanced",
-    "description": "Advanced tab (options)."
+    "message": "Gelişmiş",
+    "description": "Gelişmiş sekme (seçenekler)."
   },
   "exceptionsTab": {
-    "message": "Exceptions",
-    "description": "Exceptions tab (options)."
+    "message": "İstisnalar",
+    "description": "İstisnalar sekmesi (seçenekler)."
   },
   "exceptionsDescriptionP1": {
-    "message": "Enter a URL or Regular Expression to be excluded from redirects.",
-    "description": "A description of the 'Exceptions' feature paragraph 1 (options)."
+    "message": "Yönlendirmelerden hariç tutulacak bir URL veya düzenli ifade gir",
+    "description": "'İstisnalar' özelliği paragraf 1'in açıklaması (seçenekler)."
   },
   "exceptionsDescriptionP2": {
-    "message": "All requests for or initiating from a URL that matches the exception will be excluded from redirects.",
-    "description": "A description of the 'Exceptions' feature paragraph 2 (options)."
+    "message": "İstisnayla eşleşen bir URL'ye yönelik veya URL'den çıkan bütün bağlantılar yönlendirmelerden hariç tutulacak",
+    "description": "'İstisnalar' özelliği paragraf 2'nin açıklaması (seçenekler)."
   },
   "exceptionsDescriptionP3": {
-    "message": "Note - Supports JavaScript regular expressions, excluding the enclosing forward slashes.",
-    "description": "A description of the 'Exceptions' feature paragraph 3 (options)."
+    "message": "Not - JavaScript düzenli ifadelerini destekler, kapalı eğik çizgiler kullanılmadan.",
+    "description": "'İstisnalar' özelliği paragraf 3'ün açıklaması (seçenekler)."
   },
   "addException": {
-    "message": "Add Exception",
-    "description": "'Add Exceptions' button (options)."
+    "message": "İstisna ekle",
+    "description": "'İstisna ekle' butonu (seçenekler)"
   },
   "moreOptions": {
-    "message": "More Options",
-    "description": "More Options button (pop-up)."
+    "message": "Daha Fazla Seçenek",
+    "description": "Daha Fazla Seçenek butonu (açılır pencere)."
   },
   "privacy": {
-    "message": "Privacy",
-    "description": "Extension title - Privacy (pop-up)."
+    "message": "Gizlilik",
+    "description": "Uzantı ismi - Gizlilik (açılır pencere)."
   },
   "redirect": {
-    "message": "Redirect",
-    "description": "Extension title - Redirect (pop-up)."
+    "message": "Yönlendir",
+    "description": "Uzantı ismi - Yönlendir (açılır pencere)."
   },
   "version": {
-    "message": "Version",
-    "description": "Version"
+    "message": "Sürüm",
+    "description": "Sürüm"
   },
   "useFreeTube": {
-    "message": "Use FreeTube over Invidious when possible",
-    "description": "Label for 'Use FreeTube over Invidious when possible' option (options)."
+    "message": "Mümkün olduğunda Invidious yerine FreeTube kullan",
+    "description": "'Mümkün olduğunda Invidious yerine FreeTube kullan' seçeneği etiketi (seçenekler)."
   },
   "nitterRandomPool": {
-    "message": "Nitter random instance pool (comma-separated)",
-    "description": "Label for 'Nitter random instance pool (comma-separated)' option (options)."
+    "message": "Nitter rastgele servis havuzu (virgülle ayrılmış)",
+    "description": "'Nitter rastgele servis havuzu (virgülle ayrılmış)' seçeneği etiketi (seçenekler)."
   },
   "invidiousRandomPool": {
-    "message": "Invidious random instance pool (comma-separated)",
-    "description": "Label for 'Invidious random instance pool (comma-separated)' option (options)."
+    "message": "Invidious rastgele servis havuzu (virgülle ayrılmış)",
+    "description": "'Invidious rastgele servis havuzu (virgülle ayrılmış)' seçeneği etiketi (seçenekler)."
   },
   "bibliogramRandomPool": {
-    "message": "Bibliogram random instance pool (comma-separated)",
-    "description": "Label for 'Bibliogram random instance pool (comma-separated)' option (options)."
+    "message": "Bibliogram rastgele servis havuzu (virgülle ayrılmış)",
+    "description": "'Bibliogram rastgele servis havuzu (virgülle ayrılmış)' seçeneği etiketi (seçenekler)."
   },
   "randomInstancePlaceholder": {
-    "message": "Random instance (none selected)",
-    "description": "Input placeholder for provider instance settings that select a random instance from a pool when none is selected"
+    "message": "Rastgele servis (hiçbir servis seçilmedi)",
+    "description": "Hiçbir servis seçilmediğinde bir havuzdan rastgele servis seçen sağlayıcı servis ayarları için yer tutucu"
   }
 }
