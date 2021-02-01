@@ -41,6 +41,7 @@ Privacy Redirect allows setting custom instances, instances can be found here:
   - [Startpage](https://startpage.com)
   - [Qwant](https://www.qwant.com)
   - [Mojeek](https://www.mojeek.com)
+  - [Presearch](https://www.presearch.org)
 
 ## Development
 
