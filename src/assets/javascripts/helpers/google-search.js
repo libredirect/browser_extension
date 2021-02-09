@@ -11,6 +11,7 @@ const redirects = [
   { link: "https://searx.tuxcloud.net", q: "/" },
   { link: "https://searx.ninja", q: "/" },
   { link: "https://tromland.org/searx", q: "/search" },
+  { link: "https://engine.presearch.org", q: "/search" },
 ];
 
 export default {
