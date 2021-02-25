@@ -7,6 +7,7 @@ import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
 import mapsHelper from "../../assets/javascripts/helpers/google-maps.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
 import searchHelper from "../../assets/javascripts/helpers/google-search.js";
+import googleTranslateHelper from "../../assets/javascripts/helpers/google-translate.js";
 
 const nitterInstances = twitterHelper.redirects;
 const twitterDomains = twitterHelper.targets;
@@ -29,6 +30,9 @@ const redditBypassPaths = redditHelper.bypassPaths;
 const redditDefault = redditHelper.redirects[0];
 const googleSearchRegex = searchHelper.targets;
 const searchEngineInstances = searchHelper.redirects;
+const simplyTranslateInstances = googleTranslateHelper.redirects;
+const simplyTranslateDefault = simplyTranslateInstances[0];
+const googleTranslateDomains = googleTranslateHelper.targets;
 
 let disableNitter;
 let disableInvidious;
@@ -36,12 +40,14 @@ let disableBibliogram;
 let disableOsm;
 let disableReddit;
 let disableSearchEngine;
+let disableSimplyTranslate;
 let nitterInstance;
 let invidiousInstance;
 let bibliogramInstance;
 let osmInstance;
 let redditInstance;
 let searchEngineInstance;
+let simplyTranslateInstance;
 let alwaysProxy;
 let onlyEmbeddedVideo;
 let videoQuality;
@@ -66,12 +72,14 @@ browser.storage.sync.get(
     "osmInstance",
     "redditInstance",
     "searchEngineInstance",
+    "simplyTranslateInstance",
     "disableNitter",
     "disableInvidious",
     "disableBibliogram",
     "disableOsm",
     "disableReddit",
     "disableSearchEngine",
+    "disableSimplyTranslate",
     "alwaysProxy",
     "onlyEmbeddedVideo",
     "videoQuality",
@@ -93,12 +101,14 @@ browser.storage.sync.get(
     osmInstance = result.osmInstance || osmDefault;
     redditInstance = result.redditInstance || redditDefault;
     searchEngineInstance = result.searchEngineInstance;
+    simplyTranslateInstance = result.simplyTranslateInstance || simplyTranslateDefault;
     disableNitter = result.disableNitter;
     disableInvidious = result.disableInvidious;
     disableBibliogram = result.disableBibliogram;
     disableOsm = result.disableOsm;
     disableReddit = result.disableReddit;
     disableSearchEngine = result.disableSearchEngine;
+    disableSimplyTranslate = result.disableSimplyTranslate;
     alwaysProxy = result.alwaysProxy;
     onlyEmbeddedVideo = result.onlyEmbeddedVideo;
     videoQuality = result.videoQuality;
@@ -138,6 +148,9 @@ browser.storage.onChanged.addListener((changes) => {
   if ("osmInstance" in changes) {
     osmInstance = changes.osmInstance.newValue || osmDefault;
   }
+  if ("simplyTranslateInstance" in changes) {
+    simplyTranslateInstance = changes.simplyTranslateInstance.newValue || simplyTranslateDefault;
+  }
   if ("redditInstance" in changes) {
     redditInstance = changes.redditInstance.newValue || redditDefault;
   }
@@ -161,6 +174,9 @@ browser.storage.onChanged.addListener((changes) => {
   }
   if ("disableSearchEngine" in changes) {
     disableSearchEngine = changes.disableSearchEngine.newValue;
+  }
+  if ("disableSimplyTranslate" in changes) {
+    disableSimplyTranslate = changes.disableSimplyTranslate.newValue;
   }
   if ("alwaysProxy" in changes) {
     alwaysProxy = changes.alwaysProxy.newValue;
@@ -469,6 +485,14 @@ function redirectSearchEngine(url, initiator) {
   return `${searchEngine.link}${searchEngine.q}?${search}`;
 }
 
+function redirectGoogleTranslate(url, initiator) {
+  if (disableSimplyTranslate || isException(url, initiator)) {
+    return null;
+  }
+
+  return `${simplyTranslateInstance}/${url.search}`;
+}
+
 browser.webRequest.onBeforeRequest.addListener(
   (details) => {
     const url = new URL(details.url);
@@ -506,6 +530,10 @@ browser.webRequest.onBeforeRequest.addListener(
       redirect = {
         redirectUrl: redirectSearchEngine(url, initiator),
       };
+    } else if (googleTranslateDomains.includes(url.host)) {
+      redirect = {
+        redirectUrl: redirectGoogleTranslate(url, initiator),
+      }
     }
     if (redirect && redirect.redirectUrl) {
       console.info(
