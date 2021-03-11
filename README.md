@@ -42,6 +42,7 @@ Privacy Redirect allows setting custom instances, instances can be found here:
   - [Qwant](https://www.qwant.com)
   - [Mojeek](https://www.mojeek.com)
   - [Presearch](https://www.presearch.org)
+  - [Whoogle](https://benbusby.com/projects/whoogle-search/)
 
 ## Development
 
