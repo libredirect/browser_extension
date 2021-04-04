@@ -66,7 +66,6 @@
   "web_accessible_resources": ["assets/javascripts/helpers/*"],
   "browser_specific_settings": {
     "gecko": {
-      "id": "{b7f9d2cd-d772-4302-8c3f-eb941af36f76}",
       "strict_min_version": "60.0"
     }
   }
