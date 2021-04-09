@@ -454,6 +454,8 @@ function redirectReddit(url, initiator, type) {
     } else if (redditInstance.includes("teddit")) {
       let pathWithoutSlash = url.pathname.slice(1);
       return `${redditInstance}/pics/w:null_${pathWithoutSlash}${url.search}`
+    } else {
+      return null;
     }
   }
   return `${redditInstance}${url.pathname}${url.search}`;
