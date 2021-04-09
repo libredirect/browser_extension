@@ -449,7 +449,12 @@ function redirectReddit(url, initiator, type) {
     return null;
   }
   if (url.host === "i.redd.it") {
-    return `${redditInstance}/img${url.pathname}${url.search}`;
+    if (redditInstance.includes("libredd")) {
+      return `${redditInstance}/img${url.pathname}${url.search}`;
+    } else if (redditInstance.includes("teddit")) {
+      let pathWithoutSlash = url.pathname.slice(1);
+      return `${redditInstance}/pics/w:null_${pathWithoutSlash}${url.search}`
+    }
   }
   return `${redditInstance}${url.pathname}${url.search}`;
 }
