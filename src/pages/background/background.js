@@ -448,6 +448,9 @@ function redirectReddit(url, initiator, type) {
   if (type !== "main_frame" || url.pathname.match(redditBypassPaths)) {
     return null;
   }
+  if (url.host === "i.redd.it") {
+    return `${redditInstance}/img${url.pathname}${url.search}`;
+  }
   return `${redditInstance}${url.pathname}${url.search}`;
 }
 
