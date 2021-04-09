@@ -3,6 +3,7 @@ const targets = [
   "np.reddit.com",
   "new.reddit.com",
   "amp.reddit.com",
+  "i.redd.it",
 ];
 const redirects = [
   // libreddit: privacy w/ modern UI
