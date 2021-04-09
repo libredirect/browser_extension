@@ -452,8 +452,12 @@ function redirectReddit(url, initiator, type) {
     if (redditInstance.includes("libredd")) {
       return `${redditInstance}/img${url.pathname}${url.search}`;
     } else if (redditInstance.includes("teddit")) {
-      let pathWithoutSlash = url.pathname.slice(1);
-      return `${redditInstance}/pics/w:null_${pathWithoutSlash}${url.search}`
+      // As of 2021-04-09, redirects for teddit images are nontrivial:
+      // - navigating to the image before ever navigating to its page causes
+      //   404 error (probably needs fix on teddit project)
+      // - some image links on teddit are very different
+      // Therefore, don't support redirecting image links for teddit.
+      return null;
     } else {
       return null;
     }
