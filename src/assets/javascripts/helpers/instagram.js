@@ -15,7 +15,7 @@ const redirects = [
   "https://bibliogram.ethibox.fr",
   "https://bibliogram.hamster.dance",
   "https://bibliogram.kavin.rocks",
-  "https://bibliogram.ggc-project.de",
+  "https://insta.trom.tf",
 ];
 const reservedPaths = [
   "about",
