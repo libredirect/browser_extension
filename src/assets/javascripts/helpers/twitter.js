@@ -29,6 +29,7 @@ const redirects = [
   "https://nitter.weaponizedhumiliation.com",
   "https://nitter.vxempire.xyz",
   "https://nitter.unixfox.eu",
+  "https://bird.trom.tf",
   "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
   "http://nitter.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd.onion",
   "http://nitterlgj3n5fgwesu3vxc5h67ruku33nqaoeoocae2mvlzhsu6k7fqd.onion",
