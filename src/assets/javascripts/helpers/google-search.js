@@ -13,6 +13,7 @@ const redirects = [
   { link: "https://tromland.org/searx", q: "/search" },
   { link: "https://engine.presearch.org", q: "/search" },
   { link: "https://searx.silkky.cloud", q: "/" },
+  { link: "https://search.trom.tf", q: "/" },
 ];
 
 export default {
