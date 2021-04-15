@@ -39,6 +39,7 @@ Privacy Redirect allows setting custom instances, instances can be found here:
   - [SearX](https://searx.github.io/searx/)
   - [DuckDuckGo](https://duckduckgo.com)
   - [Startpage](https://startpage.com)
+  - [Ecosia](https://www.ecosia.org)
   - [Qwant](https://www.qwant.com)
   - [Mojeek](https://www.mojeek.com)
   - [Presearch](https://www.presearch.org)
