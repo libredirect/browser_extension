@@ -9,13 +9,11 @@ const redirects = [
   "https://bibliogram.snopyta.org",
   "https://bibliogram.pussthecat.org",
   "https://bibliogram.nixnet.services",
-  "https://bg.endl.site",
-  "https://bibliogram.13ad.de",
-  "https://bibliogram.pixelfed.uno",
   "https://bibliogram.ethibox.fr",
   "https://bibliogram.hamster.dance",
   "https://bibliogram.kavin.rocks",
   "https://insta.trom.tf",
+  "https://bibliogram.hamster.dance"
 ];
 const reservedPaths = [
   "about",

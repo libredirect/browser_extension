@@ -7,6 +7,7 @@ import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
 import mapsHelper from "../../assets/javascripts/helpers/google-maps.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
 import searchHelper from "../../assets/javascripts/helpers/google-search.js";
+import googleTranslateHelper from "../../assets/javascripts/helpers/google-translate.js";
 
 const nitterInstances = twitterHelper.redirects;
 const invidiousInstances = youtubeHelper.redirects;
@@ -14,6 +15,7 @@ const bibliogramInstances = instagramHelper.redirects;
 const osmInstances = mapsHelper.redirects;
 const redditInstances = redditHelper.redirects;
 const searchEngineInstances = searchHelper.redirects;
+const simplyTranslateInstances = googleTranslateHelper.redirects;
 const autocompletes = [
   { id: "nitter-instance", instances: nitterInstances },
   { id: "invidious-instance", instances: invidiousInstances },
@@ -24,6 +26,7 @@ const autocompletes = [
     id: "search-engine-instance",
     instances: searchEngineInstances.map((instance) => instance.link),
   },
+  { id: "simply-translate-instance", instances: simplyTranslateInstances },
 ];
 const domparser = new DOMParser();
 
@@ -33,12 +36,14 @@ let bibliogramInstance = document.getElementById("bibliogram-instance");
 let osmInstance = document.getElementById("osm-instance");
 let redditInstance = document.getElementById("reddit-instance");
 let searchEngineInstance = document.getElementById("search-engine-instance");
+let simplyTranslateInstance = document.getElementById("simply-translate-instance");
 let disableNitter = document.getElementById("disable-nitter");
 let disableInvidious = document.getElementById("disable-invidious");
 let disableBibliogram = document.getElementById("disable-bibliogram");
 let disableOsm = document.getElementById("disable-osm");
 let disableReddit = document.getElementById("disable-reddit");
 let disableSearchEngine = document.getElementById("disable-search-engine");
+let disableSimplyTranslate = document.getElementById("disable-simply-translate");
 let alwaysProxy = document.getElementById("always-proxy");
 let onlyEmbeddedVideo = document.getElementById("only-embed");
 let videoQuality = document.getElementById("video-quality");
@@ -90,12 +95,14 @@ browser.storage.sync.get(
     "osmInstance",
     "redditInstance",
     "searchEngineInstance",
+    "simplyTranslateInstance",
     "disableNitter",
     "disableInvidious",
     "disableBibliogram",
     "disableOsm",
     "disableReddit",
     "disableSearchEngine",
+    "disableSimplyTranslate",
     "alwaysProxy",
     "onlyEmbeddedVideo",
     "videoQuality",
@@ -123,12 +130,14 @@ browser.storage.sync.get(
     redditInstance.value = result.redditInstance || "";
     searchEngineInstance.value =
       (result.searchEngineInstance && result.searchEngineInstance.link) || "";
+    simplyTranslateInstance.value = result.simplyTranslateInstance || "";
     disableNitter.checked = !result.disableNitter;
     disableInvidious.checked = !result.disableInvidious;
     disableBibliogram.checked = !result.disableBibliogram;
     disableOsm.checked = !result.disableOsm;
     disableReddit.checked = !result.disableReddit;
     disableSearchEngine.checked = !result.disableSearchEngine;
+    disableSimplyTranslate.checked = !result.disableSimplyTranslate;
     alwaysProxy.checked = result.alwaysProxy;
     onlyEmbeddedVideo.checked = result.onlyEmbeddedVideo;
     videoQuality.value = result.videoQuality || "";
@@ -303,6 +312,15 @@ const searchEngineInstanceChange = debounce(() => {
 }, 500);
 searchEngineInstance.addEventListener("input", searchEngineInstanceChange);
 
+const simplyTranslateInstanceChange = debounce(() => {
+  if (simplyTranslateInstance.checkValidity()) {
+    browser.storage.sync.set({
+      simplyTranslateInstance: parseURL(simplyTranslateInstance.value),
+    });
+  }
+}, 500);
+simplyTranslateInstance.addEventListener("input", simplyTranslateInstanceChange);
+
 disableNitter.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableNitter: !event.target.checked });
 });
@@ -325,6 +343,10 @@ disableReddit.addEventListener("change", (event) => {
 
 disableSearchEngine.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableSearchEngine: !event.target.checked });
+});
+
+disableSimplyTranslate.addEventListener("change", (event) => {
+  browser.storage.sync.set({ disableSimplyTranslate: !event.target.checked });
 });
 
 alwaysProxy.addEventListener("change", (event) => {
