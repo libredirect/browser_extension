@@ -31,6 +31,10 @@
     "message": "Search Engine Instance",
     "description": "Label for Search Engine instance field option (options)."
   },
+  "simplyTranslateInstance": {
+    "message": "SimplyTranslate Instance",
+    "description": "Label for SimplyTranslate instance field option (options)."
+  },
   "disableNitter": {
     "message": "Nitter Redirects",
     "description": "Label for enable/disable Nitter redirects option (options & pop-up)."
@@ -54,6 +58,10 @@
   "disableSearchEngine": {
     "message": "Search Engine Redirects",
     "description": "Label for enable/disable Search Engine redirects option (options & pop-up)."
+  },
+  "disableSimplyTranslate": {
+    "message": "SimplyTranslate Redirects",
+    "description": "Label for enable/disable SimplyTranslate redirects option (options & pop-up)."
   },
   "alwaysProxy": {
     "message": "Always proxy videos through Invidious",

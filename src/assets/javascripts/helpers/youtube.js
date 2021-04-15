@@ -10,8 +10,8 @@ const targets = [
   "music.youtube.com",
 ];
 /*
-    Please remember to also update the manifest.json file 
-    (content_scripts > matches, 'persist-invidious-prefs.js') 
+    Please remember to also update the manifest.json file
+    (content_scripts > matches, 'persist-invidious-prefs.js')
     when updating this list:
   */
 const redirects = [
@@ -26,6 +26,7 @@ const redirects = [
   "https://yewtu.be",
   "https://invidious.tube",
   "https://dev.viewtube.io",
+  "https://invidious.048596.xyz",
   "http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion",
   "http://qklhadlycap4cnod.onion",
   "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",

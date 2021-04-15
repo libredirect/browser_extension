@@ -165,6 +165,25 @@
         </table>
       </section>
       <section class="settings-block">
+        <table class="option" aria-label="Toggle SimplyTranslate redirects">
+          <tbody>
+            <tr>
+              <td>
+                <h1 data-localise="__MSG_disableSimplyTranslate__" class="new-badge" data-new-badge>SimplyTranslate Redirects</h1>
+              </td>
+              <td>
+                <input
+                  aria-hidden="true"
+                  id="disable-simply-translate"
+                  type="checkbox"
+                />&nbsp;
+                <label for="disable-simply-translate" class="checkbox-label"></label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="settings-block">
         <h1 data-localise="__MSG_nitterInstance__">Nitter Instance</h1>
         <div class="autocomplete">
           <input
@@ -226,6 +245,16 @@
             type="url"
             data-localise-placeholder="__MSG_randomInstancePlaceholder__"
             placeholder="Random instance (none selected)"
+          />
+        </div>
+      </section>
+      <section class="settings-block">
+        <h1 data-localise="__MSG_simplyTranslateInstance__">SimplyTranslate Instance</h1>
+        <div class="autocomplete">
+          <input
+            id="simply-translate-instance"
+            type="url"
+            placeholder="https://translate.metalune.xyz"
           />
         </div>
       </section>
