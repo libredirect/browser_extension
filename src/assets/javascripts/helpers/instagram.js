@@ -10,6 +10,9 @@ const redirects = [
   "https://bibliogram.pussthecat.org",
   "https://bibliogram.nixnet.services",
   "https://bibliogram.ethibox.fr",
+  "https://bibliogram.hamster.dance",
+  "https://bibliogram.kavin.rocks",
+  "https://insta.trom.tf",
   "https://bibliogram.hamster.dance"
 ];
 const reservedPaths = [
