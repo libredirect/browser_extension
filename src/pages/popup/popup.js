@@ -6,6 +6,7 @@ let disableBibliogram = document.querySelector("#disable-bibliogram");
 let disableOsm = document.querySelector("#disable-osm");
 let disableReddit = document.querySelector("#disable-reddit");
 let disableSearchEngine = document.querySelector("#disable-searchEngine");
+let disableSimplyTranslate = document.querySelector("#disable-simplyTranslate");
 let version = document.querySelector("#version");
 
 window.browser = window.browser || window.chrome;
@@ -18,6 +19,7 @@ browser.storage.sync.get(
     "disableOsm",
     "disableReddit",
     "disableSearchEngine",
+    "disableSimplyTranslate",
     "theme",
   ],
   (result) => {
@@ -28,6 +30,7 @@ browser.storage.sync.get(
     disableOsm.checked = !result.disableOsm;
     disableReddit.checked = !result.disableReddit;
     disableSearchEngine.checked = !result.disableSearchEngine;
+    disableSimplyTranslate.checked = !result.disableSimplyTranslate;
   }
 );
 
@@ -55,6 +58,10 @@ disableReddit.addEventListener("change", (event) => {
 
 disableSearchEngine.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableSearchEngine: !event.target.checked });
+});
+
+disableSimplyTranslate.addEventListener("change", (event) => {
+  browser.storage.sync.set({ disableSimplyTranslate: !event.target.checked });
 });
 
 document.querySelector("#more-options").addEventListener("click", () => {
