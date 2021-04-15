@@ -464,6 +464,20 @@ function redirectReddit(url, initiator, type) {
   if (type !== "main_frame" || url.pathname.match(redditBypassPaths)) {
     return null;
   }
+  if (url.host === "i.redd.it") {
+    if (redditInstance.includes("libredd")) {
+      return `${redditInstance}/img${url.pathname}${url.search}`;
+    } else if (redditInstance.includes("teddit")) {
+      // As of 2021-04-09, redirects for teddit images are nontrivial:
+      // - navigating to the image before ever navigating to its page causes
+      //   404 error (probably needs fix on teddit project)
+      // - some image links on teddit are very different
+      // Therefore, don't support redirecting image links for teddit.
+      return null;
+    } else {
+      return null;
+    }
+  }
   return `${redditInstance}${url.pathname}${url.search}`;
 }
 
