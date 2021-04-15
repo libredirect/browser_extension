@@ -25,6 +25,7 @@ const redirects = [
   "https://invidious.site",
   "https://yewtu.be",
   "https://invidious.tube",
+  "https://dev.viewtube.io",
   "https://invidious.048596.xyz",
   "http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion",
   "http://qklhadlycap4cnod.onion",

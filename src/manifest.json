@@ -49,6 +49,8 @@
         "*://invidious.site/*",
         "*://yewtu.be/*",
         "*://invidious.tube/*",
+        "*://dev.viewtube.io/*",
+	      "*://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion/*",
         "*://invidious.048596.yxz/*",
         "*://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion/*",
         "*://qklhadlycap4cnod.onion/*",
@@ -66,7 +68,6 @@
   "web_accessible_resources": ["assets/javascripts/helpers/*"],
   "browser_specific_settings": {
     "gecko": {
-      "id": "{b7f9d2cd-d772-4302-8c3f-eb941af36f76}",
       "strict_min_version": "60.0"
     }
   }
