@@ -290,7 +290,7 @@ function redirectTwitter(url, initiator) {
   if (disableNitter || isException(url, initiator)) {
     return null;
   }
-  if (url.pathname.includes("/home")) {
+  if (url.pathname.split("/").includes("home")) {
     return null;
   }
   if (
@@ -313,7 +313,7 @@ function redirectTwitter(url, initiator) {
     return `${
       nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
     }/gif/${encodeURIComponent(url.href)}`;
-  } else if (url.pathname.includes("tweets")) {
+  } else if (url.pathname.split("/").includes("tweets")) {
     return `${
       nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
     }${url.pathname.replace("/tweets", "")}${url.search}`;
@@ -379,7 +379,7 @@ function redirectGoogleMaps(url, initiator) {
     layers[url.searchParams.get("layer")] || layers["none"]
   }`;
   // Handle Google Maps Embed API
-  if (url.pathname.includes("/embed")) {
+  if (url.pathname.split("/").includes("embed")) {
     let query = "";
     if (url.searchParams.has("q")) {
       query = url.searchParams.get("q");
@@ -400,7 +400,7 @@ function redirectGoogleMaps(url, initiator) {
     });
     redirect = `${osmInstance}/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${marker}`;
     // Handle Google Maps Directions
-  } else if (url.pathname.includes("/dir")) {
+  } else if (url.pathname.split("/").includes("dir")) {
     const travelMode =
       travelModes[url.searchParams.get("travelmode")] || travelModes["driving"];
     let origin;
