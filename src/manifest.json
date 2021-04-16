@@ -1,7 +1,7 @@
 {
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "1.1.46",
+  "version": "1.1.47",
   "manifest_version": 2,
   "background": {
     "page": "pages/background/background.html",
@@ -57,10 +57,8 @@
         "*://invidious.tinfoil-hat.net/*",
         "*://invidious.namazso.eu/*",
         "*://vid.puffyan.us/*",
-        "*://invidious.048596.xyz/*",
         "*://dev.viewtube.io/*",
-	      "*://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion/*",
-        "*://invidious.048596.yxz/*",
+        "*://invidious.048596.xyz/*",
         "*://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion/*",
         "*://qklhadlycap4cnod.onion/*",
         "*://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion/*",
@@ -77,7 +75,8 @@
   "web_accessible_resources": ["assets/javascripts/helpers/*"],
   "browser_specific_settings": {
     "gecko": {
-      "strict_min_version": "60.0"
+      "id": "{b7f9d2cd-d772-4302-8c3f-eb941af36f76}",
+      "strict_min_version": "67.0"
     }
   }
 }

@@ -15,6 +15,7 @@ const redirects = [
   { link: "https://engine.presearch.org", q: "/search" },
   { link: "https://searx.silkky.cloud", q: "/" },
   { link: "https://search.trom.tf", q: "/" },
+  { link: "https://whooglesearch.net", q: "/search" },
   { link: "https://whoogle.sdf.org", q: "/search" },
   { link: "https://whoogle.himiko.cloud", q: "/search" },
   { link: "https://whoogle-search.zeet.app", q: "/search" },

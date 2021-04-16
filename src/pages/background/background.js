@@ -101,7 +101,8 @@ browser.storage.sync.get(
     osmInstance = result.osmInstance || osmDefault;
     redditInstance = result.redditInstance || redditDefault;
     searchEngineInstance = result.searchEngineInstance;
-    simplyTranslateInstance = result.simplyTranslateInstance || simplyTranslateDefault;
+    simplyTranslateInstance =
+      result.simplyTranslateInstance || simplyTranslateDefault;
     disableNitter = result.disableNitter;
     disableInvidious = result.disableInvidious;
     disableBibliogram = result.disableBibliogram;
@@ -149,7 +150,8 @@ browser.storage.onChanged.addListener((changes) => {
     osmInstance = changes.osmInstance.newValue || osmDefault;
   }
   if ("simplyTranslateInstance" in changes) {
-    simplyTranslateInstance = changes.simplyTranslateInstance.newValue || simplyTranslateDefault;
+    simplyTranslateInstance =
+      changes.simplyTranslateInstance.newValue || simplyTranslateDefault;
   }
   if ("redditInstance" in changes) {
     redditInstance = changes.redditInstance.newValue || redditDefault;
@@ -547,7 +549,7 @@ browser.webRequest.onBeforeRequest.addListener(
     } else if (googleTranslateDomains.includes(url.host)) {
       redirect = {
         redirectUrl: redirectGoogleTranslate(url, initiator),
-      }
+      };
     }
     if (redirect && redirect.redirectUrl) {
       console.info(
@@ -567,13 +569,21 @@ browser.webRequest.onBeforeRequest.addListener(
 );
 
 browser.runtime.onInstalled.addListener((details) => {
-  browser.storage.sync.get(["disableSearchEngine"], (result) => {
-    if (result.disableSearchEngine === undefined) {
-      browser.storage.sync.set({
-        disableSearchEngine: true,
-      });
+  browser.storage.sync.get(
+    ["disableSearchEngine", "disableSimplyTranslate"],
+    (result) => {
+      if (result.disableSearchEngine === undefined) {
+        browser.storage.sync.set({
+          disableSearchEngine: true,
+        });
+      }
+      if (result.disableSimplyTranslate === undefined) {
+        browser.storage.sync.set({
+          disableSimplyTranslate: true,
+        });
+      }
     }
-  });
+  );
   if (details.reason === "update") {
     browser.storage.sync.get(
       ["whitelist", "exceptions", "invidiousInstance", "disableSearchEngine"],

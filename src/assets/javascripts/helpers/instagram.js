@@ -13,7 +13,7 @@ const redirects = [
   "https://bibliogram.hamster.dance",
   "https://bibliogram.kavin.rocks",
   "https://insta.trom.tf",
-  "https://bibliogram.hamster.dance"
+  "https://bibliogram.hamster.dance",
 ];
 const reservedPaths = [
   "about",

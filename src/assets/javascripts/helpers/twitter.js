@@ -1,5 +1,5 @@
 /*
-    Please remember to also update the manifest.json file 
+    Please remember to also update the src/manifest.json file 
     (content_scripts > matches, 'remove-twitter-sw.js') 
     when updating this list:
   */
@@ -10,6 +10,11 @@ const targets = [
   "pbs.twimg.com",
   "video.twimg.com",
 ];
+/*
+    Please remember to also update the 
+    src/assets/javascripts/remove-twitter-sw.js file 
+    (const nitterInstances) when updating this list:
+  */
 const redirects = [
   "https://nitter.net",
   "https://nitter.snopyta.org",
