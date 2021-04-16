@@ -36,14 +36,18 @@ let bibliogramInstance = document.getElementById("bibliogram-instance");
 let osmInstance = document.getElementById("osm-instance");
 let redditInstance = document.getElementById("reddit-instance");
 let searchEngineInstance = document.getElementById("search-engine-instance");
-let simplyTranslateInstance = document.getElementById("simply-translate-instance");
+let simplyTranslateInstance = document.getElementById(
+  "simply-translate-instance"
+);
 let disableNitter = document.getElementById("disable-nitter");
 let disableInvidious = document.getElementById("disable-invidious");
 let disableBibliogram = document.getElementById("disable-bibliogram");
 let disableOsm = document.getElementById("disable-osm");
 let disableReddit = document.getElementById("disable-reddit");
 let disableSearchEngine = document.getElementById("disable-search-engine");
-let disableSimplyTranslate = document.getElementById("disable-simply-translate");
+let disableSimplyTranslate = document.getElementById(
+  "disable-simply-translate"
+);
 let alwaysProxy = document.getElementById("always-proxy");
 let onlyEmbeddedVideo = document.getElementById("only-embed");
 let videoQuality = document.getElementById("video-quality");
@@ -319,7 +323,10 @@ const simplyTranslateInstanceChange = debounce(() => {
     });
   }
 }, 500);
-simplyTranslateInstance.addEventListener("input", simplyTranslateInstanceChange);
+simplyTranslateInstance.addEventListener(
+  "input",
+  simplyTranslateInstanceChange
+);
 
 disableNitter.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableNitter: !event.target.checked });
@@ -499,7 +506,7 @@ function autocomplete(input, list) {
     div.prepend(strong);
     div.appendChild(hiddenInput);
     div.addEventListener("click", function (e) {
-      input.value = e.target.getElementsByTagName("input")[0].value;
+      input.value = div.getElementsByTagName("input")[0].value;
       input.dispatchEvent(new Event("input"));
       closeAllLists();
     });
