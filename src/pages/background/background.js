@@ -360,6 +360,9 @@ function redirectGoogleMaps(url, initiator) {
   if (disableOsm || isException(url, initiator)) {
     return null;
   }
+  if (initiator.host === "earth.google.com") {
+    return null;
+  }
   let redirect;
   let mapCentre = "";
   let params = "";
