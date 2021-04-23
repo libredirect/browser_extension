@@ -483,9 +483,15 @@ function redirectReddit(url, initiator, type) {
       return null;
     }
   } else if (url.host === "redd.it") {
-    if (redditInstance.includes("teddit")) {
-      // As of 2021-04-22, redirects for teddit redd.it links don't work out of
-      // the box.  Prefixing the path with "/comments" seems to help.
+    if (
+      redditInstance.includes("teddit") &&
+      !url.pathname.startsWith("/comments/")
+    ) {
+      // As of 2021-04-22, redirects for teddit redd.it links don't work unless
+      // the path starts with "/comments".  It appears that all links that
+      // don't start with "/comments" are interchangeable with the ones
+      // that do start with "/comments", so manually add that prefix if it is
+      // missing.
       return `${redditInstance}/comments${url.pathname}${url.search}`;
     }
   }
