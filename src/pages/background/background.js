@@ -485,7 +485,7 @@ function redirectReddit(url, initiator, type) {
   } else if (url.host === "redd.it") {
     if (
       redditInstance.includes("teddit") &&
-      !url.pathname.startsWith("/comments/")
+      !url.pathname.match(/^\/\S+\//)
     ) {
       // As of 2021-04-22, redirects for teddit redd.it links don't work unless
       // the path starts with "/comments".  It appears that all links that
