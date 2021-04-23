@@ -484,9 +484,9 @@ function redirectReddit(url, initiator, type) {
     }
   } else if (url.host === "redd.it") {
     if (redditInstance.includes("teddit")) {
-      // As of 2021-04-22, redirects for teddit on redd.it links don't work:
-      // they take you to the home page.
-      return null;
+      // As of 2021-04-22, redirects for teddit redd.it links don't work out of
+      // the box.  Prefixing the path with "/comments" seems to help.
+      return `${redditInstance}/comments${url.pathname}${url.search}`;
     }
   }
   return `${redditInstance}${url.pathname}${url.search}`;
