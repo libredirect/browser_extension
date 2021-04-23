@@ -482,6 +482,12 @@ function redirectReddit(url, initiator, type) {
     } else {
       return null;
     }
+  } else if (url.host === "redd.it") {
+    if (redditInstance.includes("teddit")) {
+      // As of 2021-04-22, redirects for teddit on redd.it links don't work:
+      // they take you to the home page.
+      return null;
+    }
   }
   return `${redditInstance}${url.pathname}${url.search}`;
 }
