@@ -28,7 +28,7 @@ It's possible to toggle all redirects on and off. The extension will default to 
 Privacy Redirect allows setting custom instances, instances can be found here:
 
 - [Nitter instances](https://github.com/zedeus/nitter/wiki/Instances)
-- [Invidious instances](https://github.com/iv-org/invidious/wiki/Invidious-Instances)
+- [Invidious instances](https://docs.invidious.io/Invidious-Instances.md)
 - [Bibliogram instances](https://git.sr.ht/~cadence/bibliogram-docs/tree/master/docs/Instances.md)
 - [SimplyTranslate instances](https://git.sr.ht/~metalune/simplytranslate_web#list-of-instances)
 - [OpenStreetMap tile servers](https://wiki.openstreetmap.org/wiki/Tile_servers)
