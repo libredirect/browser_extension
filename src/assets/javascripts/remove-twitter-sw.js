@@ -64,7 +64,7 @@ browser.storage.sync.get(
     "redirectBypassFlag",
     "exceptions",
   ],
-  (result) => {
+  async(result) => {
     redirectBypassFlag = result.redirectBypassFlag;
     browser.storage.sync.set({
       redirectBypassFlag: false,

@@ -234,7 +234,7 @@ function isFirefox() {
   return typeof InstallTrigger !== "undefined";
 }
 
-function redirectYouTube(url, initiator, type) {
+async function redirectYouTube(url, initiator, type) {
   if (disableInvidious || isException(url, initiator)) {
     return null;
   }
@@ -282,11 +282,11 @@ function redirectYouTube(url, initiator, type) {
   url.searchParams.append("autoplay", invidiousAutoplay ? 1 : 0);
 
   return `${
-    invidiousInstance || commonHelper.getRandomInstance(invidiousRandomPool)
+    invidiousInstance || await commonHelper.getRandomOnlineInstance(invidiousRandomPool)
   }${url.pathname.replace("/shorts", "")}${url.search}`;
 }
 
-function redirectTwitter(url, initiator) {
+async function redirectTwitter(url, initiator) {
   if (disableNitter || isException(url, initiator)) {
     return null;
   }
@@ -307,24 +307,24 @@ function redirectTwitter(url, initiator) {
   }
   if (url.host.split(".")[0] === "pbs") {
     return `${
-      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
+      nitterInstance || await commonHelper.getRandomOnlineInstance(nitterRandomPool)
     }/pic/${encodeURIComponent(url.href)}`;
   } else if (url.host.split(".")[0] === "video") {
     return `${
-      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
+      nitterInstance || await commonHelper.getRandomOnlineInstance(nitterRandomPool)
     }/gif/${encodeURIComponent(url.href)}`;
   } else if (url.pathname.split("/").includes("tweets")) {
     return `${
-      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
+      nitterInstance || await commonHelper.getRandomOnlineInstance(nitterRandomPool)
     }${url.pathname.replace("/tweets", "")}${url.search}`;
   } else {
     return `${
-      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
+      nitterInstance || await commonHelper.getRandomOnlineInstance(nitterRandomPool)
     }${url.pathname}${url.search}`;
   }
 }
 
-function redirectInstagram(url, initiator, type) {
+async function redirectInstagram(url, initiator, type) {
   if (disableBibliogram || isException(url, initiator)) {
     return null;
   }
@@ -346,12 +346,12 @@ function redirectInstagram(url, initiator, type) {
     instagramReservedPaths.includes(url.pathname.split("/")[1])
   ) {
     return `${
-      bibliogramInstance || commonHelper.getRandomInstance(bibliogramRandomPool)
+      bibliogramInstance || await commonHelper.getRandomOnlineInstance(bibliogramRandomPool)
     }${url.pathname}${url.search}`;
   } else {
     // Likely a user profile, redirect to '/u/...'
     return `${
-      bibliogramInstance || commonHelper.getRandomInstance(bibliogramRandomPool)
+      bibliogramInstance || await commonHelper.getRandomOnlineInstance(bibliogramRandomPool)
     }/u${url.pathname}${url.search}`;
   }
 }
@@ -513,7 +513,7 @@ function redirectGoogleTranslate(url, initiator) {
 }
 
 browser.webRequest.onBeforeRequest.addListener(
-  (details) => {
+  async (details) => {
     const url = new URL(details.url);
     let initiator;
     if (details.originUrl) {
@@ -524,15 +524,15 @@ browser.webRequest.onBeforeRequest.addListener(
     let redirect;
     if (youtubeDomains.includes(url.host)) {
       redirect = {
-        redirectUrl: redirectYouTube(url, initiator, details.type),
+        redirectUrl: await redirectYouTube(url, initiator, details.type),
       };
     } else if (twitterDomains.includes(url.host)) {
       redirect = {
-        redirectUrl: redirectTwitter(url, initiator),
+        redirectUrl: await redirectTwitter(url, initiator),
       };
     } else if (instagramDomains.includes(url.host)) {
       redirect = {
-        redirectUrl: redirectInstagram(url, initiator, details.type),
+        redirectUrl: await redirectInstagram(url, initiator, details.type),
       };
     } else if (url.href.match(googleMapsRegex)) {
       redirect = {
