@@ -1,0 +1,154 @@
+{
+  "extensionName": {
+    "message": "Privacy Redirect",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Reindirizza Twitter, YouTube, Instagram ed altri verso alternative rispettose della privacy.",
+    "description": "Description of the extension."
+  },
+  "nitterInstance": {
+    "message": "Istanza di Nitter",
+    "description": "Label for Nitter instance field option (options)."
+  },
+  "invidiousInstance": {
+    "message": "Istanza di Invidious",
+    "description": "Label for Invidious instance field option (options)."
+  },
+  "bibliogramInstance": {
+    "message": "Istanza di Bibliogram",
+    "description": "Label for Bibliogram instance field option (options)."
+  },
+  "osmInstance": {
+    "message": "Istanza di OpenStreetMap",
+    "description": "Label for OSM instance field option (options)."
+  },
+  "redditInstance": {
+    "message": "Istanza di Reddit",
+    "description": "Label for Reddit instance field option (options)."
+  },
+  "searchEngineInstance": {
+    "message": "Istanza del motore di ricerca",
+    "description": "Label for Search Engine instance field option (options)."
+  },
+  "simplyTranslateInstance": {
+    "message": "Istanza di SimplyTranslate",
+    "description": "Label for SimplyTranslate instance field option (options)."
+  },
+  "disableNitter": {
+    "message": "Reindirizzamenti Nitter",
+    "description": "Label for enable/disable Nitter redirects option (options & pop-up)."
+  },
+  "disableInvidious": {
+    "message": "Reindirizzamenti Invidious",
+    "description": "Label for enable/disable Invidious redirects option (options & pop-up)."
+  },
+  "disableBibliogram": {
+    "message": "Reindirizzamenti Bibliogram",
+    "description": "Label for enable/disable Bibliogram redirects option (options & pop-up)."
+  },
+  "disableOsm": {
+    "message": "Reindirizzamenti OpenStreetMap",
+    "description": "Label for enable/disable OSM redirects option (options & pop-up)."
+  },
+  "disableReddit": {
+    "message": "Reindirizzamenti Reddit",
+    "description": "Label for enable/disable Reddit redirects option (options & pop-up)."
+  },
+  "disableSearchEngine": {
+    "message": "Reindirizzamenti motore di ricerca",
+    "description": "Label for enable/disable Search Engine redirects option (options & pop-up)."
+  },
+  "disableSimplyTranslate": {
+    "message": "Reindirizzamenti SimplyTranslate",
+    "description": "Label for enable/disable SimplyTranslate redirects option (options & pop-up)."
+  },
+  "alwaysProxy": {
+    "message": "Usa sempre il proxy per i video su Invidious",
+    "description": "Label for 'Always proxy videos through Invidious' option (options)."
+  },
+  "onlyEmbeddedVideo": {
+    "message": "Reindirizza solo i video incorporati verso Invidious",
+    "description": "Label for 'Only redirect embedded video to Invidious' option (options)."
+  },
+  "videoQuality": {
+    "message": "Qualità video di Invidious",
+    "description": "Label for 'Invidious Video Quality' option (options)."
+  },
+  "removeTwitterSW": {
+    "message": "Rimuovi proattivamente il service worker di Twitter",
+    "description": "Label for 'Proactively remove Twitter service worker' option (options)."
+  },
+  "invidiousDarkMode": {
+    "message": "Modalità scura di Invidious sempre attiva",
+    "description": "Label for 'Invidious dark mode always on' option (options)."
+  },
+  "persistInvidiousPrefs": {
+    "message": "Mantieni le preferenze di Invidious (con cookie)",
+    "description": "Label for 'Persist Invidious preferences (as cookie)' option (options)."
+  },
+  "generalTab": {
+    "message": "Generali",
+    "description": "General tab (options)."
+  },
+  "advancedTab": {
+    "message": "Avanzate",
+    "description": "Advanced tab (options)."
+  },
+  "exceptionsTab": {
+    "message": "Eccezioni",
+    "description": "Exceptions tab (options)."
+  },
+  "exceptionsDescriptionP1": {
+    "message": "Inserisci un URL o espressione regolare da escludere dai reindirizzamenti.",
+    "description": "A description of the 'Exceptions' feature paragraph 1 (options)."
+  },
+  "exceptionsDescriptionP2": {
+    "message": "Tutte le richieste verso o da un URL corrispondente all'eccezione saranno escluse dai reindirizzamenti.",
+    "description": "A description of the 'Exceptions' feature paragraph 2 (options)."
+  },
+  "exceptionsDescriptionP3": {
+    "message": "Nota - Supporta le espressioni regolari JavaScript, esclusi gli slash.",
+    "description": "A description of the 'Exceptions' feature paragraph 3 (options)."
+  },
+  "addException": {
+    "message": "Aggiungi eccezione",
+    "description": "'Add Exceptions' button (options)."
+  },
+  "moreOptions": {
+    "message": "Altre opzioni",
+    "description": "More Options button (pop-up)."
+  },
+  "privacy": {
+    "message": "Privacy",
+    "description": "Extension title - Privacy (pop-up)."
+  },
+  "redirect": {
+    "message": "Reindirizza",
+    "description": "Extension title - Redirect (pop-up)."
+  },
+  "version": {
+    "message": "Versione",
+    "description": "Version"
+  },
+  "useFreeTube": {
+    "message": "Usa FreeTube al posto di Invidious quando possibile",
+    "description": "Label for 'Use FreeTube over Invidious when possible' option (options)."
+  },
+  "nitterRandomPool": {
+    "message": "Gruppo di istanze Nitter casuali (separate da virgola)",
+    "description": "Label for 'Nitter random instance pool (comma-separated)' option (options)."
+  },
+  "invidiousRandomPool": {
+    "message": "Gruppo di istanze Invidious casuali (separate da virgola)",
+    "description": "Label for 'Invidious random instance pool (comma-separated)' option (options)."
+  },
+  "bibliogramRandomPool": {
+    "message": "Gruppo di istanze Bibliogram casuali (separate da virgola)",
+    "description": "Label for 'Bibliogram random instance pool (comma-separated)' option (options)."
+  },
+  "randomInstancePlaceholder": {
+    "message": "Istanza casuale (nessuna selezione)",
+    "description": "Input placeholder for provider instance settings that select a random instance from a pool when none is selected"
+  }
+}
