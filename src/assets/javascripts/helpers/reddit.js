@@ -14,6 +14,7 @@ const redirects = [
   "https://libreddit.dothq.co",
   "https://libreddit.silkky.cloud",
   "https://libreddit.himiko.cloud",
+  "https://reddit.artemislena.eu",
   // teddit: privacy w/ old UI
   "https://teddit.net",
   "https://teddit.ggc-project.de",
