@@ -20,7 +20,7 @@
 
 ## About
 
-A web extension that redirects _Twitter, YouTube, Instagram, Google Maps, Reddit & Google Search_ requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/iv-org/invidious), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Bibliogram](https://sr.ht/~cadence/bibliogram/), [OpenStreetMap](https://www.openstreetmap.org/) & Private Search Engines like [DuckDuckGo](https://duckduckgo.com) and [Startpage](https://startpage.com).
+A web extension that redirects _Twitter, YouTube, Instagram, Google Maps, Reddit, Google Search, & Google Translate_ requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/iv-org/invidious), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Bibliogram](https://sr.ht/~cadence/bibliogram/), [OpenStreetMap](https://www.openstreetmap.org/), [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web) & Private Search Engines like [DuckDuckGo](https://duckduckgo.com) and [Startpage](https://startpage.com).
 
 It's possible to toggle all redirects on and off. The extension will default to using random instances if none are selected. If these instances are not working, you can try and set a custom instance from the list below.
 
@@ -29,8 +29,9 @@ It's possible to toggle all redirects on and off. The extension will default to 
 Privacy Redirect allows setting custom instances, instances can be found here:
 
 - [Nitter instances](https://github.com/zedeus/nitter/wiki/Instances)
-- [Invidious instances](https://github.com/iv-org/invidious/wiki/Invidious-Instances)
+- [Invidious instances](https://docs.invidious.io/Invidious-Instances.md)
 - [Bibliogram instances](https://git.sr.ht/~cadence/bibliogram-docs/tree/master/docs/Instances.md)
+- [SimplyTranslate instances](https://git.sr.ht/~metalune/simplytranslate_web#list-of-instances)
 - [OpenStreetMap tile servers](https://wiki.openstreetmap.org/wiki/Tile_servers)
 - Reddit alternatives:
   - [Libreddit](https://github.com/spikecodes/libreddit#instances)
@@ -65,7 +66,7 @@ Privacy Redirect allows setting custom instances, instances can be found here:
 
 ## License
 
-[GPLv3](LICENSE.txt).
+[GPLv3](LICENSE).
 
 ## Permissions
 
