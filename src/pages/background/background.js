@@ -279,7 +279,9 @@ function redirectYouTube(url, initiator, type) {
   if (invidiousSubtitles) {
     url.searchParams.append("subtitles", invidiousSubtitles);
   }
-  url.searchParams.append("autoplay", invidiousAutoplay ? 1 : 0);
+  if (invidiousAutoplay) {
+    url.searchParams.append("autoplay", 1);
+  }
 
   return `${
     invidiousInstance || commonHelper.getRandomInstance(invidiousRandomPool)
