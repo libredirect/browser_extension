@@ -12,6 +12,7 @@
 
 [![Donate](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/SimonBrazell/donate) [![Buy me a coffee](src/assets/images/buy-me-a-coffee.png)](https://www.buymeacoffee.com/SimonBrazell)
 
+- **FIRO** `aEyKPU7mwWBYRFGoLiUGeQQybyzD8jzsS8`
 - **BTC:** `3JZWooswwmmqQKw5iW6AYFfK5gcWTrvueE`
 - **ETH:** `0x90049dc59365dF683451319Aa4632aC61193dFA7`
 

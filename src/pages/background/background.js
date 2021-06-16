@@ -305,14 +305,10 @@ function redirectTwitter(url, initiator) {
     });
     return null;
   }
-  if (url.host.split(".")[0] === "pbs") {
+  if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video") {
     return `${
       nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
     }/pic/${encodeURIComponent(url.href)}`;
-  } else if (url.host.split(".")[0] === "video") {
-    return `${
-      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
-    }/gif/${encodeURIComponent(url.href)}`;
   } else if (url.pathname.split("/").includes("tweets")) {
     return `${
       nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
