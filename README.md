@@ -65,7 +65,7 @@ Privacy Redirect allows setting custom instances, instances can be found here:
 
 ## License
 
-[GPLv3](LICENSE.txt).
+[GPLv3](LICENSE).
 
 ## Permissions
 
