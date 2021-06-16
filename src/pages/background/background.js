@@ -534,10 +534,7 @@ browser.webRequest.onBeforeRequest.addListener(
       redirect = {
         redirectUrl: redirectGoogleMaps(url, initiator),
       };
-    } else if (
-      redditDomains.includes(url.host) ||
-      redditInstances.includes(url.origin)
-    ) {
+    } else if (redditDomains.includes(url.host)) {
       redirect = {
         redirectUrl: redirectReddit(url, initiator, details.type),
       };
