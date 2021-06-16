@@ -5,9 +5,7 @@ const nitterInstances = [
   "https://nitter.snopyta.org",
   "https://nitter.42l.fr",
   "https://nitter.nixnet.services",
-  "https://nitter.13ad.de",
   "https://nitter.pussthecat.org",
-  "https://nitter.mastodont.cat",
   "https://nitter.dark.fail",
   "https://nitter.tedomum.net",
   "https://nitter.cattube.org",
@@ -18,7 +16,7 @@ const nitterInstances = [
   "https://nitter.cc",
   "https://nitter.vxempire.xyz",
   "https://nitter.unixfox.eu",
-  "https://bird.trom.tf",
+  "https://bird.trom.tf"
 ];
 
 let disableNitter;
