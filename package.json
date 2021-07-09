@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/SimonBrazell/privacy-redirect#readme",
   "devDependencies": {
-    "web-ext": "^6.1.0"
+    "web-ext": "^6.2.0"
   }
 }
