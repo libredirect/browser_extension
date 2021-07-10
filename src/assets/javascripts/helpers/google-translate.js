@@ -1,4 +1,4 @@
-const targets = ["translate.google.com"];
+const targets = ["translate.google.com", "translate.google.no"];
 
 const redirects = ["https://translate.metalune.xyz"];
 
