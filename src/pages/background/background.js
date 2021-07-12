@@ -601,7 +601,7 @@ browser.webRequest.onBeforeRequest.addListener(
       redirect = {
         redirectUrl: redirectGoogleTranslate(url, initiator),
       };
-    } else if (url.href.match(wikipediaRegex)) {
+    } else if (url.host.match(wikipediaRegex)) {
       redirect = {
         redirectUrl: redirectWikipedia(url, initiator),
       };
