@@ -543,7 +543,6 @@ function redirectGoogleTranslate(url, initiator) {
 }
 
 function redirectWikipedia(url, initiator) {
-    console.log(url);
   if (disableWikipedia || isException(url, initiator)) {
     return null;
   }
@@ -556,7 +555,6 @@ function redirectWikipedia(url, initiator) {
 	GETArguments.push([args[0],args[1]]);
       }
     }
-    
   let link = `${wikipediaInstance}${url.pathname}`;
   let urlSplit = url.host.split('.');
   if (urlSplit[0] != "wikipedia" && urlSplit[0] != "www") {
