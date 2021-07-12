@@ -35,7 +35,7 @@ const simplyTranslateInstances = googleTranslateHelper.redirects;
 const simplyTranslateDefault = simplyTranslateInstances[0];
 const googleTranslateDomains = googleTranslateHelper.targets;
 const wikipediaInstances = wikipediaHelper.redirects;
-const wikipediaDefault = simplyTranslateInstances[0];
+const wikipediaDefault = wikipediaInstances[0];
 const wikipediaRegex = wikipediaHelper.targets;
 
 let disableNitter;
