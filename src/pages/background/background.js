@@ -163,7 +163,6 @@ browser.storage.onChanged.addListener((changes) => {
     simplyTranslateInstance =
       changes.simplyTranslateInstance.newValue || simplyTranslateDefault;
   }
-
   if ("wikipediaInstance" in changes) {
     wikipediaInstance =
 	changes.wikipediaInstance.newValue || wikipediaDefault;
@@ -554,7 +553,6 @@ function redirectWikipedia(url, initiator) {
       link += "?mobileaction=toggle_view_mobile";
     else
       link += `?lang=${urlSplit[0]}`;
-      
     if (urlSplit[1] == 'm')
       link += "&mobileaction=toggle_view_mobile";
       //wikiless doesn't have mobile view support yet
@@ -569,14 +567,12 @@ browser.webRequest.onBeforeRequest.addListener(
   (details) => {
     const url = new URL(details.url);
     let initiator;
-
     if (details.originUrl) {
       initiator = new URL(details.originUrl);
     } else if (details.initiator) {
       initiator = new URL(details.initiator);
     }
     let redirect;
-    
     if (youtubeDomains.includes(url.host)) {
       redirect = {
         redirectUrl: redirectYouTube(url, initiator, details.type),
