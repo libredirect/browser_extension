@@ -8,6 +8,7 @@ import mapsHelper from "../../assets/javascripts/helpers/google-maps.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
 import searchHelper from "../../assets/javascripts/helpers/google-search.js";
 import googleTranslateHelper from "../../assets/javascripts/helpers/google-translate.js";
+import wikipediaHelper from  "../../assets/javascripts/helpers/wikipedia.js";
 
 const nitterInstances = twitterHelper.redirects;
 const twitterDomains = twitterHelper.targets;
@@ -33,6 +34,9 @@ const searchEngineInstances = searchHelper.redirects;
 const simplyTranslateInstances = googleTranslateHelper.redirects;
 const simplyTranslateDefault = simplyTranslateInstances[0];
 const googleTranslateDomains = googleTranslateHelper.targets;
+const wikipediaInstances = wikipediaHelper.redirects;
+const wikipediaDefault = simplyTranslateInstances[0];
+const wikipediaRegex = wikipediaHelper.targets;
 
 let disableNitter;
 let disableInvidious;
@@ -41,6 +45,7 @@ let disableOsm;
 let disableReddit;
 let disableSearchEngine;
 let disableSimplyTranslate;
+let disableWikipedia;
 let nitterInstance;
 let invidiousInstance;
 let bibliogramInstance;
@@ -48,6 +53,7 @@ let osmInstance;
 let redditInstance;
 let searchEngineInstance;
 let simplyTranslateInstance;
+let wikipediaInstance;
 let alwaysProxy;
 let onlyEmbeddedVideo;
 let videoQuality;
@@ -73,6 +79,7 @@ browser.storage.sync.get(
     "redditInstance",
     "searchEngineInstance",
     "simplyTranslateInstance",
+    "wikipediaInstance",  
     "disableNitter",
     "disableInvidious",
     "disableBibliogram",
@@ -80,6 +87,7 @@ browser.storage.sync.get(
     "disableReddit",
     "disableSearchEngine",
     "disableSimplyTranslate",
+    "disableWikipedia",  
     "alwaysProxy",
     "onlyEmbeddedVideo",
     "videoQuality",
@@ -103,12 +111,14 @@ browser.storage.sync.get(
     searchEngineInstance = result.searchEngineInstance;
     simplyTranslateInstance =
       result.simplyTranslateInstance || simplyTranslateDefault;
+    wikipediaInstance = result.wikipediaInstance || wikipediaDefault;  
     disableNitter = result.disableNitter;
     disableInvidious = result.disableInvidious;
     disableBibliogram = result.disableBibliogram;
     disableOsm = result.disableOsm;
     disableReddit = result.disableReddit;
     disableSearchEngine = result.disableSearchEngine;
+    disableWikipedia = result.disableWikipedia;
     disableSimplyTranslate = result.disableSimplyTranslate;
     alwaysProxy = result.alwaysProxy;
     onlyEmbeddedVideo = result.onlyEmbeddedVideo;
@@ -153,6 +163,11 @@ browser.storage.onChanged.addListener((changes) => {
     simplyTranslateInstance =
       changes.simplyTranslateInstance.newValue || simplyTranslateDefault;
   }
+
+  if ("wikipediaInstance" in changes) {
+    wikipediaInstance =
+	changes.wikipediaInstance.newValue || wikipediaDefault;
+  }
   if ("redditInstance" in changes) {
     redditInstance = changes.redditInstance.newValue || redditDefault;
   }
@@ -179,6 +194,9 @@ browser.storage.onChanged.addListener((changes) => {
   }
   if ("disableSimplyTranslate" in changes) {
     disableSimplyTranslate = changes.disableSimplyTranslate.newValue;
+  }
+  if ("disableWikipedia" in changes) {
+    disableWikipedia = changes.disableWikipedia.newValue;
   }
   if ("alwaysProxy" in changes) {
     alwaysProxy = changes.alwaysProxy.newValue;
@@ -525,16 +543,40 @@ function redirectGoogleTranslate(url, initiator) {
   return `${simplyTranslateInstance}/${url.search}`;
 }
 
+function redirectWikipedia(url, initiator) {
+  if (disableWikipedia || isException(url, initiator)) {
+    return null;
+  }
+  let link = `${wikipediaInstance}${url.pathname}`;
+  let urlSplit = url.host.split('.');
+  if (urlSplit[0] != "wikipedia" && urlSplit[0] != "www") {
+    if (urlSplit[0] == 'm')
+      link += "?mobileaction=toggle_view_mobile";
+    else
+      link += `?lang=${urlSplit[0]}`;
+      
+    if (urlSplit[1] == 'm')
+      link += "&mobileaction=toggle_view_mobile";
+      //wikiless doesn't have mobile view support yet
+  }
+  if (urlSplit[urlSplit.length - 1] == "org" &&
+      urlSplit[urlSplit.length - 2] == "wikipedia")
+    //just in case someone wanted to visit wikipedia.org.foo.bar.net
+    return link;
+}
+
 browser.webRequest.onBeforeRequest.addListener(
   (details) => {
     const url = new URL(details.url);
     let initiator;
+
     if (details.originUrl) {
       initiator = new URL(details.originUrl);
     } else if (details.initiator) {
       initiator = new URL(details.initiator);
     }
     let redirect;
+    
     if (youtubeDomains.includes(url.host)) {
       redirect = {
         redirectUrl: redirectYouTube(url, initiator, details.type),
@@ -562,6 +604,10 @@ browser.webRequest.onBeforeRequest.addListener(
     } else if (googleTranslateDomains.includes(url.host)) {
       redirect = {
         redirectUrl: redirectGoogleTranslate(url, initiator),
+      };
+    } else if (url.href.match(wikipediaRegex)) {
+      redirect = {
+        redirectUrl: redirectWikipedia(url, initiator),
       };
     }
     if (redirect && redirect.redirectUrl) {

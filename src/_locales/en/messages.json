@@ -35,6 +35,10 @@
     "message": "SimplyTranslate Instance",
     "description": "Label for SimplyTranslate instance field option (options)."
   },
+  "wikipediaInstance": {
+    "message": "Wikipedia Instance",
+    "description": "Label for Wikipedia instance field option (options)."
+  },
   "disableNitter": {
     "message": "Nitter Redirects",
     "description": "Label for enable/disable Nitter redirects option (options & pop-up)."
@@ -62,6 +66,10 @@
   "disableSimplyTranslate": {
     "message": "SimplyTranslate Redirects",
     "description": "Label for enable/disable SimplyTranslate redirects option (options & pop-up)."
+  },
+  "disableWikipedia": {
+    "message": "Wikipedia Redirects",
+    "description": "Label for enable/disable Wikipedia redirects option (options & pop-up)."
   },
   "alwaysProxy": {
     "message": "Always proxy videos through Invidious",
