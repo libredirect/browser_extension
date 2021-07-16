@@ -124,7 +124,7 @@
     "description": "Extension title - Privacy (pop-up)."
   },
   "redirect": {
-    "message": "Reindirizza",
+    "message": "Redirect",
     "description": "Extension title - Redirect (pop-up)."
   },
   "version": {
