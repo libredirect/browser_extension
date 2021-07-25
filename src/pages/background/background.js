@@ -8,7 +8,7 @@ import mapsHelper from "../../assets/javascripts/helpers/google-maps.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
 import searchHelper from "../../assets/javascripts/helpers/google-search.js";
 import googleTranslateHelper from "../../assets/javascripts/helpers/google-translate.js";
-import wikipediaHelper from  "../../assets/javascripts/helpers/wikipedia.js";
+import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 
 const nitterInstances = twitterHelper.redirects;
 const twitterDomains = twitterHelper.targets;
@@ -79,7 +79,7 @@ browser.storage.sync.get(
     "redditInstance",
     "searchEngineInstance",
     "simplyTranslateInstance",
-    "wikipediaInstance",  
+    "wikipediaInstance",
     "disableNitter",
     "disableInvidious",
     "disableBibliogram",
@@ -87,7 +87,7 @@ browser.storage.sync.get(
     "disableReddit",
     "disableSearchEngine",
     "disableSimplyTranslate",
-    "disableWikipedia",  
+    "disableWikipedia",
     "alwaysProxy",
     "onlyEmbeddedVideo",
     "videoQuality",
@@ -111,7 +111,7 @@ browser.storage.sync.get(
     searchEngineInstance = result.searchEngineInstance;
     simplyTranslateInstance =
       result.simplyTranslateInstance || simplyTranslateDefault;
-    wikipediaInstance = result.wikipediaInstance || wikipediaDefault;  
+    wikipediaInstance = result.wikipediaInstance || wikipediaDefault;
     disableNitter = result.disableNitter;
     disableInvidious = result.disableInvidious;
     disableBibliogram = result.disableBibliogram;
@@ -164,8 +164,7 @@ browser.storage.onChanged.addListener((changes) => {
       changes.simplyTranslateInstance.newValue || simplyTranslateDefault;
   }
   if ("wikipediaInstance" in changes) {
-    wikipediaInstance =
-	changes.wikipediaInstance.newValue || wikipediaDefault;
+    wikipediaInstance = changes.wikipediaInstance.newValue || wikipediaDefault;
   }
   if ("redditInstance" in changes) {
     redditInstance = changes.redditInstance.newValue || redditDefault;
@@ -547,35 +546,35 @@ function redirectWikipedia(url, initiator) {
     return null;
   }
   let GETArguments = [];
-    if (url.search.length > 0) {
-      let search = url.search.substring(1); //get rid of '?'
-      let argstrings = search.split('&');
-      for (let i = 0; i < argstrings.length;i++) {
-	let args = argstrings[i].split('=');
-	GETArguments.push([args[0],args[1]]);
-      }
+  if (url.search.length > 0) {
+    let search = url.search.substring(1); //get rid of '?'
+    let argstrings = search.split("&");
+    for (let i = 0; i < argstrings.length; i++) {
+      let args = argstrings[i].split("=");
+      GETArguments.push([args[0], args[1]]);
     }
+  }
   let link = `${wikipediaInstance}${url.pathname}`;
-  let urlSplit = url.host.split('.');
+  let urlSplit = url.host.split(".");
   if (urlSplit[0] != "wikipedia" && urlSplit[0] != "www") {
-    if (urlSplit[0] == 'm')
-	GETArguments.push(["mobileaction","toggle_view_mobile"]);
-    else
-      	GETArguments.push(["lang",urlSplit[0]]);
-    if (urlSplit[1] == 'm')
-      	GETArguments.push(["mobileaction","toggle_view_mobile"]);
-      //wikiless doesn't have mobile view support yet
+    if (urlSplit[0] == "m")
+      GETArguments.push(["mobileaction", "toggle_view_mobile"]);
+    else GETArguments.push(["lang", urlSplit[0]]);
+    if (urlSplit[1] == "m")
+      GETArguments.push(["mobileaction", "toggle_view_mobile"]);
+    //wikiless doesn't have mobile view support yet
   }
   for (let i = 0; i < GETArguments.length; i++) {
-    link += (i == 0 ? '?' : '&') + GETArguments[i][0] +
-      '=' + GETArguments[i][1];
+    link +=
+      (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1];
   }
-  if (urlSplit[urlSplit.length - 1] == "org" &&
-      urlSplit[urlSplit.length - 2] == "wikipedia") 
+  if (
+    urlSplit[urlSplit.length - 1] == "org" &&
+    urlSplit[urlSplit.length - 2] == "wikipedia"
+  )
     //just in case someone wanted to visit wikipedia.org.foo.bar.net
-    return link; 
-  else
-    return null;
+    return link;
+  else return null;
 }
 
 browser.webRequest.onBeforeRequest.addListener(
@@ -640,7 +639,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
 browser.runtime.onInstalled.addListener((details) => {
   browser.storage.sync.get(
-    ["disableSearchEngine", "disableSimplyTranslate"],
+    ["disableSearchEngine", "disableSimplyTranslate", "disableWikipedia"],
     (result) => {
       if (result.disableSearchEngine === undefined) {
         browser.storage.sync.set({
@@ -650,6 +649,11 @@ browser.runtime.onInstalled.addListener((details) => {
       if (result.disableSimplyTranslate === undefined) {
         browser.storage.sync.set({
           disableSimplyTranslate: true,
+        });
+      }
+      if (result.disableWikipedia === undefined) {
+        browser.storage.sync.set({
+          disableWikipedia: true,
         });
       }
     }
