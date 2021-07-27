@@ -31,6 +31,14 @@
     "message": "Instancia de Buscador",
     "description": "Etiqueta del campo para la instancia de Buscador (opciones)."
   },
+  "simplyTranslateInstance": {
+    "message": "Instancia deSimplyTranslate",
+    "description": "Etiqueta del campo para la instancia de SimplyTranslate (opciones)."
+  },
+  "wikipediaInstance": {
+    "message": "Instancia de Wikipedia",
+    "description": "Etiqueta del campo para la instancia de Wikipedia (opciones)."
+  },
   "disableNitter": {
     "message": "Redirecciones de Nitter",
     "description": "Etiqueta para activar/desactivar la opción de redirecciones de Nitter (opciones y pop-up)."
@@ -54,6 +62,14 @@
   "disableSearchEngine": {
     "message": "Redirecciones de Buscador",
     "description": "Etiqueta para activar/desactivar la opción de redirecciones de Buscador (opciones y pop-up)."
+  },
+  "disableSimplyTranslate": {
+    "message": "Redirecciones de SimplyTranslate",
+    "description": "Etiqueta para activar/desactivar la opción de redirecciones de SimplyTranslate (opciones y pop-up)."
+  },
+  "disableWikipedia": {
+    "message": "Redirecciones de Wikipedia",
+    "description": "Etiqueta para activar/desactivar la opción de redirecciones de Wikipedia (opciones y pop-up)."
   },
   "alwaysProxy": {
     "message": "Siempre usar el proxy de Invidious para videos",
