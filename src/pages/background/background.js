@@ -5,6 +5,7 @@ import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 import youtubeHelper from "../../assets/javascripts/helpers/youtube.js";
 import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
 import mapsHelper from "../../assets/javascripts/helpers/google-maps.js";
+import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
 import searchHelper from "../../assets/javascripts/helpers/google-search.js";
 import googleTranslateHelper from "../../assets/javascripts/helpers/google-translate.js";
@@ -13,6 +14,9 @@ import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 const nitterInstances = twitterHelper.redirects;
 const twitterDomains = twitterHelper.targets;
 const youtubeDomains = youtubeHelper.targets;
+const mediumDomains = mediumHelper.targets;
+const scribeInstances = mediumHelper.redirects;
+const scribeDefault = mediumHelper.redirects[0];
 const invidiousInstances = youtubeHelper.redirects;
 const instagramDomains = instagramHelper.targets;
 const bibliogramInstances = instagramHelper.redirects;
@@ -43,6 +47,7 @@ let disableInvidious;
 let disableBibliogram;
 let disableOsm;
 let disableReddit;
+let disableScribe;
 let disableSearchEngine;
 let disableSimplyTranslate;
 let disableWikipedia;
@@ -50,6 +55,7 @@ let nitterInstance;
 let invidiousInstance;
 let bibliogramInstance;
 let osmInstance;
+let scribeInstance;
 let redditInstance;
 let searchEngineInstance;
 let simplyTranslateInstance;
@@ -77,6 +83,7 @@ browser.storage.sync.get(
     "bibliogramInstance",
     "osmInstance",
     "redditInstance",
+    "scribeInstance",
     "searchEngineInstance",
     "simplyTranslateInstance",
     "wikipediaInstance",
@@ -85,6 +92,7 @@ browser.storage.sync.get(
     "disableBibliogram",
     "disableOsm",
     "disableReddit",
+    "disableScribe",
     "disableSearchEngine",
     "disableSimplyTranslate",
     "disableWikipedia",
@@ -108,6 +116,7 @@ browser.storage.sync.get(
     bibliogramInstance = result.bibliogramInstance;
     osmInstance = result.osmInstance || osmDefault;
     redditInstance = result.redditInstance || redditDefault;
+    scribeInstance = result.scribeInstance || scribeDefault;
     searchEngineInstance = result.searchEngineInstance;
     simplyTranslateInstance =
       result.simplyTranslateInstance || simplyTranslateDefault;
@@ -168,6 +177,9 @@ browser.storage.onChanged.addListener((changes) => {
   }
   if ("redditInstance" in changes) {
     redditInstance = changes.redditInstance.newValue || redditDefault;
+  }
+  if ("scribeInstance" in changes) {
+    scribeInstance = changes.scribeInstance.newValue || scribeDefault;
   }
   if ("searchEngineInstance" in changes) {
     searchEngineInstance = changes.searchEngineInstance.newValue;
@@ -515,6 +527,53 @@ function redirectReddit(url, initiator, type) {
   return `${redditInstance}${url.pathname}${url.search}`;
 }
 
+function redirectScribe(url, initiator, type) {
+  if (disableScribe || isException(url, initiator)) {
+    return null;
+  }
+  // Do not redirect when already on the selected view
+  if (
+    (initiator && initiator.origin === scribeInstance) ||
+    url.origin === scribeInstance
+  ) {
+    return null;
+  }
+  // Do not redirect exclusions nor anything other than main_frame
+  if (type !== "main_frame") {
+    return null;
+  }
+  if (url.host === "i.redd.it") {
+    if (scribeInstance.includes("libredd")) {
+      return `${scribeInstance}/img${url.pathname}${url.search}`;
+    } else if (scribeInstance.includes("teddit")) {
+      // As of 2021-04-09, redirects for teddit images are nontrivial:
+      // - navigating to the image before ever navigating to its page causes
+      //   404 error (probably needs fix on teddit project)
+      // - some image links on teddit are very different
+      // Therefore, don't support redirecting image links for teddit.
+      return null;
+    } else {
+      return null;
+    }
+  } else if (url.host === "redd.it") {
+    if (
+      scribeInstance.includes("teddit") &&
+      !url.pathname.match(/^\/+[^\/]+\/+[^\/]/)
+    ) {
+      // As of 2021-04-22, redirects for teddit redd.it/foo links don't work.
+      // It appears that adding "/comments" as a prefix works, so manually add
+      // that prefix if it is missing.  Even though redd.it/comments/foo links
+      // don't seem to work or exist, guard against affecting those kinds of
+      // paths.
+      //
+      // Note the difference between redd.it/comments/foo (doesn't work) and
+      // teddit.net/comments/foo (works).
+      return `${scribeInstance}/comments${url.pathname}${url.search}`;
+    }
+  }
+  return `${scribeInstance}${url.pathname}${url.search}`;
+}
+
 function redirectSearchEngine(url, initiator) {
   if (disableSearchEngine || isException(url, initiator)) {
     return null;
@@ -606,6 +665,10 @@ browser.webRequest.onBeforeRequest.addListener(
     } else if (redditDomains.includes(url.host)) {
       redirect = {
         redirectUrl: redirectReddit(url, initiator, details.type),
+      };
+    } else if (mediumDomains.includes(url.host)) {
+      redirect = {
+        redirectUrl: redirectScribe(url, initiator, details.type),
       };
     } else if (url.href.match(googleSearchRegex)) {
       redirect = {
