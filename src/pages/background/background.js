@@ -72,6 +72,7 @@ let useFreeTube;
 let nitterRandomPool;
 let invidiousRandomPool;
 let bibliogramRandomPool;
+let scribeRandomPool;
 let exceptions;
 
 window.browser = window.browser || window.chrome;
@@ -108,6 +109,7 @@ browser.storage.sync.get(
     "nitterRandomPool",
     "invidiousRandomPool",
     "bibliogramRandomPool",
+    "scribeRandomPool",
     "exceptions",
   ],
   (result) => {
@@ -151,6 +153,9 @@ browser.storage.sync.get(
       : commonHelper.filterInstances(invidiousInstances);
     bibliogramRandomPool = result.bibliogramRandomPool
       ? result.bibliogramRandomPool.split(",")
+      : commonHelper.filterInstances(bibliogramInstances);
+    scribeRandomPool = result.scribeRandomPool
+      ? result.scribeRandomPool.split(",")
       : commonHelper.filterInstances(bibliogramInstances);
   }
 );
@@ -243,6 +248,9 @@ browser.storage.onChanged.addListener((changes) => {
   }
   if ("bibliogramRandomPool" in changes) {
     bibliogramRandomPool = changes.bibliogramRandomPool.newValue.split(",");
+  }
+  if ("scribeRandomPool" in changes) {
+    scribeRandomPool = changes.scribeRandomPool.newValue.split(",");
   }
   if ("exceptions" in changes) {
     exceptions = changes.exceptions.newValue.map((e) => {
@@ -527,51 +535,38 @@ function redirectReddit(url, initiator, type) {
   return `${redditInstance}${url.pathname}${url.search}`;
 }
 
-function redirectScribe(url, initiator, type) {
+function redirectMedium(url, initiator) {
   if (disableScribe || isException(url, initiator)) {
     return null;
   }
-  // Do not redirect when already on the selected view
+  if (url.pathname.split("/").includes("home")) {
+    return null;
+  }
   if (
-    (initiator && initiator.origin === scribeInstance) ||
-    url.origin === scribeInstance
+    isFirefox() &&
+    initiator &&
+    (initiator.origin === scribeInstance ||
+      scribeInstances.includes(initiator.origin) ||
+      mediumDomains.includes(initiator.host))
   ) {
+    browser.storage.sync.set({
+      redirectBypassFlag: true,
+    });
     return null;
   }
-  // Do not redirect exclusions nor anything other than main_frame
-  if (type !== "main_frame") {
-    return null;
+  if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video") {
+    return `${
+      scribeInstance || commonHelper.getRandomInstance(scribeRandomPool)
+    }/pic/${encodeURIComponent(url.href)}`;
+  } else if (url.pathname.split("/").includes("tweets")) {
+    return `${
+      scribeInstance || commonHelper.getRandomInstance(scribeRandomPool)
+    }${url.pathname.replace("/tweets", "")}${url.search}`;
+  } else {
+    return `${
+      scribeInstance || commonHelper.getRandomInstance(scribeRandomPool)
+    }${url.pathname}${url.search}`;
   }
-  if (url.host === "i.redd.it") {
-    if (scribeInstance.includes("libredd")) {
-      return `${scribeInstance}/img${url.pathname}${url.search}`;
-    } else if (scribeInstance.includes("teddit")) {
-      // As of 2021-04-09, redirects for teddit images are nontrivial:
-      // - navigating to the image before ever navigating to its page causes
-      //   404 error (probably needs fix on teddit project)
-      // - some image links on teddit are very different
-      // Therefore, don't support redirecting image links for teddit.
-      return null;
-    } else {
-      return null;
-    }
-  } else if (url.host === "redd.it") {
-    if (
-      scribeInstance.includes("teddit") &&
-      !url.pathname.match(/^\/+[^\/]+\/+[^\/]/)
-    ) {
-      // As of 2021-04-22, redirects for teddit redd.it/foo links don't work.
-      // It appears that adding "/comments" as a prefix works, so manually add
-      // that prefix if it is missing.  Even though redd.it/comments/foo links
-      // don't seem to work or exist, guard against affecting those kinds of
-      // paths.
-      //
-      // Note the difference between redd.it/comments/foo (doesn't work) and
-      // teddit.net/comments/foo (works).
-      return `${scribeInstance}/comments${url.pathname}${url.search}`;
-    }
-  }
-  return `${scribeInstance}${url.pathname}${url.search}`;
 }
 
 function redirectSearchEngine(url, initiator) {
@@ -668,7 +663,7 @@ browser.webRequest.onBeforeRequest.addListener(
       };
     } else if (mediumDomains.includes(url.host)) {
       redirect = {
-        redirectUrl: redirectScribe(url, initiator, details.type),
+        redirectUrl: redirectMedium(url, initiator, details.type),
       };
     } else if (url.href.match(googleSearchRegex)) {
       redirect = {

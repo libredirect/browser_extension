@@ -73,6 +73,7 @@ let useFreeTube = document.getElementById("use-freetube");
 let nitterRandomPool = document.getElementById("nitter-random-pool");
 let invidiousRandomPool = document.getElementById("invidious-random-pool");
 let bibliogramRandomPool = document.getElementById("bibliogram-random-pool");
+let scribeRandomPool = document.getElementById("scribe-random-pool");
 let exceptions;
 
 window.browser = window.browser || window.chrome;
@@ -137,6 +138,7 @@ browser.storage.sync.get(
     "nitterRandomPool",
     "invidiousRandomPool",
     "bibliogramRandomPool",
+    "scribeRandomPool",
   ],
   (result) => {
     theme.value = result.theme || "";
@@ -184,6 +186,9 @@ browser.storage.sync.get(
     bibliogramRandomPool.value =
       result.bibliogramRandomPool ||
       commonHelper.filterInstances(bibliogramInstances);
+    scribeRandomPool.value =
+      result.scribeRandomPool ||
+      commonHelper.filterInstances(scribeInstances);
   }
 );
 
@@ -474,7 +479,13 @@ const bibliogramRandomPoolChange = debounce(() => {
     bibliogramRandomPool: bibliogramRandomPool.value,
   });
 }, 500);
-bibliogramRandomPool.addEventListener("input", bibliogramRandomPoolChange);
+
+const scribeRandomPoolChange = debounce(() => {
+  browser.storage.sync.set({
+    scribeRandomPool: scribeRandomPool.value,
+  });
+}, 500);
+scribeRandomPool.addEventListener("input", scribeRandomPoolChange);
 
 theme.addEventListener("change", (event) => {
   const value = event.target.options[theme.selectedIndex].value;
