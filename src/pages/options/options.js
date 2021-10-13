@@ -479,6 +479,7 @@ const bibliogramRandomPoolChange = debounce(() => {
     bibliogramRandomPool: bibliogramRandomPool.value,
   });
 }, 500);
+bibliogramRandomPool.addEventListener("input", bibliogramRandomPoolChange);
 
 const scribeRandomPoolChange = debounce(() => {
   browser.storage.sync.set({
