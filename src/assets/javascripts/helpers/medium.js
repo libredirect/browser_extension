@@ -17,7 +17,7 @@ const targets = [
 
 const redirects = [
   "https://scribe.rip",
-  "https://scribe.nixnet.services/"
+  "https://scribe.nixnet.services"
 ];
 
 export default {
