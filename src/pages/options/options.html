@@ -279,11 +279,14 @@
         </div>
       </section>
       <section class="settings-block">
-        <h1 data-localise="__MSG_scribeInstance__" class="new-badge" data-new-badge>Scribe Instance</h1>
+        <h1 data-localise="__MSG_scribeInstance__"
+          class="new-badge" data-new-badge>Scribe Instance</h1>
         <div class="autocomplete">
           <input
             id="scribe-instance"
             type="url"
+            name="scribe-instance"
+            data-localise-placeholder="__MSG_randomInstancePlaceholder__"
             placeholder="Random instance (none selected)"
           />
         </div>
@@ -586,6 +589,16 @@
           <input
             id="bibliogram-random-pool"
             name="bibliogram-random-pool"
+            type="text"
+          />
+        </section>
+        <section class="settings-block">
+          <h1 data-localise="__MSG_scribeRandomPool__">
+            Scribe random instance pool (comma-separated)
+          </h1>
+          <input
+            id="scribe-random-pool"
+            name="scribe-random-pool"
             type="text"
           />
         </section>
