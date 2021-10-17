@@ -156,7 +156,7 @@ browser.storage.sync.get(
       : commonHelper.filterInstances(bibliogramInstances);
     scribeRandomPool = result.scribeRandomPool
       ? result.scribeRandomPool.split(",")
-      : commonHelper.filterInstances(bibliogramInstances);
+      : commonHelper.filterInstances(scribeInstances);
   }
 );
 
