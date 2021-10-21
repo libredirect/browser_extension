@@ -126,8 +126,8 @@ browser.storage.sync.get(
     invidiousDarkMode = result.invidiousDarkMode;
     exceptions = result.exceptions
       ? result.exceptions.map((e) => {
-          return new RegExp(e);
-        })
+        return new RegExp(e);
+      })
       : [];
     invidiousVolume = result.invidiousVolume;
     invidiousPlayerStyle = result.invidiousPlayerStyle;
@@ -299,9 +299,8 @@ function redirectYouTube(url, initiator, type) {
     url.searchParams.append("autoplay", 1);
   }
 
-  return `${
-    invidiousInstance || commonHelper.getRandomInstance(invidiousRandomPool)
-  }${url.pathname.replace("/shorts", "")}${url.search}`;
+  return `${invidiousInstance || commonHelper.getRandomInstance(invidiousRandomPool)
+    }${url.pathname.replace("/shorts", "")}${url.search}`;
 }
 
 function redirectTwitter(url, initiator) {
@@ -324,17 +323,14 @@ function redirectTwitter(url, initiator) {
     return null;
   }
   if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video") {
-    return `${
-      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
-    }/pic/${encodeURIComponent(url.href)}`;
+    return `${nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
+      }/pic/${encodeURIComponent(url.href)}`;
   } else if (url.pathname.split("/").includes("tweets")) {
-    return `${
-      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
-    }${url.pathname.replace("/tweets", "")}${url.search}`;
+    return `${nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
+      }${url.pathname.replace("/tweets", "")}${url.search}`;
   } else {
-    return `${
-      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
-    }${url.pathname}${url.search}`;
+    return `${nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
+      }${url.pathname}${url.search}`;
   }
 }
 
@@ -359,14 +355,12 @@ function redirectInstagram(url, initiator, type) {
     url.pathname === "/" ||
     instagramReservedPaths.includes(url.pathname.split("/")[1])
   ) {
-    return `${
-      bibliogramInstance || commonHelper.getRandomInstance(bibliogramRandomPool)
-    }${url.pathname}${url.search}`;
+    return `${bibliogramInstance || commonHelper.getRandomInstance(bibliogramRandomPool)
+      }${url.pathname}${url.search}`;
   } else {
     // Likely a user profile, redirect to '/u/...'
-    return `${
-      bibliogramInstance || commonHelper.getRandomInstance(bibliogramRandomPool)
-    }/u${url.pathname}${url.search}`;
+    return `${bibliogramInstance || commonHelper.getRandomInstance(bibliogramRandomPool)
+      }/u${url.pathname}${url.search}`;
   }
 }
 
@@ -392,9 +386,8 @@ function redirectGoogleMaps(url, initiator) {
     params = "&zoom=17";
   }
   // Set map layer
-  params = `${params}&layers=${
-    layers[url.searchParams.get("layer")] || layers["none"]
-  }`;
+  params = `${params}&layers=${layers[url.searchParams.get("layer")] || layers["none"]
+    }`;
   // Handle Google Maps Embed API
   if (url.pathname.split("/").includes("embed")) {
     let query = "";
@@ -460,9 +453,8 @@ function redirectGoogleMaps(url, initiator) {
     } else if (url.pathname.match(placeRegex)) {
       query = url.pathname.match(placeRegex)[1];
     }
-    redirect = `${osmInstance}/${query ? "search?query=" + query : ""}${
-      mapCentre || "#"
-    }${params}`;
+    redirect = `${osmInstance}/${query ? "search?query=" + query : ""}${mapCentre || "#"
+      }${params}`;
   }
 
   return redirect;
@@ -541,6 +533,8 @@ function redirectGoogleTranslate(url, initiator) {
   return `${simplyTranslateInstance}/${url.search}`;
 }
 
+var oldDomain = '';
+
 function redirectWikipedia(url, initiator) {
   if (disableWikipedia || isException(url, initiator)) {
     return null;
@@ -577,6 +571,8 @@ function redirectWikipedia(url, initiator) {
   else return null;
 }
 
+
+
 browser.webRequest.onBeforeRequest.addListener(
   (details) => {
     const url = new URL(details.url);
@@ -588,34 +584,42 @@ browser.webRequest.onBeforeRequest.addListener(
     }
     let redirect;
     if (youtubeDomains.includes(url.host)) {
+      oldDomain = 'https://youtube.com/';
       redirect = {
         redirectUrl: redirectYouTube(url, initiator, details.type),
       };
     } else if (twitterDomains.includes(url.host)) {
+      oldDomain = 'https://twitter.com/';
       redirect = {
         redirectUrl: redirectTwitter(url, initiator),
       };
     } else if (instagramDomains.includes(url.host)) {
+      oldDomain = 'https://instagram.com/';
       redirect = {
         redirectUrl: redirectInstagram(url, initiator, details.type),
       };
     } else if (url.href.match(googleMapsRegex)) {
+      oldDomain = 'https://maps.google.com/';
       redirect = {
         redirectUrl: redirectGoogleMaps(url, initiator),
       };
     } else if (redditDomains.includes(url.host)) {
+      oldDomain = 'https://reddit.com/';
       redirect = {
         redirectUrl: redirectReddit(url, initiator, details.type),
       };
     } else if (url.href.match(googleSearchRegex)) {
+      oldDomain = 'https://google.com/';
       redirect = {
         redirectUrl: redirectSearchEngine(url, initiator),
       };
     } else if (googleTranslateDomains.includes(url.host)) {
+      oldDomain = 'https://translate.google.com/';
       redirect = {
         redirectUrl: redirectGoogleTranslate(url, initiator),
       };
     } else if (url.host.match(wikipediaRegex)) {
+      oldDomain = 'https://wikipedia.com/';
       redirect = {
         redirectUrl: redirectWikipedia(url, initiator),
       };
@@ -636,6 +640,8 @@ browser.webRequest.onBeforeRequest.addListener(
   },
   ["blocking"]
 );
+
+
 
 browser.runtime.onInstalled.addListener((details) => {
   browser.storage.sync.get(
@@ -680,3 +686,14 @@ browser.runtime.onInstalled.addListener((details) => {
     );
   }
 });
+
+
+function openPage() {
+  if (oldDomain != '') {
+    browser.tabs.update({
+      url: oldDomain
+    });
+  }
+
+}
+browser.pageAction.onClicked.addListener(openPage);
