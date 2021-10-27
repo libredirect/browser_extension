@@ -15,6 +15,7 @@
     "128": "assets/images/icon128.png"
   },
   "permissions": [
+    "tabs",
     "storage",
     "webRequest",
     "webRequestBlocking",

@@ -688,12 +688,19 @@ browser.runtime.onInstalled.addListener((details) => {
 });
 
 
-function openPage() {
-  if (oldDomain != '') {
-    browser.tabs.update({
-      url: oldDomain
-    });
-  }
+function changeInstance() {
+  browser.tabs.query({
+    active: true,
+    lastFocusedWindow: true
+  }, function (tabs) {
+    var tabUrl = new URL(tabs[0].url);
 
+    if (oldDomain != '') {
+      browser.tabs.update({
+        url: tabUrl.href.replace(`${tabUrl.protocol}//${tabUrl.host}/`, oldDomain)
+      });
+    }
+  });
 }
-browser.pageAction.onClicked.addListener(openPage);
+
+browser.pageAction.onClicked.addListener(changeInstance);
