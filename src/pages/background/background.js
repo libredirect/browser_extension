@@ -193,6 +193,9 @@ browser.storage.onChanged.addListener((changes) => {
   if ("disableNitter" in changes) {
     disableNitter = changes.disableNitter.newValue;
   }
+  if ("disableScribe" in changes) {
+    disableScribe = changes.disableScribe.newValue;
+  }
   if ("disableInvidious" in changes) {
     disableInvidious = changes.disableInvidious.newValue;
   }
@@ -540,9 +543,6 @@ function redirectMedium(url, initiator) {
   if (disableScribe || isException(url, initiator)) {
     return null;
   }
-  if (url.pathname.split("/").includes("home")) {
-    return null;
-  }
   if (
     isFirefox() &&
     initiator &&
@@ -654,7 +654,7 @@ browser.webRequest.onBeforeRequest.addListener(
       };
     } else if (mediumDomains.includes(url.host)) {
       redirect = {
-        redirectUrl: redirectMedium(url, initiator, details.type),
+        redirectUrl: redirectMedium(url, initiator),
       };
     } else if (url.href.match(googleSearchRegex)) {
       redirect = {
