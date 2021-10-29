@@ -118,12 +118,13 @@ browser.storage.sync.get(
     bibliogramInstance = result.bibliogramInstance;
     osmInstance = result.osmInstance || osmDefault;
     redditInstance = result.redditInstance || redditDefault;
-    scribeInstance = result.scribeInstance || scribeDefault;
+    scribeInstance = result.scribeInstance;
     searchEngineInstance = result.searchEngineInstance;
     simplyTranslateInstance =
       result.simplyTranslateInstance || simplyTranslateDefault;
     wikipediaInstance = result.wikipediaInstance || wikipediaDefault;
     disableNitter = result.disableNitter;
+    disableScribe = result.disableScribe;
     disableInvidious = result.disableInvidious;
     disableBibliogram = result.disableBibliogram;
     disableOsm = result.disableOsm;
@@ -554,19 +555,9 @@ function redirectMedium(url, initiator) {
     });
     return null;
   }
-  if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video") {
-    return `${
-      scribeInstance || commonHelper.getRandomInstance(scribeRandomPool)
-    }/pic/${encodeURIComponent(url.href)}`;
-  } else if (url.pathname.split("/").includes("tweets")) {
-    return `${
-      scribeInstance || commonHelper.getRandomInstance(scribeRandomPool)
-    }${url.pathname.replace("/tweets", "")}${url.search}`;
-  } else {
-    return `${
+  return `${
       scribeInstance || commonHelper.getRandomInstance(scribeRandomPool)
     }${url.pathname}${url.search}`;
-  }
 }
 
 function redirectSearchEngine(url, initiator) {
