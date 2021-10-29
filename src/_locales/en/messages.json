@@ -11,6 +11,10 @@
     "message": "Nitter Instance",
     "description": "Label for Nitter instance field option (options)."
   },
+  "scribeInstance": {
+    "message": "Scribe Instance",
+    "description": "Label for Scribe instance field option (options)."
+  },
   "invidiousInstance": {
     "message": "Invidious Instance",
     "description": "Label for Invidious instance field option (options)."
@@ -42,6 +46,10 @@
   "disableNitter": {
     "message": "Nitter Redirects",
     "description": "Label for enable/disable Nitter redirects option (options & pop-up)."
+  },
+  "disableScribe": {
+    "message": "Scribe Redirects",
+    "description": "Label for enable/disable Scribe redirects option (options & pop-up)."
   },
   "disableInvidious": {
     "message": "Invidious Redirects",
@@ -143,9 +151,9 @@
     "message": "Use FreeTube over Invidious when possible",
     "description": "Label for 'Use FreeTube over Invidious when possible' option (options)."
   },
-  "nitterRandomPool": {
-    "message": "Nitter random instance pool (comma-separated)",
-    "description": "Label for 'Nitter random instance pool (comma-separated)' option (options)."
+  "scribeRandomPool": {
+    "message": "Scribe random instance pool (comma-separated)",
+    "description": "Label for 'Scribe random instance pool (comma-separated)' option (options)."
   },
   "invidiousRandomPool": {
     "message": "Invidious random instance pool (comma-separated)",
