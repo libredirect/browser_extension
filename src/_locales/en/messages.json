@@ -151,6 +151,10 @@
     "message": "Use FreeTube over Invidious when possible",
     "description": "Label for 'Use FreeTube over Invidious when possible' option (options)."
   },
+  "nitterRandomPool": {
+    "message": "Nitter random instance pool (comma-separated)",
+    "description": "Label for 'Nitter random instance pool (comma-separated)' option (options)."
+  },
   "scribeRandomPool": {
     "message": "Scribe random instance pool (comma-separated)",
     "description": "Label for 'Scribe random instance pool (comma-separated)' option (options)."
