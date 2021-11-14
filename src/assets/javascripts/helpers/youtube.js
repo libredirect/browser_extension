@@ -9,36 +9,42 @@ const targets = [
   "s.ytimg.com",
   "music.youtube.com",
 ];
-/*
-    Please remember to also update the manifest.json file
-    (content_scripts > matches, 'persist-invidious-prefs.js')
-    when updating this list:
-  */
-const redirects = [
-  "https://invidious.snopyta.org",
-  "https://invidious.xyz",
-  "https://invidious.kavin.rocks",
-  "https://tube.connect.cafe",
-  "https://invidious.zapashcanon.fr",
-  "https://invidiou.site",
-  "https://vid.mint.lgbt",
-  "https://invidious.site",
-  "https://yewtu.be",
-  "https://invidious.tube",
-  "https://invidious.silkky.cloud",
-  "https://invidious.himiko.cloud",
-  "https://inv.skyn3t.in",
-  "https://tube.incognet.io",
-  "https://invidious.tinfoil-hat.net",
-  "https://invidious.namazso.eu",
-  "https://vid.puffyan.us",
-  "https://dev.viewtube.io",
-  "https://invidious.048596.xyz",
-  "http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion",
-  "http://qklhadlycap4cnod.onion",
-  "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
-  "http://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
-];
+
+const apiEndpoint = 'https://api.invidious.io/instances.json?pretty=1';
+const checkTimeout = 900000; // 15 minutes
+let lastCheck = 0;
+let currentTime = 0;
+let _instances = [];
+
+// Synchronous XHR request
+// Don't murder me, I'd happily do it async, but Chrome has no support for that.
+//
+// The function below will be eventually called from a webRequest.onBeforeRequest listener
+// (background.js). Chrome's API won't let me wait for a promise to resolve in that listener, so
+// the compromise I'm making is send a synchronous request.
+//
+// If you have a better idea, do share.
+
+const redirects = () => {
+  currentTime = Date.now();
+
+  if ((currentTime - lastCheck) > checkTimeout) {
+    let request = new XMLHttpRequest();
+    request.open('GET', apiEndpoint, false);
+    request.send(null);
+
+    if (request.status === 200) {
+      _instances = JSON.parse(request.responseText)
+                      .filter(r => r[1].type === "onion" ||
+                          (r[1].monitor != null && r[1].monitor.statusClass === "success"))
+                      .map(r => r[1].type === "https" ? "https://"+r[0] : "http://"+r[0]);
+      lastCheck = currentTime;          
+    }
+  }
+  // cache the instances, so options.js has access to them without calling this function:
+  browser.storage.sync.set({"invidiousInstances": _instances.join(",")});
+  return _instances;
+};
 
 export default {
   targets,

@@ -10,12 +10,16 @@ import searchHelper from "../../assets/javascripts/helpers/google-search.js";
 import googleTranslateHelper from "../../assets/javascripts/helpers/google-translate.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 
+window.browser = window.browser || window.chrome;
+
 const nitterInstances = twitterHelper.redirects;
 const twitterDomains = twitterHelper.targets;
 const youtubeDomains = youtubeHelper.targets;
 const invidiousInstances = youtubeHelper.redirects;
+invidiousInstances();
 const instagramDomains = instagramHelper.targets;
 const bibliogramInstances = instagramHelper.redirects;
+bibliogramInstances();
 const instagramReservedPaths = instagramHelper.reservedPaths;
 const bibliogramBypassPaths = instagramHelper.bypassPaths;
 const osmDefault = mapsHelper.redirects[0];
@@ -57,6 +61,7 @@ let wikipediaInstance;
 let alwaysProxy;
 let onlyEmbeddedVideo;
 let videoQuality;
+let invidiousRandomPool = [];
 let invidiousDarkMode;
 let invidiousVolume;
 let invidiousPlayerStyle;
@@ -64,11 +69,8 @@ let invidiousSubtitles;
 let invidiousAutoplay;
 let useFreeTube;
 let nitterRandomPool;
-let invidiousRandomPool;
 let bibliogramRandomPool;
 let exceptions;
-
-window.browser = window.browser || window.chrome;
 
 browser.storage.sync.get(
   [
@@ -91,6 +93,7 @@ browser.storage.sync.get(
     "alwaysProxy",
     "onlyEmbeddedVideo",
     "videoQuality",
+    "invidiousRandomPool",
     "invidiousDarkMode",
     "invidiousVolume",
     "invidiousPlayerStyle",
@@ -98,7 +101,6 @@ browser.storage.sync.get(
     "invidiousAutoplay",
     "useFreeTube",
     "nitterRandomPool",
-    "invidiousRandomPool",
     "bibliogramRandomPool",
     "exceptions",
   ],
@@ -129,6 +131,9 @@ browser.storage.sync.get(
           return new RegExp(e);
         })
       : [];
+    invidiousRandomPool = result.invidiousRandomPool
+        ? result.invidiousRandomPool.split(",")
+        : [];
     invidiousVolume = result.invidiousVolume;
     invidiousPlayerStyle = result.invidiousPlayerStyle;
     invidiousSubtitles = result.invidiousSubtitles || "";
@@ -137,12 +142,9 @@ browser.storage.sync.get(
     nitterRandomPool = result.nitterRandomPool
       ? result.nitterRandomPool.split(",")
       : commonHelper.filterInstances(nitterInstances);
-    invidiousRandomPool = result.invidiousRandomPool
-      ? result.invidiousRandomPool.split(",")
-      : commonHelper.filterInstances(invidiousInstances);
     bibliogramRandomPool = result.bibliogramRandomPool
       ? result.bibliogramRandomPool.split(",")
-      : commonHelper.filterInstances(bibliogramInstances);
+      : [];
   }
 );
 
@@ -250,14 +252,22 @@ function isFirefox() {
   return typeof InstallTrigger !== "undefined";
 }
 
-function redirectYouTube(url, initiator, type) {
+function redirectYouTube(url, initiator, type, force=false) {
+  let instances = invidiousInstances();
+  instances = commonHelper.filterInstances(instances);
+  let pool = (invidiousRandomPool.length != 0) ? invidiousRandomPool : instances;
+  if (force === true) {
+    return `${
+      invidiousInstance || commonHelper.getRandomInstance(pool)
+    }${url.pathname.replace("/shorts", "")}${url.search}`;
+  }
   if (disableInvidious || isException(url, initiator)) {
     return null;
   }
   if (
     initiator &&
     (initiator.origin === invidiousInstance ||
-      invidiousInstances.includes(initiator.origin) ||
+      (instances).includes(initiator.origin) ||
       youtubeDomains.includes(initiator.host))
   ) {
     return null;
@@ -300,7 +310,7 @@ function redirectYouTube(url, initiator, type) {
   }
 
   return `${
-    invidiousInstance || commonHelper.getRandomInstance(invidiousRandomPool)
+    invidiousInstance || commonHelper.getRandomInstance(pool)
   }${url.pathname.replace("/shorts", "")}${url.search}`;
 }
 
@@ -339,6 +349,10 @@ function redirectTwitter(url, initiator) {
 }
 
 function redirectInstagram(url, initiator, type) {
+  let instances = bibliogramInstances();
+  instances = commonHelper.filterInstances(instances);
+  let pool = (bibliogramRandomPool.length != 0) ? bibliogramRandomPool : instances;
+
   if (disableBibliogram || isException(url, initiator)) {
     return null;
   }
@@ -346,7 +360,7 @@ function redirectInstagram(url, initiator, type) {
   if (
     initiator &&
     (initiator.origin === bibliogramInstance ||
-      bibliogramInstances.includes(initiator.origin) ||
+      instances.includes(initiator.origin) ||
       instagramDomains.includes(initiator.host))
   ) {
     return null;
@@ -360,12 +374,12 @@ function redirectInstagram(url, initiator, type) {
     instagramReservedPaths.includes(url.pathname.split("/")[1])
   ) {
     return `${
-      bibliogramInstance || commonHelper.getRandomInstance(bibliogramRandomPool)
+      bibliogramInstance || commonHelper.getRandomInstance(pool)
     }${url.pathname}${url.search}`;
   } else {
     // Likely a user profile, redirect to '/u/...'
     return `${
-      bibliogramInstance || commonHelper.getRandomInstance(bibliogramRandomPool)
+      bibliogramInstance || commonHelper.getRandomInstance(pool)
     }/u${url.pathname}${url.search}`;
   }
 }
@@ -678,5 +692,18 @@ browser.runtime.onInstalled.addListener((details) => {
         }
       }
     );
+  }
+});
+
+browser.tabs.onUpdated.addListener((tabId, changeInfo, tabInfo) => 
+{
+  let pool = (invidiousRandomPool.length != 0) ? invidiousRandomPool : invidiousInstances();
+  if (changeInfo.url) {
+    let domain = changeInfo.url;
+    let temp = domain.substring(domain.indexOf("//")+2);
+    domain = domain.substring(0, temp.indexOf("/")+domain.length-temp.length);
+    if (pool.includes(domain)) {
+      browser.tabs.executeScript({file:"/assets/javascripts/persist-invidious-prefs.js"});
+    }
   }
 });
