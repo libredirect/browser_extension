@@ -61,7 +61,7 @@ let wikipediaInstance;
 let alwaysProxy;
 let onlyEmbeddedVideo;
 let videoQuality;
-let invidiousRandomPool = [];
+let invidiousRandomPool = [ "" ];
 let invidiousDarkMode;
 let invidiousVolume;
 let invidiousPlayerStyle;
@@ -69,7 +69,7 @@ let invidiousSubtitles;
 let invidiousAutoplay;
 let useFreeTube;
 let nitterRandomPool;
-let bibliogramRandomPool;
+let bibliogramRandomPool = [ "" ];
 let exceptions;
 
 browser.storage.sync.get(
@@ -133,7 +133,7 @@ browser.storage.sync.get(
       : [];
     invidiousRandomPool = result.invidiousRandomPool
         ? result.invidiousRandomPool.split(",")
-        : [];
+        : [ "" ];
     invidiousVolume = result.invidiousVolume;
     invidiousPlayerStyle = result.invidiousPlayerStyle;
     invidiousSubtitles = result.invidiousSubtitles || "";
@@ -144,7 +144,7 @@ browser.storage.sync.get(
       : commonHelper.filterInstances(nitterInstances);
     bibliogramRandomPool = result.bibliogramRandomPool
       ? result.bibliogramRandomPool.split(",")
-      : [];
+      : [ "" ];
   }
 );
 
@@ -255,7 +255,7 @@ function isFirefox() {
 function redirectYouTube(url, initiator, type, force=false) {
   let instances = invidiousInstances();
   instances = commonHelper.filterInstances(instances);
-  let pool = (invidiousRandomPool.length != 0) ? invidiousRandomPool : instances;
+  let pool = (invidiousRandomPool[0] === "" && invidiousRandomPool.length === 1) ? instances : invidiousRandomPool;
   if (force === true) {
     return `${
       invidiousInstance || commonHelper.getRandomInstance(pool)
@@ -351,7 +351,7 @@ function redirectTwitter(url, initiator) {
 function redirectInstagram(url, initiator, type) {
   let instances = bibliogramInstances();
   instances = commonHelper.filterInstances(instances);
-  let pool = (bibliogramRandomPool.length != 0) ? bibliogramRandomPool : instances;
+  let pool = (bibliogramRandomPool[0] === "" && bibliogramRandomPool.length === 1) ? instances : bibliogramRandomPool;
 
   if (disableBibliogram || isException(url, initiator)) {
     return null;
@@ -697,7 +697,7 @@ browser.runtime.onInstalled.addListener((details) => {
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tabInfo) => 
 {
-  let pool = (invidiousRandomPool.length != 0) ? invidiousRandomPool : invidiousInstances();
+  let pool = (invidiousRandomPool[0] === "" && invidiousRandomPool.length === 1) ? invidiousInstances() : invidiousRandomPool;
   if (changeInfo.url) {
     let domain = changeInfo.url;
     let temp = domain.substring(domain.indexOf("//")+2);

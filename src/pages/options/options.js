@@ -29,7 +29,7 @@ browser.storage.sync.get(
     bibliogramInstances = result.bibliogramInstances
     ? result.bibliogramInstances.split(",")
     : [];
-
+    console.log(invidiousInstances);
     const autocompletes = [
       { id: "nitter-instance", instances: nitterInstances },
       { id: "invidious-instance", instances: invidiousInstances },
@@ -183,10 +183,10 @@ browser.storage.sync.get(
           result.nitterRandomPool || commonHelper.filterInstances(nitterInstances);
         invidiousRandomPool.value =
           result.invidiousRandomPool ||
-          commonHelper.filterInstances(invidiousInstances);
+          "";
         bibliogramRandomPool.value =
           result.bibliogramRandomPool ||
-          commonHelper.filterInstances(bibliogramInstances);
+          "";
       }
     );
 
