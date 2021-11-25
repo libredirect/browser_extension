@@ -1,61 +1,8 @@
 "use strict";
 
-const nitterInstances = [
-  "https://nitter.net",
-  "https://nitter.snopyta.org",
-  "https://nitter.42l.fr",
-  "https://nitter.nixnet.services",
-  "https://nitter.pussthecat.org",
-  "https://nitter.dark.fail",
-  "https://nitter.tedomum.net",
-  "https://nitter.cattube.org",
-  "https://nitter.fdn.fr",
-  "https://nitter.1d4.us",
-  "https://nitter.kavin.rocks",
-  "https://tweet.lambda.dance",
-  "https://nitter.cc",
-  "https://nitter.vxempire.xyz",
-  "https://nitter.unixfox.eu",
-  "https://bird.trom.tf"
-];
-
-let disableNitter;
-let nitterInstance;
-let redirectBypassFlag;
-let exceptions;
-
-window.browser = window.browser || window.chrome;
-
-function getRandomInstance() {
-  return nitterInstances[~~(nitterInstances.length * Math.random())];
-}
-
-function isNotException(url) {
-  return !exceptions.some((regex) => regex.test(url.href));
-}
-
-function shouldRedirect(url) {
-  return (
-    !redirectBypassFlag &&
-    isNotException(url) &&
-    !disableNitter &&
-    url.host !== nitterInstance &&
-    !url.pathname.includes("/home")
-  );
-}
-
-function redirectTwitter(url) {
-  if (url.host.split(".")[0] === "pbs") {
-    return `${nitterInstance}/pic/${encodeURIComponent(url.href)}`;
-  } else if (url.host.split(".")[0] === "video") {
-    return `${nitterInstance}/gif/${encodeURIComponent(url.href)}`;
-  } else {
-    return `${nitterInstance}${url.pathname}${url.search}`;
-  }
-}
-
 browser.storage.sync.get(
   [
+    "nitterInstances",
     "nitterInstance",
     "disableNitter",
     "removeTwitterSW",
@@ -63,6 +10,45 @@ browser.storage.sync.get(
     "exceptions",
   ],
   (result) => {
+    let nitterInstances;
+    let disableNitter;
+    let nitterInstance;
+    let redirectBypassFlag;
+    let exceptions;
+
+    window.browser = window.browser || window.chrome;
+
+    function getRandomInstance() {
+      return nitterInstances[~~(nitterInstances.length * Math.random())];
+    }
+
+    function isNotException(url) {
+      return !exceptions.some((regex) => regex.test(url.href));
+    }
+
+    function shouldRedirect(url) {
+      return (
+        !redirectBypassFlag &&
+        isNotException(url) &&
+        !disableNitter &&
+        url.host !== nitterInstance &&
+        !url.pathname.includes("/home")
+      );
+    }
+
+    function redirectTwitter(url) {
+      if (url.host.split(".")[0] === "pbs") {
+        return `${nitterInstance}/pic/${encodeURIComponent(url.href)}`;
+      } else if (url.host.split(".")[0] === "video") {
+        return `${nitterInstance}/gif/${encodeURIComponent(url.href)}`;
+      } else {
+        return `${nitterInstance}${url.pathname}${url.search}`;
+      }
+    }
+
+    nitterInstances = result.nitterInstances
+      ? result.nitterInstances.split(",")
+      : [];
     redirectBypassFlag = result.redirectBypassFlag;
     browser.storage.sync.set({
       redirectBypassFlag: false,

@@ -25,19 +25,7 @@
       "128": "assets/images/icon128.png"
     }
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "*://twitter.com/*",
-        "*://www.twitter.com/*",
-        "*://mobile.twitter.com/*",
-        "*://pbs.twimg.com/*",
-        "*://video.twimg.com/*"
-      ],
-      "js": ["assets/javascripts/remove-twitter-sw.js"],
-      "run_at": "document_start"
-    }
-  ],
+
   "options_ui": {
     "page": "pages/options/options.html",
     "open_in_tab": false

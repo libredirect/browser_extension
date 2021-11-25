@@ -8,7 +8,7 @@ import searchHelper from "../../assets/javascripts/helpers/google-search.js";
 import googleTranslateHelper from "../../assets/javascripts/helpers/google-translate.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 
-const nitterInstances = twitterHelper.redirects;
+let nitterInstances;
 let invidiousInstances;
 let bibliogramInstances;
 const osmInstances = mapsHelper.redirects;
@@ -19,10 +19,14 @@ const wikipediaInstances = wikipediaHelper.redirects;
 
 browser.storage.sync.get(
   [
+    "nitterInstances",
     "invidiousInstances",
     "bibliogramInstances",
   ],
   (result) => {
+    nitterInstances = result.nitterInstances
+    ? result.nitterInstances.split(",")
+    : [];
     invidiousInstances = result.invidiousInstances
     ? result.invidiousInstances.split(",")
     : [];
@@ -180,7 +184,8 @@ browser.storage.sync.get(
         invidiousAutoplay.checked = result.invidiousAutoplay;
         useFreeTube.checked = result.useFreeTube;
         nitterRandomPool.value =
-          result.nitterRandomPool || commonHelper.filterInstances(nitterInstances);
+          result.nitterRandomPool ||
+          "";
         invidiousRandomPool.value =
           result.invidiousRandomPool ||
           "";

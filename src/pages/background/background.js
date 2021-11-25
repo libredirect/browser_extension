@@ -9,9 +9,9 @@ import redditHelper from "../../assets/javascripts/helpers/reddit.js";
 import searchHelper from "../../assets/javascripts/helpers/google-search.js";
 import googleTranslateHelper from "../../assets/javascripts/helpers/google-translate.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
+import twitter from "../../assets/javascripts/helpers/twitter.js";
 
 window.browser = window.browser || window.chrome;
-
 const nitterInstances = twitterHelper.redirects;
 const twitterDomains = twitterHelper.targets;
 const youtubeDomains = youtubeHelper.targets;
@@ -139,7 +139,7 @@ browser.storage.sync.get(
     useFreeTube = result.useFreeTube;
     nitterRandomPool = result.nitterRandomPool
       ? result.nitterRandomPool.split(",")
-      : commonHelper.filterInstances(nitterInstances);
+      : [ "" ];
     bibliogramRandomPool = result.bibliogramRandomPool
       ? result.bibliogramRandomPool.split(",")
       : [ "" ];
@@ -313,6 +313,7 @@ function redirectYouTube(url, initiator, type, force=false) {
 }
 
 function redirectTwitter(url, initiator) {
+  let pool = (nitterRandomPool[0] === "" && nitterRandomPool.length === 1) ? nitterInstances() : nitterRandomPool;
   if (disableNitter || isException(url, initiator)) {
     return null;
   }
@@ -323,7 +324,7 @@ function redirectTwitter(url, initiator) {
     isFirefox() &&
     initiator &&
     (initiator.origin === nitterInstance ||
-      nitterInstances.includes(initiator.origin) ||
+      pool.includes(initiator.origin) ||
       twitterDomains.includes(initiator.host))
   ) {
     browser.storage.sync.set({
@@ -333,15 +334,15 @@ function redirectTwitter(url, initiator) {
   }
   if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video") {
     return `${
-      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
+      nitterInstance || commonHelper.getRandomInstance(pool)
     }/pic/${encodeURIComponent(url.href)}`;
   } else if (url.pathname.split("/").includes("tweets")) {
     return `${
-      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
+      nitterInstance || commonHelper.getRandomInstance(pool)
     }${url.pathname.replace("/tweets", "")}${url.search}`;
   } else {
     return `${
-      nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
+      nitterInstance || commonHelper.getRandomInstance(pool)
     }${url.pathname}${url.search}`;
   }
 }
@@ -695,13 +696,16 @@ browser.runtime.onInstalled.addListener((details) => {
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo, tabInfo) => 
 {
-  let pool = (invidiousRandomPool[0] === "" && invidiousRandomPool.length === 1) ? invidiousInstances() : invidiousRandomPool;
   if (changeInfo.url) {
     let domain = changeInfo.url;
-    let temp = domain.substring(domain.indexOf("//")+2);
-    domain = domain.substring(0, temp.indexOf("/")+domain.length-temp.length);
-    if (pool.includes(domain)) {
-      browser.tabs.executeScript({file:"/assets/javascripts/persist-invidious-prefs.js"});
+    let site_name = domain.substring(domain.indexOf("//")+2);
+    domain = domain.substring(0, site_name.indexOf("/")+domain.length-site_name.length);
+    let inv_pool = (invidiousRandomPool[0] === "" && invidiousRandomPool.length === 1) ? invidiousInstances(true) : invidiousRandomPool;
+    if (twitterDomains.includes(site_name.slice(0,-1))) {
+      browser.tabs.executeScript({file:"/assets/javascripts/remove-twitter-sw.js"});
     }
+    else if (inv_pool.includes(domain)) {
+        browser.tabs.executeScript({file:"/assets/javascripts/persist-invidious-prefs.js"});
+      }
   }
 });

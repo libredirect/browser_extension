@@ -25,9 +25,12 @@ let _instances = [];
 //
 // If you have a better idea, do share.
 
-const redirects = () => {
-  currentTime = Date.now();
+const redirects = (skipRequest=false) => {
+  if (skipRequest) {
+    return _instances;
+  }
 
+  currentTime = Date.now();
   if ((currentTime - lastCheck) > checkTimeout) {
     let request = new XMLHttpRequest();
     request.open('GET', apiEndpoint, false);
