@@ -6,6 +6,7 @@ import youtubeHelper from "../../assets/javascripts/helpers/youtube.js";
 import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
 import mapsHelper from "../../assets/javascripts/helpers/google-maps.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
+import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import searchHelper from "../../assets/javascripts/helpers/google-search.js";
 import googleTranslateHelper from "../../assets/javascripts/helpers/google-translate.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
@@ -15,6 +16,7 @@ const invidiousInstances = youtubeHelper.redirects;
 const bibliogramInstances = instagramHelper.redirects;
 const osmInstances = mapsHelper.redirects;
 const redditInstances = redditHelper.redirects;
+const scribeInstances = mediumHelper.redirects;
 const searchEngineInstances = searchHelper.redirects;
 const simplyTranslateInstances = googleTranslateHelper.redirects;
 const wikipediaInstances = wikipediaHelper.redirects;
@@ -24,6 +26,7 @@ const autocompletes = [
   { id: "bibliogram-instance", instances: bibliogramInstances },
   { id: "osm-instance", instances: osmInstances },
   { id: "reddit-instance", instances: redditInstances },
+  { id: "scribe-instance", instances: scribeInstances },
   {
     id: "search-engine-instance",
     instances: searchEngineInstances.map((instance) => instance.link),
@@ -38,6 +41,7 @@ let invidiousInstance = document.getElementById("invidious-instance");
 let bibliogramInstance = document.getElementById("bibliogram-instance");
 let osmInstance = document.getElementById("osm-instance");
 let redditInstance = document.getElementById("reddit-instance");
+let scribeInstance = document.getElementById("scribe-instance");
 let searchEngineInstance = document.getElementById("search-engine-instance");
 let simplyTranslateInstance = document.getElementById(
   "simply-translate-instance"
@@ -48,6 +52,7 @@ let disableInvidious = document.getElementById("disable-invidious");
 let disableBibliogram = document.getElementById("disable-bibliogram");
 let disableOsm = document.getElementById("disable-osm");
 let disableReddit = document.getElementById("disable-reddit");
+let disableScribe = document.getElementById("disable-scribe");
 let disableSearchEngine = document.getElementById("disable-search-engine");
 let disableSimplyTranslate = document.getElementById(
   "disable-simply-translate"
@@ -68,6 +73,7 @@ let useFreeTube = document.getElementById("use-freetube");
 let nitterRandomPool = document.getElementById("nitter-random-pool");
 let invidiousRandomPool = document.getElementById("invidious-random-pool");
 let bibliogramRandomPool = document.getElementById("bibliogram-random-pool");
+let scribeRandomPool = document.getElementById("scribe-random-pool");
 let exceptions;
 
 window.browser = window.browser || window.chrome;
@@ -103,6 +109,7 @@ browser.storage.sync.get(
     "bibliogramInstance",
     "osmInstance",
     "redditInstance",
+    "scribeInstance",
     "searchEngineInstance",
     "simplyTranslateInstance",
     "wikipediaInstance",
@@ -111,6 +118,7 @@ browser.storage.sync.get(
     "disableBibliogram",
     "disableOsm",
     "disableReddit",
+    "disableScribe",
     "disableSearchEngine",
     "disableSimplyTranslate",
     "disableWikipedia",
@@ -130,6 +138,7 @@ browser.storage.sync.get(
     "nitterRandomPool",
     "invidiousRandomPool",
     "bibliogramRandomPool",
+    "scribeRandomPool",
   ],
   (result) => {
     theme.value = result.theme || "";
@@ -139,6 +148,7 @@ browser.storage.sync.get(
     bibliogramInstance.value = result.bibliogramInstance || "";
     osmInstance.value = result.osmInstance || "";
     redditInstance.value = result.redditInstance || "";
+    scribeInstance.value = result.scribeInstance || "";
     searchEngineInstance.value =
       (result.searchEngineInstance && result.searchEngineInstance.link) || "";
     simplyTranslateInstance.value = result.simplyTranslateInstance || "";
@@ -148,6 +158,7 @@ browser.storage.sync.get(
     disableBibliogram.checked = !result.disableBibliogram;
     disableOsm.checked = !result.disableOsm;
     disableReddit.checked = !result.disableReddit;
+    disableScribe.checked = !result.disableScribe;
     disableSearchEngine.checked = !result.disableSearchEngine;
     disableSimplyTranslate.checked = !result.disableSimplyTranslate;
     disableWikipedia.checked = !result.disableWikipedia;
@@ -175,6 +186,9 @@ browser.storage.sync.get(
     bibliogramRandomPool.value =
       result.bibliogramRandomPool ||
       commonHelper.filterInstances(bibliogramInstances);
+    scribeRandomPool.value =
+      result.scribeRandomPool ||
+      commonHelper.filterInstances(scribeInstances);
   }
 );
 
@@ -311,6 +325,15 @@ const redditInstanceChange = debounce(() => {
 }, 500);
 redditInstance.addEventListener("input", redditInstanceChange);
 
+const scribeInstanceChange = debounce(() => {
+  if (scribeInstance.checkValidity()) {
+    browser.storage.sync.set({
+      scribeInstance: parseURL(scribeInstance.value),
+    });
+  }
+}, 500);
+scribeInstance.addEventListener("input", scribeInstanceChange);
+
 const searchEngineInstanceChange = debounce(() => {
   const instance = searchEngineInstances.find(
     (instance) => instance.link === searchEngineInstance.value
@@ -367,6 +390,10 @@ disableOsm.addEventListener("change", (event) => {
 
 disableReddit.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableReddit: !event.target.checked });
+});
+
+disableScribe.addEventListener("change", (event) => {
+  browser.storage.sync.set({ disableScribe: !event.target.checked });
 });
 
 disableSearchEngine.addEventListener("change", (event) => {
@@ -453,6 +480,13 @@ const bibliogramRandomPoolChange = debounce(() => {
   });
 }, 500);
 bibliogramRandomPool.addEventListener("input", bibliogramRandomPoolChange);
+
+const scribeRandomPoolChange = debounce(() => {
+  browser.storage.sync.set({
+    scribeRandomPool: scribeRandomPool.value,
+  });
+}, 500);
+scribeRandomPool.addEventListener("input", scribeRandomPoolChange);
 
 theme.addEventListener("change", (event) => {
   const value = event.target.options[theme.selectedIndex].value;

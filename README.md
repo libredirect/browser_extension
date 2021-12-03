@@ -20,7 +20,7 @@
 
 ## About
 
-A web extension that redirects _Twitter, YouTube, Instagram, Google Maps, Reddit, Google Search, & Google Translate_ requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/iv-org/invidious), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Bibliogram](https://sr.ht/~cadence/bibliogram/), [OpenStreetMap](https://www.openstreetmap.org/), [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web) & Private Search Engines like [DuckDuckGo](https://duckduckgo.com) and [Startpage](https://startpage.com).
+A web extension that redirects _Twitter, YouTube, Instagram, Google Maps, Reddit, Medium, Google Search, & Google Translate_ requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/iv-org/invidious), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Bibliogram](https://sr.ht/~cadence/bibliogram/), [OpenStreetMap](https://www.openstreetmap.org/), [Scribe](https://sr.ht/~edwardloveall/scribe/), [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web) & Private Search Engines like [DuckDuckGo](https://duckduckgo.com) and [Startpage](https://startpage.com).
 
 It's possible to toggle all redirects on and off. The extension will default to using random instances if none are selected. If these instances are not working, you can try and set a custom instance from the list below.
 
@@ -47,6 +47,9 @@ Privacy Redirect allows setting custom instances, instances can be found here:
   - [Mojeek](https://www.mojeek.com)
   - [Presearch](https://www.presearch.org)
   - [Whoogle](https://benbusby.com/projects/whoogle-search/)
+- [Scribe](https://sr.ht/~edwardloveall/scribe/) instances:, an alternative frontend for Medium:
+  - [scribe.rip](https://scribe.rip/)
+  - [NixNet scribe](scribe.nixnet.services/)
 
 ## Development
 

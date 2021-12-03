@@ -142,6 +142,28 @@
           </tbody>
         </table>
       </section>
+      <section class="settings-block">
+        <table class="option" aria-label="Toggle Scribe redirects">
+          <tbody>
+            <tr>
+              <td>
+                <h1 data-localise="__MSG_disableScribe__">
+                  Scribe Redirects
+                </h1>
+              </td>
+              <td>
+                <input
+                  aria-hidden="true"
+                  id="disable-scribe"
+                  type="checkbox"
+                  checked
+                />&nbsp;
+                <label for="disable-scribe" class="checkbox-label"> </label>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
        <section class="settings-block">
         <table class="option" aria-label="Toggle Search Engine redirects">
           <tbody>
@@ -188,7 +210,7 @@
           <tbody>
             <tr>
               <td>
-                <h1 data-localise="__MSG_disableWikipedia__" class="new-badge" data-new-badge>Wikipedia Redirects</h1>
+                <h1 data-localise="__MSG_disableWikipedia__">Wikipedia Redirects</h1>
               </td>
               <td>
                 <input
@@ -253,6 +275,19 @@
             id="reddit-instance"
             type="url"
             placeholder="https://libredd.it"
+          />
+        </div>
+      </section>
+      <section class="settings-block">
+        <h1 data-localise="__MSG_scribeInstance__"
+          class="new-badge" data-new-badge>Scribe Instance</h1>
+        <div class="autocomplete">
+          <input
+            id="scribe-instance"
+            type="url"
+            name="scribe-instance"
+            data-localise-placeholder="__MSG_randomInstancePlaceholder__"
+            placeholder="Random instance (none selected)"
           />
         </div>
       </section>
@@ -554,6 +589,16 @@
           <input
             id="bibliogram-random-pool"
             name="bibliogram-random-pool"
+            type="text"
+          />
+        </section>
+        <section class="settings-block">
+          <h1 data-localise="__MSG_scribeRandomPool__">
+            Scribe random instance pool (comma-separated)
+          </h1>
+          <input
+            id="scribe-random-pool"
+            name="scribe-random-pool"
             type="text"
           />
         </section>
