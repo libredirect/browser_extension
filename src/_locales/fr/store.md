@@ -9,7 +9,7 @@ Redirige les requêtes les demandes Twitter, YouTube, Instagram et Google Maps v
 ## Description:
 
 ```
-Redirige les requètes pour Twitter, YouTube, Instagram et Google Maps vers des alternatives respectueuses de la confidentialité - <a href="https://nitter.net/">Nitter</a>, <a href="https://invidio.us/">Invidious</a>, <a href="https://bibliogram.art/">Bibliogram</a>, & <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+Redirige les requêtes pour Twitter, YouTube, Instagram et Google Maps vers des alternatives respectueuses de la confidentialité - <a href="https://nitter.net/">Nitter</a>, <a href="https://invidio.us/">Invidious</a>, <a href="https://bibliogram.art/">Bibliogram</a>, & <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 
 Permet de définir des instances personnalisées et d'activer ou désactiver toutes les redirections.
 
