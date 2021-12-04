@@ -14,7 +14,25 @@
     "48": "assets/images/icon48.png",
     "128": "assets/images/icon128.png"
   },
-  "permissions": ["storage", "webRequest", "webRequestBlocking", "<all_urls>"],
+  "permissions": [
+    "tabs",
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ],
+  "page_action": {
+    "show_matches": [
+      "<all_urls>"
+    ],
+    "default_title": "Change Instance",
+    "default_icon": {
+      "16": "assets/images/icon16.png",
+      "32": "assets/images/icon32.png",
+      "48": "assets/images/icon48.png",
+      "128": "assets/images/icon128.png"
+    }
+  },
   "browser_action": {
     "default_title": "Privacy Redirect",
     "default_popup": "pages/popup/popup.html",
@@ -34,7 +52,9 @@
         "*://pbs.twimg.com/*",
         "*://video.twimg.com/*"
       ],
-      "js": ["assets/javascripts/remove-twitter-sw.js"],
+      "js": [
+        "assets/javascripts/remove-twitter-sw.js"
+      ],
       "run_at": "document_start"
     },
     {
@@ -63,7 +83,9 @@
         "*://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion/*",
         "*://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion/*"
       ],
-      "js": ["assets/javascripts/persist-invidious-prefs.js"],
+      "js": [
+        "assets/javascripts/persist-invidious-prefs.js"
+      ],
       "run_at": "document_start"
     }
   ],
@@ -71,7 +93,9 @@
     "page": "pages/options/options.html",
     "open_in_tab": false
   },
-  "web_accessible_resources": ["assets/javascripts/helpers/*"],
+  "web_accessible_resources": [
+    "assets/javascripts/helpers/*"
+  ],
   "browser_specific_settings": {
     "gecko": {
       "id": "{b7f9d2cd-d772-4302-8c3f-eb941af36f76}",
