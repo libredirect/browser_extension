@@ -59,12 +59,12 @@ header .logo-container {
 }
 
 header .logo-container img {
-  height: 85px;
+  height: 30px;
   float: left;
 }
 
 header .logo-container h1 {
-  font-size: 25px;
+  font-size: 14px;
   float: left;
   margin-left: 15px;
   text-transform: uppercase;
