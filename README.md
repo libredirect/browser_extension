@@ -1,4 +1,4 @@
-# ![privacy-redirect](src/assets/images/logo-small.png)
+# ![privacy-redirect](src/assets/images/libredirect.svg)
 
 [![Awesome Humane Tech](https://raw.githubusercontent.com/humanetech-community/awesome-humane-tech/main/humane-tech-badge.svg?sanitize=true)](https://github.com/humanetech-community/awesome-humane-tech)
 
