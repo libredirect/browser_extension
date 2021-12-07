@@ -8,8 +8,8 @@
    version="1.1"
    id="svg5"
    inkscape:export-filename="/home/parsarch/bitmap.png"
-   inkscape:export-xdpi="4.8200002"
-   inkscape:export-ydpi="4.8200002"
+   inkscape:export-xdpi="78.019997"
+   inkscape:export-ydpi="78.019997"
    inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20, custom)"
    sodipodi:docname="libredirect.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -38,7 +38,7 @@
      fit-margin-bottom="0"
      showborder="true"
      inkscape:zoom="0.45102857"
-     inkscape:cx="742.74674"
+     inkscape:cx="725.0095"
      inkscape:cy="688.42646"
      inkscape:window-width="1920"
      inkscape:window-height="1080"
@@ -59,7 +59,7 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-5.29776,-1.5258789e-5)"
-     sodipodi:insensitive="true">
+     style="display:none">
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5.29775;stop-color:#000000"
        id="rect5300"
@@ -77,11 +77,17 @@
        id="rect10261"
        style="fill:#000000;fill-opacity:1;stroke-width:10.6446;stroke-linejoin:bevel;paint-order:stroke markers fill;stop-color:#000000"
        d="m 166.68447,1.5258789e-5 c -3.52434,0 -7.04775,1.350880241211 -9.74829,4.051407541211 L 4.050805,156.93523 c -5.4010733,5.40105 -5.4010733,14.09797 0,19.49903 l 152.885375,152.8838 c 5.40106,5.40105 14.09676,5.40105 19.49783,0 l 152.88412,-152.8838 c 5.40106,-5.40106 5.40106,-14.09798 0,-19.49903 L 176.43401,4.0514228 C 173.73349,1.3508955 170.2088,1.5258789e-5 166.68447,1.5258789e-5 Z"
-       sodipodi:nodetypes="sccccccscs" />
+       sodipodi:nodetypes="sccccccscs"
+       inkscape:export-filename="/home/parsarch/path983.png"
+       inkscape:export-xdpi="78.019997"
+       inkscape:export-ydpi="78.019997" />
     <path
        id="path1147"
        style="fill:#fbc118;fill-opacity:1;stroke-width:10.6446;stroke-linejoin:bevel;paint-order:stroke markers fill;stop-color:#000000"
-       d="m 166.68447,1.5258789e-5 c -3.52434,0 -7.04775,1.350880241211 -9.74829,4.051407541211 L 4.050805,156.93523 c -5.4010733,5.40105 -5.4010733,14.09797 0,19.49903 l 152.885375,152.8838 c 5.40106,5.40105 14.09676,5.40105 19.49783,0 l 152.88412,-152.8838 c 5.40106,-5.40106 5.40106,-14.09798 0,-19.49903 L 176.43401,4.0514228 C 173.73349,1.3508955 170.2088,1.5258789e-5 166.68447,1.5258789e-5 Z m 0,10.719943741211 c 3.2977,0 6.5954,1.263101 9.12228,3.78996 L 318.85962,157.56247 c 5.05373,5.05374 5.05373,13.1908 0,18.24454 L 175.80675,318.85957 c -5.05375,5.05374 -13.19085,5.05374 -18.24457,0 L 14.509325,175.80701 c -5.0537517,-5.05374 -5.0537517,-13.1908 0,-18.24454 L 157.56218,14.509919 c 2.52687,-2.526859 5.82459,-3.78996 9.12229,-3.78996 z" />
+       d="m 166.68447,1.5258789e-5 c -3.52434,0 -7.04775,1.350880241211 -9.74829,4.051407541211 L 4.050805,156.93523 c -5.4010733,5.40105 -5.4010733,14.09797 0,19.49903 l 152.885375,152.8838 c 5.40106,5.40105 14.09676,5.40105 19.49783,0 l 152.88412,-152.8838 c 5.40106,-5.40106 5.40106,-14.09798 0,-19.49903 L 176.43401,4.0514228 C 173.73349,1.3508955 170.2088,1.5258789e-5 166.68447,1.5258789e-5 Z m 0,10.719943741211 c 3.2977,0 6.5954,1.263101 9.12228,3.78996 L 318.85962,157.56247 c 5.05373,5.05374 5.05373,13.1908 0,18.24454 L 175.80675,318.85957 c -5.05375,5.05374 -13.19085,5.05374 -18.24457,0 L 14.509325,175.80701 c -5.0537517,-5.05374 -5.0537517,-13.1908 0,-18.24454 L 157.56218,14.509919 c 2.52687,-2.526859 5.82459,-3.78996 9.12229,-3.78996 z"
+       inkscape:export-filename="/home/parsarch/path983.png"
+       inkscape:export-xdpi="78.019997"
+       inkscape:export-ydpi="78.019997" />
     <rect
        style="fill:#fbc117;fill-opacity:1;stroke-width:9.25578;stroke-linejoin:bevel;paint-order:stroke markers fill;stop-color:#000000"
        id="rect8504"
@@ -90,11 +96,17 @@
        x="-105.98952"
        y="129.73819"
        transform="matrix(0.70710753,-0.70710617,0.70710753,0.70710617,0,0)"
-       ry="11.988618" />
+       ry="11.988618"
+       inkscape:export-filename="/home/parsarch/path983.png"
+       inkscape:export-xdpi="78.019997"
+       inkscape:export-ydpi="78.019997" />
     <path
        style="fill:#000000;fill-opacity:1;stroke-width:11.7733;stroke-linejoin:bevel;paint-order:stroke markers fill;stop-color:#000000"
        d="m 184.9484,150.31257 c -47.94368,20.63825 -46.95176,86.74351 -46.95176,86.74351 l -33.49195,2e-5 c 0,0 -0.43631,-96.71487 73.1579,-116.43438 -6.91258,-13.8541 -10.36137,-19.42664 -5.93301,-21.619621 5.93589,-2.939527 68.02199,11.715951 70.34687,20.392521 2.28516,8.52832 -46.82723,53.14308 -53.65602,53.14308 -5.85198,0 -4.22909,-7.02227 -3.47216,-22.22513 z"
        id="path983"
-       sodipodi:nodetypes="ccccssscc" />
+       sodipodi:nodetypes="ccccssscc"
+       inkscape:export-filename="/home/parsarch/path983.png"
+       inkscape:export-xdpi="78.019997"
+       inkscape:export-ydpi="78.019997" />
   </g>
 </svg>
