@@ -78,6 +78,20 @@ disableScribe.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableScribe: !event.target.checked });
 });
 
+const apiEndpoint = 'https://raw.githubusercontent.com/libredirect/instances/main/data.json';
+
+document.querySelector("#update-instances").addEventListener("click", () => {
+  let request = new XMLHttpRequest();
+  request.open('GET', apiEndpoint, false);
+  request.send(null);
+
+  if (request.status === 200) {
+    document.querySelector("#update-instances").innerHTML = 'gav';  
+    const instances = JSON.parse(request.responseText);
+    document.querySelector("#update-instances").innerHTML = instances.twitter.length;
+  }
+});
+
 document.querySelector("#more-options").addEventListener("click", () => {
   browser.runtime.openOptionsPage();
 });
