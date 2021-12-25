@@ -88,7 +88,11 @@ document.querySelector("#update-instances").addEventListener("click", () => {
   if (request.status === 200) {
     document.querySelector("#update-instances").innerHTML = 'gav';  
     const instances = JSON.parse(request.responseText);
-    document.querySelector("#update-instances").innerHTML = instances.twitter.length;
+    const nitterRandomPool = instances.twitter.join(',');
+    const invidiousRandomPool = instances.youtube.join(',');
+    const bibliogramRandomPool = instances.instagram.join(',');
+    browser.storage.sync.set({ nitterRandomPool, invidiousRandomPool, bibliogramRandomPool });
+    document.querySelector("#update-instances").innerHTML = 'Done!';
   }
 });
 
