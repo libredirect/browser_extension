@@ -20,20 +20,7 @@ const scribeInstances = mediumHelper.redirects;
 const searchEngineInstances = searchHelper.redirects;
 const simplyTranslateInstances = googleTranslateHelper.redirects;
 const wikipediaInstances = wikipediaHelper.redirects;
-const autocompletes = [
-  { id: "nitter-instance", instances: nitterInstances },
-  { id: "invidious-instance", instances: invidiousInstances },
-  { id: "bibliogram-instance", instances: bibliogramInstances },
-  { id: "osm-instance", instances: osmInstances },
-  { id: "reddit-instance", instances: redditInstances },
-  { id: "scribe-instance", instances: scribeInstances },
-  {
-    id: "search-engine-instance",
-    instances: searchEngineInstances.map((instance) => instance.link),
-  },
-  { id: "simply-translate-instance", instances: simplyTranslateInstances },
-  { id: "wikipedia-instance", instances: wikipediaInstances },
-];
+let autocompletes;
 const domparser = new DOMParser();
 
 let nitterInstance = document.getElementById("nitter-instance");
@@ -189,6 +176,23 @@ browser.storage.sync.get(
     scribeRandomPool.value =
       result.scribeRandomPool ||
       commonHelper.filterInstances(scribeInstances);
+    autocompletes = [
+        { id: "nitter-instance", instances: nitterRandomPool.value.split(',') },
+        { id: "invidious-instance", instances: invidiousRandomPool.value.split(',') },
+        { id: "bibliogram-instance", instances: bibliogramRandomPool.value.split(',') },
+        { id: "scribe-instance", instances: scribeRandomPool.value.split(',') },
+        { id: "reddit-instance", instances: redditInstances },
+        { id: "osm-instance", instances: osmInstances },
+        {
+          id: "search-engine-instance",
+          instances: searchEngineInstances.map((instance) => instance.link),
+        },
+        { id: "simply-translate-instance", instances: simplyTranslateInstances },
+        { id: "wikipedia-instance", instances: wikipediaInstances },
+      ];
+    autocompletes.forEach((value) => {
+      autocomplete(document.getElementById(value.id), value.instances);
+    });      
   }
 );
 
@@ -597,10 +601,6 @@ function autocomplete(input, list) {
     }
   });
 }
-
-autocompletes.forEach((value) => {
-  autocomplete(document.getElementById(value.id), value.instances);
-});
 
 var coll = document.getElementsByClassName("collapsible");
 var i;
