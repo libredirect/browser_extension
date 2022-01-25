@@ -1,32 +1,24 @@
-# ![privacy-redirect](src/assets/images/libredirect.svg)
+<img src="src/assets/images/libredirect.svg" width="150" align="right"/>
 
-[![Awesome Humane Tech](https://raw.githubusercontent.com/humanetech-community/awesome-humane-tech/main/humane-tech-badge.svg?sanitize=true)](https://github.com/humanetech-community/awesome-humane-tech)
-
+# LibRedirect
+A web extension that redirects Twitter, YouTube, Instagram, Google Maps, Reddit, Medium, Google & Google Translate requests to privacy friendly alternative frontends for those sites 
 ## Get
 
-[![Firefox Add-on](src/assets/images/badge-amo.png)](https://addons.mozilla.org/en-US/firefox/addon/privacy-redirect/)
-[![Chrome Extension](src/assets/images/badge-chrome.png)](https://chrome.google.com/webstore/detail/privacy-redirect/pmcmeagblkinmogikoikkdjiligflglb)
-[![Edge Extension](src/assets/images/badge-ms.png)](https://microsoftedge.microsoft.com/addons/detail/privacy-redirect/elnabkhcgpajchapppkhiaifkgikgihj)
 
 ## Donate
 
-[![Donate](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/SimonBrazell/donate) [![Buy me a coffee](src/assets/images/buy-me-a-coffee.png)](https://www.buymeacoffee.com/SimonBrazell)
+- **BTC:** `bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q`
 
-- **FIRO** `aEyKPU7mwWBYRFGoLiUGeQQybyzD8jzsS8`
-- **BTC:** `3JZWooswwmmqQKw5iW6AYFfK5gcWTrvueE`
-- **ETH:** `0x90049dc59365dF683451319Aa4632aC61193dFA7`
-
-<img src="https://img.shields.io/liberapay/receives/SimonBrazell.svg?logo=liberapay">
 
 ## About
 
-A web extension that redirects _Twitter, YouTube, Instagram, Google Maps, Reddit, Medium, Google Search, & Google Translate_ requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/iv-org/invidious), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Bibliogram](https://sr.ht/~cadence/bibliogram/), [OpenStreetMap](https://www.openstreetmap.org/), [Scribe](https://sr.ht/~edwardloveall/scribe/), [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web) & Private Search Engines like [DuckDuckGo](https://duckduckgo.com) and [Startpage](https://startpage.com).
+A web extension that redirects Twitter, YouTube, Instagram, Google Maps, Reddit, Medium, Google Search, & Google Translate_ requests to privacy friendly alternatives - [Nitter](https://github.com/zedeus/nitter), [Invidious](https://github.com/iv-org/invidious), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Bibliogram](https://sr.ht/~cadence/bibliogram/), [OpenStreetMap](https://www.openstreetmap.org/), [Scribe](https://sr.ht/~edwardloveall/scribe/), [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web) & Private Search Engines like [DuckDuckGo](https://duckduckgo.com) and [Startpage](https://startpage.com).
 
 It's possible to toggle all redirects on and off. The extension will default to using random instances if none are selected. If these instances are not working, you can try and set a custom instance from the list below.
 
 ### Custom instances
 
-Privacy Redirect allows setting custom instances, instances can be found here:
+LibRedirect allows setting custom instances, instances can be found here:
 
 - [Nitter instances](https://github.com/zedeus/nitter/wiki/Instances)
 - [Invidious instances](https://docs.invidious.io/Invidious-Instances.md)
@@ -78,3 +70,6 @@ Please note, access to all website navigation events ( all URLs), not just the t
 ## Privacy Policy
 
 See the [Project Wiki](https://github.com/SimonBrazell/privacy-redirect/wiki/Privacy-Policy).
+
+## Credits
+- [privacy-redirect](https://github.com/SimonBrazell/privacy-redirect)
