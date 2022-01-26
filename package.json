@@ -1,5 +1,5 @@
 {
-  "name": "privacy-redirect",
+  "name": "LibRedirect",
   "description": "Redirects Twitter, YouTube, Instagram and more to privacy friendly alternatives.",
   "engines": {
     "node": ">=10.0.0",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SimonBrazell/privacy-redirect.git"
+    "url": "git+https://github.com/LibRedirect/LibRedirect.git"
   },
-  "author": "SimonBrazell",
+  "author": "LibRedirect",
   "license": "GPL-3.0-only",
   "bugs": {
-    "url": "https://github.com/SimonBrazell/privacy-redirect/issues"
+    "url": "https://github.com/LibRedirect/LibRedirect/issues"
   },
-  "homepage": "https://github.com/SimonBrazell/privacy-redirect#readme",
+  "homepage": "https://github.com/LibRedirect/LibRedirect#readme",
   "devDependencies": {
     "web-ext": "^6.2.0"
   }
