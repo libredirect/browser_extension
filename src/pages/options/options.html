@@ -1,692 +1,341 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title></title>
-    <link href="../../assets/stylesheets/styles.css" rel="stylesheet" />
-    <title>Privacy Redirect Options</title>
-  </head>
 
-  <body>
-    <div class="tab">
-      <button
-        class="tablinks"
-        id="general-tab"
-        data-localise="__MSG_generalTab__"
-      >
-        General
-      </button>
-      <button
-        class="tablinks"
-        id="advanced-tab"
-        data-localise="__MSG_advancedTab__"
-      >
-        Advanced
-      </button>
-      <button
-        class="tablinks"
-        id="exceptions-tab"
-        data-localise="__MSG_exceptionsTab__"
-      >
-        Exceptions
-      </button>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title></title>
+  <link href="../stylesheets/styles.css" rel="stylesheet" />
+  <title>LibRedirect Options</title>
+</head>
+
+<body>
+  <div class="tab">
+    <button class="tablinks" id="general-tab" data-localise="__MSG_generalTab__">
+      General
+    </button>
+    <button class="tablinks" id="advanced-tab" data-localise="__MSG_advancedTab__">
+      Advanced
+    </button>
+    <button class="tablinks" id="exceptions-tab" data-localise="__MSG_exceptionsTab__">
+      Exceptions
+    </button>
+  </div>
+
+
+
+  <div id="general" class="tabcontent">
+
+    <div class="some-block">
+      <h4>Youtube</h4>
+      <input id="disable-invidious" type="checkbox" checked />
     </div>
 
-    <div id="general" class="tabcontent">
+    <div class="some-block">
+      <h4>Twitter</h4>
+      <input id="disable-nitter" type="checkbox" checked />
+    </div>
+
+    <div class="some-block">
+      <h4>Instagram</h4>
+      <input id="disable-bibliogram" type="checkbox" checked />
+    </div>
+
+    <div class="some-block">
+      <h4>Reddit</h4>
+      <input id="disable-reddit" type="checkbox" checked />
+    </div>
+
+    <div class="some-block">
+      <h4>Search</h4>
+      <input id="disable-searchEngine" type="checkbox" checked />
+    </div>
+
+    <div class="some-block">
+      <h4>Translate</h4>
+      <input id="disable-simplyTranslate" type="checkbox" checked />
+    </div>
+
+    <div class="some-block">
+      <h4>Maps</h4>
+      <input id="disable-osm" type="checkbox" checked />
+    </div>
+
+    <div class="some-block">
+      <h4>Wikipedia</h4>
+      <input id="disable-wikipedia" type="checkbox" checked />
+    </div>
+
+    <div class="some-block">
+      <h4>Medium</h4>
+      <input id="disable-scribe" type="checkbox" checked />
+    </div>
+
+    <div class="buttons">
+      <a class="button" id="update-instances">
+        <span data-localise="__MSG_updateInstances__">Update Instances</span>
+      </a>
+    </div>
+
+    <section class="settings-block">
+      <h1>Youtube (Invidious) Instance</h1>
+      <div class="autocomplete">
+        <input id="invidious-instance" type="url" data-localise-placeholder="__MSG_randomInstancePlaceholder__"
+          placeholder="Random instance (none selected)" />
+      </div>
+    </section>
+
+    <section class="settings-block">
+      <h1>Twitter (Nitter) Instance</h1>
+      <div class="autocomplete">
+        <input id="nitter-instance" type="url" name="nitter-instance"
+          data-localise-placeholder="__MSG_randomInstancePlaceholder__" placeholder="Random instance (none selected)" />
+      </div>
+    </section>
+
+    <section class="settings-block">
+      <h1>Instagram (Bibliogram) Instance</h1>
+      <div class="autocomplete">
+        <input id="bibliogram-instance" type="url" data-localise-placeholder="__MSG_randomInstancePlaceholder__"
+          placeholder="Random instance (none selected)" />
+      </div>
+    </section>
+
+    <section class="settings-block">
+      <h1>Reddit (libreddit) Instance</h1>
+      <div class="autocomplete">
+        <input id="reddit-instance" type="url" placeholder="https://libredd.it" />
+      </div>
+    </section>
+
+    <section class="settings-block">
+      <h1 data-localise="__MSG_searchEngineInstance__">Search Engine Instance</h1>
+      <div class="autocomplete">
+        <input id="search-engine-instance" type="url" data-localise-placeholder="__MSG_randomInstancePlaceholder__"
+          placeholder="Random instance (none selected)" />
+      </div>
+    </section>
+
+    <section class="settings-block">
+      <h1>Translate (SimplyTranslate) Instance</h1>
+      <div class="autocomplete">
+        <input id="simply-translate-instance" type="url" placeholder="https://translate.metalune.xyz" />
+      </div>
+    </section>
+
+    <section class="settings-block">
+      <h1>Maps (OpenStreetMap) Instance</h1>
+      <div class="autocomplete">
+        <input id="osm-instance" type="url" placeholder="https://openstreetmap.org" />
+      </div>
+    </section>
+
+    <section class="settings-block">
+      <h1>Wikipedia (Wikiless) Instance</h1>
+      <div class="autocomplete">
+        <input id="wikipedia-instance" type="url" placeholder="https://wikiless.org" />
+      </div>
+    </section>
+
+    <section class="settings-block">
+      <h1>Medium (Scribe) Instance</h1>
+      <div class="autocomplete">
+        <input id="scribe-instance" type="url" name="scribe-instance"
+          data-localise-placeholder="__MSG_randomInstancePlaceholder__" placeholder="Random instance (none selected)" />
+      </div>
+    </section>
+
+    <section class="settings-block">
+      <h1 data-localise="__MSG_theme__">Theme</h1>
+      <select id="theme">
+        <option value="">System</option>
+        <option value="light-theme">Light</option>
+        <option value="dark-theme">Dark</option>
+      </select>
+    </section>
+
+  </div>
+
+  <div id="advanced" class="tabcontent">
+
+
+    <button type="button" class="collapsible">
+      Invidious
+    </button>
+    <div class="collapsible-content">
+
+
       <section class="settings-block">
-        <table class="option" aria-label="Toggle Nitter redirects">
-          <tbody>
-            <tr>
-              <td>
-                <h1 data-localise="__MSG_disableNitter__">Nitter Redirects</h1>
-              </td>
-              <td>
-                <input
-                  aria-hidden="true"
-                  id="disable-nitter"
-                  type="checkbox"
-                  checked
-                />&nbsp;
-                <label for="disable-nitter" class="checkbox-label"></label>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <h1 data-localise="__MSG_invidiousRandomPool__">
+          Invidious random instance pool (comma-separated)
+        </h1>
+        <textarea type="textarea" id="invidious-random-pool" name="invidious-random-pool" type="text"></textarea>
       </section>
+
+      <div class="some-block">
+        <h4 data-localise="__MSG_useFreeTube__">Use FreeTube over Invidious when possible</h4>
+        <input id="use-freetube" type="checkbox" checked />
+      </div>
+
+      <div class="some-block">
+        <h4 data-localise="__MSG_alwaysProxy__">Always proxy videos through Invidious</h4>
+        <input id="always-proxy" type="checkbox" checked />
+      </div>
+
+      <div class="some-block">
+        <h4 data-localise="__MSG_onlyEmbeddedVideo__">Only redirect embedded video to Invidious</h4>
+        <input id="only-embed" type="checkbox" checked />
+      </div>
+
       <section class="settings-block">
-        <table class="option" aria-label="Toggle Invidious redirects">
-          <tbody>
-            <tr>
-              <td>
-                <h1 data-localise="__MSG_disableInvidious__">
-                  Invidious Redirects
-                </h1>
-              </td>
-              <td>
-                <input
-                  aria-hidden="true"
-                  id="disable-invidious"
-                  type="checkbox"
-                  checked
-                />&nbsp;
-                <label for="disable-invidious" class="checkbox-label"> </label>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-      <section class="settings-block">
-        <table class="option" aria-label="Toggle Bibliogram redirects">
-          <tbody>
-            <tr>
-              <td>
-                <h1 data-localise="__MSG_disableBibliogram__">
-                  Bibliogram Redirects
-                </h1>
-              </td>
-              <td>
-                <input
-                  aria-hidden="true"
-                  id="disable-bibliogram"
-                  type="checkbox"
-                  checked
-                />&nbsp;
-                <label for="disable-bibliogram" class="checkbox-label"> </label>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-      <section class="settings-block">
-        <table class="option" aria-label="Toggle OpenStreetMap redirects">
-          <tbody>
-            <tr>
-              <td>
-                <h1 data-localise="__MSG_disableOsm__">
-                  OpenStreetMap Redirects
-                </h1>
-              </td>
-              <td>
-                <input
-                  aria-hidden="true"
-                  id="disable-osm"
-                  type="checkbox"
-                  checked
-                />&nbsp;
-                <label for="disable-osm" class="checkbox-label"> </label>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-      <section class="settings-block">
-        <table class="option" aria-label="Toggle Reddit redirects">
-          <tbody>
-            <tr>
-              <td>
-                <h1 data-localise="__MSG_disableReddit__">
-                  Reddit Redirects
-                </h1>
-              </td>
-              <td>
-                <input
-                  aria-hidden="true"
-                  id="disable-reddit"
-                  type="checkbox"
-                  checked
-                />&nbsp;
-                <label for="disable-reddit" class="checkbox-label"> </label>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-      <section class="settings-block">
-        <table class="option" aria-label="Toggle Scribe redirects">
-          <tbody>
-            <tr>
-              <td>
-                <h1 data-localise="__MSG_disableScribe__">
-                  Scribe Redirects
-                </h1>
-              </td>
-              <td>
-                <input
-                  aria-hidden="true"
-                  id="disable-scribe"
-                  type="checkbox"
-                  checked
-                />&nbsp;
-                <label for="disable-scribe" class="checkbox-label"> </label>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-       <section class="settings-block">
-        <table class="option" aria-label="Toggle Search Engine redirects">
-          <tbody>
-            <tr>
-              <td>
-                <h1 data-localise="__MSG_disableSearchEngine__">
-                  Search Engine Redirects
-                </h1>
-              </td>
-              <td>
-                <input
-                  aria-hidden="true"
-                  id="disable-search-engine"
-                  type="checkbox"
-                  checked
-                />&nbsp;
-                <label for="disable-search-engine" class="checkbox-label"> </label>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-      <section class="settings-block">
-        <table class="option" aria-label="Toggle SimplyTranslate redirects">
-          <tbody>
-            <tr>
-              <td>
-                <h1 data-localise="__MSG_disableSimplyTranslate__">SimplyTranslate Redirects</h1>
-              </td>
-              <td>
-                <input
-                  aria-hidden="true"
-                  id="disable-simply-translate"
-                  type="checkbox"
-                />&nbsp;
-                <label for="disable-simply-translate" class="checkbox-label"></label>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-      <section class="settings-block">
-        <table class="option" aria-label="Toggle Wikipedia redirects">
-          <tbody>
-            <tr>
-              <td>
-                <h1 data-localise="__MSG_disableWikipedia__">Wikipedia Redirects</h1>
-              </td>
-              <td>
-                <input
-                  aria-hidden="true"
-                  id="disable-wikipedia"
-                  type="checkbox"
-                />&nbsp;
-                <label for="disable-wikipedia" class="checkbox-label"></label>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-      <section class="settings-block">
-        <h1 data-localise="__MSG_nitterInstance__">Nitter Instance</h1>
-        <div class="autocomplete">
-          <input
-            id="nitter-instance"
-            type="url"
-            name="nitter-instance"
-            data-localise-placeholder="__MSG_randomInstancePlaceholder__"
-            placeholder="Random instance (none selected)"
-          />
-        </div>
-      </section>
-      <section class="settings-block">
-        <h1 data-localise="__MSG_invidiousInstance__">Invidious Instance</h1>
-        <div class="autocomplete">
-          <input
-            id="invidious-instance"
-            type="url"
-            data-localise-placeholder="__MSG_randomInstancePlaceholder__"
-            placeholder="Random instance (none selected)"
-          />
-        </div>
-      </section>
-      <section class="settings-block">
-        <h1 data-localise="__MSG_bibliogramInstance__">Bibliogram Instance</h1>
-        <div class="autocomplete">
-          <input
-            id="bibliogram-instance"
-            type="url"
-            data-localise-placeholder="__MSG_randomInstancePlaceholder__"
-            placeholder="Random instance (none selected)"
-          />
-        </div>
-      </section>
-      <section class="settings-block">
-        <h1 data-localise="__MSG_osmInstance__">OpenStreetMap Instance</h1>
-        <div class="autocomplete">
-          <input
-            id="osm-instance"
-            type="url"
-            placeholder="https://openstreetmap.org"
-          />
-        </div>
-      </section>
-      <section class="settings-block">
-        <h1 data-localise="__MSG_redditInstance__">Reddit Instance</h1>
-        <div class="autocomplete">
-          <input
-            id="reddit-instance"
-            type="url"
-            placeholder="https://libredd.it"
-          />
-        </div>
-      </section>
-      <section class="settings-block">
-        <h1 data-localise="__MSG_scribeInstance__"
-          class="new-badge" data-new-badge>Scribe Instance</h1>
-        <div class="autocomplete">
-          <input
-            id="scribe-instance"
-            type="url"
-            name="scribe-instance"
-            data-localise-placeholder="__MSG_randomInstancePlaceholder__"
-            placeholder="Random instance (none selected)"
-          />
-        </div>
-      </section>
-      <section class="settings-block">
-        <h1 data-localise="__MSG_searchEngineInstance__">Search Engine Instance</h1>
-        <div class="autocomplete">
-          <input
-            id="search-engine-instance"
-            type="url"
-            data-localise-placeholder="__MSG_randomInstancePlaceholder__"
-            placeholder="Random instance (none selected)"
-          />
-        </div>
-      </section>
-      <section class="settings-block">
-        <h1 data-localise="__MSG_simplyTranslateInstance__">SimplyTranslate Instance</h1>
-        <div class="autocomplete">
-          <input
-            id="simply-translate-instance"
-            type="url"
-            placeholder="https://translate.metalune.xyz"
-          />
-        </div>
-      </section>
-      <section class="settings-block">
-        <h1 data-localise="__MSG_wikipediaInstance__">Wikipedia Instance</h1>
-        <div class="autocomplete">
-          <input
-            id="wikipedia-instance"
-            type="url"
-            placeholder="https://wikiless.org"
-          />
-        </div>
-      </section>
-      <section class="settings-block">
-        <h1 data-localise="__MSG_theme__">Theme</h1>
-        <select id="theme">
-          <option value="">System</option>
-          <option value="light-theme">Light</option>
-          <option value="dark-theme">Dark</option>
+        <h1 data-localise="__MSG_videoQuality__">Invidious Video Quality</h1>
+        <select id="video-quality">
+          <option value="">Default</option>
+          <option value="hd720">720p</option>
+          <option value="medium">480p</option>
+          <option value="dash">DASH (Dynamic Adaptive Streaming over HTTP)</option>
+          </option>
         </select>
       </section>
-    </div>
 
-    <div id="advanced" class="tabcontent">
-      <button type="button" class="collapsible">
-        Invidious
-      </button>
-      <div class="collapsible-content">
-        <section class="settings-block">
-          <h1 data-localise="__MSG_invidiousRandomPool__">
-            Invidious random instance pool (comma-separated)
-          </h1>
-          <input
-            id="invidious-random-pool"
-            name="invidious-random-pool"
-            type="text"
-          />
-        </section>
-        <section class="settings-block">
-          <table
-            class="option"
-            aria-label="Redirect YouTube to FreeTube where possible"
-          >
-            <tbody>
-              <tr>
-                <td>
-                  <h1 data-localise="__MSG_useFreeTube__">
-                    Use FreeTube over Invidious when possible
-                  </h1>
-                </td>
-                <td>
-                  <input
-                    aria-hidden="true"
-                    id="use-freetube"
-                    type="checkbox"
-                    checked
-                  />&nbsp;
-                  <label for="use-freetube" class="checkbox-label"> </label>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        <section class="settings-block">
-          <table
-            class="option"
-            aria-label="Always proxy videos through Invidious"
-          >
-            <tbody>
-              <tr>
-                <td>
-                  <h1 data-localise="__MSG_alwaysProxy__">
-                    Always proxy videos through Invidious
-                  </h1>
-                </td>
-                <td>
-                  <input
-                    aria-hidden="true"
-                    id="always-proxy"
-                    type="checkbox"
-                    checked
-                  />&nbsp;
-                  <label for="always-proxy" class="checkbox-label"> </label>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        <section class="settings-block">
-          <table
-            class="option"
-            aria-label="Only redirect embedded video to Invidious"
-          >
-            <tbody>
-              <tr>
-                <td>
-                  <h1 data-localise="__MSG_onlyEmbeddedVideo__">
-                    Only redirect embedded video to Invidious
-                  </h1>
-                </td>
-                <td>
-                  <input
-                    aria-hidden="true"
-                    id="only-embed"
-                    type="checkbox"
-                    checked
-                  />&nbsp;
-                  <label for="only-embed" class="checkbox-label"> </label>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        <section class="settings-block">
-          <h1 data-localise="__MSG_videoQuality__">Invidious Video Quality</h1>
-          <select id="video-quality">
-            <option value="">Default</option>
-            <option value="hd720">720p</option>
-            <option value="medium">480p</option>
-            <option value="dash">DASH (Dynamic Adaptive Streaming over HTTP)</option>
-            </option>
-          </select>
-        </section>
-        <section class="settings-block">
-          <table class="option" aria-label="Invidious dark mode aways on">
-            <tbody>
-              <tr>
-                <td>
-                  <h1 data-localise="__MSG_invidiousDarkMode__">
-                    Invidious dark mode always on
-                  </h1>
-                </td>
-                <td>
-                  <input
-                    aria-hidden="true"
-                    id="invidious-dark-mode"
-                    type="checkbox"
-                    checked
-                  />&nbsp;
-                  <label for="invidious-dark-mode" class="checkbox-label">
-                  </label>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        <section class="settings-block">
-          <h1 data-localise="__MSG_invidiousVolume__">
-            Invidious Volume
-          </h1>
-          <input
-            id="invidious-volume"
-            name="invidious-volume"
-            type="range"
-            min="0"
-            max="100"
-            step="1"
-          /><span id="volume-value"></span>
-        </section>
-        <section class="settings-block">
-          <h1 data-localise="__MSG_invidiousPlayerStyle__">
-            Invidious Player Style
-          </h1>
-          <select id="invidious-player-style">
-            <option value="">Invidious</option>
-            <option value="youtube">YouTube</option>
-          </select>
-        </section>
-        <section class="settings-block">
-          <h1 data-localise="__MSG_invidiousSubtitles__">
-            Invidious Subtitles - language codes (comma-separated)
-          </h1>
-          <input
-            id="invidious-subtitles"
-            name="invidious-subtitles"
-            type="text"
-          />
-        </section>
-        <section class="settings-block">
-          <table
-            class="option"
-            aria-label="Invidious automatically play video on load"
-          >
-            <tbody>
-              <tr>
-                <td>
-                  <h1 data-localise="__MSG_invidiousAutoplay__">
-                    Invidious automatically play video on load
-                  </h1>
-                </td>
-                <td>
-                  <input
-                    aria-hidden="true"
-                    id="invidious-autoplay"
-                    type="checkbox"
-                    checked
-                  />&nbsp;
-                  <label for="invidious-autoplay" class="checkbox-label"> </label>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        <section class="settings-block">
-          <table class="option" aria-label="Persist Invidious preferences">
-            <tbody>
-              <tr>
-                <td>
-                  <h1 data-localise="__MSG_persistInvidiousPrefs__">
-                    Persist Invidious preferences (as cookie)
-                  </h1>
-                </td>
-                <td>
-                  <input
-                    aria-hidden="true"
-                    id="persist-invidious-prefs"
-                    type="checkbox"
-                    checked
-                  />&nbsp;
-                  <label for="persist-invidious-prefs" class="checkbox-label">
-                  </label>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        <hr>
-      </div>
-      <button type="button" class="collapsible">
-        Nitter
-      </button>
-      <div class="collapsible-content">
-        <section class="settings-block">
-          <h1 data-localise="__MSG_nitterRandomPool__">
-            Nitter random instance pool (comma-separated)
-          </h1>
-          <input
-            id="nitter-random-pool"
-            name="nitter-random-pool"
-            type="text"
-          />
-        </section>
-        <section class="settings-block">
-          <table
-            class="option"
-            aria-label="Proactively remove Twitter service worker"
-          >
-            <tbody>
-              <tr>
-                <td>
-                  <h1 data-localise="__MSG_removeTwitterSW__">
-                    Proactively remove Twitter service worker
-                  </h1>
-                </td>
-                <td>
-                  <input
-                    aria-hidden="true"
-                    id="remove-twitter-sw"
-                    type="checkbox"
-                    checked
-                  />&nbsp;
-                  <label for="remove-twitter-sw" class="checkbox-label"> </label>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-        <hr>
-      </div>
-      <button type="button" class="collapsible">
-        Bibliogram
-      </button>
-      <div class="collapsible-content">
-        <section class="settings-block">
-          <h1 data-localise="__MSG_bibliogramRandomPool__">
-            Bibliogram random instance pool (comma-separated)
-          </h1>
-          <input
-            id="bibliogram-random-pool"
-            name="bibliogram-random-pool"
-            type="text"
-          />
-        </section>
-        <section class="settings-block">
-          <h1 data-localise="__MSG_scribeRandomPool__">
-            Scribe random instance pool (comma-separated)
-          </h1>
-          <input
-            id="scribe-random-pool"
-            name="scribe-random-pool"
-            type="text"
-          />
-        </section>
-        <hr>
-      </div>
-    </div>
 
-    <div id="exceptions" class="tabcontent">
+      <div class="some-block">
+        <h4 data-localise="__MSG_invidiousDarkMode__">Invidious dark mode always on</h4>
+        <input id="invidious-dark-mode" type="checkbox" checked />
+      </div>
+
       <section class="settings-block">
-        <p data-localise="__MSG_exceptionsDescriptionP1__">
-          Enter a URL or Regular Expression to be excluded from redirects.
-        </p>
-        <p data-localise="__MSG_exceptionsDescriptionP2__">
-          All requests for or initiating from a URL that matches your exception
-          will be excluded from redirects.
-        </p>
-        <p data-localise="__MSG_exceptionsDescriptionP3__">
-          Note - Supports JavaScript regular expressions, excluding the
-          enclosing forward slashes.
-        </p>
+        <h1 data-localise="__MSG_invidiousVolume__">
+          Invidious Volume
+        </h1>
+        <input id="invidious-volume" name="invidious-volume" type="range" min="0" max="100" step="1" /><span
+          id="volume-value"></span>
       </section>
       <section class="settings-block">
-        <table class="exceptions option">
-          <tbody>
-            <tr>
-              <td>
-                <h1 data-localise="__MSG_addException__">Add Exception</h1>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input
-                  id="new-exceptions-item"
-                  type="text"
-                  placeholder="URL or RegExp"
-                />
-              </td>
-              <td>
-                <input type="radio" id="url" name="type" value="URL" checked />
-                <label class="radio" for="url">URL</label>
-                <input type="radio" id="regExp" name="type" value="RegExp" />
-                <label class="radio" for="regExp">RegExp</label>
-              </td>
-              <td>
-                <button id="add-to-exceptions">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="512"
-                    height="512"
-                    viewBox="0 0 512 512"
-                  >
-                    <line
-                      x1="256"
-                      y1="112"
-                      x2="256"
-                      y2="400"
-                      style="
+        <h1 data-localise="__MSG_invidiousPlayerStyle__">
+          Invidious Player Style
+        </h1>
+        <select id="invidious-player-style">
+          <option value="">Invidious</option>
+          <option value="youtube">YouTube</option>
+        </select>
+      </section>
+      <section class="settings-block">
+        <h1 data-localise="__MSG_invidiousSubtitles__">
+          Invidious Subtitles - language codes (comma-separated)
+        </h1>
+        <input id="invidious-subtitles" name="invidious-subtitles" type="text" />
+      </section>
+
+      <div class="some-block">
+        <h4 data-localise="__MSG_invidiousAutoplay__">Invidious automatically play video on load</h4>
+        <input id="invidious-autoplay" type="checkbox" checked />
+      </div>
+
+      <div class="some-block">
+        <h4 data-localise="__MSG_persistInvidiousPrefs__">Persist Invidious preferences (as cookie)</h4>
+        <input id="persist-invidious-prefs" type="checkbox" checked />
+      </div>
+
+      <hr>
+    </div>
+    <button type="button" class="collapsible">
+      Nitter
+    </button>
+    <div class="collapsible-content">
+      <section class="settings-block">
+        <h1 data-localise="__MSG_nitterRandomPool__">
+          Nitter random instance pool (comma-separated)
+        </h1>
+        <input id="nitter-random-pool" name="nitter-random-pool" type="text" />
+      </section>
+      <div class="some-block">
+        <h4 data-localise="__MSG_removeTwitterSW__">Proactively remove Twitter service worker</h4>
+        <input id="remove-twitter-sw" type="checkbox" checked />
+      </div>
+      <hr>
+    </div>
+    <button type="button" class="collapsible">
+      Bibliogram
+    </button>
+    <div class="collapsible-content">
+      <section class="settings-block">
+        <h1 data-localise="__MSG_bibliogramRandomPool__">
+          Bibliogram random instance pool (comma-separated)
+        </h1>
+        <input id="bibliogram-random-pool" name="bibliogram-random-pool" type="text" />
+      </section>
+      <section class="settings-block">
+        <h1 data-localise="__MSG_scribeRandomPool__">
+          Scribe random instance pool (comma-separated)
+        </h1>
+        <input id="scribe-random-pool" name="scribe-random-pool" type="text" />
+      </section>
+      <hr>
+    </div>
+  </div>
+
+  <div id="exceptions" class="tabcontent">
+    <section class="settings-block">
+      <p data-localise="__MSG_exceptionsDescriptionP1__">
+        Enter a URL or Regular Expression to be excluded from redirects.
+      </p>
+      <p data-localise="__MSG_exceptionsDescriptionP2__">
+        All requests for or initiating from a URL that matches your exception
+        will be excluded from redirects.
+      </p>
+      <p data-localise="__MSG_exceptionsDescriptionP3__">
+        Note - Supports JavaScript regular expressions, excluding the
+        enclosing forward slashes.
+      </p>
+    </section>
+    <section class="settings-block">
+      <table class="exceptions option">
+        <tbody>
+          <tr>
+            <td>
+              <h1 data-localise="__MSG_addException__">Add Exception</h1>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input id="new-exceptions-item" type="text" placeholder="URL or RegExp" />
+            </td>
+            <td>
+              <input type="radio" id="url" name="type" value="URL" checked />
+              <label class="radio" for="url">URL</label>
+              <input type="radio" id="regExp" name="type" value="RegExp" />
+              <label class="radio" for="regExp">RegExp</label>
+            </td>
+            <td>
+              <button id="add-to-exceptions">
+                <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+                  <line x1="256" y1="112" x2="256" y2="400" style="
                         fill: none;
                         stroke: #fff;
                         stroke-linecap: round;
                         stroke-linejoin: round;
                         stroke-width: 32px;
-                      "
-                    />
-                    <line
-                      x1="400"
-                      y1="256"
-                      x2="112"
-                      y2="256"
-                      style="
+                      " />
+                  <line x1="400" y1="256" x2="112" y2="256" style="
                         fill: none;
                         stroke: #fff;
                         stroke-linecap: round;
                         stroke-linejoin: round;
                         stroke-width: 32px;
-                      "
-                    />
-                  </svg>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-      <ul id="exceptions-items"></ul>
-    </div>
+                      " />
+                </svg>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <ul id="exceptions-items"></ul>
+  </div>
 
-    <script type="module" src="./options.js"></script>
-    <script src="../../assets/javascripts/localise.js"></script>
-  </body>
+  <script type="module" src="./options.js"></script>
+  <script src="../../assets/javascripts/localise.js"></script>
+</body>
+
 </html>

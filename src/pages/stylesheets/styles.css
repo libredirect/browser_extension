@@ -1,7 +1,7 @@
 body {
   --text: #fff;
-  --bg-main: #3c4043;
-  --bg-secondary: #292a2d;
+  --bg-main: #121212;
+  --bg-secondary: #202020;
   --active: #fbc117;
   --space: 5px;
   --danger: #f04141;
@@ -25,8 +25,6 @@ body {
   background-color: var(--bg-secondary);
   color: var(--text);
 }
-
-
 
 input {
   appearance: none;
@@ -63,11 +61,6 @@ footer {
   width: 100%;
 }
 
-footer a.button {
-  margin: var(--space);
-  margin-left: 10px;
-  margin-right: 10px;
-}
 
 input[type="url"],
 input[type="text"],
@@ -387,8 +380,8 @@ input[type="range"]::-moz-range-thumb {
   opacity: 0.7;
 }
 
-*:focus {
-  outline: var(--active) solid 2px;
+input[type="url"]:focus {
+  outline: none;
 }
 
 @media (prefers-color-scheme: light) {
@@ -484,4 +477,124 @@ hr {
   padding: 2px;
   box-shadow: 0 0 1px var(--bg-secondary);
   font-weight: bold;
+}
+
+
+
+
+.light-theme.popup,
+.light-theme .popup {
+  background-color: var(--bg-secondary);
+}
+
+body.light-theme {
+  --text: #000;
+  --bg-main: #e3e7ea;
+  --bg-secondary: #fff;
+}
+
+body.popup {
+  width: 200px;
+  min-height: auto;
+  background-color: var(--bg-main);
+}
+
+div.some-block {
+  padding: 0 15px;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+}
+
+div.some-block h4 {
+  margin: 0;
+  width: 70%;
+}
+
+textarea{
+  resize: vertical;
+  width: 100%;
+  height: 200px;
+}
+
+div.some-block input[type="checkbox"] {
+  width: 48px;
+  height: 25px;
+  background-color: var(--light-grey);
+  border-radius: 50px;
+  transition: .4s;
+  cursor: pointer;
+}
+
+div.some-block input[type="checkbox"]:checked {
+  background-color: var(--active);
+
+}
+
+div.some-block input[type="checkbox"]:focus {
+  outline: none;
+}
+
+div.some-block input[type="checkbox"]::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  position: relative;
+  top: 2.5px;
+  left: 4px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  transition: .4s;
+}
+
+div.some-block input[type="checkbox"]:checked::before {
+  left: 24px;
+}
+
+div.buttons {
+  margin-bottom: 15px;
+}
+
+a.button {
+  border-radius: 5px;
+  border: var(--active) solid 1px;
+  color: var(--text);
+  stroke: var(--text);
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 7.5px 15px;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition-duration: 0.1s;
+}
+
+a.button * {
+  vertical-align: middle;
+}
+
+a.button:hover {
+  background-color: var(--active);
+  color: var(--text);
+  stroke: var(--text);
+}
+
+a.button:active {
+  background-color: var(--active);
+  box-shadow: 0 var(--space) var(--bg-main);
+  transform: translateY(1px);
+}
+
+
+a.button svg {
+  height: 18px;
+  width: 18px;
 }

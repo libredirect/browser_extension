@@ -40,9 +40,9 @@ let disableBibliogram = document.getElementById("disable-bibliogram");
 let disableOsm = document.getElementById("disable-osm");
 let disableReddit = document.getElementById("disable-reddit");
 let disableScribe = document.getElementById("disable-scribe");
-let disableSearchEngine = document.getElementById("disable-search-engine");
+let disableSearchEngine = document.getElementById("disable-searchEngine");
 let disableSimplyTranslate = document.getElementById(
-  "disable-simply-translate"
+  "disable-simplyTranslate"
 );
 let disableWikipedia = document.getElementById("disable-wikipedia");
 let alwaysProxy = document.getElementById("always-proxy");
@@ -616,3 +616,21 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
+
+
+const apiEndpoint = 'https://raw.githubusercontent.com/libredirect/instances/main/data.json';
+document.querySelector("#update-instances").addEventListener("click", () => {
+  let request = new XMLHttpRequest();
+  request.open('GET', apiEndpoint, false);
+  request.send(null);
+
+  if (request.status === 200) {
+    document.querySelector("#update-instances").innerHTML = 'gav';
+    const instances = JSON.parse(request.responseText);
+    const nitterRandomPool = instances.twitter.join(',');
+    const invidiousRandomPool = instances.youtube.join(',');
+    const bibliogramRandomPool = instances.instagram.join(',');
+    browser.storage.sync.set({ nitterRandomPool, invidiousRandomPool, bibliogramRandomPool });
+    document.querySelector("#update-instances").innerHTML = 'Done!';
+  }
+});
