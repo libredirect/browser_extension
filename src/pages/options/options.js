@@ -29,10 +29,8 @@ let bibliogramInstance = document.getElementById("bibliogram-instance");
 let osmInstance = document.getElementById("osm-instance");
 let redditInstance = document.getElementById("reddit-instance");
 let scribeInstance = document.getElementById("scribe-instance");
-let searchEngineInstance = document.getElementById("search-engine-instance");
-let simplyTranslateInstance = document.getElementById(
-  "simply-translate-instance"
-);
+let searchEngineInstance = document.getElementById("searchEngine-instance");
+let simplyTranslateInstance = document.getElementById("simplyTranslate-instance");
 let wikipediaInstance = document.getElementById("wikipedia-instance");
 let disableNitter = document.getElementById("disable-nitter");
 let disableInvidious = document.getElementById("disable-invidious");
@@ -184,10 +182,10 @@ browser.storage.sync.get(
       { id: "reddit-instance", instances: redditInstances },
       { id: "osm-instance", instances: osmInstances },
       {
-        id: "search-engine-instance",
+        id: "searchEngine-instance",
         instances: searchEngineInstances.map((instance) => instance.link),
       },
-      { id: "simply-translate-instance", instances: simplyTranslateInstances },
+      { id: "simplyTranslate-instance", instances: simplyTranslateInstances },
       { id: "wikipedia-instance", instances: wikipediaInstances },
     ];
     autocompletes.forEach((value) => {
@@ -604,7 +602,6 @@ function autocomplete(input, list) {
 
 var coll = document.getElementsByClassName("collapsible");
 var i;
-
 for (i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function () {
     this.classList.toggle("collapsible-active");
@@ -617,15 +614,14 @@ for (i = 0; i < coll.length; i++) {
   });
 }
 
-
 const apiEndpoint = 'https://raw.githubusercontent.com/libredirect/instances/main/data.json';
 document.querySelector("#update-instances").addEventListener("click", () => {
+  document.querySelector("#update-instances").innerHTML = '...';
   let request = new XMLHttpRequest();
   request.open('GET', apiEndpoint, false);
   request.send(null);
 
   if (request.status === 200) {
-    document.querySelector("#update-instances").innerHTML = 'gav';
     const instances = JSON.parse(request.responseText);
     const nitterRandomPool = instances.twitter.join(',');
     const invidiousRandomPool = instances.youtube.join(',');
