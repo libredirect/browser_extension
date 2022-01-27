@@ -9,7 +9,6 @@ let disableSearchEngine = document.querySelector("#disable-searchEngine");
 let disableSimplyTranslate = document.querySelector("#disable-simplyTranslate");
 let disableWikipedia = document.querySelector("#disable-wikipedia");
 let disableScribe = document.querySelector("#disable-scribe");
-let version = document.querySelector("#version");
 
 window.browser = window.browser || window.chrome;
 
@@ -39,8 +38,6 @@ browser.storage.sync.get(
     disableScribe.checked = !result.disableScribe;
   }
 );
-
-version.textContent = browser.runtime.getManifest().version;
 
 disableNitter.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableNitter: !event.target.checked });
@@ -79,14 +76,13 @@ disableScribe.addEventListener("change", (event) => {
 });
 
 const apiEndpoint = 'https://raw.githubusercontent.com/libredirect/instances/main/data.json';
-
 document.querySelector("#update-instances").addEventListener("click", () => {
   let request = new XMLHttpRequest();
   request.open('GET', apiEndpoint, false);
   request.send(null);
 
   if (request.status === 200) {
-    document.querySelector("#update-instances").innerHTML = 'gav';  
+    document.querySelector("#update-instances").innerHTML = 'gav';
     const instances = JSON.parse(request.responseText);
     const nitterRandomPool = instances.twitter.join(',');
     const invidiousRandomPool = instances.youtube.join(',');
