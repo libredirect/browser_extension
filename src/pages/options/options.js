@@ -177,22 +177,22 @@ browser.storage.sync.get(
       result.scribeRandomPool ||
       commonHelper.filterInstances(scribeInstances);
     autocompletes = [
-        { id: "nitter-instance", instances: nitterRandomPool.value.split(',') },
-        { id: "invidious-instance", instances: invidiousRandomPool.value.split(',') },
-        { id: "bibliogram-instance", instances: bibliogramRandomPool.value.split(',') },
-        { id: "scribe-instance", instances: scribeRandomPool.value.split(',') },
-        { id: "reddit-instance", instances: redditInstances },
-        { id: "osm-instance", instances: osmInstances },
-        {
-          id: "search-engine-instance",
-          instances: searchEngineInstances.map((instance) => instance.link),
-        },
-        { id: "simply-translate-instance", instances: simplyTranslateInstances },
-        { id: "wikipedia-instance", instances: wikipediaInstances },
-      ];
+      { id: "nitter-instance", instances: nitterRandomPool.value.split(',') },
+      { id: "invidious-instance", instances: invidiousRandomPool.value.split(',') },
+      { id: "bibliogram-instance", instances: bibliogramRandomPool.value.split(',') },
+      { id: "scribe-instance", instances: scribeRandomPool.value.split(',') },
+      { id: "reddit-instance", instances: redditInstances },
+      { id: "osm-instance", instances: osmInstances },
+      {
+        id: "search-engine-instance",
+        instances: searchEngineInstances.map((instance) => instance.link),
+      },
+      { id: "simply-translate-instance", instances: simplyTranslateInstances },
+      { id: "wikipedia-instance", instances: wikipediaInstances },
+    ];
     autocompletes.forEach((value) => {
       autocomplete(document.getElementById(value.id), value.instances);
-    });      
+    });
   }
 );
 
@@ -449,7 +449,7 @@ const invidiousVolumeChange = debounce(() => {
   browser.storage.sync.set({
     invidiousVolume: invidiousVolume.value,
   });
-}, 500);
+}, 1);
 invidiousVolume.addEventListener("input", invidiousVolumeChange);
 
 invidiousPlayerStyle.addEventListener("change", (event) => {

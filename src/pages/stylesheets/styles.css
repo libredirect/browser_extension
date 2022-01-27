@@ -66,15 +66,24 @@ input[type="url"],
 input[type="text"],
 select {
   width: 100%;
+  margin: auto;
+  border-radius: 3px;
   box-sizing: border-box;
   margin-bottom: var(--space);
   background-color: var(--bg-main);
-  border-style: inset;
+  border-style: solid;
+  border-color: #767676;
   color: var(--text);
 }
 
+select{
+  margin: 0;
+  width: auto;
+  border-radius: 3px;
+}
+
 input[type="url"] {
-  padding: 1px 2px;
+  padding: 5px;
 }
 
 input[type="radio"] {
@@ -125,7 +134,7 @@ input:checked+label:after {
 
 .settings-block {
   display: block;
-  padding: 5px 10px 5px 10px;
+  padding: 5px 15px;
 }
 
 .settings-block h1 {
@@ -184,8 +193,6 @@ input:invalid {
 }
 
 .tab button {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
   color: var(--text);
   background-color: inherit;
   float: left;
@@ -197,6 +204,14 @@ input:invalid {
   border: solid 1px var(--bg-main);
   width: 33.333%;
   font-size: 14px;
+}
+
+.tab button.left {
+  border-top-left-radius: 7px;
+}
+
+.tab button.right {
+  border-top-right-radius: 7px;
 }
 
 .tab button:hover {
@@ -276,7 +291,7 @@ li {
 }
 
 .autocomplete input {
-  background: url(../images/chevron-down.svg) right no-repeat;
+  background: url(../../assets/images/chevron-down.svg) right no-repeat;
 }
 
 .autocomplete-items {
@@ -514,7 +529,7 @@ div.some-block h4 {
   width: 70%;
 }
 
-textarea{
+textarea {
   resize: vertical;
   width: 100%;
   height: 200px;

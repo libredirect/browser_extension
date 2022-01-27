@@ -11,148 +11,129 @@
 
 <body>
   <div class="tab">
-    <button class="tablinks" id="general-tab" data-localise="__MSG_generalTab__">
+    <button class="tablinks left" id="general-tab" data-localise="__MSG_generalTab__">
       General
     </button>
     <button class="tablinks" id="advanced-tab" data-localise="__MSG_advancedTab__">
       Advanced
     </button>
-    <button class="tablinks" id="exceptions-tab" data-localise="__MSG_exceptionsTab__">
+    <button class="tablinks right" id="exceptions-tab" data-localise="__MSG_exceptionsTab__">
       Exceptions
     </button>
   </div>
 
-
-
   <div id="general" class="tabcontent">
+
+    <div class="some-block">
+      <h4 data-localise="__MSG_theme__">Theme</h4>
+      <select id="theme">
+        <option value="">System</option>
+        <option value="light-theme">Light</option>
+        <option value="dark-theme">Dark</option>
+      </select>
+    </div>
 
     <div class="some-block">
       <h4>Youtube</h4>
       <input id="disable-invidious" type="checkbox" checked />
     </div>
-
-    <div class="some-block">
-      <h4>Twitter</h4>
-      <input id="disable-nitter" type="checkbox" checked />
-    </div>
-
-    <div class="some-block">
-      <h4>Instagram</h4>
-      <input id="disable-bibliogram" type="checkbox" checked />
-    </div>
-
-    <div class="some-block">
-      <h4>Reddit</h4>
-      <input id="disable-reddit" type="checkbox" checked />
-    </div>
-
-    <div class="some-block">
-      <h4>Search</h4>
-      <input id="disable-searchEngine" type="checkbox" checked />
-    </div>
-
-    <div class="some-block">
-      <h4>Translate</h4>
-      <input id="disable-simplyTranslate" type="checkbox" checked />
-    </div>
-
-    <div class="some-block">
-      <h4>Maps</h4>
-      <input id="disable-osm" type="checkbox" checked />
-    </div>
-
-    <div class="some-block">
-      <h4>Wikipedia</h4>
-      <input id="disable-wikipedia" type="checkbox" checked />
-    </div>
-
-    <div class="some-block">
-      <h4>Medium</h4>
-      <input id="disable-scribe" type="checkbox" checked />
-    </div>
-
-    <div class="buttons">
-      <a class="button" id="update-instances">
-        <span data-localise="__MSG_updateInstances__">Update Instances</span>
-      </a>
-    </div>
-
     <section class="settings-block">
-      <h1>Youtube (Invidious) Instance</h1>
       <div class="autocomplete">
         <input id="invidious-instance" type="url" data-localise-placeholder="__MSG_randomInstancePlaceholder__"
           placeholder="Random instance (none selected)" />
       </div>
     </section>
 
+    <div class="some-block">
+      <h4>Twitter</h4>
+      <input id="disable-nitter" type="checkbox" checked />
+    </div>
     <section class="settings-block">
-      <h1>Twitter (Nitter) Instance</h1>
       <div class="autocomplete">
         <input id="nitter-instance" type="url" name="nitter-instance"
           data-localise-placeholder="__MSG_randomInstancePlaceholder__" placeholder="Random instance (none selected)" />
       </div>
     </section>
 
+    <div class="some-block">
+      <h4>Instagram</h4>
+      <input id="disable-bibliogram" type="checkbox" checked />
+    </div>
     <section class="settings-block">
-      <h1>Instagram (Bibliogram) Instance</h1>
       <div class="autocomplete">
         <input id="bibliogram-instance" type="url" data-localise-placeholder="__MSG_randomInstancePlaceholder__"
           placeholder="Random instance (none selected)" />
       </div>
     </section>
 
+    <div class="some-block">
+      <h4>Reddit</h4>
+      <input id="disable-reddit" type="checkbox" checked />
+    </div>
     <section class="settings-block">
-      <h1>Reddit (libreddit) Instance</h1>
       <div class="autocomplete">
         <input id="reddit-instance" type="url" placeholder="https://libredd.it" />
       </div>
     </section>
 
+    <div class="some-block">
+      <h4>Search</h4>
+      <input id="disable-searchEngine" type="checkbox" checked />
+    </div>
     <section class="settings-block">
-      <h1 data-localise="__MSG_searchEngineInstance__">Search Engine Instance</h1>
       <div class="autocomplete">
         <input id="search-engine-instance" type="url" data-localise-placeholder="__MSG_randomInstancePlaceholder__"
           placeholder="Random instance (none selected)" />
       </div>
     </section>
 
+    <div class="some-block">
+      <h4>Translate</h4>
+      <input id="disable-simplyTranslate" type="checkbox" checked />
+    </div>
     <section class="settings-block">
-      <h1>Translate (SimplyTranslate) Instance</h1>
       <div class="autocomplete">
         <input id="simply-translate-instance" type="url" placeholder="https://translate.metalune.xyz" />
       </div>
     </section>
 
+    <div class="some-block">
+      <h4>Maps</h4>
+      <input id="disable-osm" type="checkbox" checked />
+    </div>
     <section class="settings-block">
-      <h1>Maps (OpenStreetMap) Instance</h1>
       <div class="autocomplete">
         <input id="osm-instance" type="url" placeholder="https://openstreetmap.org" />
       </div>
     </section>
 
+    <div class="some-block">
+      <h4>Wikipedia</h4>
+      <input id="disable-wikipedia" type="checkbox" checked />
+    </div>
     <section class="settings-block">
-      <h1>Wikipedia (Wikiless) Instance</h1>
       <div class="autocomplete">
         <input id="wikipedia-instance" type="url" placeholder="https://wikiless.org" />
       </div>
     </section>
 
+    <div class="some-block">
+      <h4>Medium</h4>
+      <input id="disable-scribe" type="checkbox" checked />
+    </div>
     <section class="settings-block">
-      <h1>Medium (Scribe) Instance</h1>
       <div class="autocomplete">
         <input id="scribe-instance" type="url" name="scribe-instance"
           data-localise-placeholder="__MSG_randomInstancePlaceholder__" placeholder="Random instance (none selected)" />
       </div>
     </section>
+    <div class="buttons">
+      <a class="button" id="update-instances">
+        <span data-localise="__MSG_updateInstances__">Update Instances</span>
+      </a>
+    </div>
 
-    <section class="settings-block">
-      <h1 data-localise="__MSG_theme__">Theme</h1>
-      <select id="theme">
-        <option value="">System</option>
-        <option value="light-theme">Light</option>
-        <option value="dark-theme">Dark</option>
-      </select>
-    </section>
+
 
   </div>
 
@@ -160,7 +141,7 @@
 
 
     <button type="button" class="collapsible">
-      Invidious
+      Youtube
     </button>
     <div class="collapsible-content">
 
@@ -206,20 +187,23 @@
 
       <section class="settings-block">
         <h1 data-localise="__MSG_invidiousVolume__">
-          Invidious Volume
+          Invidious Volume:&nbsp;<span id="volume-value"></span>
         </h1>
-        <input id="invidious-volume" name="invidious-volume" type="range" min="0" max="100" step="1" /><span
-          id="volume-value"></span>
+
+        <input id="invidious-volume" name="invidious-volume" type="range" min="0" max="100" step="1" />
       </section>
-      <section class="settings-block">
-        <h1 data-localise="__MSG_invidiousPlayerStyle__">
-          Invidious Player Style
-        </h1>
+
+      <br>
+
+      <div class="some-block">
+        <h4 data-localise="__MSG_invidiousPlayerStyle__">Invidious Player Style</h4>
         <select id="invidious-player-style">
           <option value="">Invidious</option>
           <option value="youtube">YouTube</option>
         </select>
-      </section>
+      </div>
+
+
       <section class="settings-block">
         <h1 data-localise="__MSG_invidiousSubtitles__">
           Invidious Subtitles - language codes (comma-separated)
@@ -236,44 +220,47 @@
         <h4 data-localise="__MSG_persistInvidiousPrefs__">Persist Invidious preferences (as cookie)</h4>
         <input id="persist-invidious-prefs" type="checkbox" checked />
       </div>
-
-      <hr>
     </div>
     <button type="button" class="collapsible">
-      Nitter
+      Twitter
     </button>
     <div class="collapsible-content">
       <section class="settings-block">
         <h1 data-localise="__MSG_nitterRandomPool__">
           Nitter random instance pool (comma-separated)
         </h1>
-        <input id="nitter-random-pool" name="nitter-random-pool" type="text" />
+        <textarea id="nitter-random-pool" name="nitter-random-pool" type="text"></textarea>
       </section>
       <div class="some-block">
         <h4 data-localise="__MSG_removeTwitterSW__">Proactively remove Twitter service worker</h4>
         <input id="remove-twitter-sw" type="checkbox" checked />
       </div>
-      <hr>
     </div>
     <button type="button" class="collapsible">
-      Bibliogram
+      Instagram
     </button>
     <div class="collapsible-content">
       <section class="settings-block">
         <h1 data-localise="__MSG_bibliogramRandomPool__">
           Bibliogram random instance pool (comma-separated)
         </h1>
-        <input id="bibliogram-random-pool" name="bibliogram-random-pool" type="text" />
+        <textarea id="bibliogram-random-pool" name="bibliogram-random-pool" type="text"></textarea>
       </section>
+
+    </div>
+    <button type="button" class="collapsible">
+      Medium
+    </button>
+    <div class="collapsible-content">
       <section class="settings-block">
         <h1 data-localise="__MSG_scribeRandomPool__">
           Scribe random instance pool (comma-separated)
         </h1>
-        <input id="scribe-random-pool" name="scribe-random-pool" type="text" />
+        <textarea id="scribe-random-pool" name="scribe-random-pool" type="text"></textarea>
       </section>
-      <hr>
     </div>
   </div>
+
 
   <div id="exceptions" class="tabcontent">
     <section class="settings-block">
