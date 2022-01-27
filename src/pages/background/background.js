@@ -547,8 +547,7 @@ function redirectMedium(url, initiator) {
     });
     return null;
   }
-  return `${
-      scribeInstance || commonHelper.getRandomInstance(scribeRandomPool)
+  return `${scribeInstance || commonHelper.getRandomInstance(scribeRandomPool)
     }${url.pathname}${url.search}`;
 }
 
@@ -616,8 +615,8 @@ function redirectWikipedia(url, initiator) {
   else return null;
 }
 
-
-
+var tabList = []
+var redirecting = false;
 browser.webRequest.onBeforeRequest.addListener(
   (details) => {
     const url = new URL(details.url);
@@ -674,6 +673,10 @@ browser.webRequest.onBeforeRequest.addListener(
       };
     }
     if (redirect && redirect.redirectUrl) {
+      redirecting = true;
+      if (!tabList.includes(details.tabId))
+        tabList.push(details.tabId);
+
       console.info(
         "Redirecting",
         `"${url.href}"`,
@@ -681,6 +684,9 @@ browser.webRequest.onBeforeRequest.addListener(
         `"${redirect.redirectUrl}"`
       );
       console.info("Details", details);
+    } else {
+      if (!redirecting)
+        tabList = tabList.filter((val) => val != details.tabId);
     }
     return redirect;
   },
@@ -690,6 +696,14 @@ browser.webRequest.onBeforeRequest.addListener(
   ["blocking"]
 );
 
+browser.tabs.onUpdated.addListener((tabId, _, __) => {
+  if (tabList.includes(tabId))
+    browser.pageAction.show(tabId);
+})
+
+browser.webRequest.onCompleted.addListener(() => {
+  redirecting = false;
+}, { urls: ["<all_urls>"] });
 
 
 browser.runtime.onInstalled.addListener((details) => {

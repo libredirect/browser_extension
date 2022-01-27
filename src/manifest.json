@@ -22,9 +22,6 @@
     "<all_urls>"
   ],
   "page_action": {
-    "show_matches": [
-      "<all_urls>"
-    ],
     "default_title": "Change Instance",
     "default_icon": {
       "16": "assets/images/libredirect.svg",
