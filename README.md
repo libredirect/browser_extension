@@ -3,7 +3,7 @@
 # LibRedirect
 A web extension that redirects Twitter, YouTube, Instagram, Google Maps, Reddit, Medium, Google & Google Translate requests to privacy friendly alternative frontends for those sites 
 ## Get
-
+[![Firefox Add-on](src/assets/images/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)
 
 ## Donate
 
