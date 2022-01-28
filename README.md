@@ -11,7 +11,7 @@ A web extension that redirects Twitter, YouTube, Instagram, Google Maps, Reddit,
     <img alt="Awesome Humane Tech" src="https://raw.githubusercontent.com/humanetech-community/awesome-humane-tech/main/humane-tech-badge.svg?sanitize=true">
   </a>
     <a href="https://matrix.to/#/#libredirect:tokhmi.xyz">
-    <img alt="Matrix" src="https://badges.alefvanoon.xyz/matrix/libredirect:tokhmi.xyz?label=Matrix&color=darkgreen">
+    <img alt="Matrix" src="https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=Matrix&color=darkgreen">
   </a>
   
 ## Get
