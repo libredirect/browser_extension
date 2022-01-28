@@ -652,7 +652,7 @@ browser.webRequest.onBeforeRequest.addListener(
       redirect = {
         redirectUrl: redirectReddit(url, initiator, details.type),
       };
-    } else if (mediumDomains.includes(url.host)) {
+    } else if (mediumDomains.some((rx) => rx.test(url.host))) {
       redirect = {
         redirectUrl: redirectMedium(url, initiator),
       };
