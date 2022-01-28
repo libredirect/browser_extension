@@ -1,7 +1,19 @@
 <img src="src/assets/images/libredirect.svg" width="150" align="right"/>
 
+  
 # LibRedirect
-A web extension that redirects Twitter, YouTube, Instagram, Google Maps, Reddit, Medium, Google & Google Translate requests to privacy friendly alternative frontends for those sites 
+A web extension that redirects Twitter, YouTube, Instagram, Google Maps, Reddit, Medium, Google & Google Translate requests to privacy friendly alternative frontends for those sites.
+
+  <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
+    <img alt="License: GPLv3" src="https://badges.alefvanoon.xyz/badge/License-GPL%20v3-darkred.svg">
+  </a>
+    <a href="https://github.com/humanetech-community/awesome-humane-tech">
+    <img alt="Awesome Humane Tech" src="https://raw.githubusercontent.com/humanetech-community/awesome-humane-tech/main/humane-tech-badge.svg?sanitize=true">
+  </a>
+    <a href="https://matrix.to/#/#libredirect:tokhmi.xyz">
+    <img alt="Matrix" src="https://badges.alefvanoon.xyz/matrix/libredirect:tokhmi.xyz?label=Matrix&color=darkgreen">
+  </a>
+  
 ## Get
 [![Firefox Add-on](src/assets/images/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)
 
