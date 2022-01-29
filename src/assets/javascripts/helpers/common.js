@@ -1,8 +1,10 @@
 
 function filterInstances(instances) {
-  let filtered = instances.filter((instance) => !instance.includes(".onion"));
-  let result = filtered.map((item, i) => "https://" + item)
-  return result;
+  return instances.filter((instance) => !instance.includes(".onion"));
+}
+
+function addHttps(instances) {
+  return instances.map((item, i) => "https://" + item)
 }
 
 function getRandomInstance(instances) {
@@ -17,9 +19,9 @@ function getInstances() {
 
   if (request.status === 200) {
     const instances = JSON.parse(request.responseText);
-    const nitterRandomPool = filterInstances(instances.twitter).join(',');
-    const invidiousRandomPool = filterInstances(instances.youtube).join(',');
-    const bibliogramRandomPool = filterInstances(instances.instagram).join(',');
+    const nitterRandomPool = addHttps(filterInstances(instances.twitter)).join(',');
+    const invidiousRandomPool = addHttps(filterInstances(instances.youtube)).join(',');
+    const bibliogramRandomPool = addHttps(filterInstances(instances.instagram)).join(',');
     browser.storage.sync.set({ nitterRandomPool, invidiousRandomPool, bibliogramRandomPool });
     return true;
   }
@@ -30,4 +32,5 @@ export default {
   filterInstances,
   getRandomInstance,
   getInstances,
+  addHttps,
 };
