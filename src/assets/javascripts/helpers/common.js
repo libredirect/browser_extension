@@ -19,10 +19,10 @@ function getInstances() {
 
   if (request.status === 200) {
     const instances = JSON.parse(request.responseText);
-    const nitterRandomPool = addHttps(filterInstances(instances.twitter)).join(',');
-    const invidiousRandomPool = addHttps(filterInstances(instances.youtube)).join(',');
-    const bibliogramRandomPool = addHttps(filterInstances(instances.instagram)).join(',');
-    const scribeRandomPool = addHttps(filterInstances(instances.wikipedia)).join(',')
+    const nitterRandomPool = addHttps(filterInstances(instances.nitter)).join(',');
+    const invidiousRandomPool = addHttps(filterInstances(instances.invidious)).join(',');
+    const bibliogramRandomPool = addHttps(filterInstances(instances.bibliogram)).join(',');
+    const scribeRandomPool = addHttps(filterInstances(instances.wikiless)).join(',')
     browser.storage.sync.set({ nitterRandomPool, invidiousRandomPool, bibliogramRandomPool, scribeRandomPool});
     return true;
   }
