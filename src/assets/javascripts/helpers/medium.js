@@ -1,5 +1,6 @@
 const targets = [
-  /.*medium.com/,
+  // /(.*\.medium\.com)?(?(1)|^medium\.com)/,
+  /^medium.com/,
   /.*\.medium.com/,
   // Other domains of medium blogs, source(s): https://findingtom.com/best-medium-blogs-to-follow/#1-forge
   /towardsdatascience.com/,

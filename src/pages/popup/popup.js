@@ -1,5 +1,7 @@
 "use strict";
 
+import commonHelper from "../../assets/javascripts/helpers/common.js";
+
 let disableNitter = document.querySelector("#disable-nitter");
 let disableInvidious = document.querySelector("#disable-invidious");
 let disableBibliogram = document.querySelector("#disable-bibliogram");
@@ -75,21 +77,13 @@ disableScribe.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableScribe: !event.target.checked });
 });
 
-const apiEndpoint = 'https://raw.githubusercontent.com/libredirect/instances/main/data.json';
-document.querySelector("#update-instances").addEventListener("click", () => {
-  let request = new XMLHttpRequest();
-  request.open('GET', apiEndpoint, false);
-  request.send(null);
 
-  if (request.status === 200) {
-    document.querySelector("#update-instances").innerHTML = 'gav';
-    const instances = JSON.parse(request.responseText);
-    const nitterRandomPool = instances.twitter.join(',');
-    const invidiousRandomPool = instances.youtube.join(',');
-    const bibliogramRandomPool = instances.instagram.join(',');
-    browser.storage.sync.set({ nitterRandomPool, invidiousRandomPool, bibliogramRandomPool });
+document.querySelector("#update-instances").addEventListener("click", () => {
+  document.querySelector("#update-instances").innerHTML = '...';
+  if (commonHelper.getInstances())
     document.querySelector("#update-instances").innerHTML = 'Done!';
-  }
+  else
+    document.querySelector("#update-instances").innerHTML = 'Failed Miserabely';
 });
 
 document.querySelector("#more-options").addEventListener("click", () => {

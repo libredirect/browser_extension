@@ -653,6 +653,7 @@ browser.webRequest.onBeforeRequest.addListener(
         redirectUrl: redirectReddit(url, initiator, details.type),
       };
     } else if (mediumDomains.some((rx) => rx.test(url.host))) {
+      oldDomain = "https://medium.com/"
       redirect = {
         redirectUrl: redirectMedium(url, initiator),
       };

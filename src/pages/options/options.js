@@ -614,19 +614,10 @@ for (i = 0; i < coll.length; i++) {
   });
 }
 
-const apiEndpoint = 'https://raw.githubusercontent.com/libredirect/instances/main/data.json';
 document.querySelector("#update-instances").addEventListener("click", () => {
   document.querySelector("#update-instances").innerHTML = '...';
-  let request = new XMLHttpRequest();
-  request.open('GET', apiEndpoint, false);
-  request.send(null);
-
-  if (request.status === 200) {
-    const instances = JSON.parse(request.responseText);
-    const nitterRandomPool = instances.twitter.join(',');
-    const invidiousRandomPool = instances.youtube.join(',');
-    const bibliogramRandomPool = instances.instagram.join(',');
-    browser.storage.sync.set({ nitterRandomPool, invidiousRandomPool, bibliogramRandomPool });
+  if (commonHelper.getInstances())
     document.querySelector("#update-instances").innerHTML = 'Done!';
-  }
+  else
+    document.querySelector("#update-instances").innerHTML = 'Failed Miserabely';
 });
