@@ -194,32 +194,6 @@ browser.storage.sync.get(
   }
 );
 
-function openTab(tab, event) {
-  let i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(tab).style.display = "block";
-  event.currentTarget.className += " active";
-}
-
-document
-  .getElementById("general-tab")
-  .addEventListener("click", openTab.bind(null, "general"));
-document
-  .getElementById("advanced-tab")
-  .addEventListener("click", openTab.bind(null, "advanced"));
-document
-  .getElementById("exceptions-tab")
-  .addEventListener("click", openTab.bind(null, "exceptions"));
-
-document.getElementById("general-tab").click();
-
 function addToExceptions() {
   const input = document.getElementById("new-exceptions-item");
   const type = document.querySelector('input[name="type"]:checked').value;

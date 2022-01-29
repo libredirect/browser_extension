@@ -19,11 +19,18 @@ function getInstances() {
 
   if (request.status === 200) {
     const instances = JSON.parse(request.responseText);
-    const nitterRandomPool = addHttps(filterInstances(instances.twitter)).join(',');
-    const invidiousRandomPool = addHttps(filterInstances(instances.youtube)).join(',');
-    const bibliogramRandomPool = addHttps(filterInstances(instances.instagram)).join(',');
-    const scribeRandomPool = addHttps(filterInstances(instances.wikipedia)).join(',')
-    browser.storage.sync.set({ nitterRandomPool, invidiousRandomPool, bibliogramRandomPool, scribeRandomPool});
+    const nitterRandomPool = addHttps(filterInstances(instances.nitter)).join(',');
+    const invidiousRandomPool = addHttps(filterInstances(instances.invidious)).join(',');
+    const bibliogramRandomPool = addHttps(filterInstances(instances.bibliogram)).join(',');
+    const wikilessRandomPool = addHttps(filterInstances(instances.wikiless)).join(',')
+    const scribeRandomPool = addHttps(filterInstances(instances.scribe)).join(',')
+    browser.storage.sync.set({
+      nitterRandomPool,
+      invidiousRandomPool,
+      bibliogramRandomPool,
+      wikilessRandomPool,
+      scribeRandomPool
+    });
     return true;
   }
   return false;

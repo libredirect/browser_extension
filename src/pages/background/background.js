@@ -110,6 +110,7 @@ browser.storage.sync.get(
     "invidiousRandomPool",
     "bibliogramRandomPool",
     "scribeRandomPool",
+    "wikilessRandomPool",
     "exceptions",
   ],
   (result) => {
@@ -670,7 +671,12 @@ browser.webRequest.onBeforeRequest.addListener(
 );
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
-  const url = new URL(changeInfo.url);
+  let url;
+  try {
+    url = new URL(changeInfo.url)
+  } catch (_) {
+    return;
+  }
   var protocolHost = `${url.protocol}//${url.host}`;
   var mightyList = [];
   mightyList.push(...invidiousInstances);
@@ -684,7 +690,6 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
 
   if (mightyList.includes(protocolHost))
     browser.pageAction.show(tabId);
-
 });
 
 
