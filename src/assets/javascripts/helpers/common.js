@@ -22,7 +22,8 @@ function getInstances() {
     const nitterRandomPool = addHttps(filterInstances(instances.twitter)).join(',');
     const invidiousRandomPool = addHttps(filterInstances(instances.youtube)).join(',');
     const bibliogramRandomPool = addHttps(filterInstances(instances.instagram)).join(',');
-    browser.storage.sync.set({ nitterRandomPool, invidiousRandomPool, bibliogramRandomPool });
+    const scribeRandomPool = addHttps(filterInstances(instances.wikipedia)).join(',')
+    browser.storage.sync.set({ nitterRandomPool, invidiousRandomPool, bibliogramRandomPool, scribeRandomPool});
     return true;
   }
   return false;

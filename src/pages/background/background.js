@@ -577,7 +577,7 @@ function redirectGoogleTranslate(url, initiator) {
   return `${simplyTranslateInstance}/${url.search}`;
 }
 
-var oldDomain = '';
+
 
 function redirectWikipedia(url, initiator) {
   if (disableWikipedia || isException(url, initiator)) {
@@ -615,8 +615,6 @@ function redirectWikipedia(url, initiator) {
   else return null;
 }
 
-var tabList = []
-var redirecting = false;
 browser.webRequest.onBeforeRequest.addListener(
   (details) => {
     const url = new URL(details.url);
@@ -626,69 +624,43 @@ browser.webRequest.onBeforeRequest.addListener(
     } else if (details.initiator) {
       initiator = new URL(details.initiator);
     }
-    let redirect;
-    if (youtubeDomains.includes(url.host)) {
-      oldDomain = 'https://youtube.com/';
-      redirect = {
-        redirectUrl: redirectYouTube(url, initiator, details.type),
-      };
-    } else if (twitterDomains.includes(url.host)) {
-      oldDomain = 'https://twitter.com/';
-      redirect = {
-        redirectUrl: redirectTwitter(url, initiator),
-      };
-    } else if (instagramDomains.includes(url.host)) {
-      oldDomain = 'https://instagram.com/';
-      redirect = {
-        redirectUrl: redirectInstagram(url, initiator, details.type),
-      };
-    } else if (url.href.match(googleMapsRegex)) {
-      oldDomain = 'https://maps.google.com/';
-      redirect = {
-        redirectUrl: redirectGoogleMaps(url, initiator),
-      };
-    } else if (redditDomains.includes(url.host)) {
-      oldDomain = 'https://reddit.com/';
-      redirect = {
-        redirectUrl: redirectReddit(url, initiator, details.type),
-      };
-    } else if (mediumDomains.some((rx) => rx.test(url.host))) {
-      oldDomain = "https://medium.com/"
-      redirect = {
-        redirectUrl: redirectMedium(url, initiator),
-      };
-    } else if (url.href.match(googleSearchRegex)) {
-      oldDomain = 'https://google.com/';
-      redirect = {
-        redirectUrl: redirectSearchEngine(url, initiator),
-      };
-    } else if (googleTranslateDomains.includes(url.host)) {
-      oldDomain = 'https://translate.google.com/';
-      redirect = {
-        redirectUrl: redirectGoogleTranslate(url, initiator),
-      };
-    } else if (url.host.match(wikipediaRegex)) {
-      oldDomain = 'https://wikipedia.com/';
-      redirect = {
-        redirectUrl: redirectWikipedia(url, initiator),
-      };
-    }
-    if (redirect && redirect.redirectUrl) {
-      redirecting = true;
-      if (!tabList.includes(details.tabId))
-        tabList.push(details.tabId);
 
+    let newUrl;
+    if (youtubeDomains.includes(url.host))
+      newUrl = redirectYouTube(url, initiator, details.type)
+    else if (twitterDomains.includes(url.host))
+      newUrl = redirectTwitter(url, initiator);
+    else if (instagramDomains.includes(url.host))
+      newUrl = redirectInstagram(url, initiator, details.type);
+    else if (url.href.match(googleMapsRegex))
+      newUrl = redirectGoogleMaps(url, initiator);
+    else if (redditDomains.includes(url.host))
+      newUrl = redirectReddit(url, initiator, details.type);
+    else if (mediumDomains.some((rx) => rx.test(url.host)))
+      newUrl = redirectMedium(url, initiator);
+    else if (url.href.match(googleSearchRegex))
+      newUrl = redirectSearchEngine(url, initiator);
+    else if (googleTranslateDomains.includes(url.host))
+      newUrl = redirectGoogleTranslate(url, initiator);
+    else if (url.host.match(wikipediaRegex))
+      newUrl = redirectWikipedia(url, initiator);
+
+    let redirect;
+    if (newUrl) {
+      redirect = {
+        redirectUrl: newUrl
+      }
       console.info(
         "Redirecting",
         `"${url.href}"`,
         "=>",
         `"${redirect.redirectUrl}"`
       );
-      console.info("Details", details);
-    } else {
-      if (!redirecting)
-        tabList = tabList.filter((val) => val != details.tabId);
+      // console.info("Details", details);
     }
+
+
+
     return redirect;
   },
   {
@@ -697,14 +669,53 @@ browser.webRequest.onBeforeRequest.addListener(
   ["blocking"]
 );
 
-browser.tabs.onUpdated.addListener((tabId, _, __) => {
-  if (tabList.includes(tabId))
-    browser.pageAction.show(tabId);
-})
+browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
+  const url = new URL(changeInfo.url);
+  var protocolHost = `${url.protocol}//${url.host}`;
+  var mightyList = [];
+  mightyList.push(...invidiousInstances);
+  mightyList.push(...nitterInstances);
+  mightyList.push(...bibliogramInstances);
+  mightyList.push(...redditInstances);
+  mightyList.push(...searchEngineInstances);
+  mightyList.push(...simplyTranslateInstances);
+  mightyList.push(...scribeInstances);
+  mightyList.push(...wikipediaInstances);
 
-browser.webRequest.onCompleted.addListener(() => {
-  redirecting = false;
-}, { urls: ["<all_urls>"] });
+  if (mightyList.includes(protocolHost))
+    browser.pageAction.show(tabId);
+
+});
+
+
+browser.pageAction.onClicked.addListener((tab) => {
+  var tabUrl = new URL(tab.url);
+  var protocolHost = `${tabUrl.protocol}//${tabUrl.host}`;
+  var newUrl;
+  if (invidiousInstances.includes(protocolHost))
+    newUrl = 'https://youtube.com/';
+  else if (nitterInstances.includes(protocolHost))
+    newUrl = 'https://twitter.com/';
+  else if (bibliogramInstances.includes(protocolHost))
+    newUrl = 'https://instagram.com/';
+  else if (redditInstances.includes(protocolHost))
+    newUrl = 'https://reddit.com/';
+  else if (searchEngineInstances.includes(protocolHost))
+    newUrl = 'https://google.com/';
+  else if (simplyTranslateInstances.includes(protocolHost))
+    newUrl = 'https://translate.google.com/';
+  else if (scribeInstances.includes(protocolHost))
+    newUrl = 'https://medium.com/';
+  else if (wikipediaInstances.includes(protocolHost))
+    newUrl = 'https://wikipedia.com/';
+
+  if (newUrl)
+    browser.tabs.update({
+      url: tabUrl.href.replace(protocolHost, newUrl)
+    });
+});
+
+
 
 
 browser.runtime.onInstalled.addListener((details) => {
@@ -750,21 +761,3 @@ browser.runtime.onInstalled.addListener((details) => {
     );
   }
 });
-
-
-function changeInstance() {
-  browser.tabs.query({
-    active: true,
-    lastFocusedWindow: true
-  }, function (tabs) {
-    var tabUrl = new URL(tabs[0].url);
-
-    if (oldDomain != '') {
-      browser.tabs.update({
-        url: tabUrl.href.replace(`${tabUrl.protocol}//${tabUrl.host}/`, oldDomain)
-      });
-    }
-  });
-}
-
-browser.pageAction.onClicked.addListener(changeInstance);
