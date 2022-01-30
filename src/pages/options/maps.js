@@ -2,8 +2,6 @@ import mapsHelper from "../../assets/javascripts/helpers/google-maps.js";
 import commonHelper from "../../assets/javascripts/helpers/common.js";
 import shared from "./shared.js";
 
-
-
 const osmInstances = mapsHelper.redirects;
 let osmInstance = document.getElementById("osm-instance");
 let disableOsm = document.getElementById("disable-osm");
@@ -31,8 +29,6 @@ const osmInstanceChange = commonHelper.debounce(() => {
     }
 }, 500);
 osmInstance.addEventListener("input", osmInstanceChange);
-
-
 
 disableOsm.addEventListener("change", (event) => {
     browser.storage.sync.set({ disableOsm: !event.target.checked });

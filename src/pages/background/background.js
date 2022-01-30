@@ -29,10 +29,12 @@ const dataLatLngRegex = mapsHelper.dataLatLngRegex;
 const placeRegex = mapsHelper.placeRegex;
 const travelModes = mapsHelper.travelModes;
 const layers = mapsHelper.layers;
+
 const redditInstances = redditHelper.redirects;
 const redditDomains = redditHelper.targets;
 const redditBypassPaths = redditHelper.bypassPaths;
 const redditDefault = redditHelper.redirects[0];
+
 const googleSearchRegex = searchHelper.targets;
 const searchEngineInstances = searchHelper.redirects;
 const simplyTranslateInstances = googleTranslateHelper.redirects;
@@ -69,11 +71,15 @@ let invidiousPlayerStyle;
 let invidiousSubtitles;
 let invidiousAutoplay;
 let useFreeTube;
+
 let nitterRandomPool;
 let invidiousRandomPool;
 let bibliogramRandomPool;
 let scribeRandomPool;
+
+
 let exceptions;
+let redditFrontend;
 
 window.browser = window.browser || window.chrome;
 
@@ -112,53 +118,70 @@ browser.storage.sync.get(
     "scribeRandomPool",
     "wikilessRandomPool",
     "exceptions",
+    "redditFrontend",
   ],
   (result) => {
-    nitterInstance = result.nitterInstance;
-    invidiousInstance = result.invidiousInstance;
-    bibliogramInstance = result.bibliogramInstance;
     osmInstance = result.osmInstance || osmDefault;
-    redditInstance = result.redditInstance || redditDefault;
-    scribeInstance = result.scribeInstance;
-    searchEngineInstance = result.searchEngineInstance;
-    simplyTranslateInstance =
-      result.simplyTranslateInstance || simplyTranslateDefault;
-    wikipediaInstance = result.wikipediaInstance || wikipediaDefault;
-    disableNitter = result.disableNitter;
-    disableScribe = result.disableScribe;
-    disableInvidious = result.disableInvidious;
-    disableBibliogram = result.disableBibliogram;
     disableOsm = result.disableOsm;
-    disableReddit = result.disableReddit;
+
+    searchEngineInstance = result.searchEngineInstance;
     disableSearchEngine = result.disableSearchEngine;
-    disableWikipedia = result.disableWikipedia;
+
+    simplyTranslateInstance = result.simplyTranslateInstance || simplyTranslateDefault;
     disableSimplyTranslate = result.disableSimplyTranslate;
-    alwaysProxy = result.alwaysProxy;
-    onlyEmbeddedVideo = result.onlyEmbeddedVideo;
-    videoQuality = result.videoQuality;
-    invidiousDarkMode = result.invidiousDarkMode;
+
+    redditInstance = result.redditInstance;
+    disableReddit = result.disableReddit;
+    redditFrontend = result.redditFrontend;
+
+    disableWikipedia = result.disableWikipedia;
+    wikipediaInstance = result.wikipediaInstance || wikipediaDefault;
+
     exceptions = result.exceptions
       ? result.exceptions.map((e) => {
         return new RegExp(e);
       })
       : [];
+
+
+    onlyEmbeddedVideo = result.onlyEmbeddedVideo;
+    invidiousDarkMode = result.invidiousDarkMode;
+    disableInvidious = result.disableInvidious;
+    alwaysProxy = result.alwaysProxy;
+    invidiousInstance = result.invidiousInstance;
+    videoQuality = result.videoQuality;
     invidiousVolume = result.invidiousVolume;
     invidiousPlayerStyle = result.invidiousPlayerStyle;
     invidiousSubtitles = result.invidiousSubtitles || "";
     invidiousAutoplay = result.invidiousAutoplay;
     useFreeTube = result.useFreeTube;
-    nitterRandomPool = result.nitterRandomPool
-      ? result.nitterRandomPool.split(",")
-      : commonHelper.filterInstances(nitterInstances);
-    invidiousRandomPool = result.invidiousRandomPool
-      ? result.invidiousRandomPool.split(",")
-      : commonHelper.filterInstances(invidiousInstances);
-    bibliogramRandomPool = result.bibliogramRandomPool
-      ? result.bibliogramRandomPool.split(",")
-      : commonHelper.filterInstances(bibliogramInstances);
-    scribeRandomPool = result.scribeRandomPool
-      ? result.scribeRandomPool.split(",")
-      : commonHelper.filterInstances(scribeInstances);
+    invidiousRandomPool =
+      result.invidiousRandomPool
+        ? result.invidiousRandomPool.split(",")
+        : commonHelper.filterInstances(invidiousInstances);
+
+    nitterInstance = result.nitterInstance;
+    disableNitter = result.disableNitter;
+    nitterRandomPool =
+      result.nitterRandomPool
+        ? result.nitterRandomPool.split(",")
+        : commonHelper.filterInstances(nitterInstances);
+
+
+    bibliogramInstance = result.bibliogramInstance;
+    disableBibliogram = result.disableBibliogram;
+    bibliogramRandomPool =
+      result.bibliogramRandomPool
+        ? result.bibliogramRandomPool.split(",")
+        : commonHelper.filterInstances(bibliogramInstances);
+
+
+    scribeInstance = result.scribeInstance;
+    disableScribe = result.disableScribe;
+    scribeRandomPool =
+      result.scribeRandomPool
+        ? result.scribeRandomPool.split(",")
+        : commonHelper.filterInstances(scribeInstances);
   }
 );
 
@@ -185,6 +208,9 @@ browser.storage.onChanged.addListener((changes) => {
   if ("redditInstance" in changes) {
     redditInstance = changes.redditInstance.newValue || redditDefault;
   }
+  if ("redditFrontend" in changes)
+    redditFrontend = changes.redditFrontend.newValue
+
   if ("scribeInstance" in changes) {
     scribeInstance = changes.scribeInstance.newValue || scribeDefault;
   }
@@ -348,14 +374,11 @@ function redirectTwitter(url, initiator) {
     return null;
   }
   if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video") {
-    return `${nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
-      }/pic/${encodeURIComponent(url.href)}`;
+    return `${nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)}/pic/${encodeURIComponent(url.href)}`;
   } else if (url.pathname.split("/").includes("tweets")) {
-    return `${nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
-      }${url.pathname.replace("/tweets", "")}${url.search}`;
+    return `${nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)}${url.pathname.replace("/tweets", "")}${url.search}`;
   } else {
-    return `${nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)
-      }${url.pathname}${url.search}`;
+    return `${nitterInstance || commonHelper.getRandomInstance(nitterRandomPool)}${url.pathname}${url.search}`;
   }
 }
 
@@ -486,38 +509,38 @@ function redirectGoogleMaps(url, initiator) {
 }
 
 function redirectReddit(url, initiator, type) {
-  if (disableReddit || isException(url, initiator)) {
+  console.info("reddit is redirecting");
+  console.log(redditFrontend)
+
+  if (disableReddit || isException(url, initiator))
     return null;
-  }
+
   // Do not redirect when already on the selected view
-  if (
-    (initiator && initiator.origin === redditInstance) ||
-    url.origin === redditInstance
-  ) {
+  if ((initiator && initiator.origin === redditInstance) || url.origin === redditInstance)
     return null;
-  }
+
   // Do not redirect exclusions nor anything other than main_frame
-  if (type !== "main_frame" || url.pathname.match(redditBypassPaths)) {
+  if (type !== "main_frame" || url.pathname.match(redditBypassPaths))
     return null;
-  }
+
+  console.info(url.host);
   if (url.host === "i.redd.it") {
-    if (redditInstance.includes("libredd")) {
-      return `${redditInstance}/img${url.pathname}${url.search}`;
-    } else if (redditInstance.includes("teddit")) {
+    if (redditFrontend == 'libreddit')
+      return `${redditInstance || commonHelper.getRandomInstance(redditInstances['libreddit'])}/img${url.pathname}${url.search}`;
+    if (redditFrontend == 'teddit')
       // As of 2021-04-09, redirects for teddit images are nontrivial:
       // - navigating to the image before ever navigating to its page causes
       //   404 error (probably needs fix on teddit project)
       // - some image links on teddit are very different
       // Therefore, don't support redirecting image links for teddit.
       return null;
-    } else {
-      return null;
-    }
+
+    return null;
+
   } else if (url.host === "redd.it") {
-    if (
-      redditInstance.includes("teddit") &&
-      !url.pathname.match(/^\/+[^\/]+\/+[^\/]/)
-    ) {
+    if (redditFrontend == 'libreddit')
+      return `${redditInstance || commonHelper.getRandomInstance(redditInstances['libreddit'])}${url.pathname}${url.search}`;
+    if (redditFrontend == 'teddit' && !url.pathname.match(/^\/+[^\/]+\/+[^\/]/))
       // As of 2021-04-22, redirects for teddit redd.it/foo links don't work.
       // It appears that adding "/comments" as a prefix works, so manually add
       // that prefix if it is missing.  Even though redd.it/comments/foo links
@@ -526,16 +549,23 @@ function redirectReddit(url, initiator, type) {
       //
       // Note the difference between redd.it/comments/foo (doesn't work) and
       // teddit.net/comments/foo (works).
-      return `${redditInstance}/comments${url.pathname}${url.search}`;
-    }
+      return `${redditInstance || commonHelper.getRandomInstance(redditInstances['teddit'])}/comments${url.pathname}${url.search}`;
+    return null;
   }
-  return `${redditInstance}${url.pathname}${url.search}`;
+  if (redditFrontend == 'libreddit')
+    return `${redditInstance || commonHelper.getRandomInstance(redditInstances['libreddit'])}${url.pathname}${url.search}`;
+  if (redditFrontend == 'teddit')
+    return `${redditInstance || commonHelper.getRandomInstance(redditInstances['teddit'])}${url.pathname}${url.search}`;
 }
 
 function redirectMedium(url, initiator) {
   if (disableScribe || isException(url, initiator)) {
     return null;
   }
+
+  if (url.pathname == "/")
+    return null;
+
   if (
     isFirefox() &&
     initiator &&
@@ -578,8 +608,6 @@ function redirectGoogleTranslate(url, initiator) {
   return `${simplyTranslateInstance}/${url.search}`;
 }
 
-
-
 function redirectWikipedia(url, initiator) {
   if (disableWikipedia || isException(url, initiator)) {
     return null;
@@ -604,8 +632,7 @@ function redirectWikipedia(url, initiator) {
     //wikiless doesn't have mobile view support yet
   }
   for (let i = 0; i < GETArguments.length; i++) {
-    link +=
-      (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1];
+    link += (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1];
   }
   if (
     urlSplit[urlSplit.length - 1] == "org" &&
@@ -659,9 +686,6 @@ browser.webRequest.onBeforeRequest.addListener(
       );
       // console.info("Details", details);
     }
-
-
-
     return redirect;
   },
   {
@@ -682,14 +706,16 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
   mightyList.push(...invidiousInstances);
   mightyList.push(...nitterInstances);
   mightyList.push(...bibliogramInstances);
-  mightyList.push(...redditInstances);
+  mightyList.push(...redditInstances['libreddit']);
+  mightyList.push(...redditInstances['teddit']);
+  mightyList.push(redditInstances['desktop']);
+  mightyList.push(redditInstances['mobile']);
   mightyList.push(...searchEngineInstances);
   mightyList.push(...simplyTranslateInstances);
   mightyList.push(...scribeInstances);
   mightyList.push(...wikipediaInstances);
 
-  if (mightyList.includes(protocolHost))
-    browser.pageAction.show(tabId);
+  if (mightyList.includes(protocolHost)) browser.pageAction.show(tabId);
 });
 
 
@@ -698,21 +724,23 @@ browser.pageAction.onClicked.addListener((tab) => {
   var protocolHost = `${tabUrl.protocol}//${tabUrl.host}`;
   var newUrl;
   if (invidiousInstances.includes(protocolHost))
-    newUrl = 'https://youtube.com/';
+    newUrl = 'https://youtube.com';
   else if (nitterInstances.includes(protocolHost))
-    newUrl = 'https://twitter.com/';
+    newUrl = 'https://twitter.com';
   else if (bibliogramInstances.includes(protocolHost))
-    newUrl = 'https://instagram.com/';
-  else if (redditInstances.includes(protocolHost))
-    newUrl = 'https://reddit.com/';
+    newUrl = 'https://instagram.com';
+  else if (redditInstances['libreddit'].includes(protocolHost))
+    newUrl = 'https://reddit.com';
+  else if (redditInstances['teddit'].includes(protocolHost))
+    newUrl = 'https://reddit.com';
   else if (searchEngineInstances.includes(protocolHost))
-    newUrl = 'https://google.com/';
+    newUrl = 'https://google.com';
   else if (simplyTranslateInstances.includes(protocolHost))
-    newUrl = 'https://translate.google.com/';
+    newUrl = 'https://translate.google.com';
   else if (scribeInstances.includes(protocolHost))
-    newUrl = 'https://medium.com/';
+    newUrl = 'https://medium.com';
   else if (wikipediaInstances.includes(protocolHost))
-    newUrl = 'https://wikipedia.com/';
+    newUrl = 'https://wikipedia.com';
 
   if (newUrl)
     browser.tabs.update({
@@ -720,28 +748,34 @@ browser.pageAction.onClicked.addListener((tab) => {
     });
 });
 
-
-
-
 browser.runtime.onInstalled.addListener((details) => {
   browser.storage.sync.get(
-    ["disableSearchEngine", "disableSimplyTranslate", "disableWikipedia"],
+    [
+      "disableSearchEngine",
+      "disableSimplyTranslate",
+      "disableWikipedia",
+      "redditFrontend"
+    ],
     (result) => {
-      if (result.disableSearchEngine === undefined) {
+      if (result.disableSearchEngine === undefined)
         browser.storage.sync.set({
           disableSearchEngine: true,
         });
-      }
-      if (result.disableSimplyTranslate === undefined) {
+
+      if (result.disableSimplyTranslate === undefined)
         browser.storage.sync.set({
           disableSimplyTranslate: true,
         });
-      }
-      if (result.disableWikipedia === undefined) {
+
+      if (result.disableWikipedia === undefined)
         browser.storage.sync.set({
           disableWikipedia: true,
         });
-      }
+
+      if (result.redditFrontend === undefined)
+        browser.storage.sync.set({
+          redditFrontend: 'libreddit'
+        })
     }
   );
   if (details.reason === "update") {
