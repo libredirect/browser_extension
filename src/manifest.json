@@ -32,6 +32,7 @@
   },
   "browser_action": {
     "default_title": "LibRedirect",
+    "browser_style": false,
     "default_popup": "pages/popup/popup.html",
     "default_icon": {
       "16": "assets/images/libredirect.svg",
@@ -88,6 +89,7 @@
   ],
   "options_ui": {
     "page": "pages/options/options.html",
+    "browser_style": false,
     "open_in_tab": true
   },
   "web_accessible_resources": [

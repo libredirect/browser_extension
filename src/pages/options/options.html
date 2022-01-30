@@ -12,9 +12,10 @@
 <body class="option">
 
   <div class="option">
+
     <section class="general">
       <div class="some-block option-block">
-        <h4 data-localise="__MSG_theme__">Theme</h4>
+        <h4>Theme</h4>
         <select id="theme">
           <option value="">System</option>
           <option value="light-theme">Light</option>
@@ -23,7 +24,7 @@
       </div>
       <div class="buttons buttons-inline">
         <a class="button button-inline" id="update-instances">
-          <span data-localise="__MSG_updateInstances__">Update Instances</span>
+          <span>Update Instances</span>
         </a>
       </div>
       <hr>
@@ -228,8 +229,17 @@
       </div>
       <section class="settings-block">
         <h4>Random instance pool (comma-separated)</h4>
-        <textarea id="scribe-random-pool" name="scribe-random-pool" type="text"></textarea>
+        <textarea id="reddit-random-pool" name="reddit-random-pool" type="text"></textarea>
       </section>
+
+
+      <div class="some-block option-block">
+        <h4>Frontend</h4>
+        <select id="reddit-frontend">
+          <option value="libreddit">LibReddit</option>
+          <option value="teddit">Teddit</option>
+        </select>
+      </div>
 
     </section>
 
@@ -307,11 +317,23 @@
             placeholder="Random instance (none selected)" />
         </div>
       </div>
+      <section class="settings-block">
+        <h4>Random instance pool (comma-separated)</h4>
+        <textarea id="scribe-random-pool" name="scribe-random-pool" type="text"></textarea>
+      </section>
     </section>
-
 
   </div>
   <script type="module" src="./options.js"></script>
+  <script type="module" src="./youtube.js"></script>
+  <script type="module" src="./twitter.js"></script>
+  <script type="module" src="./instagram.js"></script>
+  <script type="module" src="./reddit.js"></script>
+  <script type="module" src="./searchEngine.js"></script>
+  <script type="module" src="./translate.js"></script>
+  <script type="module" src="./maps.js"></script>
+  <script type="module" src="./wikipedia.js"></script>
+  <script type="module" src="./medium.js"></script>
   <script src="../../assets/javascripts/localise.js"></script>
 </body>
 
