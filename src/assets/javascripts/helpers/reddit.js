@@ -23,7 +23,6 @@ const redirects = [
   "https://teddit.kavin.rocks",
   "https://old.reddit.com", // desktop
   "https://i.reddit.com", // mobile
-  "https://snew.notabug.io", // anti-censorship
 ];
 const bypassPaths = /\/(gallery\/poll\/rpan\/settings\/topics)/;
 

@@ -6,7 +6,7 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 - Youtube => [Invidious](https://github.com/iv-org/invidious) ([instances](https://docs.invidious.io/Invidious-Instances.md)), [FreeTube](https://github.com/FreeTubeApp/FreeTube)
 - Twitter => [Nitter](https://github.com/zedeus/nitter) ([instances](https://github.com/zedeus/nitter/wiki/Instances))
 - Instagram => [Bibliogram](https://sr.ht/~cadence/bibliogram/) ([instances](https://git.sr.ht/~cadence/bibliogram-docs/tree/master/docs/Instances.md))
-- Reddit => [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances), [Snew](https://github.com/snew/snew), [Old Reddit](https://old.reddit.com), [Mobile Reddit](https://i.reddit.com)
+- Reddit => [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances), [Old Reddit](https://old.reddit.com), [Mobile Reddit](https://i.reddit.com)
 - Google Search => [SearX](https://searx.github.io/searx/), [DuckDuckGo](https://duckduckgo.com), [Startpage](https://startpage.com), [Ecosia](https://www.ecosia.org), [Qwant](https://www.qwant.com), [Mojeek](https://www.mojeek.com), [Presearch](https://www.presearch.org), [Whoogle](https://benbusby.com/projects/whoogle-search/)
 - Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web) ([instances](https://git.sr.ht/~metalune/simplytranslate_web#list-of-instances))
 - Google Maps => [OpenStreetMap](https://www.openstreetmap.org/) ([instances](https://wiki.openstreetmap.org/wiki/Tile_servers))
