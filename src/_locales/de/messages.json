@@ -64,7 +64,7 @@
     "description": "Label for 'Persist Invidious preferences (as cookie)' option (options)."
   },
   "generalTab": {
-    "message": "Allgmein",
+    "message": "Allgemein",
     "description": "General tab (options)."
   },
   "advancedTab": {
