@@ -102,17 +102,17 @@ input:checked+label:after {
   padding: 5px 15px;
 }
 
-.button * {
+a.button * {
   vertical-align: middle;
 }
 
-.button:hover {
+a.button:hover {
   background-color: var(--active);
   color: var(--text);
   stroke: var(--text);
 }
 
-.button:active {
+a.button:active {
   background-color: var(--active);
   box-shadow: 0 var(--space) var(--bg-main);
   transform: translateY(4px);
@@ -317,10 +317,51 @@ textarea {
   height: 200px;
 }
 
-body.option {
-  width: 600px;
-  float: left;
+
+section {
+  background-color: var(--bg-main);
 }
+
+section.youtube {
+  grid-area: youtube;
+}
+
+section.twitter {
+  grid-area: twitter;
+}
+
+section.instagram {
+  grid-area: instagram;
+}
+
+section.reddit {
+  grid-area: reddit;
+}
+
+section.search {
+  grid-area: search;
+}
+
+section.translate {
+  grid-area: translate;
+}
+
+section.maps {
+  grid-area: maps;
+}
+
+section.wikipedia {
+  grid-area: wikipedia;
+}
+
+section.medium {
+  grid-area: medium;
+}
+
+section.exception {
+  grid-area: general;
+}
+
 
 div.some-block {
   padding: 0 15px;
@@ -400,7 +441,6 @@ div.buttons {
   margin-bottom: 15px;
 }
 
-
 a.button {
   stroke: var(--text);
   display: block;
@@ -417,6 +457,17 @@ a.button {
   transition-duration: 0.1s;
 }
 
+div.buttons-inline {
+  display: flex;
+  justify-content: end;
+  padding: 0 15px;
+}
+
+a.button-inline {
+  display: inline-block;
+  margin: 7.5px 0;
+}
+
 a.button:hover {
   background-color: var(--active);
   color: var(--text);
@@ -427,6 +478,54 @@ a.button:active {
   background-color: var(--active);
   box-shadow: 0 var(--space) var(--bg-main);
   transform: translateY(1px);
+}
+
+div.option {
+  box-sizing: border-box;
+  margin: auto;
+  max-width: 1800px;
+  display: grid;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  gap: 2px;
+  /* border: 3px solid var(--active); */
+  background-color: rgb(58, 58, 58);
+  grid-template-areas:
+    "general     twitter instagram"
+    "youtube     reddit  search"
+    "youtube     maps    wikipedia"
+    "translate  medium   wikipedia"
+}
+
+@media (max-width: 1590px) {
+  div.option {
+    max-width: 1200px;
+    grid-template-columns: 50% 50%;
+    grid-template-areas:
+      "general    twitter"
+      "youtube    instagram"
+      "youtube    reddit"
+      "search     maps"
+      "translate  wikipedia"
+      "medium     wikipedia"
+  }
+}
+
+@media (max-width: 1090px) {
+  div.option {
+    max-width: 600px;
+    grid-template-columns: 100%;
+    grid-template-areas:
+      "general"
+      "youtube"
+      "twitter"
+      "instagram"
+      "search"
+      "reddit"
+      "maps"
+      "translate"
+      "wikipedia"
+      "medium"
+  }
 }
 
 @media (prefers-color-scheme: light) {
