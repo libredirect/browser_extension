@@ -4,10 +4,9 @@ import shared from "./shared.js";
 
 const scribeInstances = mediumHelper.redirects;
 
-let scribeInstance = document.getElementById("scribe-instance");
-let disableScribe = document.getElementById("disable-scribe");
-let scribeRandomPool = document.getElementById("scribe-random-pool");
-
+let scribeInstanceElement = document.getElementById("scribe-instance");
+let disableScribeElement = document.getElementById("disable-scribe");
+let scribeRandomPoolElement = document.getElementById("scribe-random-pool");
 
 browser.storage.sync.get(
     [
@@ -16,46 +15,32 @@ browser.storage.sync.get(
         "scribeRandomPool",
     ],
     (result) => {
-        scribeInstance.value = result.scribeInstance || "";
-        disableScribe.checked = !result.disableScribe;
-        scribeRandomPool.value = result.scribeRandomPool || commonHelper.filterInstances(scribeInstances);
+        scribeInstanceElement.value = result.scribeInstance || "";
+        disableScribeElement.checked = !result.disableScribe;
+        scribeRandomPoolElement.value = (result.scribeRandomPool || commonHelper.filterInstances(scribeInstances)).join("\n");
         let id = "scribe-instance";
-        let instances = scribeRandomPool.value.split(',')
+        let instances = scribeRandomPoolElement.value.split(',')
         shared.autocompletes.push({ id: id, instances: instances })
         shared.autocomplete(document.getElementById(id), instances);
     }
 )
 
-disableScribe.addEventListener(
-    "change",
-    (event) => {
-        console.info("isScibeEnabled:", event.target.checked)
+disableScribeElement.addEventListener("change", (event) => {
+    console.info("isScibeEnabled:", event.target.checked)
+    browser.storage.sync.set({ disableScribe: !event.target.checked });
+});
+
+scribeInstanceElement.addEventListener("input", commonHelper.debounce(() => {
+    if (scribeInstanceElement.checkValidity()) {
+        console.info("selectedScribeInstance", scribeInstanceElement.value);
         browser.storage.sync.set({
-            disableScribe: !event.target.checked
+            scribeInstance: shared.parseURL(scribeInstanceElement.value)
         });
     }
-);
+}, 500));
 
-const scribeInstanceChange = commonHelper.debounce(
-    () => {
-        if (scribeInstance.checkValidity()) {
-            console.info("selectedScribeInstance", scribeInstance.value);
-            browser.storage.sync.set({
-                scribeInstance: shared.parseURL(scribeInstance.value)
-            });
-        }
-    },
-    500
-);
-
-scribeInstance.addEventListener("input", scribeInstanceChange);
-
-const scribeRandomPoolChange = commonHelper.debounce(
-    () => {
-        browser.storage.sync.set({
-            scribeRandomPool: scribeRandomPool.value
-        });
-    },
-    500
-);
-scribeRandomPool.addEventListener("input", scribeRandomPoolChange);
+scribeRandomPoolElement.addEventListener("input", commonHelper.debounce(() => {
+    browser.storage.sync.set({
+        scribeRandomPool: scribeRandomPoolElement.value.split('\n')
+    });
+}, 500));

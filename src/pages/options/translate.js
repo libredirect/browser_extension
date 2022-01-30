@@ -3,8 +3,9 @@ import commonHelper from "../../assets/javascripts/helpers/common.js";
 import shared from "./shared.js";
 
 const simplyTranslateInstances = googleTranslateHelper.redirects;
-let simplyTranslateInstance = document.getElementById("simplyTranslate-instance");
-let disableSimplyTranslate = document.getElementById("disable-simplyTranslate");
+
+let simplyTranslateInstanceElement = document.getElementById("simplyTranslate-instance");
+let disableSimplyTranslateElement = document.getElementById("disable-simplyTranslate");
 
 
 browser.storage.sync.get(
@@ -13,9 +14,8 @@ browser.storage.sync.get(
         "disableSimplyTranslate",
     ],
     (result) => {
-
-        simplyTranslateInstance.value = result.simplyTranslateInstance || "";
-        disableSimplyTranslate.checked = !result.disableSimplyTranslate;
+        simplyTranslateInstanceElement.value = result.simplyTranslateInstance || "";
+        disableSimplyTranslateElement.checked = !result.disableSimplyTranslate;
         let id = "simplyTranslate-instance"
         let instances = simplyTranslateInstances;
         shared.autocompletes.push({ id: id, instances: instances })
@@ -23,20 +23,16 @@ browser.storage.sync.get(
     }
 )
 
-const simplyTranslateInstanceChange = commonHelper.debounce(() => {
-    if (simplyTranslateInstance.checkValidity()) {
-        browser.storage.sync.set({
-            simplyTranslateInstance: shared.parseURL(simplyTranslateInstance.value),
-        });
-    }
-}, 500);
-simplyTranslateInstance.addEventListener(
+simplyTranslateInstanceElement.addEventListener(
     "input",
-    simplyTranslateInstanceChange
-);
+    commonHelper.debounce(() => {
+        if (simplyTranslateInstanceElement.checkValidity()) {
+            browser.storage.sync.set({
+                simplyTranslateInstance: shared.parseURL(simplyTranslateInstanceElement.value),
+            });
+        }
+    }, 500));
 
-
-
-disableSimplyTranslate.addEventListener("change", (event) => {
+disableSimplyTranslateElement.addEventListener("change", (event) => {
     browser.storage.sync.set({ disableSimplyTranslate: !event.target.checked });
 });

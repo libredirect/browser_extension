@@ -5,9 +5,9 @@ import shared from "./shared.js";
 
 const bibliogramInstances = instagramHelper.redirects;
 
-let bibliogramInstance = document.getElementById("bibliogram-instance");
-let disableBibliogram = document.getElementById("disable-bibliogram");
-let bibliogramRandomPool = document.getElementById("bibliogram-random-pool");
+let bibliogramInstanceElement = document.getElementById("bibliogram-instance");
+let disableBibliogramElement = document.getElementById("disable-bibliogram");
+let bibliogramRandomPoolElement = document.getElementById("bibliogram-random-pool");
 
 browser.storage.sync.get(
     [
@@ -16,33 +16,26 @@ browser.storage.sync.get(
         "bibliogramRandomPool",
     ],
     (result) => {
-        bibliogramInstance.value = result.bibliogramInstance || "";
-        disableBibliogram.checked = !result.disableBibliogram;
-        bibliogramRandomPool.value = result.bibliogramRandomPool || commonHelper.filterInstances(bibliogramInstances);
+        bibliogramInstanceElement.value = result.bibliogramInstance || "";
+        disableBibliogramElement.checked = !result.disableBibliogram;
+        bibliogramRandomPoolElement.value = result.bibliogramRandomPool || commonHelper.filterInstances(bibliogramInstances);
         let id = "bibliogram-instance";
-        let instances = bibliogramRandomPool.value.split(',')
+        let instances = bibliogramRandomPoolElement.value.split(',')
         shared.autocompletes.push({ id: id, instances: instances })
         shared.autocomplete(document.getElementById(id), instances);
     }
 )
 
-const bibliogramInstanceChange = commonHelper.debounce(() => {
-    if (bibliogramInstance.checkValidity()) {
-        browser.storage.sync.set({
-            bibliogramInstance: shared.parseURL(bibliogramInstance.value),
-        });
-    }
-}, 500);
-bibliogramInstance.addEventListener("input", bibliogramInstanceChange);
+bibliogramInstanceElement.addEventListener("input", commonHelper.debounce(() => {
+    if (bibliogramInstanceElement.checkValidity())
+        browser.storage.sync.set({ bibliogramInstance: shared.parseURL(bibliogramInstanceElement.value) });
+}, 500));
 
-disableBibliogram.addEventListener("change", (event) => {
+disableBibliogramElement.addEventListener("change", (event) => {
     browser.storage.sync.set({ disableBibliogram: !event.target.checked });
 });
 
-const bibliogramRandomPoolChange = commonHelper.debounce(() => {
-    browser.storage.sync.set({
-        bibliogramRandomPool: bibliogramRandomPool.value,
-    });
-}, 500);
-bibliogramRandomPool.addEventListener("input", bibliogramRandomPoolChange);
+bibliogramRandomPoolElement.addEventListener("input", commonHelper.debounce(() => {
+    browser.storage.sync.set({ bibliogramRandomPool: bibliogramRandomPoolElement.value });
+}, 500));
 

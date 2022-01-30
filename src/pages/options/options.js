@@ -6,7 +6,7 @@ import shared from "./shared.js";
 
 const domparser = new DOMParser();
 
-let theme = document.getElementById("theme");
+let themeElement = document.getElementById("theme");
 let exceptions;
 
 window.browser = window.browser || window.chrome;
@@ -26,9 +26,7 @@ function prependExceptionsItem(item, index) {
   button.appendChild(domparser.parseFromString(svg, "image/svg+xml").documentElement);
   button.addEventListener("click", () => {
     exceptions.splice(index, 1);
-    browser.storage.sync.set({
-      exceptions: exceptions,
-    });
+    browser.storage.sync.set({ exceptions: exceptions });
     li.remove();
   });
 }
@@ -39,7 +37,7 @@ browser.storage.sync.get(
     "theme",
   ],
   (result) => {
-    theme.value = result.theme || "";
+    themeElement.value = result.theme || "";
     if (result.theme) document.body.classList.add(result.theme);
     exceptions = result.exceptions || [];
     exceptions.forEach(prependExceptionsItem);
@@ -74,7 +72,7 @@ function addToExceptions() {
 }
 document.getElementById("add-to-exceptions").addEventListener("click", addToExceptions);
 
-theme.addEventListener("change", (event) => {
+themeElement.addEventListener("change", (event) => {
   const value = event.target.options[theme.selectedIndex].value;
   switch (value) {
     case "dark-theme":
@@ -89,9 +87,7 @@ theme.addEventListener("change", (event) => {
       document.body.classList.remove("light-theme");
       document.body.classList.remove("dark-theme");
   }
-  browser.storage.sync.set({
-    theme: value,
-  });
+  browser.storage.sync.set({ theme: value });
 });
 
 document.querySelector("#update-instances").addEventListener("click", () => {

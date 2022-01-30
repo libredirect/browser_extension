@@ -5,9 +5,9 @@ import shared from "./shared.js";
 
 const redditInstances = redditHelper.redirects;
 
-let redditInstance = document.getElementById("reddit-instance");
-let disableReddit = document.getElementById("disable-reddit");
-let redditFrontend = document.getElementById("reddit-frontend");
+let redditInstanceElement = document.getElementById("reddit-instance");
+let disableRedditElement = document.getElementById("disable-reddit");
+let redditFrontendElement = document.getElementById("reddit-frontend");
 
 browser.storage.sync.get(
     [
@@ -16,9 +16,9 @@ browser.storage.sync.get(
         "redditFrontend"
     ],
     (result) => {
-        redditInstance.value = result.redditInstance || "";
-        disableReddit.checked = !result.disableReddit;
-        redditFrontend.value = result.redditFrontend;
+        redditInstanceElement.value = result.redditInstance || "";
+        disableRedditElement.checked = !result.disableReddit;
+        redditFrontendElement.value = result.redditFrontend;
         let id = "reddit-instance";
         let instances = redditInstances;
         shared.autocompletes.push({ id: id, instances: instances })
@@ -26,27 +26,20 @@ browser.storage.sync.get(
     }
 )
 
-const redditInstanceChange = commonHelper.debounce(
-    () => {
-        if (redditInstance.checkValidity()) {
-            browser.storage.sync.set({
-                redditInstance: shared.parseURL(redditInstance.value),
-            });
-        }
-    },
-    500
-);
+redditInstanceElement.addEventListener("input", commonHelper.debounce(() => {
+    if (redditInstanceElement.checkValidity()) {
+        browser.storage.sync.set({
+            redditInstance: shared.parseURL(redditInstanceElement.value),
+        });
+    }
+}, 500));
 
-redditInstance.addEventListener("input", redditInstanceChange);
-
-disableReddit.addEventListener("change", (event) => {
+disableRedditElement.addEventListener("change", (event) => {
     browser.storage.sync.set({ disableReddit: !event.target.checked });
 });
 
-redditFrontend.addEventListener("change", (event) => {
-    const value = event.target.options[redditFrontend.selectedIndex].value;
+redditFrontendElement.addEventListener("change", (event) => {
+    const value = event.target.options[redditFrontendElement.selectedIndex].value;
     console.info("Reddit Frontend", value)
-    browser.storage.sync.set({
-        redditFrontend: value,
-    })
+    browser.storage.sync.set({ redditFrontend: value })
 })

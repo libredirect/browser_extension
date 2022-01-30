@@ -4,19 +4,19 @@ import shared from "./shared.js";
 
 const invidiousInstances = youtubeHelper.redirects;
 
-let invidiousInstance = document.getElementById("invidious-instance");
-let disableInvidious = document.getElementById("disable-invidious");
-let invidiousDarkMode = document.getElementById("invidious-dark-mode");
-let persistInvidiousPrefs = document.getElementById("persist-invidious-prefs");
-let invidiousVolume = document.getElementById("invidious-volume");
-let invidiousPlayerStyle = document.getElementById("invidious-player-style");
-let invidiousSubtitles = document.getElementById("invidious-subtitles");
-let invidiousAutoplay = document.getElementById("invidious-autoplay");
-let invidiousRandomPool = document.getElementById("invidious-random-pool");
-let useFreeTube = document.getElementById("use-freetube");
-let alwaysProxy = document.getElementById("always-proxy");
-let onlyEmbeddedVideo = document.getElementById("only-embed");
-let videoQuality = document.getElementById("video-quality");
+let invidiousInstanceElement = document.getElementById("invidious-instance");
+let disableInvidiousElement = document.getElementById("disable-invidious");
+let invidiousDarkModeElement = document.getElementById("invidious-dark-mode");
+let persistInvidiousPrefsElement = document.getElementById("persist-invidious-prefs");
+let invidiousVolumeElement = document.getElementById("invidious-volume");
+let invidiousPlayerStyleElement = document.getElementById("invidious-player-style");
+let invidiousSubtitlesElement = document.getElementById("invidious-subtitles");
+let invidiousAutoplayElement = document.getElementById("invidious-autoplay");
+let invidiousRandomPoolElement = document.getElementById("invidious-random-pool");
+let useFreeTubeElement = document.getElementById("use-freetube");
+let alwaysProxyElement = document.getElementById("always-proxy");
+let onlyEmbeddedVideoElement = document.getElementById("only-embed");
+let videoQualityElement = document.getElementById("video-quality");
 
 browser.storage.sync.get(
     [
@@ -35,116 +35,94 @@ browser.storage.sync.get(
         "videoQuality",
     ],
     (result) => {
-        invidiousInstance.value = result.invidiousInstance || "";
-        disableInvidious.checked = !result.disableInvidious;
-        invidiousDarkMode.checked = result.invidiousDarkMode;
-        persistInvidiousPrefs.checked = result.persistInvidiousPrefs;
-        invidiousVolume.value = result.invidiousVolume;
+        invidiousInstanceElement.value = result.invidiousInstance || "";
+        disableInvidiousElement.checked = !result.disableInvidious;
+        invidiousDarkModeElement.checked = result.invidiousDarkMode;
+        persistInvidiousPrefsElement.checked = result.persistInvidiousPrefs;
+        invidiousVolumeElement.value = result.invidiousVolume;
         document.querySelector("#volume-value").textContent = result.invidiousVolume ? `${result.invidiousVolume}%` : " - ";
-        invidiousPlayerStyle.value = result.invidiousPlayerStyle || "";
-        invidiousSubtitles.value = result.invidiousSubtitles || "";
-        invidiousAutoplay.checked = result.invidiousAutoplay;
-        invidiousRandomPool.value = result.invidiousRandomPool || commonHelper.filterInstances(invidiousInstances);
-        useFreeTube.checked = result.useFreeTube;
-        onlyEmbeddedVideo.checked = result.onlyEmbeddedVideo;
-        alwaysProxy.checked = result.alwaysProxy;
-        videoQuality.value = result.videoQuality || "";
+        invidiousPlayerStyleElement.value = result.invidiousPlayerStyle || "";
+        invidiousSubtitlesElement.value = result.invidiousSubtitles || "";
+        invidiousAutoplayElement.checked = result.invidiousAutoplay;
+        invidiousRandomPoolElement.value = (result.invidiousRandomPool || commonHelper.filterInstances(invidiousInstances)).join("\n");
+        useFreeTubeElement.checked = result.useFreeTube;
+        onlyEmbeddedVideoElement.checked = result.onlyEmbeddedVideo;
+        alwaysProxyElement.checked = result.alwaysProxy;
+        videoQualityElement.value = result.videoQuality || "";
         let id = "invidious-instance"
-        let instances = invidiousRandomPool.value.split(',');
+        let instances = invidiousRandomPoolElement.value.split('\n');
         shared.autocompletes.push({ id: id, instances: instances });
         shared.autocomplete(document.getElementById(id), instances);
     }
 )
 
-const invidiousInstanceChange = commonHelper.debounce(
-    () => {
-        if (invidiousInstance.checkValidity())
-            browser.storage.sync.set({
-                invidiousInstance: shared.parseURL(invidiousInstance.value),
-            });
-    },
-    500
-);
-invidiousInstance.addEventListener("input", invidiousInstanceChange);
-
-disableInvidious.addEventListener(
-    "change",
-    (event) => {
-        browser.storage.sync.set({ disableInvidious: !event.target.checked });
-    }
+invidiousInstanceElement.addEventListener("input",
+    commonHelper.debounce(() => {
+        if (invidiousInstanceElement.checkValidity())
+            browser.storage.sync.set({ invidiousInstance: shared.parseURL(invidiousInstanceElement.value) });
+    }, 500)
 );
 
-invidiousDarkMode.addEventListener(
-    "change",
-    (event) => {
-        console.info("InvidiousDarkMode", event.target.checked);
-        browser.storage.sync.set({ invidiousDarkMode: event.target.checked });
-    }
+disableInvidiousElement.addEventListener("change", (event) => {
+    browser.storage.sync.set({ disableInvidious: !event.target.checked });
+});
+
+invidiousDarkModeElement.addEventListener("change", (event) => {
+    console.info("InvidiousDarkMode", event.target.checked);
+    browser.storage.sync.set({ invidiousDarkMode: event.target.checked });
+});
+
+persistInvidiousPrefsElement.addEventListener("change", (event) => {
+    console.info("Persist preferences (as cookie)", event.target.checked);
+    browser.storage.sync.set({ persistInvidiousPrefs: event.target.checked });
+});
+
+invidiousVolumeElement.addEventListener("input",
+    commonHelper.debounce(() => {
+        document.querySelector("#volume-value").textContent = `${invidiousVolumeElement.value}%`;
+        browser.storage.sync.set({ invidiousVolume: invidiousVolumeElement.value });
+    }, 1)
 );
 
-persistInvidiousPrefs.addEventListener(
-    "change",
-    (event) => {
-        console.info("Persist preferences (as cookie)", event.target.checked);
-        browser.storage.sync.set({ persistInvidiousPrefs: event.target.checked });
-    }
-);
-
-const invidiousVolumeChange = commonHelper.debounce(
-    () => {
-        document.querySelector("#volume-value").textContent = `${invidiousVolume.value}%`;
-        browser.storage.sync.set({
-            invidiousVolume: invidiousVolume.value,
-        });
-    },
-    1
-);
-invidiousVolume.addEventListener("input", invidiousVolumeChange);
-
-invidiousPlayerStyle.addEventListener("change", (event) => {
+invidiousPlayerStyleElement.addEventListener("change", (event) => {
     browser.storage.sync.set({
-        invidiousPlayerStyle: event.target.options[invidiousPlayerStyle.selectedIndex].value,
+        invidiousPlayerStyle: event.target.options[invidiousPlayerStyleElement.selectedIndex].value,
     });
 });
 
-const invidiousSubtitlesChange = commonHelper.debounce(
-    () => {
-        browser.storage.sync.set({ invidiousSubtitles: invidiousSubtitles.value });
-    },
-    500
-);
-invidiousSubtitles.addEventListener("input", invidiousSubtitlesChange);
-
-invidiousAutoplay.addEventListener(
-    "change",
-    (event) => {
-        browser.storage.sync.set({ invidiousAutoplay: event.target.checked });
-    }
+invidiousSubtitlesElement.addEventListener("input",
+    commonHelper.debounce(() => {
+        browser.storage.sync.set({ invidiousSubtitles: invidiousSubtitlesElement.value });
+    }, 500)
 );
 
-const invidiousRandomPoolChange = commonHelper.debounce(
-    () => {
-        browser.storage.sync.set({ invidiousRandomPool: invidiousRandomPool.value });
-    },
-    500
+invidiousAutoplayElement.addEventListener("change", (event) => {
+    browser.storage.sync.set({ invidiousAutoplay: event.target.checked });
+});
+
+invidiousRandomPool.addEventListener("input",
+    commonHelper.debounce(() => {
+        browser.storage.sync.set({ invidiousRandomPool: invidiousRandomPool.value.split("\n") });
+    }, 500)
 );
-invidiousRandomPool.addEventListener("input", invidiousRandomPoolChange);
 
-
-useFreeTube.addEventListener("change", (event) => {
+useFreeTubeElement.addEventListener("change", (event) => {
     browser.storage.sync.set({ useFreeTube: event.target.checked });
 });
 
-alwaysProxy.addEventListener("change", (event) => {
+alwaysProxyElement.addEventListener("change", (event) => {
     browser.storage.sync.set({ alwaysProxy: event.target.checked });
 });
 
-onlyEmbeddedVideo.addEventListener("change", (event) => {
+onlyEmbeddedVideoElement.addEventListener("change", (event) => {
     browser.storage.sync.set({ onlyEmbeddedVideo: event.target.checked });
 });
 
-videoQuality.addEventListener("change", (event) => {
-    browser.storage.sync.set({
-        videoQuality: event.target.options[videoQuality.selectedIndex].value,
-    });
+videoQualityElement.addEventListener("change", (event) => {
+    browser.storage.sync.set({ videoQuality: event.target.options[videoQualityElement.selectedIndex].value });
 });
+
+browser.storage.onChanged.addListener((changes) => {
+    if ("invidiousRandomPool" in changes)
+        invidiousRandomPool.value = changes.invidiousRandomPool.newValue;
+})

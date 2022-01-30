@@ -3,8 +3,8 @@ import commonHelper from "../../assets/javascripts/helpers/common.js";
 import shared from "./shared.js";
 
 const searchEngineInstances = searchHelper.redirects;
-let searchEngineInstance = document.getElementById("searchEngine-instance");
-let disableSearchEngine = document.getElementById("disable-searchEngine");
+let searchEngineInstanceElement = document.getElementById("searchEngine-instance");
+let disableSearchEngineElement = document.getElementById("disable-searchEngine");
 
 browser.storage.sync.get(
   [
@@ -12,9 +12,9 @@ browser.storage.sync.get(
     "disableSearchEngine",
   ],
   (result) => {
-    searchEngineInstance.value = (result.searchEngineInstance && result.searchEngineInstance.link) || "";
+    searchEngineInstanceElement.value = (result.searchEngineInstance && result.searchEngineInstance.link) || "";
 
-    disableSearchEngine.checked = !result.disableSearchEngine;
+    disableSearchEngineElement.checked = !result.disableSearchEngine;
 
     let id = "searchEngine-instance"
     let instances = searchEngineInstances.map((instance) => instance.link)
@@ -25,18 +25,18 @@ browser.storage.sync.get(
 
 const searchEngineInstanceChange = commonHelper.debounce(() => {
   const instance = searchEngineInstances.find(
-    (instance) => instance.link === searchEngineInstance.value
+    (instance) => instance.link === searchEngineInstanceElement.value
   );
-  if (instance || !searchEngineInstance.value) {
+  if (instance || !searchEngineInstanceElement.value) {
     browser.storage.sync.set({
-      searchEngineInstance: instance || searchEngineInstance.value,
+      searchEngineInstance: instance || searchEngineInstanceElement.value,
     });
   } else {
-    searchEngineInstance.setCustomValidity("Must be an instance from the list");
+    searchEngineInstanceElement.setCustomValidity("Must be an instance from the list");
   }
 }, 500);
-searchEngineInstance.addEventListener("input", searchEngineInstanceChange);
+searchEngineInstanceElement.addEventListener("input", searchEngineInstanceChange);
 
-disableSearchEngine.addEventListener("change", (event) => {
+disableSearchEngineElement.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableSearchEngine: !event.target.checked });
 });

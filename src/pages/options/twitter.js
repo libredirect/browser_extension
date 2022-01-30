@@ -3,10 +3,11 @@ import commonHelper from "../../assets/javascripts/helpers/common.js";
 import shared from "./shared.js";
 
 const nitterInstances = twitterHelper.redirects;
-let nitterInstance = document.getElementById("nitter-instance");
-let disableNitter = document.getElementById("disable-nitter");
-let nitterRandomPool = document.getElementById("nitter-random-pool");
-let removeTwitterSW = document.getElementById("remove-twitter-sw");
+
+let nitterInstanceElement = document.getElementById("nitter-instance");
+let disableNitterElement = document.getElementById("disable-nitter");
+let nitterRandomPoolElement = document.getElementById("nitter-random-pool");
+let removeTwitterSWElement = document.getElementById("remove-twitter-sw");
 
 browser.storage.sync.get(
     [
@@ -16,38 +17,33 @@ browser.storage.sync.get(
         "removeTwitterSW",
     ],
     (result) => {
-        nitterInstance.value = result.nitterInstance || "";
-        disableNitter.checked = !result.disableNitter;
-        nitterRandomPool.value = result.nitterRandomPool || commonHelper.filterInstances(nitterInstances);
-        removeTwitterSW.checked = !result.removeTwitterSW;
+        nitterInstanceElement.value = result.nitterInstance || "";
+        disableNitterElement.checked = !result.disableNitter;
+        nitterRandomPoolElement.value = result.nitterRandomPool || commonHelper.filterInstances(nitterInstances);
+        removeTwitterSWElement.checked = !result.removeTwitterSW;
         let id = "nitter-instance"
-        let instances = nitterRandomPool.value.split(',')
+        let instances = nitterRandomPoolElement.value.split(',')
         shared.autocompletes.push({ id: id, instances: instances })
         shared.autocomplete(document.getElementById(id), instances);
     }
 )
 
-const nitterInstanceChange = commonHelper.debounce(
-    () => {
-        if (nitterInstance.checkValidity()) {
-            browser.storage.sync.set({
-                nitterInstance: shared.parseURL(nitterInstance.value),
-            });
-        }
-    },
-    500)
-nitterInstance.addEventListener("input", nitterInstanceChange);
+nitterInstanceElement.addEventListener("input", commonHelper.debounce(() => {
+    if (nitterInstanceElement.checkValidity()) {
+        browser.storage.sync.set({
+            nitterInstance: shared.parseURL(nitterInstanceElement.value),
+        });
+    }
+}, 500));
 
-
-disableNitter.addEventListener("change", (event) => {
+disableNitterElement.addEventListener("change", (event) => {
     browser.storage.sync.set({ disableNitter: !event.target.checked });
 });
 
-removeTwitterSW.addEventListener("change", (event) => {
+removeTwitterSWElement.addEventListener("change", (event) => {
     browser.storage.sync.set({ removeTwitterSW: !event.target.checked });
 });
 
-const nitterRandomPoolChange = commonHelper.debounce(() => {
-    browser.storage.sync.set({ nitterRandomPool: nitterRandomPool.value });
-}, 500);
-nitterRandomPool.addEventListener("input", nitterRandomPoolChange);
+nitterRandomPoolElement.addEventListener("input", commonHelper.debounce(() => {
+    browser.storage.sync.set({ nitterRandomPool: nitterRandomPoolElement.value });
+}, 500));

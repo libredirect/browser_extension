@@ -157,7 +157,7 @@ browser.storage.sync.get(
     useFreeTube = result.useFreeTube;
     invidiousRandomPool =
       result.invidiousRandomPool
-        ? result.invidiousRandomPool.split(",")
+        ? result.invidiousRandomPool
         : commonHelper.filterInstances(invidiousInstances);
 
     nitterInstance = result.nitterInstance;
@@ -186,108 +186,107 @@ browser.storage.sync.get(
 );
 
 browser.storage.onChanged.addListener((changes) => {
-  if ("nitterInstance" in changes) {
+  if ("nitterInstance" in changes)
     nitterInstance = changes.nitterInstance.newValue;
-  }
-  if ("invidiousInstance" in changes) {
+
+  if ("invidiousInstance" in changes)
     invidiousInstance = changes.invidiousInstance.newValue;
-  }
-  if ("bibliogramInstance" in changes) {
+
+  if ("bibliogramInstance" in changes)
     bibliogramInstance = changes.bibliogramInstance.newValue;
-  }
-  if ("osmInstance" in changes) {
+
+  if ("osmInstance" in changes)
     osmInstance = changes.osmInstance.newValue || osmDefault;
-  }
-  if ("simplyTranslateInstance" in changes) {
-    simplyTranslateInstance =
-      changes.simplyTranslateInstance.newValue || simplyTranslateDefault;
-  }
-  if ("wikipediaInstance" in changes) {
+
+  if ("simplyTranslateInstance" in changes)
+    simplyTranslateInstance = changes.simplyTranslateInstance.newValue || simplyTranslateDefault;
+
+  if ("wikipediaInstance" in changes)
     wikipediaInstance = changes.wikipediaInstance.newValue || wikipediaDefault;
-  }
-  if ("redditInstance" in changes) {
+
+  if ("redditInstance" in changes)
     redditInstance = changes.redditInstance.newValue || redditDefault;
-  }
+
   if ("redditFrontend" in changes)
     redditFrontend = changes.redditFrontend.newValue
 
-  if ("scribeInstance" in changes) {
+  if ("scribeInstance" in changes)
     scribeInstance = changes.scribeInstance.newValue || scribeDefault;
-  }
-  if ("searchEngineInstance" in changes) {
+
+  if ("searchEngineInstance" in changes)
     searchEngineInstance = changes.searchEngineInstance.newValue;
-  }
-  if ("disableNitter" in changes) {
+
+  if ("disableNitter" in changes)
     disableNitter = changes.disableNitter.newValue;
-  }
-  if ("disableScribe" in changes) {
+
+  if ("disableScribe" in changes)
     disableScribe = changes.disableScribe.newValue;
-  }
-  if ("disableInvidious" in changes) {
+
+  if ("disableInvidious" in changes)
     disableInvidious = changes.disableInvidious.newValue;
-  }
-  if ("disableBibliogram" in changes) {
+
+  if ("disableBibliogram" in changes)
     disableBibliogram = changes.disableBibliogram.newValue;
-  }
-  if ("disableOsm" in changes) {
+
+  if ("disableOsm" in changes)
     disableOsm = changes.disableOsm.newValue;
-  }
-  if ("disableReddit" in changes) {
+
+  if ("disableReddit" in changes)
     disableReddit = changes.disableReddit.newValue;
-  }
-  if ("disableSearchEngine" in changes) {
+
+  if ("disableSearchEngine" in changes)
     disableSearchEngine = changes.disableSearchEngine.newValue;
-  }
-  if ("disableSimplyTranslate" in changes) {
+
+  if ("disableSimplyTranslate" in changes)
     disableSimplyTranslate = changes.disableSimplyTranslate.newValue;
-  }
-  if ("disableWikipedia" in changes) {
+
+  if ("disableWikipedia" in changes)
     disableWikipedia = changes.disableWikipedia.newValue;
-  }
-  if ("alwaysProxy" in changes) {
+
+  if ("alwaysProxy" in changes)
     alwaysProxy = changes.alwaysProxy.newValue;
-  }
-  if ("onlyEmbeddedVideo" in changes) {
+
+  if ("onlyEmbeddedVideo" in changes)
     onlyEmbeddedVideo = changes.onlyEmbeddedVideo.newValue;
-  }
-  if ("videoQuality" in changes) {
+
+  if ("videoQuality" in changes)
     videoQuality = changes.videoQuality.newValue;
-  }
-  if ("invidiousDarkMode" in changes) {
+
+  if ("invidiousDarkMode" in changes)
     invidiousDarkMode = changes.invidiousDarkMode.newValue;
-  }
-  if ("invidiousVolume" in changes) {
+
+  if ("invidiousVolume" in changes)
     invidiousVolume = changes.invidiousVolume.newValue;
-  }
-  if ("invidiousPlayerStyle" in changes) {
+
+  if ("invidiousPlayerStyle" in changes)
     invidiousPlayerStyle = changes.invidiousPlayerStyle.newValue;
-  }
-  if ("invidiousSubtitles" in changes) {
+
+  if ("invidiousSubtitles" in changes)
     invidiousSubtitles = changes.invidiousSubtitles.newValue;
-  }
-  if ("invidiousAutoplay" in changes) {
+
+  if ("invidiousAutoplay" in changes)
     invidiousAutoplay = changes.invidiousAutoplay.newValue;
-  }
-  if ("useFreeTube" in changes) {
+
+  if ("useFreeTube" in changes)
     useFreeTube = changes.useFreeTube.newValue;
-  }
-  if ("nitterRandomPool" in changes) {
-    nitterRandomPool = changes.nitterRandomPool.newValue.split(",");
-  }
-  if ("invidiousRandomPool" in changes) {
-    invidiousRandomPool = changes.invidiousRandomPool.newValue.split(",");
-  }
-  if ("bibliogramRandomPool" in changes) {
-    bibliogramRandomPool = changes.bibliogramRandomPool.newValue.split(",");
-  }
-  if ("scribeRandomPool" in changes) {
-    scribeRandomPool = changes.scribeRandomPool.newValue.split(",");
-  }
-  if ("exceptions" in changes) {
+
+  if ("nitterRandomPool" in changes)
+    nitterRandomPool = changes.nitterRandomPool.newValue;
+
+  if ("invidiousRandomPool" in changes)
+    invidiousRandomPool = changes.invidiousRandomPool.newValue;
+
+  if ("bibliogramRandomPool" in changes)
+    bibliogramRandomPool = changes.bibliogramRandomPool.newValue;
+
+  if ("scribeRandomPool" in changes)
+    scribeRandomPool = changes.scribeRandomPool.newValue;
+
+  if ("exceptions" in changes)
     exceptions = changes.exceptions.newValue.map((e) => {
       return new RegExp(e);
     });
-  }
+
 });
 
 function isException(url, initiator) {
@@ -524,29 +523,22 @@ function redirectReddit(url, initiator, type) {
     return null;
 
   console.info(url.host);
-  if (url.host === "i.redd.it") {
-    if (redditFrontend == 'libreddit')
-      return `${redditInstance || commonHelper.getRandomInstance(redditInstances['libreddit'])}/img${url.pathname}${url.search}`;
-    if (redditFrontend == 'teddit')
-      // As of 2021-04-09, redirects for teddit images are nontrivial:
-      // - navigating to the image before ever navigating to its page causes
-      //   404 error (probably needs fix on teddit project)
-      // - some image links on teddit are very different
-      // Therefore, don't support redirecting image links for teddit.
-      return null;
-
-    return null;
-
-  } else if (url.host === "redd.it") {
+  if (url.host === "i.redd.it")
+    // As of 2021-04-09, redirects for teddit images are nontrivial:
+    // - navigating to the image before ever navigating to its page causes
+    //   404 error (probably needs fix on teddit project)
+    // - some image links on teddit are very different
+    // Therefore, don't support redirecting image links for teddit.
+    return `${redditInstance || commonHelper.getRandomInstance(redditInstances['libreddit'])}/img${url.pathname}${url.search}`;
+  else if (url.host === "redd.it") {
     if (redditFrontend == 'libreddit')
       return `${redditInstance || commonHelper.getRandomInstance(redditInstances['libreddit'])}${url.pathname}${url.search}`;
     if (redditFrontend == 'teddit' && !url.pathname.match(/^\/+[^\/]+\/+[^\/]/))
       // As of 2021-04-22, redirects for teddit redd.it/foo links don't work.
       // It appears that adding "/comments" as a prefix works, so manually add
-      // that prefix if it is missing.  Even though redd.it/comments/foo links
+      // that prefix if it is missing. Even though redd.it/comments/foo links
       // don't seem to work or exist, guard against affecting those kinds of
       // paths.
-      //
       // Note the difference between redd.it/comments/foo (doesn't work) and
       // teddit.net/comments/foo (works).
       return `${redditInstance || commonHelper.getRandomInstance(redditInstances['teddit'])}/comments${url.pathname}${url.search}`;
@@ -559,9 +551,8 @@ function redirectReddit(url, initiator, type) {
 }
 
 function redirectMedium(url, initiator) {
-  if (disableScribe || isException(url, initiator)) {
+  if (disableScribe || isException(url, initiator))
     return null;
-  }
 
   if (url.pathname == "/")
     return null;
@@ -573,23 +564,17 @@ function redirectMedium(url, initiator) {
       scribeInstances.includes(initiator.origin) ||
       mediumDomains.includes(initiator.host))
   ) {
-    browser.storage.sync.set({
-      redirectBypassFlag: true,
-    });
+    browser.storage.sync.set({ redirectBypassFlag: true });
     return null;
   }
-  return `${scribeInstance || commonHelper.getRandomInstance(scribeRandomPool)
-    }${url.pathname}${url.search}`;
+  return `${scribeInstance || commonHelper.getRandomInstance(scribeRandomPool)}${url.pathname}${url.search}`;
 }
 
 function redirectSearchEngine(url, initiator) {
-  if (disableSearchEngine || isException(url, initiator)) {
+  if (disableSearchEngine || isException(url, initiator))
     return null;
-  }
 
-  const searchEngine =
-    searchEngineInstance ||
-    commonHelper.getRandomInstance(searchEngineInstances);
+  const searchEngine = searchEngineInstance || commonHelper.getRandomInstance(searchEngineInstances);
   let search = "";
   url.search
     .slice(1)
@@ -601,17 +586,13 @@ function redirectSearchEngine(url, initiator) {
 }
 
 function redirectGoogleTranslate(url, initiator) {
-  if (disableSimplyTranslate || isException(url, initiator)) {
-    return null;
-  }
+  if (disableSimplyTranslate || isException(url, initiator)) return null;
 
   return `${simplyTranslateInstance}/${url.search}`;
 }
 
 function redirectWikipedia(url, initiator) {
-  if (disableWikipedia || isException(url, initiator)) {
-    return null;
-  }
+  if (disableWikipedia || isException(url, initiator)) return null;
   let GETArguments = [];
   if (url.search.length > 0) {
     let search = url.search.substring(1); //get rid of '?'
@@ -631,9 +612,9 @@ function redirectWikipedia(url, initiator) {
       GETArguments.push(["mobileaction", "toggle_view_mobile"]);
     //wikiless doesn't have mobile view support yet
   }
-  for (let i = 0; i < GETArguments.length; i++) {
+  for (let i = 0; i < GETArguments.length; i++)
     link += (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1];
-  }
+
   if (
     urlSplit[urlSplit.length - 1] == "org" &&
     urlSplit[urlSplit.length - 2] == "wikipedia"
@@ -647,11 +628,10 @@ browser.webRequest.onBeforeRequest.addListener(
   (details) => {
     const url = new URL(details.url);
     let initiator;
-    if (details.originUrl) {
+    if (details.originUrl)
       initiator = new URL(details.originUrl);
-    } else if (details.initiator) {
+    else if (details.initiator)
       initiator = new URL(details.initiator);
-    }
 
     let newUrl;
     if (youtubeDomains.includes(url.host))
@@ -673,24 +653,13 @@ browser.webRequest.onBeforeRequest.addListener(
     else if (url.host.match(wikipediaRegex))
       newUrl = redirectWikipedia(url, initiator);
 
-    let redirect;
     if (newUrl) {
-      redirect = {
-        redirectUrl: newUrl
-      }
-      console.info(
-        "Redirecting",
-        `"${url.href}"`,
-        "=>",
-        `"${redirect.redirectUrl}"`
-      );
-      // console.info("Details", details);
+      console.info("Redirecting", url.href, "=>", newUrl);
+      return { redirectUrl: newUrl };
     }
-    return redirect;
+    return null;
   },
-  {
-    urls: ["<all_urls>"],
-  },
+  { urls: ["<all_urls>"], },
   ["blocking"]
 );
 
@@ -729,10 +698,14 @@ browser.pageAction.onClicked.addListener((tab) => {
     newUrl = 'https://twitter.com';
   else if (bibliogramInstances.includes(protocolHost))
     newUrl = 'https://instagram.com';
-  else if (redditInstances['libreddit'].includes(protocolHost))
-    newUrl = 'https://reddit.com';
-  else if (redditInstances['teddit'].includes(protocolHost))
-    newUrl = 'https://reddit.com';
+  else if (redditInstances['libreddit'].includes(protocolHost) || redditInstances['teddit'].includes(protocolHost)) {
+    if (tabUrl.pathname.startsWith('/img')) {
+      newUrl = "https://i.redd.it"
+      tabUrl.href = tabUrl.href.replace("/img", "")
+    }
+    else
+      newUrl = 'https://reddit.com';
+  }
   else if (searchEngineInstances.includes(protocolHost))
     newUrl = 'https://google.com';
   else if (simplyTranslateInstances.includes(protocolHost))

@@ -3,40 +3,42 @@ import commonHelper from "../../assets/javascripts/helpers/common.js";
 import shared from "./shared.js";
 
 
-const wikipediaInstances = wikipediaHelper.redirects;
+const wikilessInstances = wikipediaHelper.redirects;
 
-let wikipediaInstance = document.getElementById("wikipedia-instance");
-
-let disableWikipedia = document.getElementById("disable-wikipedia");
+let wikipediaInstanceElement = document.getElementById("wikipedia-instance");
+let disableWikipediaElement = document.getElementById("disable-wikipedia");
+let wikilessRandomPoolElement = document.getElementById("wikiless-random-pool");
 
 browser.storage.sync.get(
     [
         "wikipediaInstance",
         "disableWikipedia",
+        "wikilessRandomPool"
     ],
     (result) => {
-        wikipediaInstance.value = result.wikipediaInstance || "";
-
-        disableWikipedia.checked = !result.disableWikipedia;
-        let id = "wikipedia-instance"
-        let instances = wikipediaInstances
+        wikipediaInstanceElement.value = result.wikipediaInstance || "";
+        disableWikipediaElement.checked = !result.disableWikipedia;
+        wikilessRandomPoolElement.value = (result.wikilessRandomPool || commonHelper.filterInstances(wikilessInstances)).join("\n")
+        let id = "wikipedia-instance";
+        let instances = wikilessInstances;
         shared.autocompletes.push({ id: id, instances: instances })
         shared.autocomplete(document.getElementById(id), instances);
     }
 )
 
-const wikipediaInstanceChange = commonHelper.debounce(() => {
-    if (wikipediaInstance.checkValidity()) {
+wikipediaInstanceElement.addEventListener("input", commonHelper.debounce(() => {
+    if (wikipediaInstanceElement.checkValidity()) {
         browser.storage.sync.set({
-            wikipediaInstance: shared.parseURL(wikipediaInstance.value),
+            wikipediaInstance: shared.parseURL(wikipediaInstanceElement.value),
         });
     }
-}, 500);
-wikipediaInstance.addEventListener(
-    "input",
-    wikipediaInstanceChange
-);
+}, 500));
 
-disableWikipedia.addEventListener("change", (event) => {
+disableWikipediaElement.addEventListener("change", (event) => {
     browser.storage.sync.set({ disableWikipedia: !event.target.checked });
 });
+
+browser.storage.onChanged.addListener((changes) => {
+    if ("wikilessRandomPool" in changes)
+        wikilessRandomPoolElement.value = changes.wikilessRandomPool.newValue.join("\n");
+})
