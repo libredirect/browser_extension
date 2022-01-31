@@ -350,6 +350,9 @@ body.light-theme textarea:focus {
   outline: none;
 }
 
+body.light-theme a{
+  color: black;
+}
 
 section {
   background-color: var(--bg-main);
