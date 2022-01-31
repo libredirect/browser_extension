@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../stylesheets/styles.css" rel="stylesheet" />
+    <title>LibRedirect Options: Twitter</title>
+</head>
+
+<body class="option">
+
+    <section class="links">
+        <a href="general.html">General</a>
+        <a href="youtube.html" class="selected">Youtube</a>
+        <a href="twitter.html">Twitter</a>
+        <a href="instagram.html">Instagram</a>
+        <a href="reddit.html">Reddit</a>
+        <a href="search.html">Search</a>
+        <a href="translate.html">Translate</a>
+        <a href="maps.html">Maps</a>
+        <a href="wikipedia.html">Wikipedia</a>
+        <a href="medium.html">Medium</a>
+    </section>
+
+    <section class="option-block">
+        <div class="some-block option-block">
+            <h1>Enable</h1>
+            <input id="disable-invidious" type="checkbox" checked />
+        </div>
+
+        <div class="some-block option-block">
+            <h4>Instance</h4>
+            <!-- <div class="autocomplete"> -->
+            <input id="invidious-instance" type="url" data-localise-placeholder="__MSG_randomInstancePlaceholder__"
+                placeholder="Random instance (none selected)" />
+            <!-- </div> -->
+        </div>
+
+        <section class="settings-block">
+            <h4>Instance List</h4>
+            <div class="random-pool">
+                <textarea type="textarea" id="invidious-random-pool" name="invidious-random-pool"
+                    type="text"></textarea>
+                <ul id="invidious-random-pool-list"></ul>
+            </div>
+        </section>
+
+        <div class="some-block option-block">
+            <h4>Player Style</h4>
+            <select id="invidious-player-style">
+                <option value="">Invidious</option>
+                <option value="youtube">YouTube</option>
+            </select>
+        </div>
+
+        <div class="some-block option-block">
+            <h4>Dark mode</h4>
+            <input id="invidious-dark-mode" type="checkbox" checked />
+        </div>
+
+        <div class="some-block">
+            <h4>Volume: <span id="volume-value">50%</span></h4>
+            <input id="invidious-volume" name="invidious-volume" type="range" min="0" max="100" step="1" />
+        </div>
+
+        <div class="some-block option-block">
+            <h4 data-localise="__MSG_useFreeTube__">Use FreeTube over Invidious when possible</h4>
+            <input id="use-freetube" type="checkbox" checked />
+        </div>
+
+        <div class="some-block option-block">
+            <h4 data-localise="__MSG_invidiousAlwaysProxy__">Always proxy videos through Invidious</h4>
+            <input id="always-proxy" type="checkbox" checked />
+        </div>
+
+        <div class="some-block option-block">
+            <h4 data-localise="__MSG_invidiousOnlyEmbeddedVideo__">Only redirect embedded video to Invidious</h4>
+            <input id="only-embed" type="checkbox" checked />
+        </div>
+
+        <div class="some-block option-block">
+            <h4>Video Quality</h4>
+            <select id="video-quality">
+                <option value="">Default</option>
+                <option value="hd720">720p</option>
+                <option value="medium">480p</option>
+                <option value="dash">DASH (Dynamic Adaptive Streaming over HTTP)</option>
+                </option>
+            </select>
+        </div>
+
+        <div class="some-block option-block">
+            <h4>Subtitles - language codes</h4>
+            <input id="invidious-subtitles" placeholder="en, ar, es" name="invidious-subtitles" type="text" />
+        </div>
+
+        <div class="some-block option-block">
+            <h4>Automatically play video on load</h4>
+            <input id="invidious-autoplay" type="checkbox" checked />
+        </div>
+
+        <div class="some-block option-block">
+            <h4>Persist preferences (as cookie)</h4>
+            <input id="persist-invidious-prefs" type="checkbox" checked />
+        </div>
+
+
+    </section>
+
+    <script type="module" src="./youtube.js"></script>
+    <script src="../../assets/javascripts/localise.js"></script>
+</body>
+
+</html>

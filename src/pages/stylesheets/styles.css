@@ -226,8 +226,39 @@ li {
   color: var(--text);
 }
 
-.option {
-  width: 100%;
+section.option-block {
+  width: 50%;
+  margin: 0 50px;
+}
+
+body.option {
+  display: flex;
+  align-items: flex-start;
+  padding: 40px;
+}
+
+
+section.links {
+  margin: 00px 0;
+}
+
+section.links a {
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  text-decoration: none;
+  color: white;
+  margin: 20px 0;
+  font-weight: bold;
+  transition: 0.1s;
+}
+
+section.links a:hover {
+  color: var(--active);
+}
+
+section.links a.selected {
+  color: var(--active);
 }
 
 .option td {
@@ -268,8 +299,6 @@ input[type="url"]:focus {
 }
 
 /* \25BE */
-
-
 
 
 hr {

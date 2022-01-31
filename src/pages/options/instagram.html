@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../stylesheets/styles.css" rel="stylesheet" />
+</head>
+
+<body class="option">
+
+    <section class="links">
+        <a href="general.html">General</a>
+        <a href="youtube.html">Youtube</a>
+        <a href="twitter.html">Twitter</a>
+        <a href="instagram.html" class="selected">Instagram</a>
+        <a href="reddit.html">Reddit</a>
+        <a href="search.html">Search</a>
+        <a href="translate.html">Translate</a>
+        <a href="maps.html">Maps</a>
+        <a href="wikipedia.html">Wikipedia</a>
+        <a href="medium.html">Medium</a>
+    </section>
+
+    <section class="option-block">
+        <div class="some-block option-block">
+            <h1>Enable</h1>
+            <input id="disable-bibliogram" type="checkbox" checked />
+        </div>
+        <div class="some-block option-block">
+            <h4>Instance</h4>
+            <div class="autocomplete">
+                <input id="bibliogram-instance" type="url" data-localise-placeholder="__MSG_randomInstancePlaceholder__"
+                    placeholder="Random instance (none selected)" />
+            </div>
+        </div>
+
+        <section class="settings-block">
+            <h4>Instance List</h4>
+            <div class="random-pool">
+                <textarea id="bibliogram-random-pool" name="bibliogram-random-pool" type="text"></textarea>
+                <ul id="bibliogram-random-pool-list"></ul>
+            </div>
+        </section>
+
+
+    </section>
+    <script type="module" src="./instagram.js"></script>
+    <script src="../../assets/javascripts/localise.js"></script>
+</body>
+
+</html>

@@ -1,6 +1,8 @@
 
 function filterInstances(instances) {
-  return instances.filter((instance) => !instance.includes(".onion"));
+  let onionScan = instances.filter((instance) => !instance.includes(".onion"))
+  let i2pScan = onionScan.filter((instance) => !instance.includes(".i2p"))
+  return i2pScan;
 }
 
 function addHttps(instances) {
@@ -8,11 +10,10 @@ function addHttps(instances) {
 }
 
 function getRandomInstance(instances) {
-  console.info(instances.length * Math.random(), "=>", instances.length * Math.random())
   return instances[~~(instances.length * Math.random())];
 }
 
-function getInstances() {
+function updateInstances() {
   const apiEndpoint = 'https://raw.githubusercontent.com/libredirect/instances/main/data.json';
   let request = new XMLHttpRequest();
   request.open('GET', apiEndpoint, false);
@@ -20,18 +21,27 @@ function getInstances() {
 
   if (request.status === 200) {
     const instances = JSON.parse(request.responseText);
-    const list = addHttps(filterInstances(instances.nitter));
     const invidiousRandomPool = addHttps(filterInstances(instances.invidious));
+    const nitterRandomPool = addHttps(filterInstances(instances.nitter));
     const bibliogramRandomPool = addHttps(filterInstances(instances.bibliogram));
+    const tedditRandomPool = addHttps(filterInstances(instances.teddit));
+    const simplyTranslateRandomPool = addHttps(filterInstances(instances.simplyTranslate))
+    const searxRandomPool = addHttps(filterInstances(instances.simplyTranslate));
+    const whoogleRandomPool = addHttps(filterInstances(instances.whoogle));
     const wikilessRandomPool = addHttps(filterInstances(instances.wikiless));
     const scribeRandomPool = addHttps(filterInstances(instances.scribe));
     browser.storage.sync.set({
-      list,
       invidiousRandomPool,
+      nitterRandomPool,
       bibliogramRandomPool,
+      tedditRandomPool,
+      searxRandomPool,
+      whoogleRandomPool,
+      simplyTranslateRandomPool,
       wikilessRandomPool,
       scribeRandomPool
     });
+    console.info("Successfully updated Instances")
     return true;
   }
   return false;
@@ -88,7 +98,7 @@ function updateListElement(listElement, list) {
 export default {
   filterInstances,
   getRandomInstance,
-  getInstances,
+  updateInstances,
   addHttps,
   debounce,
   validURL,

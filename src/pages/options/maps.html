@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../stylesheets/styles.css" rel="stylesheet" />
+    <title>LibRedirect Options: Twitter</title>
+</head>
+
+<body class="option">
+
+    <section class="links">
+        <a href="general.html">General</a>
+        <a href="youtube.html">Youtube</a>
+        <a href="twitter.html">Twitter</a>
+        <a href="instagram.html">Instagram</a>
+        <a href="reddit.html">Reddit</a>
+        <a href="search.html">Search</a>
+        <a href="translate.html">Translate</a>
+        <a href="maps.html" class="selected">Maps</a>
+        <a href="wikipedia.html">Wikipedia</a>
+        <a href="medium.html">Medium</a>
+    </section>
+
+    <section class="option-block">
+        <div class="some-block option-block">
+            <h1>Maps (OpenStreetMap)</h1>
+            <input id="disable-osm" type="checkbox" checked />
+        </div>
+        <div class="some-block option-block">
+            <h4>Instance</h4>
+            <div class="autocomplete">
+                <input id="osm-instance" type="url" placeholder="https://openstreetmap.org" />
+            </div>
+        </div>
+    </section>
+    <script type="module" src="./maps.js"></script>
+    <script src="../../assets/javascripts/localise.js"></script>
+</body>
+
+</html>

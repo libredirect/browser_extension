@@ -51,3 +51,13 @@ wikilessRandomPoolElement.addEventListener("input", commonHelper.debounce(() => 
     browser.storage.sync.set({ wikilessRandomPool: wikilessRandomPool });
 }, 50));
 
+
+browser.storage.onChanged.addListener((changes) => {
+    if ("wikilessRandomPool" in changes) {
+        console.info("Wikiless updating");
+        console.info(changes.wikilessRandomPool.newValue)
+        wikilessRandomPool = changes.wikilessRandomPool.newValue;
+        wikilessRandomPoolElement.value = wikilessRandomPool.join("\n");
+        commonHelper.updateListElement(wikilessRandomPoolListElement, wikilessRandomPool);
+    }
+})

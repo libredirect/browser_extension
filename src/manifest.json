@@ -88,7 +88,7 @@
     }
   ],
   "options_ui": {
-    "page": "pages/options/options.html",
+    "page": "pages/options/general.html",
     "browser_style": false,
     "open_in_tab": true
   },

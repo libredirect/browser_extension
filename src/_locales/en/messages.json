@@ -31,7 +31,7 @@
     "message": "Reddit Instance",
     "description": "Label for Reddit instance field option (options)."
   },
-  "searchEngineInstance": {
+  "searchInstance": {
     "message": "Search Engine Instance",
     "description": "Label for Search Engine instance field option (options)."
   },
@@ -67,7 +67,7 @@
     "message": "Reddit Redirects",
     "description": "Label for enable/disable Reddit redirects option (options & pop-up)."
   },
-  "disableSearchEngine": {
+  "disableSearch": {
     "message": "Search Engine Redirects",
     "description": "Label for enable/disable Search Engine redirects option (options & pop-up)."
   },
@@ -79,15 +79,15 @@
     "message": "Wikipedia Redirects",
     "description": "Label for enable/disable Wikipedia redirects option (options & pop-up)."
   },
-  "alwaysProxy": {
+  "invidiousAlwaysProxy": {
     "message": "Always proxy videos through Invidious",
     "description": "Label for 'Always proxy videos through Invidious' option (options)."
   },
-  "onlyEmbeddedVideo": {
+  "invidiousOnlyEmbeddedVideo": {
     "message": "Only redirect embedded video to Invidious",
     "description": "Label for 'Only redirect embedded video to Invidious' option (options)."
   },
-  "videoQuality": {
+  "invidiousVideoQuality": {
     "message": "Invidious Video Quality",
     "description": "Label for 'Invidious Video Quality' option (options)."
   },
@@ -152,20 +152,20 @@
     "description": "Label for 'Use FreeTube over Invidious when possible' option (options)."
   },
   "nitterRandomPool": {
-    "message": "Nitter random instance pool (comma-separated)",
-    "description": "Label for 'Nitter random instance pool (comma-separated)' option (options)."
+    "message": "Nitter Instance List",
+    "description": "Label for 'Nitter Instance List' option (options)."
   },
   "scribeRandomPool": {
-    "message": "Scribe random instance pool (comma-separated)",
-    "description": "Label for 'Scribe random instance pool (comma-separated)' option (options)."
+    "message": "Scribe Instance List",
+    "description": "Label for 'Scribe Instance List' option (options)."
   },
   "invidiousRandomPool": {
-    "message": "Invidious random instance pool (comma-separated)",
-    "description": "Label for 'Invidious random instance pool (comma-separated)' option (options)."
+    "message": "Invidious Instance List",
+    "description": "Label for 'Invidious Instance List' option (options)."
   },
   "bibliogramRandomPool": {
-    "message": "Bibliogram random instance pool (comma-separated)",
-    "description": "Label for 'Bibliogram random instance pool (comma-separated)' option (options)."
+    "message": "Bibliogram Instance List",
+    "description": "Label for 'Bibliogram Instance List' option (options)."
   },
   "randomInstancePlaceholder": {
     "message": "Random instance (none selected)",

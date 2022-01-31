@@ -91,7 +91,7 @@ themeElement.addEventListener("change", (event) => {
 
 document.querySelector("#update-instances").addEventListener("click", () => {
   document.querySelector("#update-instances").innerHTML = '...';
-  if (commonHelper.getInstances())
+  if (commonHelper.updateInstances())
     document.querySelector("#update-instances").innerHTML = 'Done!';
   else
     document.querySelector("#update-instances").innerHTML = 'Failed Miserabely';

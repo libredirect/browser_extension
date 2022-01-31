@@ -27,7 +27,7 @@
     "message": "Istanza di Reddit",
     "description": "Label for Reddit instance field option (options)."
   },
-  "searchEngineInstance": {
+  "searchInstance": {
     "message": "Istanza del motore di ricerca",
     "description": "Label for Search Engine instance field option (options)."
   },
@@ -55,7 +55,7 @@
     "message": "Reindirizzamenti Reddit",
     "description": "Label for enable/disable Reddit redirects option (options & pop-up)."
   },
-  "disableSearchEngine": {
+  "disableSearch": {
     "message": "Reindirizzamenti motore di ricerca",
     "description": "Label for enable/disable Search Engine redirects option (options & pop-up)."
   },
@@ -63,15 +63,15 @@
     "message": "Reindirizzamenti SimplyTranslate",
     "description": "Label for enable/disable SimplyTranslate redirects option (options & pop-up)."
   },
-  "alwaysProxy": {
+  "invidiousAlwaysProxy": {
     "message": "Usa sempre il proxy per i video su Invidious",
     "description": "Label for 'Always proxy videos through Invidious' option (options)."
   },
-  "onlyEmbeddedVideo": {
+  "invidiousOnlyEmbeddedVideo": {
     "message": "Reindirizza solo i video incorporati verso Invidious",
     "description": "Label for 'Only redirect embedded video to Invidious' option (options)."
   },
-  "videoQuality": {
+  "invidiousVideoQuality": {
     "message": "Qualità video di Invidious",
     "description": "Label for 'Invidious Video Quality' option (options)."
   },
@@ -137,15 +137,15 @@
   },
   "nitterRandomPool": {
     "message": "Gruppo di istanze Nitter casuali (separate da virgola)",
-    "description": "Label for 'Nitter random instance pool (comma-separated)' option (options)."
+    "description": "Label for 'Nitter Instance List' option (options)."
   },
   "invidiousRandomPool": {
     "message": "Gruppo di istanze Invidious casuali (separate da virgola)",
-    "description": "Label for 'Invidious random instance pool (comma-separated)' option (options)."
+    "description": "Label for 'Invidious Instance List' option (options)."
   },
   "bibliogramRandomPool": {
     "message": "Gruppo di istanze Bibliogram casuali (separate da virgola)",
-    "description": "Label for 'Bibliogram random instance pool (comma-separated)' option (options)."
+    "description": "Label for 'Bibliogram Instance List' option (options)."
   },
   "randomInstancePlaceholder": {
     "message": "Istanza casuale (nessuna selezione)",

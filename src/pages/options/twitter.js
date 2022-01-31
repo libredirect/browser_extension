@@ -23,11 +23,11 @@ browser.storage.sync.get(
         nitterInstanceElement.value = result.nitterInstance || "";
         disableNitterElement.checked = !result.disableNitter;
         removeTwitterSWElement.checked = !result.removeTwitterSW;
-        
+
         nitterRandomPool = result.nitterRandomPool || commonHelper.filterInstances(nitterInstances)
         nitterRandomPoolElement.value = nitterRandomPool.join("\n");
         commonHelper.updateListElement(nitterRandomPoolListElement, nitterRandomPool);
-        
+
         let id = "nitter-instance"
         let instances = nitterRandomPool
         shared.autocompletes.push({ id: id, instances: instances })
@@ -56,3 +56,11 @@ nitterRandomPoolElement.addEventListener("input", commonHelper.debounce(() => {
     commonHelper.updateListElement(nitterRandomPoolListElement, nitterRandomPool);
     browser.storage.sync.set({ nitterRandomPool: nitterRandomPool });
 }, 50));
+
+browser.storage.onChanged.addListener((changes) => {
+    if ("nitterRandomPool" in changes) {
+        nitterRandomPool = changes.nitterRandomPool.newValue;
+        nitterRandomPoolElement.value = nitterRandomPool.join("\n");
+        commonHelper.updateListElement(nitterRandomPoolListElement, nitterRandomPool);
+    }
+})

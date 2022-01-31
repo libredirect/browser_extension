@@ -51,3 +51,11 @@ scribeRandomPoolElement.addEventListener("input", commonHelper.debounce(() => {
     commonHelper.updateListElement(scribeRandomPoolListElement, scribeRandomPool);
     browser.storage.sync.set({ scribeRandomPool: scribeRandomPool });
 }, 50));
+
+browser.storage.onChanged.addListener((changes) => {
+    if ("scribeRandomPool" in changes) {
+        scribeRandomPool = changes.scribeRandomPool.newValue;
+        scribeRandomPoolElement.value = scribeRandomPool.join("\n");
+        commonHelper.updateListElement(scribeRandomPoolListElement, scribeRandomPool);
+    }
+})

@@ -27,7 +27,7 @@
     "message": "Reddit Servisi",
     "description": "Reddit Servisi seçeneği için etiket (seçenekler)."
   },
-  "searchEngineInstance": {
+  "searchInstance": {
     "message": "Arama Motoru Servisi",
     "description": "Arama Motoru Servisi seçeneği için etiket (seçenekler)."
   },
@@ -51,19 +51,19 @@
     "message": "Reddit Yönlendirmesi",
     "description": "Reddit Yönlendirmesi'ni etkinleştirme/devre dışı bırakma seçeneği için etiket (seçenekler & açılır pencere)."
   },
-  "disableSearchEngine": {
+  "disableSearch": {
     "message": "Arama Motoru Yönlendirmesi",
     "description": "Arama Motoru Yönlendirmesi'ni etkinleştirme/devre dışı bırakma seçeneği için etiket (seçenekler & açılır pencere)."
   },
-  "alwaysProxy": {
+  "invidiousAlwaysProxy": {
     "message": "Videoları her zaman Invidious üzerinden geçir",
     "description": "'Videoları her zaman Invidious üzerinden geçir' seçeneği için etiket (seçenekler)."
   },
-  "onlyEmbeddedVideo": {
+  "invidiousOnlyEmbeddedVideo": {
     "message": "Sadece siteye gömülü videoları Invidious'a yönlendir",
     "description": "'Sadece siteye gömülü videoları Invidious'a yönlendir' seçeneği için etiket (seçenekler)."
   },
-  "videoQuality": {
+  "invidiousVideoQuality": {
     "message": "Invidious Video Kalitesi",
     "description": "'Invidious Video Kalitesi' seçeneği için etiket (seçenekler)."
   },

@@ -15,9 +15,9 @@ let invidiousAutoplayElement = document.getElementById("invidious-autoplay");
 let invidiousRandomPoolElement = document.getElementById("invidious-random-pool");
 let invidiousRandomPoolListElement = document.getElementById('invidious-random-pool-list');
 let useFreeTubeElement = document.getElementById("use-freetube");
-let alwaysProxyElement = document.getElementById("always-proxy");
-let onlyEmbeddedVideoElement = document.getElementById("only-embed");
-let videoQualityElement = document.getElementById("video-quality");
+let invidiousAlwaysProxyElement = document.getElementById("always-proxy");
+let invidiousOnlyEmbeddedVideoElement = document.getElementById("only-embed");
+let invidiousVideoQualityElement = document.getElementById("video-quality");
 
 let invidiousRandomPool;
 
@@ -33,9 +33,9 @@ browser.storage.sync.get(
         "invidiousAutoplay",
         "invidiousRandomPool",
         "useFreeTube",
-        "alwaysProxy",
-        "onlyEmbeddedVideo",
-        "videoQuality",
+        "invidiousAlwaysProxy",
+        "invidiousOnlyEmbeddedVideo",
+        "invidiousVideoQuality",
     ],
     (result) => {
         invidiousInstanceElement.value = result.invidiousInstance || "";
@@ -47,9 +47,9 @@ browser.storage.sync.get(
         invidiousPlayerStyleElement.value = result.invidiousPlayerStyle || "";
         invidiousSubtitlesElement.value = result.invidiousSubtitles || "";
         useFreeTubeElement.checked = result.useFreeTube;
-        onlyEmbeddedVideoElement.checked = result.onlyEmbeddedVideo;
-        alwaysProxyElement.checked = result.alwaysProxy;
-        videoQualityElement.value = result.videoQuality || "";
+        invidiousOnlyEmbeddedVideoElement.checked = result.invidiousOnlyEmbeddedVideo;
+        invidiousAlwaysProxyElement.checked = result.invidiousAlwaysProxy;
+        invidiousVideoQualityElement.value = result.invidiousVideoQuality || "";
         invidiousAutoplayElement.checked = result.invidiousAutoplay;
 
         invidiousRandomPool = result.invidiousRandomPool || commonHelper.filterInstances(invidiousInstances)
@@ -118,19 +118,22 @@ useFreeTubeElement.addEventListener("change", (event) => {
     browser.storage.sync.set({ useFreeTube: event.target.checked });
 });
 
-alwaysProxyElement.addEventListener("change", (event) => {
-    browser.storage.sync.set({ alwaysProxy: event.target.checked });
+invidiousAlwaysProxyElement.addEventListener("change", (event) => {
+    browser.storage.sync.set({ invidiousAlwaysProxy: event.target.checked });
 });
 
-onlyEmbeddedVideoElement.addEventListener("change", (event) => {
-    browser.storage.sync.set({ onlyEmbeddedVideo: event.target.checked });
+invidiousOnlyEmbeddedVideoElement.addEventListener("change", (event) => {
+    browser.storage.sync.set({ invidiousOnlyEmbeddedVideo: event.target.checked });
 });
 
-videoQualityElement.addEventListener("change", (event) => {
-    browser.storage.sync.set({ videoQuality: event.target.options[videoQualityElement.selectedIndex].value });
+invidiousVideoQualityElement.addEventListener("change", (event) => {
+    browser.storage.sync.set({ invidiousVideoQuality: event.target.options[invidiousVideoQualityElement.selectedIndex].value });
 });
 
 browser.storage.onChanged.addListener((changes) => {
-    if ("invidiousRandomPool" in changes)
-        invidiousRandomPool.value = changes.invidiousRandomPool.newValue;
+    if ("invidiousRandomPool" in changes) {
+        invidiousRandomPool = changes.invidiousRandomPool.newValue;
+        invidiousRandomPoolElement.value = invidiousRandomPool.join("\n");
+        commonHelper.updateListElement(invidiousRandomPoolListElement, invidiousRandomPool);
+    }
 })

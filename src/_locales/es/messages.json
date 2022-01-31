@@ -27,7 +27,7 @@
     "message": "Instancia de Reddit",
     "description": "Etiqueta del campo para la instancia de Reddit (opciones)."
   },
-  "searchEngineInstance": {
+  "searchInstance": {
     "message": "Instancia de Buscador",
     "description": "Etiqueta del campo para la instancia de Buscador (opciones)."
   },
@@ -59,7 +59,7 @@
     "message": "Redirecciones de Reddit",
     "description": "Etiqueta para activar/desactivar la opción de redirecciones de Reddit (opciones y pop-up)."
   },
-  "disableSearchEngine": {
+  "disableSearch": {
     "message": "Redirecciones de Buscador",
     "description": "Etiqueta para activar/desactivar la opción de redirecciones de Buscador (opciones y pop-up)."
   },
@@ -71,15 +71,15 @@
     "message": "Redirecciones de Wikipedia",
     "description": "Etiqueta para activar/desactivar la opción de redirecciones de Wikipedia (opciones y pop-up)."
   },
-  "alwaysProxy": {
+  "invidiousAlwaysProxy": {
     "message": "Siempre usar el proxy de Invidious para videos",
     "description": "Etiqueta para la opción de 'Siempre usar el proxy de Invidious para videos' (opciones)."
   },
-  "onlyEmbeddedVideo": {
+  "invidiousOnlyEmbeddedVideo": {
     "message": "Solo redirigir los videos incrustados a Invidious",
     "description": "Etiqueta para la opción de 'Solo redirigir los videos incrustados a Invidious' (opciones)."
   },
-  "videoQuality": {
+  "invidiousVideoQuality": {
     "message": "Calidad de Video de Invidious",
     "description": "Etiqueta para la opción de 'Calidad de Video de Invidious' (opciones)."
   },

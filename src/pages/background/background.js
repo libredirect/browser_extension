@@ -36,7 +36,7 @@ const redditBypassPaths = redditHelper.bypassPaths;
 const redditDefault = redditHelper.redirects[0];
 
 const googleSearchRegex = searchHelper.targets;
-const searchEngineInstances = searchHelper.redirects;
+const searchInstances = searchHelper.redirects;
 const simplyTranslateInstances = googleTranslateHelper.redirects;
 const simplyTranslateDefault = simplyTranslateInstances[0];
 const googleTranslateDomains = googleTranslateHelper.targets;
@@ -50,7 +50,7 @@ let disableBibliogram;
 let disableOsm;
 let disableReddit;
 let disableScribe;
-let disableSearchEngine;
+let disableSearch;
 let disableSimplyTranslate;
 let disableWikipedia;
 let nitterInstance;
@@ -59,12 +59,12 @@ let bibliogramInstance;
 let osmInstance;
 let scribeInstance;
 let redditInstance;
-let searchEngineInstance;
+let searchInstance;
 let simplyTranslateInstance;
 let wikipediaInstance;
-let alwaysProxy;
-let onlyEmbeddedVideo;
-let videoQuality;
+let invidiousAlwaysProxy;
+let invidiousOnlyEmbeddedVideo;
+let invidiousVideoQuality;
 let invidiousDarkMode;
 let invidiousVolume;
 let invidiousPlayerStyle;
@@ -80,6 +80,7 @@ let scribeRandomPool;
 
 let exceptions;
 let redditFrontend;
+let searchFrontend;
 
 window.browser = window.browser || window.chrome;
 
@@ -91,7 +92,7 @@ browser.storage.sync.get(
     "osmInstance",
     "redditInstance",
     "scribeInstance",
-    "searchEngineInstance",
+    "searchInstance",
     "simplyTranslateInstance",
     "wikipediaInstance",
     "disableNitter",
@@ -100,12 +101,12 @@ browser.storage.sync.get(
     "disableOsm",
     "disableReddit",
     "disableScribe",
-    "disableSearchEngine",
+    "disableSearch",
     "disableSimplyTranslate",
     "disableWikipedia",
-    "alwaysProxy",
-    "onlyEmbeddedVideo",
-    "videoQuality",
+    "invidiousAlwaysProxy",
+    "invidiousOnlyEmbeddedVideo",
+    "invidiousVideoQuality",
     "invidiousDarkMode",
     "invidiousVolume",
     "invidiousPlayerStyle",
@@ -119,13 +120,15 @@ browser.storage.sync.get(
     "wikilessRandomPool",
     "exceptions",
     "redditFrontend",
+    "searchFrontend",
   ],
   (result) => {
     osmInstance = result.osmInstance || osmDefault;
     disableOsm = result.disableOsm;
 
-    searchEngineInstance = result.searchEngineInstance;
-    disableSearchEngine = result.disableSearchEngine;
+    searchInstance = result.searchInstance;
+    disableSearch = result.disableSearch;
+    searchFrontend = result.searchFrontend;
 
     simplyTranslateInstance = result.simplyTranslateInstance || simplyTranslateDefault;
     disableSimplyTranslate = result.disableSimplyTranslate;
@@ -144,12 +147,12 @@ browser.storage.sync.get(
       : [];
 
 
-    onlyEmbeddedVideo = result.onlyEmbeddedVideo;
+    invidiousOnlyEmbeddedVideo = result.invidiousOnlyEmbeddedVideo;
     invidiousDarkMode = result.invidiousDarkMode;
     disableInvidious = result.disableInvidious;
-    alwaysProxy = result.alwaysProxy;
+    invidiousAlwaysProxy = result.invidiousAlwaysProxy;
     invidiousInstance = result.invidiousInstance;
-    videoQuality = result.videoQuality;
+    invidiousVideoQuality = result.invidiousVideoQuality;
     invidiousVolume = result.invidiousVolume;
     invidiousPlayerStyle = result.invidiousPlayerStyle;
     invidiousSubtitles = result.invidiousSubtitles || "";
@@ -186,107 +189,49 @@ browser.storage.sync.get(
 );
 
 browser.storage.onChanged.addListener((changes) => {
-  if ("nitterInstance" in changes)
-    nitterInstance = changes.nitterInstance.newValue;
+  if ("invidiousInstance" in changes) invidiousInstance = changes.invidiousInstance.newValue;
+  if ("disableInvidious" in changes) disableInvidious = changes.disableInvidious.newValue;
+  if ("invidiousAlwaysProxy" in changes) invidiousAlwaysProxy = changes.invidiousAlwaysProxy.newValue;
+  if ("invidiousOnlyEmbeddedVideo" in changes) invidiousOnlyEmbeddedVideo = changes.invidiousOnlyEmbeddedVideo.newValue;
+  if ("invidiousVideoQuality" in changes) invidiousVideoQuality = changes.invidiousVideoQuality.newValue;
+  if ("invidiousDarkMode" in changes) invidiousDarkMode = changes.invidiousDarkMode.newValue;
+  if ("invidiousVolume" in changes) invidiousVolume = changes.invidiousVolume.newValue;
+  if ("invidiousPlayerStyle" in changes) invidiousPlayerStyle = changes.invidiousPlayerStyle.newValue;
+  if ("invidiousSubtitles" in changes) invidiousSubtitles = changes.invidiousSubtitles.newValue;
+  if ("invidiousAutoplay" in changes) invidiousAutoplay = changes.invidiousAutoplay.newValue;
+  if ("useFreeTube" in changes) useFreeTube = changes.useFreeTube.newValue;
+  if ("invidiousRandomPool" in changes) invidiousRandomPool = changes.invidiousRandomPool.newValue;
 
-  if ("invidiousInstance" in changes)
-    invidiousInstance = changes.invidiousInstance.newValue;
+  if ("nitterInstance" in changes) nitterInstance = changes.nitterInstance.newValue;
+  if ("disableNitter" in changes) disableNitter = changes.disableNitter.newValue;
+  if ("nitterRandomPool" in changes) nitterRandomPool = changes.nitterRandomPool.newValue;
 
-  if ("bibliogramInstance" in changes)
-    bibliogramInstance = changes.bibliogramInstance.newValue;
+  if ("bibliogramInstance" in changes) bibliogramInstance = changes.bibliogramInstance.newValue;
+  if ("disableBibliogram" in changes) disableBibliogram = changes.disableBibliogram.newValue;
+  if ("bibliogramRandomPool" in changes) bibliogramRandomPool = changes.bibliogramRandomPool.newValue;
 
-  if ("osmInstance" in changes)
-    osmInstance = changes.osmInstance.newValue || osmDefault;
+  if ("redditInstance" in changes) redditInstance = changes.redditInstance.newValue || redditDefault;
+  if ("disableReddit" in changes) disableReddit = changes.disableReddit.newValue;
+  if ("redditFrontend" in changes) redditFrontend = changes.redditFrontend.newValue
 
-  if ("simplyTranslateInstance" in changes)
-    simplyTranslateInstance = changes.simplyTranslateInstance.newValue || simplyTranslateDefault;
+  if ("searchInstance" in changes) searchInstance = changes.searchInstance.newValue;
+  if ("disableSearch" in changes) disableSearch = changes.disableSearch.newValue;
+  if ("searchFrontend" in changes) searchFrontend = changes.searchFrontend.newValue
 
-  if ("wikipediaInstance" in changes)
-    wikipediaInstance = changes.wikipediaInstance.newValue || wikipediaDefault;
+  if ("simplyTranslateInstance" in changes) simplyTranslateInstance = changes.simplyTranslateInstance.newValue || simplyTranslateDefault;
+  if ("disableSimplyTranslate" in changes) disableSimplyTranslate = changes.disableSimplyTranslate.newValue;
 
-  if ("redditInstance" in changes)
-    redditInstance = changes.redditInstance.newValue || redditDefault;
+  if ("osmInstance" in changes) osmInstance = changes.osmInstance.newValue || osmDefault;
+  if ("disableOsm" in changes) disableOsm = changes.disableOsm.newValue;
 
-  if ("redditFrontend" in changes)
-    redditFrontend = changes.redditFrontend.newValue
+  if ("wikipediaInstance" in changes) wikipediaInstance = changes.wikipediaInstance.newValue || wikipediaDefault;
+  if ("disableWikipedia" in changes) disableWikipedia = changes.disableWikipedia.newValue;
 
-  if ("scribeInstance" in changes)
-    scribeInstance = changes.scribeInstance.newValue || scribeDefault;
+  if ("scribeInstance" in changes) scribeInstance = changes.scribeInstance.newValue || scribeDefault;
+  if ("disableScribe" in changes) disableScribe = changes.disableScribe.newValue;
+  if ("scribeRandomPool" in changes) scribeRandomPool = changes.scribeRandomPool.newValue;
 
-  if ("searchEngineInstance" in changes)
-    searchEngineInstance = changes.searchEngineInstance.newValue;
-
-  if ("disableNitter" in changes)
-    disableNitter = changes.disableNitter.newValue;
-
-  if ("disableScribe" in changes)
-    disableScribe = changes.disableScribe.newValue;
-
-  if ("disableInvidious" in changes)
-    disableInvidious = changes.disableInvidious.newValue;
-
-  if ("disableBibliogram" in changes)
-    disableBibliogram = changes.disableBibliogram.newValue;
-
-  if ("disableOsm" in changes)
-    disableOsm = changes.disableOsm.newValue;
-
-  if ("disableReddit" in changes)
-    disableReddit = changes.disableReddit.newValue;
-
-  if ("disableSearchEngine" in changes)
-    disableSearchEngine = changes.disableSearchEngine.newValue;
-
-  if ("disableSimplyTranslate" in changes)
-    disableSimplyTranslate = changes.disableSimplyTranslate.newValue;
-
-  if ("disableWikipedia" in changes)
-    disableWikipedia = changes.disableWikipedia.newValue;
-
-  if ("alwaysProxy" in changes)
-    alwaysProxy = changes.alwaysProxy.newValue;
-
-  if ("onlyEmbeddedVideo" in changes)
-    onlyEmbeddedVideo = changes.onlyEmbeddedVideo.newValue;
-
-  if ("videoQuality" in changes)
-    videoQuality = changes.videoQuality.newValue;
-
-  if ("invidiousDarkMode" in changes)
-    invidiousDarkMode = changes.invidiousDarkMode.newValue;
-
-  if ("invidiousVolume" in changes)
-    invidiousVolume = changes.invidiousVolume.newValue;
-
-  if ("invidiousPlayerStyle" in changes)
-    invidiousPlayerStyle = changes.invidiousPlayerStyle.newValue;
-
-  if ("invidiousSubtitles" in changes)
-    invidiousSubtitles = changes.invidiousSubtitles.newValue;
-
-  if ("invidiousAutoplay" in changes)
-    invidiousAutoplay = changes.invidiousAutoplay.newValue;
-
-  if ("useFreeTube" in changes)
-    useFreeTube = changes.useFreeTube.newValue;
-
-  if ("nitterRandomPool" in changes)
-    nitterRandomPool = changes.nitterRandomPool.newValue;
-
-  if ("invidiousRandomPool" in changes)
-    invidiousRandomPool = changes.invidiousRandomPool.newValue;
-
-  if ("bibliogramRandomPool" in changes)
-    bibliogramRandomPool = changes.bibliogramRandomPool.newValue;
-
-  if ("scribeRandomPool" in changes)
-    scribeRandomPool = changes.scribeRandomPool.newValue;
-
-  if ("exceptions" in changes)
-    exceptions = changes.exceptions.newValue.map((e) => {
-      return new RegExp(e);
-    });
-
+  if ("exceptions" in changes) exceptions = changes.exceptions.newValue.map((e) => new RegExp(e));
 });
 
 function isException(url, initiator) {
@@ -320,18 +265,18 @@ function redirectYouTube(url, initiator, type) {
     // Avoid redirecting `studio.youtube.com`
     return null;
   }
-  if (onlyEmbeddedVideo && type !== "sub_frame") {
+  if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") {
     return null;
   }
   if (useFreeTube && type === "main_frame") {
     return `freetube://${url}`;
   }
   // Apply settings
-  if (alwaysProxy) {
+  if (invidiousAlwaysProxy) {
     url.searchParams.append("local", true);
   }
-  if (videoQuality) {
-    url.searchParams.append("quality", videoQuality);
+  if (invidiousVideoQuality) {
+    url.searchParams.append("quality", invidiousVideoQuality);
   }
   if (invidiousDarkMode) {
     url.searchParams.append("dark_mode", invidiousDarkMode);
@@ -508,8 +453,6 @@ function redirectGoogleMaps(url, initiator) {
 }
 
 function redirectReddit(url, initiator, type) {
-  console.info("reddit is redirecting");
-  console.log(redditFrontend)
 
   if (disableReddit || isException(url, initiator))
     return null;
@@ -570,19 +513,33 @@ function redirectMedium(url, initiator) {
   return `${scribeInstance || commonHelper.getRandomInstance(scribeRandomPool)}${url.pathname}${url.search}`;
 }
 
-function redirectSearchEngine(url, initiator) {
-  if (disableSearchEngine || isException(url, initiator))
+function redirectSearch(url, initiator) {
+  if (disableSearch || isException(url, initiator)) {
+    console.log("disableSearch:", disableSearch)
     return null;
+  }
 
-  const searchEngine = searchEngineInstance || commonHelper.getRandomInstance(searchEngineInstances);
-  let search = "";
+  let search;
+  let searchQ;
+  console.log("searchFrontend", searchFrontend);
+  if (searchFrontend == 'searx') {
+    search = searchInstance || commonHelper.getRandomInstance(searchInstances["searx"]);
+    searchQ = "/"
+  }
+  if (searchFrontend == 'whoogle') {
+    search = searchInstance || commonHelper.getRandomInstance(searchInstances["whoogle"]);
+    searchQ = "/search"
+  }
+
+  let searchQuery = "";
   url.search
     .slice(1)
     .split("&")
     .forEach(function (input) {
-      if (input.startsWith("q=")) search = input;
+      if (input.startsWith("q=")) searchQuery = input;
     });
-  return `${searchEngine.link}${searchEngine.q}?${search}`;
+  console.info("It will direct to:", `${search}${searchQ}?${searchQuery}`)
+  return `${search}${searchQ}?${searchQuery}`;
 }
 
 function redirectGoogleTranslate(url, initiator) {
@@ -634,24 +591,23 @@ browser.webRequest.onBeforeRequest.addListener(
       initiator = new URL(details.initiator);
 
     let newUrl;
-    if (youtubeDomains.includes(url.host))
-      newUrl = redirectYouTube(url, initiator, details.type)
-    else if (twitterDomains.includes(url.host))
-      newUrl = redirectTwitter(url, initiator);
-    else if (instagramDomains.includes(url.host))
-      newUrl = redirectInstagram(url, initiator, details.type);
-    else if (url.href.match(googleMapsRegex))
-      newUrl = redirectGoogleMaps(url, initiator);
-    else if (redditDomains.includes(url.host))
-      newUrl = redirectReddit(url, initiator, details.type);
-    else if (mediumDomains.some((rx) => rx.test(url.host)))
-      newUrl = redirectMedium(url, initiator);
-    else if (url.href.match(googleSearchRegex))
-      newUrl = redirectSearchEngine(url, initiator);
-    else if (googleTranslateDomains.includes(url.host))
-      newUrl = redirectGoogleTranslate(url, initiator);
-    else if (url.host.match(wikipediaRegex))
-      newUrl = redirectWikipedia(url, initiator);
+    if (youtubeDomains.includes(url.host)) newUrl = redirectYouTube(url, initiator, details.type)
+
+    else if (twitterDomains.includes(url.host)) newUrl = redirectTwitter(url, initiator);
+
+    else if (instagramDomains.includes(url.host)) newUrl = redirectInstagram(url, initiator, details.type);
+
+    else if (url.href.match(googleMapsRegex)) newUrl = redirectGoogleMaps(url, initiator);
+
+    else if (redditDomains.includes(url.host)) newUrl = redirectReddit(url, initiator, details.type);
+
+    else if (mediumDomains.some((rx) => rx.test(url.host))) newUrl = redirectMedium(url, initiator);
+
+    else if (googleSearchRegex.some((rx) => rx.test(url.href))) newUrl = redirectSearch(url, initiator);
+
+    else if (googleTranslateDomains.includes(url.host)) newUrl = redirectGoogleTranslate(url, initiator);
+
+    else if (url.host.match(wikipediaRegex)) newUrl = redirectWikipedia(url, initiator);
 
     if (newUrl) {
       console.info("Redirecting", url.href, "=>", newUrl);
@@ -675,11 +631,12 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
   mightyList.push(...invidiousInstances);
   mightyList.push(...nitterInstances);
   mightyList.push(...bibliogramInstances);
-  mightyList.push(...redditInstances['libreddit']);
-  mightyList.push(...redditInstances['teddit']);
-  mightyList.push(redditInstances['desktop']);
-  mightyList.push(redditInstances['mobile']);
-  mightyList.push(...searchEngineInstances);
+  mightyList.push(...redditInstances.libreddit);
+  mightyList.push(...redditInstances.teddit);
+  mightyList.push(redditInstances.desktop);
+  mightyList.push(redditInstances.mobile);
+  mightyList.push(...searchInstances.searx);
+  mightyList.push(...searchInstances.whoogle);
   mightyList.push(...simplyTranslateInstances);
   mightyList.push(...scribeInstances);
   mightyList.push(...wikipediaInstances);
@@ -706,7 +663,7 @@ browser.pageAction.onClicked.addListener((tab) => {
     else
       newUrl = 'https://reddit.com';
   }
-  else if (searchEngineInstances.includes(protocolHost))
+  else if (searchInstances.searx.includes(protocolHost) || searchInstances.whoogle.includes(protocolHost))
     newUrl = 'https://google.com';
   else if (simplyTranslateInstances.includes(protocolHost))
     newUrl = 'https://translate.google.com';
@@ -724,36 +681,29 @@ browser.pageAction.onClicked.addListener((tab) => {
 browser.runtime.onInstalled.addListener((details) => {
   browser.storage.sync.get(
     [
-      "disableSearchEngine",
+      "disableSearch",
       "disableSimplyTranslate",
       "disableWikipedia",
-      "redditFrontend"
+      "redditFrontend",
+      "searchFrontend",
     ],
     (result) => {
-      if (result.disableSearchEngine === undefined)
-        browser.storage.sync.set({
-          disableSearchEngine: true,
-        });
 
-      if (result.disableSimplyTranslate === undefined)
-        browser.storage.sync.set({
-          disableSimplyTranslate: true,
-        });
+      if (result.disableSearch === undefined) browser.storage.sync.set({ disableSearch: true });
 
-      if (result.disableWikipedia === undefined)
-        browser.storage.sync.set({
-          disableWikipedia: true,
-        });
+      if (result.disableSimplyTranslate === undefined) browser.storage.sync.set({ disableSimplyTranslate: true });
 
-      if (result.redditFrontend === undefined)
-        browser.storage.sync.set({
-          redditFrontend: 'libreddit'
-        })
+      if (result.disableWikipedia === undefined) browser.storage.sync.set({ disableWikipedia: true });
+
+      if (result.redditFrontend === undefined) browser.storage.sync.set({ redditFrontend: 'libreddit' })
+
+      if (result.searchFrontend === undefined) browser.storage.sync.set({ searchFrontend: 'searx' })
+
     }
   );
   if (details.reason === "update") {
     browser.storage.sync.get(
-      ["whitelist", "exceptions", "invidiousInstance", "disableSearchEngine"],
+      ["whitelist", "exceptions", "invidiousInstance", "disableSearch"],
       (result) => {
         if (result.whitelist) {
           let whitelist = result.whitelist.map((e) =>

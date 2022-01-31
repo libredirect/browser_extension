@@ -7,7 +7,7 @@ let disableInvidious = document.querySelector("#disable-invidious");
 let disableBibliogram = document.querySelector("#disable-bibliogram");
 let disableOsm = document.querySelector("#disable-osm");
 let disableReddit = document.querySelector("#disable-reddit");
-let disableSearchEngine = document.querySelector("#disable-searchEngine");
+let disableSearch = document.querySelector("#disable-search");
 let disableSimplyTranslate = document.querySelector("#disable-simplyTranslate");
 let disableWikipedia = document.querySelector("#disable-wikipedia");
 let disableScribe = document.querySelector("#disable-scribe");
@@ -21,7 +21,7 @@ browser.storage.sync.get(
     "disableBibliogram",
     "disableOsm",
     "disableReddit",
-    "disableSearchEngine",
+    "disableSearch",
     "disableSimplyTranslate",
     "disableWikipedia",
     "disableScribe",
@@ -34,7 +34,7 @@ browser.storage.sync.get(
     disableBibliogram.checked = !result.disableBibliogram;
     disableOsm.checked = !result.disableOsm;
     disableReddit.checked = !result.disableReddit;
-    disableSearchEngine.checked = !result.disableSearchEngine;
+    disableSearch.checked = !result.disableSearch;
     disableSimplyTranslate.checked = !result.disableSimplyTranslate;
     disableWikipedia.checked = !result.disableWikipedia;
     disableScribe.checked = !result.disableScribe;
@@ -61,8 +61,8 @@ disableReddit.addEventListener("change", (event) => {
   browser.storage.sync.set({ disableReddit: !event.target.checked });
 });
 
-disableSearchEngine.addEventListener("change", (event) => {
-  browser.storage.sync.set({ disableSearchEngine: !event.target.checked });
+disableSearch.addEventListener("change", (event) => {
+  browser.storage.sync.set({ disableSearch: !event.target.checked });
 });
 
 disableSimplyTranslate.addEventListener("change", (event) => {
@@ -80,7 +80,7 @@ disableScribe.addEventListener("change", (event) => {
 
 document.querySelector("#update-instances").addEventListener("click", () => {
   document.querySelector("#update-instances").innerHTML = '...';
-  if (commonHelper.getInstances())
+  if (commonHelper.updateInstances())
     document.querySelector("#update-instances").innerHTML = 'Done!';
   else
     document.querySelector("#update-instances").innerHTML = 'Failed Miserabely';

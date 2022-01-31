@@ -39,15 +39,15 @@
     "message": "Redirection vers OpenStreetMap",
     "description": "Étiquette pour activer / désactiver l'option de redirection vers OpenStreetMap (options et pop-up)."
   },
-  "alwaysProxy": {
+  "invidiousAlwaysProxy": {
     "message": "Toujours transiter par proxy les vidéos via Invidious",
     "description": "Libellé pour l'option 'Toujours transiter par proxy les vidéos via Invidious' (options)."
   },
-  "onlyEmbeddedVideo": {
+  "invidiousOnlyEmbeddedVideo": {
     "message": "Rediriger uniquement les vidéos intégrées vers Invidious",
     "description": "Libellé pour l'option 'Rediriger uniquement les vidéos intégrées vers Invidious' (options)."
   },
-  "videoQuality": {
+  "invidiousVideoQuality": {
     "message": "Qualité des vidéos Invidious",
     "description": "Libellé pour l'option 'Qualité des vidéos Invidious' (options)."
   },

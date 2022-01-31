@@ -47,3 +47,12 @@ bibliogramRandomPoolElement.addEventListener("input", commonHelper.debounce(() =
     commonHelper.updateListElement(bibliogramRandomPoolListElement, bibliogramRandomPool);
     browser.storage.sync.set({ bibliogramRandomPool: bibliogramRandomPool });
 }, 50));
+
+
+browser.storage.onChanged.addListener((changes) => {
+    if ("bibliogramRandomPool" in changes) {
+        bibliogramRandomPool = changes.bibliogramRandomPool.newValue;
+        bibliogramRandomPoolElement.value = bibliogramRandomPool.join("\n");
+        commonHelper.updateListElement(bibliogramRandomPoolListElement, bibliogramRandomPool);
+    }
+})

@@ -39,15 +39,15 @@
     "message": "Przekierowanie OpenStreetMap",
     "description": "Etykieta dla włączenia/wyłączenia opcji przekierowania OpenStreetMap (opcje i okno pop-up)."
   },
-  "alwaysProxy": {
+  "invidiousAlwaysProxy": {
     "message": "Zawsze buforuj i wyświetlaj odnośniki wideo z YouTube poprzez Invidious",
     "description": "Etykieta dla opcji 'Zawsze buforuj i wyświetlaj odnośniki wideo poprzez Invidious'."
   },
-  "onlyEmbeddedVideo": {
+  "invidiousOnlyEmbeddedVideo": {
     "message": "Jedynie przekieruj odnośniki wideo do instancji Invidious",
     "description": "Etykieta dla opcji 'Jedynie przekieruj odnośniki wideo do instancji Invidious'."
   },
-  "videoQuality": {
+  "invidiousVideoQuality": {
     "message": "Jakość wideo Invidious",
     "description": "Etykieta dla opcji 'Jakość wideo Invidious'."
   },

@@ -27,7 +27,7 @@
     "message": "Сервис Reddit",
     "description": "Название настройки (в настройках) поля сервиса Reddit."
   },
-  "searchEngineInstance": {
+  "searchInstance": {
     "message": "Сервис поисковой системы",
     "description": "Название настройки (в настройках) поля сервиса поисковой системы."
   },
@@ -55,7 +55,7 @@
     "message": "Перенаправление Reddit",
     "description": "Название настройки для включения/выключения перенаправления Reddit (в настройках и всплывающем окне)."
   },
-  "disableSearchEngine": {
+  "disableSearch": {
     "message": "Перенаправление поисковой системы",
     "description": "Название настройки для включения/выключения перенаправления поисковой системы (в настройках и всплывающем окне)."
   },
@@ -67,15 +67,15 @@
     "message": "Тема",
     "description": "Название настройки для 'Тема' (в настройках)."
   },
-  "alwaysProxy": {
+  "invidiousAlwaysProxy": {
     "message": "Всегда проксировать видео через Invidious",
     "description": "Название настройки для 'Всегда проксировать видео через Invidious' (в настройках)."
   },
-  "onlyEmbeddedVideo": {
+  "invidiousOnlyEmbeddedVideo": {
     "message": "Перенаправлять только встроенные видео на Invidious",
     "description": "Название настройки для 'Перенаправлять только встроенные видео на Invidious' (в настройках)."
   },
-  "videoQuality": {
+  "invidiousVideoQuality": {
     "message": "Качество видео Invidious",
     "description": "Название настройки для 'Качество видео Invidious' (в настройках)."
   },

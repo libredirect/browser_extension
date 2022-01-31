@@ -39,10 +39,10 @@ browser.storage.sync.get(
         tedditRandomPoolElement.value = tedditRandomPool.join("\n");
         commonHelper.updateListElement(tedditRandomPoolListElement, tedditRandomPool);
 
-        let id = "reddit-instance";
-        let instances = redditInstances;
-        shared.autocompletes.push({ id: id, instances: instances })
-        shared.autocomplete(document.getElementById(id), instances);
+        // let id = "reddit-instance";
+        // let instances = redditInstances;
+        // shared.autocompletes.push({ id: id, instances: instances })
+        // shared.autocomplete(document.getElementById(id), instances);
     }
 )
 
@@ -75,3 +75,17 @@ tedditRandomPoolElement.addEventListener("input", commonHelper.debounce(() => {
     commonHelper.updateListElement(tedditRandomPoolListElement, tedditRandomPool);
     browser.storage.sync.set({ tedditRandomPool: tedditRandomPool });
 }, 50));
+
+browser.storage.onChanged.addListener((changes) => {
+    if ("libredditRandomPool" in changes) {
+        libredditRandomPool = changes.libredditRandomPool.newValue;
+        libredditRandomPoolElement.value = libredditRandomPool.join("\n");
+        commonHelper.updateListElement(libredditRandomPoolListElement, libredditRandomPool);
+    }
+
+    if ("tedditRandomPool" in changes) {
+        tedditRandomPool = changes.tedditRandomPool.newValue;
+        tedditRandomPoolElement.value = tedditRandomPool.join("\n");
+        commonHelper.updateListElement(tedditRandomPoolListElement, tedditRandomPool);
+    }
+})

@@ -17,12 +17,12 @@ function getCookie() {
 }
 
 browser.storage.sync.get(
-  ["alwaysProxy", "videoQuality", "invidiousDarkMode", "persistInvidiousPrefs"],
+  ["invidiousAlwaysProxy", "invidiousVideoQuality", "invidiousDarkMode", "persistInvidiousPrefs"],
   (result) => {
     if (result.persistInvidiousPrefs) {
       const prefs = getCookie();
-      prefs.local = result.alwaysProxy;
-      prefs.quality = result.videoQuality;
+      prefs.local = result.invidiousAlwaysProxy;
+      prefs.quality = result.invidiousVideoQuality;
       prefs.dark_mode = result.invidiousDarkMode;
       document.cookie = `PREFS=${encodeURIComponent(JSON.stringify(prefs))}`;
     }
