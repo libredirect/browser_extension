@@ -102,7 +102,10 @@
 
       <section class="settings-block">
         <h4>Random Instance Pool</h4>
-        <textarea type="textarea" id="invidious-random-pool" name="invidious-random-pool" type="text"></textarea>
+        <div class="random-pool">
+          <textarea type="textarea" id="invidious-random-pool" name="invidious-random-pool" type="text"></textarea>
+          <ul id="invidious-random-pool-list"></ul>
+        </div>
       </section>
 
       <div class="some-block option-block">
@@ -183,15 +186,16 @@
       </div>
 
       <section class="settings-block">
-        <h4>Random instance pool (comma-separated)</h4>
-        <textarea id="nitter-random-pool" name="nitter-random-pool" type="text"></textarea>
+        <h4>Random instance pool</h4>
+        <div class="random-pool">
+          <textarea id="nitter-random-pool" type="text"></textarea>
+          <ul id="nitter-random-pool-list"></ul>
+        </div>
       </section>
       <div class="some-block option-block">
         <h4 data-localise="__MSG_removeTwitterSW__">Proactively remove Twitter service worker</h4>
         <input id="remove-twitter-sw" type="checkbox" checked />
       </div>
-
-
 
     </section>
 
@@ -209,8 +213,11 @@
       </div>
 
       <section class="settings-block">
-        <h4>Random instance pool (comma-separated)</h4>
-        <textarea id="bibliogram-random-pool" name="bibliogram-random-pool" type="text"></textarea>
+        <h4>Random instance pool</h4>
+        <div class="random-pool">
+          <textarea id="bibliogram-random-pool" name="bibliogram-random-pool" type="text"></textarea>
+          <ul id="bibliogram-random-pool-list"></ul>
+        </div>
       </section>
 
 
@@ -230,11 +237,6 @@
         </div>
       </div>
 
-      <section class="settings-block">
-        <h4>Random instance pool (comma-separated)</h4>
-        <textarea id="reddit-random-pool" name="reddit-random-pool" type="text"></textarea>
-      </section>
-
       <div class="some-block option-block">
         <h4>Frontend</h4>
         <select id="reddit-frontend">
@@ -242,6 +244,22 @@
           <option value="teddit">Teddit</option>
         </select>
       </div>
+
+      <section class="settings-block">
+        <h4>LibReddit Random instance pool</h4>
+        <div class="random-pool">
+          <textarea id="libreddit-random-pool" type="text"></textarea>
+          <ul id="libreddit-random-pool-list"></ul>
+        </div>
+      </section>
+
+      <section class="settings-block">
+        <h4>Teddit Random instance pool</h4>
+        <div class="random-pool">
+          <textarea id="teddit-random-pool" type="text"></textarea>
+          <ul id="teddit-random-pool-list"></ul>
+        </div>
+      </section>
 
     </section>
 
@@ -305,7 +323,10 @@
 
       <section class="settings-block">
         <h4>Random instance pool</h4>
-        <textarea id="wikiless-random-pool" type="text"></textarea>
+        <div class="random-pool">
+          <textarea id="wikiless-random-pool" type="text"></textarea>
+          <ul id="wikiless-random-pool-list"></ul>
+        </div>
       </section>
 
     </section>
@@ -325,7 +346,10 @@
       </div>
       <section class="settings-block">
         <h4>Random instance pool (comma-separated)</h4>
-        <textarea id="scribe-random-pool" type="text"></textarea>
+        <div class="random-pool">
+          <textarea id="scribe-random-pool" type="text"></textarea>
+          <ul id="scribe-random-pool-list"></ul>
+        </div>
       </section>
     </section>
 

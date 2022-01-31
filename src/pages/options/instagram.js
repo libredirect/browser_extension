@@ -8,6 +8,9 @@ const bibliogramInstances = instagramHelper.redirects;
 let bibliogramInstanceElement = document.getElementById("bibliogram-instance");
 let disableBibliogramElement = document.getElementById("disable-bibliogram");
 let bibliogramRandomPoolElement = document.getElementById("bibliogram-random-pool");
+let bibliogramRandomPoolListElement = document.getElementById("bibliogram-random-pool-list");
+
+let bibliogramRandomPool;
 
 browser.storage.sync.get(
     [
@@ -18,7 +21,11 @@ browser.storage.sync.get(
     (result) => {
         bibliogramInstanceElement.value = result.bibliogramInstance || "";
         disableBibliogramElement.checked = !result.disableBibliogram;
-        bibliogramRandomPoolElement.value = result.bibliogramRandomPool || commonHelper.filterInstances(bibliogramInstances);
+
+
+        bibliogramRandomPool = result.bibliogramRandomPool || commonHelper.filterInstances(bibliogramInstances)
+        bibliogramRandomPoolElement.value = bibliogramRandomPool.join("\n");
+        commonHelper.updateListElement(bibliogramRandomPoolListElement, bibliogramRandomPool);
         let id = "bibliogram-instance";
         let instances = bibliogramRandomPoolElement.value.split(',')
         shared.autocompletes.push({ id: id, instances: instances })
@@ -36,6 +43,7 @@ disableBibliogramElement.addEventListener("change", (event) => {
 });
 
 bibliogramRandomPoolElement.addEventListener("input", commonHelper.debounce(() => {
-    browser.storage.sync.set({ bibliogramRandomPool: bibliogramRandomPoolElement.value });
-}, 500));
-
+    bibliogramRandomPool = commonHelper.filterList(bibliogramRandomPoolElement.value.split("\n"))
+    commonHelper.updateListElement(bibliogramRandomPoolListElement, bibliogramRandomPool);
+    browser.storage.sync.set({ bibliogramRandomPool: bibliogramRandomPool });
+}, 50));

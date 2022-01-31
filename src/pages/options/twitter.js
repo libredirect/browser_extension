@@ -5,9 +5,12 @@ import shared from "./shared.js";
 const nitterInstances = twitterHelper.redirects;
 
 let nitterInstanceElement = document.getElementById("nitter-instance");
+let removeTwitterSWElement = document.getElementById("remove-twitter-sw");
 let disableNitterElement = document.getElementById("disable-nitter");
 let nitterRandomPoolElement = document.getElementById("nitter-random-pool");
-let removeTwitterSWElement = document.getElementById("remove-twitter-sw");
+let nitterRandomPoolListElement = document.getElementById('nitter-random-pool-list');
+
+let nitterRandomPool
 
 browser.storage.sync.get(
     [
@@ -19,10 +22,14 @@ browser.storage.sync.get(
     (result) => {
         nitterInstanceElement.value = result.nitterInstance || "";
         disableNitterElement.checked = !result.disableNitter;
-        nitterRandomPoolElement.value = result.nitterRandomPool || commonHelper.filterInstances(nitterInstances);
         removeTwitterSWElement.checked = !result.removeTwitterSW;
+        
+        nitterRandomPool = result.nitterRandomPool || commonHelper.filterInstances(nitterInstances)
+        nitterRandomPoolElement.value = nitterRandomPool.join("\n");
+        commonHelper.updateListElement(nitterRandomPoolListElement, nitterRandomPool);
+        
         let id = "nitter-instance"
-        let instances = nitterRandomPoolElement.value.split(',')
+        let instances = nitterRandomPool
         shared.autocompletes.push({ id: id, instances: instances })
         shared.autocomplete(document.getElementById(id), instances);
     }
@@ -45,5 +52,7 @@ removeTwitterSWElement.addEventListener("change", (event) => {
 });
 
 nitterRandomPoolElement.addEventListener("input", commonHelper.debounce(() => {
-    browser.storage.sync.set({ nitterRandomPool: nitterRandomPoolElement.value });
-}, 500));
+    nitterRandomPool = commonHelper.filterList(nitterRandomPoolElement.value.split("\n"))
+    commonHelper.updateListElement(nitterRandomPoolListElement, nitterRandomPool);
+    browser.storage.sync.set({ nitterRandomPool: nitterRandomPool });
+}, 50));

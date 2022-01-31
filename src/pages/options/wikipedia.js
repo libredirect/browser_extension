@@ -8,6 +8,9 @@ const wikilessInstances = wikipediaHelper.redirects;
 let wikipediaInstanceElement = document.getElementById("wikipedia-instance");
 let disableWikipediaElement = document.getElementById("disable-wikipedia");
 let wikilessRandomPoolElement = document.getElementById("wikiless-random-pool");
+let wikilessRandomPoolListElement = document.getElementById('wikiless-random-pool-list');
+
+let wikilessRandomPool
 
 browser.storage.sync.get(
     [
@@ -18,7 +21,11 @@ browser.storage.sync.get(
     (result) => {
         wikipediaInstanceElement.value = result.wikipediaInstance || "";
         disableWikipediaElement.checked = !result.disableWikipedia;
-        wikilessRandomPoolElement.value = (result.wikilessRandomPool || commonHelper.filterInstances(wikilessInstances)).join("\n")
+
+        wikilessRandomPool = result.wikilessRandomPool || commonHelper.filterInstances(wikilessInstances)
+        wikilessRandomPoolElement.value = wikilessRandomPool.join("\n")
+        commonHelper.updateListElement(wikilessRandomPoolListElement, wikilessRandomPool);
+
         let id = "wikipedia-instance";
         let instances = wikilessInstances;
         shared.autocompletes.push({ id: id, instances: instances })
@@ -38,7 +45,9 @@ disableWikipediaElement.addEventListener("change", (event) => {
     browser.storage.sync.set({ disableWikipedia: !event.target.checked });
 });
 
-browser.storage.onChanged.addListener((changes) => {
-    if ("wikilessRandomPool" in changes)
-        wikilessRandomPoolElement.value = changes.wikilessRandomPool.newValue.join("\n");
-})
+wikilessRandomPoolElement.addEventListener("input", commonHelper.debounce(() => {
+    wikilessRandomPool = commonHelper.filterList(wikilessRandomPoolElement.value.split("\n"))
+    commonHelper.updateListElement(wikilessRandomPoolListElement, wikilessRandomPool);
+    browser.storage.sync.set({ wikilessRandomPool: wikilessRandomPool });
+}, 50));
+

@@ -20,13 +20,13 @@ function getInstances() {
 
   if (request.status === 200) {
     const instances = JSON.parse(request.responseText);
-    const nitterRandomPool = addHttps(filterInstances(instances.nitter));
+    const list = addHttps(filterInstances(instances.nitter));
     const invidiousRandomPool = addHttps(filterInstances(instances.invidious));
     const bibliogramRandomPool = addHttps(filterInstances(instances.bibliogram));
     const wikilessRandomPool = addHttps(filterInstances(instances.wikiless));
     const scribeRandomPool = addHttps(filterInstances(instances.scribe));
     browser.storage.sync.set({
-      nitterRandomPool,
+      list,
       invidiousRandomPool,
       bibliogramRandomPool,
       wikilessRandomPool,
@@ -53,10 +53,45 @@ function debounce(func, wait, immediate) {
   };
 }
 
+function validURL(str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+    '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+  return !!pattern.test(str);
+}
+
+function filterList(oldList) {
+
+  oldList.filter((x) => x.trim() != "");
+  let newList = [];
+  oldList.forEach((c) => {
+    if (!newList.includes(c.trim()))
+      newList.push(c.trim());
+  });
+  newList = newList.filter(validURL)
+  return newList;
+}
+
+function updateListElement(listElement, list) {
+  while (listElement.firstChild)
+    listElement.removeChild(listElement.firstChild);
+  list.forEach(element => {
+    let entry = document.createElement('li');
+    entry.appendChild(document.createTextNode(element));
+    listElement.appendChild(entry);
+  });
+}
+
 export default {
   filterInstances,
   getRandomInstance,
   getInstances,
   addHttps,
-  debounce
+  debounce,
+  validURL,
+  filterList,
+  updateListElement
 };

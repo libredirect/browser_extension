@@ -13,10 +13,13 @@ let invidiousPlayerStyleElement = document.getElementById("invidious-player-styl
 let invidiousSubtitlesElement = document.getElementById("invidious-subtitles");
 let invidiousAutoplayElement = document.getElementById("invidious-autoplay");
 let invidiousRandomPoolElement = document.getElementById("invidious-random-pool");
+let invidiousRandomPoolListElement = document.getElementById('invidious-random-pool-list');
 let useFreeTubeElement = document.getElementById("use-freetube");
 let alwaysProxyElement = document.getElementById("always-proxy");
 let onlyEmbeddedVideoElement = document.getElementById("only-embed");
 let videoQualityElement = document.getElementById("video-quality");
+
+let invidiousRandomPool;
 
 browser.storage.sync.get(
     [
@@ -43,14 +46,18 @@ browser.storage.sync.get(
         document.querySelector("#volume-value").textContent = result.invidiousVolume ? `${result.invidiousVolume}%` : " - ";
         invidiousPlayerStyleElement.value = result.invidiousPlayerStyle || "";
         invidiousSubtitlesElement.value = result.invidiousSubtitles || "";
-        invidiousAutoplayElement.checked = result.invidiousAutoplay;
-        invidiousRandomPoolElement.value = (result.invidiousRandomPool || commonHelper.filterInstances(invidiousInstances)).join("\n");
         useFreeTubeElement.checked = result.useFreeTube;
         onlyEmbeddedVideoElement.checked = result.onlyEmbeddedVideo;
         alwaysProxyElement.checked = result.alwaysProxy;
         videoQualityElement.value = result.videoQuality || "";
+        invidiousAutoplayElement.checked = result.invidiousAutoplay;
+
+        invidiousRandomPool = result.invidiousRandomPool || commonHelper.filterInstances(invidiousInstances)
+        invidiousRandomPoolElement.value = invidiousRandomPool.join("\n");
+        commonHelper.updateListElement(invidiousRandomPoolListElement, invidiousRandomPool);
+
         let id = "invidious-instance"
-        let instances = invidiousRandomPoolElement.value.split('\n');
+        let instances = invidiousRandomPool;
         shared.autocompletes.push({ id: id, instances: instances });
         shared.autocomplete(document.getElementById(id), instances);
     }
@@ -100,10 +107,11 @@ invidiousAutoplayElement.addEventListener("change", (event) => {
     browser.storage.sync.set({ invidiousAutoplay: event.target.checked });
 });
 
-invidiousRandomPool.addEventListener("input",
-    commonHelper.debounce(() => {
-        browser.storage.sync.set({ invidiousRandomPool: invidiousRandomPool.value.split("\n") });
-    }, 500)
+invidiousRandomPoolElement.addEventListener("input", commonHelper.debounce(() => {
+    invidiousRandomPool = commonHelper.filterList(invidiousRandomPoolElement.value.split("\n"))
+    commonHelper.updateListElement(invidiousRandomPoolListElement, invidiousRandomPool);
+    browser.storage.sync.set({ invidiousRandomPool: invidiousRandomPool });
+}, 50)
 );
 
 useFreeTubeElement.addEventListener("change", (event) => {

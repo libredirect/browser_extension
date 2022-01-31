@@ -164,7 +164,7 @@ browser.storage.sync.get(
     disableNitter = result.disableNitter;
     nitterRandomPool =
       result.nitterRandomPool
-        ? result.nitterRandomPool.split(",")
+        ? result.nitterRandomPool
         : commonHelper.filterInstances(nitterInstances);
 
 
@@ -172,7 +172,7 @@ browser.storage.sync.get(
     disableBibliogram = result.disableBibliogram;
     bibliogramRandomPool =
       result.bibliogramRandomPool
-        ? result.bibliogramRandomPool.split(",")
+        ? result.bibliogramRandomPool
         : commonHelper.filterInstances(bibliogramInstances);
 
 
@@ -180,7 +180,7 @@ browser.storage.sync.get(
     disableScribe = result.disableScribe;
     scribeRandomPool =
       result.scribeRandomPool
-        ? result.scribeRandomPool.split(",")
+        ? result.scribeRandomPool
         : commonHelper.filterInstances(scribeInstances);
   }
 );

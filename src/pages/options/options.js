@@ -42,7 +42,6 @@ browser.storage.sync.get(
     exceptions = result.exceptions || [];
     exceptions.forEach(prependExceptionsItem);
     shared.autocompletes.forEach((value) => {
-
     });
   }
 );
