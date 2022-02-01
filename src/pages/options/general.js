@@ -1,5 +1,6 @@
 "use strict";
 
+import data from "../../assets/javascripts/data.js";
 import commonHelper from "../../assets/javascripts/helpers/common.js";
 
 import shared from "./shared.js";
@@ -7,7 +8,6 @@ import shared from "./shared.js";
 const domparser = new DOMParser();
 
 let themeElement = document.getElementById("theme");
-let exceptions;
 
 window.browser = window.browser || window.chrome;
 
@@ -37,10 +37,11 @@ browser.storage.sync.get(
     "theme",
   ],
   (result) => {
+    data.theme = result.theme || "";
     themeElement.value = result.theme || "";
     if (result.theme) document.body.classList.add(result.theme);
-    exceptions = result.exceptions || [];
-    exceptions.forEach(prependExceptionsItem);
+    data.exceptions = result.exceptions || [];
+    data.exceptions.forEach(prependExceptionsItem);
     shared.autocompletes.forEach((value) => {
     });
   }

@@ -1,80 +1,78 @@
 "use strict";
 
 import commonHelper from "../../assets/javascripts/helpers/common.js";
+import data from "../../assets/javascripts/data.js";
 
-let disableNitter = document.querySelector("#disable-nitter");
-let disableInvidious = document.querySelector("#disable-invidious");
-let disableBibliogram = document.querySelector("#disable-bibliogram");
-let disableOsm = document.querySelector("#disable-osm");
-let disableReddit = document.querySelector("#disable-reddit");
-let disableSearch = document.querySelector("#disable-search");
-let disableSimplyTranslate = document.querySelector("#disable-simplyTranslate");
-let disableWikipedia = document.querySelector("#disable-wikipedia");
-let disableScribe = document.querySelector("#disable-scribe");
+let disableNitterElement = document.querySelector("#disable-nitter");
+let disableInvidiousElement = document.querySelector("#disable-invidious");
+let disableBibliogramElement = document.querySelector("#disable-bibliogram");
+let disableOsmElement = document.querySelector("#disable-osm");
+let disableRedditElement = document.querySelector("#disable-reddit");
+let disableSearchElement = document.querySelector("#disable-search");
+let disableSimplyTranslateElement = document.querySelector("#disable-simplyTranslate");
+let disableWikipediaElement = document.querySelector("#disable-wikipedia");
+let disableScribeElement = document.querySelector("#disable-scribe");
 
 window.browser = window.browser || window.chrome;
 
-browser.storage.sync.get(
-  [
-    "disableNitter",
-    "disableInvidious",
-    "disableBibliogram",
-    "disableOsm",
-    "disableReddit",
-    "disableSearch",
-    "disableSimplyTranslate",
-    "disableWikipedia",
-    "disableScribe",
-    "theme",
-  ],
-  (result) => {
-    if (result.theme) document.body.classList.add(result.theme);
-    disableNitter.checked = !result.disableNitter;
-    disableInvidious.checked = !result.disableInvidious;
-    disableBibliogram.checked = !result.disableBibliogram;
-    disableOsm.checked = !result.disableOsm;
-    disableReddit.checked = !result.disableReddit;
-    disableSearch.checked = !result.disableSearch;
-    disableSimplyTranslate.checked = !result.disableSimplyTranslate;
-    disableWikipedia.checked = !result.disableWikipedia;
-    disableScribe.checked = !result.disableScribe;
-  }
-);
+// Complete change to the global variables in data.js
 
-disableNitter.addEventListener("change", (event) => {
-  browser.storage.sync.set({ disableNitter: !event.target.checked });
+if (data.theme) document.body.classList.add(data.theme);
+disableNitterElement.checked = !data.disableNitter;
+disableInvidiousElement.checked = !data.disableInvidious;
+disableBibliogramElement.checked = !data.disableBibliogram;
+disableOsmElement.checked = !data.disableOsm;
+disableRedditElement.checked = !data.disableReddit;
+disableSearchElement.checked = !data.disableSearch;
+disableSimplyTranslateElement.checked = !data.disableSimplyTranslate;
+disableWikipediaElement.checked = !data.disableWikipedia;
+disableScribeElement.checked = !data.disableScribe;
+
+
+disableNitterElement.addEventListener("change", (event) => {
+  data.disableNitter = !event.target.checked;
+  browser.storage.sync.set({ disableNitter: data.disableNitter });
 });
 
-disableInvidious.addEventListener("change", (event) => {
-  browser.storage.sync.set({ disableInvidious: !event.target.checked });
+disableInvidiousElement.addEventListener("change", (event) => {
+  data.disableInvidious = !event.target.checked;
+  browser.storage.sync.set({ disableInvidious: data.disableInvidious });
 });
 
-disableBibliogram.addEventListener("change", (event) => {
-  browser.storage.sync.set({ disableBibliogram: !event.target.checked });
+disableBibliogramElement.addEventListener("change", (event) => {
+  data.disableBibliogram = !event.target.checked;
+  browser.storage.sync.set({ disableBibliogram: data.disableBibliogram });
 });
 
-disableOsm.addEventListener("change", (event) => {
-  browser.storage.sync.set({ disableOsm: !event.target.checked });
+disableOsmElement.addEventListener("change", (event) => {
+  data.disableOsm = !event.target.checked;
+  browser.storage.sync.set({ disableOsm: data.disableOsm });
 });
 
-disableReddit.addEventListener("change", (event) => {
-  browser.storage.sync.set({ disableReddit: !event.target.checked });
+disableRedditElement.addEventListener("change", (event) => {
+  data.disableReddit = !event.target.checked;
+  browser.storage.sync.set({ disableReddit: data.disableReddit });
 });
 
-disableSearch.addEventListener("change", (event) => {
-  browser.storage.sync.set({ disableSearch: !event.target.checked });
+disableSearchElement.addEventListener("change", (event) => {
+  data.disableSearch = !event.target.checked;
+  console.log("DisableSearch", data.disableSearch)
+  browser.storage.sync.set({ disableSearch: data.disableSearch });
 });
 
-disableSimplyTranslate.addEventListener("change", (event) => {
-  browser.storage.sync.set({ disableSimplyTranslate: !event.target.checked });
+disableSimplyTranslateElement.addEventListener("change", (event) => {
+  data.disableSimplyTranslate = !event.target.checked;
+  browser.storage.sync.set({ disableSimplyTranslate: data.disableSimplyTranslate });
 });
 
-disableWikipedia.addEventListener("change", (event) => {
-  browser.storage.sync.set({ disableWikipedia: !event.target.checked });
+disableWikipediaElement.addEventListener("change", (event) => {
+  data.disableWikipedia = !event.target.checked;
+  browser.storage.sync.set({ disableWikipedia: data.disableWikipedia });
 });
 
-disableScribe.addEventListener("change", (event) => {
-  browser.storage.sync.set({ disableScribe: !event.target.checked });
+disableScribeElement.addEventListener("change", (event) => {
+  data.disableScribe = !event.target.checked;
+  browser.storage.sync.set({ disableScribe: data.disableScribe });
 });
 
 

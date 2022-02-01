@@ -1,10 +1,6 @@
 import youtubeHelper from "../../assets/javascripts/helpers/youtube.js";
 import commonHelper from "../../assets/javascripts/helpers/common.js";
-import shared from "./shared.js";
 
-const invidiousInstances = youtubeHelper.redirects;
-
-let invidiousInstanceElement = document.getElementById("invidious-instance");
 let disableInvidiousElement = document.getElementById("disable-invidious");
 let invidiousDarkModeElement = document.getElementById("invidious-dark-mode");
 let persistInvidiousPrefsElement = document.getElementById("persist-invidious-prefs");
@@ -12,128 +8,75 @@ let invidiousVolumeElement = document.getElementById("invidious-volume");
 let invidiousPlayerStyleElement = document.getElementById("invidious-player-style");
 let invidiousSubtitlesElement = document.getElementById("invidious-subtitles");
 let invidiousAutoplayElement = document.getElementById("invidious-autoplay");
-let invidiousRandomPoolElement = document.getElementById("invidious-random-pool");
-let invidiousRandomPoolListElement = document.getElementById('invidious-random-pool-list');
 let useFreeTubeElement = document.getElementById("use-freetube");
 let invidiousAlwaysProxyElement = document.getElementById("always-proxy");
 let invidiousOnlyEmbeddedVideoElement = document.getElementById("only-embed");
 let invidiousVideoQualityElement = document.getElementById("video-quality");
+let invidiousVolumeValueElement = document.querySelector("#volume-value");
 
-let invidiousRandomPool;
+youtubeHelper.init().then(() => {
+    disableInvidiousElement.checked = !youtubeHelper.getDisableInvidious();
+    invidiousDarkModeElement.checked = youtubeHelper.getInvidiousDarkMode();
+    persistInvidiousPrefsElement.checked = youtubeHelper.getPersistInvidiousPrefs();
+    invidiousVolumeElement.value = youtubeHelper.getInvidiousVolume();
+    invidiousVolumeValueElement.textContent = youtubeHelper.getInvidiousVolume() ? `${youtubeHelper.getInvidiousVolume()}%` : " - ";
+    invidiousPlayerStyleElement.value = youtubeHelper.getInvidiousPlayerStyle() || "";
+    invidiousSubtitlesElement.value = youtubeHelper.getInvidiousSubtitles() || "";
+    useFreeTubeElement.checked = youtubeHelper.getUseFreeTube();
+    invidiousOnlyEmbeddedVideoElement.checked = youtubeHelper.getInvidiousOnlyEmbeddedVideo();
+    invidiousAlwaysProxyElement.checked = youtubeHelper.getInvidiousAlwaysProxy();
+    invidiousVideoQualityElement.value = youtubeHelper.getInvidiousVideoQuality() || "";
+    invidiousAutoplayElement.checked = youtubeHelper.getInvidiousAutoplay();
+});
 
-browser.storage.sync.get(
-    [
-        "invidiousInstance",
-        "disableInvidious",
-        "invidiousDarkMode",
-        "persistInvidiousPrefs",
-        "invidiousVolume",
-        "invidiousPlayerStyle",
-        "invidiousSubtitles",
-        "invidiousAutoplay",
-        "invidiousRandomPool",
-        "useFreeTube",
-        "invidiousAlwaysProxy",
-        "invidiousOnlyEmbeddedVideo",
-        "invidiousVideoQuality",
-    ],
-    (result) => {
-        invidiousInstanceElement.value = result.invidiousInstance || "";
-        disableInvidiousElement.checked = !result.disableInvidious;
-        invidiousDarkModeElement.checked = result.invidiousDarkMode;
-        persistInvidiousPrefsElement.checked = result.persistInvidiousPrefs;
-        invidiousVolumeElement.value = result.invidiousVolume;
-        document.querySelector("#volume-value").textContent = result.invidiousVolume ? `${result.invidiousVolume}%` : " - ";
-        invidiousPlayerStyleElement.value = result.invidiousPlayerStyle || "";
-        invidiousSubtitlesElement.value = result.invidiousSubtitles || "";
-        useFreeTubeElement.checked = result.useFreeTube;
-        invidiousOnlyEmbeddedVideoElement.checked = result.invidiousOnlyEmbeddedVideo;
-        invidiousAlwaysProxyElement.checked = result.invidiousAlwaysProxy;
-        invidiousVideoQualityElement.value = result.invidiousVideoQuality || "";
-        invidiousAutoplayElement.checked = result.invidiousAutoplay;
 
-        invidiousRandomPool = result.invidiousRandomPool || commonHelper.filterInstances(invidiousInstances)
-        invidiousRandomPoolElement.value = invidiousRandomPool.join("\n");
-        commonHelper.updateListElement(invidiousRandomPoolListElement, invidiousRandomPool);
-
-        let id = "invidious-instance"
-        let instances = invidiousRandomPool;
-        shared.autocompletes.push({ id: id, instances: instances });
-        shared.autocomplete(document.getElementById(id), instances);
-    }
-)
-
-invidiousInstanceElement.addEventListener("input",
-    commonHelper.debounce(() => {
-        if (invidiousInstanceElement.checkValidity())
-            browser.storage.sync.set({ invidiousInstance: shared.parseURL(invidiousInstanceElement.value) });
-    }, 500)
+disableInvidiousElement.addEventListener("change",
+    (event) => youtubeHelper.setDisableInvidious(!event.target.checked)
 );
 
-disableInvidiousElement.addEventListener("change", (event) => {
-    browser.storage.sync.set({ disableInvidious: !event.target.checked });
-});
+invidiousDarkModeElement.addEventListener("change",
+    (event) => youtubeHelper.setInvidiousDarkMode(event.target.checked)
+);
 
-invidiousDarkModeElement.addEventListener("change", (event) => {
-    console.info("InvidiousDarkMode", event.target.checked);
-    browser.storage.sync.set({ invidiousDarkMode: event.target.checked });
-});
-
-persistInvidiousPrefsElement.addEventListener("change", (event) => {
-    console.info("Persist preferences (as cookie)", event.target.checked);
-    browser.storage.sync.set({ persistInvidiousPrefs: event.target.checked });
-});
+persistInvidiousPrefsElement.addEventListener("change",
+    (event) => youtubeHelper.setPersistInvidiousPrefs(event.target.checked)
+);
 
 invidiousVolumeElement.addEventListener("input",
     commonHelper.debounce(() => {
-        document.querySelector("#volume-value").textContent = `${invidiousVolumeElement.value}%`;
-        browser.storage.sync.set({ invidiousVolume: invidiousVolumeElement.value });
+        youtubeHelper.setInvidiousVolume(invidiousVolumeElement.value);
+        console.info("youtubeHelper.invidiousVolume:", youtubeHelper.getInvidiousVolume());
+        invidiousVolumeValueElement.textContent = `${invidiousVolumeElement.value}%`;
     }, 1)
 );
 
-invidiousPlayerStyleElement.addEventListener("change", (event) => {
-    browser.storage.sync.set({
-        invidiousPlayerStyle: event.target.options[invidiousPlayerStyleElement.selectedIndex].value,
-    });
-});
+invidiousPlayerStyleElement.addEventListener("change",
+    (event) => youtubeHelper.setInvidiousPlayerStyle(event.target.options[invidiousPlayerStyleElement.selectedIndex].value)
+);
 
 invidiousSubtitlesElement.addEventListener("input",
     commonHelper.debounce(() => {
-        browser.storage.sync.set({ invidiousSubtitles: invidiousSubtitlesElement.value });
+        youtubeHelper.setInvidiousSubtitles(invidiousSubtitlesElement.value)
     }, 500)
 );
 
-invidiousAutoplayElement.addEventListener("change", (event) => {
-    browser.storage.sync.set({ invidiousAutoplay: event.target.checked });
-});
-
-invidiousRandomPoolElement.addEventListener("input", commonHelper.debounce(() => {
-    invidiousRandomPool = commonHelper.filterList(invidiousRandomPoolElement.value.split("\n"))
-    commonHelper.updateListElement(invidiousRandomPoolListElement, invidiousRandomPool);
-    browser.storage.sync.set({ invidiousRandomPool: invidiousRandomPool });
-}, 50)
+invidiousAutoplayElement.addEventListener("change",
+    (event) => youtubeHelper.setInvidiousAutoplay(event.target.checked)
 );
 
-useFreeTubeElement.addEventListener("change", (event) => {
-    browser.storage.sync.set({ useFreeTube: event.target.checked });
-});
 
-invidiousAlwaysProxyElement.addEventListener("change", (event) => {
-    browser.storage.sync.set({ invidiousAlwaysProxy: event.target.checked });
-});
+useFreeTubeElement.addEventListener("change",
+    (event) => youtubeHelper.setUseFreeTube(event.target.checked)
+);
 
-invidiousOnlyEmbeddedVideoElement.addEventListener("change", (event) => {
-    browser.storage.sync.set({ invidiousOnlyEmbeddedVideo: event.target.checked });
-});
+invidiousAlwaysProxyElement.addEventListener("change",
+    (event) => youtubeHelper.setInvidiousAlwaysProxy(event.target.checked)
+);
 
-invidiousVideoQualityElement.addEventListener("change", (event) => {
-    browser.storage.sync.set({ invidiousVideoQuality: event.target.options[invidiousVideoQualityElement.selectedIndex].value });
-});
+invidiousOnlyEmbeddedVideoElement.addEventListener("change",
+    (event) => youtubeHelper.setInvidiousOnlyEmbeddedVideo(event.target.checked)
+);
 
-browser.storage.onChanged.addListener((changes) => {
-    if ("invidiousRandomPool" in changes) {
-        invidiousRandomPool = changes.invidiousRandomPool.newValue;
-        invidiousRandomPoolElement.value = invidiousRandomPool.join("\n");
-        commonHelper.updateListElement(invidiousRandomPoolListElement, invidiousRandomPool);
-    }
-})
+invidiousVideoQualityElement.addEventListener("change",
+    (event) => youtubeHelper.setInvidiousVideoQuality(event.target.options[invidiousVideoQualityElement.selectedIndex].value)
+);

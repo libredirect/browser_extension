@@ -1,3 +1,14 @@
+import twitterHelper from "./twitter.js";
+import youtubeHelper from "./youtube.js";
+import instagramHelper from "./instagram.js";
+import mediumHelper from "./medium.js";
+import redditHelper from "./reddit.js";
+import searchHelper from "./google-search.js";
+import googleTranslateHelper from "./google-translate.js";
+import wikipediaHelper from "./wikipedia.js";
+import mapsHelper from "./google-maps.js";
+import medium from "./medium.js";
+
 
 function filterInstances(instances) {
   let onionScan = instances.filter((instance) => !instance.includes(".onion"))
@@ -21,27 +32,16 @@ function updateInstances() {
 
   if (request.status === 200) {
     const instances = JSON.parse(request.responseText);
-    const invidiousRandomPool = addHttps(filterInstances(instances.invidious));
-    const nitterRandomPool = addHttps(filterInstances(instances.nitter));
-    const bibliogramRandomPool = addHttps(filterInstances(instances.bibliogram));
-    const tedditRandomPool = addHttps(filterInstances(instances.teddit));
-    const simplyTranslateRandomPool = addHttps(filterInstances(instances.simplyTranslate))
-    const searxRandomPool = addHttps(filterInstances(instances.simplyTranslate));
-    const whoogleRandomPool = addHttps(filterInstances(instances.whoogle));
-    const wikilessRandomPool = addHttps(filterInstances(instances.wikiless));
-    const scribeRandomPool = addHttps(filterInstances(instances.scribe));
-    browser.storage.sync.set({
-      invidiousRandomPool,
-      nitterRandomPool,
-      bibliogramRandomPool,
-      tedditRandomPool,
-      searxRandomPool,
-      whoogleRandomPool,
-      simplyTranslateRandomPool,
-      wikilessRandomPool,
-      scribeRandomPool
-    });
-    console.info("Successfully updated Instances")
+    youtubeHelper.redirects = addHttps(filterInstances(instances.invidious));
+    twitterHelper.redirects = addHttps(filterInstances(instances.nitter));
+    instagramHelper.redirects = addHttps(filterInstances(instances.bibliogram));
+    redditHelper.redirects.libreddit = addHttps(filterInstances(instances.simplyTranslate))
+    redditHelper.redirects.teddit = addHttps(filterInstances(instances.teddit));
+    searchHelper.redirects.searx = addHttps(filterInstances(instances.simplyTranslate));
+    searchHelper.redirects.whoogle = addHttps(filterInstances(instances.whoogle));
+    wikipediaHelper.redirects = addHttps(filterInstances(instances.wikiless));
+    mediumHelper.redirects = addHttps(filterInstances(instances.scribe));
+    console.info("Successfully updated Instances");
     return true;
   }
   return false;
@@ -95,6 +95,17 @@ function updateListElement(listElement, list) {
   });
 }
 
+function isFirefox() {
+  return typeof InstallTrigger !== "undefined";
+}
+
+function isException(url, initiator) {
+  return (
+    data.exceptions.some((regex) => regex.test(url.href)) ||
+    (initiator && data.exceptions.some((regex) => regex.test(initiator.href)))
+  );
+}
+
 export default {
   filterInstances,
   getRandomInstance,
@@ -103,5 +114,7 @@ export default {
   debounce,
   validURL,
   filterList,
-  updateListElement
+  updateListElement,
+  isFirefox,
+  isException,
 };
