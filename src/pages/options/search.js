@@ -1,4 +1,4 @@
-import searchHelper from "../../assets/javascripts/helpers/google-search.js";
+import searchHelper from "../../assets/javascripts/helpers/search.js";
 
 let disableSearchElement = document.getElementById("disable-search");
 let searchFrontendElement = document.getElementById("search-frontend");

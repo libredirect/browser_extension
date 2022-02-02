@@ -1,4 +1,4 @@
-import googleTranslateHelper from "../../assets/javascripts/helpers/google-translate.js";
+import googleTranslateHelper from "../../assets/javascripts/helpers/translate.js";
 
 let disableSimplyTranslateElement = document.getElementById("disable-simplyTranslate");
 let translateFrontendElement = document.getElementById("translate-frontend");

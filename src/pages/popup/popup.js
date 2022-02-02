@@ -2,13 +2,13 @@
 
 import commonHelper from "../../assets/javascripts/helpers/common.js";
 import data from "../../assets/javascripts/data.js";
-import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 import youtubeHelper from "../../assets/javascripts/helpers/youtube.js";
+import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
-import mapsHelper from "../../assets/javascripts/helpers/google-maps.js";
+import mapsHelper from "../../assets/javascripts/helpers/maps.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
-import searchHelper from "../../assets/javascripts/helpers/google-search.js";
-import translateHelper from "../../assets/javascripts/helpers/google-translate.js";
+import searchHelper from "../../assets/javascripts/helpers/search.js";
+import translateHelper from "../../assets/javascripts/helpers/translate.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 
@@ -24,19 +24,31 @@ let disableScribeElement = document.querySelector("#disable-scribe");
 
 window.browser = window.browser || window.chrome;
 
-// Complete change to the global variables in data.js
+async function wholeInit() {
+  console.log("staring async func")
+  await youtubeHelper.init();
+  await twitterHelper.init();
+  await instagramHelper.init();
+  await mapsHelper.init();
+  await redditHelper.init();
+  await searchHelper.init();
+  await translateHelper.init();
+  await wikipediaHelper.init();
+  await mediumHelper.init();
+};
 
-if (data.theme) document.body.classList.add(data.theme);
-disableNitterElement.checked = !data.disableNitter;
-disableInvidiousElement.checked = !data.disableInvidious;
-disableBibliogramElement.checked = !data.disableBibliogram;
-disableOsmElement.checked = !data.disableOsm;
-disableRedditElement.checked = !data.disableReddit;
-disableSearchElement.checked = !data.disableSearch;
-disableSimplyTranslateElement.checked = !data.disableSimplyTranslate;
-disableWikipediaElement.checked = !data.disableWikipedia;
-disableScribeElement.checked = !data.disableScribe;
-
+wholeInit().then(() => {
+  if (data.theme) document.body.classList.add(data.theme);
+  disableNitterElement.checked = !twitterHelper.getDisableNitter();
+  disableInvidiousElement.checked = !youtubeHelper.getDisableInvidious();
+  disableBibliogramElement.checked = !instagramHelper.getDisableBibliogram();
+  disableOsmElement.checked = !mapsHelper.getDisableOsm();
+  disableRedditElement.checked = !redditHelper.getDisableReddit();
+  disableSearchElement.checked = !searchHelper.getDisableSearch();
+  disableSimplyTranslateElement.checked = !translateHelper.getDisableSimplyTranslate();
+  disableWikipediaElement.checked = !wikipediaHelper.getDisableWikipedia();
+  disableScribeElement.checked = !mediumHelper.getDisableScribe();
+})
 
 disableNitterElement.addEventListener("change",
   (event) => twitterHelper.setDisableNitter(!event.target.checked)
@@ -73,7 +85,6 @@ disableWikipediaElement.addEventListener("change",
 disableScribeElement.addEventListener("change",
   (event) => mediumHelper.setDisableScribe(!event.target.checked)
 );
-
 
 document.querySelector("#update-instances").addEventListener("click", () => {
   document.querySelector("#update-instances").innerHTML = '...';

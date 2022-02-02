@@ -1,4 +1,4 @@
-import mapsHelper from "../../assets/javascripts/helpers/google-maps.js";
+import mapsHelper from "../../assets/javascripts/helpers/maps.js";
 
 let disableOsmElement = document.getElementById("disable-osm");
 

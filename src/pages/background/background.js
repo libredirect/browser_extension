@@ -1,16 +1,16 @@
 "use strict";
 
-import mapsHelper from "../../assets/javascripts/helpers/google-maps.js";
+import mapsHelper from "../../assets/javascripts/helpers/maps.js";
 import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 import youtubeHelper from "../../assets/javascripts/helpers/youtube.js";
 import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
-import searchHelper from "../../assets/javascripts/helpers/google-search.js";
-import googleTranslateHelper from "../../assets/javascripts/helpers/google-translate.js";
+import searchHelper from "../../assets/javascripts/helpers/search.js";
+import googleTranslateHelper from "../../assets/javascripts/helpers/translate.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import data from "../../assets/javascripts/data.js";
-import googleMaps from "../../assets/javascripts/helpers/google-maps.js";
+import googleMaps from "../../assets/javascripts/helpers/maps.js";
 
 window.browser = window.browser || window.chrome;
 
@@ -60,9 +60,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     else if (googleTranslateHelper.targets.includes(url.host)) newUrl = await googleTranslateHelper.redirect(url, initiator);
 
-
     else if (searchHelper.targets.some((rx) => rx.test(url.href))) newUrl = await searchHelper.redirect(url, initiator)
-
 
     else if (url.host.match(wikipediaHelper.targets)) newUrl = await wikipediaHelper.redirect(url, initiator);
 
