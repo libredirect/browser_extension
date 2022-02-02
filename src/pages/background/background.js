@@ -58,9 +58,11 @@ browser.webRequest.onBeforeRequest.addListener(
 
     else if (mediumHelper.targets.some((rx) => rx.test(url.host))) newUrl = await mediumHelper.redirect(url, initiator);
 
+    else if (googleTranslateHelper.targets.includes(url.host)) newUrl = await googleTranslateHelper.redirect(url, initiator);
+
+
     else if (searchHelper.targets.some((rx) => rx.test(url.href))) newUrl = await searchHelper.redirect(url, initiator)
 
-    else if (googleTranslateHelper.targets.includes(url.host)) newUrl = await googleTranslateHelper.redirect(url, initiator);
 
     else if (url.host.match(wikipediaHelper.targets)) newUrl = await wikipediaHelper.redirect(url, initiator);
 
@@ -93,7 +95,8 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
     redditHelper.redirects.mobile,
     ...searchHelper.redirects.searx.normal,
     ...searchHelper.redirects.whoogle.normal,
-    ...googleTranslateHelper.redirects.normal,
+    ...googleTranslateHelper.redirects.simplyTranslate.normal,
+    ...googleTranslateHelper.redirects.lingva.normal,
     ...mediumHelper.redirects.normal,
     ...wikipediaHelper.redirects.normal
   );
@@ -127,7 +130,10 @@ browser.pageAction.onClicked.addListener((tab) => {
     searchHelper.redirects.whoogle.normal.includes(protocolHost)
   ) newUrl = 'https://google.com';
 
-  if (googleTranslateHelper.redirects.normal.includes(protocolHost)) newUrl = 'https://translate.google.com';
+  if (
+    googleTranslateHelper.redirects.simplyTranslate.normal.includes(protocolHost) ||
+    googleTranslateHelper.redirects.lingva.normal.includes(protocolHost)
+  ) newUrl = 'https://translate.google.com';
 
   if (mediumHelper.redirects.normal.includes(protocolHost)) newUrl = 'https://medium.com';
 
