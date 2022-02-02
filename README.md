@@ -14,6 +14,9 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 
 **Note**: It will default to using random instances if none are selected. You can also set custom instances.
 
+[![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=Matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
+[![PrivacyPolicy](https://badges.alefvanoon.xyz/badge/-PrivacyPolicy-orange
+)](Privacy-Policy.md)
 ## Get
 [![Firefox Add-on](src/assets/images/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)
 
@@ -21,7 +24,6 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 **BTC:** `bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q`
 
 ## Development
-[![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=Matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
 ### Install Dependencies
 - [Node.js](https://nodejs.org/) >=10.0.0 installed
 - `npm install`
@@ -32,15 +34,6 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 
 ### Test
 - `npm run test`
-
-## License
-[GPLv3](LICENSE)
-
-## Permissions
-Please note, access to all website navigation events ( all URLs), not just the target domains, is required to allow embedded video redirects to occur. At this time I know of no other way to achieve iframe redirects, happy to hear some suggestions on this though 🙂
-
-## Privacy Policy
-See the [Project Wiki](https://github.com/SimonBrazell/privacy-redirect/wiki/Privacy-Policy).
 
 ## Credits
 - [privacy-redirect](https://github.com/SimonBrazell/privacy-redirect)
