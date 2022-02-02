@@ -1,5 +1,7 @@
 "use strict";
 
+import commonHelper from './common.js'
+
 window.browser = window.browser || window.chrome;
 
 const targets = [
@@ -114,20 +116,20 @@ function setInvidiousPlayerStyle(val) {
 }
 
 let invidiousSubtitles;
+let getInvidiousSubtitles = () => invidiousSubtitles;
 function setInvidiousSubtitles(val) {
   invidiousSubtitles = val;
   browser.storage.sync.set({ invidiousSubtitles })
   console.log("invidiousSubtitles: ", invidiousSubtitles)
 }
-let getInvidiousSubtitles = () => invidiousSubtitles;
 
 let invidiousAutoplay;
+const getInvidiousAutoplay = () => invidiousAutoplay;
 function setInvidiousAutoplay(val) {
   invidiousAutoplay = val;
   browser.storage.sync.set({ invidiousAutoplay })
   console.log("invidiousAutoplay: ", invidiousAutoplay)
 }
-const getInvidiousAutoplay = () => invidiousAutoplay;
 
 let useFreeTube;
 function setUseFreeTube(val) {
@@ -147,16 +149,17 @@ function setPersistInvidiousPrefs(val) {
 }
 const getPersistInvidiousPrefs = () => persistInvidiousPrefs;
 
-function redirect(url, initiator, type) {
-  if (disableInvidious || data.isException(url, initiator))
+async function redirect(url, initiator, type) {
+  await init();
+  if (disableInvidious)
     return null;
 
   if (
     initiator &&
     (
       initiator.origin === invidiousInstance ||
-      youtubeHelper.redirects.normal.includes(initiator.origin) ||
-      youtubeHelper.targets.includes(initiator.host)
+      redirects.normal.includes(initiator.origin) ||
+      targets.includes(initiator.host)
     )
   )
     return null;
@@ -190,7 +193,7 @@ function redirect(url, initiator, type) {
 
   if (invidiousAutoplay) url.searchParams.append("autoplay", 1);
 
-  let randomInstance = commonHelper.getRandomInstance(youtubeHelper.redirects.normal)
+  let randomInstance = commonHelper.getRandomInstance(redirects.normal)
 
   return `${randomInstance}${url.pathname.replace("/shorts", "")}${url.search}`;
 }
@@ -216,6 +219,7 @@ function initInvidiousCookie() {
   prefs.dark_mode = invidiousDarkMode;
   document.cookie = `PREFS=${encodeURIComponent(JSON.stringify(prefs))}`;
 }
+
 async function init() {
   let result = await browser.storage.sync.get(
     [
@@ -235,17 +239,17 @@ async function init() {
       "invidiousAutoplay",
       "useFreeTube",
     ]);
-  disableInvidious = result.disableInvidious;
+  disableInvidious = result.disableInvidious || false;
   invidiousInstance = result.invidiousInstance;
-  invidiousAlwaysProxy = result.invidiousAlwaysProxy;
-  invidiousOnlyEmbeddedVideo = result.invidiousOnlyEmbeddedVideo;
-  invidiousVideoQuality = result.invidiousVideoQuality;
-  invidiousDarkMode = result.invidiousDarkMode;
-  invidiousVolume = result.invidiousVolume;
-  invidiousPlayerStyle = result.invidiousPlayerStyle;
-  invidiousSubtitles = result.invidiousSubtitles;
-  invidiousAutoplay = result.invidiousAutoplay;
-  useFreeTube = result.useFreeTube;
+  invidiousAlwaysProxy = result.invidiousAlwaysProxy || true;
+  invidiousOnlyEmbeddedVideo = result.invidiousOnlyEmbeddedVideo || false;
+  invidiousVideoQuality = result.invidiousVideoQuality || 'medium';
+  invidiousDarkMode = result.invidiousDarkMode || true;
+  invidiousVolume = result.invidiousVolume || 50;
+  invidiousPlayerStyle = result.invidiousPlayerStyle || 'invidious';
+  invidiousSubtitles = result.invidiousSubtitles || '';
+  invidiousAutoplay = result.invidiousAutoplay || true;
+  useFreeTube = result.useFreeTube || false;
 
   if (result.persistInvidiousPrefs) initInvidiousCookie();
 }

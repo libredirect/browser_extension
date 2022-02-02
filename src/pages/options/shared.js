@@ -17,7 +17,6 @@ function parseURL(urlString) {
         return "";
 }
 
-
 function autocomplete(input, list) {
     let currentFocus;
     input.addEventListener("focus", (e) => {
@@ -107,9 +106,6 @@ function autocomplete(input, list) {
         }
     });
 }
-
-
-
 
 
 export default {

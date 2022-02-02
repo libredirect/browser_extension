@@ -1,3 +1,5 @@
+import commonHelper from './common.js'
+
 const targets = [
   "instagram.com",
   "www.instagram.com",
@@ -58,29 +60,30 @@ function setBibliogramInstance(val) {
 };
 
 
-function redirect(url, initiator, type) {
-  if (data.disableBibliogram || data.isException(url, initiator))
+async function redirect(url, initiator, type) {
+  await init();
+  if (disableBibliogram)
     return null;
 
   // Do not redirect Bibliogram view on Instagram links
   if (
     initiator &&
     (
-      initiator.origin === data.bibliogramInstance ||
-      instagramHelper.redirects.normal.includes(initiator.origin) ||
-      instagramHelper.targets.includes(initiator.host)
+      initiator.origin === bibliogramInstance ||
+      redirects.normal.includes(initiator.origin) ||
+      targets.includes(initiator.host)
     )
   )
     return null;
 
   // Do not redirect /accounts, /embeds.js, or anything other than main_frame
-  if (type !== "main_frame" || url.pathname.match(instagramHelper.bypassPaths))
+  if (type !== "main_frame" || url.pathname.match(bypassPaths))
     return null;
 
-  let link = commonHelper.getRandomInstance(instagramHelper.redirects.normal);
+  let link = commonHelper.getRandomInstance(redirects.normal);
   if (
     url.pathname === "/" ||
-    data.instagramReservedPaths.includes(url.pathname.split("/")[1])
+    instagramReservedPaths.includes(url.pathname.split("/")[1])
   )
     return `${link}${url.pathname}${url.search}`;
   else
@@ -88,6 +91,15 @@ function redirect(url, initiator, type) {
     return `${link}/u${url.pathname}${url.search}`;
 }
 
+
+async function init() {
+  let result = await browser.storage.sync.get([
+    "disableBibliogram",
+    "bibliogramInstance",
+  ])
+  disableBibliogram = result.disableBibliogram || false;
+  bibliogramInstance = result.bibliogramInstance;
+}
 
 export default {
   targets,
@@ -99,4 +111,5 @@ export default {
   getBibliogramInstance,
   setBibliogramInstance,
   redirect,
+  init,
 };

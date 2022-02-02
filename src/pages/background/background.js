@@ -24,9 +24,19 @@ window.browser = window.browser || window.chrome;
 //   : [];
 // data.invidiousSubtitles = result.invidiousSubtitles || "";
 
+googleMaps.init()
+searchHelper.init()
+googleTranslateHelper.init()
+instagramHelper.init()
+mediumHelper.init()
+redditHelper.init()
+twitterHelper.init()
+wikipediaHelper.init()
+youtubeHelper.init()
+
 
 browser.webRequest.onBeforeRequest.addListener(
-  (details) => {
+  async (details) => {
     const url = new URL(details.url);
     let initiator;
     if (details.originUrl)
@@ -34,25 +44,25 @@ browser.webRequest.onBeforeRequest.addListener(
     else if (details.initiator)
       initiator = new URL(details.initiator);
 
-    let newUrl;
+    var newUrl;
 
-    if (youtubeHelper.targets.includes(url.host)) newUrl = youtubeHelper.redirect(url, initiator, details.type)
+    if (youtubeHelper.targets.includes(url.host)) newUrl = await youtubeHelper.redirect(url, initiator, details.type)
 
-    else if (twitterHelper.targets.includes(url.host)) newUrl = redirectTwitter(url, initiator);
+    else if (twitterHelper.targets.includes(url.host)) newUrl = await twitterHelper.redirect(url, initiator);
 
-    else if (instagramHelper.targets.includes(url.host)) newUrl = redirectInstagram(url, initiator, details.type);
+    else if (instagramHelper.targets.includes(url.host)) newUrl = await instagramHelper.redirect(url, initiator, details.type);
 
-    else if (url.href.match(mapsHelper.targets)) newUrl = redirectGoogleMaps(url, initiator);
+    else if (url.href.match(mapsHelper.targets)) newUrl = await mapsHelper.redirect(url, initiator);
 
-    else if (redditHelper.targets.includes(url.host)) newUrl = redirectReddit(url, initiator, details.type);
+    else if (redditHelper.targets.includes(url.host)) newUrl = await redditHelper.redirect(url, initiator, details.type);
 
-    else if (mediumHelper.targets.some((rx) => rx.test(url.host))) newUrl = redirectMedium(url, initiator);
+    else if (mediumHelper.targets.some((rx) => rx.test(url.host))) newUrl = await mediumHelper.redirect(url, initiator);
 
-    else if (searchHelper.targets.some((rx) => rx.test(url.href))) newUrl = redirectSearch(url, initiator);
+    else if (searchHelper.targets.some((rx) => rx.test(url.href))) newUrl = await searchHelper.redirect(url, initiator)
 
-    else if (googleTranslateHelper.targets.includes(url.host)) newUrl = redirectGoogleTranslate(url, initiator);
+    else if (googleTranslateHelper.targets.includes(url.host)) newUrl = await googleTranslateHelper.redirect(url, initiator);
 
-    else if (url.host.match(wikipediaHelper.targets)) newUrl = redirectWikipedia(url, initiator);
+    else if (url.host.match(wikipediaHelper.targets)) newUrl = await wikipediaHelper.redirect(url, initiator);
 
     if (newUrl) {
       console.info("Redirecting", url.href, "=>", newUrl);

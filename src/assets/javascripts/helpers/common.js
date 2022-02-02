@@ -4,6 +4,7 @@ import instagramHelper from "./instagram.js";
 import mediumHelper from "./medium.js";
 import redditHelper from "./reddit.js";
 import searchHelper from "./google-search.js";
+import data from '../data.js'
 import googleTranslateHelper from "./google-translate.js";
 import wikipediaHelper from "./wikipedia.js";
 import mapsHelper from "./google-maps.js";

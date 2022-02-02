@@ -2,6 +2,15 @@
 
 import commonHelper from "../../assets/javascripts/helpers/common.js";
 import data from "../../assets/javascripts/data.js";
+import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
+import youtubeHelper from "../../assets/javascripts/helpers/youtube.js";
+import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
+import mapsHelper from "../../assets/javascripts/helpers/google-maps.js";
+import redditHelper from "../../assets/javascripts/helpers/reddit.js";
+import searchHelper from "../../assets/javascripts/helpers/google-search.js";
+import translateHelper from "../../assets/javascripts/helpers/google-translate.js";
+import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
+import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 
 let disableNitterElement = document.querySelector("#disable-nitter");
 let disableInvidiousElement = document.querySelector("#disable-invidious");
@@ -29,51 +38,41 @@ disableWikipediaElement.checked = !data.disableWikipedia;
 disableScribeElement.checked = !data.disableScribe;
 
 
-disableNitterElement.addEventListener("change", (event) => {
-  data.disableNitter = !event.target.checked;
-  browser.storage.sync.set({ disableNitter: data.disableNitter });
-});
+disableNitterElement.addEventListener("change",
+  (event) => twitterHelper.setDisableNitter(!event.target.checked)
+);
 
-disableInvidiousElement.addEventListener("change", (event) => {
-  data.disableInvidious = !event.target.checked;
-  browser.storage.sync.set({ disableInvidious: data.disableInvidious });
-});
+disableInvidiousElement.addEventListener("change",
+  (event) => youtubeHelper.setDisableInvidious(!event.target.checked)
+);
 
-disableBibliogramElement.addEventListener("change", (event) => {
-  data.disableBibliogram = !event.target.checked;
-  browser.storage.sync.set({ disableBibliogram: data.disableBibliogram });
-});
+disableBibliogramElement.addEventListener("change",
+  (event) => instagramHelper.setDisableBibliogram(!event.target.checked)
+);
 
-disableOsmElement.addEventListener("change", (event) => {
-  data.disableOsm = !event.target.checked;
-  browser.storage.sync.set({ disableOsm: data.disableOsm });
-});
+disableOsmElement.addEventListener("change",
+  (event) => mapsHelper.setDisableOsm(!event.target.checked)
+);
 
-disableRedditElement.addEventListener("change", (event) => {
-  data.disableReddit = !event.target.checked;
-  browser.storage.sync.set({ disableReddit: data.disableReddit });
-});
+disableRedditElement.addEventListener("change",
+  (event) => redditHelper.setDisableReddit(!event.target.checked)
+);
 
-disableSearchElement.addEventListener("change", (event) => {
-  data.disableSearch = !event.target.checked;
-  console.log("DisableSearch", data.disableSearch)
-  browser.storage.sync.set({ disableSearch: data.disableSearch });
-});
+disableSearchElement.addEventListener("change",
+  (event) => searchHelper.setDisableSearch(!event.target.checked)
+);
 
-disableSimplyTranslateElement.addEventListener("change", (event) => {
-  data.disableSimplyTranslate = !event.target.checked;
-  browser.storage.sync.set({ disableSimplyTranslate: data.disableSimplyTranslate });
-});
+disableSimplyTranslateElement.addEventListener("change",
+  (event) => translateHelper.setDisableSimplyTranslate(!event.target.checked)
+);
 
-disableWikipediaElement.addEventListener("change", (event) => {
-  data.disableWikipedia = !event.target.checked;
-  browser.storage.sync.set({ disableWikipedia: data.disableWikipedia });
-});
+disableWikipediaElement.addEventListener("change",
+  (event) => wikipediaHelper.setDisableWikipedia(!event.target.checked)
+);
 
-disableScribeElement.addEventListener("change", (event) => {
-  data.disableScribe = !event.target.checked;
-  browser.storage.sync.set({ disableScribe: data.disableScribe });
-});
+disableScribeElement.addEventListener("change",
+  (event) => mediumHelper.setDisableScribe(!event.target.checked)
+);
 
 
 document.querySelector("#update-instances").addEventListener("click", () => {

@@ -1,4 +1,5 @@
-import data from "../data.js";
+import commonHelper from './common.js'
+
 
 const targets = [
   // /(.*\.medium\.com)?(?(1)|^medium\.com)/,
@@ -38,27 +39,35 @@ function setScribeInstance(val) {
   browser.storage.sync.set({ scribeInstance })
 };
 
-
-function redirectMedium(url, initiator) {
-  if (disableScribe || data.isException(url, initiator)) return null;
+async function redirect(url, initiator) {
+  await init()
+  if (disableScribe) return null;
 
   if (url.pathname == "/") return null;
 
   if (
-    data.isFirefox() &&
+    commonHelper.isFirefox() &&
     initiator &&
     (
       initiator.origin === scribeInstance ||
-      mediumHelper.redirects.normal.includes(initiator.origin) ||
-      mediumHelper.targets.includes(initiator.host)
+      redirects.normal.includes(initiator.origin) ||
+      targets.includes(initiator.host)
     )
   ) {
     browser.storage.sync.set({ redirectBypassFlag: true });
     return null;
   }
-  return `${commonHelper.getRandomInstance(mediumHelper.redirects.normal)}${url.pathname}${url.search}`;
+  return `${commonHelper.getRandomInstance(redirects.normal)}${url.pathname}${url.search}`;
 }
 
+async function init() {
+  let result = await browser.storage.sync.get([
+    "disableScribe",
+    "scribeInstance",
+  ])
+  disableScribe = result.disableScribe || false;
+  scribeInstance = result.scribeInstance;
+}
 
 export default {
   targets,
@@ -67,5 +76,6 @@ export default {
   setDisableScribe,
   getScribeInstance,
   setScribeInstance,
-  redirectMedium,
+  redirect,
+  init,
 };

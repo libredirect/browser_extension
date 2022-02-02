@@ -1,6 +1,7 @@
 "use strict";
 
 let exceptions;
+
 function setExceptions(val) {
     exceptions = val;
     browser.storage.sync.set({ exceptions })

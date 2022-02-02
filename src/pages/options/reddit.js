@@ -1,15 +1,17 @@
-import reddit from "../../assets/javascripts/helpers/reddit.js";
+import redditHelper from "../../assets/javascripts/helpers/reddit.js";
 
 let disableRedditElement = document.getElementById("disable-reddit");
 let redditFrontendElement = document.getElementById("reddit-frontend");
 
-disableRedditElement.checked = !reddit.getDisableReddit();
-redditFrontendElement.value = reddit.getRedditFrontend();
+redditHelper.init().then(() => {
+    disableRedditElement.checked = !redditHelper.getDisableReddit();
+    redditFrontendElement.value = redditHelper.getRedditFrontend();
+})
 
 disableRedditElement.addEventListener("change",
-    (event) => reddit.setDisableReddit(!event.target.checked)
+    (event) => redditHelper.setDisableReddit(!event.target.checked)
 );
 
 redditFrontendElement.addEventListener("change",
-    (event) => reddit.setRedditFrontend(event.target.options[redditFrontendElement.selectedIndex].value)
+    (event) => redditHelper.setRedditFrontend(event.target.options[redditFrontendElement.selectedIndex].value)
 );

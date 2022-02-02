@@ -19,13 +19,13 @@ youtubeHelper.init().then(() => {
     invidiousDarkModeElement.checked = youtubeHelper.getInvidiousDarkMode();
     persistInvidiousPrefsElement.checked = youtubeHelper.getPersistInvidiousPrefs();
     invidiousVolumeElement.value = youtubeHelper.getInvidiousVolume();
-    invidiousVolumeValueElement.textContent = youtubeHelper.getInvidiousVolume() ? `${youtubeHelper.getInvidiousVolume()}%` : " - ";
-    invidiousPlayerStyleElement.value = youtubeHelper.getInvidiousPlayerStyle() || "";
-    invidiousSubtitlesElement.value = youtubeHelper.getInvidiousSubtitles() || "";
+    invidiousVolumeValueElement.textContent = `${youtubeHelper.getInvidiousVolume()}%`;
+    invidiousPlayerStyleElement.value = youtubeHelper.getInvidiousPlayerStyle();
+    invidiousSubtitlesElement.value = youtubeHelper.getInvidiousSubtitles();
     useFreeTubeElement.checked = youtubeHelper.getUseFreeTube();
     invidiousOnlyEmbeddedVideoElement.checked = youtubeHelper.getInvidiousOnlyEmbeddedVideo();
     invidiousAlwaysProxyElement.checked = youtubeHelper.getInvidiousAlwaysProxy();
-    invidiousVideoQualityElement.value = youtubeHelper.getInvidiousVideoQuality() || "";
+    invidiousVideoQualityElement.value = youtubeHelper.getInvidiousVideoQuality();
     invidiousAutoplayElement.checked = youtubeHelper.getInvidiousAutoplay();
 });
 
@@ -43,11 +43,10 @@ persistInvidiousPrefsElement.addEventListener("change",
 );
 
 invidiousVolumeElement.addEventListener("input",
-    commonHelper.debounce(() => {
+    () => {
         youtubeHelper.setInvidiousVolume(invidiousVolumeElement.value);
-        console.info("youtubeHelper.invidiousVolume:", youtubeHelper.getInvidiousVolume());
         invidiousVolumeValueElement.textContent = `${invidiousVolumeElement.value}%`;
-    }, 1)
+    }
 );
 
 invidiousPlayerStyleElement.addEventListener("change",

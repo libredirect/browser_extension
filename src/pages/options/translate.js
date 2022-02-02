@@ -2,7 +2,9 @@ import googleTranslateHelper from "../../assets/javascripts/helpers/google-trans
 
 let disableSimplyTranslateElement = document.getElementById("disable-simplyTranslate");
 
-disableSimplyTranslateElement.checked = !googleTranslateHelper.getDisableSimplyTranslate();
+googleTranslateHelper.init().then(() => {
+    disableSimplyTranslateElement.checked = !googleTranslateHelper.getDisableSimplyTranslate();
+});
 
 disableSimplyTranslateElement.addEventListener("change",
     (event) => googleTranslateHelper.setDisableSimplyTranslate(!event.target.checked)

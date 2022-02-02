@@ -21,6 +21,7 @@ const getDisableSimplyTranslate = () => disableSimplyTranslate;
 function setDisableSimplyTranslate(val) {
   disableSimplyTranslate = val;
   browser.storage.sync.set({ disableSimplyTranslate })
+  console.log("disableSimplyTranslate: ", disableSimplyTranslate)
 }
 
 let simplyTranslateInstance;
@@ -30,10 +31,20 @@ function setSimplyTranslateInstance(val) {
   browser.storage.sync.set({ simplyTranslateInstance })
 };
 
-function redirectGoogleTranslate(url, initiator) {
-  if (disableSimplyTranslate || isException(url, initiator)) return null;
-
+async function redirect(url, initiator) {
+  await init()
+  if (disableSimplyTranslate)
+    return null;
   return `${simplyTranslateInstance}/${url.search}`;
+}
+
+async function init() {
+  let result = await browser.storage.sync.get([
+    "disableSimplyTranslate",
+    "simplyTranslateInstance",
+  ]);
+  disableSimplyTranslate = result.disableSimplyTranslate || false;
+  simplyTranslateInstance = result.simplyTranslateInstance;
 }
 
 export default {
@@ -43,7 +54,8 @@ export default {
   setDisableSimplyTranslate,
   getSimplyTranslateInstance,
   setSimplyTranslateInstance,
-  redirectGoogleTranslate,
+  redirect,
+  init,
 };
 
 

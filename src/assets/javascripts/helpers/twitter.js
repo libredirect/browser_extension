@@ -1,4 +1,5 @@
-import data from "../data.js";
+import commonHelper from './common.js'
+
 /*
     Please remember to also update the src/manifest.json file 
     (content_scripts > matches, 'remove-twitter-sw.js') 
@@ -58,26 +59,27 @@ function setNitterInstance(val) {
 }
 
 
-function redirect(url, initiator) {
-  if (disableNitter || data.isException(url, initiator))
+async function redirect(url, initiator) {
+  await init();
+  if (disableNitter)
     return null;
 
   if (url.pathname.split("/").includes("home")) {
     return null;
   }
   if (
-    data.isFirefox() &&
+    commonHelper.isFirefox() &&
     initiator &&
     (
       initiator.origin === nitterInstance ||
-      twitterHelper.redirects.normal.includes(initiator.origin) ||
-      twitterHelper.targets.includes(initiator.host)
+      redirects.normal.includes(initiator.origin) ||
+      targets.includes(initiator.host)
     )
   ) {
     browser.storage.sync.set({ redirectBypassFlag: true });
     return null;
   }
-  let link = commonHelper.getRandomInstance(twitterHelper.redirects.normal)
+  let link = commonHelper.getRandomInstance(redirects.normal)
   if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video")
     return `${link}/pic/${encodeURIComponent(url.href)}`;
 
@@ -89,6 +91,14 @@ function redirect(url, initiator) {
 
 }
 
+async function init() {
+  let result = await browser.storage.sync.get([
+    "disableNitter",
+    "nitterInstance"
+  ]);
+  disableNitter = result.disableNitter || false;
+  nitterInstance = result.nitterInstance;
+}
 
 export default {
   targets,
@@ -98,4 +108,5 @@ export default {
   getNitterInstance,
   setNitterInstance,
   redirect,
+  init,
 };

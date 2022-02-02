@@ -7,21 +7,22 @@ const redirects = {
 };
 
 let disableWikipedia;
+const getDisableWikipedia = () => disableWikipedia;
 function setDisableWikipedia(val) {
   disableWikipedia = val;
   browser.storage.sync.set({ disableWikipedia })
 }
-const getDisableWikipedia = () => disableWikipedia;
 
 let wikipediaInstance;
+const getWikipediaInstance = () => wikipediaInstance;
 function setWikipediaInstance(val) {
   wikipediaInstance = val;
   browser.storage.sync.set({ wikipediaInstance })
 };
-const getWikipediaInstance = () => wikipediaInstance;
 
-function redirectWikipedia(url, initiator) {
-  if (disableWikipedia || data.isException(url, initiator)) return null;
+async function redirect(url, initiator) {
+  await init()
+  if (disableWikipedia) return null;
 
   let GETArguments = [];
   if (url.search.length > 0) {
@@ -54,12 +55,22 @@ function redirectWikipedia(url, initiator) {
   else return null;
 }
 
+async function init() {
+  let result = await browser.storage.sync.get([
+    "disableWikipedia",
+    "wikipediaInstance",
+  ]);
+  disableWikipedia = result.disableWikipedia || false;
+  wikipediaInstance = result.wikipediaInstance;
+}
+
 export default {
+  targets,
+  redirects,
   setDisableWikipedia,
   getDisableWikipedia,
   setWikipediaInstance,
   getWikipediaInstance,
-  redirectWikipedia,
-  targets,
-  redirects,
+  redirect,
+  init,
 };

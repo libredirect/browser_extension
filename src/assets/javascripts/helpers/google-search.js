@@ -1,3 +1,5 @@
+import commonHelper from './common.js'
+
 const targets = [
   /https:\/\/google\.com/,
   /https:\/\/.*\.google\.com/,
@@ -150,12 +152,12 @@ const redirects = {
   }
 };
 
-
 let disableSearch;
 const getDisableSearch = () => disableSearch;
 function setDisableSearch(val) {
   disableSearch = val;
   browser.storage.sync.set({ disableSearch })
+  console.log("disableSearch: ", disableSearch)
 }
 
 let searchInstance;
@@ -170,22 +172,22 @@ const getSearchFrontend = () => searchFrontend;
 function setSearchFrontend(val) {
   searchFrontend = val;
   browser.storage.sync.set({ searchFrontend })
+  console.log("searchFrontend: ", searchFrontend)
 };
 
-function redirect(url, initiator) {
-  console.info("searchFrontend:", searchFrontend)
-  if (disableSearch || data.isException(url, initiator)) {
+async function redirect(url, initiator) {
+  await init();
+  if (disableSearch)
     return null;
-  }
 
   let instance;
   let path;
   if (searchFrontend == 'searx') {
-    instance = commonHelper.getRandomInstance(searchHelper.redirects.searx.normal);
+    instance = commonHelper.getRandomInstance(redirects.searx.normal);
     path = "/"
   }
   if (searchFrontend == 'whoogle') {
-    instance = commonHelper.getRandomInstance(searchHelper.redirects.whoogle.normal);
+    instance = commonHelper.getRandomInstance(redirects.whoogle.normal);
     path = "/search"
   }
 
@@ -193,7 +195,20 @@ function redirect(url, initiator) {
   url.search.slice(1).split("&").forEach(function (input) {
     if (input.startsWith("q=")) searchQuery = input;
   });
+  console.log("Will return");
   return `${instance}${path}?${searchQuery}`;
+}
+
+async function init() {
+  console.log("Init Search Helper");
+  let result = await browser.storage.sync.get([
+    "disableSearch",
+    "searchInstance",
+    "searchFrontend",
+  ])
+  disableSearch = result.disableSearch;
+  searchInstance = result.searchInstance;
+  searchFrontend = result.searchFrontend;
 }
 
 export default {
@@ -206,4 +221,5 @@ export default {
   getSearchFrontend,
   setSearchFrontend,
   redirect,
+  init,
 };

@@ -1,3 +1,5 @@
+import commonHelper from './common.js'
+
 const targets = /https?:\/\/(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
 const redirects = {
   "normal": [
@@ -58,20 +60,21 @@ function setOsmInstance(val) {
   browser.storage.sync.set({ osmInstance })
 };
 
-function redirectGoogleMaps(url, initiator) {
-  if (disableOsm || data.isException(url, initiator))
+async function redirect(url, initiator) {
+  await init()
+  if (disableOsm)
     return null;
 
   if (initiator && initiator.host === "earth.google.com")
     return null;
 
   let redirect;
-  let link = commonHelper.getRandomInstance(mapsHelper.redirects.normal);
+  let link = commonHelper.getRandomInstance(redirects.normal);
   let mapCentre = "";
   let params = "";
   // Set map centre if present
-  if (url.pathname.match(mapsHelper.mapCentreRegex)) {
-    const [, lat, lon, zoom] = url.pathname.match(mapsHelper.mapCentreRegex);
+  if (url.pathname.match(mapCentreRegex)) {
+    const [, lat, lon, zoom] = url.pathname.match(mapCentreRegex);
     mapCentre = `#map=${zoom}/${lat}/${lon}`;
   } else if (url.search.includes("center=")) {
     const [lat, lon] = url.searchParams.get("center").split(",");
@@ -81,7 +84,7 @@ function redirectGoogleMaps(url, initiator) {
     params = "&zoom=17";
   }
   // Set map layer
-  params = `${params}&layers=${mapsHelper.layers[url.searchParams.get("layer")] || mapsHelper.layers["none"]
+  params = `${params}&layers=${layers[url.searchParams.get("layer")] || layers["none"]
     }`;
   // Handle Google Maps Embed API
   if (url.pathname.split("/").includes("embed")) {
@@ -97,25 +100,25 @@ function redirectGoogleMaps(url, initiator) {
       }
     }
     let marker, bbox;
-    mapsHelper.addressToLatLng(query, (coords, boundingbox) => {
+    addressToLatLng(query, (coords, boundingbox) => {
       marker = coords;
       bbox = boundingbox;
     });
     redirect = `${link}/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${marker}`;
     // Handle Google Maps Directions
   } else if (url.pathname.split("/").includes("dir")) {
-    const travelMode = mapsHelper.travelModes[url.searchParams.get("travelmode")] || mapsHelper.travelModes["driving"];
+    const travelMode = travelModes[url.searchParams.get("travelmode")] || travelModes["driving"];
     let origin;
-    mapsHelper.addressToLatLng(url.searchParams.get("origin"), (coords) => origin = coords);
+    addressToLatLng(url.searchParams.get("origin"), (coords) => origin = coords);
     let destination;
-    mapsHelper.addressToLatLng(url.searchParams.get("destination"), (coords) => destination = coords);
+    addressToLatLng(url.searchParams.get("destination"), (coords) => destination = coords);
     redirect = `${link}/directions?engine=${travelMode}&route=${origin}%3B${destination}${mapCentre}${params}`;
     // Get marker from data attribute
   } else if (
     url.pathname.includes("data=") &&
-    url.pathname.match(mapsHelper.dataLatLngRegex)
+    url.pathname.match(dataLatLngRegex)
   ) {
-    const [mlat, mlon] = url.pathname.match(mapsHelper.dataLatLngRegex);
+    const [mlat, mlon] = url.pathname.match(dataLatLngRegex);
     redirect = `${link}/?mlat=${mlat.replace("!3d", "")}&mlon=${mlon.replace("!4d", "")}${mapCentre}${params}`;
     // Get marker from ll param
   } else if (url.searchParams.has("ll")) {
@@ -130,11 +133,21 @@ function redirectGoogleMaps(url, initiator) {
     let query;
     if (url.searchParams.has("q")) query = url.searchParams.get("q");
     else if (url.searchParams.has("query")) query = url.searchParams.get("query");
-    else if (url.pathname.match(mapsHelper.placeRegex)) query = url.pathname.match(mapsHelper.placeRegex)[1];
+    else if (url.pathname.match(placeRegex)) query = url.pathname.match(placeRegex)[1];
 
     redirect = `${link}/${query ? "search?query=" + query : ""}${mapCentre || "#"}${params}`;
   }
   return redirect;
+}
+
+
+async function init() {
+  let result = await browser.storage.sync.get([
+    "disableOsm",
+    "osmInstance",
+  ])
+  disableOsm = result.disableOsm;
+  osmInstance = result.osmInstance;
 }
 
 export default {
@@ -150,5 +163,6 @@ export default {
   setDisableOsm,
   getOsmInstance,
   setOsmInstance,
-  redirectGoogleMaps,
+  redirect,
+  init,
 };

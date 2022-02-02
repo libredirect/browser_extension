@@ -3,8 +3,10 @@ import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 let removeTwitterSWElement = document.getElementById("remove-twitter-sw");
 let disableNitterElement = document.getElementById("disable-nitter");
 
-disableNitterElement.checked = !twitterHelper.getDisableNitter();
-removeTwitterSWElement.checked = !remove.getRemoveTwitterSW; // Problem
+twitterHelper.init().then(() => {
+    disableNitterElement.checked = !twitterHelper.getDisableNitter();
+    removeTwitterSWElement.checked = !remove.getRemoveTwitterSW; // Problem
+});
 
 disableNitterElement.addEventListener("change",
     (event) => twitterHelper.setDisableNitter(!event.target.checked)

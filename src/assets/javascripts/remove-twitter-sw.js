@@ -35,13 +35,7 @@ function isNotException(url) {
 }
 
 function shouldRedirect(url) {
-  return (
-    !redirectBypassFlag &&
-    isNotException(url) &&
-    !disableNitter &&
-    url.host !== nitterInstance &&
-    !url.pathname.includes("/home")
-  );
+  return (!redirectBypassFlag && isNotException(url) && !disableNitter && url.host !== nitterInstance && !url.pathname.includes("/home"));
 }
 
 function redirectTwitter(url) {
@@ -64,16 +58,14 @@ browser.storage.sync.get(
   ],
   (result) => {
     redirectBypassFlag = result.redirectBypassFlag;
-    browser.storage.sync.set({
-      redirectBypassFlag: false,
-    });
+    browser.storage.sync.set({ redirectBypassFlag: false });
     if (!result.removeTwitterSW) {
       disableNitter = result.disableNitter;
       nitterInstance = result.nitterInstance || getRandomInstance();
       exceptions = result.exceptions
         ? result.exceptions.map((e) => {
-            return new RegExp(e);
-          })
+          return new RegExp(e);
+        })
         : [];
       navigator.serviceWorker.getRegistrations().then((registrations) => {
         for (let registration of registrations) {

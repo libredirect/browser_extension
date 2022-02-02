@@ -1,3 +1,5 @@
+import commonHelper from './common.js'
+
 const targets = [
   "www.reddit.com",
   "np.reddit.com",
@@ -23,7 +25,6 @@ const redirects = {
   },
   // old UI
   "teddit": {
-
     "normal": [
       "https://teddit.net",
       "https://teddit.ggc-project.de",
@@ -71,9 +72,9 @@ function setRedditFrontend(val) {
 };
 
 
-function redirect(url, initiator, type) {
-
-  if (disableReddit || data.isException(url, initiator))
+async function redirect(url, initiator, type) {
+  await init()
+  if (disableReddit)
     return null;
 
   // Do not redirect when already on the selected view
@@ -82,11 +83,11 @@ function redirect(url, initiator, type) {
 
 
   // Do not redirect exclusions nor anything other than main_frame
-  if (type !== "main_frame" || url.pathname.match(redditHelper.bypassPaths))
+  if (type !== "main_frame" || url.pathname.match(bypassPaths))
     return null;
 
-  let libredditLink = commonHelper.getRandomInstance(redditHelper.redirects.libreddit.normal);
-  let tedditLink = commonHelper.getRandomInstance(redditHelper.redirects.teddit.normal);
+  let libredditLink = commonHelper.getRandomInstance(redirects.libreddit.normal);
+  let tedditLink = commonHelper.getRandomInstance(redirects.teddit.normal);
 
   if (url.host === "i.redd.it")
     // As of 2021-04-09, redirects for teddit images are nontrivial:
@@ -111,6 +112,16 @@ function redirect(url, initiator, type) {
   if (redditFrontend == 'teddit') return `${tedditLink}${url.pathname}${url.search}`;
 }
 
+async function init() {
+  let result = await browser.storage.sync.get([
+    "disableReddit",
+    "redditInstance",
+    "redditFrontend",
+  ])
+  disableReddit = result.disableReddit || false;
+  redditInstance = result.redditInstance;
+  redditFrontend = result.redditFrontend || 'libreddit';
+}
 
 export default {
   targets,
@@ -123,4 +134,5 @@ export default {
   getRedditFrontend,
   setRedditFrontend,
   redirect,
+  init,
 };
