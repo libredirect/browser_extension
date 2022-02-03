@@ -75,7 +75,6 @@ function validURL(str) {
 }
 
 function filterList(oldList) {
-
   oldList.filter((x) => x.trim() != "");
   let newList = [];
   oldList.forEach((c) => {
