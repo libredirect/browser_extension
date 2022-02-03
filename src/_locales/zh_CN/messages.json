@@ -23,19 +23,19 @@
     "message": "OpenStreetMap 实例",
     "description": "Label for OSM instance field option (options)."
   },
-  "disableNitter": {
+  "disableTwitter": {
     "message": "Nitter 重定向",
     "description": "Label for enable/disable Nitter redirects option (options & pop-up)."
   },
-  "disableInvidious": {
+  "disableYoutube": {
     "message": "Invidious 重定向",
     "description": "Label for enable/disable Invidious redirects option (options & pop-up)."
   },
-  "disableBibliogram": {
+  "disableInstagram": {
     "message": "Bibliogram 重定向",
     "description": "Label for enable/disable Bibliogram redirects option (options & pop-up)."
   },
-  "disableOsm": {
+  "disableMaps": {
     "message": "OpenStreetMap 重定向",
     "description": "Label for enable/disable OSM redirects option (options & pop-up)."
   },

@@ -1,15 +1,15 @@
 import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 
 let removeTwitterSWElement = document.getElementById("remove-twitter-sw");
-let disableNitterElement = document.getElementById("disable-nitter");
+let disableTwitterElement = document.getElementById("disable-nitter");
 
 twitterHelper.init().then(() => {
-    disableNitterElement.checked = !twitterHelper.getDisableNitter();
+    disableTwitterElement.checked = !twitterHelper.getDisableTwitter();
     removeTwitterSWElement.checked = !remove.getRemoveTwitterSW; // Problem
 });
 
-disableNitterElement.addEventListener("change",
-    (event) => twitterHelper.setDisableNitter(!event.target.checked)
+disableTwitterElement.addEventListener("change",
+    (event) => twitterHelper.setDisableTwitter(!event.target.checked)
 );
 
 removeTwitterSWElement.addEventListener("change", (event) => {

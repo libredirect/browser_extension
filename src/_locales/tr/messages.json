@@ -31,19 +31,19 @@
     "message": "Arama Motoru Servisi",
     "description": "Arama Motoru Servisi seçeneği için etiket (seçenekler)."
   },
-  "disableNitter": {
+  "disableTwitter": {
     "message": "Nitter Yönlendirmesi",
     "description": "Nitter Yönlendirmesi'ni etkinleştirme/devre dışı bırakma seçeneği için etiket (seçenekler & açılır pencere)."
   },
-  "disableInvidious": {
+  "disableYoutube": {
     "message": "Invidious Yönlendirmesi",
     "description": "Invidious Yönlendirmesi'ni etkinleştirme/devre dışı bırakma seçeneği için etiket (seçenekler & açılır pencere)."
   },
-  "disableBibliogram": {
+  "disableInstagram": {
     "message": "Bibliogram Yönlendirmesi",
     "description": "Bibliogram Yönlendirmesi'ni etkinleştirme/devre dışı bırakma seçeneği için etiket (seçenekler & açılır pencere)."
   },
-  "disableOsm": {
+  "disableMaps": {
     "message": "OpenStreetMap Yönlendirmesi",
     "description": "OSM Yönlendirmesi'ni etkinleştirme/devre dışı bırakma seçeneği için etiket (seçenekler & açılır pencere)."
   },

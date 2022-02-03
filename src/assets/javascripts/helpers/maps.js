@@ -46,11 +46,11 @@ function addressToLatLng(address, callback) {
   xmlhttp.send();
 }
 
-let disableOsm;
-const getDisableOsm = () => disableOsm;
-function setDisableOsm(val) {
-  disableOsm = val;
-  browser.storage.sync.set({ disableOsm })
+let disableMaps;
+const getDisableMaps = () => disableMaps;
+function setDisableMaps(val) {
+  disableMaps = val;
+  browser.storage.sync.set({ disableMaps })
 }
 
 let osmInstance;
@@ -62,7 +62,7 @@ function setOsmInstance(val) {
 
 async function redirect(url, initiator) {
   await init()
-  if (disableOsm)
+  if (disableMaps)
     return null;
 
   if (initiator && initiator.host === "earth.google.com")
@@ -143,10 +143,10 @@ async function redirect(url, initiator) {
 
 async function init() {
   let result = await browser.storage.sync.get([
-    "disableOsm",
+    "disableMaps",
     "osmInstance",
   ])
-  disableOsm = result.disableOsm;
+  disableMaps = result.disableMaps;
   osmInstance = result.osmInstance;
 }
 
@@ -159,8 +159,8 @@ export default {
   travelModes,
   layers,
   addressToLatLng,
-  getDisableOsm,
-  setDisableOsm,
+  getDisableMaps,
+  setDisableMaps,
   getOsmInstance,
   setOsmInstance,
   redirect,

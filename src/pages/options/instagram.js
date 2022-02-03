@@ -1,11 +1,11 @@
 import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
 
-let disableBibliogramElement = document.getElementById("disable-bibliogram");
+let disableInstagramElement = document.getElementById("disable-bibliogram");
 
 instagramHelper.init().then(() => {
-    disableBibliogramElement.checked = !instagramHelper.getDisableBibliogram();
+    disableInstagramElement.checked = !instagramHelper.getDisableInstagram();
 })
 
-disableBibliogramElement.addEventListener("change",
-    (event) => instagramHelper.setDisableBibliogram(!event.target.checked)
+disableInstagramElement.addEventListener("change",
+    (event) => instagramHelper.setDisableInstagram(!event.target.checked)
 );

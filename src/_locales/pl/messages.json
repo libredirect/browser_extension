@@ -23,19 +23,19 @@
     "message": "Instancja OpenStreetMap",
     "description": "Etykieta dla pola wyboru instancji OpenStreetMap (opcje)."
   },
-  "disableNitter": {
+  "disableTwitter": {
     "message": "Przekierowanie Nitter",
     "description": "Etykieta dla włączenia/wyłączenia opcji przekierowania Nitter (opcje i okno pop-up)."
   },
-  "disableInvidious": {
+  "disableYoutube": {
     "message": "Przekierowanie Invidious ",
     "description": "Etykieta dla włączenia/wyłączenia opcji przekierowania Invidious (opcje i okno pop-up)."
   },
-  "disableBibliogram": {
+  "disableInstagram": {
     "message": "Przekierowanie Bibliogram",
     "description": "Etykieta dla włączenia/wyłączenia opcji przekierowania Bibliogram (opcje i okno pop-up)."
   },
-  "disableOsm": {
+  "disableMaps": {
     "message": "Przekierowanie OpenStreetMap",
     "description": "Etykieta dla włączenia/wyłączenia opcji przekierowania OpenStreetMap (opcje i okno pop-up)."
   },

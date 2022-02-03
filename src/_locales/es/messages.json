@@ -39,19 +39,19 @@
     "message": "Instancia de Wikipedia",
     "description": "Etiqueta del campo para la instancia de Wikipedia (opciones)."
   },
-  "disableNitter": {
+  "disableTwitter": {
     "message": "Redirecciones de Nitter",
     "description": "Etiqueta para activar/desactivar la opción de redirecciones de Nitter (opciones y pop-up)."
   },
-  "disableInvidious": {
+  "disableYoutube": {
     "message": "Redirecciones de Invidious",
     "description": "Etiqueta para activar/desactivar la opción de redirecciones de Invidious (opciones y pop-up)."
   },
-  "disableBibliogram": {
+  "disableInstagram": {
     "message": "Redirecciones de Bibliogram",
     "description": "Etiqueta para activar/desactivar la opción de redirecciones de Bibliogram (opciones y pop-up)."
   },
-  "disableOsm": {
+  "disableMaps": {
     "message": "Redirecciones de OpenStreetMap",
     "description": "Etiqueta para activar/desactivar la opción de redirecciones de OSM (opciones y pop-up)."
   },
@@ -63,7 +63,7 @@
     "message": "Redirecciones de Buscador",
     "description": "Etiqueta para activar/desactivar la opción de redirecciones de Buscador (opciones y pop-up)."
   },
-  "disableSimplyTranslate": {
+  "disableTranslate": {
     "message": "Redirecciones de SimplyTranslate",
     "description": "Etiqueta para activar/desactivar la opción de redirecciones de SimplyTranslate (opciones y pop-up)."
   },

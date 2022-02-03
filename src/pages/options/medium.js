@@ -1,11 +1,11 @@
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 
-let disableScribeElement = document.getElementById("disable-scribe");
+let disableMediumElement = document.getElementById("disable-scribe");
 
 mediumHelper.init().then(() => {
-    disableScribeElement.checked = !mediumHelper.getDisableScribe();
+    disableMediumElement.checked = !mediumHelper.getDisableMedium();
 })
 
-disableScribeElement.addEventListener("change",
-    (event) => mediumHelper.setDisableScribe(!event.target.checked)
+disableMediumElement.addEventListener("change",
+    (event) => mediumHelper.setDisableMedium(!event.target.checked)
 );

@@ -144,7 +144,7 @@ browser.runtime.onInstalled.addListener((details) => {
   browser.storage.sync.get(
     [
       "disableSearch",
-      "disableSimplyTranslate",
+      "disableTranslate",
       "disableWikipedia",
       "redditFrontend",
       "searchFrontend",
@@ -153,7 +153,7 @@ browser.runtime.onInstalled.addListener((details) => {
 
       if (result.disableSearch === undefined) browser.storage.sync.set({ disableSearch: true });
 
-      if (result.disableSimplyTranslate === undefined) browser.storage.sync.set({ disableSimplyTranslate: true });
+      if (result.disableTranslate === undefined) browser.storage.sync.set({ disableTranslate: true });
 
       if (result.disableWikipedia === undefined) browser.storage.sync.set({ disableWikipedia: true });
 

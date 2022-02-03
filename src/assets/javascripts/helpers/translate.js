@@ -31,12 +31,12 @@ const redirects = {
 
 };
 
-let disableSimplyTranslate;
-const getDisableSimplyTranslate = () => disableSimplyTranslate;
-function setDisableSimplyTranslate(val) {
-  disableSimplyTranslate = val;
-  browser.storage.sync.set({ disableSimplyTranslate })
-  console.log("disableSimplyTranslate: ", disableSimplyTranslate)
+let disableTranslate;
+const getDisableTranslate = () => disableTranslate;
+function setDisableTranslate(val) {
+  disableTranslate = val;
+  browser.storage.sync.set({ disableTranslate })
+  console.log("disableTranslate: ", disableTranslate)
 }
 
 let simplyTranslateInstance;
@@ -56,7 +56,7 @@ function setFrontend(val) {
 
 async function redirect(url, initiator) {
   await init()
-  if (disableSimplyTranslate) {
+  if (disableTranslate) {
     console.log("SImplyTranslte disabled")
     return null
   };
@@ -86,11 +86,11 @@ async function redirect(url, initiator) {
 
 async function init() {
   let result = await browser.storage.sync.get([
-    "disableSimplyTranslate",
+    "disableTranslate",
     "simplyTranslateInstance",
     "translateFrontend"
   ]);
-  disableSimplyTranslate = result.disableSimplyTranslate || false;
+  disableTranslate = result.disableTranslate || false;
   simplyTranslateInstance = result.simplyTranslateInstance;
   translateFrontend = result.translateFrontend || "simplyTransalte";
 }
@@ -98,8 +98,8 @@ async function init() {
 export default {
   targets,
   redirects,
-  getDisableSimplyTranslate,
-  setDisableSimplyTranslate,
+  getDisableTranslate,
+  setDisableTranslate,
   getSimplyTranslateInstance,
   setSimplyTranslateInstance,
   getFrontend,

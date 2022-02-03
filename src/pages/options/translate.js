@@ -1,16 +1,16 @@
 import googleTranslateHelper from "../../assets/javascripts/helpers/translate.js";
 
-let disableSimplyTranslateElement = document.getElementById("disable-simplyTranslate");
+let disableTranslateElement = document.getElementById("disable-simplyTranslate");
 let translateFrontendElement = document.getElementById("translate-frontend");
 
 
 googleTranslateHelper.init().then(() => {
-    disableSimplyTranslateElement.checked = !googleTranslateHelper.getDisableSimplyTranslate();
+    disableTranslateElement.checked = !googleTranslateHelper.getDisableTranslate();
     translateFrontendElement.value = googleTranslateHelper.getFrontend();
 });
 
-disableSimplyTranslateElement.addEventListener("change",
-    (event) => googleTranslateHelper.setDisableSimplyTranslate(!event.target.checked)
+disableTranslateElement.addEventListener("change",
+    (event) => googleTranslateHelper.setDisableTranslate(!event.target.checked)
 );
 
 translateFrontendElement.addEventListener("change",

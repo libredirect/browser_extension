@@ -50,12 +50,12 @@ const redirects = {
   ]
 };
 
-let disableInvidious;
-const getDisableInvidious = () => disableInvidious;
-function setDisableInvidious(val) {
-  disableInvidious = val;
-  browser.storage.sync.set({ disableInvidious })
-  console.log("disableInvidious: ", disableInvidious)
+let disableYoutube;
+const getDisableYoutube = () => disableYoutube;
+function setDisableYoutube(val) {
+  disableYoutube = val;
+  browser.storage.sync.set({ disableYoutube })
+  console.log("disableYoutube: ", disableYoutube)
 }
 
 let invidiousInstance;
@@ -151,7 +151,7 @@ const getPersistInvidiousPrefs = () => persistInvidiousPrefs;
 
 async function redirect(url, initiator, type) {
   await init();
-  if (disableInvidious)
+  if (disableYoutube)
     return null;
 
   if (
@@ -164,16 +164,11 @@ async function redirect(url, initiator, type) {
   )
     return null;
 
-  if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/))
-    // Don't redirect YouTube Player API.
-    return null;
+  if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
 
-  if (url.host.split(".")[0] === "studio")
-    // Avoid redirecting `studio.youtube.com`
-    return null;
+  if (url.host.split(".")[0] === "studio") return null; // Avoid redirecting `studio.youtube.com`
 
-  if (invidiousOnlyEmbeddedVideo && type !== "sub_frame")
-    return null;
+  if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
 
   if (useFreeTube && type === "main_frame")
     return `freetube://${url}`;
@@ -227,7 +222,7 @@ async function init() {
       "invidiousVideoQuality",
       "invidiousDarkMode",
       "persistInvidiousPrefs",
-      "disableInvidious",
+      "disableYoutube",
       "invidiousInstance",
       "invidiousAlwaysProxy",
       "invidiousOnlyEmbeddedVideo",
@@ -239,7 +234,7 @@ async function init() {
       "invidiousAutoplay",
       "useFreeTube",
     ]);
-  disableInvidious = result.disableInvidious || false;
+  disableYoutube = result.disableYoutube || false;
   invidiousInstance = result.invidiousInstance;
   invidiousAlwaysProxy = result.invidiousAlwaysProxy || true;
   invidiousOnlyEmbeddedVideo = result.invidiousOnlyEmbeddedVideo || false;
@@ -259,8 +254,8 @@ export default {
   redirects,
   redirect,
 
-  getDisableInvidious,
-  setDisableInvidious,
+  getDisableYoutube,
+  setDisableYoutube,
 
   setInvidiousInstance,
   getInvidiousInstance,

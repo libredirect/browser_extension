@@ -35,19 +35,19 @@
     "message": "Сервис SimplyTranslate",
     "description": "Название настройки (в настройках) поля сервиса SimplyTranslate."
   },
-  "disableNitter": {
+  "disableTwitter": {
     "message": "Перенаправление на Nitter",
     "description": "Название настройки для включения/выключения перенаправления на Nitter (в настройках и всплывающем окне)."
   },
-  "disableInvidious": {
+  "disableYoutube": {
     "message": "Перенаправление на Invidious",
     "description": "Название настройки для включения/выключения перенаправления на Invidious redirects option (в настройках и всплывающем окне)."
   },
-  "disableBibliogram": {
+  "disableInstagram": {
     "message": "Перенаправление на Bibliogram",
     "description": "Название настройки для включения/выключения перенаправления на Bibliogram (в настройках и всплывающем окне)."
   },
-  "disableOsm": {
+  "disableMaps": {
     "message": "Перенаправление на OpenStreetMap",
     "description": "Название настройки для включения/выключения перенаправления на OSM (в настройках и всплывающем окне)."
   },
@@ -59,7 +59,7 @@
     "message": "Перенаправление поисковой системы",
     "description": "Название настройки для включения/выключения перенаправления поисковой системы (в настройках и всплывающем окне)."
   },
-  "disableSimplyTranslate": {
+  "disableTranslate": {
     "message": "Перенаправление на SimplyTranslate",
     "description": "Название настройки для включения/выключения перенаправления на SimplyTranslate (в настройках и всплывающем окне)."
   },

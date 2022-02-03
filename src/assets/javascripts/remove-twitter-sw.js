@@ -19,7 +19,7 @@ const nitterInstances = [
   "https://bird.trom.tf"
 ];
 
-let disableNitter;
+let disableTwitter;
 let nitterInstance;
 let redirectBypassFlag;
 let exceptions;
@@ -35,7 +35,7 @@ function isNotException(url) {
 }
 
 function shouldRedirect(url) {
-  return (!redirectBypassFlag && isNotException(url) && !disableNitter && url.host !== nitterInstance && !url.pathname.includes("/home"));
+  return (!redirectBypassFlag && isNotException(url) && !disableTwitter && url.host !== nitterInstance && !url.pathname.includes("/home"));
 }
 
 function redirectTwitter(url) {
@@ -51,7 +51,7 @@ function redirectTwitter(url) {
 browser.storage.sync.get(
   [
     "nitterInstance",
-    "disableNitter",
+    "disableTwitter",
     "removeTwitterSW",
     "redirectBypassFlag",
     "exceptions",
@@ -60,7 +60,7 @@ browser.storage.sync.get(
     redirectBypassFlag = result.redirectBypassFlag;
     browser.storage.sync.set({ redirectBypassFlag: false });
     if (!result.removeTwitterSW) {
-      disableNitter = result.disableNitter;
+      disableTwitter = result.disableTwitter;
       nitterInstance = result.nitterInstance || getRandomInstance();
       exceptions = result.exceptions
         ? result.exceptions.map((e) => {
@@ -89,7 +89,7 @@ browser.storage.sync.get(
 //
 //"use strict";
 //
-//let disableNitter;
+//let disableTwitter;
 //let nitterInstance;
 //let redirectBypassFlag;
 //let exceptions;
@@ -113,7 +113,7 @@ browser.storage.sync.get(
 //      return (
 //        !redirectBypassFlag &&
 //        isNotException(url) &&
-//        !disableNitter &&
+//        !disableTwitter &&
 //        url.host !== nitterInstance &&
 //        !url.pathname.includes("/home")
 //      );
@@ -132,7 +132,7 @@ browser.storage.sync.get(
 //    browser.storage.sync.get(
 //      [
 //        "nitterInstance",
-//        "disableNitter",
+//        "disableTwitter",
 //        "removeTwitterSW",
 //        "redirectBypassFlag",
 //        "exceptions",
@@ -143,7 +143,7 @@ browser.storage.sync.get(
 //          redirectBypassFlag: false,
 //        });
 //        if (!result.removeTwitterSW) {
-//          disableNitter = result.disableNitter;
+//          disableTwitter = result.disableTwitter;
 //          nitterInstance =
 //            result.nitterInstance ||
 //            commonHelper.default.getRandomInstance(

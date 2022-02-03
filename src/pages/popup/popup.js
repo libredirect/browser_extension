@@ -12,15 +12,15 @@ import translateHelper from "../../assets/javascripts/helpers/translate.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 
-let disableNitterElement = document.querySelector("#disable-nitter");
-let disableInvidiousElement = document.querySelector("#disable-invidious");
-let disableBibliogramElement = document.querySelector("#disable-bibliogram");
-let disableOsmElement = document.querySelector("#disable-osm");
+let disableTwitterElement = document.querySelector("#disable-nitter");
+let disableYoutubeElement = document.querySelector("#disable-invidious");
+let disableInstagramElement = document.querySelector("#disable-bibliogram");
+let disableMapsElement = document.querySelector("#disable-osm");
 let disableRedditElement = document.querySelector("#disable-reddit");
 let disableSearchElement = document.querySelector("#disable-search");
-let disableSimplyTranslateElement = document.querySelector("#disable-simplyTranslate");
+let disableTranslateElement = document.querySelector("#disable-simplyTranslate");
 let disableWikipediaElement = document.querySelector("#disable-wikipedia");
-let disableScribeElement = document.querySelector("#disable-scribe");
+let disableMediumElement = document.querySelector("#disable-scribe");
 
 window.browser = window.browser || window.chrome;
 
@@ -39,31 +39,31 @@ async function wholeInit() {
 
 wholeInit().then(() => {
   if (data.theme) document.body.classList.add(data.theme);
-  disableNitterElement.checked = !twitterHelper.getDisableNitter();
-  disableInvidiousElement.checked = !youtubeHelper.getDisableInvidious();
-  disableBibliogramElement.checked = !instagramHelper.getDisableBibliogram();
-  disableOsmElement.checked = !mapsHelper.getDisableOsm();
+  disableTwitterElement.checked = !twitterHelper.getDisableTwitter();
+  disableYoutubeElement.checked = !youtubeHelper.getDisableYoutube();
+  disableInstagramElement.checked = !instagramHelper.getDisableInstagram();
+  disableMapsElement.checked = !mapsHelper.getDisableMaps();
   disableRedditElement.checked = !redditHelper.getDisableReddit();
   disableSearchElement.checked = !searchHelper.getDisableSearch();
-  disableSimplyTranslateElement.checked = !translateHelper.getDisableSimplyTranslate();
+  disableTranslateElement.checked = !translateHelper.getDisableTranslate();
   disableWikipediaElement.checked = !wikipediaHelper.getDisableWikipedia();
-  disableScribeElement.checked = !mediumHelper.getDisableScribe();
+  disableMediumElement.checked = !mediumHelper.getDisableMedium();
 })
 
-disableNitterElement.addEventListener("change",
-  (event) => twitterHelper.setDisableNitter(!event.target.checked)
+disableTwitterElement.addEventListener("change",
+  (event) => twitterHelper.setDisableTwitter(!event.target.checked)
 );
 
-disableInvidiousElement.addEventListener("change",
-  (event) => youtubeHelper.setDisableInvidious(!event.target.checked)
+disableYoutubeElement.addEventListener("change",
+  (event) => youtubeHelper.setDisableYoutube(!event.target.checked)
 );
 
-disableBibliogramElement.addEventListener("change",
-  (event) => instagramHelper.setDisableBibliogram(!event.target.checked)
+disableInstagramElement.addEventListener("change",
+  (event) => instagramHelper.setDisableInstagram(!event.target.checked)
 );
 
-disableOsmElement.addEventListener("change",
-  (event) => mapsHelper.setDisableOsm(!event.target.checked)
+disableMapsElement.addEventListener("change",
+  (event) => mapsHelper.setDisableMaps(!event.target.checked)
 );
 
 disableRedditElement.addEventListener("change",
@@ -74,16 +74,16 @@ disableSearchElement.addEventListener("change",
   (event) => searchHelper.setDisableSearch(!event.target.checked)
 );
 
-disableSimplyTranslateElement.addEventListener("change",
-  (event) => translateHelper.setDisableSimplyTranslate(!event.target.checked)
+disableTranslateElement.addEventListener("change",
+  (event) => translateHelper.setDisableTranslate(!event.target.checked)
 );
 
 disableWikipediaElement.addEventListener("change",
   (event) => wikipediaHelper.setDisableWikipedia(!event.target.checked)
 );
 
-disableScribeElement.addEventListener("change",
-  (event) => mediumHelper.setDisableScribe(!event.target.checked)
+disableMediumElement.addEventListener("change",
+  (event) => mediumHelper.setDisableMedium(!event.target.checked)
 );
 
 document.querySelector("#update-instances").addEventListener("click", () => {

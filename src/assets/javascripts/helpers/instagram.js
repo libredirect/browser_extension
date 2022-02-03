@@ -45,11 +45,11 @@ const reservedPaths = [
 ];
 const bypassPaths = /\/(accounts\/|embeds?.js)/;
 
-let disableBibliogram;
-const getDisableBibliogram = () => disableBibliogram;
-function setDisableBibliogram(val) {
-  disableBibliogram = val;
-  browser.storage.sync.set({ disableBibliogram })
+let disableInstagram;
+const getDisableInstagram = () => disableInstagram;
+function setDisableInstagram(val) {
+  disableInstagram = val;
+  browser.storage.sync.set({ disableInstagram })
 }
 
 let bibliogramInstance;
@@ -62,7 +62,7 @@ function setBibliogramInstance(val) {
 
 async function redirect(url, initiator, type) {
   await init();
-  if (disableBibliogram)
+  if (disableInstagram)
     return null;
 
   // Do not redirect Bibliogram view on Instagram links
@@ -94,10 +94,10 @@ async function redirect(url, initiator, type) {
 
 async function init() {
   let result = await browser.storage.sync.get([
-    "disableBibliogram",
+    "disableInstagram",
     "bibliogramInstance",
   ])
-  disableBibliogram = result.disableBibliogram || false;
+  disableInstagram = result.disableInstagram || false;
   bibliogramInstance = result.bibliogramInstance;
 }
 
@@ -106,8 +106,8 @@ export default {
   redirects,
   reservedPaths,
   bypassPaths,
-  getDisableBibliogram,
-  setDisableBibliogram,
+  getDisableInstagram,
+  setDisableInstagram,
   getBibliogramInstance,
   setBibliogramInstance,
   redirect,

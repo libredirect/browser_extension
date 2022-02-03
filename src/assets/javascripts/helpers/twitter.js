@@ -44,11 +44,11 @@ const redirects = {
   ]
 };
 
-let disableNitter;
-const getDisableNitter = () => disableNitter;
-function setDisableNitter(val) {
-  disableNitter = val;
-  browser.storage.sync.set({ disableNitter })
+let disableTwitter;
+const getDisableTwitter = () => disableTwitter;
+function setDisableTwitter(val) {
+  disableTwitter = val;
+  browser.storage.sync.set({ disableTwitter })
 }
 
 let nitterInstance;
@@ -61,7 +61,7 @@ function setNitterInstance(val) {
 
 async function redirect(url, initiator) {
   await init();
-  if (disableNitter)
+  if (disableTwitter)
     return null;
 
   if (url.pathname.split("/").includes("home")) {
@@ -93,18 +93,18 @@ async function redirect(url, initiator) {
 
 async function init() {
   let result = await browser.storage.sync.get([
-    "disableNitter",
+    "disableTwitter",
     "nitterInstance"
   ]);
-  disableNitter = result.disableNitter || false;
+  disableTwitter = result.disableTwitter || false;
   nitterInstance = result.nitterInstance;
 }
 
 export default {
   targets,
   redirects,
-  getDisableNitter,
-  setDisableNitter,
+  getDisableTwitter,
+  setDisableTwitter,
   getNitterInstance,
   setNitterInstance,
   redirect,

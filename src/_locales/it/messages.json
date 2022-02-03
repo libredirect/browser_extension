@@ -35,19 +35,19 @@
     "message": "Istanza di SimplyTranslate",
     "description": "Label for SimplyTranslate instance field option (options)."
   },
-  "disableNitter": {
+  "disableTwitter": {
     "message": "Reindirizzamenti Nitter",
     "description": "Label for enable/disable Nitter redirects option (options & pop-up)."
   },
-  "disableInvidious": {
+  "disableYoutube": {
     "message": "Reindirizzamenti Invidious",
     "description": "Label for enable/disable Invidious redirects option (options & pop-up)."
   },
-  "disableBibliogram": {
+  "disableInstagram": {
     "message": "Reindirizzamenti Bibliogram",
     "description": "Label for enable/disable Bibliogram redirects option (options & pop-up)."
   },
-  "disableOsm": {
+  "disableMaps": {
     "message": "Reindirizzamenti OpenStreetMap",
     "description": "Label for enable/disable OSM redirects option (options & pop-up)."
   },
@@ -59,7 +59,7 @@
     "message": "Reindirizzamenti motore di ricerca",
     "description": "Label for enable/disable Search Engine redirects option (options & pop-up)."
   },
-  "disableSimplyTranslate": {
+  "disableTranslate": {
     "message": "Reindirizzamenti SimplyTranslate",
     "description": "Label for enable/disable SimplyTranslate redirects option (options & pop-up)."
   },

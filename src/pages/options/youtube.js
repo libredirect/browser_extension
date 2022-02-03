@@ -1,7 +1,7 @@
 import youtubeHelper from "../../assets/javascripts/helpers/youtube.js";
 import commonHelper from "../../assets/javascripts/helpers/common.js";
 
-let disableInvidiousElement = document.getElementById("disable-invidious");
+let disableYoutubeElement = document.getElementById("disable-invidious");
 let invidiousDarkModeElement = document.getElementById("invidious-dark-mode");
 let persistInvidiousPrefsElement = document.getElementById("persist-invidious-prefs");
 let invidiousVolumeElement = document.getElementById("invidious-volume");
@@ -15,7 +15,7 @@ let invidiousVideoQualityElement = document.getElementById("video-quality");
 let invidiousVolumeValueElement = document.querySelector("#volume-value");
 
 youtubeHelper.init().then(() => {
-    disableInvidiousElement.checked = !youtubeHelper.getDisableInvidious();
+    disableYoutubeElement.checked = !youtubeHelper.getDisableYoutube();
     invidiousDarkModeElement.checked = youtubeHelper.getInvidiousDarkMode();
     persistInvidiousPrefsElement.checked = youtubeHelper.getPersistInvidiousPrefs();
     invidiousVolumeElement.value = youtubeHelper.getInvidiousVolume();
@@ -30,8 +30,8 @@ youtubeHelper.init().then(() => {
 });
 
 
-disableInvidiousElement.addEventListener("change",
-    (event) => youtubeHelper.setDisableInvidious(!event.target.checked)
+disableYoutubeElement.addEventListener("change",
+    (event) => youtubeHelper.setDisableYoutube(!event.target.checked)
 );
 
 invidiousDarkModeElement.addEventListener("change",

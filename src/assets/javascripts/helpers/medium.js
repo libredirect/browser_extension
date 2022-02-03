@@ -24,11 +24,11 @@ const redirects = {
   ]
 };
 
-let disableScribe;
-const getDisableScribe = () => disableScribe;
-function setDisableScribe(val) {
-  disableScribe = val;
-  browser.storage.sync.set({ disableScribe })
+let disableMedium;
+const getDisableMedium = () => disableMedium;
+function setDisableMedium(val) {
+  disableMedium = val;
+  browser.storage.sync.set({ disableMedium })
 }
 
 
@@ -41,7 +41,7 @@ function setScribeInstance(val) {
 
 async function redirect(url, initiator) {
   await init()
-  if (disableScribe) return null;
+  if (disableMedium) return null;
 
   if (url.pathname == "/") return null;
 
@@ -62,18 +62,18 @@ async function redirect(url, initiator) {
 
 async function init() {
   let result = await browser.storage.sync.get([
-    "disableScribe",
+    "disableMedium",
     "scribeInstance",
   ])
-  disableScribe = result.disableScribe || false;
+  disableMedium = result.disableMedium || false;
   scribeInstance = result.scribeInstance;
 }
 
 export default {
   targets,
   redirects,
-  getDisableScribe,
-  setDisableScribe,
+  getDisableMedium,
+  setDisableMedium,
   getScribeInstance,
   setScribeInstance,
   redirect,

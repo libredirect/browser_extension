@@ -23,19 +23,19 @@
     "message": "OpenStreetMap-Instanz",
     "description": "Label for OSM instance field option (options)."
   },
-  "disableNitter": {
+  "disableTwitter": {
     "message": "Nitter-Weiterleitungen",
     "description": "Label for enable/disable Nitter redirects option (options & pop-up)."
   },
-  "disableInvidious": {
+  "disableYoutube": {
     "message": "Invidious-Weiterleitungen",
     "description": "Label for enable/disable Invidious redirects option (options & pop-up)."
   },
-  "disableBibliogram": {
+  "disableInstagram": {
     "message": "Bibliogram-Weiterleitungen",
     "description": "Label for enable/disable Bibliogram redirects option (options & pop-up)."
   },
-  "disableOsm": {
+  "disableMaps": {
     "message": "OpenStreetMap-Weiterleitungen",
     "description": "Label for enable/disable OSM redirects option (options & pop-up)."
   },

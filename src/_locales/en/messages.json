@@ -43,23 +43,23 @@
     "message": "Wikipedia Instance",
     "description": "Label for Wikipedia instance field option (options)."
   },
-  "disableNitter": {
+  "disableTwitter": {
     "message": "Nitter Redirects",
     "description": "Label for enable/disable Nitter redirects option (options & pop-up)."
   },
-  "disableScribe": {
+  "disableMedium": {
     "message": "Scribe Redirects",
     "description": "Label for enable/disable Scribe redirects option (options & pop-up)."
   },
-  "disableInvidious": {
+  "disableYoutube": {
     "message": "Invidious Redirects",
     "description": "Label for enable/disable Invidious redirects option (options & pop-up)."
   },
-  "disableBibliogram": {
+  "disableInstagram": {
     "message": "Bibliogram Redirects",
     "description": "Label for enable/disable Bibliogram redirects option (options & pop-up)."
   },
-  "disableOsm": {
+  "disableMaps": {
     "message": "OpenStreetMap Redirects",
     "description": "Label for enable/disable OSM redirects option (options & pop-up)."
   },
@@ -71,7 +71,7 @@
     "message": "Search Engine Redirects",
     "description": "Label for enable/disable Search Engine redirects option (options & pop-up)."
   },
-  "disableSimplyTranslate": {
+  "disableTranslate": {
     "message": "SimplyTranslate Redirects",
     "description": "Label for enable/disable SimplyTranslate redirects option (options & pop-up)."
   },
