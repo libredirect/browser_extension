@@ -1,15 +1,14 @@
 "use strict";
 
-import mapsHelper from "../../assets/javascripts/helpers/maps.js";
-import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 import youtubeHelper from "../../assets/javascripts/helpers/youtube.js";
+import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
-import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
 import searchHelper from "../../assets/javascripts/helpers/search.js";
 import translateHelper from "../../assets/javascripts/helpers/translate.js";
-import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mapsHelper from "../../assets/javascripts/helpers/maps.js";
+import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
+import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 
 window.browser = window.browser || window.chrome;
 

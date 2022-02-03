@@ -200,15 +200,14 @@ async function redirect(url, initiator) {
 }
 
 async function init() {
-  console.log("Init Search Helper");
   let result = await browser.storage.sync.get([
     "disableSearch",
     "searchInstance",
     "searchFrontend",
   ])
-  disableSearch = result.disableSearch;
+  disableSearch = result.disableSearch ?? false;
   searchInstance = result.searchInstance;
-  searchFrontend = result.searchFrontend;
+  searchFrontend = result.searchFrontend ?? 'searx';
 }
 
 export default {

@@ -60,7 +60,7 @@ async function init() {
     "disableWikipedia",
     "wikipediaInstance",
   ]);
-  disableWikipedia = result.disableWikipedia || false;
+  disableWikipedia = result.disableWikipedia ?? false;
   wikipediaInstance = result.wikipediaInstance;
 }
 

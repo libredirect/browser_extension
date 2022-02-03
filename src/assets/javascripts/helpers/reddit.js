@@ -118,9 +118,9 @@ async function init() {
     "redditInstance",
     "redditFrontend",
   ])
-  disableReddit = result.disableReddit || false;
+  disableReddit = result.disableReddit ?? false;
   redditInstance = result.redditInstance;
-  redditFrontend = result.redditFrontend || 'libreddit';
+  redditFrontend = result.redditFrontend ?? 'libreddit';
 }
 
 export default {

@@ -96,7 +96,7 @@ async function init() {
     "disableTwitter",
     "nitterInstance"
   ]);
-  disableTwitter = result.disableTwitter || false;
+  disableTwitter = result.disableTwitter ?? false;
   nitterInstance = result.nitterInstance;
 }
 

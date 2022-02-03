@@ -234,17 +234,17 @@ async function init() {
       "invidiousAutoplay",
       "useFreeTube",
     ]);
-  disableYoutube = result.disableYoutube || false;
+  disableYoutube = result.disableYoutube ?? false;
   invidiousInstance = result.invidiousInstance;
-  invidiousAlwaysProxy = result.invidiousAlwaysProxy || true;
-  invidiousOnlyEmbeddedVideo = result.invidiousOnlyEmbeddedVideo || false;
-  invidiousVideoQuality = result.invidiousVideoQuality || 'medium';
-  invidiousDarkMode = result.invidiousDarkMode || true;
-  invidiousVolume = result.invidiousVolume || 50;
-  invidiousPlayerStyle = result.invidiousPlayerStyle || 'invidious';
+  invidiousAlwaysProxy = result.invidiousAlwaysProxy ?? true;
+  invidiousOnlyEmbeddedVideo = result.invidiousOnlyEmbeddedVideo ?? false;
+  invidiousVideoQuality = result.invidiousVideoQuality ?? 'medium';
+  invidiousDarkMode = result.invidiousDarkMode ?? true;
+  invidiousVolume = result.invidiousVolume ?? 50;
+  invidiousPlayerStyle = result.invidiousPlayerStyle ?? 'invidious';
   invidiousSubtitles = result.invidiousSubtitles || '';
-  invidiousAutoplay = result.invidiousAutoplay || true;
-  useFreeTube = result.useFreeTube || false;
+  invidiousAutoplay = result.invidiousAutoplay ?? true;
+  useFreeTube = result.useFreeTube ?? false;
 
   if (result.persistInvidiousPrefs) initInvidiousCookie();
 }

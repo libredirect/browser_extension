@@ -59,7 +59,6 @@ function setBibliogramInstance(val) {
   browser.storage.sync.set({ bibliogramInstance })
 };
 
-
 async function redirect(url, initiator, type) {
   await init();
   if (disableInstagram)
@@ -68,11 +67,7 @@ async function redirect(url, initiator, type) {
   // Do not redirect Bibliogram view on Instagram links
   if (
     initiator &&
-    (
-      initiator.origin === bibliogramInstance ||
-      redirects.normal.includes(initiator.origin) ||
-      targets.includes(initiator.host)
-    )
+    (initiator.origin === bibliogramInstance || redirects.normal.includes(initiator.origin) || targets.includes(initiator.host))
   )
     return null;
 
@@ -97,7 +92,7 @@ async function init() {
     "disableInstagram",
     "bibliogramInstance",
   ])
-  disableInstagram = result.disableInstagram || false;
+  disableInstagram = result.disableInstagram ?? false;
   bibliogramInstance = result.bibliogramInstance;
 }
 

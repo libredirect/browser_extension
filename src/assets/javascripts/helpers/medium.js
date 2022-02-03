@@ -64,7 +64,7 @@ async function init() {
     "disableMedium",
     "scribeInstance",
   ])
-  disableMedium = result.disableMedium || false;
+  disableMedium = result.disableMedium ?? false;
   scribeInstance = result.scribeInstance;
 }
 

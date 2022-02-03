@@ -146,7 +146,7 @@ async function init() {
     "disableMaps",
     "osmInstance",
   ])
-  disableMaps = result.disableMaps;
+  disableMaps = result.disableMaps ?? false;
   osmInstance = result.osmInstance;
 }
 

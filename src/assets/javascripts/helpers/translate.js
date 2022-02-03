@@ -90,9 +90,9 @@ async function init() {
     "simplyTranslateInstance",
     "translateFrontend"
   ]);
-  disableTranslate = result.disableTranslate || false;
+  disableTranslate = result.disableTranslate ?? false;
   simplyTranslateInstance = result.simplyTranslateInstance;
-  translateFrontend = result.translateFrontend || "simplyTransalte";
+  translateFrontend = result.translateFrontend ?? "simplyTransalte";
 }
 
 export default {
