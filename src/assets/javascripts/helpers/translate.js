@@ -5,7 +5,7 @@ const targets = [
   "translate.google.no"
 ];
 
-const redirects = {
+let redirects = {
   "simplyTranslate": {
     "normal": [
       "https://simplytranslate.org",

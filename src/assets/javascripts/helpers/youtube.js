@@ -20,7 +20,7 @@ const targets = [
     (content_scripts > matches, 'persist-invidious-prefs.js')
     when updating this list:
   */
-const redirects = {
+let redirects = {
   "normal": [
     "https://invidious.snopyta.org",
     "https://invidious.xyz",

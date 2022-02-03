@@ -5,7 +5,7 @@ const targets = [
   /https:\/\/.*\.google\.com/,
   /https?:\/\/(((www|maps)\.)?(google\.).*(\/search)|search\.(google\.).*)/
 ];
-const redirects = {
+let redirects = {
   "searx": {
     "normal": [
       "https://a.searx.space",

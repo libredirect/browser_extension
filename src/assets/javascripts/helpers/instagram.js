@@ -6,7 +6,7 @@ const targets = [
   "help.instagram.com",
   "about.instagram.com",
 ];
-const redirects = {
+let redirects = {
   "normal": [
     "https://bibliogram.art",
     "https://bibliogram.snopyta.org",

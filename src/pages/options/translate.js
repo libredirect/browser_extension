@@ -1,18 +1,18 @@
-import googleTranslateHelper from "../../assets/javascripts/helpers/translate.js";
+import translateHelper from "../../assets/javascripts/helpers/translate.js";
 
 let disableTranslateElement = document.getElementById("disable-simplyTranslate");
 let translateFrontendElement = document.getElementById("translate-frontend");
 
 
-googleTranslateHelper.init().then(() => {
-    disableTranslateElement.checked = !googleTranslateHelper.getDisableTranslate();
-    translateFrontendElement.value = googleTranslateHelper.getFrontend();
+translateHelper.init().then(() => {
+    disableTranslateElement.checked = !translateHelper.getDisableTranslate();
+    translateFrontendElement.value = translateHelper.getFrontend();
 });
 
 disableTranslateElement.addEventListener("change",
-    (event) => googleTranslateHelper.setDisableTranslate(!event.target.checked)
+    (event) => translateHelper.setDisableTranslate(!event.target.checked)
 );
 
 translateFrontendElement.addEventListener("change",
-    (event) => googleTranslateHelper.setFrontend(event.target.options[translateFrontendElement.selectedIndex].value)
+    (event) => translateHelper.setFrontend(event.target.options[translateFrontendElement.selectedIndex].value)
 );

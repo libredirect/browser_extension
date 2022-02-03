@@ -8,7 +8,7 @@ const targets = [
   "i.redd.it",
   "redd.it",
 ];
-const redirects = {
+let redirects = {
   // modern UI
   "libreddit": {
     "normal": [

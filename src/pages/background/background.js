@@ -7,26 +7,15 @@ import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
 import searchHelper from "../../assets/javascripts/helpers/search.js";
-import googleTranslateHelper from "../../assets/javascripts/helpers/translate.js";
+import translateHelper from "../../assets/javascripts/helpers/translate.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
-import data from "../../assets/javascripts/data.js";
-import googleMaps from "../../assets/javascripts/helpers/maps.js";
+import mapsHelper from "../../assets/javascripts/helpers/maps.js";
 
 window.browser = window.browser || window.chrome;
 
-// data.osmInstance = result.osmInstance || data.osmDefault;
-// data.simplyTranslateInstance = result.simplyTranslateInstance || data.simplyTranslateDefault;
-// data.wikipediaInstance = result.wikipediaInstance || data.wikipediaDefault;
-// data.exceptions = result.exceptions
-//   ? result.exceptions.map((e) => {
-//     return new RegExp(e);
-//   })
-//   : [];
-// data.invidiousSubtitles = result.invidiousSubtitles || "";
-
-googleMaps.init()
+mapsHelper.init()
 searchHelper.init()
-googleTranslateHelper.init()
+translateHelper.init()
 instagramHelper.init()
 mediumHelper.init()
 redditHelper.init()
@@ -58,7 +47,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     else if (mediumHelper.targets.some((rx) => rx.test(url.host))) newUrl = await mediumHelper.redirect(url, initiator);
 
-    else if (googleTranslateHelper.targets.includes(url.host)) newUrl = await googleTranslateHelper.redirect(url, initiator);
+    else if (translateHelper.targets.includes(url.host)) newUrl = await translateHelper.redirect(url, initiator);
 
     else if (searchHelper.targets.some((rx) => rx.test(url.href))) newUrl = await searchHelper.redirect(url, initiator)
 
@@ -73,6 +62,7 @@ browser.webRequest.onBeforeRequest.addListener(
   { urls: ["<all_urls>"], },
   ["blocking"]
 );
+
 
 browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
   let url;
@@ -93,8 +83,8 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
     redditHelper.redirects.mobile,
     ...searchHelper.redirects.searx.normal,
     ...searchHelper.redirects.whoogle.normal,
-    ...googleTranslateHelper.redirects.simplyTranslate.normal,
-    ...googleTranslateHelper.redirects.lingva.normal,
+    ...translateHelper.redirects.simplyTranslate.normal,
+    ...translateHelper.redirects.lingva.normal,
     ...mediumHelper.redirects.normal,
     ...wikipediaHelper.redirects.normal
   );
@@ -129,8 +119,8 @@ browser.pageAction.onClicked.addListener((tab) => {
   ) newUrl = 'https://google.com';
 
   if (
-    googleTranslateHelper.redirects.simplyTranslate.normal.includes(protocolHost) ||
-    googleTranslateHelper.redirects.lingva.normal.includes(protocolHost)
+    translateHelper.redirects.simplyTranslate.normal.includes(protocolHost) ||
+    translateHelper.redirects.lingva.normal.includes(protocolHost)
   ) newUrl = 'https://translate.google.com';
 
   if (mediumHelper.redirects.normal.includes(protocolHost)) newUrl = 'https://medium.com';
@@ -138,50 +128,4 @@ browser.pageAction.onClicked.addListener((tab) => {
   if (wikipediaHelper.redirects.normal.includes(protocolHost)) newUrl = 'https://wikipedia.com';
 
   if (newUrl) browser.tabs.update({ url: tabUrl.href.replace(protocolHost, newUrl) });
-});
-
-browser.runtime.onInstalled.addListener((details) => {
-  browser.storage.sync.get(
-    [
-      "disableSearch",
-      "disableTranslate",
-      "disableWikipedia",
-      "redditFrontend",
-      "searchFrontend",
-    ],
-    (result) => {
-
-      if (result.disableSearch === undefined) browser.storage.sync.set({ disableSearch: true });
-
-      if (result.disableTranslate === undefined) browser.storage.sync.set({ disableTranslate: true });
-
-      if (result.disableWikipedia === undefined) browser.storage.sync.set({ disableWikipedia: true });
-
-      if (result.redditFrontend === undefined) browser.storage.sync.set({ redditFrontend: 'libreddit' })
-
-      if (result.searchFrontend === undefined) {
-        data.searchFrontend = 'searx';
-        browser.storage.sync.set({ searchFrontend: data.searchFrontend })
-      }
-
-    }
-  );
-  if (details.reason === "update") {
-    browser.storage.sync.get(
-      ["whitelist", "exceptions", "invidiousInstance", "disableSearch"],
-      (result) => {
-        if (result.whitelist) {
-          let whitelist = result.whitelist.map((e) =>
-            e.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&")
-          );
-          browser.storage.sync.set({
-            exceptions: result.exceptions.concat(whitelist),
-            whitelist: null,
-          });
-        }
-        if (result.invidiousInstance === "https://invidio.us")
-          browser.storage.sync.set({ invidiousInstance: null });
-      }
-    );
-  }
 });

@@ -5,7 +5,7 @@ import mediumHelper from "./medium.js";
 import redditHelper from "./reddit.js";
 import searchHelper from "./search.js";
 import data from '../data.js'
-import googleTranslateHelper from "./translate.js";
+import translateHelper from "./translate.js";
 import wikipediaHelper from "./wikipedia.js";
 import mapsHelper from "./maps.js";
 import medium from "./medium.js";

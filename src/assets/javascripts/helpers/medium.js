@@ -16,7 +16,7 @@ const targets = [
   /blog\.coinbase\.com/
 ];
 
-const redirects = {
+let redirects = {
   "normal": [
     "https://scribe.rip",
     "https://scribe.nixnet.services"

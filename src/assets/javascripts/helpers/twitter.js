@@ -17,7 +17,7 @@ const targets = [
     src/assets/javascripts/remove-twitter-sw.js file 
     (const nitterInstances) when updating this list:
   */
-const redirects = {
+let redirects = {
   "normal": [
     "https://nitter.net",
     "https://nitter.snopyta.org",

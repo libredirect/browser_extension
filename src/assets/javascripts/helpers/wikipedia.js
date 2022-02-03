@@ -1,6 +1,6 @@
 const targets = /wikipedia.org/;
 
-const redirects = {
+let redirects = {
   "normal": [
     "https://wikiless.org"
   ]

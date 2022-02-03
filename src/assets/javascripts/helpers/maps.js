@@ -1,7 +1,7 @@
 import commonHelper from './common.js'
 
 const targets = /https?:\/\/(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
-const redirects = {
+let redirects = {
   "normal": [
     "https://openstreetmap.org"
   ]
