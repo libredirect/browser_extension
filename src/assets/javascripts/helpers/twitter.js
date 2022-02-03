@@ -43,6 +43,12 @@ let redirects = {
     "http://npf37k3mtzwxreiw52ccs5ay4e6qt2fkcs2ndieurdyn2cuzzsfyfvid.onion",
   ]
 };
+const getRedirects = () => redirects;
+function setRedirects(val) {
+  redirects = val;
+  browser.storage.sync.set({ twitterRedirects: val })
+  console.log("twitterRedirects:", val)
+}
 
 let disableTwitter;
 const getDisableTwitter = () => disableTwitter;
@@ -58,9 +64,7 @@ function setNitterInstance(val) {
   browser.storage.sync.set({ nitterInstance })
 }
 
-
-async function redirect(url, initiator) {
-  await init();
+function redirect(url, initiator) {
   if (disableTwitter)
     return null;
 
@@ -91,22 +95,33 @@ async function redirect(url, initiator) {
 
 }
 
+function isTwitter(url) {
+  return targets.includes(url.host)
+}
+
 async function init() {
   let result = await browser.storage.sync.get([
     "disableTwitter",
-    "nitterInstance"
+    "nitterInstance",
+    "twitterRedirects"
   ]);
   disableTwitter = result.disableTwitter ?? false;
   nitterInstance = result.nitterInstance;
+  if (result.twitterRedirects)
+    redirects = result.twitterRedirects;
 }
 
 export default {
-  targets,
-  redirects,
+  getRedirects,
+  setRedirects,
+
   getDisableTwitter,
   setDisableTwitter,
+
   getNitterInstance,
   setNitterInstance,
+
   redirect,
+  isTwitter,
   init,
 };

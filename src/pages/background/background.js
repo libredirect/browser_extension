@@ -12,16 +12,21 @@ import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 
 window.browser = window.browser || window.chrome;
 
-mapsHelper.init()
-searchHelper.init()
-translateHelper.init()
-instagramHelper.init()
-mediumHelper.init()
-redditHelper.init()
-twitterHelper.init()
-wikipediaHelper.init()
-youtubeHelper.init()
+function wholeInit() {
+  mapsHelper.init()
+  searchHelper.init()
+  translateHelper.init()
+  instagramHelper.init()
+  mediumHelper.init()
+  redditHelper.init()
+  twitterHelper.init()
+  wikipediaHelper.init()
+  youtubeHelper.init()
+}
 
+wholeInit();
+
+browser.storage.onChanged.addListener(wholeInit);
 
 browser.webRequest.onBeforeRequest.addListener(
   async (details) => {
@@ -34,23 +39,23 @@ browser.webRequest.onBeforeRequest.addListener(
 
     var newUrl;
 
-    if (youtubeHelper.targets.includes(url.host)) newUrl = await youtubeHelper.redirect(url, initiator, details.type)
+    if (youtubeHelper.isYoutube(url)) newUrl = youtubeHelper.redirect(url, initiator, details.type)
 
-    else if (twitterHelper.targets.includes(url.host)) newUrl = await twitterHelper.redirect(url, initiator);
+    else if (twitterHelper.isTwitter(url)) newUrl = twitterHelper.redirect(url, initiator);
 
-    else if (instagramHelper.targets.includes(url.host)) newUrl = await instagramHelper.redirect(url, initiator, details.type);
+    else if (instagramHelper.isInstagram(url)) newUrl = instagramHelper.redirect(url, initiator, details.type);
 
-    else if (url.href.match(mapsHelper.targets)) newUrl = await mapsHelper.redirect(url, initiator);
+    else if (mapsHelper.isMaps(url)) newUrl = mapsHelper.redirect(url, initiator);
 
-    else if (redditHelper.targets.includes(url.host)) newUrl = await redditHelper.redirect(url, initiator, details.type);
+    else if (redditHelper.isReddit(url)) newUrl = redditHelper.redirect(url, initiator, details.type);
 
-    else if (mediumHelper.targets.some((rx) => rx.test(url.host))) newUrl = await mediumHelper.redirect(url, initiator);
+    else if (mediumHelper.isMedium(url)) newUrl = mediumHelper.redirect(url, initiator);
 
-    else if (translateHelper.targets.includes(url.host)) newUrl = await translateHelper.redirect(url, initiator);
+    else if (translateHelper.isTranslate(url)) newUrl = translateHelper.redirect(url, initiator);
 
-    else if (searchHelper.targets.some((rx) => rx.test(url.href))) newUrl = await searchHelper.redirect(url, initiator)
+    else if (searchHelper.isSearch(url)) newUrl = searchHelper.redirect(url, initiator)
 
-    else if (url.host.match(wikipediaHelper.targets)) newUrl = await wikipediaHelper.redirect(url, initiator);
+    else if (wikipediaHelper.isWikipedia(url)) newUrl = wikipediaHelper.redirect(url, initiator);
 
     if (newUrl) {
       console.info("Redirecting", url.href, "=>", newUrl);
@@ -62,7 +67,6 @@ browser.webRequest.onBeforeRequest.addListener(
   ["blocking"]
 );
 
-
 browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
   let url;
   try {
@@ -73,19 +77,19 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
   var protocolHost = `${url.protocol}//${url.host}`;
   var mightyList = [];
   mightyList.push(
-    ...youtubeHelper.redirects.normal,
-    ...twitterHelper.redirects.normal,
-    ...instagramHelper.redirects.normal,
-    ...redditHelper.redirects.libreddit.normal,
-    ...redditHelper.redirects.teddit.normal,
-    redditHelper.redirects.desktop,
-    redditHelper.redirects.mobile,
-    ...searchHelper.redirects.searx.normal,
-    ...searchHelper.redirects.whoogle.normal,
-    ...translateHelper.redirects.simplyTranslate.normal,
-    ...translateHelper.redirects.lingva.normal,
-    ...mediumHelper.redirects.normal,
-    ...wikipediaHelper.redirects.normal
+    ...youtubeHelper.getRedirects().normal,
+    ...twitterHelper.getRedirects().normal,
+    ...instagramHelper.getRedirects().normal,
+    ...redditHelper.getRedirects().libreddit.normal,
+    ...redditHelper.getRedirects().teddit.normal,
+    redditHelper.getRedirects().desktop,
+    redditHelper.getRedirects().mobile,
+    ...searchHelper.getRedirects().searx.normal,
+    ...searchHelper.getRedirects().whoogle.normal,
+    ...translateHelper.getRedirects().simplyTranslate.normal,
+    ...translateHelper.getRedirects().lingva.normal,
+    ...mediumHelper.getRedirects().normal,
+    ...wikipediaHelper.getRedirects().normal
   );
 
   if (mightyList.includes(protocolHost)) browser.pageAction.show(tabId);
@@ -96,14 +100,14 @@ browser.pageAction.onClicked.addListener((tab) => {
   var tabUrl = new URL(tab.url);
   var protocolHost = `${tabUrl.protocol}//${tabUrl.host}`;
   var newUrl;
-  if (youtubeHelper.redirects.normal.includes(protocolHost)) newUrl = 'https://youtube.com';
 
-  if (twitterHelper.redirects.normal.includes(protocolHost)) newUrl = 'https://twitter.com';
+  if (youtubeHelper.getRedirects().normal.includes(protocolHost)) newUrl = 'https://youtube.com';
 
-  if (instagramHelper.redirects.normal.includes(protocolHost)) newUrl = 'https://instagram.com';
+  if (twitterHelper.getRedirects().normal.includes(protocolHost)) newUrl = 'https://twitter.com';
 
+  if (instagramHelper.getRedirects().normal.includes(protocolHost)) newUrl = 'https://instagram.com';
 
-  if (redditHelper.redirects.libreddit.normal.includes(protocolHost) || redditHelper.redirects.teddit.normal.includes(protocolHost)) {
+  if (redditHelper.getRedirects().libreddit.normal.includes(protocolHost) || redditHelper.getRedirects().teddit.normal.includes(protocolHost)) {
     if (tabUrl.pathname.startsWith('/img')) {
       newUrl = "https://i.redd.it"
       tabUrl.href = tabUrl.href.replace("/img", "")
@@ -113,18 +117,18 @@ browser.pageAction.onClicked.addListener((tab) => {
   }
 
   if (
-    searchHelper.redirects.searx.normal.includes(protocolHost) ||
-    searchHelper.redirects.whoogle.normal.includes(protocolHost)
+    searchHelper.getRedirects().searx.normal.includes(protocolHost) ||
+    searchHelper.getRedirects().whoogle.normal.includes(protocolHost)
   ) newUrl = 'https://google.com';
 
   if (
-    translateHelper.redirects.simplyTranslate.normal.includes(protocolHost) ||
-    translateHelper.redirects.lingva.normal.includes(protocolHost)
+    translateHelper.getRedirects().simplyTranslate.normal.includes(protocolHost) ||
+    translateHelper.getRedirects().lingva.normal.includes(protocolHost)
   ) newUrl = 'https://translate.google.com';
 
-  if (mediumHelper.redirects.normal.includes(protocolHost)) newUrl = 'https://medium.com';
+  if (mediumHelper.getRedirects().normal.includes(protocolHost)) newUrl = 'https://medium.com';
 
-  if (wikipediaHelper.redirects.normal.includes(protocolHost)) newUrl = 'https://wikipedia.com';
+  if (wikipediaHelper.getRedirects().normal.includes(protocolHost)) newUrl = 'https://wikipedia.com';
 
   if (newUrl) browser.tabs.update({ url: tabUrl.href.replace(protocolHost, newUrl) });
 });

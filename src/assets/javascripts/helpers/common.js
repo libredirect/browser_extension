@@ -11,12 +11,6 @@ import mapsHelper from "./maps.js";
 import medium from "./medium.js";
 
 
-function filterInstances(instances) {
-  let onionScan = instances.filter((instance) => !instance.includes(".onion"))
-  let i2pScan = onionScan.filter((instance) => !instance.includes(".i2p"))
-  return i2pScan;
-}
-
 function addHttps(instances) {
   return instances.map((item, i) => "https://" + item)
 }
@@ -33,15 +27,24 @@ function updateInstances() {
 
   if (request.status === 200) {
     const instances = JSON.parse(request.responseText);
-    youtubeHelper.redirects = addHttps(filterInstances(instances.invidious));
-    twitterHelper.redirects = addHttps(filterInstances(instances.nitter));
-    instagramHelper.redirects = addHttps(filterInstances(instances.bibliogram));
-    redditHelper.redirects.libreddit = addHttps(filterInstances(instances.simplyTranslate))
-    redditHelper.redirects.teddit = addHttps(filterInstances(instances.teddit));
-    searchHelper.redirects.searx = addHttps(filterInstances(instances.simplyTranslate));
-    searchHelper.redirects.whoogle = addHttps(filterInstances(instances.whoogle));
-    wikipediaHelper.redirects = addHttps(filterInstances(instances.wikiless));
-    mediumHelper.redirects = addHttps(filterInstances(instances.scribe));
+
+    youtubeHelper.setRedirects(instances.invidious);
+
+    twitterHelper.setRedirects(instances.nitter);
+
+    instagramHelper.setRedirects(instances.bibliogram);
+
+    redditHelper.setTedditRedirects(instances.teddit);
+
+    translateHelper.setSimplyTranslateRedirects(instances.simplyTranslate);
+
+    searchHelper.setSearxRedirects(instances.searx);
+    searchHelper.setWhoogleRedirects(instances.whoogle);
+
+    wikipediaHelper.setRedirects(instances.wikiless);
+
+    mediumHelper.setRedirects(instances.scribe);
+
     console.info("Successfully updated Instances");
     return true;
   }
@@ -107,7 +110,6 @@ function isException(url, initiator) {
 }
 
 export default {
-  filterInstances,
   getRandomInstance,
   updateInstances,
   addHttps,

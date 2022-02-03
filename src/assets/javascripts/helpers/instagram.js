@@ -18,6 +18,13 @@ let redirects = {
     "https://bib.actionsack.com"
   ],
 };
+const getRedirects = () => redirects;
+function setRedirects(val) {
+  redirects = val;
+  browser.storage.sync.set({ instagramRedirects: val })
+  console.log("instagramRedirects: ", val)
+}
+
 const reservedPaths = [
   "about",
   "explore",
@@ -59,8 +66,7 @@ function setBibliogramInstance(val) {
   browser.storage.sync.set({ bibliogramInstance })
 };
 
-async function redirect(url, initiator, type) {
-  await init();
+function redirect(url, initiator, type) {
   if (disableInstagram)
     return null;
 
@@ -86,25 +92,30 @@ async function redirect(url, initiator, type) {
     return `${link}/u${url.pathname}${url.search}`;
 }
 
+function isInstagram(url) {
+  return targets.includes(url.host)
+}
 
 async function init() {
   let result = await browser.storage.sync.get([
     "disableInstagram",
     "bibliogramInstance",
+    "instagramRedirects"
   ])
   disableInstagram = result.disableInstagram ?? false;
   bibliogramInstance = result.bibliogramInstance;
+  if (result.instagramRedirects)
+    redirects = result.instagramRedirects
 }
 
 export default {
-  targets,
-  redirects,
-  reservedPaths,
-  bypassPaths,
+  getRedirects,
+  setRedirects,
   getDisableInstagram,
   setDisableInstagram,
   getBibliogramInstance,
   setBibliogramInstance,
+  isInstagram,
   redirect,
   init,
 };

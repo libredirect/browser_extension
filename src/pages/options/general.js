@@ -54,9 +54,9 @@ function addToExceptions() {
     try {
       let value = input.value;
       new RegExp(input.value);
-      if (type === "URL") {
+      if (type === "URL")
         value = value.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
-      }
+
       exceptions.push(value);
       browser.storage.sync.set({
         exceptions: exceptions,

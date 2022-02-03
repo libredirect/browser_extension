@@ -22,6 +22,12 @@ let redirects = {
     "https://scribe.nixnet.services"
   ]
 };
+const getRedirects = () => redirects;
+function setRedirects(val) {
+  redirects = val;
+  browser.storage.sync.set({ mediumRedirects: val })
+  console.log("mediumRedirects: ", val)
+}
 
 let disableMedium;
 const getDisableMedium = () => disableMedium;
@@ -38,8 +44,7 @@ function setScribeInstance(val) {
   browser.storage.sync.set({ scribeInstance })
 };
 
-async function redirect(url, initiator) {
-  await init()
+function redirect(url, initiator) {
   if (disableMedium) return null;
 
   if (url.pathname == "/") return null;
@@ -59,22 +64,35 @@ async function redirect(url, initiator) {
   return `${commonHelper.getRandomInstance(redirects.normal)}${url.pathname}${url.search}`;
 }
 
+function isMedium(url) {
+  return targets.some((rx) => rx.test(url.host));
+}
+
 async function init() {
   let result = await browser.storage.sync.get([
     "disableMedium",
     "scribeInstance",
+    "mediumRedirects"
   ])
   disableMedium = result.disableMedium ?? false;
   scribeInstance = result.scribeInstance;
+  if (result.mediumRedirects)
+    redirects = result.mediumRedirects;
 }
 
 export default {
   targets,
-  redirects,
+
+  getRedirects,
+  setRedirects,
+
   getDisableMedium,
   setDisableMedium,
+
   getScribeInstance,
   setScribeInstance,
+
   redirect,
+  isMedium,
   init,
 };

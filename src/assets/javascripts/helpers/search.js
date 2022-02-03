@@ -151,6 +151,21 @@ let redirects = {
     ]
   }
 };
+const getRedirects = () => redirects;
+
+function setSearxRedirects(val) {
+  redirects.searx = val;
+  browser.storage.sync.set({ searchRedirects: redirects })
+  console.log("searxRedirects:", val)
+}
+
+function setWhoogleRedirects(val) {
+  redirects.whoogle = val;
+  browser.storage.sync.set({ searchRedirects: redirects })
+  console.log("whoogleRedirects:", val)
+}
+
+
 
 let disableSearch;
 const getDisableSearch = () => disableSearch;
@@ -175,8 +190,7 @@ function setSearchFrontend(val) {
   console.log("searchFrontend: ", searchFrontend)
 };
 
-async function redirect(url, initiator) {
-  await init();
+function redirect(url, initiator) {
   if (disableSearch)
     return null;
 
@@ -199,26 +213,41 @@ async function redirect(url, initiator) {
   return `${instance}${path}?${searchQuery}`;
 }
 
+function isSearch(url) {
+  return targets.some((rx) => rx.test(url.href));
+}
+
 async function init() {
   let result = await browser.storage.sync.get([
     "disableSearch",
     "searchInstance",
     "searchFrontend",
+    "searchRedirects",
   ])
   disableSearch = result.disableSearch ?? false;
   searchInstance = result.searchInstance;
   searchFrontend = result.searchFrontend ?? 'searx';
+  if (result.searchRedirects)
+    redirects = result.searchRedirects;
 }
 
 export default {
   targets,
-  redirects,
+  isSearch,
+
+  getRedirects,
+  setSearxRedirects,
+  setWhoogleRedirects,
+
   getDisableSearch,
   setDisableSearch,
+
   getSearchInstance,
   setSearchInstance,
+
   getSearchFrontend,
   setSearchFrontend,
+
   redirect,
   init,
 };

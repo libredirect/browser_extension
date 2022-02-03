@@ -30,6 +30,19 @@ let redirects = {
   }
 
 };
+const getRedirects = () => redirects;
+
+function setSimplyTranslateRedirects(val) {
+  redirects.simplyTranslate = val;
+  browser.storage.sync.set({ translateRedirects: redirects })
+  console.log("simplyTranslateRedirects:", val)
+}
+
+function setLingvaRedirects(val) {
+  redirects.lingva = val;
+  browser.storage.sync.set({ translateRedirects: redirects })
+  console.log("lingvaRedirects:", val)
+}
 
 let disableTranslate;
 const getDisableTranslate = () => disableTranslate;
@@ -54,8 +67,7 @@ function setFrontend(val) {
   console.log("Translate frontend: ", frontend)
 }
 
-async function redirect(url, initiator) {
-  await init()
+function redirect(url, initiator) {
   if (disableTranslate) {
     console.log("SImplyTranslte disabled")
     return null
@@ -81,29 +93,43 @@ async function redirect(url, initiator) {
     else
       return link;
   }
+
 }
 
+function isTranslate(url) {
+  return targets.includes(url.host)
+}
 
 async function init() {
   let result = await browser.storage.sync.get([
     "disableTranslate",
     "simplyTranslateInstance",
-    "translateFrontend"
+    "translateFrontend",
+    "translateRedirects"
   ]);
   disableTranslate = result.disableTranslate ?? false;
   simplyTranslateInstance = result.simplyTranslateInstance;
   translateFrontend = result.translateFrontend ?? "simplyTransalte";
+  if (result.translateRedirects)
+    redirects = result.translateRedirects
 }
 
 export default {
-  targets,
-  redirects,
+  getRedirects,
+  setSimplyTranslateRedirects,
+  setLingvaRedirects,
+  
+  isTranslate,
+  
   getDisableTranslate,
   setDisableTranslate,
+  
   getSimplyTranslateInstance,
   setSimplyTranslateInstance,
+  
   getFrontend,
   setFrontend,
+  
   redirect,
   init,
 };

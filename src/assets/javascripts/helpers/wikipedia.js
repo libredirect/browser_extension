@@ -1,3 +1,5 @@
+import commonHelper from './common.js'
+
 const targets = /wikipedia.org/;
 
 let redirects = {
@@ -5,6 +7,12 @@ let redirects = {
     "https://wikiless.org"
   ]
 };
+const getRedirects = () => redirects;
+function setRedirects(val) {
+  redirects = val;
+  browser.storage.sync.set({ wikipediaRedirects: val })
+  console.log("wikipediaRedirects: ", val)
+}
 
 let disableWikipedia;
 const getDisableWikipedia = () => disableWikipedia;
@@ -20,8 +28,7 @@ function setWikipediaInstance(val) {
   browser.storage.sync.set({ wikipediaInstance })
 };
 
-async function redirect(url, initiator) {
-  await init()
+function redirect(url, initiator) {
   if (disableWikipedia) return null;
 
   let GETArguments = [];
@@ -33,7 +40,8 @@ async function redirect(url, initiator) {
       GETArguments.push([args[0], args[1]]);
     }
   }
-  let link = `${wikipediaInstance}${url.pathname}`;
+  let instance = wikipediaInstance ?? commonHelper.getRandomInstance(redirects.normal)
+  let link = `${instance}${url.pathname}`;
   let urlSplit = url.host.split(".");
   if (urlSplit[0] != "wikipedia" && urlSplit[0] != "www") {
     if (urlSplit[0] == "m")
@@ -55,22 +63,33 @@ async function redirect(url, initiator) {
   else return null;
 }
 
+function isWikipedia(url) {
+  return url.host.match(targets);
+}
+
 async function init() {
   let result = await browser.storage.sync.get([
     "disableWikipedia",
     "wikipediaInstance",
+    "wikipediaRedirects"
   ]);
   disableWikipedia = result.disableWikipedia ?? false;
   wikipediaInstance = result.wikipediaInstance;
+  if (result.wikipediaRedirects)
+    redirects = result.wikipediaRedirects;
 }
 
 export default {
-  targets,
-  redirects,
+  getRedirects,
+  setRedirects,
+
   setDisableWikipedia,
   getDisableWikipedia,
+
   setWikipediaInstance,
   getWikipediaInstance,
+
   redirect,
+  isWikipedia,
   init,
 };

@@ -49,6 +49,20 @@ let redirects = {
   "desktop": "https://old.reddit.com", // desktop
   "mobile": "https://i.reddit.com", // mobile
 };
+const getRedirects = () => redirects;
+
+function setLibredditRedirects(val) {
+  redirects.libreddit = val;
+  browser.storage.sync.set({ redditRedirects: redirects })
+  console.log("libredditRedirects:", val)
+}
+
+function setTedditRedirects(val) {
+  redirects.teddit = val;
+  browser.storage.sync.set({ redditRedirects: redirects })
+  console.log("tedditRedirects:", val)
+}
+
 const bypassPaths = /\/(gallery\/poll\/rpan\/settings\/topics)/;
 
 let disableReddit;
@@ -72,8 +86,7 @@ function setRedditFrontend(val) {
 };
 
 
-async function redirect(url, initiator, type) {
-  await init()
+function redirect(url, initiator, type) {
   if (disableReddit)
     return null;
 
@@ -112,27 +125,40 @@ async function redirect(url, initiator, type) {
   if (redditFrontend == 'teddit') return `${tedditLink}${url.pathname}${url.search}`;
 }
 
+function isReddit(url) {
+  return targets.includes(url.host)
+}
+
 async function init() {
   let result = await browser.storage.sync.get([
     "disableReddit",
     "redditInstance",
     "redditFrontend",
+    "redditRedirects"
   ])
   disableReddit = result.disableReddit ?? false;
   redditInstance = result.redditInstance;
   redditFrontend = result.redditFrontend ?? 'libreddit';
+  if (result.redditRedirects)
+    redirects = result.redditRedirects;
 }
 
 export default {
   targets,
-  redirects,
-  bypassPaths,
+  getRedirects,
+  setTedditRedirects,
+  setLibredditRedirects,
+
   getDisableReddit,
   setDisableReddit,
+
   getRedditInstance,
   setRedditInstance,
+
   getRedditFrontend,
   setRedditFrontend,
+
   redirect,
+  isReddit,
   init,
 };

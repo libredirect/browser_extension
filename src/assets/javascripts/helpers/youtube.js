@@ -49,6 +49,12 @@ let redirects = {
     "http://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
   ]
 };
+const getRedirects = () => redirects;
+function setRedirects(val) {
+  redirects = val;
+  browser.storage.sync.set({ youtubeRedirects: val })
+  console.log("youtubeRedirects: ", val)
+}
 
 let disableYoutube;
 const getDisableYoutube = () => disableYoutube;
@@ -106,7 +112,6 @@ function setInvidiousVolume(val) {
   console.log("invidiousVolume: ", invidiousVolume)
 }
 
-
 let invidiousPlayerStyle;
 const getInvidiousPlayerStyle = () => invidiousPlayerStyle;
 function setInvidiousPlayerStyle(val) {
@@ -139,7 +144,6 @@ function setUseFreeTube(val) {
 }
 const getUseFreeTube = () => useFreeTube;
 
-
 let persistInvidiousPrefs;
 function setPersistInvidiousPrefs(val) {
   persistInvidiousPrefs = val;
@@ -149,8 +153,7 @@ function setPersistInvidiousPrefs(val) {
 }
 const getPersistInvidiousPrefs = () => persistInvidiousPrefs;
 
-async function redirect(url, initiator, type) {
-  await init();
+function redirect(url, initiator, type) {
   if (disableYoutube)
     return null;
 
@@ -193,6 +196,9 @@ async function redirect(url, initiator, type) {
   return `${randomInstance}${url.pathname.replace("/shorts", "")}${url.search}`;
 }
 
+function isYoutube(url) {
+  return targets.includes(url.host);
+}
 
 function getCookie() {
   let ca = document.cookie.split(";");
@@ -233,6 +239,7 @@ async function init() {
       "invidiousSubtitles",
       "invidiousAutoplay",
       "useFreeTube",
+      "youtubeRedirects"
     ]);
   disableYoutube = result.disableYoutube ?? false;
   invidiousInstance = result.invidiousInstance;
@@ -246,13 +253,17 @@ async function init() {
   invidiousAutoplay = result.invidiousAutoplay ?? true;
   useFreeTube = result.useFreeTube ?? false;
 
+  if (result.youtubeRedirects)
+    redirects = result.youtubeRedirects
+
   if (result.persistInvidiousPrefs) initInvidiousCookie();
 }
 
 export default {
-  targets,
-  redirects,
+  getRedirects,
+  setRedirects,
   redirect,
+  isYoutube,
 
   getDisableYoutube,
   setDisableYoutube,

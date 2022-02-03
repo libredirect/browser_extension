@@ -21,6 +21,7 @@ const layers = {
   traffic: "S", // not implemented on OSM, default to standard.
   bicycling: "C",
 };
+
 function addressToLatLng(address, callback) {
   const xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = () => {
@@ -58,15 +59,12 @@ const getOsmInstance = () => osmInstance;
 function setOsmInstance(val) {
   osmInstance = val;
   browser.storage.sync.set({ osmInstance })
-};
+}
 
-async function redirect(url, initiator) {
-  await init()
-  if (disableMaps)
-    return null;
+function redirect(url, initiator) {
+  if (disableMaps) return null;
 
-  if (initiator && initiator.host === "earth.google.com")
-    return null;
+  if (initiator && initiator.host === "earth.google.com") return null;
 
   let redirect;
   let link = commonHelper.getRandomInstance(redirects.normal);
@@ -80,9 +78,9 @@ async function redirect(url, initiator) {
     const [lat, lon] = url.searchParams.get("center").split(",");
     mapCentre = `#map=${url.searchParams.get("zoom") || "17"}/${lat}/${lon}`;
     // Set default zoom if mapCentre not present
-  } else {
+  } else
     params = "&zoom=17";
-  }
+
   // Set map layer
   params = `${params}&layers=${layers[url.searchParams.get("layer")] || layers["none"]
     }`;
@@ -140,6 +138,9 @@ async function redirect(url, initiator) {
   return redirect;
 }
 
+function isMaps(url) {
+  return url.href.match(targets)
+}
 
 async function init() {
   let result = await browser.storage.sync.get([
@@ -151,18 +152,12 @@ async function init() {
 }
 
 export default {
-  targets,
-  redirects,
-  mapCentreRegex,
-  dataLatLngRegex,
-  placeRegex,
-  travelModes,
-  layers,
   addressToLatLng,
   getDisableMaps,
   setDisableMaps,
   getOsmInstance,
   setOsmInstance,
   redirect,
+  isMaps,
   init,
 };
