@@ -41,52 +41,6 @@
       "128": "assets/images/libredirect.svg"
     }
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "*://twitter.com/*",
-        "*://www.twitter.com/*",
-        "*://mobile.twitter.com/*",
-        "*://pbs.twimg.com/*",
-        "*://video.twimg.com/*"
-      ],
-      "js": [
-        "assets/javascripts/remove-twitter-sw.js"
-      ],
-      "run_at": "document_start"
-    },
-    {
-      "matches": [
-        "*://invidious.snopyta.org/*",
-        "*://invidious.xyz/*",
-        "*://invidious.kavin.rocks/*",
-        "*://tube.connect.cafe/*",
-        "*://invidious.zapashcanon.fr/*",
-        "*://invidiou.site/*",
-        "*://vid.mint.lgbt/*",
-        "*://invidious.site/*",
-        "*://yewtu.be/*",
-        "*://invidious.tube/*",
-        "*://invidious.silkky.cloud/*",
-        "*://invidious.himiko.cloud/*",
-        "*://inv.skyn3t.in/*",
-        "*://tube.incognet.io/*",
-        "*://invidious.tinfoil-hat.net/*",
-        "*://invidious.namazso.eu/*",
-        "*://vid.puffyan.us/*",
-        "*://dev.viewtube.io/*",
-        "*://invidious.048596.xyz/*",
-        "*://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion/*",
-        "*://qklhadlycap4cnod.onion/*",
-        "*://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion/*",
-        "*://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion/*"
-      ],
-      "js": [
-        "assets/javascripts/persist-invidious-prefs.js"
-      ],
-      "run_at": "document_start"
-    }
-  ],
   "options_ui": {
     "page": "pages/options/general.html",
     "browser_style": false,

@@ -36,4 +36,4 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 - `npm run test`
 
 ## Credits
-- [privacy-redirect](https://github.com/SimonBrazell/privacy-redirect)
+- [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)
