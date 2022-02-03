@@ -8,7 +8,7 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 - Instagram => [Bibliogram](https://sr.ht/~cadence/bibliogram/)
 - Reddit => [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances), [Old Reddit](https://old.reddit.com), [Mobile Reddit](https://i.reddit.com)
 - Google Search => [SearX](https://searx.github.io/searx/), [Whoogle](https://benbusby.com/projects/whoogle-search/)
-- Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web)
+- Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web), [Lingva](https://github.com/TheDavidDelta/lingva-translate)
 - Google Maps => [OpenStreetMap](https://www.openstreetmap.org/)
 - Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)
 
