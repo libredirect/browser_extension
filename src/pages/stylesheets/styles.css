@@ -31,11 +31,6 @@ div.some-block input[type="checkbox"] {
   -webkit-appearance: none;
 }
 
-h1 {
-  font-size: 14px;
-  margin: 7px auto;
-}
-
 h2 {
   clear: both;
   font-size: 12px;
@@ -60,7 +55,6 @@ select {
   background-color: var(--bg-main);
   border-style: solid;
   border-color: #767676;
-
   color: var(--text);
 }
 
@@ -75,7 +69,6 @@ select {
   width: auto;
   border-radius: 3px;
 }
-
 
 input[type="radio"] {
   appearance: radio;
@@ -237,7 +230,6 @@ body.option {
   padding: 40px;
 }
 
-
 section.links {
   margin: 00px 0;
 }
@@ -265,7 +257,6 @@ section.links a.selected {
   vertical-align: middle;
 }
 
-
 input[type="range"] {
   width: 50%;
 }
@@ -284,50 +275,13 @@ input[type="url"]:focus {
   color: var(--active);
 }
 
-.collapsible {
-  background-color: var(--bg-main);
-  cursor: pointer;
-  color: var(--active);
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-  border-bottom: solid var(--active);
-  font-weight: bold;
-}
-
 /* \25BE */
-
 
 hr {
   height: 2px;
   margin: 0 15px;
   background-color: rgb(77, 77, 77);
   border: none;
-}
-
-.new-badge {
-  position: relative;
-}
-
-.new-badge[data-new-badge]:after {
-  content: "New!";
-  position: absolute;
-  top: -10px;
-  right: -42px;
-  font-size: 0.9em;
-  background: var(--active);
-  color: white;
-  width: 35px;
-  height: 18px;
-  text-align: center;
-  line-height: 18px;
-  border-radius: 25px;
-  padding: 2px;
-  box-shadow: 0 0 1px var(--bg-secondary);
-  font-weight: bold;
 }
 
 .light-theme.popup,
@@ -353,51 +307,6 @@ body.light-theme textarea:focus {
 body.light-theme a{
   color: black;
 }
-
-section {
-  background-color: var(--bg-main);
-}
-
-section.youtube {
-  grid-area: youtube;
-}
-
-section.twitter {
-  grid-area: twitter;
-}
-
-section.instagram {
-  grid-area: instagram;
-}
-
-section.reddit {
-  grid-area: reddit;
-}
-
-section.search {
-  grid-area: search;
-}
-
-section.translate {
-  grid-area: translate;
-}
-
-section.maps {
-  grid-area: maps;
-}
-
-section.wikipedia {
-  grid-area: wikipedia;
-}
-
-section.medium {
-  grid-area: medium;
-}
-
-section.exception {
-  grid-area: general;
-}
-
 
 div.some-block {
   padding: 0 15px;
@@ -431,9 +340,7 @@ div.option-block h4 {
 
 div.option-block h1 {
   margin: 0;
-  margin-right: 5px;
-  width: 80%;
-  font-size: 20px;
+  font-size: 28px;
   color: var(--active);
 }
 
@@ -516,39 +423,6 @@ a.button:active {
   transform: translateY(1px);
 }
 
-div.option {
-  box-sizing: border-box;
-  margin: auto;
-  max-width: 1800px;
-  display: grid;
-  grid-template-columns: 33.3% 33.3% 33.3%;
-  gap: 2px;
-  /* border: 3px solid var(--active); */
-  background-color: rgb(58, 58, 58);
-  grid-template-areas:
-    "general     twitter instagram"
-    "youtube     reddit  search"
-    "youtube     maps    wikipedia"
-    "translate  medium   wikipedia"
-}
-
-div.random-pool {
-  display: flex;
-  align-items: stretch;
-}
-
-div.random-pool ul {
-  list-style: disc;
-  margin: 0 20px;
-}
-
-div.random-pool li {
-  border: none;
-  padding: 10px 0;
-  font-size: 15px;
-  line-height: 1px;
-}
-
 textarea {
   line-height: 21px;
   background-color: var(--bg-secondary);
@@ -556,38 +430,6 @@ textarea {
   border: none;
   resize: none;
   width: 100%;
-}
-
-@media (max-width: 1590px) {
-  div.option {
-    max-width: 1200px;
-    grid-template-columns: 50% 50%;
-    grid-template-areas:
-      "general    twitter"
-      "youtube    instagram"
-      "youtube    reddit"
-      "search     maps"
-      "translate  wikipedia"
-      "medium     wikipedia"
-  }
-}
-
-@media (max-width: 1090px) {
-  div.option {
-    max-width: 600px;
-    grid-template-columns: 100%;
-    grid-template-areas:
-      "general"
-      "youtube"
-      "twitter"
-      "instagram"
-      "search"
-      "reddit"
-      "maps"
-      "translate"
-      "wikipedia"
-      "medium"
-  }
 }
 
 @media (prefers-color-scheme: light) {

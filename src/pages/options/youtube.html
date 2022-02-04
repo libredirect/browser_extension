@@ -26,7 +26,7 @@
 
     <section class="option-block">
         <div class="some-block option-block">
-            <h1>Enable</h1>
+            <h4>Enable</h4>
             <input id="disable-invidious" type="checkbox" checked />
         </div>
 
@@ -48,64 +48,77 @@
         </section> -->
 
         <div class="some-block option-block">
-            <h4>Player Style</h4>
-            <select id="invidious-player-style">
+            <h4>Frontend</h4>
+            <select id="youtube-frontend">
+                <option value="piped">Piped</option>
                 <option value="invidious">Invidious</option>
-                <option value="youtube">YouTube</option>
             </select>
         </div>
 
-        <div class="some-block option-block">
-            <h4>Dark mode</h4>
-            <input id="invidious-dark-mode" type="checkbox" checked />
+        <hr>
+
+        <div id="invidious">
+            <div class="some-block option-block">
+                <h4>Player Style</h4>
+                <select id="invidious-player-style">
+                    <option value="invidious">Invidious</option>
+                    <option value="youtube">YouTube</option>
+                </select>
+            </div>
+
+            <div class="some-block option-block">
+                <h4>Dark mode</h4>
+                <input id="invidious-dark-mode" type="checkbox" checked />
+            </div>
+
+            <div class="some-block">
+                <h4>Volume: <span id="volume-value">50%</span></h4>
+                <input id="invidious-volume" name="invidious-volume" type="range" min="0" max="100" step="1" />
+            </div>
+
+            <div class="some-block option-block">
+                <h4 data-localise="__MSG_useFreeTube__">Use FreeTube over Invidious when possible</h4>
+                <input id="use-freetube" type="checkbox" checked />
+            </div>
+
+            <div class="some-block option-block">
+                <h4 data-localise="__MSG_invidiousAlwaysProxy__">Always proxy videos through Invidious</h4>
+                <input id="always-proxy" type="checkbox" checked />
+            </div>
+
+            <div class="some-block option-block">
+                <h4 data-localise="__MSG_invidiousOnlyEmbeddedVideo__">Only redirect embedded video to Invidious</h4>
+                <input id="only-embed" type="checkbox" checked />
+            </div>
+
+            <div class="some-block option-block">
+                <h4>Video Quality</h4>
+                <select id="video-quality">
+                    <option value="">Default</option>
+                    <option value="hd720">720p</option>
+                    <option value="medium">480p</option>
+                    <option value="dash">DASH (Dynamic Adaptive Streaming over HTTP)</option>
+                    </option>
+                </select>
+            </div>
+
+            <div class="some-block option-block">
+                <h4>Subtitles - language codes</h4>
+                <input id="invidious-subtitles" placeholder="en, ar, es" name="invidious-subtitles" type="text" />
+            </div>
+
+            <div class="some-block option-block">
+                <h4>Automatically play video on load</h4>
+                <input id="invidious-autoplay" type="checkbox" checked />
+            </div>
+
+            <div class="some-block option-block">
+                <h4>Persist preferences (as cookie)</h4>
+                <input id="persist-invidious-prefs" type="checkbox" checked />
+            </div>
         </div>
 
-        <div class="some-block">
-            <h4>Volume: <span id="volume-value">50%</span></h4>
-            <input id="invidious-volume" name="invidious-volume" type="range" min="0" max="100" step="1" />
-        </div>
-
-        <div class="some-block option-block">
-            <h4 data-localise="__MSG_useFreeTube__">Use FreeTube over Invidious when possible</h4>
-            <input id="use-freetube" type="checkbox" checked />
-        </div>
-
-        <div class="some-block option-block">
-            <h4 data-localise="__MSG_invidiousAlwaysProxy__">Always proxy videos through Invidious</h4>
-            <input id="always-proxy" type="checkbox" checked />
-        </div>
-
-        <div class="some-block option-block">
-            <h4 data-localise="__MSG_invidiousOnlyEmbeddedVideo__">Only redirect embedded video to Invidious</h4>
-            <input id="only-embed" type="checkbox" checked />
-        </div>
-
-        <div class="some-block option-block">
-            <h4>Video Quality</h4>
-            <select id="video-quality">
-                <option value="">Default</option>
-                <option value="hd720">720p</option>
-                <option value="medium">480p</option>
-                <option value="dash">DASH (Dynamic Adaptive Streaming over HTTP)</option>
-                </option>
-            </select>
-        </div>
-
-        <div class="some-block option-block">
-            <h4>Subtitles - language codes</h4>
-            <input id="invidious-subtitles" placeholder="en, ar, es" name="invidious-subtitles" type="text" />
-        </div>
-
-        <div class="some-block option-block">
-            <h4>Automatically play video on load</h4>
-            <input id="invidious-autoplay" type="checkbox" checked />
-        </div>
-
-        <div class="some-block option-block">
-            <h4>Persist preferences (as cookie)</h4>
-            <input id="persist-invidious-prefs" type="checkbox" checked />
-        </div>
-
+        <div id="piped"></div>
 
     </section>
 

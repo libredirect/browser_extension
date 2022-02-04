@@ -21,39 +21,57 @@ const targets = [
     when updating this list:
   */
 let redirects = {
-  "normal": [
-    "https://invidious.snopyta.org",
-    "https://invidious.xyz",
-    "https://invidious.kavin.rocks",
-    "https://tube.connect.cafe",
-    "https://invidious.zapashcanon.fr",
-    "https://invidiou.site",
-    "https://vid.mint.lgbt",
-    "https://invidious.site",
-    "https://yewtu.be",
-    "https://invidious.tube",
-    "https://invidious.silkky.cloud",
-    "https://invidious.himiko.cloud",
-    "https://inv.skyn3t.in",
-    "https://tube.incognet.io",
-    "https://invidious.tinfoil-hat.net",
-    "https://invidious.namazso.eu",
-    "https://vid.puffyan.us",
-    "https://dev.viewtube.io",
-    "https://invidious.048596.xyz",
-  ],
-  "onion": [
-    "http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion",
-    "http://qklhadlycap4cnod.onion",
-    "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
-    "http://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
-  ]
+  "invidious": {
+    "normal": [
+      "https://invidious.snopyta.org",
+      "https://invidious.xyz",
+      "https://invidious.kavin.rocks",
+      "https://tube.connect.cafe",
+      "https://invidious.zapashcanon.fr",
+      "https://invidiou.site",
+      "https://vid.mint.lgbt",
+      "https://invidious.site",
+      "https://yewtu.be",
+      "https://invidious.tube",
+      "https://invidious.silkky.cloud",
+      "https://invidious.himiko.cloud",
+      "https://inv.skyn3t.in",
+      "https://tube.incognet.io",
+      "https://invidious.tinfoil-hat.net",
+      "https://invidious.namazso.eu",
+      "https://vid.puffyan.us",
+      "https://dev.viewtube.io",
+      "https://invidious.048596.xyz",
+    ],
+    "onion": [
+      "http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion",
+      "http://qklhadlycap4cnod.onion",
+      "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
+      "http://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
+    ]
+  },
+  "piped": {
+    "normal": [
+      "https://piped.kavin.rocks",
+      "https://piped.silkky.cloud",
+      "https://piped.tokhmi.xyz",
+      "https://piped.mint.lgbt",
+    ]
+  }
 };
+
 const getRedirects = () => redirects;
-function setRedirects(val) {
-  redirects = val;
-  browser.storage.sync.set({ youtubeRedirects: val })
-  console.log("youtubeRedirects: ", val)
+
+function setInvidiousRedirects(val) {
+  redirects.invidious = val;
+  browser.storage.sync.set({ youtubeRedirects: redirects })
+  console.log("invidiousRedirects: ", val)
+}
+
+function setPipedRedirects(val) {
+  redirects.piped = val;
+  browser.storage.sync.set({ youtubeRedirects: redirects })
+  console.log("pipedRedirects: ", val)
 }
 
 let disableYoutube;
@@ -136,6 +154,15 @@ function setInvidiousAutoplay(val) {
   console.log("invidiousAutoplay: ", invidiousAutoplay)
 }
 
+
+let frontend;
+const getFrontend = () => frontend;
+function setFrontend(val) {
+  frontend = val;
+  browser.storage.sync.set({ youtubeFrontend: val })
+  console.log("youtubeFrontend: ", val)
+}
+
 let useFreeTube;
 function setUseFreeTube(val) {
   useFreeTube = val;
@@ -152,49 +179,6 @@ function setPersistInvidiousPrefs(val) {
   if (persistInvidiousPrefs) initInvidiousCookie()
 }
 const getPersistInvidiousPrefs = () => persistInvidiousPrefs;
-
-function redirect(url, initiator, type) {
-  if (disableYoutube)
-    return null;
-
-  if (
-    initiator &&
-    (
-      initiator.origin === invidiousInstance ||
-      redirects.normal.includes(initiator.origin) ||
-      targets.includes(initiator.host)
-    )
-  )
-    return null;
-
-  if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
-
-  if (url.host.split(".")[0] === "studio") return null; // Avoid redirecting `studio.youtube.com`
-
-  if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
-
-  if (useFreeTube && type === "main_frame")
-    return `freetube://${url}`;
-
-  // Apply settings
-  if (invidiousAlwaysProxy) url.searchParams.append("local", true);
-
-  if (invidiousVideoQuality) url.searchParams.append("quality", invidiousVideoQuality);
-
-  if (invidiousDarkMode) url.searchParams.append("dark_mode", invidiousDarkMode);
-
-  if (invidiousVolume) url.searchParams.append("volume", invidiousVolume);
-
-  if (invidiousPlayerStyle) url.searchParams.append("player_style", invidiousPlayerStyle);
-
-  if (invidiousSubtitles) url.searchParams.append("subtitles", invidiousSubtitles);
-
-  if (invidiousAutoplay) url.searchParams.append("autoplay", 1);
-
-  let randomInstance = commonHelper.getRandomInstance(redirects.normal)
-
-  return `${randomInstance}${url.pathname.replace("/shorts", "")}${url.search}`;
-}
 
 function isYoutube(url) {
   return targets.includes(url.host);
@@ -239,7 +223,8 @@ async function init() {
       "invidiousSubtitles",
       "invidiousAutoplay",
       "useFreeTube",
-      "youtubeRedirects"
+      "youtubeRedirects",
+      "youtubeFrontend",
     ]);
   disableYoutube = result.disableYoutube ?? false;
   invidiousInstance = result.invidiousInstance;
@@ -257,11 +242,75 @@ async function init() {
     redirects = result.youtubeRedirects
 
   if (result.persistInvidiousPrefs) initInvidiousCookie();
+
+  frontend = result.youtubeFrontend ?? 'piped';
 }
 
+function redirect(url, initiator, type) {
+  if (disableYoutube)
+    return null;
+
+  if (
+    initiator &&
+    (
+      initiator.origin === invidiousInstance ||
+      redirects.invidious.normal.includes(initiator.origin) ||
+      redirects.piped.normal.includes(initiator.origin) ||
+      targets.includes(initiator.host)
+    )
+  )
+    return null;
+
+  if (frontend == 'invidious') {
+
+    if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
+
+    if (url.host.split(".")[0] === "studio") return null; // Avoid redirecting `studio.youtube.com`
+
+    if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
+
+    if (useFreeTube && type === "main_frame")
+      return `freetube://${url}`;
+
+    // Apply settings
+    if (invidiousAlwaysProxy) url.searchParams.append("local", true);
+
+    if (invidiousVideoQuality) url.searchParams.append("quality", invidiousVideoQuality);
+
+    if (invidiousDarkMode) url.searchParams.append("dark_mode", invidiousDarkMode);
+
+    if (invidiousVolume) url.searchParams.append("volume", invidiousVolume);
+
+    if (invidiousPlayerStyle) url.searchParams.append("player_style", invidiousPlayerStyle);
+
+    if (invidiousSubtitles) url.searchParams.append("subtitles", invidiousSubtitles);
+
+    if (invidiousAutoplay) url.searchParams.append("autoplay", 1);
+
+    let randomInstance = commonHelper.getRandomInstance(redirects.invidious.normal)
+
+    return `${randomInstance}${url.pathname.replace("/shorts", "")}${url.search}`;
+
+  } else if (frontend == 'piped') {
+    let randomInstance = commonHelper.getRandomInstance(redirects.piped.normal);
+    if (url.hostname.endsWith("youtube.com") || url.hostname.endsWith("youtube-nocookie.com"))
+      return `${randomInstance}${url.pathname}${url.search}`;
+
+    if (url.hostname.endsWith("youtu.be") && url.pathname.length > 1)
+      return `${randomInstance}/watch?v=${url.pathname.substring(1)}`;
+
+  }
+}
+
+
 export default {
+  getFrontend,
+  setFrontend,
+
   getRedirects,
-  setRedirects,
+  setInvidiousRedirects,
+  setPipedRedirects,
+
   redirect,
   isYoutube,
 

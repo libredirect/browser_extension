@@ -77,7 +77,8 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
   var protocolHost = `${url.protocol}//${url.host}`;
   var mightyList = [];
   mightyList.push(
-    ...youtubeHelper.getRedirects().normal,
+    ...youtubeHelper.getRedirects().invidious.normal,
+    ...youtubeHelper.getRedirects().piped.normal,
     ...twitterHelper.getRedirects().normal,
     ...instagramHelper.getRedirects().normal,
     ...redditHelper.getRedirects().libreddit.normal,
@@ -101,7 +102,11 @@ browser.pageAction.onClicked.addListener((tab) => {
   var protocolHost = `${tabUrl.protocol}//${tabUrl.host}`;
   var newUrl;
 
-  if (youtubeHelper.getRedirects().normal.includes(protocolHost)) newUrl = 'https://youtube.com';
+  if (
+    youtubeHelper.getRedirects().invidious.normal.includes(protocolHost) ||
+    youtubeHelper.getRedirects().piped.normal.includes(protocolHost)
+  )
+    newUrl = 'https://youtube.com';
 
   if (twitterHelper.getRedirects().normal.includes(protocolHost)) newUrl = 'https://twitter.com';
 
@@ -132,3 +137,4 @@ browser.pageAction.onClicked.addListener((tab) => {
 
   if (newUrl) browser.tabs.update({ url: tabUrl.href.replace(protocolHost, newUrl) });
 });
+

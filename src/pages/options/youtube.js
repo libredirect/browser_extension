@@ -2,6 +2,7 @@ import youtubeHelper from "../../assets/javascripts/helpers/youtube.js";
 import commonHelper from "../../assets/javascripts/helpers/common.js";
 
 let disableYoutubeElement = document.getElementById("disable-invidious");
+let youtubeFrontendElement = document.getElementById("youtube-frontend");
 let invidiousDarkModeElement = document.getElementById("invidious-dark-mode");
 let persistInvidiousPrefsElement = document.getElementById("persist-invidious-prefs");
 let invidiousVolumeElement = document.getElementById("invidious-volume");
@@ -13,6 +14,20 @@ let invidiousAlwaysProxyElement = document.getElementById("always-proxy");
 let invidiousOnlyEmbeddedVideoElement = document.getElementById("only-embed");
 let invidiousVideoQualityElement = document.getElementById("video-quality");
 let invidiousVolumeValueElement = document.querySelector("#volume-value");
+
+let invidiousDivElement = document.getElementById("invidious")
+let pipedDivElement = document.getElementById("piped")
+
+function changeFrontendsSettings(frontend) {
+    if (frontend == 'piped') {
+        pipedDivElement.style.display = 'block';
+        invidiousDivElement.style.display = 'none';
+    }
+    else if (frontend == 'invidious') {
+        pipedDivElement.style.display = 'none';
+        invidiousDivElement.style.display = 'block';
+    }
+}
 
 youtubeHelper.init().then(() => {
     disableYoutubeElement.checked = !youtubeHelper.getDisableYoutube();
@@ -27,6 +42,9 @@ youtubeHelper.init().then(() => {
     invidiousAlwaysProxyElement.checked = youtubeHelper.getInvidiousAlwaysProxy();
     invidiousVideoQualityElement.value = youtubeHelper.getInvidiousVideoQuality();
     invidiousAutoplayElement.checked = youtubeHelper.getInvidiousAutoplay();
+    let frontend = youtubeHelper.getFrontend()
+    youtubeFrontendElement.value = frontend;
+    changeFrontendsSettings(frontend);
 });
 
 
@@ -63,7 +81,6 @@ invidiousAutoplayElement.addEventListener("change",
     (event) => youtubeHelper.setInvidiousAutoplay(event.target.checked)
 );
 
-
 useFreeTubeElement.addEventListener("change",
     (event) => youtubeHelper.setUseFreeTube(event.target.checked)
 );
@@ -78,4 +95,12 @@ invidiousOnlyEmbeddedVideoElement.addEventListener("change",
 
 invidiousVideoQualityElement.addEventListener("change",
     (event) => youtubeHelper.setInvidiousVideoQuality(event.target.options[invidiousVideoQualityElement.selectedIndex].value)
+);
+
+youtubeFrontendElement.addEventListener("change",
+    (event) => {
+        let frontend = event.target.options[youtubeFrontendElement.selectedIndex].value
+        youtubeHelper.setFrontend(frontend);
+        changeFrontendsSettings(frontend);
+    }
 );
