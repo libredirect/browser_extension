@@ -105,12 +105,12 @@ function setInvidiousVideoQuality(val) {
 }
 const getInvidiousVideoQuality = () => invidiousVideoQuality;
 
-let invidiousDarkMode;
-const getInvidiousDarkMode = () => invidiousDarkMode;
-function setInvidiousDarkMode(val) {
-  invidiousDarkMode = val;
-  browser.storage.sync.set({ invidiousDarkMode })
-  console.log("invidiousDarkMode: ", invidiousDarkMode)
+let invidiousTheme;
+const getInvidiousTheme = () => invidiousTheme;
+function setInvidiousTheme(val) {
+  invidiousTheme = val;
+  browser.storage.sync.set({ invidiousTheme })
+  console.log("invidiousTheme: ", invidiousTheme)
 }
 
 let invidiousVolume;
@@ -179,7 +179,7 @@ async function init() {
     [
       "invidiousAlwaysProxy",
       "invidiousVideoQuality",
-      "invidiousDarkMode",
+      "invidiousTheme",
       "persistInvidiousPrefs",
       "disableYoutube",
       "invidiousInstance",
@@ -201,7 +201,7 @@ async function init() {
   invidiousAlwaysProxy = result.invidiousAlwaysProxy ?? true;
   invidiousOnlyEmbeddedVideo = result.invidiousOnlyEmbeddedVideo ?? false;
   invidiousVideoQuality = result.invidiousVideoQuality ?? 'medium';
-  invidiousDarkMode = result.invidiousDarkMode ?? true;
+  invidiousTheme = result.invidiousTheme ?? 'dark';
   invidiousVolume = result.invidiousVolume ?? 50;
   invidiousPlayerStyle = result.invidiousPlayerStyle ?? 'invidious';
   invidiousSubtitles = result.invidiousSubtitles || '';
@@ -250,7 +250,7 @@ function redirect(url, initiator, type) {
 
     url.searchParams.append("local", invidiousAlwaysProxy);
     url.searchParams.append("quality", invidiousVideoQuality);
-    url.searchParams.append("dark_mode", invidiousDarkMode);
+    url.searchParams.append("dark_mode", invidiousTheme);
     url.searchParams.append("volume", invidiousVolume);
     url.searchParams.append("player_style", invidiousPlayerStyle);
     url.searchParams.append("subtitles", invidiousSubtitles);
@@ -270,7 +270,6 @@ function redirect(url, initiator, type) {
 
   }
 }
-
 
 export default {
   invidiousInitCookies,
@@ -300,8 +299,8 @@ export default {
   setInvidiousVideoQuality,
   getInvidiousVideoQuality,
 
-  setInvidiousDarkMode,
-  getInvidiousDarkMode,
+  setInvidiousTheme,
+  getInvidiousTheme,
 
   setInvidiousVolume,
   getInvidiousVolume,

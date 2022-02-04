@@ -47,7 +47,7 @@
     "open_in_tab": true
   },
   "web_accessible_resources": [
-    "assets/javascripts/helpers/*"
+    "assets/javascripts/helpers/youtube/invidious-cookies.js"
   ],
   "browser_specific_settings": {
     "gecko": {

@@ -88,8 +88,12 @@ disableMediumElement.addEventListener("change",
 
 document.querySelector("#update-instances").addEventListener("click", () => {
   document.querySelector("#update-instances").innerHTML = '...';
-  if (commonHelper.updateInstances())
+  if (commonHelper.updateInstances()) {
     document.querySelector("#update-instances").innerHTML = 'Done!';
+    new Promise(resolve => setTimeout(resolve, 1500)).then( // Sleep 1500ms
+      () => document.querySelector("#update-instances").innerHTML = 'Update Instances'
+    )
+  }
   else
     document.querySelector("#update-instances").innerHTML = 'Failed Miserabely';
 });

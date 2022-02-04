@@ -28,7 +28,7 @@ function updateInstances() {
   if (request.status === 200) {
     const instances = JSON.parse(request.responseText);
 
-    youtubeHelper.setRedirects(instances.invidious);
+    youtubeHelper.setInvidiousRedirects(instances.invidious);
 
     twitterHelper.setRedirects(instances.nitter);
 

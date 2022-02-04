@@ -60,16 +60,19 @@
 
         <div id="invidious">
             <div class="some-block option-block">
+                <h4>Theme</h4>
+                <select id="invidious-theme">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                </select>
+            </div>
+
+            <div class="some-block option-block">
                 <h4>Player Style</h4>
                 <select id="invidious-player-style">
                     <option value="invidious">Invidious</option>
                     <option value="youtube">YouTube</option>
                 </select>
-            </div>
-
-            <div class="some-block option-block">
-                <h4>Dark mode</h4>
-                <input id="invidious-dark-mode" type="checkbox" checked />
             </div>
 
             <div class="some-block">
@@ -90,10 +93,9 @@
             <div class="some-block option-block">
                 <h4>Video Quality</h4>
                 <select id="video-quality">
-                    <option value="">Default</option>
                     <option value="hd720">720p</option>
                     <option value="medium">480p</option>
-                    <option value="dash">DASH (Dynamic Adaptive Streaming over HTTP)</option>
+                    <option value="dash">DASH (adaptive quality)</option>
                     </option>
                 </select>
             </div>

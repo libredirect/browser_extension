@@ -32,9 +32,9 @@ disableYoutubeElement.addEventListener("change",
     (event) => youtubeHelper.setDisableYoutube(!event.target.checked)
 );
 
-let invidiousDarkModeElement = document.getElementById("invidious-dark-mode");
-invidiousDarkModeElement.addEventListener("change",
-    (event) => youtubeHelper.setInvidiousDarkMode(event.target.checked)
+let invidiousThemeElement = document.getElementById("invidious-theme");
+invidiousThemeElement.addEventListener("change",
+    (event) => youtubeHelper.setInvidiousTheme(event.target.options[invidiousThemeElement.selectedIndex].value)
 );
 
 let persistInvidiousPrefsElement = document.getElementById("persist-invidious-prefs");
@@ -86,7 +86,7 @@ invidiousVideoQualityElement.addEventListener("change",
 
 youtubeHelper.init().then(() => {
     disableYoutubeElement.checked = !youtubeHelper.getDisableYoutube();
-    invidiousDarkModeElement.checked = youtubeHelper.getInvidiousDarkMode();
+    invidiousThemeElement.checked = youtubeHelper.getInvidiousTheme();
     persistInvidiousPrefsElement.checked = youtubeHelper.getPersistInvidiousPrefs();
     invidiousVolumeElement.value = youtubeHelper.getInvidiousVolume();
     invidiousVolumeValueElement.textContent = `${youtubeHelper.getInvidiousVolume()}%`;
