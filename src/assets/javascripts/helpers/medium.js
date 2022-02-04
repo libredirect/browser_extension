@@ -19,7 +19,9 @@ const targets = [
 let redirects = {
   "normal": [
     "https://scribe.rip",
-    "https://scribe.nixnet.services"
+    "https://scribe.nixnet.services",
+    "https://scribe.citizen4.eu",
+    "https://scribe.bus-hit.me"
   ]
 };
 const getRedirects = () => redirects;

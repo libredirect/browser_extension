@@ -1,6 +1,6 @@
 "use strict";
 
-import commonHelper from './common.js'
+import commonHelper from '../common.js'
 
 window.browser = window.browser || window.chrome;
 
@@ -15,39 +15,30 @@ const targets = [
   "s.ytimg.com",
   "music.youtube.com",
 ];
-/*
-    Please remember to also update the manifest.json file
-    (content_scripts > matches, 'persist-invidious-prefs.js')
-    when updating this list:
-  */
 let redirects = {
   "invidious": {
     "normal": [
-      "https://invidious.snopyta.org",
-      "https://invidious.xyz",
-      "https://invidious.kavin.rocks",
-      "https://tube.connect.cafe",
-      "https://invidious.zapashcanon.fr",
-      "https://invidiou.site",
-      "https://vid.mint.lgbt",
-      "https://invidious.site",
       "https://yewtu.be",
-      "https://invidious.tube",
-      "https://invidious.silkky.cloud",
-      "https://invidious.himiko.cloud",
-      "https://inv.skyn3t.in",
-      "https://tube.incognet.io",
-      "https://invidious.tinfoil-hat.net",
-      "https://invidious.namazso.eu",
+      "https://invidious.snopyta.org",
       "https://vid.puffyan.us",
-      "https://dev.viewtube.io",
-      "https://invidious.048596.xyz",
+      "https://invidious.kavin.rocks",
+      "https://invidio.xamh.de",
+      "https://inv.riverside.rocks",
+      "https://invidious-us.kavin.rocks",
+      "https://invidious.osi.kr",
+      "https://inv.cthd.icu",
+      "https://yt.artemislena.eu",
+      "https://youtube.076.ne.jp",
+      "https://invidious.namazso.eu"
     ],
     "onion": [
-      "http://fz253lmuao3strwbfbmx46yu7acac2jz27iwtorgmbqlkurlclmancad.onion",
-      "http://qklhadlycap4cnod.onion",
       "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
       "http://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
+      "http://kbjggqkzv65ivcqj6bumvp337z6264huv5kpkwuv6gu5yjiskvan7fad.onion",
+      "http://grwp24hodrefzvjjuccrkw3mjq4tzhaaq32amf33dzpmuxe7ilepcmad.onion",
+      "http://hpniueoejy4opn7bc4ftgazyqjoeqwlvh2uiku2xqku6zpoa4bf5ruid.onion",
+      "http://osbivz6guyeahrwp2lnwyjk2xos342h4ocsxyqrlaopqjuhwn2djiiyd.onion",
+      "http://u2cvlit75owumwpy4dj2hsmvkq7nvrclkpht7xgyye2pyoxhpmclkrad.onion"
     ]
   },
   "piped": {
@@ -176,33 +167,11 @@ function setPersistInvidiousPrefs(val) {
   persistInvidiousPrefs = val;
   browser.storage.sync.set({ persistInvidiousPrefs })
   console.log("persistInvidiousPrefs: ", persistInvidiousPrefs)
-  if (persistInvidiousPrefs) initInvidiousCookie()
 }
 const getPersistInvidiousPrefs = () => persistInvidiousPrefs;
 
 function isYoutube(url) {
   return targets.includes(url.host);
-}
-
-function getCookie() {
-  let ca = document.cookie.split(";");
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == " ") c = c.substring(1, c.length);
-    if (c.indexOf("PREFS=") == 0)
-      return JSON.parse(
-        decodeURIComponent(c.substring("PREFS=".length, c.length))
-      );
-  }
-  return {};
-}
-
-function initInvidiousCookie() {
-  const prefs = getCookie();
-  prefs.local = invidiousAlwaysProxy;
-  prefs.quality = invidiousVideoQuality;
-  prefs.dark_mode = invidiousDarkMode;
-  document.cookie = `PREFS=${encodeURIComponent(JSON.stringify(prefs))}`;
 }
 
 async function init() {
@@ -214,10 +183,7 @@ async function init() {
       "persistInvidiousPrefs",
       "disableYoutube",
       "invidiousInstance",
-      "invidiousAlwaysProxy",
       "invidiousOnlyEmbeddedVideo",
-      "invidiousVideoQuality",
-      "invidiousDarkMode",
       "invidiousVolume",
       "invidiousPlayerStyle",
       "invidiousSubtitles",
@@ -226,8 +192,12 @@ async function init() {
       "youtubeRedirects",
       "youtubeFrontend",
     ]);
+  if (result.youtubeRedirects) redirects = result.youtubeRedirects
+  frontend = result.youtubeFrontend ?? 'piped';
   disableYoutube = result.disableYoutube ?? false;
+
   invidiousInstance = result.invidiousInstance;
+
   invidiousAlwaysProxy = result.invidiousAlwaysProxy ?? true;
   invidiousOnlyEmbeddedVideo = result.invidiousOnlyEmbeddedVideo ?? false;
   invidiousVideoQuality = result.invidiousVideoQuality ?? 'medium';
@@ -236,14 +206,18 @@ async function init() {
   invidiousPlayerStyle = result.invidiousPlayerStyle ?? 'invidious';
   invidiousSubtitles = result.invidiousSubtitles || '';
   invidiousAutoplay = result.invidiousAutoplay ?? true;
+
+  persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
+
   useFreeTube = result.useFreeTube ?? false;
+}
 
-  if (result.youtubeRedirects)
-    redirects = result.youtubeRedirects
-
-  if (result.persistInvidiousPrefs) initInvidiousCookie();
-
-  frontend = result.youtubeFrontend ?? 'piped';
+function invidiousInitCookies(tabId) {
+  browser.tabs.executeScript(
+    tabId, {
+    file: "/assets/javascripts/helpers/youtube/invidious-cookies.js",
+    runAt: "document_start"
+  });
 }
 
 function redirect(url, initiator, type) {
@@ -261,31 +235,26 @@ function redirect(url, initiator, type) {
   )
     return null;
 
-  if (frontend == 'invidious') {
+  if (frontend == 'freeTube' && type === "main_frame")
+    return `freetube://${url}`;
+  else if (frontend == 'invidious') {
 
     if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
 
-    if (url.host.split(".")[0] === "studio") return null; // Avoid redirecting `studio.youtube.com`
+    if (url.host.split(".")[0] === "studio") {
+      console.log("no because studio");
+      return null;
+    }; // Avoid redirecting `studio.youtube.com`
 
     if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
 
-    if (useFreeTube && type === "main_frame")
-      return `freetube://${url}`;
-
-    // Apply settings
-    if (invidiousAlwaysProxy) url.searchParams.append("local", true);
-
-    if (invidiousVideoQuality) url.searchParams.append("quality", invidiousVideoQuality);
-
-    if (invidiousDarkMode) url.searchParams.append("dark_mode", invidiousDarkMode);
-
-    if (invidiousVolume) url.searchParams.append("volume", invidiousVolume);
-
-    if (invidiousPlayerStyle) url.searchParams.append("player_style", invidiousPlayerStyle);
-
-    if (invidiousSubtitles) url.searchParams.append("subtitles", invidiousSubtitles);
-
-    if (invidiousAutoplay) url.searchParams.append("autoplay", 1);
+    url.searchParams.append("local", invidiousAlwaysProxy);
+    url.searchParams.append("quality", invidiousVideoQuality);
+    url.searchParams.append("dark_mode", invidiousDarkMode);
+    url.searchParams.append("volume", invidiousVolume);
+    url.searchParams.append("player_style", invidiousPlayerStyle);
+    url.searchParams.append("subtitles", invidiousSubtitles);
+    url.searchParams.append("autoplay", invidiousAutoplay);
 
     let randomInstance = commonHelper.getRandomInstance(redirects.invidious.normal)
 
@@ -304,6 +273,8 @@ function redirect(url, initiator, type) {
 
 
 export default {
+  invidiousInitCookies,
+
   getFrontend,
   setFrontend,
 

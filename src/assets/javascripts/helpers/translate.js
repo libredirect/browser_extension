@@ -16,6 +16,11 @@ let redirects = {
       "https://manerakai.asuscomm.com:447",
       "https://translate.bus-hit.me",
       "https://simplytranslate.pussthecat.org",
+      "https://translate.northboot.xyz"
+    ],
+    "onion": [
+      "http://fyng2tsmzmvxmojzbbwmfnsn2lrcyftf4cw6rk5j2v2huliazud3fjid.onion",
+      "http://xxtbwyb5z5bdvy2f6l2yquu5qilgkjeewno4qfknvb3lkg3nmoklitid.onion"
     ]
   },
 

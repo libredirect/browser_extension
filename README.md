@@ -3,13 +3,13 @@
 # LibRedirect
 A web extension that redirects YouTube, Twitter, Instagram... requests to alternative privacy friendly frontends and backends.
 
-- Youtube => [Invidious](https://github.com/iv-org/invidious), [FreeTube](https://github.com/FreeTubeApp/FreeTube)
+- Youtube => [Piped](https://github.com/TeamPiped/Piped), [Invidious](https://github.com/iv-org/invidious), [FreeTube](https://github.com/FreeTubeApp/FreeTube)
 - Twitter => [Nitter](https://github.com/zedeus/nitter)
 - Instagram => [Bibliogram](https://sr.ht/~cadence/bibliogram/)
 - Reddit => [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances), [Old Reddit](https://old.reddit.com), [Mobile Reddit](https://i.reddit.com)
-- Google Search => [SearX](https://searx.github.io/searx/), [Whoogle](https://benbusby.com/projects/whoogle-search/)
-- Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web), [Lingva](https://github.com/TheDavidDelta/lingva-translate)
-- Google Maps => [OpenStreetMap](https://www.openstreetmap.org/)
+- Search => [SearX](https://searx.github.io/searx/), [Whoogle](https://benbusby.com/projects/whoogle-search/)
+- Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web), [LingvaTranslate](https://github.com/TheDavidDelta/lingva-translate)
+- Maps => [OpenStreetMap](https://www.openstreetmap.org/)
 - Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)
 
 **Note**: It will default to using random instances if none are selected. You can also set custom instances.

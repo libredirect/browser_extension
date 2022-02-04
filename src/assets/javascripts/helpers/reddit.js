@@ -45,6 +45,14 @@ let redirects = {
       "https://teddit.adminforge.de",
       "https://teddit.bus-hit.me"
     ],
+    "onion": [
+      "http://teddit4w6cmzmj5kimhfcavs7yo5s7alszvsi2khqutqtlaanpcftfyd.onion",
+      "http://snoo.ioensistjs7wd746zluwixvojbbkxhr37lepdvwtdfeav673o64iflqd.onion",
+      "http://ibarajztopxnuhabfu7fg6gbudynxofbnmvis3ltj6lfx47b6fhrd5qd.onion",
+      "http://tedditfyn6idalzso5wam5qd3kdtxoljjhbrbbx34q2xkcisvshuytad.onion",
+      "http://dawtyi5e2cfyfmoht4izmczi42aa2zwh6wi34zwvc6rzf2acpxhrcrad.onion",
+      "http://qtpvyiaqhmwccxwzsqubd23xhmmrt75tdyw35kp43w4hvamsgl3x27ad.onion"
+    ]
   },
   "desktop": "https://old.reddit.com", // desktop
   "mobile": "https://i.reddit.com", // mobile

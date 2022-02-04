@@ -4,7 +4,13 @@ const targets = /wikipedia.org/;
 
 let redirects = {
   "normal": [
-    "https://wikiless.org"
+    "https://wikiless.org",
+    "https://wikiless.alefvanoon.xyz",
+    "https://wikiless.sethforprivacy.com",
+    "https://wiki.604kph.xyz"
+  ],
+  "onion": [
+    "http://dj2tbh2nqfxyfmvq33cjmhuw7nb6am7thzd3zsjvizeqf374fixbrxyd.onion"
   ]
 };
 const getRedirects = () => redirects;

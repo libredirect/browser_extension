@@ -1,5 +1,5 @@
 import twitterHelper from "./twitter.js";
-import youtubeHelper from "./youtube.js";
+import youtubeHelper from "./youtube/youtube.js";
 import instagramHelper from "./instagram.js";
 import mediumHelper from "./medium.js";
 import redditHelper from "./reddit.js";

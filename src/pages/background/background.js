@@ -1,6 +1,6 @@
 "use strict";
 
-import youtubeHelper from "../../assets/javascripts/helpers/youtube.js";
+import youtubeHelper from "../../assets/javascripts/helpers/youtube/youtube.js";
 import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
@@ -75,6 +75,13 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
     return;
   }
   var protocolHost = `${url.protocol}//${url.host}`;
+
+
+  if (youtubeHelper.getRedirects().invidious.normal.includes(protocolHost)) {
+    if (youtubeHelper.getPersistInvidiousPrefs())
+      youtubeHelper.invidiousInitCookies(tabId);
+  }
+
   var mightyList = [];
   mightyList.push(
     ...youtubeHelper.getRedirects().invidious.normal,

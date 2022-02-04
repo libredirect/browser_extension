@@ -1,9 +1,9 @@
 "use strict";
 
-import data from "../../assets/javascripts/data.js";
-import commonHelper from "../../assets/javascripts/helpers/common.js";
+import data from "../../../assets/javascripts/data.js";
+import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
-import shared from "./shared.js";
+import shared from "../shared.js";
 
 const domparser = new DOMParser();
 

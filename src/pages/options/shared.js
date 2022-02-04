@@ -107,7 +107,6 @@ function autocomplete(input, list) {
     });
 }
 
-
 export default {
     autocompletes,
     parseURL,

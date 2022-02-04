@@ -2,7 +2,7 @@
 
 import commonHelper from "../../assets/javascripts/helpers/common.js";
 import data from "../../assets/javascripts/data.js";
-import youtubeHelper from "../../assets/javascripts/helpers/youtube.js";
+import youtubeHelper from "../../assets/javascripts/helpers/youtube/youtube.js";
 import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
 import mapsHelper from "../../assets/javascripts/helpers/maps.js";
