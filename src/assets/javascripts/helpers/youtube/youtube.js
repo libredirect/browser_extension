@@ -5,9 +5,11 @@ import commonHelper from '../common.js'
 window.browser = window.browser || window.chrome;
 
 const targets = [
+  "studio.youtube.com",
   "m.youtube.com",
   "youtube.com",
   "img.youtube.com",
+  "i.ytimg.com",
   "www.youtube.com",
   "youtube-nocookie.com",
   "www.youtube-nocookie.com",
@@ -243,7 +245,7 @@ function redirect(url, initiator, type) {
     return null;
 
   if (url.host.split(".")[0] === "studio") return null;// Avoid `studio.youtube.com`
-  
+
   if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
 
   if (frontend == 'freeTube' && type === "main_frame")
@@ -271,8 +273,6 @@ function redirect(url, initiator, type) {
 
     let randomInstance = commonHelper.getRandomInstance(redirects.piped.normal);
 
-    console.log(" redirects.invidious.normal.includes(url.hostname)", redirects.invidious.normal.includes(url.hostname))
-
     if (
       url.hostname.endsWith("youtube.com") ||
       url.hostname.endsWith("youtube-nocookie.com") ||
@@ -284,6 +284,7 @@ function redirect(url, initiator, type) {
       return `${randomInstance}/watch?v=${url.pathname.substring(1)}`;
 
   }
+  return 'CANCEL';
 }
 
 export default {

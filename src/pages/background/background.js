@@ -58,8 +58,14 @@ browser.webRequest.onBeforeRequest.addListener(
     else if (wikipediaHelper.isWikipedia(url)) newUrl = wikipediaHelper.redirect(url, initiator);
 
     if (newUrl) {
-      console.info("Redirecting", url.href, "=>", newUrl);
-      return { redirectUrl: newUrl };
+      if (newUrl == 'CANCEL') {
+        console.log(`Canceled ${url}`);
+        return { cancel: true };
+      }
+      else {
+        console.info("Redirecting", url.href, "=>", newUrl);
+        return { redirectUrl: newUrl };
+      }
     }
     return null;
   },
