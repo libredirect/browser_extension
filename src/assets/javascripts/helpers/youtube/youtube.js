@@ -154,21 +154,13 @@ function setFrontend(val) {
   console.log("youtubeFrontend: ", val)
 }
 
-let useFreeTube;
-function setUseFreeTube(val) {
-  useFreeTube = val;
-  browser.storage.sync.set({ useFreeTube })
-  console.log("useFreeTube: ", useFreeTube)
-}
-const getUseFreeTube = () => useFreeTube;
-
 let persistInvidiousPrefs;
+const getPersistInvidiousPrefs = () => persistInvidiousPrefs;
 function setPersistInvidiousPrefs(val) {
   persistInvidiousPrefs = val;
   browser.storage.sync.set({ persistInvidiousPrefs })
   console.log("persistInvidiousPrefs: ", persistInvidiousPrefs)
 }
-const getPersistInvidiousPrefs = () => persistInvidiousPrefs;
 
 function isYoutube(url) {
   return targets.includes(url.host);
@@ -188,7 +180,6 @@ async function init() {
       "invidiousPlayerStyle",
       "invidiousSubtitles",
       "invidiousAutoplay",
-      "useFreeTube",
       "youtubeRedirects",
       "youtubeFrontend",
     ]);
@@ -198,18 +189,16 @@ async function init() {
 
   invidiousInstance = result.invidiousInstance;
 
-  invidiousAlwaysProxy = result.invidiousAlwaysProxy ?? true;
+  invidiousAlwaysProxy = result.invidiousAlwaysProxy ?? 'DEFAULT';
   invidiousOnlyEmbeddedVideo = result.invidiousOnlyEmbeddedVideo ?? false;
-  invidiousVideoQuality = result.invidiousVideoQuality ?? 'medium';
-  invidiousTheme = result.invidiousTheme ?? 'dark';
-  invidiousVolume = result.invidiousVolume ?? 50;
-  invidiousPlayerStyle = result.invidiousPlayerStyle ?? 'invidious';
+  invidiousVideoQuality = result.invidiousVideoQuality ?? 'DEFAULT';
+  invidiousTheme = result.invidiousTheme ?? 'DEFAULT';
+  invidiousVolume = result.invidiousVolume ?? '--';
+  invidiousPlayerStyle = result.invidiousPlayerStyle ?? 'DEFAULT';
   invidiousSubtitles = result.invidiousSubtitles || '';
-  invidiousAutoplay = result.invidiousAutoplay ?? true;
+  invidiousAutoplay = result.invidiousAutoplay ?? 'DEFAULT';
 
   persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
-
-  useFreeTube = result.useFreeTube ?? false;
 }
 
 function invidiousInitCookies(tabId) {
@@ -237,6 +226,7 @@ function redirect(url, initiator, type) {
 
   if (frontend == 'freeTube' && type === "main_frame")
     return `freetube://${url}`;
+
   else if (frontend == 'invidious') {
 
     if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
@@ -248,19 +238,33 @@ function redirect(url, initiator, type) {
 
     if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
 
-    url.searchParams.append("local", invidiousAlwaysProxy);
-    url.searchParams.append("quality", invidiousVideoQuality);
-    url.searchParams.append("dark_mode", invidiousTheme);
-    url.searchParams.append("volume", invidiousVolume);
-    url.searchParams.append("player_style", invidiousPlayerStyle);
-    url.searchParams.append("subtitles", invidiousSubtitles);
-    url.searchParams.append("autoplay", invidiousAutoplay);
+    if (invidiousAlwaysProxy != "DEFAULT")
+      url.searchParams.append("local", invidiousAlwaysProxy);
+
+    if (invidiousVideoQuality != "DEFAULT")
+      url.searchParams.append("quality", invidiousVideoQuality);
+
+    if (invidiousTheme != "DEFAULT")
+      url.searchParams.append("dark_mode", invidiousTheme);
+
+    if (invidiousVolume != "--")
+      url.searchParams.append("volume", invidiousVolume);
+
+    if (invidiousPlayerStyle != "DEFAULT")
+      url.searchParams.append("player_style", invidiousPlayerStyle);
+
+    if (invidiousSubtitles.trim() != '')
+      url.searchParams.append("subtitles", invidiousSubtitles);
+
+    if (invidiousAutoplay != "DEFAULT")
+      url.searchParams.append("autoplay", invidiousAutoplay);
 
     let randomInstance = commonHelper.getRandomInstance(redirects.invidious.normal)
 
     return `${randomInstance}${url.pathname.replace("/shorts", "")}${url.search}`;
 
   } else if (frontend == 'piped') {
+    if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
     let randomInstance = commonHelper.getRandomInstance(redirects.piped.normal);
     if (url.hostname.endsWith("youtube.com") || url.hostname.endsWith("youtube-nocookie.com"))
       return `${randomInstance}${url.pathname}${url.search}`;
@@ -313,9 +317,6 @@ export default {
 
   setInvidiousAutoplay,
   getInvidiousAutoplay,
-
-  getUseFreeTube,
-  setUseFreeTube,
 
   getPersistInvidiousPrefs,
   setPersistInvidiousPrefs,

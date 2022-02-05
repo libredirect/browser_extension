@@ -56,12 +56,18 @@
             </select>
         </div>
 
+        <div class="some-block option-block">
+            <h4>Only Redirect Embedded-Video</h4>
+            <input id="only-embed" type="checkbox" checked />
+        </div>
+
         <hr>
 
         <div id="invidious">
             <div class="some-block option-block">
                 <h4>Theme</h4>
                 <select id="invidious-theme">
+                    <option value="DEFAULT">Default</option>
                     <option value="dark">Dark</option>
                     <option value="light">Light</option>
                 </select>
@@ -70,29 +76,42 @@
             <div class="some-block option-block">
                 <h4>Player Style</h4>
                 <select id="invidious-player-style">
+                    <option value="DEFAULT">Default</option>
                     <option value="invidious">Invidious</option>
                     <option value="youtube">YouTube</option>
                 </select>
             </div>
 
-            <div class="some-block">
+            <div class="some-block option-block">
                 <h4>Volume: <span id="volume-value">50%</span></h4>
                 <input id="invidious-volume" name="invidious-volume" type="range" min="0" max="100" step="1" />
+                <button type="button" class="default" id="clear-invidious-volume">
+                    <img src="../icons/clear_white_24dp.svg">
+                </button>
             </div>
 
             <div class="some-block option-block">
-                <h4 data-localise="__MSG_invidiousAlwaysProxy__">Always proxy videos through Invidious</h4>
-                <input id="always-proxy" type="checkbox" checked />
+                <h4 data-localise="__MSG_invidiousAlwaysProxy__">Always proxy videos</h4>
+                <select id="invidious-always-proxy">
+                    <option value="DEFAULT">Default</option>
+                    <option value="true">True</option>
+                    <option value="true">False</option>
+                </select>
             </div>
 
             <div class="some-block option-block">
-                <h4 data-localise="__MSG_invidiousOnlyEmbeddedVideo__">Only redirect embedded video to Invidious</h4>
-                <input id="only-embed" type="checkbox" checked />
+                <h4>Autoplay Video</h4>
+                <select id="invidious-autoplay">
+                    <option value="DEFAULT">Default</option>
+                    <option value="true">True</option>
+                    <option value="true">False</option>
+                </select>
             </div>
 
             <div class="some-block option-block">
                 <h4>Video Quality</h4>
                 <select id="video-quality">
+                    <option value="DEFAULT">Default</option>
                     <option value="hd720">720p</option>
                     <option value="medium">480p</option>
                     <option value="dash">DASH (adaptive quality)</option>
@@ -101,13 +120,8 @@
             </div>
 
             <div class="some-block option-block">
-                <h4>Subtitles - language codes</h4>
+                <h4>Subtitles</h4>
                 <input id="invidious-subtitles" placeholder="en, ar, es" name="invidious-subtitles" type="text" />
-            </div>
-
-            <div class="some-block option-block">
-                <h4>Automatically play video on load</h4>
-                <input id="invidious-autoplay" type="checkbox" checked />
             </div>
 
             <div class="some-block option-block">

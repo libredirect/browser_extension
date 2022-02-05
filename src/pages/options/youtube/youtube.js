@@ -50,6 +50,14 @@ invidiousVolumeElement.addEventListener("input",
         invidiousVolumeValueElement.textContent = `${invidiousVolumeElement.value}%`;
     }
 );
+let invidiousClearVolumeElement = document.getElementById("clear-invidious-volume");
+invidiousClearVolumeElement.addEventListener("click",
+    (_) => {
+        youtubeHelper.setInvidiousVolume('--');
+        invidiousVolumeValueElement.textContent = `--%`;
+        invidiousVolumeElement.value = 50;
+    }
+);
 
 let invidiousPlayerStyleElement = document.getElementById("invidious-player-style");
 invidiousPlayerStyleElement.addEventListener("change",
@@ -65,12 +73,12 @@ invidiousSubtitlesElement.addEventListener("input",
 
 let invidiousAutoplayElement = document.getElementById("invidious-autoplay");
 invidiousAutoplayElement.addEventListener("change",
-    (event) => youtubeHelper.setInvidiousAutoplay(event.target.checked)
+    (event) => youtubeHelper.setInvidiousAutoplay(event.target.options[invidiousAutoplayElement.selectedIndex].value)
 );
 
-let invidiousAlwaysProxyElement = document.getElementById("always-proxy");
+let invidiousAlwaysProxyElement = document.getElementById("invidious-always-proxy");
 invidiousAlwaysProxyElement.addEventListener("change",
-    (event) => youtubeHelper.setInvidiousAlwaysProxy(event.target.checked)
+    (event) => youtubeHelper.setInvidiousAlwaysProxy(event.target.options[invidiousAlwaysProxyElement.selectedIndex].value)
 );
 
 let invidiousOnlyEmbeddedVideoElement = document.getElementById("only-embed");

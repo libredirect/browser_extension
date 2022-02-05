@@ -329,7 +329,7 @@ h4 {
 
 div.some-block h4 {
   margin: 0;
-  width: 70%;
+  /* width: 70%; */
 }
 
 div.option-block h4 {
@@ -430,6 +430,22 @@ textarea {
   border: none;
   resize: none;
   width: 100%;
+}
+
+button.default {
+  margin-left: 30px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  padding: 5px;
+  width: 34px;
+  height: 34px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 
 @media (prefers-color-scheme: light) {
