@@ -162,8 +162,26 @@ function setPersistInvidiousPrefs(val) {
   console.log("persistInvidiousPrefs: ", persistInvidiousPrefs)
 }
 
+let invidiousHostNames = () => redirects.invidious.normal.map(link => new URL(link).host);
+let pipedHostNames = () => redirects.piped.normal.map(link => new URL(link).host);
+
 function isYoutube(url) {
-  return targets.includes(url.host);
+  if (frontend == 'invidious') {
+    let mightyList = [
+      ...targets,
+      ...pipedHostNames(),
+    ]
+    return mightyList.includes(url.host);
+  }
+  if (frontend == 'piped') {
+    let mightyList = [
+      ...targets,
+      ...invidiousHostNames(),
+    ]
+    console.log("mightyList.includes(url.host)", mightyList.includes(url.host))
+    return mightyList.includes(url.host);
+  } else
+    return targets.includes(url.host)
 }
 
 async function init() {
@@ -224,49 +242,42 @@ function redirect(url, initiator, type) {
   )
     return null;
 
+  if (url.host.split(".")[0] === "studio") return null;// Avoid `studio.youtube.com`
+  
+  if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
+
   if (frontend == 'freeTube' && type === "main_frame")
     return `freetube://${url}`;
 
   else if (frontend == 'invidious') {
 
-    if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
-
-    if (url.host.split(".")[0] === "studio") {
-      console.log("no because studio");
-      return null;
-    }; // Avoid redirecting `studio.youtube.com`
-
     if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
 
-    if (invidiousAlwaysProxy != "DEFAULT")
-      url.searchParams.append("local", invidiousAlwaysProxy);
-
-    if (invidiousVideoQuality != "DEFAULT")
-      url.searchParams.append("quality", invidiousVideoQuality);
-
-    if (invidiousTheme != "DEFAULT")
-      url.searchParams.append("dark_mode", invidiousTheme);
-
-    if (invidiousVolume != "--")
-      url.searchParams.append("volume", invidiousVolume);
-
-    if (invidiousPlayerStyle != "DEFAULT")
-      url.searchParams.append("player_style", invidiousPlayerStyle);
-
-    if (invidiousSubtitles.trim() != '')
-      url.searchParams.append("subtitles", invidiousSubtitles);
-
-    if (invidiousAutoplay != "DEFAULT")
-      url.searchParams.append("autoplay", invidiousAutoplay);
+    if (invidiousAlwaysProxy != "DEFAULT") url.searchParams.append("local", invidiousAlwaysProxy);
+    if (invidiousVideoQuality != "DEFAULT") url.searchParams.append("quality", invidiousVideoQuality);
+    if (invidiousTheme != "DEFAULT") url.searchParams.append("dark_mode", invidiousTheme);
+    if (invidiousVolume != "--") url.searchParams.append("volume", invidiousVolume);
+    if (invidiousPlayerStyle != "DEFAULT") url.searchParams.append("player_style", invidiousPlayerStyle);
+    if (invidiousSubtitles.trim() != '') url.searchParams.append("subtitles", invidiousSubtitles);
+    if (invidiousAutoplay != "DEFAULT") url.searchParams.append("autoplay", invidiousAutoplay);
 
     let randomInstance = commonHelper.getRandomInstance(redirects.invidious.normal)
 
     return `${randomInstance}${url.pathname.replace("/shorts", "")}${url.search}`;
 
   } else if (frontend == 'piped') {
+
     if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
+
     let randomInstance = commonHelper.getRandomInstance(redirects.piped.normal);
-    if (url.hostname.endsWith("youtube.com") || url.hostname.endsWith("youtube-nocookie.com"))
+
+    console.log(" redirects.invidious.normal.includes(url.hostname)", redirects.invidious.normal.includes(url.hostname))
+
+    if (
+      url.hostname.endsWith("youtube.com") ||
+      url.hostname.endsWith("youtube-nocookie.com") ||
+      invidiousHostNames().includes(url.hostname)
+    )
       return `${randomInstance}${url.pathname}${url.search}`;
 
     if (url.hostname.endsWith("youtu.be") && url.pathname.length > 1)
