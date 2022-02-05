@@ -304,7 +304,7 @@ body.light-theme textarea:focus {
   outline: none;
 }
 
-body.light-theme a{
+body.light-theme a {
   color: black;
 }
 
@@ -446,6 +446,10 @@ button.default {
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+button.default svg {
+  color: var(--text);
 }
 
 @media (prefers-color-scheme: light) {
