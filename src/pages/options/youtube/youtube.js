@@ -6,16 +6,20 @@ let disableYoutubeElement = document.getElementById("disable-invidious");
 let youtubeFrontendElement = document.getElementById("youtube-frontend");
 let invidiousDivElement = document.getElementById("invidious")
 let pipedDivElement = document.getElementById("piped")
+let invidiousPipedDivElement = document.getElementById("invidious-piped")
 function changeFrontendsSettings(frontend) {
     if (frontend == 'piped') {
+        invidiousPipedDivElement.style.display = 'block'
         pipedDivElement.style.display = 'block';
         invidiousDivElement.style.display = 'none';
     }
     else if (frontend == 'invidious') {
+        invidiousPipedDivElement.style.display = 'block'
         pipedDivElement.style.display = 'none';
         invidiousDivElement.style.display = 'block';
     }
     else if (frontend == 'freeTube') {
+        invidiousPipedDivElement.style.display = 'none'
         pipedDivElement.style.display = 'none';
         invidiousDivElement.style.display = 'none';
     }

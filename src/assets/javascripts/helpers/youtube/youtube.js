@@ -180,7 +180,6 @@ function isYoutube(url) {
       ...targets,
       ...invidiousHostNames(),
     ]
-    console.log("mightyList.includes(url.host)", mightyList.includes(url.host))
     return mightyList.includes(url.host);
   } else
     return targets.includes(url.host)
@@ -244,7 +243,7 @@ function redirect(url, initiator, type) {
   )
     return null;
 
-  if (url.host.split(".")[0] === "studio") return null;// Avoid `studio.youtube.com`
+  if (url.hostname == "studio.youtube.com") return null;
 
   if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
 
@@ -265,20 +264,21 @@ function redirect(url, initiator, type) {
 
     let randomInstance = commonHelper.getRandomInstance(redirects.invidious.normal)
 
-    return `${randomInstance}${url.pathname.replace("/shorts", "")}${url.search}`;
+    return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
 
   } else if (frontend == 'piped') {
 
     if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
 
+    
+    if (invidiousTheme != "DEFAULT") url.searchParams.append("theme", invidiousTheme);
+    if (invidiousVolume != "--") url.searchParams.append("volume", invidiousVolume / 100);
+    if (invidiousAutoplay != "DEFAULT") url.searchParams.append("playerAutoPlay", invidiousAutoplay);
+
     let randomInstance = commonHelper.getRandomInstance(redirects.piped.normal);
 
-    if (
-      url.hostname.endsWith("youtube.com") ||
-      url.hostname.endsWith("youtube-nocookie.com") ||
-      invidiousHostNames().includes(url.hostname)
-    )
-      return `${randomInstance}${url.pathname}${url.search}`;
+    if (url.hostname.endsWith("youtube.com") || url.hostname.endsWith("youtube-nocookie.com") || invidiousHostNames().includes(url.hostname))
+      return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
 
     if (url.hostname.endsWith("youtu.be") && url.pathname.length > 1)
       return `${randomInstance}/watch?v=${url.pathname.substring(1)}`;

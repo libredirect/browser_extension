@@ -86,18 +86,6 @@ disableMediumElement.addEventListener("change",
   (event) => mediumHelper.setDisableMedium(!event.target.checked)
 );
 
-document.querySelector("#update-instances").addEventListener("click", () => {
-  document.querySelector("#update-instances").innerHTML = '...';
-  if (commonHelper.updateInstances()) {
-    document.querySelector("#update-instances").innerHTML = 'Done!';
-    new Promise(resolve => setTimeout(resolve, 1500)).then( // Sleep 1500ms
-      () => document.querySelector("#update-instances").innerHTML = 'Update Instances'
-    )
-  }
-  else
-    document.querySelector("#update-instances").innerHTML = 'Failed Miserabely';
-});
-
 document.querySelector("#more-options").addEventListener("click", () => {
   browser.runtime.openOptionsPage();
 });
