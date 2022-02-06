@@ -79,12 +79,6 @@ function setDisableReddit(val) {
   disableReddit = val;
   browser.storage.sync.set({ disableReddit })
 }
-let redditInstance;
-const getRedditInstance = () => redditInstance;
-function setRedditInstance(val) {
-  redditInstance = val;
-  browser.storage.sync.set({ redditInstance })
-};
 
 let redditFrontend;
 const getRedditFrontend = () => redditFrontend;
@@ -99,8 +93,8 @@ function redirect(url, initiator, type) {
     return null;
 
   // Do not redirect when already on the selected view
-  if ((initiator && initiator.origin === redditInstance) || url.origin === redditInstance)
-    return null;
+  // if ((initiator && initiator.origin === redditInstance) || url.origin === redditInstance)
+  //   return null;
 
 
   // Do not redirect exclusions nor anything other than main_frame
@@ -140,12 +134,10 @@ function isReddit(url) {
 async function init() {
   let result = await browser.storage.sync.get([
     "disableReddit",
-    "redditInstance",
     "redditFrontend",
     "redditRedirects"
   ])
   disableReddit = result.disableReddit ?? false;
-  redditInstance = result.redditInstance;
   redditFrontend = result.redditFrontend ?? 'libreddit';
   if (result.redditRedirects)
     redirects = result.redditRedirects;
@@ -159,9 +151,6 @@ export default {
 
   getDisableReddit,
   setDisableReddit,
-
-  getRedditInstance,
-  setRedditInstance,
 
   getRedditFrontend,
   setRedditFrontend,

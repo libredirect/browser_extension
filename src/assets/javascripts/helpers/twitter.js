@@ -12,11 +12,7 @@ const targets = [
   "pbs.twimg.com",
   "video.twimg.com",
 ];
-/*
-    Please remember to also update the 
-    src/assets/javascripts/remove-twitter-sw.js file 
-    (const nitterInstances) when updating this list:
-  */
+
 let redirects = {
   "normal": [
     "https://nitter.net",
@@ -93,12 +89,6 @@ function setDisableTwitter(val) {
   browser.storage.sync.set({ disableTwitter })
 }
 
-let nitterInstance;
-const getNitterInstance = () => nitterInstance;
-function setNitterInstance(val) {
-  nitterInstance = val;
-  browser.storage.sync.set({ nitterInstance })
-}
 
 function redirect(url, initiator) {
   if (disableTwitter)
@@ -110,11 +100,7 @@ function redirect(url, initiator) {
   if (
     commonHelper.isFirefox() &&
     initiator &&
-    (
-      initiator.origin === nitterInstance ||
-      redirects.normal.includes(initiator.origin) ||
-      targets.includes(initiator.host)
-    )
+    (redirects.normal.includes(initiator.origin) || targets.includes(initiator.host))
   ) {
     browser.storage.sync.set({ redirectBypassFlag: true });
     return null;
@@ -138,11 +124,9 @@ function isTwitter(url) {
 async function init() {
   let result = await browser.storage.sync.get([
     "disableTwitter",
-    "nitterInstance",
     "twitterRedirects"
   ]);
   disableTwitter = result.disableTwitter ?? false;
-  nitterInstance = result.nitterInstance;
   if (result.twitterRedirects)
     redirects = result.twitterRedirects;
 }
@@ -153,9 +137,6 @@ export default {
 
   getDisableTwitter,
   setDisableTwitter,
-
-  getNitterInstance,
-  setNitterInstance,
 
   redirect,
   isTwitter,

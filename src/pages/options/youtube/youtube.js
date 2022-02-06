@@ -69,10 +69,8 @@ invidiousPlayerStyleElement.addEventListener("change",
 );
 
 let invidiousSubtitlesElement = document.getElementById("invidious-subtitles");
-invidiousSubtitlesElement.addEventListener("input",
-    commonHelper.debounce(() => {
-        youtubeHelper.setInvidiousSubtitles(invidiousSubtitlesElement.value)
-    }, 500)
+invidiousSubtitlesElement.addEventListener("change",
+    () => youtubeHelper.setInvidiousSubtitles(invidiousSubtitlesElement.value)
 );
 
 let invidiousAutoplayElement = document.getElementById("invidious-autoplay");
@@ -124,61 +122,50 @@ youtubeHelper.init().then(() => {
 
     let myMightyList = youtubeHelper.getInvidiousRedirectsChecks();
 
-    function checkToggleAll() {
-        console.log("CheckToggleAll")
-        let isTrue = true;
-        for (const item of youtubeHelper.getRedirects().invidious.normal)
-            if (!myMightyList.includes(item)) {
-                isTrue = false;
-                break;
-            }
-        document.getElementById('invidious-toogle-all').checked = isTrue;
-    }
-
-
     let checklistList = invidiousCheckListElement.getElementsByTagName('input')
     for (let element of checklistList) {
-
         element.checked = myMightyList.includes(element.id);
-
         if (element.id == 'invidious-toogle-all')
-            document.getElementById('invidious-toogle-all').addEventListener("change",
-                (event) => {
-                    if (event.target.checked) {
-                        for (let item of checklistList) {
-                            myMightyList.push(item.id)
-                            item.checked = true;
-                        }
+            document.getElementById('invidious-toogle-all').addEventListener("change", (event) => {
+                if (event.target.checked)
+                    for (let item of checklistList) {
+                        myMightyList.push(item.id);
+                        item.checked = true;
                     }
-                    else {
-                        myMightyList = [];
-                        for (let item of checklistList) item.checked = false;
-                    }
-                    youtubeHelper.setInvidiousRedirectsChecks(myMightyList);
+                else {
+                    myMightyList = [];
+                    for (let item of checklistList) item.checked = false;
                 }
-            );
+                youtubeHelper.setInvidiousRedirectsChecks(myMightyList);
+            });
         else
-            document.getElementById(element.id).addEventListener("change",
-                (event) => {
-                    if (event.target.checked)
-                        myMightyList.push(element.id)
-                    else {
-                        let index = myMightyList.indexOf(element.id);
-                        if (index > -1) myMightyList.splice(index, 1);
-                    }
-
-                    youtubeHelper.setInvidiousRedirectsChecks(myMightyList);
-                    checkToggleAll();
+            document.getElementById(element.id).addEventListener("change", (event) => {
+                if (event.target.checked)
+                    myMightyList.push(element.id)
+                else {
+                    let index = myMightyList.indexOf(element.id);
+                    if (index > -1) myMightyList.splice(index, 1);
                 }
-            );
+                youtubeHelper.setInvidiousRedirectsChecks(myMightyList);
+                checkToggleAll();
+            });
     }
     checkToggleAll();
-
 
     mightyInvidiousCustomInstances = youtubeHelper.getInvidiousCustomRedirects();
     calcCustom();
 
 });
+
+function checkToggleAll() {
+    let isTrue = true;
+    for (const item of youtubeHelper.getRedirects().invidious.normal)
+        if (!myMightyList.includes(item)) {
+            isTrue = false;
+            break;
+        }
+    document.getElementById('invidious-toogle-all').checked = isTrue;
+}
 
 
 let invidiousCustomInstanceElement = document.getElementById("invidious-custom-instance")

@@ -54,13 +54,6 @@ function setDisableMaps(val) {
   browser.storage.sync.set({ disableMaps })
 }
 
-let osmInstance;
-const getOsmInstance = () => osmInstance;
-function setOsmInstance(val) {
-  osmInstance = val;
-  browser.storage.sync.set({ osmInstance })
-}
-
 function redirect(url, initiator) {
   if (disableMaps) return null;
 
@@ -82,8 +75,7 @@ function redirect(url, initiator) {
     params = "&zoom=17";
 
   // Set map layer
-  params = `${params}&layers=${layers[url.searchParams.get("layer")] || layers["none"]
-    }`;
+  params = `${params}&layers=${layers[url.searchParams.get("layer")] || layers["none"]}`;
   // Handle Google Maps Embed API
   if (url.pathname.split("/").includes("embed")) {
     let query = "";
@@ -93,8 +85,7 @@ function redirect(url, initiator) {
       try {
         query = url.searchParams.get("pb").split(/!2s(.*?)!/)[1];
       } catch (error) {
-        console.error(error);
-        // Unable to find map marker in URL.
+        console.error(error); // Unable to find map marker in URL.
       }
     }
     let marker, bbox;
@@ -145,18 +136,14 @@ function isMaps(url) {
 async function init() {
   let result = await browser.storage.sync.get([
     "disableMaps",
-    "osmInstance",
   ])
   disableMaps = result.disableMaps ?? false;
-  osmInstance = result.osmInstance;
 }
 
 export default {
   addressToLatLng,
   getDisableMaps,
   setDisableMaps,
-  getOsmInstance,
-  setOsmInstance,
   redirect,
   isMaps,
   init,

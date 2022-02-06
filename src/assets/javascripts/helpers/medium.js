@@ -39,12 +39,6 @@ function setDisableMedium(val) {
 }
 
 
-let scribeInstance;
-const getScribeInstance = () => scribeInstance;
-function setScribeInstance(val) {
-  scribeInstance = val;
-  browser.storage.sync.set({ scribeInstance })
-};
 
 function redirect(url, initiator) {
   if (disableMedium) return null;
@@ -52,13 +46,8 @@ function redirect(url, initiator) {
   if (url.pathname == "/") return null;
 
   if (
-    commonHelper.isFirefox() &&
-    initiator &&
-    (
-      initiator.origin === scribeInstance ||
-      redirects.normal.includes(initiator.origin) ||
-      targets.includes(initiator.host)
-    )
+    commonHelper.isFirefox() && initiator &&
+    (redirects.normal.includes(initiator.origin) || targets.includes(initiator.host))
   ) {
     browser.storage.sync.set({ redirectBypassFlag: true });
     return null;
@@ -73,11 +62,9 @@ function isMedium(url) {
 async function init() {
   let result = await browser.storage.sync.get([
     "disableMedium",
-    "scribeInstance",
     "mediumRedirects"
   ])
   disableMedium = result.disableMedium ?? false;
-  scribeInstance = result.scribeInstance;
   if (result.mediumRedirects)
     redirects = result.mediumRedirects;
 }
@@ -90,9 +77,6 @@ export default {
 
   getDisableMedium,
   setDisableMedium,
-
-  getScribeInstance,
-  setScribeInstance,
 
   redirect,
   isMedium,

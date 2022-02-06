@@ -60,37 +60,23 @@ function setDisableInstagram(val) {
   browser.storage.sync.set({ disableInstagram })
 }
 
-let bibliogramInstance;
-const getBibliogramInstance = () => bibliogramInstance;
-function setBibliogramInstance(val) {
-  bibliogramInstance = val;
-  browser.storage.sync.set({ bibliogramInstance })
-};
-
 function redirect(url, initiator, type) {
   if (disableInstagram)
     return null;
 
   // Do not redirect Bibliogram view on Instagram links
-  if (
-    initiator &&
-    (initiator.origin === bibliogramInstance || redirects.normal.includes(initiator.origin) || targets.includes(initiator.host))
-  )
+  if (initiator && (redirects.normal.includes(initiator.origin) || targets.includes(initiator.host)))
     return null;
 
   // Do not redirect /accounts, /embeds.js, or anything other than main_frame
   if (type !== "main_frame" || url.pathname.match(bypassPaths))
-    return null;
+    return 'CANCEL';
 
   let link = commonHelper.getRandomInstance(redirects.normal);
-  if (
-    url.pathname === "/" ||
-    instagramReservedPaths.includes(url.pathname.split("/")[1])
-  )
+  if (url.pathname === "/" || instagramReservedPaths.includes(url.pathname.split("/")[1]))
     return `${link}${url.pathname}${url.search}`;
   else
-    // Likely a user profile, redirect to '/u/...'
-    return `${link}/u${url.pathname}${url.search}`;
+    return `${link}/u${url.pathname}${url.search}`; // Likely a user profile, redirect to '/u/...'
 }
 
 function isInstagram(url) {
@@ -100,11 +86,9 @@ function isInstagram(url) {
 async function init() {
   let result = await browser.storage.sync.get([
     "disableInstagram",
-    "bibliogramInstance",
     "instagramRedirects"
   ])
   disableInstagram = result.disableInstagram ?? false;
-  bibliogramInstance = result.bibliogramInstance;
   if (result.instagramRedirects)
     redirects = result.instagramRedirects
 }
@@ -114,8 +98,6 @@ export default {
   setRedirects,
   getDisableInstagram,
   setDisableInstagram,
-  getBibliogramInstance,
-  setBibliogramInstance,
   isInstagram,
   redirect,
   init,

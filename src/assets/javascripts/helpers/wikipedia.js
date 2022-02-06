@@ -27,13 +27,6 @@ function setDisableWikipedia(val) {
   browser.storage.sync.set({ disableWikipedia })
 }
 
-let wikipediaInstance;
-const getWikipediaInstance = () => wikipediaInstance;
-function setWikipediaInstance(val) {
-  wikipediaInstance = val;
-  browser.storage.sync.set({ wikipediaInstance })
-};
-
 function redirect(url, initiator) {
   if (disableWikipedia) return null;
 
@@ -46,7 +39,7 @@ function redirect(url, initiator) {
       GETArguments.push([args[0], args[1]]);
     }
   }
-  let instance = wikipediaInstance ?? commonHelper.getRandomInstance(redirects.normal)
+  let instance = commonHelper.getRandomInstance(redirects.normal)
   let link = `${instance}${url.pathname}`;
   let urlSplit = url.host.split(".");
   if (urlSplit[0] != "wikipedia" && urlSplit[0] != "www") {
@@ -55,7 +48,7 @@ function redirect(url, initiator) {
     else GETArguments.push(["lang", urlSplit[0]]);
     if (urlSplit[1] == "m")
       GETArguments.push(["mobileaction", "toggle_view_mobile"]);
-    //wikiless doesn't have mobile view support yet
+    // wikiless doesn't have mobile view support yet
   }
   for (let i = 0; i < GETArguments.length; i++)
     link += (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1];
@@ -76,11 +69,9 @@ function isWikipedia(url) {
 async function init() {
   let result = await browser.storage.sync.get([
     "disableWikipedia",
-    "wikipediaInstance",
     "wikipediaRedirects"
   ]);
   disableWikipedia = result.disableWikipedia ?? false;
-  wikipediaInstance = result.wikipediaInstance;
   if (result.wikipediaRedirects)
     redirects = result.wikipediaRedirects;
 }
@@ -91,9 +82,6 @@ export default {
 
   setDisableWikipedia,
   getDisableWikipedia,
-
-  setWikipediaInstance,
-  getWikipediaInstance,
 
   redirect,
   isWikipedia,

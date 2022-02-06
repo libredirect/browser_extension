@@ -19,7 +19,6 @@ body.light-theme {
 body {
   margin: auto;
   padding: 0;
-  min-height: 572px;
   font-family: Sans-Serif;
   background-color: var(--bg-main);
   color: var(--text);
@@ -31,23 +30,11 @@ div.some-block input[type="checkbox"] {
   -webkit-appearance: none;
 }
 
-h2 {
-  clear: both;
-  font-size: 12px;
-  font-weight: normal;
-  margin: 0;
-}
-
-h1,
-h2 {
-  color: var(--text);
-}
-
 input[type="url"],
 input[type="text"],
 select {
   padding: 5px 10px;
-  width: 400px;
+  width: 350px;
   border-radius: 3px;
   box-sizing: border-box;
   margin-bottom: var(--space);
@@ -63,35 +50,9 @@ select {
   padding: 8px;
   background-color: var(--bg-secondary);
   border: none;
-  ;
   margin: 0;
   width: auto;
   border-radius: 3px;
-}
-
-input[type="radio"] {
-  appearance: radio;
-  -moz-appearance: radio;
-  -webkit-appearance: radio;
-}
-
-input[type="radio"]:checked+label {
-  background: transparent;
-}
-
-input:checked+label {
-  background: var(--active);
-}
-
-input:checked+label:after {
-  left: calc(100% - var(--space));
-  transform: translateX(-100%);
-}
-
-.settings-block {
-  display: block;
-  margin: 30px 0;
-  padding: 5px 15px;
 }
 
 a.button * {
@@ -113,109 +74,11 @@ a.button:active {
 input:invalid {
   color: var(--danger);
   border-color: var(--danger);
-  background-color: var(--danger-light);
-}
-
-.margin-bottom {
-  margin-bottom: 20px;
-}
-
-div.exceptions {
-  clear: left;
-}
-
-div.exceptions>input {
-  width: 240px;
-  float: left;
-}
-
-#add-to-exceptions {
-  float: right;
-  border: var(--active) solid 1px;
-  background-color: var(--active);
-  color: var(--text);
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 50%;
-  padding: 1px 1px 0px 1px;
-  margin-right: 5px;
-}
-
-#add-to-exceptions svg {
-  height: 20px;
-  width: 20px;
-}
-
-ul {
-  padding: 0;
-  list-style-type: none;
-  color: var(--text);
-  margin: 20px 20px 0 20px;
-}
-
-li {
-  white-space: nowrap;
-  border-bottom: solid 0.5px var(--bg-secondary);
-  padding: 20px 0px 20px 20px;
-}
-
-#exceptions-items button {
-  float: right;
-  margin-right: -5px;
-  border: var(--active) solid 1px;
-  background-color: var(--active);
-  color: var(--text);
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 50%;
-  padding: 2px 2px 0px 2px;
 }
 
 .button svg {
   height: 18px;
   width: 18px;
-}
-
-.autocomplete {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
-
-.autocomplete input {
-  background: url(../../assets/images/chevron-down.svg) right no-repeat;
-}
-
-.autocomplete-items {
-  position: absolute;
-  border: 1px solid var(--bg-main);
-  border-bottom: none;
-  border-top: none;
-  z-index: 99;
-  top: 85%;
-  left: 0;
-  right: 0;
-  overflow-y: auto;
-  max-height: 175px;
-  color: var(--text);
-  overflow-x: hidden;
-  max-width: 380px;
-}
-
-.autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: var(--bg-secondary);
-  border-bottom: 1px solid var(--bg-main);
-}
-
-.autocomplete-items div:hover {
-  background-color: var(--active);
-}
-
-.autocomplete-active {
-  background-color: var(--active);
-  color: var(--text);
 }
 
 section.option-block {
@@ -229,10 +92,6 @@ body.option {
   padding: 40px;
 }
 
-section.links {
-  margin: 00px 0;
-}
-
 section.links a {
   display: flex;
   align-items: center;
@@ -244,30 +103,18 @@ section.links a {
   transition: 0.1s;
 }
 
-section.links a:hover {
-  color: var(--active);
-}
-
+section.links a:hover,
 section.links a.selected {
   color: var(--active);
 }
 
-.option td {
-  vertical-align: middle;
-}
-
 input[type="range"] {
-  width: 50%;
+  width: 350px;
 }
 
 ::placeholder {
   color: var(--text);
   opacity: 0.7;
-}
-
-input[type="text"]:focus,
-input[type="url"]:focus {
-  outline: none;
 }
 
 #volume-value {
@@ -328,7 +175,6 @@ h4 {
 
 div.some-block h4 {
   margin: 0;
-  /* width: 70%; */
 }
 
 div.option-block h4 {
@@ -356,10 +202,6 @@ div.some-block input[type="checkbox"]:checked {
   background-color: var(--active);
 }
 
-div.some-block input[type="checkbox"]:focus {
-  outline: none;
-}
-
 div.some-block input[type="checkbox"]::before {
   content: "";
   display: inline-block;
@@ -372,7 +214,7 @@ div.some-block input[type="checkbox"]::before {
   height: 20px;
   background-color: white;
   border-radius: 50%;
-  transition: .4s;
+  transition: .3s;
 }
 
 div.some-block input[type="checkbox"]:checked::before {
@@ -422,15 +264,6 @@ a.button:active {
   transform: translateY(1px);
 }
 
-textarea {
-  line-height: 21px;
-  background-color: var(--bg-secondary);
-  color: white;
-  border: none;
-  resize: none;
-  width: 100%;
-}
-
 button.default {
   margin-left: 30px;
   background-color: transparent;
@@ -455,10 +288,8 @@ div.checklist div {
   justify-content: space-between;
   margin: 5px 15px;
   padding: 10px 0;
-  /* border-bottom: 2px solid rgb(77, 77, 77); */
   display: flex;
 }
-
 
 button.add {
   background-color: transparent;

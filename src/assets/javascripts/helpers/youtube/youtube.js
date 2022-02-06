@@ -91,14 +91,6 @@ function setDisableYoutube(val) {
   console.log("disableYoutube: ", disableYoutube)
 }
 
-let invidiousInstance;
-const getInvidiousInstance = () => invidiousInstance;
-function setInvidiousInstance(val) {
-  invidiousInstance = val;
-  browser.storage.sync.set({ invidiousInstance })
-  console.log("invidiousInstance: ", invidiousInstance)
-}
-
 let invidiousAlwaysProxy;
 function setInvidiousAlwaysProxy(val) {
   invidiousAlwaysProxy = val;
@@ -208,7 +200,6 @@ async function init() {
       "invidiousTheme",
       "persistInvidiousPrefs",
       "disableYoutube",
-      "invidiousInstance",
       "invidiousOnlyEmbeddedVideo",
       "invidiousVolume",
       "invidiousPlayerStyle",
@@ -219,7 +210,7 @@ async function init() {
       "invidiousRedirectsChecks",
       "invidiousCustomRedirects",
     ]);
-  if (result.youtubeRedirects) redirects = result.youtubeRedirects
+  if (result.youtubeRedirects) redirects = result.youtubeRedirects;
 
   if (result.invidiousRedirectsChecks) invidiousRedirectsChecks = result.invidiousRedirectsChecks;
 
@@ -227,8 +218,6 @@ async function init() {
 
   frontend = result.youtubeFrontend ?? 'piped';
   disableYoutube = result.disableYoutube ?? false;
-
-  invidiousInstance = result.invidiousInstance;
 
   invidiousAlwaysProxy = result.invidiousAlwaysProxy ?? 'DEFAULT';
   invidiousOnlyEmbeddedVideo = result.invidiousOnlyEmbeddedVideo ?? false;
@@ -240,8 +229,6 @@ async function init() {
   invidiousAutoplay = result.invidiousAutoplay ?? 'DEFAULT';
 
   persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
-
-
 }
 
 function invidiousInitCookies(tabId) {
@@ -259,7 +246,6 @@ function redirect(url, initiator, type) {
   if (
     initiator &&
     (
-      initiator.origin === invidiousInstance ||
       redirects.invidious.normal.includes(initiator.origin) ||
       redirects.piped.normal.includes(initiator.origin) ||
       targets.includes(initiator.host)
@@ -325,9 +311,6 @@ export default {
 
   getDisableYoutube,
   setDisableYoutube,
-
-  setInvidiousInstance,
-  getInvidiousInstance,
 
   setInvidiousAlwaysProxy,
   getInvidiousAlwaysProxy,

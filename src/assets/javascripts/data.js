@@ -1,12 +1,5 @@
 "use strict";
 
-let exceptions;
-
-function setExceptions(val) {
-    exceptions = val;
-    browser.storage.sync.set({ exceptions })
-};
-
 let theme;
 function setTheme(val) {
     theme = val;
@@ -17,5 +10,4 @@ export default {
     exceptions,
     theme,
     setTheme,
-    setExceptions,
 }

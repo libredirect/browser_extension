@@ -47,31 +47,6 @@ browser.storage.sync.get(
   }
 );
 
-// function addToExceptions() {
-//   const input = document.getElementById("new-exceptions-item");
-//   const type = document.querySelector('input[name="type"]:checked').value;
-//   if (input.value) {
-//     try {
-//       let value = input.value;
-//       new RegExp(input.value);
-//       if (type === "URL")
-//         value = value.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
-
-//       exceptions.push(value);
-//       browser.storage.sync.set({
-//         exceptions: exceptions,
-//       });
-//       prependExceptionsItem(value, exceptions.indexOf(value));
-//       input.value = "";
-//     } catch (error) {
-//       input.setCustomValidity("Invalid RegExp");
-//     }
-//   } else {
-//     input.setCustomValidity("Invalid RegExp");
-//   }
-// }
-// document.getElementById("add-to-exceptions").addEventListener("click", addToExceptions);
-
 themeElement.addEventListener("change", (event) => {
   const value = event.target.options[theme.selectedIndex].value;
   switch (value) {

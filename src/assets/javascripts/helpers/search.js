@@ -6,7 +6,7 @@ const targets = [
   /https?:\/\/(((www|maps)\.)?(google\.).*(\/search)|search\.(google\.).*)/
 ];
 let redirects = {
-    "searx": {
+  "searx": {
     "normal": [
       "https://a.searx.space",
       "https://anon.sx",
@@ -137,7 +137,7 @@ let redirects = {
       "http://mqamk4cfykdvhw5kjez2gnvse56gmnqxn7vkvvbuor4k4j2lbbnq.b32.i2p"
     ]
   },
- "whoogle": {
+  "whoogle": {
     "normal": [
       "https://s.alefvanoon.xyz",
       "https://search.albony.xyz",
@@ -164,8 +164,6 @@ function setWhoogleRedirects(val) {
   console.log("whoogleRedirects:", val)
 }
 
-
-
 let disableSearch;
 const getDisableSearch = () => disableSearch;
 function setDisableSearch(val) {
@@ -173,13 +171,6 @@ function setDisableSearch(val) {
   browser.storage.sync.set({ disableSearch })
   console.log("disableSearch: ", disableSearch)
 }
-
-let searchInstance;
-const getSearchInstance = () => searchInstance;
-function setSearchInstance(val) {
-  searchInstance = val;
-  browser.storage.sync.set({ searchInstance })
-};
 
 let searchFrontend;
 const getSearchFrontend = () => searchFrontend;
@@ -208,7 +199,6 @@ function redirect(url, initiator) {
   url.search.slice(1).split("&").forEach(function (input) {
     if (input.startsWith("q=")) searchQuery = input;
   });
-  console.log("Will return");
   return `${instance}${path}?${searchQuery}`;
 }
 
@@ -219,12 +209,10 @@ function isSearch(url) {
 async function init() {
   let result = await browser.storage.sync.get([
     "disableSearch",
-    "searchInstance",
     "searchFrontend",
     "searchRedirects",
   ])
   disableSearch = result.disableSearch ?? false;
-  searchInstance = result.searchInstance;
   searchFrontend = result.searchFrontend ?? 'searx';
   if (result.searchRedirects)
     redirects = result.searchRedirects;
@@ -240,9 +228,6 @@ export default {
 
   getDisableSearch,
   setDisableSearch,
-
-  getSearchInstance,
-  setSearchInstance,
 
   getSearchFrontend,
   setSearchFrontend,
