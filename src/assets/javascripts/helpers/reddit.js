@@ -71,6 +71,39 @@ function setTedditRedirects(val) {
   console.log("tedditRedirects:", val)
 }
 
+
+let libredditRedirectsChecks;
+const getLibredditRedirectsChecks = () => libredditRedirectsChecks;
+function setLibredditRedirectsChecks(val) {
+  libredditRedirectsChecks = val;
+  browser.storage.sync.set({ libredditRedirectsChecks })
+  console.log("libredditRedirectsChecks: ", val)
+}
+
+let libredditCustomRedirects = [];
+const getLibredditCustomRedirects = () => libredditCustomRedirects;
+function setLibredditCustomRedirects(val) {
+  libredditCustomRedirects = val;
+  browser.storage.sync.set({ libredditCustomRedirects })
+  console.log("libredditCustomRedirects: ", val)
+}
+
+let tedditRedirectsChecks;
+const getTedditRedirectsChecks = () => tedditRedirectsChecks;
+function setTedditRedirectsChecks(val) {
+  tedditRedirectsChecks = val;
+  browser.storage.sync.set({ tedditRedirectsChecks })
+  console.log("tedditRedirectsChecks: ", val)
+}
+
+let tedditCustomRedirects = [];
+const getTedditCustomRedirects = () => tedditCustomRedirects;
+function setTedditCustomRedirects(val) {
+  tedditCustomRedirects = val;
+  browser.storage.sync.set({ tedditCustomRedirects })
+  console.log("tedditCustomRedirects: ", val)
+}
+
 const bypassPaths = /\/(gallery\/poll\/rpan\/settings\/topics)/;
 
 let disableReddit;
@@ -101,8 +134,13 @@ function redirect(url, initiator, type) {
   if (type !== "main_frame" || url.pathname.match(bypassPaths))
     return null;
 
-  let libredditLink = commonHelper.getRandomInstance(redirects.libreddit.normal);
-  let tedditLink = commonHelper.getRandomInstance(redirects.teddit.normal);
+  let libreddtInstancesList = [...libredditRedirectsChecks, ...libredditCustomRedirects];
+  if (libreddtInstancesList.length === 0) return null;
+  let libredditRandomInstance = commonHelper.getRandomInstance(libreddtInstancesList);
+
+  let tedditInstancesList = [...tedditRedirectsChecks, ...tedditCustomRedirects];
+  if (tedditInstancesList.length === 0) return null;
+  let tedditRandomInstance = commonHelper.getRandomInstance(tedditInstancesList);
 
   if (url.host === "i.redd.it")
     // As of 2021-04-09, redirects for teddit images are nontrivial:
@@ -110,9 +148,9 @@ function redirect(url, initiator, type) {
     //   404 error (probably needs fix on teddit project)
     // - some image links on teddit are very different
     // Therefore, don't support redirecting image links for teddit.
-    return `${libredditLink}/img${url.pathname}${url.search}`;
+    return `${libredditRandomInstance}/img${url.pathname}${url.search}`;
   else if (url.host === "redd.it") {
-    if (redditFrontend == 'libreddit') return `${libredditLink}${url.pathname}${url.search}`;
+    if (redditFrontend == 'libreddit') return `${libredditRandomInstance}${url.pathname}${url.search}`;
     if (redditFrontend == 'teddit' && !url.pathname.match(/^\/+[^\/]+\/+[^\/]/))
       // As of 2021-04-22, redirects for teddit redd.it/foo links don't work.
       // It appears that adding "/comments" as a prefix works, so manually add
@@ -121,10 +159,10 @@ function redirect(url, initiator, type) {
       // paths.
       // Note the difference between redd.it/comments/foo (doesn't work) and
       // teddit.net/comments/foo (works).
-      return `${tedditLink}/comments${url.pathname}${url.search}`;
+      return `${tedditRandomInstance}/comments${url.pathname}${url.search}`;
   }
-  if (redditFrontend == 'libreddit') return `${libredditLink}${url.pathname}${url.search}`;
-  if (redditFrontend == 'teddit') return `${tedditLink}${url.pathname}${url.search}`;
+  if (redditFrontend == 'libreddit') return `${libredditRandomInstance}${url.pathname}${url.search}`;
+  if (redditFrontend == 'teddit') return `${tedditRandomInstance}${url.pathname}${url.search}`;
 }
 
 function isReddit(url) {
@@ -135,12 +173,22 @@ async function init() {
   let result = await browser.storage.sync.get([
     "disableReddit",
     "redditFrontend",
-    "redditRedirects"
+    "redditRedirects",
+    "libredditRedirectsChecks",
+    "libredditCustomRedirects",
+    "tedditRedirectsChecks",
+    "tedditCustomRedirects",
   ])
   disableReddit = result.disableReddit ?? false;
   redditFrontend = result.redditFrontend ?? 'libreddit';
   if (result.redditRedirects)
     redirects = result.redditRedirects;
+
+  libredditRedirectsChecks = result.libredditRedirectsChecks ?? [...redirects.libreddit.normal];
+  libredditCustomRedirects = result.libredditCustomRedirects ?? [];
+
+  tedditRedirectsChecks = result.tedditRedirectsChecks ?? [...redirects.teddit.normal];
+  tedditCustomRedirects = result.tedditCustomRedirects ?? [];
 }
 
 export default {
@@ -154,6 +202,18 @@ export default {
 
   getRedditFrontend,
   setRedditFrontend,
+
+  getLibredditRedirectsChecks,
+  setLibredditRedirectsChecks,
+
+  getLibredditCustomRedirects,
+  setLibredditCustomRedirects,
+
+  getTedditRedirectsChecks,
+  setTedditRedirectsChecks,
+
+  getTedditCustomRedirects,
+  setTedditCustomRedirects,
 
   redirect,
   isReddit,

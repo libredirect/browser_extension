@@ -92,18 +92,25 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
   mightyList.push(
     ...youtubeHelper.getRedirects().invidious.normal,
     ...youtubeHelper.getRedirects().piped.normal,
-    ...twitterHelper.getRedirects().normal,
-    ...instagramHelper.getRedirects().normal,
+    
+    ...twitterHelper.getRedirects().nitter.normal,
+
+    ...instagramHelper.getRedirects().bibliogram.normal,
+    
     ...redditHelper.getRedirects().libreddit.normal,
     ...redditHelper.getRedirects().teddit.normal,
     redditHelper.getRedirects().desktop,
     redditHelper.getRedirects().mobile,
+    
     ...searchHelper.getRedirects().searx.normal,
     ...searchHelper.getRedirects().whoogle.normal,
+    
     ...translateHelper.getRedirects().simplyTranslate.normal,
     ...translateHelper.getRedirects().lingva.normal,
-    ...mediumHelper.getRedirects().normal,
-    ...wikipediaHelper.getRedirects().normal
+    
+    ...mediumHelper.getRedirects().scribe.normal,
+    
+    ...wikipediaHelper.getRedirects().wikiless.normal
   );
 
   if (mightyList.includes(protocolHost)) browser.pageAction.show(tabId);

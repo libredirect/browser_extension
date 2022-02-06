@@ -1,4 +1,5 @@
 import mediumHelper from "../../../assets/javascripts/helpers/medium.js";
+import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableMediumElement = document.getElementById("disable-scribe");
 disableMediumElement.addEventListener("change",
@@ -7,4 +8,14 @@ disableMediumElement.addEventListener("change",
 
 mediumHelper.init().then(() => {
     disableMediumElement.checked = !mediumHelper.getDisableMedium();
+
+    commonHelper.processDefaultCustomInstances(
+        'scribe',
+        mediumHelper,
+        document,
+        mediumHelper.getScribeRedirectsChecks,
+        mediumHelper.setScribeRedirectsChecks,
+        mediumHelper.getScribeCustomRedirects,
+        mediumHelper.setScribeCustomRedirects
+    )
 })

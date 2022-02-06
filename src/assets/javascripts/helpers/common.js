@@ -23,7 +23,7 @@ function updateInstances() {
   if (request.status === 200) {
     const instances = JSON.parse(request.responseText);
 
-    nameHelper.setInvidiousRedirects(instances.invidious);
+    youtubeHelper.setInvidiousRedirects(instances.invidious);
 
     twitterHelper.setRedirects(instances.nitter);
 
@@ -140,6 +140,7 @@ function processDefaultCustomInstances(
       if (!nameCustomInstances.includes(val)) {
         nameCustomInstances.push(val)
         setNameCustomRedirects(nameCustomInstances);
+        nameCustomInstanceInput.value = '';
       }
       calcNameCustomInstances();
     }

@@ -7,23 +7,42 @@ const targets = [
   "about.instagram.com",
 ];
 let redirects = {
-  "normal": [
-    "https://bibliogram.art",
-    "https://bibliogram.snopyta.org",
-    "https://bibliogram.pussthecat.org",
-    "https://bibliogram.1d4.us",
-    "https://insta.trom.tf",
-    "https://bib.riverside.rocks",
-    "https://bibliogram.esmailelbob.xyz",
-    "https://bib.actionsack.com",
-    "https://biblio.alefvanoon.xyz"
-  ]
+  "bibliogram": {
+    "normal": [
+      "https://bibliogram.art",
+      "https://bibliogram.snopyta.org",
+      "https://bibliogram.pussthecat.org",
+      "https://bibliogram.1d4.us",
+      "https://insta.trom.tf",
+      "https://bib.riverside.rocks",
+      "https://bibliogram.esmailelbob.xyz",
+      "https://bib.actionsack.com",
+      "https://biblio.alefvanoon.xyz"
+    ]
+  }
 };
 const getRedirects = () => redirects;
 function setRedirects(val) {
-  redirects = val;
-  browser.storage.sync.set({ instagramRedirects: val })
+  redirects.bibliogram = val;
+  browser.storage.sync.set({ instagramRedirects: redirects })
   console.log("instagramRedirects: ", val)
+}
+
+
+let bibliogramRedirectsChecks;
+const getBibliogramRedirectsChecks = () => bibliogramRedirectsChecks;
+function setBibliogramRedirectsChecks(val) {
+  bibliogramRedirectsChecks = val;
+  browser.storage.sync.set({ bibliogramRedirectsChecks })
+  console.log("bibliogramRedirectsChecks: ", val)
+}
+
+let bibliogramCustomRedirects = [];
+const getBibliogramCustomRedirects = () => bibliogramCustomRedirects;
+function setBibliogramCustomRedirects(val) {
+  bibliogramCustomRedirects = val;
+  browser.storage.sync.set({ bibliogramCustomRedirects })
+  console.log("bibliogramCustomRedirects: ", val)
 }
 
 const reservedPaths = [
@@ -61,22 +80,24 @@ function setDisableInstagram(val) {
 }
 
 function redirect(url, initiator, type) {
-  if (disableInstagram)
-    return null;
+  if (disableInstagram) return null;
+
+  let instancesList = [...bibliogramRedirectsChecks, ...bibliogramCustomRedirects];
+  if (instancesList.length === 0) return null;
+  let randomInstance = commonHelper.getRandomInstance(instancesList)
 
   // Do not redirect Bibliogram view on Instagram links
-  if (initiator && (redirects.normal.includes(initiator.origin) || targets.includes(initiator.host)))
+  if (initiator && (instancesList.includes(initiator.origin) || targets.includes(initiator.host)))
     return null;
 
   // Do not redirect /accounts, /embeds.js, or anything other than main_frame
   if (type !== "main_frame" || url.pathname.match(bypassPaths))
     return 'CANCEL';
 
-  let link = commonHelper.getRandomInstance(redirects.normal);
   if (url.pathname === "/" || instagramReservedPaths.includes(url.pathname.split("/")[1]))
-    return `${link}${url.pathname}${url.search}`;
+    return `${randomInstance}${url.pathname}${url.search}`;
   else
-    return `${link}/u${url.pathname}${url.search}`; // Likely a user profile, redirect to '/u/...'
+    return `${randomInstance}/u${url.pathname}${url.search}`; // Likely a user profile, redirect to '/u/...'
 }
 
 function isInstagram(url) {
@@ -86,19 +107,34 @@ function isInstagram(url) {
 async function init() {
   let result = await browser.storage.sync.get([
     "disableInstagram",
-    "instagramRedirects"
+    "instagramRedirects",
+    "bibliogramRedirectsChecks",
+    "bibliogramCustomRedirects",
   ])
   disableInstagram = result.disableInstagram ?? false;
   if (result.instagramRedirects)
     redirects = result.instagramRedirects
+
+
+  bibliogramRedirectsChecks = result.bibliogramRedirectsChecks ?? [...redirects.bibliogram.normal];
+  bibliogramCustomRedirects = result.bibliogramCustomRedirects ?? [];
 }
 
 export default {
   getRedirects,
   setRedirects,
+
   getDisableInstagram,
   setDisableInstagram,
+
+  getBibliogramRedirectsChecks,
+  setBibliogramRedirectsChecks,
+
+  getBibliogramCustomRedirects,
+  setBibliogramCustomRedirects,
+
   isInstagram,
+
   redirect,
   init,
 };

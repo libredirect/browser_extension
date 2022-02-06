@@ -157,6 +157,37 @@ function setSearxRedirects(val) {
   browser.storage.sync.set({ searchRedirects: redirects })
   console.log("searxRedirects:", val)
 }
+let whoogleRedirectsChecks;
+const getWhoogleRedirectsChecks = () => whoogleRedirectsChecks;
+function setWhoogleRedirectsChecks(val) {
+  whoogleRedirectsChecks = val;
+  browser.storage.sync.set({ whoogleRedirectsChecks })
+  console.log("whoogleRedirectsChecks: ", val)
+}
+
+let whoogleCustomRedirects = [];
+const getWhoogleCustomRedirects = () => whoogleCustomRedirects;
+function setWhoogleCustomRedirects(val) {
+  whoogleCustomRedirects = val;
+  browser.storage.sync.set({ whoogleCustomRedirects })
+  console.log("whoogleCustomRedirects: ", val)
+}
+
+let searxRedirectsChecks;
+const getSearxRedirectsChecks = () => searxRedirectsChecks;
+function setSearxRedirectsChecks(val) {
+  searxRedirectsChecks = val;
+  browser.storage.sync.set({ searxRedirectsChecks })
+  console.log("searxRedirectsChecks: ", val)
+}
+
+let searxCustomRedirects = [];
+const getSearxCustomRedirects = () => searxCustomRedirects;
+function setSearxCustomRedirects(val) {
+  searxCustomRedirects = val;
+  browser.storage.sync.set({ searxCustomRedirects })
+  console.log("searxCustomRedirects: ", val)
+}
 
 function setWhoogleRedirects(val) {
   redirects.whoogle = val;
@@ -184,14 +215,18 @@ function redirect(url, initiator) {
   if (disableSearch)
     return null;
 
-  let instance;
+  let randomInstance;
   let path;
   if (searchFrontend == 'searx') {
-    instance = commonHelper.getRandomInstance(redirects.searx.normal);
+    let instancesList = [...searxRedirectsChecks, ...searxCustomRedirects];
+    if (instancesList.length === 0) return null;
+    randomInstance = commonHelper.getRandomInstance(instancesList)
     path = "/"
   }
   if (searchFrontend == 'whoogle') {
-    instance = commonHelper.getRandomInstance(redirects.whoogle.normal);
+    let instancesList = [...whoogleRedirectsChecks, ...whoogleCustomRedirects];
+    if (instancesList.length === 0) return null;
+    randomInstance = commonHelper.getRandomInstance(instancesList)
     path = "/search"
   }
 
@@ -199,7 +234,7 @@ function redirect(url, initiator) {
   url.search.slice(1).split("&").forEach(function (input) {
     if (input.startsWith("q=")) searchQuery = input;
   });
-  return `${instance}${path}?${searchQuery}`;
+  return `${randomInstance}${path}?${searchQuery}`;
 }
 
 function isSearch(url) {
@@ -211,11 +246,22 @@ async function init() {
     "disableSearch",
     "searchFrontend",
     "searchRedirects",
+    "whoogleRedirectsChecks",
+    "whoogleCustomRedirects",
+    "searxRedirectsChecks",
+    "searxCustomRedirects",
   ])
   disableSearch = result.disableSearch ?? false;
   searchFrontend = result.searchFrontend ?? 'searx';
   if (result.searchRedirects)
     redirects = result.searchRedirects;
+
+
+  whoogleRedirectsChecks = result.whoogleRedirectsChecks ?? [...redirects.whoogle.normal];
+  whoogleCustomRedirects = result.whoogleCustomRedirects ?? [];
+
+  searxRedirectsChecks = result.searxRedirectsChecks ?? [...redirects.whoogle.normal];
+  searxCustomRedirects = result.searxCustomRedirects ?? [];
 }
 
 export default {
@@ -231,6 +277,18 @@ export default {
 
   getSearchFrontend,
   setSearchFrontend,
+
+  getWhoogleRedirectsChecks,
+  setWhoogleRedirectsChecks,
+
+  getWhoogleCustomRedirects,
+  setWhoogleCustomRedirects,
+
+  getSearxRedirectsChecks,
+  setSearxRedirectsChecks,
+
+  getSearxCustomRedirects,
+  setSearxCustomRedirects,
 
   redirect,
   init,

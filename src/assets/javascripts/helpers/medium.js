@@ -17,18 +17,36 @@ const targets = [
 ];
 
 let redirects = {
-  "normal": [
-    "https://scribe.rip",
-    "https://scribe.nixnet.services",
-    "https://scribe.citizen4.eu",
-    "https://scribe.bus-hit.me"
-  ]
+  "scribe": {
+    "normal": [
+      "https://scribe.rip",
+      "https://scribe.nixnet.services",
+      "https://scribe.citizen4.eu",
+      "https://scribe.bus-hit.me"
+    ]
+  }
 };
 const getRedirects = () => redirects;
 function setRedirects(val) {
-  redirects = val;
-  browser.storage.sync.set({ mediumRedirects: val })
+  redirects.scribe = val;
+  browser.storage.sync.set({ mediumRedirects: redirects })
   console.log("mediumRedirects: ", val)
+}
+
+let scribeRedirectsChecks;
+const getScribeRedirectsChecks = () => scribeRedirectsChecks;
+function setScribeRedirectsChecks(val) {
+  scribeRedirectsChecks = val;
+  browser.storage.sync.set({ scribeRedirectsChecks })
+  console.log("scribeRedirectsChecks: ", val)
+}
+
+let scribeCustomRedirects = [];
+const getScribeCustomRedirects = () => scribeCustomRedirects;
+function setScribeCustomRedirects(val) {
+  scribeCustomRedirects = val;
+  browser.storage.sync.set({ scribeCustomRedirects })
+  console.log("scribeCustomRedirects: ", val)
 }
 
 let disableMedium;
@@ -45,14 +63,19 @@ function redirect(url, initiator) {
 
   if (url.pathname == "/") return null;
 
+
+  let instancesList = [...scribeRedirectsChecks, ...scribeCustomRedirects];
+  if (instancesList.length === 0) return null;
+  let randomInstance = commonHelper.getRandomInstance(instancesList)
+
   if (
     commonHelper.isFirefox() && initiator &&
-    (redirects.normal.includes(initiator.origin) || targets.includes(initiator.host))
+    (instancesList.includes(initiator.origin) || targets.includes(initiator.host))
   ) {
     browser.storage.sync.set({ redirectBypassFlag: true });
     return null;
   }
-  return `${commonHelper.getRandomInstance(redirects.normal)}${url.pathname}${url.search}`;
+  return `${randomInstance}${url.pathname}${url.search}`;
 }
 
 function isMedium(url) {
@@ -62,11 +85,16 @@ function isMedium(url) {
 async function init() {
   let result = await browser.storage.sync.get([
     "disableMedium",
-    "mediumRedirects"
+    "mediumRedirects",
+    "scribeRedirectsChecks",
+    "scribeCustomRedirects",
   ])
   disableMedium = result.disableMedium ?? false;
   if (result.mediumRedirects)
     redirects = result.mediumRedirects;
+
+  scribeRedirectsChecks = result.scribeRedirectsChecks ?? [...redirects.scribe.normal];
+  scribeCustomRedirects = result.scribeCustomRedirects ?? [];
 }
 
 export default {
@@ -77,6 +105,12 @@ export default {
 
   getDisableMedium,
   setDisableMedium,
+
+  getScribeRedirectsChecks,
+  setScribeRedirectsChecks,
+
+  getScribeCustomRedirects,
+  setScribeCustomRedirects,
 
   redirect,
   isMedium,

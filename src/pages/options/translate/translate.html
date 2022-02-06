@@ -27,20 +27,67 @@
             <h4>Enable</h4>
             <input id="disable-simplyTranslate" type="checkbox" checked />
         </div>
-        <!-- <div class="some-block option-block">
-            <h4>Instance</h4>
-            <div class="autocomplete">
-                <input id="simplyTranslate-instance" type="url" placeholder="https://translate.metalune.xyz" />
-            </div>
-        </div> -->
 
         <div class="some-block option-block">
             <h4>Frontend</h4>
             <select id="translate-frontend">
-                <option value="simplyTransalte">SimplyTransalte</option>
+                <option value="simplyTranslate">SimplyTranslate</option>
                 <option value="lingva">Lingva</option>
             </select>
         </div>
+
+        <hr>
+
+        <div id="simplyTranslate">
+            <div class="some-block option-block">
+                <h4>Default Instances</h4>
+            </div>
+            <div class="checklist" id="simplyTranslate-checklist">
+            </div>
+            <hr>
+            <div class="some-block option-block">
+                <h4>Custom Instances</h4>
+            </div>
+            <form id="custom-simplyTranslate-instance-form">
+                <div class="some-block option-block">
+                    <input id="simplyTranslate-custom-instance" placeholder="https://simplyTranslate.com" type="url" />
+                    <button type="submit" class="add" id="simplyTranslate-add-instance">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                            fill="currentColor">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
+            <div class="checklist" id="simplyTranslate-custom-checklist"></div>
+        </div>
+
+        <div id="lingva">
+            <div class="some-block option-block">
+                <h4>Default Instances</h4>
+            </div>
+            <div class="checklist" id="lingva-checklist">
+            </div>
+            <hr>
+            <div class="some-block option-block">
+                <h4>Custom Instances</h4>
+            </div>
+            <form id="custom-lingva-instance-form">
+                <div class="some-block option-block">
+                    <input id="lingva-custom-instance" placeholder="https://lingva.com" type="url" />
+                    <button type="submit" class="add" id="lingva-add-instance">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                            fill="currentColor">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
+            <div class="checklist" id="lingva-custom-checklist"></div>
+        </div>
+
     </section>
 
     <script type="module" src="../init.js"></script>
