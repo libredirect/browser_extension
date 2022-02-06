@@ -260,7 +260,7 @@ async function init() {
   whoogleRedirectsChecks = result.whoogleRedirectsChecks ?? [...redirects.whoogle.normal];
   whoogleCustomRedirects = result.whoogleCustomRedirects ?? [];
 
-  searxRedirectsChecks = result.searxRedirectsChecks ?? [...redirects.whoogle.normal];
+  searxRedirectsChecks = result.searxRedirectsChecks ?? [...redirects.searx.normal];
   searxCustomRedirects = result.searxCustomRedirects ?? [];
 }
 

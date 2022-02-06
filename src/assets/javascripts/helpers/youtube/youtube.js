@@ -245,7 +245,7 @@ async function init() {
   invidiousRedirectsChecks = result.invidiousRedirectsChecks ?? [...redirects.invidious.normal];
   invidiousCustomRedirects = result.invidiousCustomRedirects ?? [];
 
-  pipedRedirectsChecks = result.pipedRedirectsChecks ?? [...redirects.invidious.normal];
+  pipedRedirectsChecks = result.pipedRedirectsChecks ?? [...redirects.piped.normal];
   pipedCustomRedirects = result.pipedCustomRedirects ?? [];
 
   persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
@@ -308,8 +308,7 @@ function redirect(url, initiator, type) {
 
     let instancesList = [...pipedRedirectsChecks, ...pipedCustomRedirects];
 
-    if (instancesList.length === 0)
-      return null;
+    if (instancesList.length === 0) return null;
 
     let randomInstance = commonHelper.getRandomInstance(instancesList)
 
