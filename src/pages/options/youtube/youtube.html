@@ -129,13 +129,44 @@
 
             <div class="some-block option-block">
                 <h4>Subtitles</h4>
-                <input id="invidious-subtitles" placeholder="en, ar, es" name="invidious-subtitles" type="text" />
+                <input id="invidious-subtitles" placeholder="en, ar, es" type="text" />
             </div>
 
             <div class="some-block option-block">
                 <h4>Persist preferences (as cookie)</h4>
                 <input id="persist-invidious-prefs" type="checkbox" checked />
             </div>
+
+            <hr>
+
+            <div class="some-block option-block">
+                <h4>Default Instances</h4>
+            </div>
+            <div class="checklist" id="checklist">
+            </div>
+
+            <hr>
+
+            <div class="some-block option-block">
+                <h4>Custom Instances</h4>
+            </div>
+
+
+            <form id="custom-instance-form">
+                <div class="some-block option-block">
+                    <input id="invidious-custom-instance" placeholder="https://invidious.com" type="url" />
+                    <button type="submit" class="add" id="invidious-add-instance">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                            fill="currentColor">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
+
+            <div class="checklist" id="custom-checklist"></div>
+
         </div>
 
         <div id="piped"></div>

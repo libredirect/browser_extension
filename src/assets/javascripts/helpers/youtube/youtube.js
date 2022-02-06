@@ -61,6 +61,22 @@ function setInvidiousRedirects(val) {
   console.log("invidiousRedirects: ", val)
 }
 
+let invidiousRedirectsChecks = redirects.invidious.normal;
+const getInvidiousRedirectsChecks = () => invidiousRedirectsChecks;
+function setInvidiousRedirectsChecks(val) {
+  invidiousRedirectsChecks = val;
+  browser.storage.sync.set({ invidiousRedirectsChecks })
+  console.log("invidiousRedirectsChecks: ", val)
+}
+
+let invidiousCustomRedirects = [];
+const getInvidiousCustomRedirects = () => invidiousCustomRedirects;
+function setInvidiousCustomRedirects(val) {
+  invidiousCustomRedirects = val;
+  browser.storage.sync.set({ invidiousCustomRedirects })
+  console.log("invidiousCustomRedirects: ", val)
+}
+
 function setPipedRedirects(val) {
   redirects.piped = val;
   browser.storage.sync.set({ youtubeRedirects: redirects })
@@ -147,7 +163,6 @@ function setInvidiousAutoplay(val) {
   console.log("invidiousAutoplay: ", invidiousAutoplay)
 }
 
-
 let frontend;
 const getFrontend = () => frontend;
 function setFrontend(val) {
@@ -201,8 +216,15 @@ async function init() {
       "invidiousAutoplay",
       "youtubeRedirects",
       "youtubeFrontend",
+      "invidiousRedirectsChecks",
+      "invidiousCustomRedirects",
     ]);
   if (result.youtubeRedirects) redirects = result.youtubeRedirects
+
+  if (result.invidiousRedirectsChecks) invidiousRedirectsChecks = result.invidiousRedirectsChecks;
+
+  if (result.invidiousCustomRedirects) invidiousCustomRedirects = result.invidiousCustomRedirects;
+
   frontend = result.youtubeFrontend ?? 'piped';
   disableYoutube = result.disableYoutube ?? false;
 
@@ -218,6 +240,8 @@ async function init() {
   invidiousAutoplay = result.invidiousAutoplay ?? 'DEFAULT';
 
   persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
+
+
 }
 
 function invidiousInitCookies(tabId) {
@@ -262,7 +286,7 @@ function redirect(url, initiator, type) {
     if (invidiousSubtitles.trim() != '') url.searchParams.append("subtitles", invidiousSubtitles);
     if (invidiousAutoplay != "DEFAULT") url.searchParams.append("autoplay", invidiousAutoplay);
 
-    let randomInstance = commonHelper.getRandomInstance(redirects.invidious.normal)
+    let randomInstance = commonHelper.getRandomInstance([...invidiousRedirectsChecks, ...invidiousCustomRedirects])
 
     return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
 
@@ -270,7 +294,6 @@ function redirect(url, initiator, type) {
 
     if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
 
-    
     if (invidiousTheme != "DEFAULT") url.searchParams.append("theme", invidiousTheme);
     if (invidiousVolume != "--") url.searchParams.append("volume", invidiousVolume / 100);
     if (invidiousAutoplay != "DEFAULT") url.searchParams.append("playerAutoPlay", invidiousAutoplay);
@@ -332,6 +355,12 @@ export default {
 
   getPersistInvidiousPrefs,
   setPersistInvidiousPrefs,
+
+  getInvidiousRedirectsChecks,
+  setInvidiousRedirectsChecks,
+
+  getInvidiousCustomRedirects,
+  setInvidiousCustomRedirects,
 
   init,
 };

@@ -48,7 +48,6 @@ input[type="text"],
 select {
   padding: 5px 10px;
   width: 400px;
-  margin: auto;
   border-radius: 3px;
   box-sizing: border-box;
   margin-bottom: var(--space);
@@ -448,8 +447,27 @@ button.default {
   cursor: pointer;
 }
 
-button.default svg {
+button svg {
   color: var(--text);
+}
+
+div.checklist div {
+  justify-content: space-between;
+  margin: 5px 15px;
+  padding: 10px 0;
+  /* border-bottom: 2px solid rgb(77, 77, 77); */
+  display: flex;
+}
+
+
+button.add {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
 }
 
 @media (prefers-color-scheme: light) {
