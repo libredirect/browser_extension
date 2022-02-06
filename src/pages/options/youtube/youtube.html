@@ -124,16 +124,13 @@
             <div class="some-block option-block">
                 <h4>Default Instances</h4>
             </div>
-            <div class="checklist" id="checklist">
+            <div class="checklist" id="invidious-checklist">
             </div>
-
             <hr>
-
             <div class="some-block option-block">
                 <h4>Custom Instances</h4>
             </div>
-
-            <form id="custom-instance-form">
+            <form id="custom-invidious-instance-form">
                 <div class="some-block option-block">
                     <input id="invidious-custom-instance" placeholder="https://invidious.com" type="url" />
                     <button type="submit" class="add" id="invidious-add-instance">
@@ -145,17 +142,41 @@
                     </button>
                 </div>
             </form>
-
-            <div class="checklist" id="custom-checklist"></div>
+            <div class="checklist" id="invidious-custom-checklist"></div>
 
         </div>
 
-        <div id="piped"></div>
+        <div id="piped">
+            <div class="some-block option-block">
+                <h4>Default Instances</h4>
+            </div>
+            <div class="checklist" id="piped-checklist">
+            </div>
+            <hr>
+            <div class="some-block option-block">
+                <h4>Custom Instances</h4>
+            </div>
+            <form id="custom-piped-instance-form">
+                <div class="some-block option-block">
+                    <input id="piped-custom-instance" placeholder="https://piped.com" type="url" />
+                    <button type="submit" class="add" id="piped-add-instance">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                            fill="currentColor">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
+            <div class="checklist" id="piped-custom-checklist"></div>
+        </div>
 
     </section>
 
     <script type="module" src="../init.js"></script>
     <script type="module" src="./youtube.js"></script>
+    <script type="module" src="./invidious.js"></script>
+    <script type="module" src="./piped.js"></script>
     <!-- <script src="../../assets/javascripts/localise.js"></script> -->
 </body>
 

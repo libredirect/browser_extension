@@ -7,7 +7,6 @@ function setTheme(val) {
 };
 
 export default {
-    exceptions,
     theme,
     setTheme,
 }

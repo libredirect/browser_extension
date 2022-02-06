@@ -61,7 +61,7 @@ function setInvidiousRedirects(val) {
   console.log("invidiousRedirects: ", val)
 }
 
-let invidiousRedirectsChecks = redirects.invidious.normal;
+let invidiousRedirectsChecks;
 const getInvidiousRedirectsChecks = () => invidiousRedirectsChecks;
 function setInvidiousRedirectsChecks(val) {
   invidiousRedirectsChecks = val;
@@ -75,6 +75,22 @@ function setInvidiousCustomRedirects(val) {
   invidiousCustomRedirects = val;
   browser.storage.sync.set({ invidiousCustomRedirects })
   console.log("invidiousCustomRedirects: ", val)
+}
+
+let pipedRedirectsChecks;
+const getPipedRedirectsChecks = () => pipedRedirectsChecks;
+function setPipedRedirectsChecks(val) {
+  pipedRedirectsChecks = val;
+  browser.storage.sync.set({ pipedRedirectsChecks })
+  console.log("pipedRedirectsChecks: ", val)
+}
+
+let pipedCustomRedirects = [];
+const getPipedCustomRedirects = () => pipedCustomRedirects;
+function setPipedCustomRedirects(val) {
+  pipedCustomRedirects = val;
+  browser.storage.sync.set({ pipedCustomRedirects })
+  console.log("pipedCustomRedirects: ", val)
 }
 
 function setPipedRedirects(val) {
@@ -209,12 +225,10 @@ async function init() {
       "youtubeFrontend",
       "invidiousRedirectsChecks",
       "invidiousCustomRedirects",
+      "pipedRedirectsChecks",
+      "pipedCustomRedirects",
     ]);
   if (result.youtubeRedirects) redirects = result.youtubeRedirects;
-
-  if (result.invidiousRedirectsChecks) invidiousRedirectsChecks = result.invidiousRedirectsChecks;
-
-  if (result.invidiousCustomRedirects) invidiousCustomRedirects = result.invidiousCustomRedirects;
 
   frontend = result.youtubeFrontend ?? 'piped';
   disableYoutube = result.disableYoutube ?? false;
@@ -227,6 +241,12 @@ async function init() {
   invidiousPlayerStyle = result.invidiousPlayerStyle ?? 'DEFAULT';
   invidiousSubtitles = result.invidiousSubtitles || '';
   invidiousAutoplay = result.invidiousAutoplay ?? 'DEFAULT';
+
+  invidiousRedirectsChecks = result.invidiousRedirectsChecks ?? [...redirects.invidious.normal];
+  invidiousCustomRedirects = result.invidiousCustomRedirects ?? [];
+
+  pipedRedirectsChecks = result.pipedRedirectsChecks ?? [...redirects.invidious.normal];
+  pipedCustomRedirects = result.pipedCustomRedirects ?? [];
 
   persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
 }
@@ -253,6 +273,7 @@ function redirect(url, initiator, type) {
   )
     return null;
 
+
   if (url.hostname == "studio.youtube.com") return null;
 
   if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
@@ -272,7 +293,12 @@ function redirect(url, initiator, type) {
     if (invidiousSubtitles.trim() != '') url.searchParams.append("subtitles", invidiousSubtitles);
     if (invidiousAutoplay != "DEFAULT") url.searchParams.append("autoplay", invidiousAutoplay);
 
-    let randomInstance = commonHelper.getRandomInstance([...invidiousRedirectsChecks, ...invidiousCustomRedirects])
+    let instancesList = [...invidiousRedirectsChecks, ...invidiousCustomRedirects];
+
+    if (instancesList.length === 0)
+      return null;
+
+    let randomInstance = commonHelper.getRandomInstance(instancesList)
 
     return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
 
@@ -280,11 +306,16 @@ function redirect(url, initiator, type) {
 
     if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
 
+    let instancesList = [...pipedRedirectsChecks, ...pipedCustomRedirects];
+
+    if (instancesList.length === 0)
+      return null;
+
+    let randomInstance = commonHelper.getRandomInstance(instancesList)
+
     if (invidiousTheme != "DEFAULT") url.searchParams.append("theme", invidiousTheme);
     if (invidiousVolume != "--") url.searchParams.append("volume", invidiousVolume / 100);
     if (invidiousAutoplay != "DEFAULT") url.searchParams.append("playerAutoPlay", invidiousAutoplay);
-
-    let randomInstance = commonHelper.getRandomInstance(redirects.piped.normal);
 
     if (url.hostname.endsWith("youtube.com") || url.hostname.endsWith("youtube-nocookie.com") || invidiousHostNames().includes(url.hostname))
       return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
@@ -344,6 +375,12 @@ export default {
 
   getInvidiousCustomRedirects,
   setInvidiousCustomRedirects,
+
+  getPipedRedirectsChecks,
+  setPipedRedirectsChecks,
+
+  getPipedCustomRedirects,
+  setPipedCustomRedirects,
 
   init,
 };
