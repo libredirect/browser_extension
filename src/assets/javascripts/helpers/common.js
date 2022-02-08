@@ -14,13 +14,27 @@ function getRandomInstance(instances) {
   return instances[~~(instances.length * Math.random())];
 }
 
-function updateInstances() {
+async function wholeInit() {
+  await youtubeHelper.init();
+  await twitterHelper.init();
+  await instagramHelper.init();
+  await redditHelper.init();
+  await translateHelper.init();
+  await searchHelper.init();
+  await wikipediaHelper.init();
+  await mediumHelper.init();
+}
+
+async function updateInstances() {
   const apiEndpoint = 'https://raw.githubusercontent.com/libredirect/instances/main/data.json';
   let request = new XMLHttpRequest();
   request.open('GET', apiEndpoint, false);
   request.send(null);
 
   if (request.status === 200) {
+
+    await wholeInit();
+
     const instances = JSON.parse(request.responseText);
 
     youtubeHelper.setInvidiousRedirects(instances.invidious);
@@ -32,6 +46,7 @@ function updateInstances() {
     redditHelper.setTedditRedirects(instances.teddit);
 
     translateHelper.setSimplyTranslateRedirects(instances.simplyTranslate);
+    translateHelper.setLingvaRedirects(instances.lingva)
 
     searchHelper.setSearxRedirects(instances.searx);
     searchHelper.setWhoogleRedirects(instances.whoogle);

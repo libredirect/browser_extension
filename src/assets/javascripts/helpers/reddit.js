@@ -78,6 +78,12 @@ function setLibredditRedirectsChecks(val) {
   libredditRedirectsChecks = val;
   browser.storage.sync.set({ libredditRedirectsChecks })
   console.log("libredditRedirectsChecks: ", val)
+  for (const item of libredditRedirectsChecks)
+    if (!redirects.libreddit.normal.includes(item)) {
+      var index = libredditRedirectsChecks.indexOf(item);
+      if (index !== -1) libredditRedirectsChecks.splice(index, 1);
+    }
+  setLibredditRedirectsChecks(libredditRedirectsChecks);
 }
 
 let libredditCustomRedirects = [];
@@ -94,6 +100,12 @@ function setTedditRedirectsChecks(val) {
   tedditRedirectsChecks = val;
   browser.storage.sync.set({ tedditRedirectsChecks })
   console.log("tedditRedirectsChecks: ", val)
+  for (const item of tedditRedirectsChecks)
+    if (!redirects.teddit.normal.includes(item)) {
+      var index = tedditRedirectsChecks.indexOf(item);
+      if (index !== -1) tedditRedirectsChecks.splice(index, 1);
+    }
+  setTedditRedirectsChecks(tedditRedirectsChecks);
 }
 
 let tedditCustomRedirects = [];

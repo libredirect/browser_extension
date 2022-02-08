@@ -89,6 +89,12 @@ const getNitterRedirectsChecks = () => nitterRedirectsChecks;
 function setNitterRedirectsChecks(val) {
   nitterRedirectsChecks = val;
   browser.storage.sync.set({ nitterRedirectsChecks })
+  for (const item of nitterRedirectsChecks)
+  if (!redirects.nitter.normal.includes(item)) {
+    var index = nitterRedirectsChecks.indexOf(item);
+    if (index !== -1) nitterRedirectsChecks.splice(index, 1);
+  }
+setNitterRedirectsChecks(nitterRedirectsChecks);
   console.log("nitterRedirectsChecks: ", val)
 }
 

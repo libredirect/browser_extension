@@ -14,106 +14,7 @@ let redirects = {
       "https://darmarit.org/searx",
       "https://dynabyte.ca",
       "https://engo.mint.lgbt",
-      "https://jsearch.pw",
-      "https://metasearch.nl",
-      "https://nibblehole.com",
-      "https://northboot.xyz",
-      "https://paulgo.io",
-      "https://procurx.pt",
-      "https://putin.agency",
-      "https://quickso.eu.org",
-      "https://s.zhaocloud.net",
-      "https://search.076.ne.jp",
-      "https://search.activemail.de",
-      "https://search.anonymize.com",
-      "https://search.antonkling.se",
-      "https://search.asynchronousexchange.com",
-      "https://search.biboumail.fr",
-      "https://search.blou.xyz",
-      "https://search.bluelock.org",
-      "https://search.bus-hit.me",
-      "https://search.disroot.org",
-      "https://search.ethibox.fr",
-      "https://search.jigsaw-security.com",
-      "https://search.jpope.org",
-      "https://search.mdosch.de",
-      "https://search.neet.works",
-      "https://search.ononoki.org",
-      "https://search.snopyta.org",
-      "https://search.st8.at",
-      "https://search.stinpriza.org",
-      "https://search.trom.tf",
-      "https://search.zdechov.net",
-      "https://searx.bar",
-      "https://searx.be",
-      "https://searx.bissisoft.com",
-      "https://searx.divided-by-zero.eu",
-      "https://searx.dresden.network",
-      "https://searx.esmailelbob.xyz",
-      "https://searx.everdot.org",
-      "https://searx.fmac.xyz",
-      "https://searx.fossencdi.org",
-      "https://searx.gnous.eu",
-      "https://searx.gnu.style",
-      "https://searx.hardwired.link",
-      "https://searx.hummel-web.at",
-      "https://searx.lavatech.top",
-      "https://searx.mastodontech.de",
-      "https://searx.mha.fi",
-      "https://searx.mxchange.org",
-      "https://searx.nakhan.net",
-      "https://searx.netzspielplatz.de",
-      "https://searx.nevrlands.de",
-      "https://searx.ninja",
-      "https://searx.nixnet.services",
-      "https://searx.openhoofd.nl",
-      "https://searx.operationtulip.com",
-      "https://searx.org",
-      "https://searx.prvcy.eu",
-      "https://searx.pwoss.org",
-      "https://searx.rasp.fr",
-      "https://searx.roughs.ru",
-      "https://searx.ru",
-      "https://searx.run",
-      "https://searx.s1gm4.eu",
-      "https://searx.sadblog.xyz",
-      "https://searx.semipvt.com",
-      "https://searx.slash-dev.de",
-      "https://searx.solusar.de",
-      "https://searx.sp-codes.de",
-      "https://searx.stuehieyr.com",
-      "https://searx.sunless.cloud",
-      "https://searx.theanonymouse.xyz",
-      "https://searx.thegreenwebfoundation.org",
-      "https://searx.tiekoetter.com",
-      "https://searx.tk",
-      "https://searx.tux.land",
-      "https://searx.tuxcloud.net",
-      "https://searx.tyil.nl",
-      "https://searx.vitanetworks.link",
-      "https://searx.webheberg.info",
-      "https://searx.xkek.net",
-      "https://searx.xyz",
-      "https://searx.zackptg5.com",
-      "https://searx.zapashcanon.fr",
-      "https://searx.zecircle.xyz",
-      "https://searxzh.cn",
-      "https://seeks.hsbp.org",
-      "https://serx.cf",
-      "https://spot.ecloud.global",
-      "https://suche.dasnetzundich.de",
-      "https://suche.uferwerk.org",
-      "https://swag.pw",
-      "https://sx.catgirl.cloud",
-      "https://sx.fedi.tech",
-      "https://timdor.noip.me/searx",
-      "https://trovu.komun.org",
-      "https://www.gruble.de",
-      "https://www.perfectpixel.de/searx",
-      "https://www.searxs.eu",
-      "https://www.webrats.xyz",
-      "https://xeek.com",
-      "https://searx.roflcopter.fr"
+
     ],
     "onion": [
       "http://3afisqjw2rxm6z7mmstyt5rx75qfqrgxnkzftknbp2vhipr2nrmrjdyd.onion",
@@ -156,6 +57,15 @@ function setSearxRedirects(val) {
   redirects.searx = val;
   browser.storage.sync.set({ searchRedirects: redirects })
   console.log("searxRedirects:", val)
+  for (const item of searxRedirectsChecks) {
+    console.log(item)
+    if (!redirects.searx.normal.includes(item)) {
+      var index = searxRedirectsChecks.indexOf(item);
+      if (index !== -1) searxRedirectsChecks.splice(index, 1);
+      console.log(`Deleted ${item}`);
+    }
+  }
+  setSearxRedirectsChecks(searxRedirectsChecks);
 }
 let whoogleRedirectsChecks;
 const getWhoogleRedirectsChecks = () => whoogleRedirectsChecks;
@@ -163,6 +73,12 @@ function setWhoogleRedirectsChecks(val) {
   whoogleRedirectsChecks = val;
   browser.storage.sync.set({ whoogleRedirectsChecks })
   console.log("whoogleRedirectsChecks: ", val)
+  for (const item of whoogleRedirectsChecks)
+    if (!redirects.whoogle.normal.includes(item)) {
+      var index = whoogleRedirectsChecks.indexOf(item);
+      if (index !== -1) whoogleRedirectsChecks.splice(index, 1);
+    }
+  setWhoogleRedirectsChecks(whoogleRedirectsChecks);
 }
 
 let whoogleCustomRedirects = [];
@@ -261,6 +177,8 @@ async function init() {
   whoogleCustomRedirects = result.whoogleCustomRedirects ?? [];
 
   searxRedirectsChecks = result.searxRedirectsChecks ?? [...redirects.searx.normal];
+
+
   searxCustomRedirects = result.searxCustomRedirects ?? [];
 }
 

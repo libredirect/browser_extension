@@ -26,6 +26,12 @@ function setRedirects(val) {
   redirects.bibliogram = val;
   browser.storage.sync.set({ instagramRedirects: redirects })
   console.log("instagramRedirects: ", val)
+  for (const item of bibliogramRedirectsChecks)
+    if (!redirects.bibliogram.normal.includes(item)) {
+      var index = bibliogramRedirectsChecks.indexOf(item);
+      if (index !== -1) bibliogramRedirectsChecks.splice(index, 1);
+    }
+  setBibliogramRedirectsChecks(bibliogramRedirectsChecks);
 }
 
 

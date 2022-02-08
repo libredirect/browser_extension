@@ -20,6 +20,12 @@ function setRedirects(val) {
   redirects.wikiless = val;
   browser.storage.sync.set({ wikipediaRedirects: redirects })
   console.log("wikipediaRedirects: ", val)
+  for (const item of wikilessRedirectsChecks)
+  if (!redirects.wikiless.normal.includes(item)) {
+    var index = wikilessRedirectsChecks.indexOf(item);
+    if (index !== -1) wikilessRedirectsChecks.splice(index, 1);
+  }
+setWikilessRedirectsChecks(wikilessRedirectsChecks);
 }
 
 let disableWikipedia;

@@ -42,6 +42,12 @@ function setSimplyTranslateRedirects(val) {
   redirects.simplyTranslate = val;
   browser.storage.sync.set({ translateRedirects: redirects })
   console.log("simplyTranslateRedirects:", val)
+  for (const item of simplyTranslateRedirectsChecks)
+    if (!redirects.simplyTranslate.normal.includes(item)) {
+      var index = simplyTranslateRedirectsChecks.indexOf(item);
+      if (index !== -1) simplyTranslateRedirectsChecks.splice(index, 1);
+    }
+  setSimplyTranslateRedirectsChecks(simplyTranslateRedirectsChecks);
 }
 
 let simplyTranslateRedirectsChecks;
@@ -65,6 +71,12 @@ function setLingvaRedirects(val) {
   redirects.lingva = val;
   browser.storage.sync.set({ translateRedirects: redirects })
   console.log("lingvaRedirects:", val)
+  for (const item of lingvaRedirectsChecks)
+    if (!redirects.lingva.normal.includes(item)) {
+      var index = lingvaRedirectsChecks.indexOf(item);
+      if (index !== -1) lingvaRedirectsChecks.splice(index, 1);
+    }
+  setLingvaRedirectsChecks(lingvaRedirectsChecks);
 }
 
 let lingvaRedirectsChecks;
@@ -105,7 +117,7 @@ function redirect(url, initiator) {
     console.log("SimplyTranslate disabled")
     return null
   };
-  
+
   if (translateFrontend == 'simplyTranslate') {
 
     let instancesList = [...simplyTranslateRedirectsChecks, ...simplyTranslateCustomRedirects];
