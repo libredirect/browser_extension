@@ -2,9 +2,9 @@ import commonHelper from './common.js'
 
 
 const targets = [
-  /(?:.*\.)*(?<!(link\.|cdn\-images\-\d+\.))medium\.com(\/.*)?$/,
-  // /^medium\.com/,
-  // /.*\.medium\.com/,
+  // /(?:.*\.)*(?<!(link\.|cdn\-images\-\d+\.))medium\.com(\/.*)?$/,
+  /^medium\.com/,
+  /.*\.medium\.com/,
   // // Other domains of medium blogs, source(s): https://findingtom.com/best-medium-blogs-to-follow/#1-forge
   // /towardsdatascience\.com/,
   // /uxdesign\.cc/,
@@ -66,12 +66,13 @@ function setDisableMedium(val) {
 
 
 function redirect(url, initiator, type) {
+
   if (disableMedium) return null;
 
   if (url.pathname == "/") return null;
 
-  if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other")
-    return null;
+  if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") return null;
+
 
   let instancesList = [...scribeRedirectsChecks, ...scribeCustomRedirects];
   if (instancesList.length === 0) return null;
