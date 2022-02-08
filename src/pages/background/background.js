@@ -49,7 +49,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     else if (redditHelper.isReddit(url)) newUrl = redditHelper.redirect(url, initiator, details.type);
 
-    else if (mediumHelper.isMedium(url)) newUrl = mediumHelper.redirect(url, initiator);
+    else if (mediumHelper.isMedium(url)) newUrl = mediumHelper.redirect(url, initiator, details.type);
 
     else if (translateHelper.isTranslate(url)) newUrl = translateHelper.redirect(url, initiator);
 
