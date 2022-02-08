@@ -11,6 +11,7 @@ import searchHelper from "../../assets/javascripts/helpers/search.js";
 import translateHelper from "../../assets/javascripts/helpers/translate.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
+import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 
 let disableTwitterElement = document.querySelector("#disable-nitter");
 let disableYoutubeElement = document.querySelector("#disable-invidious");
@@ -20,7 +21,8 @@ let disableRedditElement = document.querySelector("#disable-reddit");
 let disableSearchElement = document.querySelector("#disable-search");
 let disableTranslateElement = document.querySelector("#disable-simplyTranslate");
 let disableWikipediaElement = document.querySelector("#disable-wikipedia");
-let disableMediumElement = document.querySelector("#disable-scribe");
+let disableMediumElement = document.querySelector("#disable-medium");
+let disableImgurElement = document.querySelector("#disable-imgur");
 
 window.browser = window.browser || window.chrome;
 
@@ -33,6 +35,7 @@ async function wholeInit() {
   await searchHelper.init();
   await translateHelper.init();
   await wikipediaHelper.init();
+  await imgurHelper.init();
   await mediumHelper.init();
 };
 
@@ -46,6 +49,7 @@ wholeInit().then(() => {
   disableSearchElement.checked = !searchHelper.getDisableSearch();
   disableTranslateElement.checked = !translateHelper.getDisableTranslate();
   disableWikipediaElement.checked = !wikipediaHelper.getDisableWikipedia();
+  disableImgurElement.checked = !imgurHelper.getDisableImgur();
   disableMediumElement.checked = !mediumHelper.getDisableMedium();
 })
 
@@ -79,6 +83,10 @@ disableTranslateElement.addEventListener("change",
 
 disableWikipediaElement.addEventListener("change",
   (event) => wikipediaHelper.setDisableWikipedia(!event.target.checked)
+);
+
+disableImgurElement.addEventListener("change",
+  (event) => imgurHelper.setDisableImgur(!event.target.checked)
 );
 
 disableMediumElement.addEventListener("change",

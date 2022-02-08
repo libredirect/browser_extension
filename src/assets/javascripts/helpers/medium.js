@@ -89,7 +89,7 @@ function redirect(url, initiator, type) {
 }
 
 function isMedium(url) {
-  return targets.some((rx) => rx.test(url.href));
+  return targets.some((rx) => rx.test(url.host));
 }
 
 async function init() {

@@ -9,6 +9,7 @@ import translateHelper from "../../assets/javascripts/helpers/translate.js";
 import mapsHelper from "../../assets/javascripts/helpers/maps.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
+import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 
 window.browser = window.browser || window.chrome;
 
@@ -22,6 +23,7 @@ function wholeInit() {
   twitterHelper.init()
   wikipediaHelper.init()
   youtubeHelper.init()
+  imgurHelper.init()
 }
 
 wholeInit();
@@ -50,6 +52,8 @@ browser.webRequest.onBeforeRequest.addListener(
     else if (redditHelper.isReddit(url)) newUrl = redditHelper.redirect(url, initiator, details.type);
 
     else if (mediumHelper.isMedium(url)) newUrl = mediumHelper.redirect(url, initiator, details.type);
+
+    else if (imgurHelper.isImgur(url)) newUrl = imgurHelper.redirect(url, initiator, details.type);
 
     else if (translateHelper.isTranslate(url)) newUrl = translateHelper.redirect(url, initiator);
 
@@ -92,24 +96,25 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
   mightyList.push(
     ...youtubeHelper.getRedirects().invidious.normal,
     ...youtubeHelper.getRedirects().piped.normal,
-    
+
     ...twitterHelper.getRedirects().nitter.normal,
 
     ...instagramHelper.getRedirects().bibliogram.normal,
-    
+
     ...redditHelper.getRedirects().libreddit.normal,
     ...redditHelper.getRedirects().teddit.normal,
     redditHelper.getRedirects().desktop,
     redditHelper.getRedirects().mobile,
-    
+
     ...searchHelper.getRedirects().searx.normal,
     ...searchHelper.getRedirects().whoogle.normal,
-    
+
     ...translateHelper.getRedirects().simplyTranslate.normal,
     ...translateHelper.getRedirects().lingva.normal,
-    
+
     ...mediumHelper.getRedirects().scribe.normal,
-    
+    ...imgurHelper.getRedirects().rimgo.normal,
+
     ...wikipediaHelper.getRedirects().wikiless.normal
   );
 
@@ -128,9 +133,9 @@ browser.pageAction.onClicked.addListener((tab) => {
   )
     newUrl = 'https://youtube.com';
 
-  if (twitterHelper.getRedirects().normal.includes(protocolHost)) newUrl = 'https://twitter.com';
+  if (twitterHelper.getRedirects().nitter.normal.includes(protocolHost)) newUrl = 'https://twitter.com';
 
-  if (instagramHelper.getRedirects().normal.includes(protocolHost)) newUrl = 'https://instagram.com';
+  if (instagramHelper.getRedirects().bibliogram.normal.includes(protocolHost)) newUrl = 'https://instagram.com';
 
   if (redditHelper.getRedirects().libreddit.normal.includes(protocolHost) || redditHelper.getRedirects().teddit.normal.includes(protocolHost)) {
     if (tabUrl.pathname.startsWith('/img')) {
@@ -151,9 +156,11 @@ browser.pageAction.onClicked.addListener((tab) => {
     translateHelper.getRedirects().lingva.normal.includes(protocolHost)
   ) newUrl = 'https://translate.google.com';
 
-  if (mediumHelper.getRedirects().normal.includes(protocolHost)) newUrl = 'https://medium.com';
+  if (mediumHelper.getRedirects().scribe.normal.includes(protocolHost)) newUrl = 'https://medium.com';
 
-  if (wikipediaHelper.getRedirects().normal.includes(protocolHost)) newUrl = 'https://wikipedia.com';
+  if (imgurHelper.getRedirects().rimgo.normal.includes(protocolHost)) newUrl = 'https://imgur.com';
+
+  if (wikipediaHelper.getRedirects().wikiless.normal.includes(protocolHost)) newUrl = 'https://wikipedia.com';
 
   if (newUrl) browser.tabs.update({ url: tabUrl.href.replace(protocolHost, newUrl) });
 });

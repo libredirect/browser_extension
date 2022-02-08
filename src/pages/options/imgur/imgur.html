@@ -7,28 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../../../assets/images/libredirect.svg" />
     <link href="../../stylesheets/styles.css" rel="stylesheet" />
+    <title>LibRedirect options: Twitter</title>
 </head>
 
 <body class="option">
-
     <section class="links">
         <a href="../general/general.html">General</a>
         <a href="../youtube/youtube.html">Youtube</a>
         <a href="../twitter/twitter.html">Twitter</a>
-        <a href="instagram.html" class="selected">Instagram</a>
+        <a href="../instagram/instagram.html">Instagram</a>
         <a href="../reddit/reddit.html">Reddit</a>
         <a href="../search/search.html">Search</a>
         <a href="../translate/translate.html">Translate</a>
         <a href="../maps/maps.html">Maps</a>
         <a href="../wikipedia/wikipedia.html">Wikipedia</a>
-        <a href="../imgur/imgur.html">Imgur</a>
-        <a href="../medium/medium.html">Medium</a>
+        <a href="../imgur/imgur.html" class="selected">Imgur</a>
+        <a href="medium.html">Medium</a>
     </section>
 
     <section class="option-block">
         <div class="some-block option-block">
             <h4>Enable</h4>
-            <input id="disable-bibliogram" type="checkbox" checked />
+            <input id="disable-imgur" type="checkbox" checked />
         </div>
 
         <hr>
@@ -36,15 +36,15 @@
         <div class="some-block option-block">
             <h4>Default Instances</h4>
         </div>
-        <div class="checklist" id="bibliogram-checklist"></div>
+        <div class="checklist" id="rimgo-checklist"></div>
         <hr>
         <div class="some-block option-block">
             <h4>Custom Instances</h4>
         </div>
-        <form id="custom-bibliogram-instance-form">
+        <form id="custom-rimgo-instance-form">
             <div class="some-block option-block">
-                <input id="bibliogram-custom-instance" placeholder="https://bibliogram.com" type="url" />
-                <button type="submit" class="add" id="bibliogram-add-instance">
+                <input id="rimgo-custom-instance" placeholder="https://rimgo.com" type="url" />
+                <button type="submit" class="add" id="rimgo-add-instance">
                     <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
                         fill="currentColor">
                         <path d="M0 0h24v24H0V0z" fill="none" />
@@ -53,11 +53,12 @@
                 </button>
             </div>
         </form>
-        <div class="checklist" id="bibliogram-custom-checklist"></div>
-
+        <div class="checklist" id="rimgo-custom-checklist"></div>
     </section>
+
+
     <script type="module" src="../init.js"></script>
-    <script type="module" src="./instagram.js"></script>
+    <script type="module" src="./imgur.js"></script>
     <!-- <script src="../../assets/javascripts/localise.js"></script> -->
 </body>
 
