@@ -25,7 +25,6 @@ let disableMediumElement = document.querySelector("#disable-scribe");
 window.browser = window.browser || window.chrome;
 
 async function wholeInit() {
-  console.log("staring async func")
   await youtubeHelper.init();
   await twitterHelper.init();
   await instagramHelper.init();

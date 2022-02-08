@@ -10,11 +10,6 @@ body {
   --light-grey: #c3c3c3;
 }
 
-body.light-theme {
-  --text: #000;
-  --bg-main: #e3e7ea;
-  --bg-secondary: #fff;
-}
 
 body {
   margin: auto;
@@ -130,29 +125,6 @@ hr {
   border: none;
 }
 
-.light-theme.popup,
-.light-theme .popup {
-  background-color: var(--bg-secondary);
-}
-
-body.light-theme {
-  --text: #000;
-  --bg-main: #e3e7ea;
-  --bg-secondary: #fff;
-}
-
-body.light-theme textarea {
-  color: black;
-  border: 1px solid #767676;
-}
-
-body.light-theme textarea:focus {
-  outline: none;
-}
-
-body.light-theme a {
-  color: black;
-}
 
 div.some-block {
   padding: 0 15px;
@@ -301,22 +273,35 @@ button.add {
   cursor: pointer;
 }
 
+
+.light-theme.popup,
+.light-theme .popup {
+  background-color: var(--bg-secondary);
+}
+
+body.light-theme {
+  --text: black;
+  --bg-main: white;
+  --bg-secondary: #fff;
+  --active: #fb9817;
+}
+
+body.light-theme select {
+  border: 1px solid black;
+}
+
+body.light-theme textarea {
+  color: black;
+  border: 1px solid #767676;
+}
+
+body.light-theme textarea:focus {
+  outline: none;
+}
+
+body.light-theme a {
+  color: black;
+}
+
 @media (prefers-color-scheme: light) {
-  body {
-    --text: #000;
-    --text-secondary: #fff;
-    --bg-main: #e3e7ea;
-    --bg-secondary: #fff;
-  }
-
-  body.dark-theme {
-    --text: #fff;
-    --text-secondary: #000;
-    --bg-main: #3c4043;
-    --bg-secondary: #292a2d;
-  }
-
-  .popup {
-    background-color: var(--bg-secondary);
-  }
 }

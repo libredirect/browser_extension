@@ -49,19 +49,6 @@ browser.storage.sync.get(
 
 themeElement.addEventListener("change", (event) => {
   const value = event.target.options[theme.selectedIndex].value;
-  switch (value) {
-    case "dark-theme":
-      document.body.classList.add("dark-theme");
-      document.body.classList.remove("light-theme");
-      break;
-    case "light-theme":
-      document.body.classList.add("light-theme");
-      document.body.classList.remove("dark-theme");
-      break;
-    default:
-      document.body.classList.remove("light-theme");
-      document.body.classList.remove("dark-theme");
-  }
   browser.storage.sync.set({ theme: value });
 });
 
