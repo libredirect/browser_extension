@@ -1,8 +1,7 @@
 import commonHelper from './common.js'
 
 const targets = [
-  /https:\/\/(www\.)google\.com\/$/,
-  /https?:\/\/(((www|maps)\.)?(google\.).*(\/search)|search\.(google\.).*)/
+  /https?:\/\/(www\.|maps\.|search\.|)google\.com(\/search\?q=..*|\/$|)/,
 ];
 let redirects = {
   "searx": {

@@ -5,17 +5,16 @@ import commonHelper from '../common.js'
 window.browser = window.browser || window.chrome;
 
 const targets = [
-  "studio.youtube.com",
-  "m.youtube.com",
-  "youtube.com",
-  "img.youtube.com",
-  "i.ytimg.com",
-  "www.youtube.com",
-  "youtube-nocookie.com",
-  "www.youtube-nocookie.com",
-  "youtu.be",
-  "s.ytimg.com",
-  "music.youtube.com",
+  /https?:\/\/(www\.|music|m)youtube\.com(\/.*|$)/,
+
+  /https?:\/\/img\.youtube\.com\/vi\/.*\/..*/, // https://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api
+  /https?:\/\/(i|s)\.ytimg\.com\/vi\/.*\/..*/,
+
+  /https?:\/\/(www\.|music|)youtube\.com\/watch\?v\=..*/,
+
+  /https?:\/\/youtu\.be\/..*/,
+
+  /https?:\/\/(www\.|)(youtube|youtube-nocookie)\.com\/embed\/..*/,
 ];
 let redirects = {
   "invidious": {
@@ -191,21 +190,12 @@ let invidiousHostNames = () => redirects.invidious.normal.map(link => new URL(li
 let pipedHostNames = () => redirects.piped.normal.map(link => new URL(link).host);
 
 function isYoutube(url) {
-  if (frontend == 'invidious') {
-    let mightyList = [
-      ...targets,
-      ...pipedHostNames(),
-    ]
-    return mightyList.includes(url.host);
-  }
-  if (frontend == 'piped') {
-    let mightyList = [
-      ...targets,
-      ...invidiousHostNames(),
-    ]
-    return mightyList.includes(url.host);
-  } else
-    return targets.includes(url.host)
+  if (frontend == 'invidious')
+    return (targets.some((rx) => rx.test(url.href)) | pipedHostNames().includes(url.host));
+  if (frontend == 'piped')
+    return (targets.some((rx) => rx.test(url.href)) | invidiousHostNames().includes(url.host));
+  else
+    return targets.some((rx) => rx.test(url.href))
 }
 
 async function init() {
@@ -272,9 +262,6 @@ function redirect(url, initiator, type) {
     )
   )
     return null;
-
-
-  if (url.hostname == "studio.youtube.com") return null;
 
   if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
 
