@@ -1,8 +1,7 @@
 import commonHelper from './common.js'
 
 const targets = [
-  /https:\/\/google\.com/,
-  /https:\/\/.*\.google\.com/,
+  /https:\/\/(www\.)google\.com\/$/,
   /https?:\/\/(((www|maps)\.)?(google\.).*(\/search)|search\.(google\.).*)/
 ];
 let redirects = {
