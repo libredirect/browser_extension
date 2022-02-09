@@ -12,6 +12,7 @@ import translateHelper from "../../assets/javascripts/helpers/translate.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
+import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 
 let disableTwitterElement = document.querySelector("#disable-nitter");
 let disableYoutubeElement = document.querySelector("#disable-invidious");
@@ -23,6 +24,7 @@ let disableTranslateElement = document.querySelector("#disable-simplyTranslate")
 let disableWikipediaElement = document.querySelector("#disable-wikipedia");
 let disableMediumElement = document.querySelector("#disable-medium");
 let disableImgurElement = document.querySelector("#disable-imgur");
+let disableTiktokElement = document.querySelector("#disable-tiktok");
 
 window.browser = window.browser || window.chrome;
 
@@ -36,6 +38,7 @@ async function wholeInit() {
   await translateHelper.init();
   await wikipediaHelper.init();
   await imgurHelper.init();
+  await tiktokHelper.init();
   await mediumHelper.init();
 };
 
@@ -50,6 +53,7 @@ wholeInit().then(() => {
   disableTranslateElement.checked = !translateHelper.getDisableTranslate();
   disableWikipediaElement.checked = !wikipediaHelper.getDisableWikipedia();
   disableImgurElement.checked = !imgurHelper.getDisableImgur();
+  disableTiktokElement.checked = !tiktokHelper.getDisableTiktok();
   disableMediumElement.checked = !mediumHelper.getDisableMedium();
 })
 
@@ -87,6 +91,10 @@ disableWikipediaElement.addEventListener("change",
 
 disableImgurElement.addEventListener("change",
   (event) => imgurHelper.setDisableImgur(!event.target.checked)
+);
+
+disableTiktokElement.addEventListener("change",
+  (event) => tiktokHelper.setDisableTiktok(!event.target.checked)
 );
 
 disableMediumElement.addEventListener("change",

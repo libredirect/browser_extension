@@ -10,6 +10,7 @@ import mapsHelper from "../../assets/javascripts/helpers/maps.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
+import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 
 window.browser = window.browser || window.chrome;
 
@@ -24,6 +25,7 @@ function wholeInit() {
   wikipediaHelper.init()
   youtubeHelper.init()
   imgurHelper.init()
+  tiktokHelper.init()
 }
 
 wholeInit();
@@ -54,6 +56,8 @@ browser.webRequest.onBeforeRequest.addListener(
     else if (mediumHelper.isMedium(url)) newUrl = mediumHelper.redirect(url, initiator, details.type);
 
     else if (imgurHelper.isImgur(url)) newUrl = imgurHelper.redirect(url, initiator, details.type);
+
+    else if (tiktokHelper.isTiktok(url)) newUrl = tiktokHelper.redirect(url, initiator, details.type);
 
     else if (translateHelper.isTranslate(url)) newUrl = translateHelper.redirect(url, initiator);
 
