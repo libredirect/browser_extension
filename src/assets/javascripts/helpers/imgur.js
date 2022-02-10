@@ -58,6 +58,11 @@ function setDisableImgur(val) {
 }
 
 function redirect(url, initiator, type) {
+    // https://imgur.com/gallery/s4WXQmn
+    // https://imgur.com/a/H8M4rcp
+    // https://imgur.com/gallery/gYiQLWy
+    // https://imgur.com/gallery/cTRwaJU
+    // https://i.imgur.com/CFSQArP.jpeg
 
     if (disableImgur) return null;
 

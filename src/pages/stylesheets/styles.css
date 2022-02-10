@@ -25,6 +25,17 @@ div.some-block input[type="checkbox"] {
   -webkit-appearance: none;
 }
 
+div.title {
+  display: flex;
+  align-items: center;
+}
+
+img, svg {
+  margin-right: 10px;
+  height: 26px;
+  color: var(--text);
+}
+
 input[type="url"],
 input[type="text"],
 select {
@@ -87,13 +98,17 @@ body.option {
   padding: 40px;
 }
 
+section.links div {
+  margin: 20px 0;
+}
+
 section.links a {
   display: flex;
   align-items: center;
   font-size: 30px;
   text-decoration: none;
   color: white;
-  margin: 20px 0;
+  /* margin: 20px 0; */
   font-weight: bold;
   transition: 0.1s;
 }
@@ -301,7 +316,4 @@ body.light-theme textarea:focus {
 
 body.light-theme a {
   color: black;
-}
-
-@media (prefers-color-scheme: light) {
 }

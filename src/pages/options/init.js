@@ -1,6 +1,5 @@
 function changeTheme() {
     browser.storage.sync.get("theme", (result) => {
-        console.log("Chaning Theme")
         switch (result.theme) {
             case "dark-theme":
                 document.body.classList.add("dark-theme");
