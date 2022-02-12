@@ -1,3 +1,5 @@
+window.browser = window.browser || window.chrome;
+
 import commonHelper from './common.js'
 
 const targets = [
@@ -161,25 +163,32 @@ function isTranslate(url) {
 }
 
 async function init() {
-  let result = await browser.storage.sync.get([
-    "disableTranslate",
-    "translateFrontend",
-    "translateRedirects",
-    "simplyTranslateRedirectsChecks",
-    "simplyTranslateCustomRedirects",
-    "lingvaRedirectsChecks",
-    "lingvaCustomRedirects",
-  ]);
-  disableTranslate = result.disableTranslate ?? false;
-  translateFrontend = result.translateFrontend ?? "simplyTranslate";
-  if (result.translateRedirects)
-    redirects = result.translateRedirects
+  return new Promise((resolve) => {
+    browser.storage.sync.get(
+      [
+        "disableTranslate",
+        "translateFrontend",
+        "translateRedirects",
+        "simplyTranslateRedirectsChecks",
+        "simplyTranslateCustomRedirects",
+        "lingvaRedirectsChecks",
+        "lingvaCustomRedirects",
+      ], (result) => {
+        disableTranslate = result.disableTranslate ?? false;
+        translateFrontend = result.translateFrontend ?? "simplyTranslate";
+        if (result.translateRedirects)
+          redirects = result.translateRedirects
 
-  simplyTranslateRedirectsChecks = result.simplyTranslateRedirectsChecks ?? [...redirects.simplyTranslate.normal];
-  simplyTranslateCustomRedirects = result.simplyTranslateCustomRedirects ?? [];
+        simplyTranslateRedirectsChecks = result.simplyTranslateRedirectsChecks ?? [...redirects.simplyTranslate.normal];
+        simplyTranslateCustomRedirects = result.simplyTranslateCustomRedirects ?? [];
 
-  lingvaRedirectsChecks = result.lingvaRedirectsChecks ?? [...redirects.lingva.normal];
-  lingvaCustomRedirects = result.lingvaCustomRedirects ?? [];
+        lingvaRedirectsChecks = result.lingvaRedirectsChecks ?? [...redirects.lingva.normal];
+        lingvaCustomRedirects = result.lingvaCustomRedirects ?? [];
+
+        resolve();
+      });
+  });
+
 }
 
 export default {

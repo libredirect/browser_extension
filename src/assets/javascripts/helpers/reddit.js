@@ -1,3 +1,5 @@
+window.browser = window.browser || window.chrome;
+
 import commonHelper from './common.js'
 
 const targets = [
@@ -192,25 +194,32 @@ function isReddit(url) {
 }
 
 async function init() {
-  let result = await browser.storage.sync.get([
-    "disableReddit",
-    "redditFrontend",
-    "redditRedirects",
-    "libredditRedirectsChecks",
-    "libredditCustomRedirects",
-    "tedditRedirectsChecks",
-    "tedditCustomRedirects",
-  ])
-  disableReddit = result.disableReddit ?? false;
-  redditFrontend = result.redditFrontend ?? 'libreddit';
-  if (result.redditRedirects)
-    redirects = result.redditRedirects;
+  return new Promise((resolve) => {
+    browser.storage.sync.get(
+      [
+        "disableReddit",
+        "redditFrontend",
+        "redditRedirects",
+        "libredditRedirectsChecks",
+        "libredditCustomRedirects",
+        "tedditRedirectsChecks",
+        "tedditCustomRedirects",
+      ], (result) => {
+        disableReddit = result.disableReddit ?? false;
+        redditFrontend = result.redditFrontend ?? 'libreddit';
+        if (result.redditRedirects)
+          redirects = result.redditRedirects;
 
-  libredditRedirectsChecks = result.libredditRedirectsChecks ?? [...redirects.libreddit.normal];
-  libredditCustomRedirects = result.libredditCustomRedirects ?? [];
+        libredditRedirectsChecks = result.libredditRedirectsChecks ?? [...redirects.libreddit.normal];
+        libredditCustomRedirects = result.libredditCustomRedirects ?? [];
 
-  tedditRedirectsChecks = result.tedditRedirectsChecks ?? [...redirects.teddit.normal];
-  tedditCustomRedirects = result.tedditCustomRedirects ?? [];
+        tedditRedirectsChecks = result.tedditRedirectsChecks ?? [...redirects.teddit.normal];
+        tedditCustomRedirects = result.tedditCustomRedirects ?? [];
+
+        resolve();
+      }
+    )
+  })
 }
 
 export default {

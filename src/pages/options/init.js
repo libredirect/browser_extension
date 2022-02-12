@@ -1,3 +1,5 @@
+window.browser = window.browser || window.chrome;
+
 function changeTheme() {
     browser.storage.sync.get("theme", (result) => {
         switch (result.theme) {

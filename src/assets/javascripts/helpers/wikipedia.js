@@ -1,3 +1,5 @@
+window.browser = window.browser || window.chrome;
+
 import commonHelper from './common.js'
 
 const targets = /wikipedia.org/;
@@ -106,18 +108,24 @@ function isWikipedia(url) {
 }
 
 async function init() {
-  let result = await browser.storage.sync.get([
-    "disableWikipedia",
-    "wikipediaRedirects",
-    "wikilessRedirectsChecks",
-    "wikilessCustomRedirects",
-  ]);
-  disableWikipedia = result.disableWikipedia ?? false;
-  if (result.wikipediaRedirects)
-    redirects = result.wikipediaRedirects;
+  return new Promise((resolve) => {
+    browser.storage.sync.get(
+      [
+        "disableWikipedia",
+        "wikipediaRedirects",
+        "wikilessRedirectsChecks",
+        "wikilessCustomRedirects",
+      ], (result) => {
+        disableWikipedia = result.disableWikipedia ?? false;
+        if (result.wikipediaRedirects) redirects = result.wikipediaRedirects;
 
-  wikilessRedirectsChecks = result.wikilessRedirectsChecks ?? [...redirects.wikiless.normal];
-  wikilessCustomRedirects = result.wikilessCustomRedirects ?? [];
+        wikilessRedirectsChecks = result.wikilessRedirectsChecks ?? [...redirects.wikiless.normal];
+        wikilessCustomRedirects = result.wikilessCustomRedirects ?? [];
+
+        resolve();
+      }
+    );
+  });
 }
 
 export default {

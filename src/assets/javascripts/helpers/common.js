@@ -1,3 +1,4 @@
+window.browser = window.browser || window.chrome;
 import twitterHelper from "./twitter.js";
 import youtubeHelper from "./youtube/youtube.js";
 import instagramHelper from "./instagram.js";
@@ -8,6 +9,7 @@ import translateHelper from "./translate.js";
 import wikipediaHelper from "./wikipedia.js";
 import mapsHelper from "./maps.js";
 import medium from "./medium.js";
+
 
 function getRandomInstance(instances) {
   return instances[~~(instances.length * Math.random())];

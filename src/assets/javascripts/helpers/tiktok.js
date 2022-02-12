@@ -1,3 +1,5 @@
+window.browser = window.browser || window.chrome;
+
 import commonHelper from './common.js'
 
 const targets = [
@@ -80,18 +82,25 @@ function isTiktok(url) {
 }
 
 async function init() {
-    let result = await browser.storage.sync.get([
-        "disableTiktok",
-        "tiktokRedirects",
-        "proxiTokRedirectsChecks",
-        "proxiTokCustomRedirects",
-    ])
-    disableTiktok = result.disableTiktok ?? false;
-    if (result.tiktokRedirects)
-        redirects = result.tiktokRedirects;
+    return new Promise((resolve) => {
+        browser.storage.sync.get(
+            [
+                "disableTiktok",
+                "tiktokRedirects",
+                "proxiTokRedirectsChecks",
+                "proxiTokCustomRedirects",
+            ],
+            (result) => {
+                disableTiktok = result.disableTiktok ?? false;
+                if (result.tiktokRedirects) redirects = result.tiktokRedirects;
 
-    proxiTokRedirectsChecks = result.proxiTokRedirectsChecks ?? [...redirects.proxiTok.normal];
-    proxiTokCustomRedirects = result.proxiTokCustomRedirects ?? [];
+                proxiTokRedirectsChecks = result.proxiTokRedirectsChecks ?? [...redirects.proxiTok.normal];
+                proxiTokCustomRedirects = result.proxiTokCustomRedirects ?? [];
+
+                resolve();
+            }
+        )
+    })
 }
 
 export default {

@@ -1,3 +1,5 @@
+window.browser = window.browser || window.chrome;
+
 import commonHelper from './common.js'
 
 /*
@@ -157,18 +159,25 @@ function isTwitter(url) {
 }
 
 async function init() {
-  let result = await browser.storage.sync.get([
-    "disableTwitter",
-    "twitterRedirects",
-    "nitterRedirectsChecks",
-    "nitterCustomRedirects",
-  ]);
-  disableTwitter = result.disableTwitter ?? false;
-  if (result.twitterRedirects)
-    redirects = result.twitterRedirects;
+  return new Promise((resolve) => {
+    browser.storage.sync.get(
+      [
+        "disableTwitter",
+        "twitterRedirects",
+        "nitterRedirectsChecks",
+        "nitterCustomRedirects",
+      ],
+      (result) => {
+        disableTwitter = result.disableTwitter ?? false;
+        if (result.twitterRedirects)
+          redirects = result.twitterRedirects;
 
-  nitterRedirectsChecks = result.nitterRedirectsChecks ?? [...redirects.nitter.normal];
-  nitterCustomRedirects = result.nitterCustomRedirects ?? [];
+        nitterRedirectsChecks = result.nitterRedirectsChecks ?? [...redirects.nitter.normal];
+        nitterCustomRedirects = result.nitterCustomRedirects ?? [];
+        resolve();
+      }
+    );
+  })
 }
 
 export default {

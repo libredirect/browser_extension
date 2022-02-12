@@ -1,3 +1,5 @@
+window.browser = window.browser || window.chrome;
+
 import commonHelper from './common.js'
 
 const targets = [
@@ -93,18 +95,26 @@ function isImgur(url) {
 }
 
 async function init() {
-    let result = await browser.storage.sync.get([
-        "disableImgur",
-        "imgurRedirects",
-        "rimgoRedirectsChecks",
-        "rimgoCustomRedirects",
-    ])
-    disableImgur = result.disableImgur ?? false;
-    if (result.imgurRedirects)
-        redirects = result.imgurRedirects;
+    return new Promise((resolve) => {
+        browser.storage.sync.get(
+            [
+                "disableImgur",
+                "imgurRedirects",
+                "rimgoRedirectsChecks",
+                "rimgoCustomRedirects",
+            ],
+            (result) => {
+                disableImgur = result.disableImgur ?? false;
+                if (result.imgurRedirects)
+                    redirects = result.imgurRedirects;
 
-    rimgoRedirectsChecks = result.rimgoRedirectsChecks ?? [...redirects.rimgo.normal];
-    rimgoCustomRedirects = result.rimgoCustomRedirects ?? [];
+                rimgoRedirectsChecks = result.rimgoRedirectsChecks ?? [...redirects.rimgo.normal];
+                rimgoCustomRedirects = result.rimgoCustomRedirects ?? [];
+
+                resolve();
+            }
+        )
+    });
 }
 
 export default {

@@ -15,21 +15,11 @@
     "128": "assets/images/libredirect.svg"
   },
   "permissions": [
-    "tabs",
     "storage",
     "webRequest",
     "webRequestBlocking",
     "<all_urls>"
   ],
-  "page_action": {
-    "default_title": "Change Instance",
-    "default_icon": {
-      "16": "assets/images/libredirect.svg",
-      "32": "assets/images/libredirect.svg",
-      "48": "assets/images/libredirect.svg",
-      "128": "assets/images/libredirect.svg"
-    }
-  },
   "browser_action": {
     "default_title": "LibRedirect",
     "browser_style": false,

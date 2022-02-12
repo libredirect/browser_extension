@@ -35,7 +35,7 @@ wholeInit();
 browser.storage.onChanged.addListener(wholeInit);
 
 browser.webRequest.onBeforeRequest.addListener(
-  async (details) => {
+  (details) => {
     const url = new URL(details.url);
     let initiator;
     if (details.originUrl)
@@ -101,26 +101,6 @@ browser.webRequest.onResponseStarted.addListener(
   { urls: ["<all_urls>"] }
 );
 
-browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
-  let url;
-  try {
-    url = new URL(changeInfo.url)
-  } catch (_) {
-    return;
-  }
-  var protocolHost = `${url.protocol}//${url.host}`;
-
-  if (youtubeHelper.getRedirects().invidious.normal.includes(protocolHost)) {
-    if (youtubeHelper.getPersistInvidiousPrefs())
-      youtubeHelper.invidiousInitCookies(tabId);
-  }
-
-  var mightyList = getMightyList();
-
-  if (mightyList.includes(protocolHost)) browser.pageAction.show(tabId);
-});
-
-
 function changeInstance(url) {
   var tabUrl = new URL(url);
   var protocolHost = `${tabUrl.protocol}//${tabUrl.host}`;
@@ -163,9 +143,6 @@ function changeInstance(url) {
 
   if (newUrl) browser.tabs.update({ url: tabUrl.href.replace(protocolHost, newUrl) });
 }
-
-
-browser.pageAction.onClicked.addListener((tab) => changeInstance(tab.url));
 
 function getMightyList() {
   return [

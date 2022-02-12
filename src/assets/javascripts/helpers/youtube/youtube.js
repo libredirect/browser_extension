@@ -210,46 +210,53 @@ function isYoutube(url) {
 }
 
 async function init() {
-  let result = await browser.storage.sync.get(
-    [
-      "invidiousAlwaysProxy",
-      "invidiousVideoQuality",
-      "invidiousTheme",
-      "persistInvidiousPrefs",
-      "disableYoutube",
-      "invidiousOnlyEmbeddedVideo",
-      "invidiousVolume",
-      "invidiousPlayerStyle",
-      "invidiousSubtitles",
-      "invidiousAutoplay",
-      "youtubeRedirects",
-      "youtubeFrontend",
-      "invidiousRedirectsChecks",
-      "invidiousCustomRedirects",
-      "pipedRedirectsChecks",
-      "pipedCustomRedirects",
-    ]);
-  if (result.youtubeRedirects) redirects = result.youtubeRedirects;
+  return new Promise((resolve) => {
+    browser.storage.sync.get(
+      [
+        "invidiousAlwaysProxy",
+        "invidiousVideoQuality",
+        "invidiousTheme",
+        "persistInvidiousPrefs",
+        "disableYoutube",
+        "invidiousOnlyEmbeddedVideo",
+        "invidiousVolume",
+        "invidiousPlayerStyle",
+        "invidiousSubtitles",
+        "invidiousAutoplay",
+        "youtubeRedirects",
+        "youtubeFrontend",
+        "invidiousRedirectsChecks",
+        "invidiousCustomRedirects",
+        "pipedRedirectsChecks",
+        "pipedCustomRedirects",
+      ],
+      (result) => {
+        if (result.youtubeRedirects) redirects = result.youtubeRedirects;
 
-  frontend = result.youtubeFrontend ?? 'piped';
-  disableYoutube = result.disableYoutube ?? false;
+        frontend = result.youtubeFrontend ?? 'piped';
+        disableYoutube = result.disableYoutube ?? false;
 
-  invidiousAlwaysProxy = result.invidiousAlwaysProxy ?? 'DEFAULT';
-  invidiousOnlyEmbeddedVideo = result.invidiousOnlyEmbeddedVideo ?? false;
-  invidiousVideoQuality = result.invidiousVideoQuality ?? 'DEFAULT';
-  invidiousTheme = result.invidiousTheme ?? 'DEFAULT';
-  invidiousVolume = result.invidiousVolume ?? '--';
-  invidiousPlayerStyle = result.invidiousPlayerStyle ?? 'DEFAULT';
-  invidiousSubtitles = result.invidiousSubtitles || '';
-  invidiousAutoplay = result.invidiousAutoplay ?? 'DEFAULT';
+        invidiousAlwaysProxy = result.invidiousAlwaysProxy ?? 'DEFAULT';
+        invidiousOnlyEmbeddedVideo = result.invidiousOnlyEmbeddedVideo ?? false;
+        invidiousVideoQuality = result.invidiousVideoQuality ?? 'DEFAULT';
+        invidiousTheme = result.invidiousTheme ?? 'DEFAULT';
+        invidiousVolume = result.invidiousVolume ?? '--';
+        invidiousPlayerStyle = result.invidiousPlayerStyle ?? 'DEFAULT';
+        invidiousSubtitles = result.invidiousSubtitles || '';
+        invidiousAutoplay = result.invidiousAutoplay ?? 'DEFAULT';
 
-  invidiousRedirectsChecks = result.invidiousRedirectsChecks ?? [...redirects.invidious.normal];
-  invidiousCustomRedirects = result.invidiousCustomRedirects ?? [];
+        invidiousRedirectsChecks = result.invidiousRedirectsChecks ?? [...redirects.invidious.normal];
+        invidiousCustomRedirects = result.invidiousCustomRedirects ?? [];
 
-  pipedRedirectsChecks = result.pipedRedirectsChecks ?? [...redirects.piped.normal];
-  pipedCustomRedirects = result.pipedCustomRedirects ?? [];
+        pipedRedirectsChecks = result.pipedRedirectsChecks ?? [...redirects.piped.normal];
+        pipedCustomRedirects = result.pipedCustomRedirects ?? [];
 
-  persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
+        persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
+
+        resolve();
+      });
+
+  })
 }
 
 function invidiousInitCookies(tabId) {

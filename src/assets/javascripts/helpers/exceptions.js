@@ -1,4 +1,6 @@
 "use strict";
+window.browser = window.browser || window.chrome;
+
 
 let exceptions = {
     "url": [],
@@ -12,8 +14,12 @@ function setExceptions(val) {
 }
 
 async function init() {
-    let result = await browser.storage.sync.get("exceptions");
-    if (result.exceptions) exceptions = result.exceptions;
+    return new Promise((resolve) => {
+        browser.storage.sync.get("exceptions", (result) => {
+            if (result.exceptions) exceptions = result.exceptions;
+            resolve();
+        });
+    })
 }
 
 function isException(url) {

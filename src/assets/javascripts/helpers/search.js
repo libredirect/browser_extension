@@ -1,3 +1,5 @@
+window.browser = window.browser || window.chrome;
+
 import commonHelper from './common.js'
 
 const targets = [
@@ -250,28 +252,33 @@ function isSearch(url) {
 }
 
 async function init() {
-  let result = await browser.storage.sync.get([
-    "disableSearch",
-    "searchFrontend",
-    "searchRedirects",
-    "whoogleRedirectsChecks",
-    "whoogleCustomRedirects",
-    "searxRedirectsChecks",
-    "searxCustomRedirects",
-  ])
-  disableSearch = result.disableSearch ?? false;
-  searchFrontend = result.searchFrontend ?? 'searx';
-  if (result.searchRedirects)
-    redirects = result.searchRedirects;
+  return new Promise((resolve) => {
+    browser.storage.sync.get(
+      [
+        "disableSearch",
+        "searchFrontend",
+        "searchRedirects",
+        "whoogleRedirectsChecks",
+        "whoogleCustomRedirects",
+        "searxRedirectsChecks",
+        "searxCustomRedirects",
+      ],
+      (result) => {
+        disableSearch = result.disableSearch ?? false;
+        searchFrontend = result.searchFrontend ?? 'searx';
+        if (result.searchRedirects) redirects = result.searchRedirects;
 
+        whoogleRedirectsChecks = result.whoogleRedirectsChecks ?? [...redirects.whoogle.normal];
+        whoogleCustomRedirects = result.whoogleCustomRedirects ?? [];
 
-  whoogleRedirectsChecks = result.whoogleRedirectsChecks ?? [...redirects.whoogle.normal];
-  whoogleCustomRedirects = result.whoogleCustomRedirects ?? [];
+        searxRedirectsChecks = result.searxRedirectsChecks ?? [...redirects.searx.normal];
 
-  searxRedirectsChecks = result.searxRedirectsChecks ?? [...redirects.searx.normal];
+        searxCustomRedirects = result.searxCustomRedirects ?? [];
 
-
-  searxCustomRedirects = result.searxCustomRedirects ?? [];
+        resolve();
+      }
+    );
+  });
 }
 
 export default {

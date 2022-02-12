@@ -1,11 +1,11 @@
 "use strict";
+window.browser = window.browser || window.chrome;
 
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 import exceptionsHelper from "../../../assets/javascripts/helpers/exceptions.js";
 
 let themeElement = document.getElementById("theme");
 
-window.browser = window.browser || window.chrome;
 
 browser.storage.sync.get(
   ["theme"],

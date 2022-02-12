@@ -1,3 +1,4 @@
+window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 
@@ -100,18 +101,26 @@ function isMedium(url) {
 }
 
 async function init() {
-  let result = await browser.storage.sync.get([
-    "disableMedium",
-    "mediumRedirects",
-    "scribeRedirectsChecks",
-    "scribeCustomRedirects",
-  ])
-  disableMedium = result.disableMedium ?? false;
-  if (result.mediumRedirects)
-    redirects = result.mediumRedirects;
+  return new Promise((resolve) => {
+    browser.storage.sync.get(
+      [
+        "disableMedium",
+        "mediumRedirects",
+        "scribeRedirectsChecks",
+        "scribeCustomRedirects",
+      ],
+      (result) => {
+        disableMedium = result.disableMedium ?? false;
+        if (result.mediumRedirects)
+          redirects = result.mediumRedirects;
 
-  scribeRedirectsChecks = result.scribeRedirectsChecks ?? [...redirects.scribe.normal];
-  scribeCustomRedirects = result.scribeCustomRedirects ?? [];
+        scribeRedirectsChecks = result.scribeRedirectsChecks ?? [...redirects.scribe.normal];
+        scribeCustomRedirects = result.scribeCustomRedirects ?? [];
+        resolve();
+      }
+    )
+  })
+
 }
 
 export default {

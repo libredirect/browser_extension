@@ -1,4 +1,5 @@
 "use strict";
+window.browser = window.browser || window.chrome;
 
 import commonHelper from "../../assets/javascripts/helpers/common.js";
 import youtubeHelper from "../../assets/javascripts/helpers/youtube/youtube.js";
@@ -24,8 +25,6 @@ let disableWikipediaElement = document.querySelector("#disable-wikipedia");
 let disableMediumElement = document.querySelector("#disable-medium");
 let disableImgurElement = document.querySelector("#disable-imgur");
 let disableTiktokElement = document.querySelector("#disable-tiktok");
-
-window.browser = window.browser || window.chrome;
 
 async function wholeInit() {
   await youtubeHelper.init();

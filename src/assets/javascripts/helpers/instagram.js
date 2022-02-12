@@ -1,3 +1,4 @@
+window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
@@ -118,19 +119,28 @@ function isInstagram(url) {
 }
 
 async function init() {
-  let result = await browser.storage.sync.get([
-    "disableInstagram",
-    "instagramRedirects",
-    "bibliogramRedirectsChecks",
-    "bibliogramCustomRedirects",
-  ])
-  disableInstagram = result.disableInstagram ?? false;
-  if (result.instagramRedirects)
-    redirects = result.instagramRedirects
+  return new Promise((resolve) => {
+    browser.storage.sync.get(
+      [
+        "disableInstagram",
+        "instagramRedirects",
+        "bibliogramRedirectsChecks",
+        "bibliogramCustomRedirects",
+      ],
+      (result) => {
+        disableInstagram = result.disableInstagram ?? false;
 
+        if (result.instagramRedirects) redirects = result.instagramRedirects
 
-  bibliogramRedirectsChecks = result.bibliogramRedirectsChecks ?? [...redirects.bibliogram.normal];
-  bibliogramCustomRedirects = result.bibliogramCustomRedirects ?? [];
+        bibliogramRedirectsChecks = result.bibliogramRedirectsChecks ?? [...redirects.bibliogram.normal];
+
+        bibliogramCustomRedirects = result.bibliogramCustomRedirects ?? [];
+
+        resolve();
+      }
+    )
+  })
+
 }
 
 export default {

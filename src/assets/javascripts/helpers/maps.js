@@ -1,3 +1,4 @@
+window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = /https?:\/\/(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
@@ -134,10 +135,15 @@ function isMaps(url) {
 }
 
 async function init() {
-  let result = await browser.storage.sync.get([
-    "disableMaps",
-  ])
-  disableMaps = result.disableMaps ?? false;
+  return new Promise((resolve) => {
+    browser.storage.sync.get(
+      "disableMaps",
+      (result) => {
+        disableMaps = result.disableMaps ?? false
+        resolve();
+      }
+    );
+  });
 }
 
 export default {
