@@ -28,6 +28,13 @@ let redirects = {
   }
 };
 const getRedirects = () => redirects;
+const getCustomRedirects = function () {
+  return {
+    "scribe": {
+      "normal": [...scribeRedirectsChecks, ...scribeCustomRedirects]
+    },
+  };
+};
 function setRedirects(val) {
   redirects.scribe = val;
   browser.storage.sync.set({ mediumRedirects: redirects })
@@ -111,6 +118,7 @@ export default {
   targets,
 
   getRedirects,
+  getCustomRedirects,
   setRedirects,
 
   getDisableMedium,

@@ -58,6 +58,16 @@ let redirects = {
   "mobile": "https://i.reddit.com", // mobile
 };
 const getRedirects = () => redirects;
+const getCustomRedirects = function () {
+  return {
+    "libreddit": {
+      "normal": [...libredditRedirectsChecks, ...libredditCustomRedirects]
+    },
+    "teddit": {
+      "normal": [...tedditRedirectsChecks, ...tedditCustomRedirects]
+    }
+  };
+};
 
 function setLibredditRedirects(val) {
   redirects.libreddit = val;
@@ -206,6 +216,7 @@ async function init() {
 export default {
   targets,
   getRedirects,
+  getCustomRedirects,
   setTedditRedirects,
   setLibredditRedirects,
 

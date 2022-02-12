@@ -37,6 +37,16 @@ let redirects = {
 };
 
 const getRedirects = () => redirects;
+const getCustomRedirects = function () {
+  return {
+    "simplyTranslate": {
+      "normal": [...simplyTranslateRedirectsChecks, ...simplyTranslateCustomRedirects]
+    },
+    "lingva": {
+      "normal": [...lingvaRedirectsChecks, ...lingvaCustomRedirects]
+    }
+  };
+};
 
 function setSimplyTranslateRedirects(val) {
   redirects.simplyTranslate = val;
@@ -174,6 +184,7 @@ async function init() {
 
 export default {
   getRedirects,
+  getCustomRedirects,
   setSimplyTranslateRedirects,
   setLingvaRedirects,
 

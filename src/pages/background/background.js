@@ -81,6 +81,22 @@ browser.webRequest.onBeforeRequest.addListener(
   ["blocking"]
 );
 
+browser.webRequest.onResponseStarted.addListener(
+  (responseDetails) => {
+    let url = new URL(responseDetails.url);
+    let protocolHost = `${url.protocol}//${url.host}`;
+    var mightyList = getMightyList();
+
+    if (mightyList.includes(protocolHost)); {
+      if (responseDetails.statusCode < 200 || responseDetails.statusCode >= 300) {
+        console.log("Instance is corrupted, redirecting", responseDetails.url);
+        changeInstance(responseDetails.url);
+      }
+    }
+  },
+  { urls: ["<all_urls>"] }
+);
+
 browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
   let url;
   try {
@@ -90,50 +106,25 @@ browser.tabs.onUpdated.addListener((tabId, changeInfo, _) => {
   }
   var protocolHost = `${url.protocol}//${url.host}`;
 
-
   if (youtubeHelper.getRedirects().invidious.normal.includes(protocolHost)) {
     if (youtubeHelper.getPersistInvidiousPrefs())
       youtubeHelper.invidiousInitCookies(tabId);
   }
 
-  var mightyList = [];
-  mightyList.push(
-    ...youtubeHelper.getRedirects().invidious.normal,
-    ...youtubeHelper.getRedirects().piped.normal,
-
-    ...twitterHelper.getRedirects().nitter.normal,
-
-    ...instagramHelper.getRedirects().bibliogram.normal,
-
-    ...redditHelper.getRedirects().libreddit.normal,
-    ...redditHelper.getRedirects().teddit.normal,
-    redditHelper.getRedirects().desktop,
-    redditHelper.getRedirects().mobile,
-
-    ...searchHelper.getRedirects().searx.normal,
-    ...searchHelper.getRedirects().whoogle.normal,
-
-    ...translateHelper.getRedirects().simplyTranslate.normal,
-    ...translateHelper.getRedirects().lingva.normal,
-
-    ...mediumHelper.getRedirects().scribe.normal,
-    ...imgurHelper.getRedirects().rimgo.normal,
-
-    ...wikipediaHelper.getRedirects().wikiless.normal
-  );
+  var mightyList = getMightyList();
 
   if (mightyList.includes(protocolHost)) browser.pageAction.show(tabId);
 });
 
 
-browser.pageAction.onClicked.addListener((tab) => {
-  var tabUrl = new URL(tab.url);
+function changeInstance(url) {
+  var tabUrl = new URL(url);
   var protocolHost = `${tabUrl.protocol}//${tabUrl.host}`;
   var newUrl;
 
   if (
-    youtubeHelper.getRedirects().invidious.normal.includes(protocolHost) ||
-    youtubeHelper.getRedirects().piped.normal.includes(protocolHost)
+    youtubeHelper.getCustomRedirects().invidious.normal.includes(protocolHost) ||
+    youtubeHelper.getCustomRedirects().piped.normal.includes(protocolHost)
   )
     newUrl = 'https://youtube.com';
 
@@ -167,5 +158,27 @@ browser.pageAction.onClicked.addListener((tab) => {
   if (wikipediaHelper.getRedirects().wikiless.normal.includes(protocolHost)) newUrl = 'https://wikipedia.com';
 
   if (newUrl) browser.tabs.update({ url: tabUrl.href.replace(protocolHost, newUrl) });
-});
+}
 
+
+browser.pageAction.onClicked.addListener((tab) => changeInstance(tab.url));
+
+function getMightyList() {
+  return [
+    ...youtubeHelper.getCustomRedirects().invidious.normal,
+    ...youtubeHelper.getCustomRedirects().piped.normal,
+    ...twitterHelper.getCustomRedirects().nitter.normal,
+    ...instagramHelper.getCustomRedirects().bibliogram.normal,
+    ...redditHelper.getCustomRedirects().libreddit.normal,
+    ...redditHelper.getCustomRedirects().teddit.normal,
+    redditHelper.getCustomRedirects().desktop,
+    redditHelper.getCustomRedirects().mobile,
+    ...searchHelper.getCustomRedirects().searx.normal,
+    ...searchHelper.getCustomRedirects().whoogle.normal,
+    ...translateHelper.getCustomRedirects().simplyTranslate.normal,
+    ...translateHelper.getCustomRedirects().lingva.normal,
+    ...mediumHelper.getCustomRedirects().scribe.normal,
+    ...imgurHelper.getCustomRedirects().rimgo.normal,
+    ...wikipediaHelper.getCustomRedirects().wikiless.normal
+  ];
+}

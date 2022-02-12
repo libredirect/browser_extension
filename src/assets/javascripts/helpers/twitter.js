@@ -78,6 +78,13 @@ let redirects = {
   }
 };
 const getRedirects = () => redirects;
+const getCustomRedirects = function () {
+  return {
+    "nitter": {
+      "normal": [...nitterRedirectsChecks, ...nitterCustomRedirects]
+    },
+  };
+};
 function setRedirects(val) {
   redirects.nitter = val;
   browser.storage.sync.set({ twitterRedirects: redirects })
@@ -90,11 +97,11 @@ function setNitterRedirectsChecks(val) {
   nitterRedirectsChecks = val;
   browser.storage.sync.set({ nitterRedirectsChecks })
   for (const item of nitterRedirectsChecks)
-  if (!redirects.nitter.normal.includes(item)) {
-    var index = nitterRedirectsChecks.indexOf(item);
-    if (index !== -1) nitterRedirectsChecks.splice(index, 1);
-  }
-setNitterRedirectsChecks(nitterRedirectsChecks);
+    if (!redirects.nitter.normal.includes(item)) {
+      var index = nitterRedirectsChecks.indexOf(item);
+      if (index !== -1) nitterRedirectsChecks.splice(index, 1);
+    }
+  setNitterRedirectsChecks(nitterRedirectsChecks);
   console.log("nitterRedirectsChecks: ", val)
 }
 
@@ -166,6 +173,7 @@ async function init() {
 
 export default {
   getRedirects,
+  getCustomRedirects,
   setRedirects,
 
   getDisableTwitter,

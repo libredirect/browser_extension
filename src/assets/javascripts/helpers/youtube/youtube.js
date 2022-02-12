@@ -54,6 +54,17 @@ let redirects = {
 
 const getRedirects = () => redirects;
 
+const getCustomRedirects = function () {
+  return {
+    "invidious": {
+      "normal": [...invidiousRedirectsChecks, ...invidiousCustomRedirects]
+    },
+    "piped": {
+      "normal": [...pipedRedirectsChecks, ...pipedCustomRedirects]
+    }
+  };
+};
+
 function setInvidiousRedirects(val) {
   redirects.invidious = val;
   browser.storage.sync.set({ youtubeRedirects: redirects })
@@ -320,6 +331,7 @@ export default {
   setFrontend,
 
   getRedirects,
+  getCustomRedirects,
   setInvidiousRedirects,
   setPipedRedirects,
 

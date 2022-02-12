@@ -13,6 +13,14 @@ let redirects = {
 }
 
 const getRedirects = () => redirects;
+const getCustomRedirects = function () {
+    return {
+        "proxiTok": {
+            "normal": [...proxiTokRedirectsChecks, ...proxiTokCustomRedirects]
+        },
+    };
+};
+
 function setRedirects(val) {
     redirects.proxiTok = val;
     browser.storage.sync.set({ tiktokRedirects: redirects })
@@ -90,6 +98,7 @@ export default {
     targets,
 
     getRedirects,
+    getCustomRedirects,
     setRedirects,
 
     getDisableTiktok,

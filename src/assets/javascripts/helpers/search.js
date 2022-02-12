@@ -134,6 +134,16 @@ let redirects = {
   },
 };
 const getRedirects = () => redirects;
+const getCustomRedirects = function () {
+  return {
+    "searx": {
+      "normal": [...searxRedirectsChecks, ...searxCustomRedirects]
+    },
+    "whoogle": {
+      "normal": [...whoogleRedirectsChecks, ...whoogleCustomRedirects]
+    }
+  };
+};
 
 function setSearxRedirects(val) {
   redirects.searx = val;
@@ -269,6 +279,7 @@ export default {
   isSearch,
 
   getRedirects,
+  getCustomRedirects,
   setSearxRedirects,
   setWhoogleRedirects,
 

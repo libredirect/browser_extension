@@ -22,6 +22,15 @@ let redirects = {
 }
 
 const getRedirects = () => redirects;
+
+const getCustomRedirects = function () {
+    return {
+        "rimgo": {
+            "normal": [...rimgoRedirectsChecks, ...rimgoCustomRedirects]
+        },
+    };
+};
+
 function setRedirects(val) {
     redirects.rimgo = val;
     browser.storage.sync.set({ imgurRedirects: redirects })
@@ -102,6 +111,7 @@ export default {
     targets,
 
     getRedirects,
+    getCustomRedirects,
     setRedirects,
 
     getDisableImgur,

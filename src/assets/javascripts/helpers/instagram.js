@@ -22,6 +22,13 @@ let redirects = {
   }
 };
 const getRedirects = () => redirects;
+const getCustomRedirects = function () {
+  return {
+    "bibliogram": {
+      "normal": [...bibliogramRedirectsChecks, ...bibliogramCustomRedirects]
+    },
+  };
+};
 function setRedirects(val) {
   redirects.bibliogram = val;
   browser.storage.sync.set({ instagramRedirects: redirects })
@@ -128,6 +135,7 @@ async function init() {
 
 export default {
   getRedirects,
+  getCustomRedirects,
   setRedirects,
 
   getDisableInstagram,
