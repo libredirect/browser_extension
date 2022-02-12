@@ -1,7 +1,6 @@
 "use strict";
 
 import commonHelper from "../../assets/javascripts/helpers/common.js";
-import data from "../../assets/javascripts/data.js";
 import youtubeHelper from "../../assets/javascripts/helpers/youtube/youtube.js";
 import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
@@ -43,7 +42,6 @@ async function wholeInit() {
 };
 
 wholeInit().then(() => {
-  if (data.theme) document.body.classList.add(data.theme);
   disableTwitterElement.checked = !twitterHelper.getDisableTwitter();
   disableYoutubeElement.checked = !youtubeHelper.getDisableYoutube();
   disableInstagramElement.checked = !instagramHelper.getDisableInstagram();

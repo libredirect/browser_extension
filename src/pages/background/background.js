@@ -11,6 +11,7 @@ import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
+import exceptionsHelper from "../../assets/javascripts/helpers/exceptions.js";
 
 window.browser = window.browser || window.chrome;
 
@@ -26,6 +27,7 @@ function wholeInit() {
   youtubeHelper.init()
   imgurHelper.init()
   tiktokHelper.init()
+  exceptionsHelper.init()
 }
 
 wholeInit();
@@ -43,7 +45,9 @@ browser.webRequest.onBeforeRequest.addListener(
 
     var newUrl;
 
-    if (youtubeHelper.isYoutube(url)) newUrl = youtubeHelper.redirect(url, initiator, details.type)
+    if (exceptionsHelper.isException(url)) newUrl = null;
+
+    else if (youtubeHelper.isYoutube(url)) newUrl = youtubeHelper.redirect(url, initiator, details.type)
 
     else if (twitterHelper.isTwitter(url)) newUrl = twitterHelper.redirect(url, initiator);
 

@@ -43,7 +43,6 @@ select {
   width: 350px;
   border-radius: 3px;
   box-sizing: border-box;
-  margin-bottom: var(--space);
   background-color: var(--bg-main);
   border-style: solid;
   border-color: #767676;
