@@ -13,6 +13,7 @@ const targets = [
   "mobile.twitter.com",
   "pbs.twimg.com",
   "video.twimg.com",
+  "platform.twitter.com"
 ];
 
 let redirects = {
@@ -58,7 +59,9 @@ let redirects = {
       "https://fuckthesacklers.network",
       "https://nitter.govt.land",
       "https://nitter.datatunnel.xyz",
-      "https://nitter.esmailelbob.xyz"
+      "https://nitter.esmailelbob.xyz",
+      "https://tw.artemislena.eu",
+      "https://nitter.eu.org"
     ],
     "onion": [
       "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
@@ -77,7 +80,7 @@ let redirects = {
       "http://nitraeju2mipeziu2wtcrqsxg7h62v5y4eqgwi75uprynkj74gevvuqd.onion",
       "http://nitter.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion"
     ]
-  }
+  },
 };
 const getRedirects = () => redirects;
 const getCustomRedirects = function () {
@@ -124,12 +127,9 @@ function setDisableTwitter(val) {
 
 
 function redirect(url, initiator) {
-  if (disableTwitter)
-    return null;
+  if (disableTwitter) return null;
 
-  if (url.pathname.split("/").includes("home")) {
-    return null;
-  }
+  if (url.pathname.split("/").includes("home")) return null;
 
   let instancesList = [...nitterRedirectsChecks, ...nitterCustomRedirects];
   if (instancesList.length === 0) return null;
@@ -148,7 +148,6 @@ function redirect(url, initiator) {
 
   else if (url.pathname.split("/").includes("tweets"))
     return `${randomInstance}${url.pathname.replace("/tweets", "")}${url.search}`;
-
   else
     return `${randomInstance}${url.pathname}${url.search}`;
 
