@@ -3,6 +3,7 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
+  "reddit.com",
   "www.reddit.com",
   "np.reddit.com",
   "new.reddit.com",
@@ -146,8 +147,7 @@ function setRedditFrontend(val) {
 
 
 function redirect(url, initiator, type) {
-  if (disableReddit)
-    return null;
+  if (disableReddit) return null;
 
   // Do not redirect when already on the selected view
   // if ((initiator && initiator.origin === redditInstance) || url.origin === redditInstance)
@@ -158,24 +158,30 @@ function redirect(url, initiator, type) {
   if (type !== "main_frame" || url.pathname.match(bypassPaths))
     return null;
 
-  let libreddtInstancesList = [...libredditRedirectsChecks, ...libredditCustomRedirects];
-  if (libreddtInstancesList.length === 0) return null;
-  let libredditRandomInstance = commonHelper.getRandomInstance(libreddtInstancesList);
+  let libredditInstancesList = [...libredditRedirectsChecks, ...libredditCustomRedirects];
 
   let tedditInstancesList = [...tedditRedirectsChecks, ...tedditCustomRedirects];
-  if (tedditInstancesList.length === 0) return null;
-  let tedditRandomInstance = commonHelper.getRandomInstance(tedditInstancesList);
 
-  if (url.host === "i.redd.it")
+
+  if (url.host === "i.redd.it") {
+    if (libredditInstancesList.length === 0) return null;
+    let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
     // As of 2021-04-09, redirects for teddit images are nontrivial:
     // - navigating to the image before ever navigating to its page causes
     //   404 error (probably needs fix on teddit project)
     // - some image links on teddit are very different
     // Therefore, don't support redirecting image links for teddit.
     return `${libredditRandomInstance}/img${url.pathname}${url.search}`;
+  }
   else if (url.host === "redd.it") {
-    if (redditFrontend == 'libreddit') return `${libredditRandomInstance}${url.pathname}${url.search}`;
-    if (redditFrontend == 'teddit' && !url.pathname.match(/^\/+[^\/]+\/+[^\/]/))
+    if (redditFrontend == 'libreddit') {
+      if (libredditInstancesList.length === 0) return null;
+      let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
+      return `${libredditRandomInstance}${url.pathname}${url.search}`;
+    }
+    if (redditFrontend == 'teddit' && !url.pathname.match(/^\/+[^\/]+\/+[^\/]/)) {
+      if (tedditInstancesList.length === 0) return null;
+      let tedditRandomInstance = commonHelper.getRandomInstance(tedditInstancesList);
       // As of 2021-04-22, redirects for teddit redd.it/foo links don't work.
       // It appears that adding "/comments" as a prefix works, so manually add
       // that prefix if it is missing. Even though redd.it/comments/foo links
@@ -184,9 +190,20 @@ function redirect(url, initiator, type) {
       // Note the difference between redd.it/comments/foo (doesn't work) and
       // teddit.net/comments/foo (works).
       return `${tedditRandomInstance}/comments${url.pathname}${url.search}`;
+    }
   }
-  if (redditFrontend == 'libreddit') return `${libredditRandomInstance}${url.pathname}${url.search}`;
-  if (redditFrontend == 'teddit') return `${tedditRandomInstance}${url.pathname}${url.search}`;
+  if (redditFrontend == 'libreddit') {
+    if (libredditInstancesList.length === 0) return null;
+    let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
+
+    return `${libredditRandomInstance}${url.pathname}${url.search}`;
+  }
+  if (redditFrontend == 'teddit') {
+    if (tedditInstancesList.length === 0) return null;
+    let tedditRandomInstance = commonHelper.getRandomInstance(tedditInstancesList);
+
+    return `${tedditRandomInstance}${url.pathname}${url.search}`;
+  }
 }
 
 function isReddit(url) {
