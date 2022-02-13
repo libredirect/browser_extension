@@ -30,7 +30,10 @@ redditFrontendElement.addEventListener("change",
 
 redditHelper.init().then(() => {
     disableRedditElement.checked = !redditHelper.getDisableReddit();
-    redditFrontendElement.value = redditHelper.getRedditFrontend();
+
+    let frontend = redditHelper.getRedditFrontend();
+    redditFrontendElement.value = frontend;
+    changeFrontendsSettings(frontend);
 
     commonHelper.processDefaultCustomInstances(
         'libreddit',
@@ -50,5 +53,6 @@ redditHelper.init().then(() => {
         redditHelper.setTedditRedirectsChecks,
         redditHelper.getTedditCustomRedirects,
         redditHelper.setTedditCustomRedirects
-    )
+    );
+
 })

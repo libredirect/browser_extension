@@ -104,8 +104,6 @@ function redirect(url, initiator, type) {
   if (initiator && (instancesList.includes(initiator.origin) || targets.includes(initiator.host)))
     return null;
 
-
-
   // Do not redirect /accounts, /embeds.js, or anything other than main_frame
   if (type !== "main_frame" || url.pathname.match(bypassPaths))
     return 'CANCEL';
