@@ -104,14 +104,22 @@ function redirect(url, initiator, type) {
   if (initiator && (instancesList.includes(initiator.origin) || targets.includes(initiator.host)))
     return null;
 
+
+
   // Do not redirect /accounts, /embeds.js, or anything other than main_frame
   if (type !== "main_frame" || url.pathname.match(bypassPaths))
     return 'CANCEL';
 
-  if (url.pathname === "/" || instagramReservedPaths.includes(url.pathname.split("/")[1]))
+  console.log("Hello", url.href)
+
+  if (url.pathname === "/" || reservedPaths.includes(url.pathname.split("/")[1])) {
+    console.log("wewe")
     return `${randomInstance}${url.pathname}${url.search}`;
-  else
-    return `${randomInstance}/u${url.pathname}${url.search}`; // Likely a user profile, redirect to '/u/...'
+  }
+  else {
+    console.log("A user profile")
+    return `${randomInstance}/u${url.pathname}${url.search}`;
+  } // Likely a user profile, redirect to '/u/...'
 }
 
 function isInstagram(url) {
