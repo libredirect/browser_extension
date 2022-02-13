@@ -103,6 +103,9 @@ function processDefaultCustomInstances(
   let nameDefaultRedirects;
 
   function calcNameCheckBoxes() {
+    browser.storage.sync.getBytesInUse(null).then(
+      (result) => console.log(result)
+    )
     let isTrue = true;
     for (const item of nameHelper.getRedirects()[name].normal)
       if (!nameDefaultRedirects.includes(item)) {

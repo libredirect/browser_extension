@@ -94,6 +94,12 @@ function setRedirects(val) {
   redirects.nitter = val;
   browser.storage.sync.set({ twitterRedirects: redirects })
   console.log("twitterRedirects:", val)
+  for (const item of nitterRedirectsChecks)
+    if (!redirects.nitter.normal.includes(item)) {
+      var index = nitterRedirectsChecks.indexOf(item);
+      if (index !== -1) nitterRedirectsChecks.splice(index, 1);
+    }
+  setNitterRedirectsChecks(nitterRedirectsChecks);
 }
 
 let nitterRedirectsChecks;
@@ -101,12 +107,6 @@ const getNitterRedirectsChecks = () => nitterRedirectsChecks;
 function setNitterRedirectsChecks(val) {
   nitterRedirectsChecks = val;
   browser.storage.sync.set({ nitterRedirectsChecks })
-  for (const item of nitterRedirectsChecks)
-    if (!redirects.nitter.normal.includes(item)) {
-      var index = nitterRedirectsChecks.indexOf(item);
-      if (index !== -1) nitterRedirectsChecks.splice(index, 1);
-    }
-  setNitterRedirectsChecks(nitterRedirectsChecks);
   console.log("nitterRedirectsChecks: ", val)
 }
 
