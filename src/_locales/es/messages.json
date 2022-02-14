@@ -75,7 +75,7 @@
     "message": "Siempre usar el proxy de Invidious para videos",
     "description": "Etiqueta para la opción de 'Siempre usar el proxy de Invidious para videos' (opciones)."
   },
-  "invidiousOnlyEmbeddedVideo": {
+  "OnlyEmbeddedVideo": {
     "message": "Solo redirigir los videos incrustados a Invidious",
     "description": "Etiqueta para la opción de 'Solo redirigir los videos incrustados a Invidious' (opciones)."
   },

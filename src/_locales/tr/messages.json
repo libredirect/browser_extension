@@ -59,7 +59,7 @@
     "message": "Videoları her zaman Invidious üzerinden geçir",
     "description": "'Videoları her zaman Invidious üzerinden geçir' seçeneği için etiket (seçenekler)."
   },
-  "invidiousOnlyEmbeddedVideo": {
+  "OnlyEmbeddedVideo": {
     "message": "Sadece siteye gömülü videoları Invidious'a yönlendir",
     "description": "'Sadece siteye gömülü videoları Invidious'a yönlendir' seçeneği için etiket (seçenekler)."
   },

@@ -43,7 +43,7 @@
     "message": "使用 Invidious 时始终使用视频代理",
     "description": "Label for 'Always proxy videos through Invidious' option (options)."
   },
-  "invidiousOnlyEmbeddedVideo": {
+  "OnlyEmbeddedVideo": {
     "message": "只重定向嵌入视频至 Invidious",
     "description": "Label for 'Only redirect embedded video to Invidious' option (options)."
   },

@@ -71,7 +71,7 @@
     "message": "Всегда проксировать видео через Invidious",
     "description": "Название настройки для 'Всегда проксировать видео через Invidious' (в настройках)."
   },
-  "invidiousOnlyEmbeddedVideo": {
+  "OnlyEmbeddedVideo": {
     "message": "Перенаправлять только встроенные видео на Invidious",
     "description": "Название настройки для 'Перенаправлять только встроенные видео на Invidious' (в настройках)."
   },

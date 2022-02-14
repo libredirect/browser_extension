@@ -17,7 +17,7 @@ browser.storage.sync.get(
         "invidiousAlwaysProxy",
         "invidiousVideoQuality",
         "invidiousDarkMode",
-        "invidiousOnlyEmbeddedVideo",
+        "OnlyEmbeddedVideo",
         "invidiousVolume",
         "invidiousPlayerStyle",
         "invidiousSubtitles",

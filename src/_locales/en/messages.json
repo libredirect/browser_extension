@@ -83,7 +83,7 @@
     "message": "Always proxy videos through Invidious",
     "description": "Label for 'Always proxy videos through Invidious' option (options)."
   },
-  "invidiousOnlyEmbeddedVideo": {
+  "OnlyEmbeddedVideo": {
     "message": "Only redirect embedded video to Invidious",
     "description": "Label for 'Only redirect embedded video to Invidious' option (options)."
   },

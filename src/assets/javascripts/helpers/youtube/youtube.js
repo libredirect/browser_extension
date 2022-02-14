@@ -125,13 +125,13 @@ function setInvidiousAlwaysProxy(val) {
 }
 const getInvidiousAlwaysProxy = () => invidiousAlwaysProxy;
 
-let invidiousOnlyEmbeddedVideo;
-function setInvidiousOnlyEmbeddedVideo(val) {
-  invidiousOnlyEmbeddedVideo = val;
-  browser.storage.sync.set({ invidiousOnlyEmbeddedVideo })
-  console.log("invidiousOnlyEmbeddedVideo: ", invidiousOnlyEmbeddedVideo)
+let OnlyEmbeddedVideo;
+function setOnlyEmbeddedVideo(val) {
+  OnlyEmbeddedVideo = val;
+  browser.storage.sync.set({ OnlyEmbeddedVideo })
+  console.log("OnlyEmbeddedVideo: ", OnlyEmbeddedVideo)
 }
-const getInvidiousOnlyEmbeddedVideo = () => invidiousOnlyEmbeddedVideo;
+const getOnlyEmbeddedVideo = () => OnlyEmbeddedVideo;
 
 let invidiousVideoQuality;
 function setInvidiousVideoQuality(val) {
@@ -265,7 +265,7 @@ async function init() {
         "invidiousTheme",
         "persistInvidiousPrefs",
         "disableYoutube",
-        "invidiousOnlyEmbeddedVideo",
+        "OnlyEmbeddedVideo",
         "invidiousVolume",
         "invidiousPlayerStyle",
         "invidiousSubtitles",
@@ -285,7 +285,7 @@ async function init() {
         disableYoutube = result.disableYoutube ?? false;
 
         invidiousAlwaysProxy = result.invidiousAlwaysProxy ?? 'DEFAULT';
-        invidiousOnlyEmbeddedVideo = result.invidiousOnlyEmbeddedVideo ?? false;
+        OnlyEmbeddedVideo = result.OnlyEmbeddedVideo ?? 'both';
         invidiousVideoQuality = result.invidiousVideoQuality ?? 'DEFAULT';
         invidiousTheme = result.invidiousTheme ?? 'DEFAULT';
         invidiousVolume = result.invidiousVolume ?? '--';
@@ -319,6 +319,8 @@ function invidiousInitCookies(tabId) {
 
 function redirect(url, type) {
 
+  console.log("type", type);
+
   if (frontend == 'freeTube' && type === "main_frame")
     return `freetube://${url}`;
 
@@ -328,7 +330,8 @@ function redirect(url, type) {
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-    if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
+    if (OnlyEmbeddedVideo == 'onlyEmbedded' && type !== "sub_frame") return null
+    if (OnlyEmbeddedVideo == 'onlyNotEmbedded' && type !== "main_frame") return null;
 
     if (invidiousAlwaysProxy != "DEFAULT") url.searchParams.append("local", invidiousAlwaysProxy);
     if (invidiousVideoQuality != "DEFAULT") url.searchParams.append("quality", invidiousVideoQuality);
@@ -346,7 +349,8 @@ function redirect(url, type) {
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-    if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
+    if (OnlyEmbeddedVideo == 'onlyEmbedded' && type !== "sub_frame") return null
+    if (OnlyEmbeddedVideo == 'onlyNotEmbedded' && type !== "main_frame") return null;
 
     if (invidiousTheme != "DEFAULT") url.searchParams.append("theme", invidiousTheme);
     if (invidiousVolume != "--") url.searchParams.append("volume", invidiousVolume / 100);
@@ -377,8 +381,8 @@ export default {
   setInvidiousAlwaysProxy,
   getInvidiousAlwaysProxy,
 
-  setInvidiousOnlyEmbeddedVideo,
-  getInvidiousOnlyEmbeddedVideo,
+  setOnlyEmbeddedVideo,
+  getOnlyEmbeddedVideo,
 
   setInvidiousVideoQuality,
   getInvidiousVideoQuality,

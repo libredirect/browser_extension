@@ -43,7 +43,7 @@
     "message": "Zawsze buforuj i wyświetlaj odnośniki wideo z YouTube poprzez Invidious",
     "description": "Etykieta dla opcji 'Zawsze buforuj i wyświetlaj odnośniki wideo poprzez Invidious'."
   },
-  "invidiousOnlyEmbeddedVideo": {
+  "OnlyEmbeddedVideo": {
     "message": "Jedynie przekieruj odnośniki wideo do instancji Invidious",
     "description": "Etykieta dla opcji 'Jedynie przekieruj odnośniki wideo do instancji Invidious'."
   },

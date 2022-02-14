@@ -43,7 +43,7 @@
     "message": "Toujours transiter par proxy les vidéos via Invidious",
     "description": "Libellé pour l'option 'Toujours transiter par proxy les vidéos via Invidious' (options)."
   },
-  "invidiousOnlyEmbeddedVideo": {
+  "OnlyEmbeddedVideo": {
     "message": "Rediriger uniquement les vidéos intégrées vers Invidious",
     "description": "Libellé pour l'option 'Rediriger uniquement les vidéos intégrées vers Invidious' (options)."
   },
