@@ -47,7 +47,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (exceptionsHelper.isException(url)) newUrl = null;
 
-    else if (youtubeHelper.isYoutube(url)) newUrl = youtubeHelper.redirect(url, initiator, details.type)
+    else if (youtubeHelper.isYoutube(url, initiator)) newUrl = youtubeHelper.redirect(url, initiator, details.type)
 
     else if (twitterHelper.isTwitter(url)) newUrl = twitterHelper.redirect(url, initiator);
 

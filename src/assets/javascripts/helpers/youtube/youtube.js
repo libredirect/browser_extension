@@ -197,16 +197,63 @@ function setPersistInvidiousPrefs(val) {
   console.log("persistInvidiousPrefs: ", persistInvidiousPrefs)
 }
 
+
+let alwaysusePreferred;
+const getAlwaysusePreferred = () => alwaysusePreferred;
+function setAlwaysusePreferred(val) {
+  alwaysusePreferred = val;
+  browser.storage.sync.set({ alwaysusePreferred })
+  console.log("alwaysusePreferred: ", alwaysusePreferred)
+}
+
 let invidiousHostNames = () => redirects.invidious.normal.map(link => new URL(link).host);
 let pipedHostNames = () => redirects.piped.normal.map(link => new URL(link).host);
 
-function isYoutube(url) {
-  if (frontend == 'invidious')
-    return (targets.some((rx) => rx.test(url.href)) | pipedHostNames().includes(url.host));
-  if (frontend == 'piped')
-    return (targets.some((rx) => rx.test(url.href)) | invidiousHostNames().includes(url.host));
+function isYoutube(url, initiator) {
+  if (disableYoutube)
+    return null;
+
+  if (
+    initiator &&
+    (
+      redirects.invidious.normal.includes(initiator.origin) ||
+      redirects.piped.normal.includes(initiator.origin) ||
+      targets.includes(initiator.host)
+    )
+  )
+    return null;
+
+  if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
+
+  let pipedInstancesList = [...pipedRedirectsChecks, ...pipedCustomRedirects];
+  let invidiousInstancesList = [...invidiousRedirectsChecks, ...invidiousCustomRedirects];
+  let isTargets = targets.some((rx) => rx.test(url.href));
+  let protocolHost = `${url.protocol}//${url.host}`;
+
+  let isInvidious = redirects.invidious.normal.includes(protocolHost);
+  if (isInvidious)
+    for (const iterator of invidiousInstancesList)
+      if (iterator.indexOf(protocolHost) === 0) isInvidious = false;
+
+  let isPiped = redirects.piped.normal.includes(protocolHost);
+  if (isPiped)
+    for (const iterator of pipedInstancesList)
+      if (iterator.indexOf(protocolHost) === 0) isPiped = false;
+
+  if (frontend == 'invidious') {
+    if (alwaysusePreferred)
+      return isTargets | isPiped | isInvidious;
+    else
+      return isTargets | isPiped;
+  }
+  if (frontend == 'piped') {
+    if (alwaysusePreferred)
+      return isTargets | isPiped | isInvidious;
+    else
+      return isTargets | isInvidious;
+  }
   else
-    return targets.some((rx) => rx.test(url.href))
+    return isTargets
 }
 
 async function init() {
@@ -229,6 +276,7 @@ async function init() {
         "invidiousCustomRedirects",
         "pipedRedirectsChecks",
         "pipedCustomRedirects",
+        "alwaysusePreferred",
       ],
       (result) => {
         if (result.youtubeRedirects) redirects = result.youtubeRedirects;
@@ -253,6 +301,8 @@ async function init() {
 
         persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
 
+        alwaysusePreferred = result.alwaysusePreferred ?? true;
+
         resolve();
       });
 
@@ -267,26 +317,16 @@ function invidiousInitCookies(tabId) {
   });
 }
 
-function redirect(url, initiator, type) {
-  if (disableYoutube)
-    return null;
-
-  if (
-    initiator &&
-    (
-      redirects.invidious.normal.includes(initiator.origin) ||
-      redirects.piped.normal.includes(initiator.origin) ||
-      targets.includes(initiator.host)
-    )
-  )
-    return null;
-
-  if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
+function redirect(url, type) {
 
   if (frontend == 'freeTube' && type === "main_frame")
     return `freetube://${url}`;
 
   else if (frontend == 'invidious') {
+
+    let instancesList = [...invidiousRedirectsChecks, ...invidiousCustomRedirects];
+    if (instancesList.length === 0) return null;
+    let randomInstance = commonHelper.getRandomInstance(instancesList);
 
     if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
 
@@ -298,35 +338,21 @@ function redirect(url, initiator, type) {
     if (invidiousSubtitles.trim() != '') url.searchParams.append("subtitles", invidiousSubtitles);
     if (invidiousAutoplay != "DEFAULT") url.searchParams.append("autoplay", invidiousAutoplay);
 
-    let instancesList = [...invidiousRedirectsChecks, ...invidiousCustomRedirects];
-
-    if (instancesList.length === 0)
-      return null;
-
-    let randomInstance = commonHelper.getRandomInstance(instancesList)
-
     return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
 
   } else if (frontend == 'piped') {
 
-    if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
-
     let instancesList = [...pipedRedirectsChecks, ...pipedCustomRedirects];
-
     if (instancesList.length === 0) return null;
+    let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-    let randomInstance = commonHelper.getRandomInstance(instancesList)
+    if (invidiousOnlyEmbeddedVideo && type !== "sub_frame") return null;
 
     if (invidiousTheme != "DEFAULT") url.searchParams.append("theme", invidiousTheme);
     if (invidiousVolume != "--") url.searchParams.append("volume", invidiousVolume / 100);
     if (invidiousAutoplay != "DEFAULT") url.searchParams.append("playerAutoPlay", invidiousAutoplay);
 
-    if (url.hostname.endsWith("youtube.com") || url.hostname.endsWith("youtube-nocookie.com") || invidiousHostNames().includes(url.hostname))
-      return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
-
-    if (url.hostname.endsWith("youtu.be") && url.pathname.length > 1)
-      return `${randomInstance}/watch?v=${url.pathname.substring(1)}`;
-
+    return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
   }
   return 'CANCEL';
 }
@@ -386,6 +412,9 @@ export default {
 
   getPipedCustomRedirects,
   setPipedCustomRedirects,
+
+  getAlwaysusePreferred,
+  setAlwaysusePreferred,
 
   init,
 };
