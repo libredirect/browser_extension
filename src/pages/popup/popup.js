@@ -20,7 +20,7 @@ let disableInstagramElement = document.querySelector("#disable-bibliogram");
 let disableMapsElement = document.querySelector("#disable-osm");
 let disableRedditElement = document.querySelector("#disable-reddit");
 let disableSearchElement = document.querySelector("#disable-search");
-let disableTranslateElement = document.querySelector("#disable-simplyTranslate");
+let disableElement = document.querySelector("#disable-simplyTranslate");
 let disableWikipediaElement = document.querySelector("#disable-wikipedia");
 let disableMediumElement = document.querySelector("#disable-medium");
 let disableImgurElement = document.querySelector("#disable-imgur");
@@ -47,7 +47,7 @@ wholeInit().then(() => {
   disableMapsElement.checked = !mapsHelper.getDisableMaps();
   disableRedditElement.checked = !redditHelper.getDisableReddit();
   disableSearchElement.checked = !searchHelper.getDisableSearch();
-  disableTranslateElement.checked = !translateHelper.getDisableTranslate();
+  disableElement.checked = !translateHelper.getDisable();
   disableWikipediaElement.checked = !wikipediaHelper.getDisableWikipedia();
   disableImgurElement.checked = !imgurHelper.getDisableImgur();
   disableTiktokElement.checked = !tiktokHelper.getDisableTiktok();
@@ -78,8 +78,8 @@ disableSearchElement.addEventListener("change",
   (event) => searchHelper.setDisableSearch(!event.target.checked)
 );
 
-disableTranslateElement.addEventListener("change",
-  (event) => translateHelper.setDisableTranslate(!event.target.checked)
+disableElement.addEventListener("change",
+  (event) => translateHelper.setDisable(!event.target.checked)
 );
 
 disableWikipediaElement.addEventListener("change",

@@ -18,20 +18,20 @@ browser.storage.sync.get(
         "invidiousVideoQuality",
         "invidiousDarkMode",
         "OnlyEmbeddedVideo",
-        "invidiousVolume",
+        "volume",
         "invidiousPlayerStyle",
         "invidiousSubtitles",
-        "invidiousAutoplay",
+        "autoplay",
     ], (result) => {
         const prefs = getCookie();
 
         prefs.local = result.invidiousAlwaysProxy;
         prefs.quality = result.invidiousVideoQuality;
         prefs.dark_mode = result.invidiousDarkMode;
-        prefs.volume = result.invidiousVolume;
+        prefs.volume = result.volume;
         prefs.player_style = result.invidiousPlayerStyle;
         prefs.subtitles = result.invidiousSubtitles;
-        prefs.autoplay = result.invidiousAutoplay;
+        prefs.autoplay = result.autoplay;
 
         document.cookie = `PREFS=${encodeURIComponent(JSON.stringify(prefs))}`;
     }

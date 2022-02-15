@@ -63,7 +63,7 @@
     "message": "Redirecciones de Buscador",
     "description": "Etiqueta para activar/desactivar la opción de redirecciones de Buscador (opciones y pop-up)."
   },
-  "disableTranslate": {
+  "disable": {
     "message": "Redirecciones de SimplyTranslate",
     "description": "Etiqueta para activar/desactivar la opción de redirecciones de SimplyTranslate (opciones y pop-up)."
   },

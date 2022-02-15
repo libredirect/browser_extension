@@ -141,20 +141,20 @@ function setInvidiousVideoQuality(val) {
 }
 const getInvidiousVideoQuality = () => invidiousVideoQuality;
 
-let invidiousTheme;
-const getInvidiousTheme = () => invidiousTheme;
-function setInvidiousTheme(val) {
-  invidiousTheme = val;
-  browser.storage.sync.set({ invidiousTheme })
-  console.log("invidiousTheme: ", invidiousTheme)
+let theme;
+const getTheme = () => theme;
+function setTheme(val) {
+  theme = val;
+  browser.storage.sync.set({ youtubeTheme: theme })
+  console.log("theme: ", theme)
 }
 
-let invidiousVolume;
-const getInvidiousVolume = () => invidiousVolume;
-function setInvidiousVolume(val) {
-  invidiousVolume = val;
-  browser.storage.sync.set({ invidiousVolume })
-  console.log("invidiousVolume: ", invidiousVolume)
+let volume;
+const getVolume = () => volume;
+function setVolume(val) {
+  volume = val;
+  browser.storage.sync.set({ youtubeVolume: volume })
+  console.log("youtubeVolume: ", volume)
 }
 
 let invidiousPlayerStyle;
@@ -173,12 +173,12 @@ function setInvidiousSubtitles(val) {
   console.log("invidiousSubtitles: ", invidiousSubtitles)
 }
 
-let invidiousAutoplay;
-const getInvidiousAutoplay = () => invidiousAutoplay;
-function setInvidiousAutoplay(val) {
-  invidiousAutoplay = val;
-  browser.storage.sync.set({ invidiousAutoplay })
-  console.log("invidiousAutoplay: ", invidiousAutoplay)
+let autoplay;
+const getAutoplay = () => autoplay;
+function setAutoplay(val) {
+  autoplay = val;
+  browser.storage.sync.set({ youtubeAutoplay: autoplay })
+  console.log("autoplay: ", autoplay)
 }
 
 let frontend;
@@ -262,14 +262,14 @@ async function init() {
       [
         "invidiousAlwaysProxy",
         "invidiousVideoQuality",
-        "invidiousTheme",
+        "youtubeTheme",
         "persistInvidiousPrefs",
         "disableYoutube",
         "OnlyEmbeddedVideo",
-        "invidiousVolume",
+        "youtubeVolume",
         "invidiousPlayerStyle",
         "invidiousSubtitles",
-        "invidiousAutoplay",
+        "youtubeAutoplay",
         "youtubeRedirects",
         "youtubeFrontend",
         "invidiousRedirectsChecks",
@@ -287,11 +287,11 @@ async function init() {
         invidiousAlwaysProxy = result.invidiousAlwaysProxy ?? 'DEFAULT';
         OnlyEmbeddedVideo = result.OnlyEmbeddedVideo ?? 'both';
         invidiousVideoQuality = result.invidiousVideoQuality ?? 'DEFAULT';
-        invidiousTheme = result.invidiousTheme ?? 'DEFAULT';
-        invidiousVolume = result.invidiousVolume ?? '--';
+        theme = result.youtubeTheme ?? 'DEFAULT';
+        volume = result.youtubeVolume ?? '--';
         invidiousPlayerStyle = result.invidiousPlayerStyle ?? 'DEFAULT';
         invidiousSubtitles = result.invidiousSubtitles || '';
-        invidiousAutoplay = result.invidiousAutoplay ?? 'DEFAULT';
+        autoplay = result.youtubeAutoplay ?? 'DEFAULT';
 
         invidiousRedirectsChecks = result.invidiousRedirectsChecks ?? [...redirects.invidious.normal];
         invidiousCustomRedirects = result.invidiousCustomRedirects ?? [];
@@ -318,9 +318,6 @@ function invidiousInitCookies(tabId) {
 }
 
 function redirect(url, type) {
-
-  console.log("type", type);
-
   if (frontend == 'freeTube' && type === "main_frame")
     return `freetube://${url}`;
 
@@ -335,11 +332,11 @@ function redirect(url, type) {
 
     if (invidiousAlwaysProxy != "DEFAULT") url.searchParams.append("local", invidiousAlwaysProxy);
     if (invidiousVideoQuality != "DEFAULT") url.searchParams.append("quality", invidiousVideoQuality);
-    if (invidiousTheme != "DEFAULT") url.searchParams.append("dark_mode", invidiousTheme);
-    if (invidiousVolume != "--") url.searchParams.append("volume", invidiousVolume);
+    if (theme != "DEFAULT") url.searchParams.append("dark_mode", theme);
+    if (volume != "--") url.searchParams.append("volume", volume);
+    if (autoplay != "DEFAULT") url.searchParams.append("autoplay", autoplay);
     if (invidiousPlayerStyle != "DEFAULT") url.searchParams.append("player_style", invidiousPlayerStyle);
     if (invidiousSubtitles.trim() != '') url.searchParams.append("subtitles", invidiousSubtitles);
-    if (invidiousAutoplay != "DEFAULT") url.searchParams.append("autoplay", invidiousAutoplay);
 
     return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
 
@@ -352,9 +349,9 @@ function redirect(url, type) {
     if (OnlyEmbeddedVideo == 'onlyEmbedded' && type !== "sub_frame") return null
     if (OnlyEmbeddedVideo == 'onlyNotEmbedded' && type !== "main_frame") return null;
 
-    if (invidiousTheme != "DEFAULT") url.searchParams.append("theme", invidiousTheme);
-    if (invidiousVolume != "--") url.searchParams.append("volume", invidiousVolume / 100);
-    if (invidiousAutoplay != "DEFAULT") url.searchParams.append("playerAutoPlay", invidiousAutoplay);
+    if (theme != "DEFAULT") url.searchParams.append("theme", theme);
+    if (volume != "--") url.searchParams.append("volume", volume / 100);
+    if (autoplay != "DEFAULT") url.searchParams.append("playerAutoPlay", autoplay);
 
     return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
   }
@@ -387,11 +384,11 @@ export default {
   setInvidiousVideoQuality,
   getInvidiousVideoQuality,
 
-  setInvidiousTheme,
-  getInvidiousTheme,
+  setTheme,
+  getTheme,
 
-  setInvidiousVolume,
-  getInvidiousVolume,
+  setVolume,
+  getVolume,
 
   setInvidiousPlayerStyle,
   getInvidiousPlayerStyle,
@@ -399,8 +396,8 @@ export default {
   setInvidiousSubtitles,
   getInvidiousSubtitles,
 
-  setInvidiousAutoplay,
-  getInvidiousAutoplay,
+  setAutoplay,
+  getAutoplay,
 
   getPersistInvidiousPrefs,
   setPersistInvidiousPrefs,

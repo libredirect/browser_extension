@@ -78,7 +78,6 @@ function setSimplyTranslateCustomRedirects(val) {
   console.log("simplyTranslateCustomRedirects: ", val)
 }
 
-
 function setLingvaRedirects(val) {
   redirects.lingva = val;
   browser.storage.sync.set({ translateRedirects: redirects })
@@ -107,45 +106,62 @@ function setLingvaCustomRedirects(val) {
   console.log("lingvaCustomRedirects: ", val)
 }
 
-
-let disableTranslate;
-const getDisableTranslate = () => disableTranslate;
-function setDisableTranslate(val) {
-  disableTranslate = val;
-  browser.storage.sync.set({ disableTranslate })
-  console.log("disableTranslate: ", disableTranslate)
+let disable;
+const getDisable = () => disable;
+function setDisable(val) {
+  disable = val;
+  browser.storage.sync.set({ translateDisable: disable })
+  console.log("disable: ", disable)
 }
 
-let translateFrontend;
-const getFrontend = () => translateFrontend;
+let frontend;
+const getFrontend = () => frontend;
 function setFrontend(val) {
-  translateFrontend = val;
-  browser.storage.sync.set({ translateFrontend })
-  console.log("Translate frontend: ", val)
+  frontend = val;
+  browser.storage.sync.set({ translateFrontend: frontend })
+  console.log("translateFrontend: ", frontend)
+}
+
+let from;
+const getFrom = () => from;
+function setFrom(val) {
+  from = val;
+  browser.storage.sync.set({ translateFrom: from })
+  console.log("from: ", from)
+}
+
+let to;
+const getTo = () => to;
+function setTo(val) {
+  to = val;
+  browser.storage.sync.set({ translateTo: to })
+  console.log("to: ", to)
+}
+
+function isTranslate(url) {
+  if (disable) return null;
+  return targets.includes(url.host)
 }
 
 function redirect(url, initiator) {
-  if (disableTranslate) {
-    console.log("SimplyTranslate disabled")
-    return null
-  };
-
-  if (translateFrontend == 'simplyTranslate') {
-
+  let params_arr = url.search.split('&');
+  params_arr[0] = params_arr[0].substring(1);
+  let myMap = {};
+  for (let i = 0; i < params_arr.length; i++) {
+    let pair = params_arr[i].split('=');
+    myMap[pair[0]] = pair[1];
+  }
+  if (frontend == 'simplyTranslate') {
     let instancesList = [...simplyTranslateRedirectsChecks, ...simplyTranslateCustomRedirects];
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList)
 
-    return `${randomInstance}/${url.search}`;
+    if (myMap.sl && myMap.tl && myMap.text)
+      return `${randomInstance}/${url.search}`;
+    else
+      return `${randomInstance}/?sl=${from}&tl=${to}`
   }
-  else if (translateFrontend == 'lingva') {
-    let params_arr = url.search.split('&');
-    params_arr[0] = params_arr[0].substring(1);
-    let myMap = {};
-    for (let i = 0; i < params_arr.length; i++) {
-      let pair = params_arr[i].split('=');
-      myMap[pair[0]] = pair[1];
-    }
+  else if (frontend == 'lingva') {
     let instancesList = [...lingvaRedirectsChecks, ...lingvaCustomRedirects];
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList)
@@ -158,26 +174,28 @@ function redirect(url, initiator) {
 
 }
 
-function isTranslate(url) {
-  return targets.includes(url.host)
-}
-
 async function init() {
   return new Promise((resolve) => {
     browser.storage.sync.get(
       [
-        "disableTranslate",
+        "translateDisable",
         "translateFrontend",
         "translateRedirects",
         "simplyTranslateRedirectsChecks",
         "simplyTranslateCustomRedirects",
         "lingvaRedirectsChecks",
         "lingvaCustomRedirects",
-      ], (result) => {
-        disableTranslate = result.disableTranslate ?? false;
-        translateFrontend = result.translateFrontend ?? "simplyTranslate";
-        if (result.translateRedirects)
-          redirects = result.translateRedirects
+        "translateFrom",
+        "translateTo",
+      ],
+      (result) => {
+        disable = result.translateDisable ?? false;
+        frontend = result.translateFrontend ?? "simplyTranslate";
+
+        from = result.translateFrom ?? "auto";
+        to = result.translateTo ?? 'en';
+
+        if (result.translateRedirects) redirects = result.translateRedirects
 
         simplyTranslateRedirectsChecks = result.simplyTranslateRedirectsChecks ?? [...redirects.simplyTranslate.normal];
         simplyTranslateCustomRedirects = result.simplyTranslateCustomRedirects ?? [];
@@ -199,11 +217,16 @@ export default {
 
   isTranslate,
 
-  getDisableTranslate,
-  setDisableTranslate,
+  getDisable,
+  setDisable,
 
   getFrontend,
   setFrontend,
+
+  getFrom,
+  setFrom,
+  getTo,
+  setTo,
 
   getSimplyTranslateRedirectsChecks,
   setSimplyTranslateRedirectsChecks,

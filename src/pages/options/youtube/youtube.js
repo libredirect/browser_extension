@@ -36,31 +36,31 @@ disableYoutubeElement.addEventListener("change",
     (event) => youtubeHelper.setDisableYoutube(!event.target.checked)
 );
 
-let invidiousThemeElement = document.getElementById("invidious-theme");
-invidiousThemeElement.addEventListener("change",
-    (event) => youtubeHelper.setInvidiousTheme(event.target.options[invidiousThemeElement.selectedIndex].value)
+let themeElement = document.getElementById("invidious-theme");
+themeElement.addEventListener("change",
+    (event) => youtubeHelper.setTheme(event.target.options[themeElement.selectedIndex].value)
 );
 
-let invidiousVolumeElement = document.getElementById("invidious-volume");
-let invidiousVolumeValueElement = document.querySelector("#volume-value");
-invidiousVolumeElement.addEventListener("input",
+let volumeElement = document.getElementById("invidious-volume");
+let volumeValueElement = document.querySelector("#volume-value");
+volumeElement.addEventListener("input",
     () => {
-        youtubeHelper.setInvidiousVolume(invidiousVolumeElement.value);
-        invidiousVolumeValueElement.textContent = `${invidiousVolumeElement.value}%`;
+        youtubeHelper.setVolume(volumeElement.value);
+        volumeValueElement.textContent = `${volumeElement.value}%`;
     }
 );
 let invidiousClearVolumeElement = document.getElementById("clear-invidious-volume");
 invidiousClearVolumeElement.addEventListener("click",
     (_) => {
-        youtubeHelper.setInvidiousVolume('--');
-        invidiousVolumeValueElement.textContent = `--%`;
-        invidiousVolumeElement.value = 50;
+        youtubeHelper.setVolume('--');
+        volumeValueElement.textContent = `--%`;
+        volumeElement.value = 50;
     }
 );
 
-let invidiousAutoplayElement = document.getElementById("invidious-autoplay");
-invidiousAutoplayElement.addEventListener("change",
-    (event) => youtubeHelper.setInvidiousAutoplay(event.target.options[invidiousAutoplayElement.selectedIndex].value)
+let autoplayElement = document.getElementById("invidious-autoplay");
+autoplayElement.addEventListener("change",
+    (event) => youtubeHelper.setAutoplay(event.target.options[autoplayElement.selectedIndex].value)
 );
 
 let OnlyEmbeddedVideoElement = document.getElementById("only-embed");
@@ -75,12 +75,12 @@ alwaysUsePreferredElement.addEventListener("change",
 
 youtubeHelper.init().then(() => {
     disableYoutubeElement.checked = !youtubeHelper.getDisableYoutube();
-    invidiousThemeElement.checked = youtubeHelper.getInvidiousTheme();
-    invidiousVolumeElement.value = youtubeHelper.getInvidiousVolume();
-    invidiousVolumeValueElement.textContent = `${youtubeHelper.getInvidiousVolume()}%`;
+    themeElement.checked = youtubeHelper.getTheme();
+    volumeElement.value = youtubeHelper.getVolume();
+    volumeValueElement.textContent = `${youtubeHelper.getVolume()}%`;
     OnlyEmbeddedVideoElement.value = youtubeHelper.getOnlyEmbeddedVideo();
     alwaysUsePreferredElement.checked = youtubeHelper.getAlwaysusePreferred();
-    invidiousAutoplayElement.checked = youtubeHelper.getInvidiousAutoplay();
+    autoplayElement.checked = youtubeHelper.getAutoplay();
     let frontend = youtubeHelper.getFrontend();
     youtubeFrontendElement.value = frontend;
     changeFrontendsSettings(frontend);

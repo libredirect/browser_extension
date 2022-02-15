@@ -59,7 +59,7 @@
     "message": "Reindirizzamenti motore di ricerca",
     "description": "Label for enable/disable Search Engine redirects option (options & pop-up)."
   },
-  "disableTranslate": {
+  "disable": {
     "message": "Reindirizzamenti SimplyTranslate",
     "description": "Label for enable/disable SimplyTranslate redirects option (options & pop-up)."
   },
