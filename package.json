@@ -2,10 +2,11 @@
   "name": "libredirect",
   "description": "Redirects YouTube, Twitter, Instagram and more to privacy friendly frontends.",
   "engines": {
-    "node": ">=10.0.0",
-    "npm": ">=5.6.0"
+    "node": ">=16.13.1",
+    "npm": ">=8.1.2"
   },
   "scripts": {
+    "start": "web-ext run --browser-console --source-dir ./src/",
     "build": "web-ext build --overwrite-dest --source-dir ./src/",
     "test": "web-ext lint --source-dir ./src/ || true"
   },
@@ -20,6 +21,6 @@
   },
   "homepage": "https://github.com/LibRedirect/LibRedirect#readme",
   "devDependencies": {
-    "web-ext": "^6.2.0"
+    "web-ext": "^6.7.0"
   }
 }
