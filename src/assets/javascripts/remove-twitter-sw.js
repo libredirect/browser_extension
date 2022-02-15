@@ -8,8 +8,8 @@ let exceptions;
 window.browser = window.browser || window.chrome;
 
 Promise.all([
-  import(browser.extension.getURL("src/assets/javascripts/helpers/common.js")),
-  import(browser.extension.getURL("src/assets/javascripts/helpers/twitter.js")),
+  import(browser.runtime.getURL("src/assets/javascripts/helpers/common.js")),
+  import(browser.runtime.getURL("src/assets/javascripts/helpers/twitter.js")),
 ]).then(
   (helpers) => {
     let commonHelper;
