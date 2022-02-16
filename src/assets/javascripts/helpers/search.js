@@ -136,7 +136,7 @@ let redirects = {
   },
 };
 const getRedirects = () => redirects;
-const getCustomRedirects = function () {
+const getCustomRedirects = () => {
   return {
     "searx": {
       "normal": [...searxRedirectsChecks, ...searxCustomRedirects]
@@ -151,13 +151,9 @@ function setSearxRedirects(val) {
   redirects.searx = val;
   browser.storage.sync.set({ searchRedirects: redirects })
   console.log("searxRedirects:", val)
-  for (const item of searxRedirectsChecks) {
-    console.log(item)
-    if (!redirects.searx.normal.includes(item)) {
-      var index = searxRedirectsChecks.indexOf(item);
-      if (index !== -1) searxRedirectsChecks.splice(index, 1);
-      console.log(`Deleted ${item}`);
-    }
+  for (const item of searxRedirectsChecks) if (!redirects.searx.normal.includes(item)) {
+    var index = searxRedirectsChecks.indexOf(item);
+    if (index !== -1) searxRedirectsChecks.splice(index, 1);
   }
   setSearxRedirectsChecks(searxRedirectsChecks);
 }
@@ -166,6 +162,11 @@ function setWhoogleRedirects(val) {
   redirects.whoogle = val;
   browser.storage.sync.set({ searchRedirects: redirects })
   console.log("whoogleRedirects:", val)
+  for (const item of whoogleRedirectsChecks) if (!redirects.whoogle.normal.includes(item)) {
+    var index = whoogleRedirectsChecks.indexOf(item);
+    if (index !== -1) whoogleRedirectsChecks.splice(index, 1);
+  }
+  setWhoogleRedirectsChecks(whoogleRedirectsChecks);
 }
 
 let whoogleRedirectsChecks;
@@ -174,12 +175,6 @@ function setWhoogleRedirectsChecks(val) {
   whoogleRedirectsChecks = val;
   browser.storage.sync.set({ whoogleRedirectsChecks })
   console.log("whoogleRedirectsChecks: ", val)
-  for (const item of whoogleRedirectsChecks)
-    if (!redirects.whoogle.normal.includes(item)) {
-      var index = whoogleRedirectsChecks.indexOf(item);
-      if (index !== -1) whoogleRedirectsChecks.splice(index, 1);
-    }
-  setWhoogleRedirectsChecks(whoogleRedirectsChecks);
 }
 
 let whoogleCustomRedirects = [];
@@ -251,7 +246,6 @@ function redirect(url) {
   return `${randomInstance}${path}?${searchQuery}`;
 }
 
-
 async function init() {
   return new Promise((resolve) => {
     browser.storage.sync.get(
@@ -266,7 +260,7 @@ async function init() {
       ],
       (result) => {
         disable = result.disableSearch ?? false;
-        
+
         frontend = result.searchFrontend ?? 'searx';
 
         if (result.searchRedirects) redirects = result.searchRedirects;

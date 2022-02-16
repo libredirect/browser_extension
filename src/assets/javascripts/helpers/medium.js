@@ -40,11 +40,10 @@ function setRedirects(val) {
   redirects.scribe = val;
   browser.storage.sync.set({ mediumRedirects: redirects })
   console.log("mediumRedirects: ", val)
-  for (const item of scribeRedirectsChecks)
-    if (!redirects.scribe.normal.includes(item)) {
-      var index = scribeRedirectsChecks.indexOf(item);
-      if (index !== -1) scribeRedirectsChecks.splice(index, 1);
-    }
+  for (const item of scribeRedirectsChecks) if (!redirects.scribe.normal.includes(item)) {
+    var index = scribeRedirectsChecks.indexOf(item);
+    if (index !== -1) scribeRedirectsChecks.splice(index, 1);
+  }
   setScribeRedirectsChecks(scribeRedirectsChecks);
 }
 
