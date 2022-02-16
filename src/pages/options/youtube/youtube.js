@@ -3,22 +3,45 @@ import youtubeHelper from "../../../assets/javascripts/helpers/youtube/youtube.j
 let disableYoutubeElement = document.getElementById("disable-invidious");
 
 let youtubeFrontendElement = document.getElementById("youtube-frontend");
-let invidiousDivElement = document.getElementById("invidious")
-let pipedDivElement = document.getElementById("piped")
-let invidiousPipedDivElement = document.getElementById("invidious-piped")
+let invidiousDivElement = document.getElementById("invidious");
+let pipedDivElement = document.getElementById("piped");
+let invidiousPipedDivElement = document.getElementById("invidious-piped");
+let freetubeDivElement = document.getElementById("freetube");
+let freetubeFrontendElement = document.getElementById("freetube-embedded-frontend");
 
 function changeFrontendsSettings(frontend) {
     if (frontend == 'piped') {
         invidiousPipedDivElement.style.display = 'block'
         pipedDivElement.style.display = 'block';
         invidiousDivElement.style.display = 'none';
+        freetubeDivElement.style.display = 'none';
     }
     else if (frontend == 'invidious') {
         invidiousPipedDivElement.style.display = 'block'
         pipedDivElement.style.display = 'none';
         invidiousDivElement.style.display = 'block';
+        freetubeDivElement.style.display = 'none';
     }
-    else if (frontend == 'freeTube') {
+    else if (frontend == 'freetube') {
+        invidiousPipedDivElement.style.display = 'none'
+        pipedDivElement.style.display = 'none';
+        invidiousDivElement.style.display = 'none';
+        freetubeDivElement.style.display = 'block';
+    }
+}
+
+function changeFreetubeFrontendsSettings(freetubeFrontend) {
+    if (freetubeFrontend == 'invidious') {
+        invidiousPipedDivElement.style.display = 'block'
+        pipedDivElement.style.display = 'none';
+        invidiousDivElement.style.display = 'block';
+    }
+    if (freetubeFrontend == 'piped') {
+        invidiousPipedDivElement.style.display = 'block'
+        pipedDivElement.style.display = 'block';
+        invidiousDivElement.style.display = 'none';
+    }
+    else if (freetubeFrontend == 'youtube') {
         invidiousPipedDivElement.style.display = 'none'
         pipedDivElement.style.display = 'none';
         invidiousDivElement.style.display = 'none';
@@ -29,6 +52,13 @@ youtubeFrontendElement.addEventListener("change",
         let frontend = event.target.options[youtubeFrontendElement.selectedIndex].value
         youtubeHelper.setFrontend(frontend);
         changeFrontendsSettings(frontend);
+    }
+);
+freetubeFrontendElement.addEventListener("change",
+    (event) => {
+        let freetubeFrontend = event.target.options[freetubeFrontendElement.selectedIndex].value
+        youtubeHelper.setFreetubeFrontend(freetubeFrontend);
+        changeFreetubeFrontendsSettings(freetubeFrontend);
     }
 );
 
@@ -84,4 +114,8 @@ youtubeHelper.init().then(() => {
     let frontend = youtubeHelper.getFrontend();
     youtubeFrontendElement.value = frontend;
     changeFrontendsSettings(frontend);
+
+    let freetubeFrontend = youtubeHelper.getFreetubeFrontend()
+    freetubeFrontendElement.value = freetubeFrontend
+    changeFreetubeFrontendsSettings(freetubeFrontend);
 });

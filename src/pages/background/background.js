@@ -92,7 +92,7 @@ browser.webRequest.onResponseStarted.addListener(
     var mightyList = getMightyList();
 
     if (mightyList.includes(protocolHost)); {
-      if (responseDetails.statusCode >= 500) {
+      if (responseDetails.statusCode >= 500 && responseDetails.type === "main_frame") {
         console.log("Instance is corrupted, redirecting", responseDetails.url);
         changeInstance(responseDetails.url);
       }
