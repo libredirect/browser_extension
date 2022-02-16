@@ -258,14 +258,14 @@ function redirect(url, type) {
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-    if (theme != "DEFAULT") url.searchParams.append("dark_mode", theme);
-    if (volume != "--") url.searchParams.append("volume", volume);
-    if (autoplay != "DEFAULT") url.searchParams.append("autoplay", autoplay);
+    if (!url.searchParams.has("dark_mode")) if (theme != "DEFAULT") url.searchParams.append("dark_mode", theme);
+    if (!url.searchParams.has("volume")) if (volume != "--") url.searchParams.append("volume", volume);
+    if (!url.searchParams.has("autoplay")) if (autoplay != "DEFAULT") url.searchParams.append("autoplay", autoplay);
 
-    if (invidiousAlwaysProxy != "DEFAULT") url.searchParams.append("local", invidiousAlwaysProxy);
-    if (invidiousVideoQuality != "DEFAULT") url.searchParams.append("quality", invidiousVideoQuality);
-    if (invidiousPlayerStyle != "DEFAULT") url.searchParams.append("player_style", invidiousPlayerStyle);
-    if (invidiousSubtitles.trim() != '') url.searchParams.append("subtitles", invidiousSubtitles);
+    if (!url.searchParams.has("local")) if (invidiousAlwaysProxy != "DEFAULT") url.searchParams.append("local", invidiousAlwaysProxy);
+    if (!url.searchParams.has("quality")) if (invidiousVideoQuality != "DEFAULT") url.searchParams.append("quality", invidiousVideoQuality);
+    if (!url.searchParams.has("player_style")) if (invidiousPlayerStyle != "DEFAULT") url.searchParams.append("player_style", invidiousPlayerStyle);
+    if (!url.searchParams.has("subtitles")) if (invidiousSubtitles.trim() != '') url.searchParams.append("subtitles", invidiousSubtitles);
 
     return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
 
@@ -278,9 +278,9 @@ function redirect(url, type) {
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-    if (theme != "DEFAULT") url.searchParams.append("theme", theme);
-    if (volume != "--") url.searchParams.append("volume", volume / 100);
-    if (autoplay != "DEFAULT") url.searchParams.append("playerAutoPlay", autoplay);
+    if (!url.searchParams.has("theme")) if (theme != "DEFAULT") url.searchParams.append("theme", theme);
+    if (!url.searchParams.has("volume")) if (volume != "--") url.searchParams.append("volume", volume / 100);
+    if (!url.searchParams.has("playerAutoPlay")) if (autoplay != "DEFAULT") url.searchParams.append("playerAutoPlay", autoplay);
 
     return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
   }
