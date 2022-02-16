@@ -29,15 +29,12 @@ function addressToLatLng(address, callback) {
     if (xmlhttp.readyState === XMLHttpRequest.DONE) {
       if (xmlhttp.status === 200) {
         const json = JSON.parse(xmlhttp.responseText)[0];
-        if (json) {
-          callback(
-            `${json.lat}%2C${json.lon}`,
-            `${json.boundingbox[2]},${json.boundingbox[1]},${json.boundingbox[3]},${json.boundingbox[0]}`
-          );
-        }
-      } else {
+        if (json) callback(
+          `${json.lat}%2C${json.lon}`,
+          `${json.boundingbox[2]},${json.boundingbox[1]},${json.boundingbox[3]},${json.boundingbox[0]}`
+        );
+      } else
         console.info("Error: Status is " + xmlhttp.status);
-      }
     }
   };
   xmlhttp.open(
@@ -48,18 +45,20 @@ function addressToLatLng(address, callback) {
   xmlhttp.send();
 }
 
-let disableMaps;
-const getDisableMaps = () => disableMaps;
-function setDisableMaps(val) {
-  disableMaps = val;
-  browser.storage.sync.set({ disableMaps })
+let disable;
+const getDisable = () => disable;
+function setDisable(val) {
+  disable = val;
+  browser.storage.sync.set({ disableMaps: disable })
 }
 
-function redirect(url, initiator) {
-  if (disableMaps) return null;
+function isMaps(url, initiator) {
+  if (disable) return false;
+  if (initiator && initiator.host === "earth.google.com") return false;
+  return url.href.match(targets);
+}
 
-  if (initiator && initiator.host === "earth.google.com") return null;
-
+function redirect(url) {
   let redirect;
   let link = commonHelper.getRandomInstance(redirects.normal);
   let mapCentre = "";
@@ -104,10 +103,7 @@ function redirect(url, initiator) {
     addressToLatLng(url.searchParams.get("destination"), (coords) => destination = coords);
     redirect = `${link}/directions?engine=${travelMode}&route=${origin}%3B${destination}${mapCentre}${params}`;
     // Get marker from data attribute
-  } else if (
-    url.pathname.includes("data=") &&
-    url.pathname.match(dataLatLngRegex)
-  ) {
+  } else if (url.pathname.includes("data=") && url.pathname.match(dataLatLngRegex)) {
     const [mlat, mlon] = url.pathname.match(dataLatLngRegex);
     redirect = `${link}/?mlat=${mlat.replace("!3d", "")}&mlon=${mlon.replace("!4d", "")}${mapCentre}${params}`;
     // Get marker from ll param
@@ -130,16 +126,12 @@ function redirect(url, initiator) {
   return redirect;
 }
 
-function isMaps(url) {
-  return url.href.match(targets)
-}
-
 async function init() {
   return new Promise((resolve) => {
     browser.storage.sync.get(
       "disableMaps",
       (result) => {
-        disableMaps = result.disableMaps ?? false
+        disable = result.disableMaps ?? false
         resolve();
       }
     );
@@ -147,9 +139,8 @@ async function init() {
 }
 
 export default {
-  addressToLatLng,
-  getDisableMaps,
-  setDisableMaps,
+  getDisable,
+  setDisable,
   redirect,
   isMaps,
   init,

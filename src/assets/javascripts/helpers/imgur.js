@@ -61,23 +61,29 @@ function setRimgoCustomRedirects(val) {
     console.log("rimgoCustomRedirects: ", val)
 }
 
-let disableImgur;
-const getDisableImgur = () => disableImgur;
-function setDisableImgur(val) {
-    disableImgur = val;
-    browser.storage.sync.set({ disableImgur })
+let disable;
+const getDisable = () => disable;
+function setDisable(val) {
+    disable = val;
+    browser.storage.sync.set({ disableImgur: disable })
 }
 
-function redirect(url, initiator, type) {
+function isImgur(url, initiator) {
+    if (disable) return false;
+    if (url.pathname == "/") return false;
+    if (
+        initiator &&
+        ([...redirects.rimgo.normal, ...rimgoCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))
+    ) return false;
+    return targets.some((rx) => rx.test(url.href));
+}
+
+function redirect(url, type) {
     // https://imgur.com/gallery/s4WXQmn
     // https://imgur.com/a/H8M4rcp
     // https://imgur.com/gallery/gYiQLWy
     // https://imgur.com/gallery/cTRwaJU
     // https://i.imgur.com/CFSQArP.jpeg
-
-    if (disableImgur) return null;
-
-    if (url.pathname == "/") return null;
 
     if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") return null;
 
@@ -85,13 +91,7 @@ function redirect(url, initiator, type) {
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList)
 
-    if (initiator && (instancesList.includes(initiator.origin) || targets.includes(initiator.host))) return null;
-
     return `${randomInstance}${url.pathname}${url.search}`;
-}
-
-function isImgur(url) {
-    return targets.some((rx) => rx.test(url.href));
 }
 
 async function init() {
@@ -104,9 +104,9 @@ async function init() {
                 "rimgoCustomRedirects",
             ],
             (result) => {
-                disableImgur = result.disableImgur ?? false;
-                if (result.imgurRedirects)
-                    redirects = result.imgurRedirects;
+                disable = result.disableImgur ?? false;
+
+                if (result.imgurRedirects) redirects = result.imgurRedirects;
 
                 rimgoRedirectsChecks = result.rimgoRedirectsChecks ?? [...redirects.rimgo.normal];
                 rimgoCustomRedirects = result.rimgoCustomRedirects ?? [];
@@ -118,14 +118,12 @@ async function init() {
 }
 
 export default {
-    targets,
-
     getRedirects,
     getCustomRedirects,
     setRedirects,
 
-    getDisableImgur,
-    setDisableImgur,
+    getDisable,
+    setDisable,
 
     getRimgoRedirectsChecks,
     setRimgoRedirectsChecks,

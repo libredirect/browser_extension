@@ -45,29 +45,29 @@ browser.webRequest.onBeforeRequest.addListener(
 
     var newUrl;
 
-    if (exceptionsHelper.isException(url)) newUrl = null;
+    if (exceptionsHelper.isException(url, initiator)) newUrl = null;
 
     else if (youtubeHelper.isYoutube(url, initiator)) newUrl = youtubeHelper.redirect(url, details.type)
 
-    else if (twitterHelper.isTwitter(url)) newUrl = twitterHelper.redirect(url, initiator);
+    else if (twitterHelper.isTwitter(url, initiator)) newUrl = twitterHelper.redirect(url);
 
-    else if (instagramHelper.isInstagram(url)) newUrl = instagramHelper.redirect(url, initiator, details.type);
+    else if (instagramHelper.isInstagram(url, initiator)) newUrl = instagramHelper.redirect(url, details.type);
 
-    else if (mapsHelper.isMaps(url)) newUrl = mapsHelper.redirect(url, initiator);
+    else if (mapsHelper.isMaps(url, initiator)) newUrl = mapsHelper.redirect(url);
 
-    else if (redditHelper.isReddit(url)) newUrl = redditHelper.redirect(url, initiator, details.type);
+    else if (redditHelper.isReddit(url, initiator)) newUrl = redditHelper.redirect(url, details.type);
 
-    else if (mediumHelper.isMedium(url)) newUrl = mediumHelper.redirect(url, initiator, details.type);
+    else if (mediumHelper.isMedium(url, initiator)) newUrl = mediumHelper.redirect(url, details.type);
 
-    else if (imgurHelper.isImgur(url)) newUrl = imgurHelper.redirect(url, initiator, details.type);
+    else if (imgurHelper.isImgur(url, initiator)) newUrl = imgurHelper.redirect(url, details.type);
 
-    else if (tiktokHelper.isTiktok(url)) newUrl = tiktokHelper.redirect(url, initiator, details.type);
+    else if (tiktokHelper.isTiktok(url, initiator)) newUrl = tiktokHelper.redirect(url, details.type);
 
-    else if (translateHelper.isTranslate(url)) newUrl = translateHelper.redirect(url, initiator);
+    else if (translateHelper.isTranslate(url, initiator)) newUrl = translateHelper.redirect(url);
 
-    else if (searchHelper.isSearch(url)) newUrl = searchHelper.redirect(url, initiator)
+    else if (searchHelper.isSearch(url, initiator)) newUrl = searchHelper.redirect(url)
 
-    else if (wikipediaHelper.isWikipedia(url)) newUrl = wikipediaHelper.redirect(url, initiator);
+    else if (wikipediaHelper.isWikipedia(url, initiator)) newUrl = wikipediaHelper.redirect(url);
 
     if (newUrl) {
       if (newUrl == 'CANCEL') {

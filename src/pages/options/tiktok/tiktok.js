@@ -3,11 +3,11 @@ import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableTiktokElement = document.getElementById("disable-tiktok");
 disableTiktokElement.addEventListener("change",
-    (event) => tiktokHelper.setDisableTiktok(!event.target.checked)
+    (event) => tiktokHelper.setDisable(!event.target.checked)
 );
 
 tiktokHelper.init().then(() => {
-    disableTiktokElement.checked = !tiktokHelper.getDisableTiktok();
+    disableTiktokElement.checked = !tiktokHelper.getDisable();
 
     commonHelper.processDefaultCustomInstances(
         'proxiTok',

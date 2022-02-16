@@ -3,11 +3,11 @@ import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableTwitterElement = document.getElementById("disable-nitter");
 disableTwitterElement.addEventListener("change",
-    (event) => twitterHelper.setDisableTwitter(!event.target.checked)
+    (event) => twitterHelper.setDisable(!event.target.checked)
 );
 
 twitterHelper.init().then(() => {
-    disableTwitterElement.checked = !twitterHelper.getDisableTwitter(); 
+    disableTwitterElement.checked = !twitterHelper.getDisable(); 
 
     commonHelper.processDefaultCustomInstances(
         'nitter',

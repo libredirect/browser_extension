@@ -145,23 +145,25 @@ function setRedditFrontend(val) {
   browser.storage.sync.set({ redditFrontend })
 };
 
+function isReddit(url, initiator) {
+  if (
+    initiator &&
+    (
+      [...redirects.libreddit.normal, ...libredditCustomRedirects].includes(initiator.origin) ||
+      [...redirects.teddit.normal, ...tedditCustomRedirects].includes(initiator.origin) ||
+      targets.includes(initiator.host)
+    )
+  ) return false;
+  return targets.includes(url.host)
+}
 
-function redirect(url, initiator, type) {
+function redirect(url, type) {
   if (disableReddit) return null;
 
-  // Do not redirect when already on the selected view
-  // if ((initiator && initiator.origin === redditInstance) || url.origin === redditInstance)
-  //   return null;
-
-
-  // Do not redirect exclusions nor anything other than main_frame
-  if (type !== "main_frame" || url.pathname.match(bypassPaths))
-    return null;
+  if (type !== "main_frame" || url.pathname.match(bypassPaths)) return null;
 
   let libredditInstancesList = [...libredditRedirectsChecks, ...libredditCustomRedirects];
-
   let tedditInstancesList = [...tedditRedirectsChecks, ...tedditCustomRedirects];
-
 
   if (url.host === "i.redd.it") {
     if (libredditInstancesList.length === 0) return null;
@@ -195,19 +197,13 @@ function redirect(url, initiator, type) {
   if (redditFrontend == 'libreddit') {
     if (libredditInstancesList.length === 0) return null;
     let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
-
     return `${libredditRandomInstance}${url.pathname}${url.search}`;
   }
   if (redditFrontend == 'teddit') {
     if (tedditInstancesList.length === 0) return null;
     let tedditRandomInstance = commonHelper.getRandomInstance(tedditInstancesList);
-
     return `${tedditRandomInstance}${url.pathname}${url.search}`;
   }
-}
-
-function isReddit(url) {
-  return targets.includes(url.host)
 }
 
 async function init() {

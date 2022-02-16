@@ -42,7 +42,6 @@ function setRedirects(val) {
   setBibliogramRedirectsChecks(bibliogramRedirectsChecks);
 }
 
-
 let bibliogramRedirectsChecks;
 const getBibliogramRedirectsChecks = () => bibliogramRedirectsChecks;
 function setBibliogramRedirectsChecks(val) {
@@ -84,45 +83,40 @@ const reservedPaths = [
   "tv",
   "reel",
 ];
+
 const bypassPaths = /\/(accounts\/|embeds?.js)/;
 
-let disableInstagram;
-const getDisableInstagram = () => disableInstagram;
-function setDisableInstagram(val) {
-  disableInstagram = val;
-  browser.storage.sync.set({ disableInstagram })
+let disable;
+const getDisable = () => disable;
+function setDisable(val) {
+  disable = val;
+  browser.storage.sync.set({ disableInstagram: disable })
 }
 
-function redirect(url, initiator, type) {
-  if (disableInstagram) return null;
+function isInstagram(url, initiator) {
+  if (disable) return false;
+  if (
+    initiator &&
+    ([...redirects.bibliogram.normal, ...bibliogramCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))
+  )
+    return false; // Do not redirect Bibliogram view on Instagram links
+  return targets.includes(url.host)
+}
+
+function redirect(url, type) {
+  if (type !== "main_frame" || url.pathname.match(bypassPaths))
+    return 'CANCEL'; // Do not redirect /accounts, /embeds.js, or anything other than main_frame
 
   let instancesList = [...bibliogramRedirectsChecks, ...bibliogramCustomRedirects];
   if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList)
 
-  // Do not redirect Bibliogram view on Instagram links
-  if (initiator && (instancesList.includes(initiator.origin) || targets.includes(initiator.host)))
-    return null;
-
-  // Do not redirect /accounts, /embeds.js, or anything other than main_frame
-  if (type !== "main_frame" || url.pathname.match(bypassPaths))
-    return 'CANCEL';
-
-  console.log("Hello", url.href)
-
-  if (url.pathname === "/" || reservedPaths.includes(url.pathname.split("/")[1])) {
-    console.log("wewe")
+  if (url.pathname === "/" || reservedPaths.includes(url.pathname.split("/")[1]))
     return `${randomInstance}${url.pathname}${url.search}`;
-  }
-  else {
-    console.log("A user profile")
-    return `${randomInstance}/u${url.pathname}${url.search}`;
-  } // Likely a user profile, redirect to '/u/...'
+  else
+    return `${randomInstance}/u${url.pathname}${url.search}`; // Likely a user profile, redirect to '/u/...'
 }
 
-function isInstagram(url) {
-  return targets.includes(url.host)
-}
 
 async function init() {
   return new Promise((resolve) => {
@@ -134,19 +128,17 @@ async function init() {
         "bibliogramCustomRedirects",
       ],
       (result) => {
-        disableInstagram = result.disableInstagram ?? false;
+        disable = result.disableInstagram ?? false;
 
         if (result.instagramRedirects) redirects = result.instagramRedirects
 
         bibliogramRedirectsChecks = result.bibliogramRedirectsChecks ?? [...redirects.bibliogram.normal];
-
         bibliogramCustomRedirects = result.bibliogramCustomRedirects ?? [];
 
         resolve();
       }
     )
   })
-
 }
 
 export default {
@@ -154,8 +146,8 @@ export default {
   getCustomRedirects,
   setRedirects,
 
-  getDisableInstagram,
-  setDisableInstagram,
+  getDisable,
+  setDisable,
 
   getBibliogramRedirectsChecks,
   setBibliogramRedirectsChecks,

@@ -41,33 +41,33 @@ async function wholeInit() {
 };
 
 wholeInit().then(() => {
-  disableTwitterElement.checked = !twitterHelper.getDisableTwitter();
-  disableYoutubeElement.checked = !youtubeHelper.getDisableYoutube();
-  disableInstagramElement.checked = !instagramHelper.getDisableInstagram();
-  disableMapsElement.checked = !mapsHelper.getDisableMaps();
+  disableTwitterElement.checked = !twitterHelper.getDisable();
+  disableYoutubeElement.checked = !youtubeHelper.getDisable();
+  disableInstagramElement.checked = !instagramHelper.getDisable();
+  disableMapsElement.checked = !mapsHelper.getDisable();
   disableRedditElement.checked = !redditHelper.getDisableReddit();
-  disableSearchElement.checked = !searchHelper.getDisableSearch();
+  disableSearchElement.checked = !searchHelper.getDisable();
   disableElement.checked = !translateHelper.getDisable();
-  disableWikipediaElement.checked = !wikipediaHelper.getDisableWikipedia();
-  disableImgurElement.checked = !imgurHelper.getDisableImgur();
-  disableTiktokElement.checked = !tiktokHelper.getDisableTiktok();
-  disableMediumElement.checked = !mediumHelper.getDisableMedium();
+  disableWikipediaElement.checked = !wikipediaHelper.getDisable();
+  disableImgurElement.checked = !imgurHelper.getDisable();
+  disableTiktokElement.checked = !tiktokHelper.getDisable();
+  disableMediumElement.checked = !mediumHelper.getDisable();
 })
 
 disableTwitterElement.addEventListener("change",
-  (event) => twitterHelper.setDisableTwitter(!event.target.checked)
+  (event) => twitterHelper.setDisable(!event.target.checked)
 );
 
 disableYoutubeElement.addEventListener("change",
-  (event) => youtubeHelper.setDisableYoutube(!event.target.checked)
+  (event) => youtubeHelper.setDisable(!event.target.checked)
 );
 
 disableInstagramElement.addEventListener("change",
-  (event) => instagramHelper.setDisableInstagram(!event.target.checked)
+  (event) => instagramHelper.setDisable(!event.target.checked)
 );
 
 disableMapsElement.addEventListener("change",
-  (event) => mapsHelper.setDisableMaps(!event.target.checked)
+  (event) => mapsHelper.setDisable(!event.target.checked)
 );
 
 disableRedditElement.addEventListener("change",
@@ -75,7 +75,7 @@ disableRedditElement.addEventListener("change",
 );
 
 disableSearchElement.addEventListener("change",
-  (event) => searchHelper.setDisableSearch(!event.target.checked)
+  (event) => searchHelper.setDisable(!event.target.checked)
 );
 
 disableElement.addEventListener("change",
@@ -83,19 +83,19 @@ disableElement.addEventListener("change",
 );
 
 disableWikipediaElement.addEventListener("change",
-  (event) => wikipediaHelper.setDisableWikipedia(!event.target.checked)
+  (event) => wikipediaHelper.setDisable(!event.target.checked)
 );
 
 disableImgurElement.addEventListener("change",
-  (event) => imgurHelper.setDisableImgur(!event.target.checked)
+  (event) => imgurHelper.setDisable(!event.target.checked)
 );
 
 disableTiktokElement.addEventListener("change",
-  (event) => tiktokHelper.setDisableTiktok(!event.target.checked)
+  (event) => tiktokHelper.setDisable(!event.target.checked)
 );
 
 disableMediumElement.addEventListener("change",
-  (event) => mediumHelper.setDisableMedium(!event.target.checked)
+  (event) => mediumHelper.setDisable(!event.target.checked)
 );
 
 document.querySelector("#more-options").addEventListener("click", () => {

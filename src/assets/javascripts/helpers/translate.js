@@ -138,12 +138,12 @@ function setTo(val) {
   console.log("to: ", to)
 }
 
-function isTranslate(url) {
-  if (disable) return null;
+function isTranslate(url, initiator) {
+  if (disable) return false;
   return targets.includes(url.host)
 }
 
-function redirect(url, initiator) {
+function redirect(url) {
   let params_arr = url.search.split('&');
   params_arr[0] = params_arr[0].substring(1);
   let myMap = {};
@@ -171,7 +171,6 @@ function redirect(url, initiator) {
     else
       return randomInstance;
   }
-
 }
 
 async function init() {

@@ -3,11 +3,11 @@ import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableMediumElement = document.getElementById("disable-medium");
 disableMediumElement.addEventListener("change",
-    (event) => mediumHelper.setDisableMedium(!event.target.checked)
+    (event) => mediumHelper.setDisable(!event.target.checked)
 );
 
 mediumHelper.init().then(() => {
-    disableMediumElement.checked = !mediumHelper.getDisableMedium();
+    disableMediumElement.checked = !mediumHelper.getDisable();
 
     commonHelper.processDefaultCustomInstances(
         'scribe',

@@ -64,40 +64,33 @@ function setScribeCustomRedirects(val) {
   console.log("scribeCustomRedirects: ", val)
 }
 
-let disableMedium;
-const getDisableMedium = () => disableMedium;
-function setDisableMedium(val) {
-  disableMedium = val;
-  browser.storage.sync.set({ disableMedium })
+let disable;
+const getDisable = () => disable;
+function setDisable(val) {
+  disable = val;
+  browser.storage.sync.set({ disableMedium: disable })
 }
 
+function isMedium(url, initiator) {
+  if (disable) return false;
+  if (url.pathname == "/") return false;
 
+  if (
+    commonHelper.isFirefox() &&
+    initiator && ([...redirects.scribe.normal, ...scribeCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))
+  ) return false;
 
-function redirect(url, initiator, type) {
-
-  if (disableMedium) return null;
-
-  if (url.pathname == "/") return null;
+  return targets.some((rx) => rx.test(url.host));
+}
+function redirect(url, type) {
 
   if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") return null;
-
 
   let instancesList = [...scribeRedirectsChecks, ...scribeCustomRedirects];
   if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList)
 
-  if (
-    commonHelper.isFirefox() && initiator &&
-    (instancesList.includes(initiator.origin) || targets.includes(initiator.host))
-  ) {
-    browser.storage.sync.set({ redirectBypassFlag: true });
-    return null;
-  }
   return `${randomInstance}${url.pathname}${url.search}`;
-}
-
-function isMedium(url) {
-  return targets.some((rx) => rx.test(url.host));
 }
 
 async function init() {
@@ -110,12 +103,13 @@ async function init() {
         "scribeCustomRedirects",
       ],
       (result) => {
-        disableMedium = result.disableMedium ?? false;
-        if (result.mediumRedirects)
-          redirects = result.mediumRedirects;
+        disable = result.disableMedium ?? false;
+
+        if (result.mediumRedirects) redirects = result.mediumRedirects;
 
         scribeRedirectsChecks = result.scribeRedirectsChecks ?? [...redirects.scribe.normal];
         scribeCustomRedirects = result.scribeCustomRedirects ?? [];
+
         resolve();
       }
     )
@@ -130,8 +124,8 @@ export default {
   getCustomRedirects,
   setRedirects,
 
-  getDisableMedium,
-  setDisableMedium,
+  getDisable,
+  setDisable,
 
   getScribeRedirectsChecks,
   setScribeRedirectsChecks,

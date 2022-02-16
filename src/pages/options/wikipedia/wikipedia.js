@@ -3,10 +3,10 @@ import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableWikipediaElement = document.getElementById("disable-wikipedia");
 disableWikipediaElement.addEventListener("change",
-    (event) => wikipediaHelper.setDisableWikipedia(!event.target.checked)
+    (event) => wikipediaHelper.setDisable(!event.target.checked)
 );
 wikipediaHelper.init().then(() => {
-    disableWikipediaElement.checked = !wikipediaHelper.getDisableWikipedia();
+    disableWikipediaElement.checked = !wikipediaHelper.getDisable();
 
     commonHelper.processDefaultCustomInstances(
         'wikiless',

@@ -118,43 +118,37 @@ function setNitterCustomRedirects(val) {
   console.log("nitterCustomRedirects: ", val)
 }
 
-let disableTwitter;
-const getDisableTwitter = () => disableTwitter;
-function setDisableTwitter(val) {
-  disableTwitter = val;
-  browser.storage.sync.set({ disableTwitter })
+let disable;
+const getDisable = () => disable;
+function setDisable(val) {
+  disable = val;
+  browser.storage.sync.set({ disableTwitter: disable })
 }
 
-
-function redirect(url, initiator) {
-  if (disableTwitter) return null;
-
+function isTwitter(url, initiator) {
+  if (disable) return false;
   if (url.pathname.split("/").includes("home")) return null;
+  if (
+    commonHelper.isFirefox() &&
+    initiator && ([...redirects.nitter.normal, ...nitterCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))
+  ) return false;
 
+  return targets.includes(url.host)
+}
+
+function redirect(url) {
   let instancesList = [...nitterRedirectsChecks, ...nitterCustomRedirects];
   if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList)
 
-  if (
-    commonHelper.isFirefox() &&
-    initiator &&
-    (instancesList.includes(initiator.origin) || targets.includes(initiator.host))
-  ) {
-    browser.storage.sync.set({ redirectBypassFlag: true });
-    return null;
-  }
   if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video")
     return `${randomInstance}/pic/${encodeURIComponent(url.href)}`;
 
   else if (url.pathname.split("/").includes("tweets"))
     return `${randomInstance}${url.pathname.replace("/tweets", "")}${url.search}`;
+
   else
     return `${randomInstance}${url.pathname}${url.search}`;
-
-}
-
-function isTwitter(url) {
-  return targets.includes(url.host)
 }
 
 async function init() {
@@ -167,12 +161,13 @@ async function init() {
         "nitterCustomRedirects",
       ],
       (result) => {
-        disableTwitter = result.disableTwitter ?? false;
-        if (result.twitterRedirects)
-          redirects = result.twitterRedirects;
+        disable = result.disableTwitter ?? false;
+
+        if (result.twitterRedirects) redirects = result.twitterRedirects;
 
         nitterRedirectsChecks = result.nitterRedirectsChecks ?? [...redirects.nitter.normal];
         nitterCustomRedirects = result.nitterCustomRedirects ?? [];
+
         resolve();
       }
     );
@@ -184,8 +179,8 @@ export default {
   getCustomRedirects,
   setRedirects,
 
-  getDisableTwitter,
-  setDisableTwitter,
+  getDisable,
+  setDisable,
 
   getNitterRedirectsChecks,
   setNitterRedirectsChecks,

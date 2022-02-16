@@ -3,11 +3,11 @@ import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableImgurElement = document.getElementById("disable-imgur");
 disableImgurElement.addEventListener("change",
-    (event) => imgurHelper.setDisableImgur(!event.target.checked)
+    (event) => imgurHelper.setDisable(!event.target.checked)
 );
 
 imgurHelper.init().then(() => {
-    disableImgurElement.checked = !imgurHelper.getDisableImgur();
+    disableImgurElement.checked = !imgurHelper.getDisable();
 
     commonHelper.processDefaultCustomInstances(
         'rimgo',

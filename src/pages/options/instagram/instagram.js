@@ -3,11 +3,11 @@ import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableInstagramElement = document.getElementById("disable-bibliogram");
 disableInstagramElement.addEventListener("change",
-    (event) => instagramHelper.setDisableInstagram(!event.target.checked)
+    (event) => instagramHelper.setDisable(!event.target.checked)
 );
 
 instagramHelper.init().then(() => {
-    disableInstagramElement.checked = !instagramHelper.getDisableInstagram();
+    disableInstagramElement.checked = !instagramHelper.getDisable();
 
     commonHelper.processDefaultCustomInstances(
         'bibliogram',

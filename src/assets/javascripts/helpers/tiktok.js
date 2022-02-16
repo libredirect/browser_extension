@@ -51,34 +51,32 @@ function setProxiTokCustomRedirects(val) {
     console.log("proxiTokCustomRedirects: ", val)
 }
 
-let disableTiktok;
-const getDisableTiktok = () => disableTiktok;
-function setDisableTiktok(val) {
-    disableTiktok = val;
-    browser.storage.sync.set({ disableTiktok })
+let disable;
+const getDisable = () => disable;
+function setDisable(val) {
+    disable = val;
+    browser.storage.sync.set({ disableTiktok: disable })
 }
 
-function redirect(url, initiator, type) {
+function isTiktok(url, initiator) {
+    if (disable) return false;
+    if (initiator && ([...redirects.proxiTok.normal, ...proxiTokCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))) return false;
+    return targets.some((rx) => rx.test(url.href));
+}
+
+function redirect(url, type) {
     // https://www.tiktok.com/@keysikaspol/video/7061265241887345946
     // https://www.tiktok.com/@keysikaspol
-
-    if (disableTiktok) return null;
 
     if (type != "main_frame" && "sub_frame" && "xmlhttprequest") return null;
 
     let instancesList = [...proxiTokRedirectsChecks, ...proxiTokCustomRedirects];
     if (instancesList.length === 0) return null;
-    let randomInstance = commonHelper.getRandomInstance(instancesList)
+    let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-    if (initiator && (instancesList.includes(initiator.origin) || targets.includes(initiator.host))) return null;
-
-    let pathName = url.pathname.replace(new RegExp(/@.*\/(?=video)/), "")
+    let pathName = url.pathname.replace(new RegExp(/@.*\/(?=video)/), "");
 
     return `${randomInstance}${pathName}`;
-}
-
-function isTiktok(url) {
-    return targets.some((rx) => rx.test(url.href));
 }
 
 async function init() {
@@ -91,7 +89,8 @@ async function init() {
                 "proxiTokCustomRedirects",
             ],
             (result) => {
-                disableTiktok = result.disableTiktok ?? false;
+                disable = result.disableTiktok ?? false;
+
                 if (result.tiktokRedirects) redirects = result.tiktokRedirects;
 
                 proxiTokRedirectsChecks = result.proxiTokRedirectsChecks ?? [...redirects.proxiTok.normal];
@@ -104,14 +103,13 @@ async function init() {
 }
 
 export default {
-    targets,
 
     getRedirects,
     getCustomRedirects,
     setRedirects,
 
-    getDisableTiktok,
-    setDisableTiktok,
+    getDisable,
+    setDisable,
 
     getProxiTokRedirectsChecks,
     setProxiTokRedirectsChecks,

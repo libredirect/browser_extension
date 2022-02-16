@@ -33,7 +33,7 @@ youtubeFrontendElement.addEventListener("change",
 );
 
 disableYoutubeElement.addEventListener("change",
-    (event) => youtubeHelper.setDisableYoutube(!event.target.checked)
+    (event) => youtubeHelper.setDisable(!event.target.checked)
 );
 
 let themeElement = document.getElementById("invidious-theme");
@@ -74,7 +74,7 @@ alwaysUsePreferredElement.addEventListener("change",
 );
 
 youtubeHelper.init().then(() => {
-    disableYoutubeElement.checked = !youtubeHelper.getDisableYoutube();
+    disableYoutubeElement.checked = !youtubeHelper.getDisable();
     themeElement.checked = youtubeHelper.getTheme();
     volumeElement.value = youtubeHelper.getVolume();
     volumeValueElement.textContent = `${youtubeHelper.getVolume()}%`;

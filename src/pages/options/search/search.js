@@ -3,7 +3,7 @@ import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableSearchElement = document.getElementById("disable-search");
 disableSearchElement.addEventListener("change",
-  (event) => searchHelper.setDisableSearch(!event.target.checked)
+  (event) => searchHelper.setDisable(!event.target.checked)
 );
 
 
@@ -25,14 +25,14 @@ let searchFrontendElement = document.getElementById("search-frontend");
 searchFrontendElement.addEventListener("change",
   (event) => {
     let frontend = event.target.options[searchFrontendElement.selectedIndex].value
-    searchHelper.setSearchFrontend(frontend)
+    searchHelper.setFrontend(frontend)
     changeFrontendsSettings(frontend);
   }
 );
 
 searchHelper.init().then(() => {
-  disableSearchElement.checked = !searchHelper.getDisableSearch();
-  let frontend = searchHelper.getSearchFrontend();
+  disableSearchElement.checked = !searchHelper.getDisable();
+  let frontend = searchHelper.getFrontend();
   searchFrontendElement.value = frontend;
   changeFrontendsSettings(frontend);
 

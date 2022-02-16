@@ -2,7 +2,7 @@ window.browser = window.browser || window.chrome;
 
 import commonHelper from './common.js'
 
-const targets = /wikipedia.org/;
+const targets = /https:\/\/(www\.|)wikipedia\.org/
 
 let redirects = {
   "wikiless": {
@@ -37,13 +37,12 @@ function setRedirects(val) {
   setWikilessRedirectsChecks(wikilessRedirectsChecks);
 }
 
-let disableWikipedia;
-const getDisableWikipedia = () => disableWikipedia;
-function setDisableWikipedia(val) {
-  disableWikipedia = val;
-  browser.storage.sync.set({ disableWikipedia })
+let disable;
+const getDisable = () => disable;
+function setDisable(val) {
+  disable = val;
+  browser.storage.sync.set({ disableWikipedia: disable })
 }
-
 
 let wikilessRedirectsChecks;
 const getWikilessRedirectsChecks = () => wikilessRedirectsChecks;
@@ -61,9 +60,12 @@ function setWikilessCustomRedirects(val) {
   console.log("wikilessCustomRedirects: ", val)
 }
 
-function redirect(url, initiator) {
-  if (disableWikipedia) return null;
+function isWikipedia(url, initiator) {
+  if (disable) return false;
+  return url.host.match(targets);
+}
 
+function redirect(url) {
   let GETArguments = [];
   if (url.search.length > 0) {
     let search = url.search.substring(1); //get rid of '?'
@@ -75,10 +77,7 @@ function redirect(url, initiator) {
   }
 
   let instancesList = [...wikilessRedirectsChecks, ...wikilessCustomRedirects];
-
-  if (instancesList.length === 0)
-    return null;
-
+  if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList)
 
   let link = `${randomInstance}${url.pathname}`;
@@ -86,7 +85,8 @@ function redirect(url, initiator) {
   if (urlSplit[0] != "wikipedia" && urlSplit[0] != "www") {
     if (urlSplit[0] == "m")
       GETArguments.push(["mobileaction", "toggle_view_mobile"]);
-    else GETArguments.push(["lang", urlSplit[0]]);
+    else
+      GETArguments.push(["lang", urlSplit[0]]);
     if (urlSplit[1] == "m")
       GETArguments.push(["mobileaction", "toggle_view_mobile"]);
     // wikiless doesn't have mobile view support yet
@@ -94,17 +94,8 @@ function redirect(url, initiator) {
   for (let i = 0; i < GETArguments.length; i++)
     link += (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1];
 
-  if (
-    urlSplit[urlSplit.length - 1] == "org" &&
-    urlSplit[urlSplit.length - 2] == "wikipedia"
-  )
-    //just in case someone wanted to visit wikipedia.org.foo.bar.net
-    return link;
-  else return null;
-}
+  return link;
 
-function isWikipedia(url) {
-  return url.host.match(targets);
 }
 
 async function init() {
@@ -116,7 +107,8 @@ async function init() {
         "wikilessRedirectsChecks",
         "wikilessCustomRedirects",
       ], (result) => {
-        disableWikipedia = result.disableWikipedia ?? false;
+        disable = result.disableWikipedia ?? false;
+
         if (result.wikipediaRedirects) redirects = result.wikipediaRedirects;
 
         wikilessRedirectsChecks = result.wikilessRedirectsChecks ?? [...redirects.wikiless.normal];
@@ -133,8 +125,8 @@ export default {
   getCustomRedirects,
   setRedirects,
 
-  setDisableWikipedia,
-  getDisableWikipedia,
+  setDisable,
+  getDisable,
 
   getWikilessRedirectsChecks,
   setWikilessRedirectsChecks,

@@ -161,6 +161,13 @@ function setSearxRedirects(val) {
   }
   setSearxRedirectsChecks(searxRedirectsChecks);
 }
+
+function setWhoogleRedirects(val) {
+  redirects.whoogle = val;
+  browser.storage.sync.set({ searchRedirects: redirects })
+  console.log("whoogleRedirects:", val)
+}
+
 let whoogleRedirectsChecks;
 const getWhoogleRedirectsChecks = () => whoogleRedirectsChecks;
 function setWhoogleRedirectsChecks(val) {
@@ -199,57 +206,51 @@ function setSearxCustomRedirects(val) {
   console.log("searxCustomRedirects: ", val)
 }
 
-function setWhoogleRedirects(val) {
-  redirects.whoogle = val;
-  browser.storage.sync.set({ searchRedirects: redirects })
-  console.log("whoogleRedirects:", val)
+let disable;
+const getDisable = () => disable;
+function setDisable(val) {
+  disable = val;
+  browser.storage.sync.set({ disableSearch: disable })
+  console.log("disableSearch: ", disable)
 }
 
-let disableSearch;
-const getDisableSearch = () => disableSearch;
-function setDisableSearch(val) {
-  disableSearch = val;
-  browser.storage.sync.set({ disableSearch })
-  console.log("disableSearch: ", disableSearch)
-}
-
-let searchFrontend;
-const getSearchFrontend = () => searchFrontend;
-function setSearchFrontend(val) {
-  searchFrontend = val;
-  browser.storage.sync.set({ searchFrontend })
-  console.log("searchFrontend: ", searchFrontend)
+let frontend;
+const getFrontend = () => frontend;
+function setFrontend(val) {
+  frontend = val;
+  browser.storage.sync.set({ searchFrontend: frontend })
+  console.log("searchFrontend: ", frontend)
 };
 
-function redirect(url, initiator) {
-  if (disableSearch)
-    return null;
+function isSearch(url, initiator) {
+  if (disable) return false;
+  return targets.some((rx) => rx.test(url.href));
+}
 
+function redirect(url) {
   let randomInstance;
   let path;
-  if (searchFrontend == 'searx') {
+  if (frontend == 'searx') {
     let instancesList = [...searxRedirectsChecks, ...searxCustomRedirects];
     if (instancesList.length === 0) return null;
     randomInstance = commonHelper.getRandomInstance(instancesList)
-    path = "/"
+    path = "/";
   }
-  if (searchFrontend == 'whoogle') {
+  if (frontend == 'whoogle') {
     let instancesList = [...whoogleRedirectsChecks, ...whoogleCustomRedirects];
     if (instancesList.length === 0) return null;
     randomInstance = commonHelper.getRandomInstance(instancesList)
-    path = "/search"
+    path = "/search";
   }
 
   let searchQuery = "";
   url.search.slice(1).split("&").forEach((input) => {
     if (input.startsWith("q=")) searchQuery = input;
   });
+
   return `${randomInstance}${path}?${searchQuery}`;
 }
 
-function isSearch(url) {
-  return targets.some((rx) => rx.test(url.href));
-}
 
 async function init() {
   return new Promise((resolve) => {
@@ -264,15 +265,16 @@ async function init() {
         "searxCustomRedirects",
       ],
       (result) => {
-        disableSearch = result.disableSearch ?? false;
-        searchFrontend = result.searchFrontend ?? 'searx';
+        disable = result.disableSearch ?? false;
+        
+        frontend = result.searchFrontend ?? 'searx';
+
         if (result.searchRedirects) redirects = result.searchRedirects;
 
         whoogleRedirectsChecks = result.whoogleRedirectsChecks ?? [...redirects.whoogle.normal];
         whoogleCustomRedirects = result.whoogleCustomRedirects ?? [];
 
         searxRedirectsChecks = result.searxRedirectsChecks ?? [...redirects.searx.normal];
-
         searxCustomRedirects = result.searxCustomRedirects ?? [];
 
         resolve();
@@ -282,19 +284,18 @@ async function init() {
 }
 
 export default {
-  targets,
   isSearch,
+
+  getDisable,
+  setDisable,
 
   getRedirects,
   getCustomRedirects,
   setSearxRedirects,
   setWhoogleRedirects,
 
-  getDisableSearch,
-  setDisableSearch,
-
-  getSearchFrontend,
-  setSearchFrontend,
+  getFrontend,
+  setFrontend,
 
   getWhoogleRedirectsChecks,
   setWhoogleRedirectsChecks,
