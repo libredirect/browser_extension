@@ -21,7 +21,6 @@ let redirects = {
       "https://libreddit.insanity.wtf",
       "https://libreddit.dothq.co",
       "https://libreddit.silkky.cloud",
-      "https://libreddit.himiko.cloud",
       "https://reddit.artemislena.eu",
       "https://reddit.git-bruh.duckdns.org",
     ]
