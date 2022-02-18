@@ -224,26 +224,30 @@ function isYoutube(url, initiator) {
     )
   ) return false;
 
-  let pipedInstancesList = [...pipedRedirectsChecks, ...pipedCustomRedirects];
-  let invidiousInstancesList = [...invidiousRedirectsChecks, ...invidiousCustomRedirects];
   let isTargets = targets.some((rx) => rx.test(url.href));
   let protocolHost = `${url.protocol}//${url.host}`;
 
   let isInvidious = redirects.invidious.normal.includes(protocolHost);
-  if (isInvidious) for (const iterator of invidiousInstancesList) if (iterator.indexOf(protocolHost) === 0) isInvidious = false;
+  if (isInvidious) {
+    let myInvidiousInstances = [...invidiousRedirectsChecks, ...invidiousCustomRedirects];
+    for (const item of myInvidiousInstances) if (item == protocolHost) isInvidious = false;
+  }
 
   let isPiped = redirects.piped.normal.includes(protocolHost);
-  if (isPiped) for (const iterator of pipedInstancesList) if (iterator.indexOf(protocolHost) === 0) isPiped = false;
+  if (isPiped) {
+    let myPipedInstances = [...pipedRedirectsChecks, ...pipedCustomRedirects];
+    for (const item of myPipedInstances) if (item == protocolHost) isPiped = false;
+  }
 
   if (frontend == 'invidious') {
     if (alwaysusePreferred)
-      return isTargets | isPiped | isInvidious;
+      return isTargets | redirects.piped.normal.includes(protocolHost) | isInvidious;
     else
       return isTargets | isPiped;
   }
   if (frontend == 'piped') {
     if (alwaysusePreferred)
-      return isTargets | isPiped | isInvidious;
+      return isTargets | isPiped | redirects.invidious.normal.includes(protocolHost);
     else
       return isTargets | isInvidious;
   }

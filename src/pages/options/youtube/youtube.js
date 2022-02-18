@@ -117,5 +117,5 @@ youtubeHelper.init().then(() => {
 
     let freetubeFrontend = youtubeHelper.getFreetubeFrontend()
     freetubeFrontendElement.value = freetubeFrontend
-    changeFreetubeFrontendsSettings(freetubeFrontend);
+    if (frontend == "freetube") changeFreetubeFrontendsSettings(freetubeFrontend);
 });
