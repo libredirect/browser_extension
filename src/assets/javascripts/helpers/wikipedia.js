@@ -2,7 +2,7 @@ window.browser = window.browser || window.chrome;
 
 import commonHelper from './common.js'
 
-const targets = /https:\/\/(www\.|)wikipedia\.org/
+const targets = /^https?:\/\/.*wikipedia\.org\//
 
 let redirects = {
   "wikiless": {
@@ -62,7 +62,7 @@ function setWikilessCustomRedirects(val) {
 
 function isWikipedia(url, initiator) {
   if (disable) return false;
-  return url.host.match(targets);
+  return targets.test(url.href);
 }
 
 function redirect(url) {
