@@ -9,10 +9,10 @@
   },
   "default_locale": "en",
   "icons": {
-    "16": "assets/images/libredirect.svg",
-    "32": "assets/images/libredirect.svg",
-    "48": "assets/images/libredirect.svg",
-    "128": "assets/images/libredirect.svg"
+    "16": "assets/images/libredirect.png",
+    "32": "assets/images/libredirect.png",
+    "48": "assets/images/libredirect.png",
+    "128": "assets/images/libredirect.png"
   },
   "permissions": [
     "storage",
@@ -25,10 +25,10 @@
     "browser_style": false,
     "default_popup": "pages/popup/popup.html",
     "default_icon": {
-      "16": "assets/images/libredirect.svg",
-      "32": "assets/images/libredirect.svg",
-      "48": "assets/images/libredirect.svg",
-      "128": "assets/images/libredirect.svg"
+      "16": "assets/images/libredirect.png",
+      "32": "assets/images/libredirect.png",
+      "48": "assets/images/libredirect.png",
+      "128": "assets/images/libredirect.png"
     }
   },
   "options_ui": {
