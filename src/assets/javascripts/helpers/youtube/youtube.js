@@ -32,7 +32,7 @@ let redirects = {
       "https://youtube.076.ne.jp",
       "https://invidious.namazso.eu"
     ],
-    "onion": [
+    "tor": [
       "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
       "http://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
       "http://kbjggqkzv65ivcqj6bumvp337z6264huv5kpkwuv6gu5yjiskvan7fad.onion",
@@ -48,7 +48,8 @@ let redirects = {
       "https://piped.silkky.cloud",
       "https://piped.tokhmi.xyz",
       "https://piped.mint.lgbt",
-    ]
+    ],
+    "tor": []
   }
 };
 
@@ -57,10 +58,12 @@ const getRedirects = () => redirects;
 const getCustomRedirects = function () {
   return {
     "invidious": {
-      "normal": [...invidiousRedirectsChecks, ...invidiousCustomRedirects]
+      "normal": [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects],
+      "tor": [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects]
     },
     "piped": {
-      "normal": [...pipedRedirectsChecks, ...pipedCustomRedirects]
+      "normal": [...pipedNormalRedirectsChecks, ...pipedNormalCustomRedirects],
+      "tor": [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects]
     }
   };
 };
@@ -71,37 +74,75 @@ function setInvidiousRedirects(val) {
   console.log("invidiousRedirects: ", val)
 }
 
-let invidiousRedirectsChecks;
-const getInvidiousRedirectsChecks = () => invidiousRedirectsChecks;
-function setInvidiousRedirectsChecks(val) {
-  invidiousRedirectsChecks = val;
-  browser.storage.sync.set({ invidiousRedirectsChecks })
-  console.log("invidiousRedirectsChecks: ", val)
+let invidiousNormalRedirectsChecks;
+const getInvidiousNormalRedirectsChecks = () => invidiousNormalRedirectsChecks;
+function setInvidiousNormalRedirectsChecks(val) {
+  invidiousNormalRedirectsChecks = val;
+  browser.storage.sync.set({ invidiousNormalRedirectsChecks })
+  console.log("invidiousNormalRedirectsChecks: ", val)
 }
 
-let invidiousCustomRedirects = [];
-const getInvidiousCustomRedirects = () => invidiousCustomRedirects;
-function setInvidiousCustomRedirects(val) {
-  invidiousCustomRedirects = val;
-  browser.storage.sync.set({ invidiousCustomRedirects })
-  console.log("invidiousCustomRedirects: ", val)
+let invidiousNormalCustomRedirects = [];
+const getInvidiousNormalCustomRedirects = () => invidiousNormalCustomRedirects;
+function setInvidiousNormalCustomRedirects(val) {
+  invidiousNormalCustomRedirects = val;
+  browser.storage.sync.set({ invidiousNormalCustomRedirects })
+  console.log("invidiousNormalCustomRedirects: ", val)
 }
 
-let pipedRedirectsChecks;
-const getPipedRedirectsChecks = () => pipedRedirectsChecks;
-function setPipedRedirectsChecks(val) {
-  pipedRedirectsChecks = val;
-  browser.storage.sync.set({ pipedRedirectsChecks })
-  console.log("pipedRedirectsChecks: ", val)
+
+let invidiousTorRedirectsChecks;
+const getInvidiousTorRedirectsChecks = () => invidiousTorRedirectsChecks;
+function setInvidiousTorRedirectsChecks(val) {
+  invidiousTorRedirectsChecks = val;
+  browser.storage.sync.set({ invidiousTorRedirectsChecks })
+  console.log("invidiousTorRedirectsChecks: ", val)
 }
 
-let pipedCustomRedirects = [];
-const getPipedCustomRedirects = () => pipedCustomRedirects;
-function setPipedCustomRedirects(val) {
-  pipedCustomRedirects = val;
-  browser.storage.sync.set({ pipedCustomRedirects })
-  console.log("pipedCustomRedirects: ", val)
+let invidiousTorCustomRedirects = [];
+const getInvidiousTorCustomRedirects = () => invidiousTorCustomRedirects;
+function setInvidiousTorCustomRedirects(val) {
+  invidiousTorCustomRedirects = val;
+  browser.storage.sync.set({ invidiousTorCustomRedirects })
+  console.log("invidiousTorCustomRedirects: ", val)
 }
+
+
+let pipedNormalRedirectsChecks;
+const getPipedNormalRedirectsChecks = () => pipedNormalRedirectsChecks;
+function setPipedNormalRedirectsChecks(val) {
+  pipedNormalRedirectsChecks = val;
+  browser.storage.sync.set({ pipedNormalRedirectsChecks })
+  console.log("pipedNormalRedirectsChecks: ", val)
+}
+
+let pipedNormalCustomRedirects = [];
+const getPipedNormalCustomRedirects = () => pipedNormalCustomRedirects;
+function setPipedNormalCustomRedirects(val) {
+  pipedNormalCustomRedirects = val;
+  browser.storage.sync.set({ pipedNormalCustomRedirects })
+  console.log("pipedNormalCustomRedirects: ", val)
+}
+
+
+let pipedTorRedirectsChecks;
+const getPipedTorRedirectsChecks = () => pipedTorRedirectsChecks;
+function setPipedTorRedirectsChecks(val) {
+  pipedTorRedirectsChecks = val;
+  browser.storage.sync.set({ pipedTorRedirectsChecks })
+  console.log("pipedTorRedirectsChecks: ", val)
+}
+
+let pipedTorCustomRedirects = [];
+const getPipedTorCustomRedirects = () => pipedTorCustomRedirects;
+function setPipedTorCustomRedirects(val) {
+  pipedTorCustomRedirects = val;
+  browser.storage.sync.set({ pipedTorCustomRedirects })
+  console.log("pipedTorCustomRedirects: ", val)
+}
+
+
+
 
 function setPipedRedirects(val) {
   redirects.piped = val;
@@ -115,6 +156,15 @@ function setDisable(val) {
   disable = val;
   browser.storage.sync.set({ disableYoutube: disable })
   console.log("disableYoutube: ", disable)
+}
+
+
+let protocol;
+const getprotocol = () => protocol;
+function setProtocol(val) {
+  protocol = val;
+  browser.storage.sync.set({ youtubeProtocol: val })
+  console.log("youtubeProtocol: ", val)
 }
 
 let invidiousAlwaysProxy;
@@ -215,11 +265,19 @@ function setAlwaysusePreferred(val) {
 
 function isYoutube(url, initiator) {
   if (disable) return false;
-
   if (
     initiator && (
-      [...redirects.invidious.normal, ...invidiousCustomRedirects].includes(initiator.origin) ||
-      [...redirects.piped.normal, ...pipedCustomRedirects].includes(initiator.origin) ||
+      [
+        ...redirects.invidious.normal,
+        ...invidiousNormalCustomRedirects,
+        ...redirects.invidious.tor,
+        ...invidiousTorCustomRedirects,
+
+        ...redirects.piped.normal,
+        ...redirects.piped.tor,
+        ...pipedNormalCustomRedirects,
+        ...pipedTorCustomRedirects
+      ].includes(initiator.origin) ||
       targets.includes(initiator.host)
     )
   ) return false;
@@ -227,15 +285,27 @@ function isYoutube(url, initiator) {
   let isTargets = targets.some((rx) => rx.test(url.href));
   let protocolHost = `${url.protocol}//${url.host}`;
 
-  let isInvidious = redirects.invidious.normal.includes(protocolHost);
+  let isInvidious = [...redirects.invidious.normal, ...redirects.invidious.tor].includes(protocolHost);
   if (isInvidious) {
-    let myInvidiousInstances = [...invidiousRedirectsChecks, ...invidiousCustomRedirects];
+    let myInvidiousInstances = [
+      ...invidiousNormalRedirectsChecks,
+      ...invidiousNormalCustomRedirects,
+
+      ...invidiousTorRedirectsChecks,
+      ...invidiousTorCustomRedirects,
+    ];
     for (const item of myInvidiousInstances) if (item == protocolHost) isInvidious = false;
   }
 
-  let isPiped = redirects.piped.normal.includes(protocolHost);
+  let isPiped = [...redirects.piped.normal, ...redirects.piped.tor].includes(protocolHost);
   if (isPiped) {
-    let myPipedInstances = [...pipedRedirectsChecks, ...pipedCustomRedirects];
+    let myPipedInstances = [
+      ...pipedNormalRedirectsChecks,
+      ...pipedNormalCustomRedirects,
+
+      ...pipedTorRedirectsChecks,
+      ...pipedTorCustomRedirects,
+    ];
     for (const item of myPipedInstances) if (item == protocolHost) isPiped = false;
   }
 
@@ -272,7 +342,10 @@ function redirect(url, type) {
       !(frontend == 'freetube' && freetubeFrontend == 'invidious' && type === "sub_frame")
     ) return null;
 
-    let instancesList = [...invidiousRedirectsChecks, ...invidiousCustomRedirects];
+    let instancesList;
+    if (protocol == 'normal') instancesList = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
+
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
@@ -286,7 +359,9 @@ function redirect(url, type) {
       !(frontend == 'freetube' && freetubeFrontend == 'piped' && type == "sub_frame")
     ) return null;
 
-    let instancesList = [...pipedRedirectsChecks, ...pipedCustomRedirects];
+    let instancesList;
+    if (protocol == 'normal') instancesList = [...pipedNormalRedirectsChecks, ...pipedNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
@@ -297,22 +372,54 @@ function redirect(url, type) {
 
 function isPipedorInvidious(url, type) {
   let protocolHost = `${url.protocol}//${url.host}`;
-  return (type === "main_frame" || type === "sub_frame") && [...redirects.invidious.normal, ...redirects.piped.normal].includes(protocolHost);
+  return (type === "main_frame" || type === "sub_frame") && [
+    ...redirects.invidious.normal,
+    ...invidiousNormalCustomRedirects,
+    ...redirects.invidious.tor,
+    ...invidiousTorCustomRedirects,
+
+    ...redirects.piped.normal,
+    ...redirects.piped.tor,
+    ...pipedNormalCustomRedirects,
+    ...pipedTorCustomRedirects,
+  ].includes(protocolHost);
 }
 
 function isUrlPipedorInvidious(url) {
   url = new URL(url);
   let protocolHost = `${url.protocol}//${url.host}`;
-  return [...redirects.invidious.normal, ...redirects.piped.normal].includes(protocolHost);
+  return [
+    ...redirects.invidious.normal,
+    ...redirects.invidious.tor,
+    ...invidiousNormalCustomRedirects,
+    ...invidiousTorCustomRedirects,
+
+    ...redirects.piped.normal,
+    ...redirects.piped.tor,
+    ...pipedNormalCustomRedirects,
+    ...pipedTorCustomRedirects,
+
+  ].includes(protocolHost);
 }
 
 function addUrlParams(url) {
 
   let protocolHost = `${url.protocol}//${url.host}`;
   let isChanged = false;
-
-  console.log("protocolHost", protocolHost)
-  if (redirects.invidious.normal.includes(protocolHost)) {
+  console.log("protocolHost", protocolHost);
+  console.log([
+    ...redirects.invidious.normal,
+    ...redirects.invidious.tor,
+    ...invidiousNormalCustomRedirects,
+    ...invidiousTorCustomRedirects,
+  ])
+  if (
+    [
+      ...redirects.invidious.normal,
+      ...redirects.invidious.tor,
+      ...invidiousNormalCustomRedirects,
+      ...invidiousTorCustomRedirects,
+    ].includes(protocolHost)) {
     if (!url.searchParams.has("dark_mode") && theme != "DEFAULT") {
       url.searchParams.append("dark_mode", theme);
       isChanged = true;
@@ -348,7 +455,13 @@ function addUrlParams(url) {
       isChanged = true;
     }
 
-  } else if (redirects.piped.normal.includes(protocolHost)) {
+  } else if (
+    [
+      ...redirects.piped.normal,
+      ...redirects.piped.tor,
+      ...pipedNormalCustomRedirects,
+      ...pipedTorCustomRedirects,
+    ].includes(protocolHost)) {
 
     if (!url.searchParams.has("theme") && theme != "DEFAULT") {
       url.searchParams.append("theme", theme);
@@ -396,17 +509,28 @@ async function init() {
         "youtubeAutoplay",
         "youtubeRedirects",
         "youtubeFrontend",
-        "invidiousRedirectsChecks",
-        "invidiousCustomRedirects",
-        "pipedRedirectsChecks",
-        "pipedCustomRedirects",
+
+        "invidiousNormalRedirectsChecks",
+        "invidiousNormalCustomRedirects",
+
+        "invidiousTorRedirectsChecks",
+        "invidiousTorCustomRedirects",
+
+        "pipedNormalRedirectsChecks",
+        "pipedNormalCustomRedirects",
+
+        "pipedTorRedirectsChecks",
+        "pipedTorCustomRedirects",
         "alwaysusePreferred",
         "freetubeFrontend",
+
+        "youtubeProtocol",
       ],
       (result) => {
         if (result.youtubeRedirects) redirects = result.youtubeRedirects;
 
         disable = result.disableYoutube ?? false;
+        protocol = result.youtubeProtocol ?? 'normal';
         frontend = result.youtubeFrontend ?? 'piped';
         freetubeFrontend = result.freetubeFrontend ?? 'invidious';
 
@@ -420,11 +544,17 @@ async function init() {
         invidiousPlayerStyle = result.invidiousPlayerStyle ?? 'DEFAULT';
         invidiousSubtitles = result.invidiousSubtitles || '';
 
-        invidiousRedirectsChecks = result.invidiousRedirectsChecks ?? [...redirects.invidious.normal];
-        invidiousCustomRedirects = result.invidiousCustomRedirects ?? [];
+        invidiousNormalRedirectsChecks = result.invidiousNormalRedirectsChecks ?? [...redirects.invidious.normal];
+        invidiousNormalCustomRedirects = result.invidiousNormalCustomRedirects ?? [];
 
-        pipedRedirectsChecks = result.pipedRedirectsChecks ?? [...redirects.piped.normal];
-        pipedCustomRedirects = result.pipedCustomRedirects ?? [];
+        invidiousTorRedirectsChecks = result.invidiousTorRedirectsChecks ?? [...redirects.invidious.tor];
+        invidiousTorCustomRedirects = result.invidiousTorCustomRedirects ?? [];
+
+        pipedNormalRedirectsChecks = result.pipedNormalRedirectsChecks ?? [...redirects.piped.normal];
+        pipedNormalCustomRedirects = result.pipedNormalCustomRedirects ?? [];
+
+        pipedTorRedirectsChecks = result.pipedTorRedirectsChecks ?? [...redirects.piped.tor];
+        pipedTorCustomRedirects = result.pipedTorCustomRedirects ?? [];
 
         persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
 
@@ -460,6 +590,9 @@ export default {
   getDisable,
   setDisable,
 
+  getprotocol,
+  setProtocol,
+
   setInvidiousAlwaysProxy,
   getInvidiousAlwaysProxy,
 
@@ -487,17 +620,29 @@ export default {
   getPersistInvidiousPrefs,
   setPersistInvidiousPrefs,
 
-  getInvidiousRedirectsChecks,
-  setInvidiousRedirectsChecks,
+  getInvidiousNormalRedirectsChecks,
+  setInvidiousNormalRedirectsChecks,
 
-  getInvidiousCustomRedirects,
-  setInvidiousCustomRedirects,
+  getInvidiousNormalCustomRedirects,
+  setInvidiousNormalCustomRedirects,
 
-  getPipedRedirectsChecks,
-  setPipedRedirectsChecks,
+  getPipedNormalRedirectsChecks,
+  setPipedNormalRedirectsChecks,
 
-  getPipedCustomRedirects,
-  setPipedCustomRedirects,
+  getPipedNormalCustomRedirects,
+  setPipedNormalCustomRedirects,
+
+  getInvidiousTorRedirectsChecks,
+  setInvidiousTorRedirectsChecks,
+
+  getInvidiousTorCustomRedirects,
+  setInvidiousTorCustomRedirects,
+
+  getPipedTorRedirectsChecks,
+  setPipedTorRedirectsChecks,
+
+  getPipedTorCustomRedirects,
+  setPipedTorCustomRedirects,
 
   getAlwaysusePreferred,
   setAlwaysusePreferred,

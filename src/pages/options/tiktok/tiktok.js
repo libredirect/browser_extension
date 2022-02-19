@@ -11,6 +11,7 @@ tiktokHelper.init().then(() => {
 
     commonHelper.processDefaultCustomInstances(
         'proxiTok',
+        'normal',
         tiktokHelper,
         document,
         tiktokHelper.getProxiTokRedirectsChecks,

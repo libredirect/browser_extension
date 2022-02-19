@@ -100,7 +100,7 @@ let redirects = {
       "https://xeek.com",
       "https://searx.roflcopter.fr",
     ],
-    "onion": [
+    "tor": [
       "http://3afisqjw2rxm6z7mmstyt5rx75qfqrgxnkzftknbp2vhipr2nrmrjdyd.onion",
       "http://searxbgetrkiwxhdwi6svpgh7eotopqyxhbqiokrwzg7dcte44t36kyd.onion",
       "http://suche.xyzco456vwisukfg.onion",

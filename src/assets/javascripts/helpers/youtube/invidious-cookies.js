@@ -24,8 +24,8 @@ browser.storage.sync.get(
         let prefs = getCookie();
         let changed = false;
 
-        if (result.invidiousAlwaysProxy !== undefined && prefs.local !== result.invidiousAlwaysProxy) {
-            prefs.local = result.invidiousAlwaysProxy;
+        if (result.invidiousAlwaysProxy !== undefined && prefs.sync !== result.invidiousAlwaysProxy) {
+            prefs.sync = result.invidiousAlwaysProxy;
             changed = true;
         }
         if (result.invidiousVideoQuality !== undefined && prefs.quality !== result.invidiousVideoQuality) {

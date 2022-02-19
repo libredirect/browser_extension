@@ -47,7 +47,7 @@ let redirects = {
       "https://teddit.adminforge.de",
       "https://teddit.bus-hit.me"
     ],
-    "onion": [
+    "tor": [
       "http://teddit4w6cmzmj5kimhfcavs7yo5s7alszvsi2khqutqtlaanpcftfyd.onion",
       "http://snoo.ioensistjs7wd746zluwixvojbbkxhr37lepdvwtdfeav673o64iflqd.onion",
       "http://ibarajztopxnuhabfu7fg6gbudynxofbnmvis3ltj6lfx47b6fhrd5qd.onion",

@@ -58,6 +58,7 @@ translateHelper.init().then(() => {
 
     commonHelper.processDefaultCustomInstances(
         'simplyTranslate',
+        'normal',
         translateHelper,
         document,
         translateHelper.getSimplyTranslateRedirectsChecks,
@@ -68,6 +69,7 @@ translateHelper.init().then(() => {
 
     commonHelper.processDefaultCustomInstances(
         'lingva',
+        'normal',
         translateHelper,
         document,
         translateHelper.getLingvaRedirectsChecks,

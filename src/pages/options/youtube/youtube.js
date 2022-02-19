@@ -103,6 +103,35 @@ alwaysUsePreferredElement.addEventListener("change",
     (event) => youtubeHelper.setAlwaysusePreferred(event.target.checked)
 );
 
+let protocolElement = document.getElementById("protocol")
+protocolElement.addEventListener("change",
+    (event) => {
+        let protocol = event.target.options[protocolElement.selectedIndex].value
+        youtubeHelper.setProtocol(protocol);
+        changeProtocolSettings(protocol);
+    }
+);
+
+function changeProtocolSettings(protocol) {
+    let normalPipedDiv = document.getElementById("piped-normal");
+    let torPipedDiv = document.getElementById("piped-tor");
+
+    let normalInvidiousDiv = document.getElementById("invidious-normal");
+    let torInvidiousDiv = document.getElementById("invidious-tor");
+    if (protocol == 'normal') {
+        normalPipedDiv.style.display = 'block';
+        normalInvidiousDiv.style.display = 'block';
+        torInvidiousDiv.style.display = 'none';
+        torPipedDiv.style.display = 'none';
+    }
+    else if (protocol == 'tor') {
+        normalPipedDiv.style.display = 'none';
+        normalInvidiousDiv.style.display = 'none';
+        torInvidiousDiv.style.display = 'block';
+        torPipedDiv.style.display = 'block';
+    }
+}
+
 youtubeHelper.init().then(() => {
     disableYoutubeElement.checked = !youtubeHelper.getDisable();
     themeElement.checked = youtubeHelper.getTheme();
@@ -114,6 +143,10 @@ youtubeHelper.init().then(() => {
     let frontend = youtubeHelper.getFrontend();
     youtubeFrontendElement.value = frontend;
     changeFrontendsSettings(frontend);
+
+    let protocol = youtubeHelper.getprotocol();
+    protocolElement.value = protocol;
+    changeProtocolSettings(protocol);
 
     let freetubeFrontend = youtubeHelper.getFreetubeFrontend()
     freetubeFrontendElement.value = freetubeFrontend

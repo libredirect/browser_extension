@@ -11,6 +11,7 @@ imgurHelper.init().then(() => {
 
     commonHelper.processDefaultCustomInstances(
         'rimgo',
+        'normal',
         imgurHelper,
         document,
         imgurHelper.getRimgoRedirectsChecks,

@@ -37,6 +37,7 @@ redditHelper.init().then(() => {
 
     commonHelper.processDefaultCustomInstances(
         'libreddit',
+        'normal',
         redditHelper,
         document,
         redditHelper.getLibredditRedirectsChecks,
@@ -47,6 +48,7 @@ redditHelper.init().then(() => {
 
     commonHelper.processDefaultCustomInstances(
         'teddit',
+        'normal',
         redditHelper,
         document,
         redditHelper.getTedditRedirectsChecks,

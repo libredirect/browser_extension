@@ -6,16 +6,54 @@ disableTwitterElement.addEventListener("change",
     (event) => twitterHelper.setDisable(!event.target.checked)
 );
 
+let protocolElement = document.getElementById("protocol")
+protocolElement.addEventListener("change",
+    (event) => {
+        let protocol = event.target.options[protocolElement.selectedIndex].value
+        twitterHelper.setProtocol(protocol);
+        changeProtocolSettings(protocol);
+    }
+);
+
+
+function changeProtocolSettings(protocol) {
+    let normalDiv = document.getElementById("normal");
+    let torDiv = document.getElementById("tor");
+    if (protocol == 'normal') {
+        normalDiv.style.display = 'block';
+        torDiv.style.display = 'none';
+    }
+    else if (protocol == 'tor') {
+        normalDiv.style.display = 'none';
+        torDiv.style.display = 'block';
+    }
+}
+
 twitterHelper.init().then(() => {
-    disableTwitterElement.checked = !twitterHelper.getDisable(); 
+    disableTwitterElement.checked = !twitterHelper.getDisable();
+
+    let protocol = twitterHelper.getprotocol();
+    protocolElement.value = protocol;
+    changeProtocolSettings(protocol);
 
     commonHelper.processDefaultCustomInstances(
         'nitter',
+        'normal',
         twitterHelper,
         document,
-        twitterHelper.getNitterRedirectsChecks,
-        twitterHelper.setNitterRedirectsChecks,
-        twitterHelper.getNitterCustomRedirects,
-        twitterHelper.setNitterCustomRedirects
+        twitterHelper.getNitterNormalRedirectsChecks,
+        twitterHelper.setNitterNormalRedirectsChecks,
+        twitterHelper.getNitterNormalCustomRedirects,
+        twitterHelper.setNitterNormalCustomRedirects
+    )
+    commonHelper.processDefaultCustomInstances(
+        'nitter',
+        'tor',
+        twitterHelper,
+        document,
+        twitterHelper.getNitterTorRedirectsChecks,
+        twitterHelper.setNitterTorRedirectsChecks,
+        twitterHelper.getNitterTorCustomRedirects,
+        twitterHelper.setNitterTorCustomRedirects
     )
 });

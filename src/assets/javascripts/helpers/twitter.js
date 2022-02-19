@@ -63,7 +63,7 @@ let redirects = {
       "https://tw.artemislena.eu",
       "https://nitter.eu.org"
     ],
-    "onion": [
+    "tor": [
       "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
       "http://nitter.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd.onion",
       "http://nitter7bryz3jv7e3uekphigvmoyoem4al3fynerxkj22dmoxoq553qd.onion",
@@ -83,13 +83,15 @@ let redirects = {
   },
 };
 const getRedirects = () => redirects;
-const getCustomRedirects = function () {
+
+function getCustomRedirects() {
   return {
     "nitter": {
-      "normal": [...nitterRedirectsChecks, ...nitterCustomRedirects]
+      "normal": [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects]
     },
   };
 };
+
 function setRedirects(val) {
   redirects.nitter = val;
   browser.storage.sync.set({ twitterRedirects: redirects })
@@ -102,21 +104,38 @@ function setRedirects(val) {
   setNitterRedirectsChecks(nitterRedirectsChecks);
 }
 
-let nitterRedirectsChecks;
-const getNitterRedirectsChecks = () => nitterRedirectsChecks;
-function setNitterRedirectsChecks(val) {
-  nitterRedirectsChecks = val;
-  browser.storage.sync.set({ nitterRedirectsChecks })
-  console.log("nitterRedirectsChecks: ", val)
+let nitterNormalRedirectsChecks;
+const getNitterNormalRedirectsChecks = () => nitterNormalRedirectsChecks;
+function setNitterNormalRedirectsChecks(val) {
+  nitterNormalRedirectsChecks = val;
+  browser.storage.sync.set({ nitterNormalRedirectsChecks })
+  console.log("nitterNormalRedirectsChecks: ", val)
 }
 
-let nitterCustomRedirects = [];
-const getNitterCustomRedirects = () => nitterCustomRedirects;
-function setNitterCustomRedirects(val) {
-  nitterCustomRedirects = val;
-  browser.storage.sync.set({ nitterCustomRedirects })
-  console.log("nitterCustomRedirects: ", val)
+let nitterNormalCustomRedirects = [];
+const getNitterNormalCustomRedirects = () => nitterNormalCustomRedirects;
+function setNitterNormalCustomRedirects(val) {
+  nitterNormalCustomRedirects = val;
+  browser.storage.sync.set({ nitterNormalCustomRedirects })
+  console.log("nitterNormalCustomRedirects: ", val)
 }
+
+let nitterTorRedirectsChecks;
+const getNitterTorRedirectsChecks = () => nitterTorRedirectsChecks;
+function setNitterTorRedirectsChecks(val) {
+  nitterTorRedirectsChecks = val;
+  browser.storage.sync.set({ nitterTorRedirectsChecks })
+  console.log("nitterTorRedirectsChecks: ", val)
+}
+
+let nitterTorCustomRedirects = [];
+const getNitterTorCustomRedirects = () => nitterTorCustomRedirects;
+function setNitterTorCustomRedirects(val) {
+  nitterTorCustomRedirects = val;
+  browser.storage.sync.set({ nitterTorCustomRedirects })
+  console.log("nitterTorCustomRedirects: ", val)
+}
+
 
 let disable;
 const getDisable = () => disable;
@@ -125,19 +144,38 @@ function setDisable(val) {
   browser.storage.sync.set({ disableTwitter: disable })
 }
 
+let protocol;
+const getprotocol = () => protocol;
+function setProtocol(val) {
+  protocol = val;
+  browser.storage.sync.set({ nitterProtocol: val })
+  console.log("nitterProtocol: ", val)
+}
+
 function isTwitter(url, initiator) {
   if (disable) return false;
   if (url.pathname.split("/").includes("home")) return null;
   if (
     commonHelper.isFirefox() &&
-    initiator && ([...redirects.nitter.normal, ...nitterCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))
+    initiator && (
+      [
+        ...redirects.nitter.normal,
+        ...redirects.nitter.tor,
+        ...nitterTorCustomRedirects,
+        ...nitterNormalCustomRedirects
+      ].includes(initiator.origin) || targets.includes(initiator.host))
   ) return false;
 
   return targets.includes(url.host)
 }
 
 function redirect(url) {
-  let instancesList = [...nitterRedirectsChecks, ...nitterCustomRedirects];
+  let instancesList;
+  if (protocol == 'normal')
+    instancesList = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
+  else if (protocol == 'tor')
+    instancesList = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+
   if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList)
 
@@ -157,16 +195,24 @@ async function init() {
       [
         "disableTwitter",
         "twitterRedirects",
-        "nitterRedirectsChecks",
-        "nitterCustomRedirects",
+        "nitterNormalRedirectsChecks",
+        "nitterNormalCustomRedirects",
+        "nitterTorRedirectsChecks",
+        "nitterTorCustomRedirects",
+        "nitterProtocol",
       ],
       (result) => {
         disable = result.disableTwitter ?? false;
 
         if (result.twitterRedirects) redirects = result.twitterRedirects;
 
-        nitterRedirectsChecks = result.nitterRedirectsChecks ?? [...redirects.nitter.normal];
-        nitterCustomRedirects = result.nitterCustomRedirects ?? [];
+        nitterNormalRedirectsChecks = result.nitterNormalRedirectsChecks ?? [...redirects.nitter.normal];
+        nitterNormalCustomRedirects = result.nitterNormalCustomRedirects ?? [];
+
+        nitterTorRedirectsChecks = result.nitterTorRedirectsChecks ?? [...redirects.nitter.tor];
+        nitterTorCustomRedirects = result.nitterTorCustomRedirects ?? [];
+
+        protocol = result.nitterProtocol ?? "normal";
 
         resolve();
       }
@@ -182,11 +228,20 @@ export default {
   getDisable,
   setDisable,
 
-  getNitterRedirectsChecks,
-  setNitterRedirectsChecks,
+  getNitterNormalRedirectsChecks,
+  setNitterNormalRedirectsChecks,
 
-  getNitterCustomRedirects,
-  setNitterCustomRedirects,
+  getNitterNormalCustomRedirects,
+  setNitterNormalCustomRedirects,
+
+  getNitterTorRedirectsChecks,
+  setNitterTorRedirectsChecks,
+
+  getNitterTorCustomRedirects,
+  setNitterTorCustomRedirects,
+
+  getprotocol,
+  setProtocol,
 
   redirect,
   isTwitter,

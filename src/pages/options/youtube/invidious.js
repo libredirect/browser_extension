@@ -26,6 +26,7 @@ persistInvidiousPrefsElement.addEventListener("change",
     (event) => youtubeHelper.setPersistInvidiousPrefs(event.target.checked)
 );
 
+
 youtubeHelper.init().then(() => {
     invidiousPlayerStyleElement.value = youtubeHelper.getInvidiousPlayerStyle();
     invidiousAlwaysProxyElement.checked = youtubeHelper.getInvidiousAlwaysProxy();
@@ -35,12 +36,24 @@ youtubeHelper.init().then(() => {
 
     commonHelper.processDefaultCustomInstances(
         'invidious',
+        'normal',
         youtubeHelper,
         document,
-        youtubeHelper.getInvidiousRedirectsChecks,
-        youtubeHelper.setInvidiousRedirectsChecks,
-        youtubeHelper.getInvidiousCustomRedirects,
-        youtubeHelper.setInvidiousCustomRedirects
-    )
+        youtubeHelper.getInvidiousNormalRedirectsChecks,
+        youtubeHelper.setInvidiousNormalRedirectsChecks,
+        youtubeHelper.getInvidiousNormalCustomRedirects,
+        youtubeHelper.setInvidiousNormalCustomRedirects
+    );
+
+    commonHelper.processDefaultCustomInstances(
+        'invidious',
+        'tor',
+        youtubeHelper,
+        document,
+        youtubeHelper.getInvidiousTorRedirectsChecks,
+        youtubeHelper.setInvidiousTorRedirectsChecks,
+        youtubeHelper.getInvidiousTorCustomRedirects,
+        youtubeHelper.setInvidiousTorCustomRedirects
+    );
 });
 

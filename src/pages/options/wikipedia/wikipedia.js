@@ -10,6 +10,7 @@ wikipediaHelper.init().then(() => {
 
     commonHelper.processDefaultCustomInstances(
         'wikiless',
+        'normal',
         wikipediaHelper,
         document,
         wikipediaHelper.getWikilessRedirectsChecks,

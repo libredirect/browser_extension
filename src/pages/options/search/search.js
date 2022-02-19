@@ -38,6 +38,7 @@ searchHelper.init().then(() => {
 
   commonHelper.processDefaultCustomInstances(
     'searx',
+    'normal',
     searchHelper,
     document,
     searchHelper.getSearxRedirectsChecks,
@@ -48,6 +49,7 @@ searchHelper.init().then(() => {
 
   commonHelper.processDefaultCustomInstances(
     'whoogle',
+    'normal',
     searchHelper,
     document,
     searchHelper.getWhoogleRedirectsChecks,

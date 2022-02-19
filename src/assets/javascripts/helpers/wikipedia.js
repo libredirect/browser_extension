@@ -12,7 +12,7 @@ let redirects = {
       "https://wikiless.sethforprivacy.com",
       "https://wiki.604kph.xyz"
     ],
-    "onion": [
+    "tor": [
       "http://dj2tbh2nqfxyfmvq33cjmhuw7nb6am7thzd3zsjvizeqf374fixbrxyd.onion"
     ]
   }

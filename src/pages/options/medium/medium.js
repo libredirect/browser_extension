@@ -11,6 +11,7 @@ mediumHelper.init().then(() => {
 
     commonHelper.processDefaultCustomInstances(
         'scribe',
+        'normal',
         mediumHelper,
         document,
         mediumHelper.getScribeRedirectsChecks,

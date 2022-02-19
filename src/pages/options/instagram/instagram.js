@@ -11,6 +11,7 @@ instagramHelper.init().then(() => {
 
     commonHelper.processDefaultCustomInstances(
         'bibliogram',
+        'normal',
         instagramHelper,
         document,
         instagramHelper.getBibliogramRedirectsChecks,
