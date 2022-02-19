@@ -10,13 +10,13 @@
       "https://invidious-us.kavin.rocks",
       "https://invidious.osi.kr",
       "https://tube.cthd.icu",
-      "https://yt.artemislena.eu",
       "https://invidious.flokinet.to",
-      "https://youtube.076.ne.jp",
+      "https://yt.artemislena.eu",
       "https://invidious.privacy.gd",
+      "https://youtube.076.ne.jp",
       "https://invidious.namazso.eu"
     ],
-    "tor": [
+    "onion": [
       "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
       "http://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
       "http://kbjggqkzv65ivcqj6bumvp337z6264huv5kpkwuv6gu5yjiskvan7fad.onion",
@@ -71,9 +71,11 @@
       "https://nitter.datatunnel.xyz",
       "https://nitter.esmailelbob.xyz",
       "https://tw.artemislena.eu",
-      "https://de.nttr.stream"
+      "https://de.nttr.stream",
+      "https://nitter.winscloud.net",
+      "https://nitter.tiekoetter.com"
     ],
-    "tor": [
+    "onion": [
       "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
       "http://nitter.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd.onion",
       "http://nitter7bryz3jv7e3uekphigvmoyoem4al3fynerxkj22dmoxoq553qd.onion",
@@ -126,7 +128,7 @@
       "https://teddit.adminforge.de",
       "https://teddit.bus-hit.me"
     ],
-    "tor": [
+    "onion": [
       "http://teddit4w6cmzmj5kimhfcavs7yo5s7alszvsi2khqutqtlaanpcftfyd.onion",
       "http://snoo.ioensistjs7wd746zluwixvojbbkxhr37lepdvwtdfeav673o64iflqd.onion",
       "http://ibarajztopxnuhabfu7fg6gbudynxofbnmvis3ltj6lfx47b6fhrd5qd.onion",
@@ -142,7 +144,7 @@
       "https://wikiless.sethforprivacy.com",
       "https://wiki.604kph.xyz"
     ],
-    "tor": [
+    "onion": [
       "http://dj2tbh2nqfxyfmvq33cjmhuw7nb6am7thzd3zsjvizeqf374fixbrxyd.onion"
     ]
   },
@@ -164,9 +166,10 @@
       "https://manerakai.asuscomm.com:447",
       "https://translate.bus-hit.me",
       "https://simplytranslate.pussthecat.org",
-      "https://translate.northboot.xyz"
+      "https://translate.northboot.xyz",
+      "https://translate.tiekoetter.com"
     ],
-    "tor": [
+    "onion": [
       "http://fyng2tsmzmvxmojzbbwmfnsn2lrcyftf4cw6rk5j2v2huliazud3fjid.onion",
       "http://xxtbwyb5z5bdvy2f6l2yquu5qilgkjeewno4qfknvb3lkg3nmoklitid.onion"
     ]
@@ -276,7 +279,7 @@
       "https://xeek.com",
       "https://searx.roflcopter.fr"
     ],
-    "tor": [
+    "onion": [
       "http://3afisqjw2rxm6z7mmstyt5rx75qfqrgxnkzftknbp2vhipr2nrmrjdyd.onion",
       "http://searxbgetrkiwxhdwi6svpgh7eotopqyxhbqiokrwzg7dcte44t36kyd.onion",
       "http://suche.xyzco456vwisukfg.onion",
@@ -321,7 +324,7 @@
       "https://rimgo.totaldarkness.net",
       "https://rimgo.bus-hit.me"
     ],
-    "tor": [
+    "onion": [
       "http://l4d4owboqr6xcmd6lf64gbegel62kbudu3x3jnldz2mx6mhn3bsv3zyd.onion",
       "http://jx3dpcwedpzu2mh54obk5gvl64i2ln7pt5mrzd75s4jnndkqwzaim7ad.onion"
     ]
