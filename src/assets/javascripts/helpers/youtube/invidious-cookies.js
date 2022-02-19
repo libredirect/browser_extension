@@ -1,8 +1,6 @@
 
 function getCookie() {
-    let ca = document.cookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
+    for (const c of document.cookie.split(";")) {
         while (c.charAt(0) == " ") c = c.substring(1, c.length);
         if (c.indexOf("PREFS=") == 0)
             return JSON.parse(
@@ -15,24 +13,47 @@ function getCookie() {
 browser.storage.sync.get(
     [
         "invidiousAlwaysProxy",
-        "invidiousVideoQuality",
-        "invidiousDarkMode",
-        "OnlyEmbeddedVideo",
-        "volume",
-        "invidiousPlayerStyle",
         "invidiousSubtitles",
-        "autoplay",
+        "invidiousPlayerStyle",
+        "youtubeVolume",
+        "youtubeAutoplay",
+        "OnlyEmbeddedVideo",
+        "youtubeTheme",
+        "invidiousVideoQuality",
     ], (result) => {
-        const prefs = getCookie();
+        let prefs = getCookie();
+        let changed = false;
 
-        prefs.local = result.invidiousAlwaysProxy;
-        prefs.quality = result.invidiousVideoQuality;
-        prefs.dark_mode = result.invidiousDarkMode;
-        prefs.volume = result.volume;
-        prefs.player_style = result.invidiousPlayerStyle;
-        prefs.subtitles = result.invidiousSubtitles;
-        prefs.autoplay = result.autoplay;
+        if (result.invidiousAlwaysProxy !== undefined && prefs.local !== result.invidiousAlwaysProxy) {
+            prefs.local = result.invidiousAlwaysProxy;
+            changed = true;
+        }
+        if (result.invidiousVideoQuality !== undefined && prefs.quality !== result.invidiousVideoQuality) {
+            prefs.quality = result.invidiousVideoQuality;
+            changed = true;
+        }
+        if (result.youtubeTheme !== undefined && prefs.dark_mode !== result.youtubeTheme) {
+            prefs.dark_mode = result.youtubeTheme;
+            changed = true;
+        }
+        if (result.youtubeVolume !== undefined && prefs.volume !== result.youtubeVolume) {
+            prefs.volume = result.youtubeVolume;
+            changed = true;
+        }
+        if (result.invidiousPlayerStyle !== undefined && prefs.player_style !== result.invidiousPlayerStyle) {
+            prefs.player_style = result.invidiousPlayerStyle;
+            changed = true;
+        }
+        if (result.invidiousSubtitles !== undefined && prefs.subtitles === result.invidiousSubtitles) {
+            prefs.subtitles = result.invidiousSubtitles;
+            changed = true;
+        }
+        if (result.youtubeAutoplay !== undefined && prefs.autoplay !== result.youtubeAutoplay) {
+            prefs.autoplay = result.youtubeAutoplay;
+            changed = true;
+        }
 
-        document.cookie = `PREFS=${encodeURIComponent(JSON.stringify(prefs))}`;
+        if (changed) document.cookie = `PREFS=${encodeURIComponent(JSON.stringify(prefs))}`;
+
     }
 )

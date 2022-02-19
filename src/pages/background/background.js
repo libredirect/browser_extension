@@ -103,6 +103,12 @@ browser.webRequest.onResponseStarted.addListener(
   { urls: ["<all_urls>"] }
 );
 
+browser.tabs.onUpdated.addListener(
+  (tabId, changeInfo) => {
+    if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url))
+      youtubeHelper.invidiousInitCookies(tabId);
+  });
+
 function changeInstance(url) {
   var tabUrl = new URL(url);
   var protocolHost = `${tabUrl.protocol}//${tabUrl.host}`;

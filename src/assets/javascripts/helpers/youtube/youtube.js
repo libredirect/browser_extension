@@ -300,6 +300,12 @@ function isPipedorInvidious(url, type) {
   return (type === "main_frame" || type === "sub_frame") && [...redirects.invidious.normal, ...redirects.piped.normal].includes(protocolHost);
 }
 
+function isUrlPipedorInvidious(url) {
+  url = new URL(url);
+  let protocolHost = `${url.protocol}//${url.host}`;
+  return [...redirects.invidious.normal, ...redirects.piped.normal].includes(protocolHost);
+}
+
 function addUrlParams(url) {
 
   let protocolHost = `${url.protocol}//${url.host}`;
@@ -360,7 +366,6 @@ function addUrlParams(url) {
     }
 
   }
-
   if (isChanged) return url.href;
   else return;
 }
@@ -449,6 +454,7 @@ export default {
   isYoutube,
 
   isPipedorInvidious,
+  isUrlPipedorInvidious,
   addUrlParams,
 
   getDisable,
