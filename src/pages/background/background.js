@@ -69,6 +69,8 @@ browser.webRequest.onBeforeRequest.addListener(
 
     else if (wikipediaHelper.isWikipedia(url, initiator)) newUrl = wikipediaHelper.redirect(url);
 
+    if (youtubeHelper.isPipedorInvidious(newUrl ?? url, details.type)) newUrl = youtubeHelper.addUrlParams(newUrl ?? url);
+
     if (newUrl) {
       if (newUrl == 'CANCEL') {
         console.log(`Canceled ${url}`);

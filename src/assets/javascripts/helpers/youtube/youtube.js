@@ -276,15 +276,6 @@ function redirect(url, type) {
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-    if (!url.searchParams.has("dark_mode")) if (theme != "DEFAULT") url.searchParams.append("dark_mode", theme);
-    if (!url.searchParams.has("volume")) if (volume != "--") url.searchParams.append("volume", volume);
-    if (!url.searchParams.has("autoplay")) if (autoplay != "DEFAULT") url.searchParams.append("autoplay", autoplay);
-
-    if (!url.searchParams.has("local")) if (invidiousAlwaysProxy != "DEFAULT") url.searchParams.append("local", invidiousAlwaysProxy);
-    if (!url.searchParams.has("quality")) if (invidiousVideoQuality != "DEFAULT") url.searchParams.append("quality", invidiousVideoQuality);
-    if (!url.searchParams.has("player_style")) if (invidiousPlayerStyle != "DEFAULT") url.searchParams.append("player_style", invidiousPlayerStyle);
-    if (!url.searchParams.has("subtitles")) if (invidiousSubtitles.trim() != '') url.searchParams.append("subtitles", invidiousSubtitles);
-
     return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
 
   } else if (frontend == 'piped' || (frontend == 'freetube' && freetubeFrontend == 'piped' && type === "sub_frame")) {
@@ -299,15 +290,79 @@ function redirect(url, type) {
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-    if (!url.searchParams.has("theme")) if (theme != "DEFAULT") url.searchParams.append("theme", theme);
-    if (!url.searchParams.has("volume")) if (volume != "--") url.searchParams.append("volume", volume / 100);
-    if (!url.searchParams.has("playerAutoPlay")) if (autoplay != "DEFAULT") url.searchParams.append("playerAutoPlay", autoplay);
-
     return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
   }
-  console.log(freetubeFrontend)
-  console.log(type)
   return 'CANCEL';
+}
+
+function isPipedorInvidious(url, type) {
+  let protocolHost = `${url.protocol}//${url.host}`;
+  return (type === "main_frame" || type === "sub_frame") && [...redirects.invidious.normal, ...redirects.piped.normal].includes(protocolHost);
+}
+
+function addUrlParams(url) {
+
+  let protocolHost = `${url.protocol}//${url.host}`;
+  let isChanged = false;
+
+  console.log("protocolHost", protocolHost)
+  if (redirects.invidious.normal.includes(protocolHost)) {
+    if (!url.searchParams.has("dark_mode") && theme != "DEFAULT") {
+      url.searchParams.append("dark_mode", theme);
+      isChanged = true;
+    }
+
+    if (!url.searchParams.has("volume") && volume != "--") {
+      url.searchParams.append("volume", volume);
+      isChanged = true;
+    }
+
+    if (!url.searchParams.has("autoplay") && autoplay != "DEFAULT") {
+      url.searchParams.append("autoplay", autoplay);
+      isChanged = true;
+    }
+
+    if (!url.searchParams.has("local") && invidiousAlwaysProxy != "DEFAULT") {
+      url.searchParams.append("local", invidiousAlwaysProxy);
+      isChanged = true;
+    }
+
+    if (!url.searchParams.has("quality") && invidiousVideoQuality != "DEFAULT") {
+      url.searchParams.append("quality", invidiousVideoQuality);
+      isChanged = true;
+    }
+
+    if (!url.searchParams.has("player_style") && invidiousPlayerStyle != "DEFAULT") {
+      url.searchParams.append("player_style", invidiousPlayerStyle);
+      isChanged = true;
+    };
+
+    if (!url.searchParams.has("subtitles") && invidiousSubtitles.trim() != '') {
+      url.searchParams.append("subtitles", invidiousSubtitles);
+      isChanged = true;
+    }
+
+  } else if (redirects.piped.normal.includes(protocolHost)) {
+
+    if (!url.searchParams.has("theme") && theme != "DEFAULT") {
+      url.searchParams.append("theme", theme);
+      isChanged = true;
+    }
+
+    if (!url.searchParams.has("volume") && volume != "--") {
+      url.searchParams.append("volume", volume / 100);
+      isChanged = true;
+    }
+
+    if (!url.searchParams.has("playerAutoPlay") && autoplay != "DEFAULT") {
+      url.searchParams.append("playerAutoPlay", autoplay);
+      isChanged = true;
+    }
+
+  }
+
+  if (isChanged) return url.href;
+  else return;
 }
 
 function invidiousInitCookies(tabId) {
@@ -392,6 +447,9 @@ export default {
 
   redirect,
   isYoutube,
+
+  isPipedorInvidious,
+  addUrlParams,
 
   getDisable,
   setDisable,
