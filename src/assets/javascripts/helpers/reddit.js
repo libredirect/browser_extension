@@ -63,10 +63,10 @@ const getRedirects = () => redirects;
 const getCustomRedirects = function () {
   return {
     "libreddit": {
-      "normal": [...libredditRedirectsChecks, ...libredditCustomRedirects]
+      "normal": [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects]
     },
     "teddit": {
-      "normal": [...tedditRedirectsChecks, ...tedditCustomRedirects]
+      "normal": [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects]
     }
   };
 };
@@ -75,57 +75,57 @@ function setLibredditRedirects(val) {
   redirects.libreddit = val;
   browser.storage.sync.set({ redditRedirects: redirects })
   console.log("libredditRedirects:", val)
-  for (const item of libredditRedirectsChecks)
+  for (const item of libredditNormalRedirectsChecks)
     if (!redirects.libreddit.normal.includes(item)) {
-      var index = libredditRedirectsChecks.indexOf(item);
-      if (index !== -1) libredditRedirectsChecks.splice(index, 1);
+      var index = libredditNormalRedirectsChecks.indexOf(item);
+      if (index !== -1) libredditNormalRedirectsChecks.splice(index, 1);
     }
-  setLibredditRedirectsChecks(libredditRedirectsChecks);
+  setLibredditNormalRedirectsChecks(libredditNormalRedirectsChecks);
 }
 
 function setTedditRedirects(val) {
   redirects.teddit = val;
   browser.storage.sync.set({ redditRedirects: redirects })
   console.log("tedditRedirects:", val)
-  for (const item of tedditRedirectsChecks)
+  for (const item of tedditNormalRedirectsChecks)
     if (!redirects.teddit.normal.includes(item)) {
-      var index = tedditRedirectsChecks.indexOf(item);
-      if (index !== -1) tedditRedirectsChecks.splice(index, 1);
+      var index = tedditNormalRedirectsChecks.indexOf(item);
+      if (index !== -1) tedditNormalRedirectsChecks.splice(index, 1);
     }
-  setTedditRedirectsChecks(tedditRedirectsChecks);
+  setTedditNormalRedirectsChecks(tedditNormalRedirectsChecks);
 }
 
 
-let libredditRedirectsChecks;
-const getLibredditRedirectsChecks = () => libredditRedirectsChecks;
-function setLibredditRedirectsChecks(val) {
-  libredditRedirectsChecks = val;
-  browser.storage.sync.set({ libredditRedirectsChecks })
-  console.log("libredditRedirectsChecks: ", val)
+let libredditNormalRedirectsChecks;
+const getLibredditNormalRedirectsChecks = () => libredditNormalRedirectsChecks;
+function setLibredditNormalRedirectsChecks(val) {
+  libredditNormalRedirectsChecks = val;
+  browser.storage.sync.set({ libredditNormalRedirectsChecks })
+  console.log("libredditNormalRedirectsChecks: ", val)
 }
 
-let libredditCustomRedirects = [];
-const getLibredditCustomRedirects = () => libredditCustomRedirects;
-function setLibredditCustomRedirects(val) {
-  libredditCustomRedirects = val;
-  browser.storage.sync.set({ libredditCustomRedirects })
-  console.log("libredditCustomRedirects: ", val)
+let libredditNormalCustomRedirects = [];
+const getLibredditNormalCustomRedirects = () => libredditNormalCustomRedirects;
+function setLibredditNormalCustomRedirects(val) {
+  libredditNormalCustomRedirects = val;
+  browser.storage.sync.set({ libredditNormalCustomRedirects })
+  console.log("libredditNormalCustomRedirects: ", val)
 }
 
-let tedditRedirectsChecks;
-const getTedditRedirectsChecks = () => tedditRedirectsChecks;
-function setTedditRedirectsChecks(val) {
-  tedditRedirectsChecks = val;
-  browser.storage.sync.set({ tedditRedirectsChecks })
-  console.log("tedditRedirectsChecks: ", val)
+let tedditNormalRedirectsChecks;
+const getTedditNormalRedirectsChecks = () => tedditNormalRedirectsChecks;
+function setTedditNormalRedirectsChecks(val) {
+  tedditNormalRedirectsChecks = val;
+  browser.storage.sync.set({ tedditNormalRedirectsChecks })
+  console.log("tedditNormalRedirectsChecks: ", val)
 }
 
-let tedditCustomRedirects = [];
-const getTedditCustomRedirects = () => tedditCustomRedirects;
-function setTedditCustomRedirects(val) {
-  tedditCustomRedirects = val;
-  browser.storage.sync.set({ tedditCustomRedirects })
-  console.log("tedditCustomRedirects: ", val)
+let tedditNormalCustomRedirects = [];
+const getTedditNormalCustomRedirects = () => tedditNormalCustomRedirects;
+function setTedditNormalCustomRedirects(val) {
+  tedditNormalCustomRedirects = val;
+  browser.storage.sync.set({ tedditNormalCustomRedirects })
+  console.log("tedditNormalCustomRedirects: ", val)
 }
 
 const bypassPaths = /\/(gallery\/poll\/rpan\/settings\/topics)/;
@@ -148,8 +148,8 @@ function isReddit(url, initiator) {
   if (
     initiator &&
     (
-      [...redirects.libreddit.normal, ...libredditCustomRedirects].includes(initiator.origin) ||
-      [...redirects.teddit.normal, ...tedditCustomRedirects].includes(initiator.origin) ||
+      [...redirects.libreddit.normal, ...libredditNormalCustomRedirects].includes(initiator.origin) ||
+      [...redirects.teddit.normal, ...tedditNormalCustomRedirects].includes(initiator.origin) ||
       targets.includes(initiator.host)
     )
   ) return false;
@@ -161,8 +161,8 @@ function redirect(url, type) {
 
   if (type !== "main_frame" || url.pathname.match(bypassPaths)) return null;
 
-  let libredditInstancesList = [...libredditRedirectsChecks, ...libredditCustomRedirects];
-  let tedditInstancesList = [...tedditRedirectsChecks, ...tedditCustomRedirects];
+  let libredditInstancesList = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects];
+  let tedditInstancesList = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects];
 
   if (url.host === "i.redd.it") {
     if (libredditInstancesList.length === 0) return null;
@@ -212,21 +212,21 @@ async function init() {
         "disableReddit",
         "redditFrontend",
         "redditRedirects",
-        "libredditRedirectsChecks",
-        "libredditCustomRedirects",
-        "tedditRedirectsChecks",
-        "tedditCustomRedirects",
+        "libredditNormalRedirectsChecks",
+        "libredditNormalCustomRedirects",
+        "tedditNormalRedirectsChecks",
+        "tedditNormalCustomRedirects",
       ], (result) => {
         disableReddit = result.disableReddit ?? false;
         redditFrontend = result.redditFrontend ?? 'libreddit';
         if (result.redditRedirects)
           redirects = result.redditRedirects;
 
-        libredditRedirectsChecks = result.libredditRedirectsChecks ?? [...redirects.libreddit.normal];
-        libredditCustomRedirects = result.libredditCustomRedirects ?? [];
+        libredditNormalRedirectsChecks = result.libredditNormalRedirectsChecks ?? [...redirects.libreddit.normal];
+        libredditNormalCustomRedirects = result.libredditNormalCustomRedirects ?? [];
 
-        tedditRedirectsChecks = result.tedditRedirectsChecks ?? [...redirects.teddit.normal];
-        tedditCustomRedirects = result.tedditCustomRedirects ?? [];
+        tedditNormalRedirectsChecks = result.tedditNormalRedirectsChecks ?? [...redirects.teddit.normal];
+        tedditNormalCustomRedirects = result.tedditNormalCustomRedirects ?? [];
 
         resolve();
       }
@@ -247,17 +247,17 @@ export default {
   getRedditFrontend,
   setRedditFrontend,
 
-  getLibredditRedirectsChecks,
-  setLibredditRedirectsChecks,
+  getLibredditNormalRedirectsChecks,
+  setLibredditNormalRedirectsChecks,
 
-  getLibredditCustomRedirects,
-  setLibredditCustomRedirects,
+  getLibredditNormalCustomRedirects,
+  setLibredditNormalCustomRedirects,
 
-  getTedditRedirectsChecks,
-  setTedditRedirectsChecks,
+  getTedditNormalRedirectsChecks,
+  setTedditNormalRedirectsChecks,
 
-  getTedditCustomRedirects,
-  setTedditCustomRedirects,
+  getTedditNormalCustomRedirects,
+  setTedditNormalCustomRedirects,
 
   redirect,
   isReddit,

@@ -22,7 +22,7 @@ invidiousList['tor'] = []
 for instance in rJson:
     if instance[1]['type'] == 'https':
         invidiousList['normal'].append(instance[1]['uri'])
-    elif instance[1]['type'] == 'tor':
+    elif instance[1]['type'] == 'onion':
         invidiousList['tor'].append(instance[1]['uri'])
 mightyList['invidious'] = invidiousList
 print('fetched Invidious')
@@ -76,8 +76,8 @@ for item in rJson:
     url = item['url']
     if url != '':
         tedditList['normal'].append(url)
-    if 'tor' in item:
-        onion = item['tor']
+    if 'onion' in item:
+        onion = item['onion']
         if onion != '':
             tedditList['tor'].append(onion)
 
@@ -163,6 +163,7 @@ r = requests.get(
 tmpList = r.text.strip().split('\n')
 whoogleList = {}
 whoogleList['normal'] = []
+whoogleList['tor'] = []
 for item in tmpList:
     whoogleList['normal'].append(item)
 mightyList['whoogle'] = whoogleList
@@ -188,7 +189,7 @@ print('fetched Rimgo')
 
 # Writing to file
 json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
-with open('src/instances/data.json', 'w') as outfile:
+with open('./src/instances/data.json', 'w') as outfile:
     outfile.write(json_object)
 # print(json_object)
 print('wrote instances/data.json')

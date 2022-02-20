@@ -18,7 +18,7 @@ const getRedirects = () => redirects;
 const getCustomRedirects = function () {
     return {
         "proxiTok": {
-            "normal": [...proxiTokRedirectsChecks, ...proxiTokCustomRedirects]
+            "normal": [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects]
         },
     };
 };
@@ -27,28 +27,28 @@ function setRedirects(val) {
     redirects.proxiTok = val;
     browser.storage.sync.set({ tiktokRedirects: redirects })
     console.log("tiktokRedirects: ", val)
-    for (const item of proxiTokRedirectsChecks)
+    for (const item of proxiTokNormalRedirectsChecks)
         if (!redirects.proxiTok.normal.includes(item)) {
-            var index = proxiTokRedirectsChecks.indexOf(item);
-            if (index !== -1) proxiTokRedirectsChecks.splice(index, 1);
+            var index = proxiTokNormalRedirectsChecks.indexOf(item);
+            if (index !== -1) proxiTokNormalRedirectsChecks.splice(index, 1);
         }
-    setProxiTokRedirectsChecks(proxiTokRedirectsChecks);
+    setProxiTokNormalRedirectsChecks(proxiTokNormalRedirectsChecks);
 }
 
-let proxiTokRedirectsChecks;
-const getProxiTokRedirectsChecks = () => proxiTokRedirectsChecks;
-function setProxiTokRedirectsChecks(val) {
-    proxiTokRedirectsChecks = val;
-    browser.storage.sync.set({ proxiTokRedirectsChecks })
-    console.log("proxiTokRedirectsChecks: ", val)
+let proxiTokNormalRedirectsChecks;
+const getProxiTokNormalRedirectsChecks = () => proxiTokNormalRedirectsChecks;
+function setProxiTokNormalRedirectsChecks(val) {
+    proxiTokNormalRedirectsChecks = val;
+    browser.storage.sync.set({ proxiTokNormalRedirectsChecks })
+    console.log("proxiTokNormalRedirectsChecks: ", val)
 }
 
-let proxiTokCustomRedirects = [];
-const getProxiTokCustomRedirects = () => proxiTokCustomRedirects;
-function setProxiTokCustomRedirects(val) {
-    proxiTokCustomRedirects = val;
-    browser.storage.sync.set({ proxiTokCustomRedirects })
-    console.log("proxiTokCustomRedirects: ", val)
+let proxiTokNormalCustomRedirects = [];
+const getProxiTokNormalCustomRedirects = () => proxiTokNormalCustomRedirects;
+function setProxiTokNormalCustomRedirects(val) {
+    proxiTokNormalCustomRedirects = val;
+    browser.storage.sync.set({ proxiTokNormalCustomRedirects })
+    console.log("proxiTokNormalCustomRedirects: ", val)
 }
 
 let disable;
@@ -60,7 +60,7 @@ function setDisable(val) {
 
 function isTiktok(url, initiator) {
     if (disable) return false;
-    if (initiator && ([...redirects.proxiTok.normal, ...proxiTokCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))) return false;
+    if (initiator && ([...redirects.proxiTok.normal, ...proxiTokNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))) return false;
     return targets.some((rx) => rx.test(url.href));
 }
 
@@ -70,7 +70,7 @@ function redirect(url, type) {
 
     if (type != "main_frame" && "sub_frame" && "xmlhttprequest") return null;
 
-    let instancesList = [...proxiTokRedirectsChecks, ...proxiTokCustomRedirects];
+    let instancesList = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
@@ -85,16 +85,16 @@ async function init() {
             [
                 "disableTiktok",
                 "tiktokRedirects",
-                "proxiTokRedirectsChecks",
-                "proxiTokCustomRedirects",
+                "proxiTokNormalRedirectsChecks",
+                "proxiTokNormalCustomRedirects",
             ],
             (result) => {
                 disable = result.disableTiktok ?? false;
 
                 if (result.tiktokRedirects) redirects = result.tiktokRedirects;
 
-                proxiTokRedirectsChecks = result.proxiTokRedirectsChecks ?? [...redirects.proxiTok.normal];
-                proxiTokCustomRedirects = result.proxiTokCustomRedirects ?? [];
+                proxiTokNormalRedirectsChecks = result.proxiTokNormalRedirectsChecks ?? [...redirects.proxiTok.normal];
+                proxiTokNormalCustomRedirects = result.proxiTokNormalCustomRedirects ?? [];
 
                 resolve();
             }
@@ -111,11 +111,11 @@ export default {
     getDisable,
     setDisable,
 
-    getProxiTokRedirectsChecks,
-    setProxiTokRedirectsChecks,
+    getProxiTokNormalRedirectsChecks,
+    setProxiTokNormalRedirectsChecks,
 
-    getProxiTokCustomRedirects,
-    setProxiTokCustomRedirects,
+    getProxiTokNormalCustomRedirects,
+    setProxiTokNormalCustomRedirects,
 
     redirect,
     isTiktok,

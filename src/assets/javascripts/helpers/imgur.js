@@ -28,7 +28,7 @@ const getRedirects = () => redirects;
 const getCustomRedirects = function () {
     return {
         "rimgo": {
-            "normal": [...rimgoRedirectsChecks, ...rimgoCustomRedirects]
+            "normal": [...rimgoNormalRedirectsChecks, ...rimgoNormalCustomRedirects]
         },
     };
 };
@@ -37,28 +37,28 @@ function setRedirects(val) {
     redirects.rimgo = val;
     browser.storage.sync.set({ imgurRedirects: redirects })
     console.log("imgurRedirects: ", val)
-    for (const item of rimgoRedirectsChecks)
+    for (const item of rimgoNormalRedirectsChecks)
         if (!redirects.rimgo.normal.includes(item)) {
-            var index = rimgoRedirectsChecks.indexOf(item);
-            if (index !== -1) rimgoRedirectsChecks.splice(index, 1);
+            var index = rimgoNormalRedirectsChecks.indexOf(item);
+            if (index !== -1) rimgoNormalRedirectsChecks.splice(index, 1);
         }
-    setRimgoRedirectsChecks(rimgoRedirectsChecks);
+    setRimgoNormalRedirectsChecks(rimgoNormalRedirectsChecks);
 }
 
-let rimgoRedirectsChecks;
-const getRimgoRedirectsChecks = () => rimgoRedirectsChecks;
-function setRimgoRedirectsChecks(val) {
-    rimgoRedirectsChecks = val;
-    browser.storage.sync.set({ rimgoRedirectsChecks })
-    console.log("rimgoRedirectsChecks: ", val)
+let rimgoNormalRedirectsChecks;
+const getRimgoNormalRedirectsChecks = () => rimgoNormalRedirectsChecks;
+function setRimgoNormalRedirectsChecks(val) {
+    rimgoNormalRedirectsChecks = val;
+    browser.storage.sync.set({ rimgoNormalRedirectsChecks })
+    console.log("rimgoNormalRedirectsChecks: ", val)
 }
 
-let rimgoCustomRedirects = [];
-const getRimgoCustomRedirects = () => rimgoCustomRedirects;
-function setRimgoCustomRedirects(val) {
-    rimgoCustomRedirects = val;
-    browser.storage.sync.set({ rimgoCustomRedirects })
-    console.log("rimgoCustomRedirects: ", val)
+let rimgoNormalCustomRedirects = [];
+const getRimgoNormalCustomRedirects = () => rimgoNormalCustomRedirects;
+function setRimgoNormalCustomRedirects(val) {
+    rimgoNormalCustomRedirects = val;
+    browser.storage.sync.set({ rimgoNormalCustomRedirects })
+    console.log("rimgoNormalCustomRedirects: ", val)
 }
 
 let disable;
@@ -73,7 +73,7 @@ function isImgur(url, initiator) {
     if (url.pathname == "/") return false;
     if (
         initiator &&
-        ([...redirects.rimgo.normal, ...rimgoCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))
+        ([...redirects.rimgo.normal, ...rimgoNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))
     ) return false;
     return targets.some((rx) => rx.test(url.href));
 }
@@ -87,7 +87,7 @@ function redirect(url, type) {
 
     if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") return null;
 
-    let instancesList = [...rimgoRedirectsChecks, ...rimgoCustomRedirects];
+    let instancesList = [...rimgoNormalRedirectsChecks, ...rimgoNormalCustomRedirects];
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList)
 
@@ -100,16 +100,16 @@ async function init() {
             [
                 "disableImgur",
                 "imgurRedirects",
-                "rimgoRedirectsChecks",
-                "rimgoCustomRedirects",
+                "rimgoNormalRedirectsChecks",
+                "rimgoNormalCustomRedirects",
             ],
             (result) => {
                 disable = result.disableImgur ?? false;
 
                 if (result.imgurRedirects) redirects = result.imgurRedirects;
 
-                rimgoRedirectsChecks = result.rimgoRedirectsChecks ?? [...redirects.rimgo.normal];
-                rimgoCustomRedirects = result.rimgoCustomRedirects ?? [];
+                rimgoNormalRedirectsChecks = result.rimgoNormalRedirectsChecks ?? [...redirects.rimgo.normal];
+                rimgoNormalCustomRedirects = result.rimgoNormalCustomRedirects ?? [];
 
                 resolve();
             }
@@ -125,11 +125,11 @@ export default {
     getDisable,
     setDisable,
 
-    getRimgoRedirectsChecks,
-    setRimgoRedirectsChecks,
+    getRimgoNormalRedirectsChecks,
+    setRimgoNormalRedirectsChecks,
 
-    getRimgoCustomRedirects,
-    setRimgoCustomRedirects,
+    getRimgoNormalCustomRedirects,
+    setRimgoNormalCustomRedirects,
 
     redirect,
     isImgur,

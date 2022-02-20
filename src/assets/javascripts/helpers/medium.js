@@ -32,7 +32,7 @@ const getRedirects = () => redirects;
 const getCustomRedirects = function () {
   return {
     "scribe": {
-      "normal": [...scribeRedirectsChecks, ...scribeCustomRedirects]
+      "normal": [...scribeNormalRedirectsChecks, ...scribeNormalCustomRedirects]
     },
   };
 };
@@ -40,27 +40,27 @@ function setRedirects(val) {
   redirects.scribe = val;
   browser.storage.sync.set({ mediumRedirects: redirects })
   console.log("mediumRedirects: ", val)
-  for (const item of scribeRedirectsChecks) if (!redirects.scribe.normal.includes(item)) {
-    var index = scribeRedirectsChecks.indexOf(item);
-    if (index !== -1) scribeRedirectsChecks.splice(index, 1);
+  for (const item of scribeNormalRedirectsChecks) if (!redirects.scribe.normal.includes(item)) {
+    var index = scribeNormalRedirectsChecks.indexOf(item);
+    if (index !== -1) scribeNormalRedirectsChecks.splice(index, 1);
   }
-  setScribeRedirectsChecks(scribeRedirectsChecks);
+  setScribeNormalRedirectsChecks(scribeNormalRedirectsChecks);
 }
 
-let scribeRedirectsChecks;
-const getScribeRedirectsChecks = () => scribeRedirectsChecks;
-function setScribeRedirectsChecks(val) {
-  scribeRedirectsChecks = val;
-  browser.storage.sync.set({ scribeRedirectsChecks })
-  console.log("scribeRedirectsChecks: ", val)
+let scribeNormalRedirectsChecks;
+const getScribeNormalRedirectsChecks = () => scribeNormalRedirectsChecks;
+function setScribeNormalRedirectsChecks(val) {
+  scribeNormalRedirectsChecks = val;
+  browser.storage.sync.set({ scribeNormalRedirectsChecks })
+  console.log("scribeNormalRedirectsChecks: ", val)
 }
 
-let scribeCustomRedirects = [];
-const getScribeCustomRedirects = () => scribeCustomRedirects;
-function setScribeCustomRedirects(val) {
-  scribeCustomRedirects = val;
-  browser.storage.sync.set({ scribeCustomRedirects })
-  console.log("scribeCustomRedirects: ", val)
+let scribeNormalCustomRedirects = [];
+const getScribeNormalCustomRedirects = () => scribeNormalCustomRedirects;
+function setScribeNormalCustomRedirects(val) {
+  scribeNormalCustomRedirects = val;
+  browser.storage.sync.set({ scribeNormalCustomRedirects })
+  console.log("scribeNormalCustomRedirects: ", val)
 }
 
 let disable;
@@ -68,6 +68,7 @@ const getDisable = () => disable;
 function setDisable(val) {
   disable = val;
   browser.storage.sync.set({ disableMedium: disable })
+  console.log("disableMedium", disable)
 }
 
 function isMedium(url, initiator) {
@@ -76,7 +77,7 @@ function isMedium(url, initiator) {
 
   if (
     commonHelper.isFirefox() &&
-    initiator && ([...redirects.scribe.normal, ...scribeCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))
+    initiator && ([...redirects.scribe.normal, ...scribeNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))
   ) return false;
 
   return targets.some((rx) => rx.test(url.host));
@@ -85,7 +86,7 @@ function redirect(url, type) {
 
   if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") return null;
 
-  let instancesList = [...scribeRedirectsChecks, ...scribeCustomRedirects];
+  let instancesList = [...scribeNormalRedirectsChecks, ...scribeNormalCustomRedirects];
   if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList)
 
@@ -98,16 +99,16 @@ async function init() {
       [
         "disableMedium",
         "mediumRedirects",
-        "scribeRedirectsChecks",
-        "scribeCustomRedirects",
+        "scribeNormalRedirectsChecks",
+        "scribeNormalCustomRedirects",
       ],
       (result) => {
         disable = result.disableMedium ?? false;
 
         if (result.mediumRedirects) redirects = result.mediumRedirects;
 
-        scribeRedirectsChecks = result.scribeRedirectsChecks ?? [...redirects.scribe.normal];
-        scribeCustomRedirects = result.scribeCustomRedirects ?? [];
+        scribeNormalRedirectsChecks = result.scribeNormalRedirectsChecks ?? [...redirects.scribe.normal];
+        scribeNormalCustomRedirects = result.scribeNormalCustomRedirects ?? [];
 
         resolve();
       }
@@ -126,11 +127,11 @@ export default {
   getDisable,
   setDisable,
 
-  getScribeRedirectsChecks,
-  setScribeRedirectsChecks,
+  getScribeNormalRedirectsChecks,
+  setScribeNormalRedirectsChecks,
 
-  getScribeCustomRedirects,
-  setScribeCustomRedirects,
+  getScribeNormalCustomRedirects,
+  setScribeNormalCustomRedirects,
 
   redirect,
   isMedium,

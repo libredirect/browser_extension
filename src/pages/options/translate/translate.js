@@ -61,10 +61,10 @@ translateHelper.init().then(() => {
         'normal',
         translateHelper,
         document,
-        translateHelper.getSimplyTranslateRedirectsChecks,
-        translateHelper.setSimplyTranslateRedirectsChecks,
-        translateHelper.getSimplyTranslateCustomRedirects,
-        translateHelper.setSimplyTranslateCustomRedirects
+        translateHelper.getSimplyTranslateNormalRedirectsChecks,
+        translateHelper.setSimplyTranslateNormalRedirectsChecks,
+        translateHelper.getSimplyTranslateNormalCustomRedirects,
+        translateHelper.setSimplyTranslateNormalCustomRedirects
     )
 
     commonHelper.processDefaultCustomInstances(
@@ -72,9 +72,9 @@ translateHelper.init().then(() => {
         'normal',
         translateHelper,
         document,
-        translateHelper.getLingvaRedirectsChecks,
-        translateHelper.setLingvaRedirectsChecks,
-        translateHelper.getLingvaCustomRedirects,
-        translateHelper.setLingvaCustomRedirects
+        translateHelper.getLingvaNormalRedirectsChecks,
+        translateHelper.setLingvaNormalRedirectsChecks,
+        translateHelper.getLingvaNormalCustomRedirects,
+        translateHelper.setLingvaNormalCustomRedirects
     )
 });

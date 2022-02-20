@@ -14,9 +14,9 @@ imgurHelper.init().then(() => {
         'normal',
         imgurHelper,
         document,
-        imgurHelper.getRimgoRedirectsChecks,
-        imgurHelper.setRimgoRedirectsChecks,
-        imgurHelper.getRimgoCustomRedirects,
-        imgurHelper.setRimgoCustomRedirects
+        imgurHelper.getRimgoNormalRedirectsChecks,
+        imgurHelper.setRimgoNormalRedirectsChecks,
+        imgurHelper.getRimgoNormalCustomRedirects,
+        imgurHelper.setRimgoNormalCustomRedirects
     )
 })

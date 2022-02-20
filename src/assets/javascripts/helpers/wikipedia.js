@@ -21,7 +21,7 @@ const getRedirects = () => redirects;
 const getCustomRedirects = function () {
   return {
     "wikiless": {
-      "normal": [...wikilessRedirectsChecks, ...wikilessCustomRedirects]
+      "normal": [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects]
     },
   };
 };
@@ -29,12 +29,12 @@ function setRedirects(val) {
   redirects.wikiless = val;
   browser.storage.sync.set({ wikipediaRedirects: redirects })
   console.log("wikipediaRedirects: ", val)
-  for (const item of wikilessRedirectsChecks)
+  for (const item of wikilessNormalRedirectsChecks)
     if (!redirects.wikiless.normal.includes(item)) {
-      var index = wikilessRedirectsChecks.indexOf(item);
-      if (index !== -1) wikilessRedirectsChecks.splice(index, 1);
+      var index = wikilessNormalRedirectsChecks.indexOf(item);
+      if (index !== -1) wikilessNormalRedirectsChecks.splice(index, 1);
     }
-  setWikilessRedirectsChecks(wikilessRedirectsChecks);
+  setWikilessNormalRedirectsChecks(wikilessNormalRedirectsChecks);
 }
 
 let disable;
@@ -44,20 +44,20 @@ function setDisable(val) {
   browser.storage.sync.set({ disableWikipedia: disable })
 }
 
-let wikilessRedirectsChecks;
-const getWikilessRedirectsChecks = () => wikilessRedirectsChecks;
-function setWikilessRedirectsChecks(val) {
-  wikilessRedirectsChecks = val;
-  browser.storage.sync.set({ wikilessRedirectsChecks })
-  console.log("wikilessRedirectsChecks: ", val)
+let wikilessNormalRedirectsChecks;
+const getWikilessNormalRedirectsChecks = () => wikilessNormalRedirectsChecks;
+function setWikilessNormalRedirectsChecks(val) {
+  wikilessNormalRedirectsChecks = val;
+  browser.storage.sync.set({ wikilessNormalRedirectsChecks })
+  console.log("wikilessNormalRedirectsChecks: ", val)
 }
 
-let wikilessCustomRedirects = [];
-const getWikilessCustomRedirects = () => wikilessCustomRedirects;
-function setWikilessCustomRedirects(val) {
-  wikilessCustomRedirects = val;
-  browser.storage.sync.set({ wikilessCustomRedirects })
-  console.log("wikilessCustomRedirects: ", val)
+let wikilessNormalCustomRedirects = [];
+const getWikilessNormalCustomRedirects = () => wikilessNormalCustomRedirects;
+function setWikilessNormalCustomRedirects(val) {
+  wikilessNormalCustomRedirects = val;
+  browser.storage.sync.set({ wikilessNormalCustomRedirects })
+  console.log("wikilessNormalCustomRedirects: ", val)
 }
 
 function isWikipedia(url, initiator) {
@@ -76,7 +76,7 @@ function redirect(url) {
     }
   }
 
-  let instancesList = [...wikilessRedirectsChecks, ...wikilessCustomRedirects];
+  let instancesList = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
   if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList)
 
@@ -104,15 +104,15 @@ async function init() {
       [
         "disableWikipedia",
         "wikipediaRedirects",
-        "wikilessRedirectsChecks",
-        "wikilessCustomRedirects",
+        "wikilessNormalRedirectsChecks",
+        "wikilessNormalCustomRedirects",
       ], (result) => {
         disable = result.disableWikipedia ?? false;
 
         if (result.wikipediaRedirects) redirects = result.wikipediaRedirects;
 
-        wikilessRedirectsChecks = result.wikilessRedirectsChecks ?? [...redirects.wikiless.normal];
-        wikilessCustomRedirects = result.wikilessCustomRedirects ?? [];
+        wikilessNormalRedirectsChecks = result.wikilessNormalRedirectsChecks ?? [...redirects.wikiless.normal];
+        wikilessNormalCustomRedirects = result.wikilessNormalCustomRedirects ?? [];
 
         resolve();
       }
@@ -128,11 +128,11 @@ export default {
   setDisable,
   getDisable,
 
-  getWikilessRedirectsChecks,
-  setWikilessRedirectsChecks,
+  getWikilessNormalRedirectsChecks,
+  setWikilessNormalRedirectsChecks,
 
-  getWikilessCustomRedirects,
-  setWikilessCustomRedirects,
+  getWikilessNormalCustomRedirects,
+  setWikilessNormalCustomRedirects,
 
   redirect,
   isWikipedia,

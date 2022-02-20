@@ -14,9 +14,9 @@ tiktokHelper.init().then(() => {
         'normal',
         tiktokHelper,
         document,
-        tiktokHelper.getProxiTokRedirectsChecks,
-        tiktokHelper.setProxiTokRedirectsChecks,
-        tiktokHelper.getProxiTokCustomRedirects,
-        tiktokHelper.setProxiTokCustomRedirects
+        tiktokHelper.getProxiTokNormalRedirectsChecks,
+        tiktokHelper.setProxiTokNormalRedirectsChecks,
+        tiktokHelper.getProxiTokNormalCustomRedirects,
+        tiktokHelper.setProxiTokNormalCustomRedirects
     )
 })

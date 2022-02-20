@@ -14,9 +14,9 @@ mediumHelper.init().then(() => {
         'normal',
         mediumHelper,
         document,
-        mediumHelper.getScribeRedirectsChecks,
-        mediumHelper.setScribeRedirectsChecks,
-        mediumHelper.getScribeCustomRedirects,
-        mediumHelper.setScribeCustomRedirects
+        mediumHelper.getScribeNormalRedirectsChecks,
+        mediumHelper.setScribeNormalRedirectsChecks,
+        mediumHelper.getScribeNormalCustomRedirects,
+        mediumHelper.setScribeNormalCustomRedirects
     )
 })

@@ -2,11 +2,6 @@ window.browser = window.browser || window.chrome;
 
 import commonHelper from './common.js'
 
-/*
-    Please remember to also update the src/manifest.json file 
-    (content_scripts > matches, 'remove-twitter-sw.js') 
-    when updating this list:
-  */
 const targets = [
   "twitter.com",
   "www.twitter.com",
@@ -18,68 +13,8 @@ const targets = [
 
 let redirects = {
   "nitter": {
-    "normal": [
-      "https://nitter.net",
-      "https://nitter.42l.fr",
-      "https://nitter.pussthecat.org",
-      "https://nitter.nixnet.services",
-      "https://nitter.fdn.fr",
-      "https://nitter.1d4.us",
-      "https://nitter.kavin.rocks",
-      "https://nitter.unixfox.eu",
-      "https://nitter.domain.glass",
-      "https://nitter.eu",
-      "https://nitter.namazso.eu",
-      "https://nitter.actionsack.com",
-      "https://birdsite.xanny.family",
-      "https://nitter.hu",
-      "https://twitr.gq",
-      "https://nitter.moomoo.me",
-      "https://nittereu.moomoo.me",
-      "https://bird.trom.tf",
-      "https://nitter.it",
-      "https://twitter.censors.us",
-      "https://nitter.grimneko.de",
-      "https://nitter.alefvanoon.xyz",
-      "https://n.hyperborea.cloud",
-      "https://nitter.ca",
-      "https://twitter.076.ne.jp",
-      "https://nitter.mstdn.social",
-      "https://nitter.fly.dev",
-      "https://notabird.site",
-      "https://nitter.weiler.rocks",
-      "https://nitter.silkky.cloud",
-      "https://nitter.sethforprivacy.com",
-      "https://nttr.stream",
-      "https://nitter.cutelab.space",
-      "https://nitter.nl",
-      "https://nitter.mint.lgbt",
-      "https://nitter.tokhmi.xyz",
-      "https://nitter.bus-hit.me",
-      "https://fuckthesacklers.network",
-      "https://nitter.govt.land",
-      "https://nitter.datatunnel.xyz",
-      "https://nitter.esmailelbob.xyz",
-      "https://tw.artemislena.eu",
-      "https://nitter.eu.org"
-    ],
-    "tor": [
-      "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
-      "http://nitter.l4qlywnpwqsluw65ts7md3khrivpirse744un3x7mlskqauz5pyuzgqd.onion",
-      "http://nitter7bryz3jv7e3uekphigvmoyoem4al3fynerxkj22dmoxoq553qd.onion",
-      "http://npf37k3mtzwxreiw52ccs5ay4e6qt2fkcs2ndieurdyn2cuzzsfyfvid.onion",
-      "http://nitter.v6vgyqpa7yefkorazmg5d5fimstmvm2vtbirt6676mt7qmllrcnwycqd.onion",
-      "http://i23nv6w3juvzlw32xzoxcqzktegd4i4fu3nmnc2ewv4ggiu4ledwklad.onion",
-      "http://26oq3gioiwcmfojub37nz5gzbkdiqp7fue5kvye7d4txv4ny6fb4wwid.onion",
-      "http://vfaomgh4jxphpbdfizkm5gbtjahmei234giqj4facbwhrfjtcldauqad.onion",
-      "http://iwgu3cv7ywf3gssed5iqtavmrlszgsxazkmwwnt4h2kdait75thdyrqd.onion",
-      "http://erpnncl5nhyji3c32dcfmztujtl3xaddqb457jsbkulq24zqq7ifdgad.onion",
-      "http://ckzuw5misyahmg7j5t5xwwuj3bwy62jfolxyux4brfflramzsvvd3syd.onion",
-      "http://jebqj47jgxleaiosfcxfibx2xdahjettuydlxbg64azd4khsxv6kawid.onion",
-      "http://nttr2iupbb6fazdpr2rgbooon2tzbbsvvkagkgkwohhodjzj43stxhad.onion",
-      "http://nitraeju2mipeziu2wtcrqsxg7h62v5y4eqgwi75uprynkj74gevvuqd.onion",
-      "http://nitter.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion"
-    ]
+    "normal": [],
+    "tor": []
   },
 };
 const getRedirects = () => redirects;
@@ -87,7 +22,8 @@ const getRedirects = () => redirects;
 function getCustomRedirects() {
   return {
     "nitter": {
-      "normal": [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects]
+      "normal": [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects],
+      "tor": [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects]
     },
   };
 };
@@ -98,10 +34,17 @@ function setRedirects(val) {
   console.log("twitterRedirects:", val)
   for (const item of nitterNormalRedirectsChecks)
     if (!redirects.nitter.normal.includes(item)) {
-      var index = nitterRedirectsChecks.indexOf(item);
-      if (index !== -1) nitterRedirectsChecks.splice(index, 1);
+      var index = nitterNormalRedirectsChecks.indexOf(item);
+      if (index !== -1) nitterNormalRedirectsChecks.splice(index, 1);
     }
-  setNitterRedirectsChecks(nitterRedirectsChecks);
+  setNitterNormalRedirectsChecks(nitterNormalRedirectsChecks);
+
+  for (const item of nitterTorRedirectsChecks)
+    if (!redirects.nitter.tor.includes(item)) {
+      var index = nitterTorRedirectsChecks.indexOf(item);
+      if (index !== -1) nitterTorRedirectsChecks.splice(index, 1);
+    }
+  setNitterTorRedirectsChecks(nitterTorRedirectsChecks);
 }
 
 let nitterNormalRedirectsChecks;
@@ -191,33 +134,37 @@ function redirect(url) {
 
 async function init() {
   return new Promise((resolve) => {
-    browser.storage.sync.get(
-      [
-        "disableTwitter",
-        "twitterRedirects",
-        "nitterNormalRedirectsChecks",
-        "nitterNormalCustomRedirects",
-        "nitterTorRedirectsChecks",
-        "nitterTorCustomRedirects",
-        "nitterProtocol",
-      ],
-      (result) => {
-        disable = result.disableTwitter ?? false;
+    fetch('/instances/data.json').then(response => response.text()).then(data => {
+      let dataJson = JSON.parse(data);
+      browser.storage.sync.get(
+        [
+          "disableTwitter",
+          "twitterRedirects",
+          "nitterNormalRedirectsChecks",
+          "nitterNormalCustomRedirects",
+          "nitterTorRedirectsChecks",
+          "nitterTorCustomRedirects",
+          "nitterProtocol",
+        ],
+        (result) => {
+          disable = result.disableTwitter ?? false;
 
-        if (result.twitterRedirects) redirects = result.twitterRedirects;
+          redirects.nitter = dataJson.nitter;
+          if (result.twitterRedirects) redirects = result.twitterRedirects;
 
-        nitterNormalRedirectsChecks = result.nitterNormalRedirectsChecks ?? [...redirects.nitter.normal];
-        nitterNormalCustomRedirects = result.nitterNormalCustomRedirects ?? [];
+          nitterNormalRedirectsChecks = result.nitterNormalRedirectsChecks ?? [...redirects.nitter.normal];
+          nitterNormalCustomRedirects = result.nitterNormalCustomRedirects ?? [];
 
-        nitterTorRedirectsChecks = result.nitterTorRedirectsChecks ?? [...redirects.nitter.tor];
-        nitterTorCustomRedirects = result.nitterTorCustomRedirects ?? [];
+          nitterTorRedirectsChecks = result.nitterTorRedirectsChecks ?? [...redirects.nitter.tor];
+          nitterTorCustomRedirects = result.nitterTorCustomRedirects ?? [];
 
-        protocol = result.nitterProtocol ?? "normal";
+          protocol = result.nitterProtocol ?? "normal";
 
-        resolve();
-      }
-    );
-  })
+          resolve();
+        }
+      );
+    });
+  });
 }
 
 export default {

@@ -42,10 +42,10 @@ const getRedirects = () => redirects;
 const getCustomRedirects = function () {
   return {
     "simplyTranslate": {
-      "normal": [...simplyTranslateRedirectsChecks, ...simplyTranslateCustomRedirects]
+      "normal": [...simplyTranslateNormalRedirectsChecks, ...simplyTranslateNormalCustomRedirects]
     },
     "lingva": {
-      "normal": [...lingvaRedirectsChecks, ...lingvaCustomRedirects]
+      "normal": [...lingvaNormalRedirectsChecks, ...lingvaNormalCustomRedirects]
     }
   };
 };
@@ -54,56 +54,56 @@ function setSimplyTranslateRedirects(val) {
   redirects.simplyTranslate = val;
   browser.storage.sync.set({ translateRedirects: redirects })
   console.log("simplyTranslateRedirects:", val)
-  for (const item of simplyTranslateRedirectsChecks)
+  for (const item of simplyTranslateNormalRedirectsChecks)
     if (!redirects.simplyTranslate.normal.includes(item)) {
-      var index = simplyTranslateRedirectsChecks.indexOf(item);
-      if (index !== -1) simplyTranslateRedirectsChecks.splice(index, 1);
+      var index = simplyTranslateNormalRedirectsChecks.indexOf(item);
+      if (index !== -1) simplyTranslateNormalRedirectsChecks.splice(index, 1);
     }
-  setSimplyTranslateRedirectsChecks(simplyTranslateRedirectsChecks);
+  setSimplyTranslateNormalRedirectsChecks(simplyTranslateNormalRedirectsChecks);
 }
 
-let simplyTranslateRedirectsChecks;
-const getSimplyTranslateRedirectsChecks = () => simplyTranslateRedirectsChecks;
-function setSimplyTranslateRedirectsChecks(val) {
-  simplyTranslateRedirectsChecks = val;
-  browser.storage.sync.set({ simplyTranslateRedirectsChecks })
-  console.log("simplyTranslateRedirectsChecks: ", val)
+let simplyTranslateNormalRedirectsChecks;
+const getSimplyTranslateNormalRedirectsChecks = () => simplyTranslateNormalRedirectsChecks;
+function setSimplyTranslateNormalRedirectsChecks(val) {
+  simplyTranslateNormalRedirectsChecks = val;
+  browser.storage.sync.set({ simplyTranslateNormalRedirectsChecks })
+  console.log("simplyTranslateNormalRedirectsChecks: ", val)
 }
 
-let simplyTranslateCustomRedirects = [];
-const getSimplyTranslateCustomRedirects = () => simplyTranslateCustomRedirects;
-function setSimplyTranslateCustomRedirects(val) {
-  simplyTranslateCustomRedirects = val;
-  browser.storage.sync.set({ simplyTranslateCustomRedirects })
-  console.log("simplyTranslateCustomRedirects: ", val)
+let simplyTranslateNormalCustomRedirects = [];
+const getSimplyTranslateNormalCustomRedirects = () => simplyTranslateNormalCustomRedirects;
+function setSimplyTranslateNormalCustomRedirects(val) {
+  simplyTranslateNormalCustomRedirects = val;
+  browser.storage.sync.set({ simplyTranslateNormalCustomRedirects })
+  console.log("simplyTranslateNormalCustomRedirects: ", val)
 }
 
 function setLingvaRedirects(val) {
   redirects.lingva = val;
   browser.storage.sync.set({ translateRedirects: redirects })
   console.log("lingvaRedirects:", val)
-  for (const item of lingvaRedirectsChecks)
+  for (const item of lingvaNormalRedirectsChecks)
     if (!redirects.lingva.normal.includes(item)) {
-      var index = lingvaRedirectsChecks.indexOf(item);
-      if (index !== -1) lingvaRedirectsChecks.splice(index, 1);
+      var index = lingvaNormalRedirectsChecks.indexOf(item);
+      if (index !== -1) lingvaNormalRedirectsChecks.splice(index, 1);
     }
-  setLingvaRedirectsChecks(lingvaRedirectsChecks);
+  setLingvaNormalRedirectsChecks(lingvaNormalRedirectsChecks);
 }
 
-let lingvaRedirectsChecks;
-const getLingvaRedirectsChecks = () => lingvaRedirectsChecks;
-function setLingvaRedirectsChecks(val) {
-  lingvaRedirectsChecks = val;
-  browser.storage.sync.set({ lingvaRedirectsChecks })
-  console.log("lingvaRedirectsChecks: ", val)
+let lingvaNormalRedirectsChecks;
+const getLingvaNormalRedirectsChecks = () => lingvaNormalRedirectsChecks;
+function setLingvaNormalRedirectsChecks(val) {
+  lingvaNormalRedirectsChecks = val;
+  browser.storage.sync.set({ lingvaNormalRedirectsChecks })
+  console.log("lingvaNormalRedirectsChecks: ", val)
 }
 
-let lingvaCustomRedirects = [];
-const getLingvaCustomRedirects = () => lingvaCustomRedirects;
-function setLingvaCustomRedirects(val) {
-  lingvaCustomRedirects = val;
-  browser.storage.sync.set({ lingvaCustomRedirects })
-  console.log("lingvaCustomRedirects: ", val)
+let lingvaNormalCustomRedirects = [];
+const getLingvaNormalCustomRedirects = () => lingvaNormalCustomRedirects;
+function setLingvaNormalCustomRedirects(val) {
+  lingvaNormalCustomRedirects = val;
+  browser.storage.sync.set({ lingvaNormalCustomRedirects })
+  console.log("lingvaNormalCustomRedirects: ", val)
 }
 
 let disable;
@@ -152,7 +152,7 @@ function redirect(url) {
     myMap[pair[0]] = pair[1];
   }
   if (frontend == 'simplyTranslate') {
-    let instancesList = [...simplyTranslateRedirectsChecks, ...simplyTranslateCustomRedirects];
+    let instancesList = [...simplyTranslateNormalRedirectsChecks, ...simplyTranslateNormalCustomRedirects];
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList)
 
@@ -162,7 +162,7 @@ function redirect(url) {
       return `${randomInstance}/?sl=${from}&tl=${to}`
   }
   else if (frontend == 'lingva') {
-    let instancesList = [...lingvaRedirectsChecks, ...lingvaCustomRedirects];
+    let instancesList = [...lingvaNormalRedirectsChecks, ...lingvaNormalCustomRedirects];
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList)
 
@@ -180,10 +180,10 @@ async function init() {
         "translateDisable",
         "translateFrontend",
         "translateRedirects",
-        "simplyTranslateRedirectsChecks",
-        "simplyTranslateCustomRedirects",
-        "lingvaRedirectsChecks",
-        "lingvaCustomRedirects",
+        "simplyTranslateNormalRedirectsChecks",
+        "simplyTranslateNormalCustomRedirects",
+        "lingvaNormalRedirectsChecks",
+        "lingvaNormalCustomRedirects",
         "translateFrom",
         "translateTo",
       ],
@@ -196,11 +196,11 @@ async function init() {
 
         if (result.translateRedirects) redirects = result.translateRedirects
 
-        simplyTranslateRedirectsChecks = result.simplyTranslateRedirectsChecks ?? [...redirects.simplyTranslate.normal];
-        simplyTranslateCustomRedirects = result.simplyTranslateCustomRedirects ?? [];
+        simplyTranslateNormalRedirectsChecks = result.simplyTranslateNormalRedirectsChecks ?? [...redirects.simplyTranslate.normal];
+        simplyTranslateNormalCustomRedirects = result.simplyTranslateNormalCustomRedirects ?? [];
 
-        lingvaRedirectsChecks = result.lingvaRedirectsChecks ?? [...redirects.lingva.normal];
-        lingvaCustomRedirects = result.lingvaCustomRedirects ?? [];
+        lingvaNormalRedirectsChecks = result.lingvaNormalRedirectsChecks ?? [...redirects.lingva.normal];
+        lingvaNormalCustomRedirects = result.lingvaNormalCustomRedirects ?? [];
 
         resolve();
       });
@@ -227,17 +227,17 @@ export default {
   getTo,
   setTo,
 
-  getSimplyTranslateRedirectsChecks,
-  setSimplyTranslateRedirectsChecks,
+  getSimplyTranslateNormalRedirectsChecks,
+  setSimplyTranslateNormalRedirectsChecks,
 
-  getSimplyTranslateCustomRedirects,
-  setSimplyTranslateCustomRedirects,
+  getSimplyTranslateNormalCustomRedirects,
+  setSimplyTranslateNormalCustomRedirects,
 
-  getLingvaRedirectsChecks,
-  setLingvaRedirectsChecks,
+  getLingvaNormalRedirectsChecks,
+  setLingvaNormalRedirectsChecks,
 
-  getLingvaCustomRedirects,
-  setLingvaCustomRedirects,
+  getLingvaNormalCustomRedirects,
+  setLingvaNormalCustomRedirects,
 
   redirect,
   init,

@@ -14,9 +14,9 @@ instagramHelper.init().then(() => {
         'normal',
         instagramHelper,
         document,
-        instagramHelper.getBibliogramRedirectsChecks,
-        instagramHelper.setBibliogramRedirectsChecks,
-        instagramHelper.getBibliogramCustomRedirects,
-        instagramHelper.setBibliogramCustomRedirects
+        instagramHelper.getBibliogramNormalRedirectsChecks,
+        instagramHelper.setBibliogramNormalRedirectsChecks,
+        instagramHelper.getBibliogramNormalCustomRedirects,
+        instagramHelper.setBibliogramNormalCustomRedirects
     )
 })

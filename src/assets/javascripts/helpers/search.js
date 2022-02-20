@@ -3,136 +3,17 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-  /https?:\/\/(www\.|maps\.|search\.|)google\.com(\/search\?..*|\/$)/,
+  /https?:\/\/(www\.|maps\.|search\.|)google\.com(\...|)(\/search\?..*|\/$)/,
+  // /https?:\/\/yandex\.com(\...|)(\/search\/..*|\/$)/,
 ];
 let redirects = {
   "searx": {
-    "normal": [
-      "https://anon.sx",
-      "https://darmarit.org/searx",
-      "https://dynabyte.ca",
-      "https://engo.mint.lgbt",
-      "https://jsearch.pw",
-      "https://metasearch.nl",
-      "https://nibblehole.com",
-      "https://northboot.xyz",
-      "https://paulgo.io",
-      "https://procurx.pt",
-      "https://s.zhaocloud.net",
-      "https://search.antonkling.se",
-      "https://search.asynchronousexchange.com",
-      "https://search.biboumail.fr",
-      "https://search.bus-hit.me",
-      "https://search.disroot.org",
-      "https://search.ethibox.fr",
-      "https://search.jpope.org",
-      "https://search.mdosch.de",
-      "https://search.neet.works",
-      "https://search.ononoki.org",
-      "https://search.snopyta.org",
-      "https://search.st8.at",
-      "https://search.stinpriza.org",
-      "https://search.trom.tf",
-      "https://search.zdechov.net",
-      "https://searx-private-search.de",
-      "https://searx.bar",
-      "https://searx.be",
-      "https://searx.bissisoft.com",
-      "https://searx.divided-by-zero.eu",
-      "https://searx.dresden.network",
-      "https://searx.esmailelbob.xyz",
-      "https://searx.everdot.org",
-      "https://searx.fmac.xyz",
-      "https://searx.fossencdi.org",
-      "https://searx.gnous.eu",
-      "https://searx.gnu.style",
-      "https://searx.hardwired.link",
-      "https://searx.hummel-web.at",
-      "https://searx.lavatech.top",
-      "https://searx.mastodontech.de",
-      "https://searx.mha.fi",
-      "https://searx.mxchange.org",
-      "https://searx.nakhan.net",
-      "https://searx.netzspielplatz.de",
-      "https://searx.nevrlands.de",
-      "https://searx.ninja",
-      "https://searx.nixnet.services",
-      "https://searx.openhoofd.nl",
-      "https://searx.operationtulip.com",
-      "https://searx.org",
-      "https://searx.prvcy.eu",
-      "https://searx.pwoss.org",
-      "https://searx.rasp.fr",
-      "https://searx.roughs.ru",
-      "https://searx.ru",
-      "https://searx.run",
-      "https://searx.sadblog.xyz",
-      "https://searx.semipvt.com",
-      "https://searx.slash-dev.de",
-      "https://searx.solusar.de",
-      "https://searx.sp-codes.de",
-      "https://searx.stuehieyr.com",
-      "https://searx.theanonymouse.xyz",
-      "https://searx.thegreenwebfoundation.org",
-      "https://searx.tiekoetter.com",
-      "https://searx.tk",
-      "https://searx.tux.land",
-      "https://searx.tuxcloud.net",
-      "https://searx.tyil.nl",
-      "https://searx.vitanetworks.link",
-      "https://searx.webheberg.info",
-      "https://searx.xkek.net",
-      "https://searx.xyz",
-      "https://searx.zackptg5.com",
-      "https://searx.zapashcanon.fr",
-      "https://searx.zecircle.xyz",
-      "https://serx.cf",
-      "https://spot.ecloud.global",
-      "https://suche.dasnetzundich.de",
-      "https://suche.uferwerk.org",
-      "https://swag.pw",
-      "https://sx.catgirl.cloud",
-      "https://sx.fedi.tech",
-      "https://timdor.noip.me/searx",
-      "https://trovu.komun.org",
-      "https://www.gruble.de",
-      "https://www.webrats.xyz",
-      "https://xeek.com",
-      "https://searx.roflcopter.fr",
-    ],
-    "tor": [
-      "http://3afisqjw2rxm6z7mmstyt5rx75qfqrgxnkzftknbp2vhipr2nrmrjdyd.onion",
-      "http://searxbgetrkiwxhdwi6svpgh7eotopqyxhbqiokrwzg7dcte44t36kyd.onion",
-      "http://suche.xyzco456vwisukfg.onion",
-      "http://w5rl6wsd7mzj4bdkbuqvzidet5osdsm5jhg2f7nvfidakfq5exda5wid.onion",
-      "http://4n53nafyi77iplnbrpmxnp3x4exbswwxigujaxy3b37fvr7bvlopxeyd.onion",
-      "http://z34ambyi6makk6ta7ksog2sljly2ctt2sa3apekb7wkllk72sxecdtad.onion",
-      "http://search.4bkxscubgtxwvhpe.onion",
-      "http://juy4e6eicawzdrz7.onion",
-      "http://z5vawdol25vrmorm4yydmohsd4u6rdoj2sylvoi3e3nqvxkvpqul7bqd.onion",
-      "http://zbuc3bbzbfdqqo2x46repx2ddajbha6fpsjeeptjhhhhzji3zopxdqyd.onion",
-      "http://f4qfqajszpx5b7itzxt6mb7kj4ktpgbdq7lq6xaiqyqx6a7de3epptad.onion",
-      "http://searx.cwuzdtzlubq5uual.onion",
-      "http://rq2w52kyrif3xpfihkgjnhqm3a5aqhoikpv72z3drpjglfzc2wr5z4yd.onion",
-      "http://searx3aolosaf3urwnhpynlhuokqsgz47si4pzz5hvb7uuzyjncl2tid.onion",
-      "http://searx.bsbvtqi5oq2cqzn32zt4cr2f2z2rwots3dq7gmdcnlyqoxko2wx6reqd.onion"
-    ],
-    "i2p": [
-      "http://ransack.i2p",
-      "http://mqamk4cfykdvhw5kjez2gnvse56gmnqxn7vkvvbuor4k4j2lbbnq.b32.i2p"
-    ]
+    "normal": [],
+    "tor": [],
+    "i2p": []
   },
   "whoogle": {
-    "normal": [
-      "https://s.alefvanoon.xyz",
-      "https://search.albony.xyz",
-      "https://search.garudalinux.org",
-      "https://search.sethforprivacy.com",
-      "https://whoogle.fossho.st",
-      "https://whooglesearch.net",
-      "https://www.whooglesearch.ml",
-      "https://whoogle.dcs0.hu"
-    ],
+    "normal": [],
     "tor": []
   },
 };
@@ -140,10 +21,12 @@ const getRedirects = () => redirects;
 const getCustomRedirects = () => {
   return {
     "searx": {
-      "normal": [...searxRedirectsChecks, ...searxCustomRedirects]
+      "normal": [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects],
+      "tor": [...searxTorRedirectsChecks, ...searxTorCustomRedirects],
     },
     "whoogle": {
-      "normal": [...whoogleRedirectsChecks, ...whoogleCustomRedirects]
+      "normal": [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects],
+      "normal": [...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects]
     }
   };
 };
@@ -152,54 +35,98 @@ function setSearxRedirects(val) {
   redirects.searx = val;
   browser.storage.sync.set({ searchRedirects: redirects })
   console.log("searxRedirects:", val)
-  for (const item of searxRedirectsChecks) if (!redirects.searx.normal.includes(item)) {
-    var index = searxRedirectsChecks.indexOf(item);
-    if (index !== -1) searxRedirectsChecks.splice(index, 1);
+  for (const item of searxNormalRedirectsChecks) if (!redirects.searx.normal.includes(item)) {
+    var index = searxNormalRedirectsChecks.indexOf(item);
+    if (index !== -1) searxNormalRedirectsChecks.splice(index, 1);
   }
-  setSearxRedirectsChecks(searxRedirectsChecks);
+  setSearxNormalRedirectsChecks(searxNormalRedirectsChecks);
+
+  for (const item of searxTorRedirectsChecks) if (!redirects.searx.tor.includes(item)) {
+    var index = searxTorRedirectsChecks.indexOf(item);
+    if (index !== -1) searxTorRedirectsChecks.splice(index, 1);
+  }
+  setSearxTorRedirectsChecks(searxTorRedirectsChecks);
 }
 
 function setWhoogleRedirects(val) {
   redirects.whoogle = val;
   browser.storage.sync.set({ searchRedirects: redirects })
   console.log("whoogleRedirects:", val)
-  for (const item of whoogleRedirectsChecks) if (!redirects.whoogle.normal.includes(item)) {
-    var index = whoogleRedirectsChecks.indexOf(item);
-    if (index !== -1) whoogleRedirectsChecks.splice(index, 1);
+  for (const item of whoogleNormalRedirectsChecks) if (!redirects.whoogle.normal.includes(item)) {
+    var index = whoogleNormalRedirectsChecks.indexOf(item);
+    if (index !== -1) whoogleNormalRedirectsChecks.splice(index, 1);
   }
-  setWhoogleRedirectsChecks(whoogleRedirectsChecks);
+  setWhoogleNormalRedirectsChecks(whoogleNormalRedirectsChecks);
+
+  for (const item of whoogleTorRedirectsChecks) if (!redirects.whoogle.tor.includes(item)) {
+    var index = whoogleTorRedirectsChecks.indexOf(item);
+    if (index !== -1) whoogleTorRedirectsChecks.splice(index, 1);
+  }
+  setWhoogleTorRedirectsChecks(whoogleTorRedirectsChecks);
 }
 
-let whoogleRedirectsChecks;
-const getWhoogleRedirectsChecks = () => whoogleRedirectsChecks;
-function setWhoogleRedirectsChecks(val) {
-  whoogleRedirectsChecks = val;
-  browser.storage.sync.set({ whoogleRedirectsChecks })
-  console.log("whoogleRedirectsChecks: ", val)
+let whoogleNormalRedirectsChecks;
+const getWhoogleNormalRedirectsChecks = () => whoogleNormalRedirectsChecks;
+function setWhoogleNormalRedirectsChecks(val) {
+  whoogleNormalRedirectsChecks = val;
+  browser.storage.sync.set({ whoogleNormalRedirectsChecks })
+  console.log("whoogleNormalRedirectsChecks: ", val)
 }
 
-let whoogleCustomRedirects = [];
-const getWhoogleCustomRedirects = () => whoogleCustomRedirects;
-function setWhoogleCustomRedirects(val) {
-  whoogleCustomRedirects = val;
-  browser.storage.sync.set({ whoogleCustomRedirects })
-  console.log("whoogleCustomRedirects: ", val)
+let whoogleTorRedirectsChecks;
+const getWhoogleTorRedirectsChecks = () => whoogleTorRedirectsChecks;
+function setWhoogleTorRedirectsChecks(val) {
+  whoogleTorRedirectsChecks = val;
+  browser.storage.sync.set({ whoogleTorRedirectsChecks })
+  console.log("whoogleTorRedirectsChecks: ", val)
 }
 
-let searxRedirectsChecks;
-const getSearxRedirectsChecks = () => searxRedirectsChecks;
-function setSearxRedirectsChecks(val) {
-  searxRedirectsChecks = val;
-  browser.storage.sync.set({ searxRedirectsChecks })
-  console.log("searxRedirectsChecks: ", val)
+let whoogleNormalCustomRedirects = [];
+const getWhoogleNormalCustomRedirects = () => whoogleNormalCustomRedirects;
+function setWhoogleNormalCustomRedirects(val) {
+  whoogleNormalCustomRedirects = val;
+  browser.storage.sync.set({ whoogleNormalCustomRedirects })
+  console.log("whoogleNormalCustomRedirects: ", val)
 }
 
-let searxCustomRedirects = [];
-const getSearxCustomRedirects = () => searxCustomRedirects;
-function setSearxCustomRedirects(val) {
-  searxCustomRedirects = val;
-  browser.storage.sync.set({ searxCustomRedirects })
-  console.log("searxCustomRedirects: ", val)
+let whoogleTorCustomRedirects = [];
+const getWhoogleTorCustomRedirects = () => whoogleTorCustomRedirects;
+function setWhoogleTorCustomRedirects(val) {
+  whoogleTorCustomRedirects = val;
+  browser.storage.sync.set({ whoogleTorCustomRedirects })
+  console.log("whoogleTorCustomRedirects: ", val)
+}
+
+let searxNormalRedirectsChecks;
+const getSearxNormalRedirectsChecks = () => searxNormalRedirectsChecks;
+function setSearxNormalRedirectsChecks(val) {
+  searxNormalRedirectsChecks = val;
+  browser.storage.sync.set({ searxNormalRedirectsChecks })
+  console.log("searxNormalRedirectsChecks: ", val)
+}
+
+let searxTorRedirectsChecks;
+const getSearxTorRedirectsChecks = () => searxTorRedirectsChecks;
+function setSearxTorRedirectsChecks(val) {
+  searxTorRedirectsChecks = val;
+  browser.storage.sync.set({ searxTorRedirectsChecks })
+  console.log("searxTorRedirectsChecks: ", val)
+}
+
+let searxNormalCustomRedirects = [];
+const getSearxNormalCustomRedirects = () => searxNormalCustomRedirects;
+function setSearxNormalCustomRedirects(val) {
+  searxNormalCustomRedirects = val;
+  browser.storage.sync.set({ searxNormalCustomRedirects })
+  console.log("searxNormalCustomRedirects: ", val)
+}
+
+let searxTorCustomRedirects = [];
+const getSearxTorCustomRedirects = () => searxTorCustomRedirects;
+function setSearxTorCustomRedirects(val) {
+  searxTorCustomRedirects = val;
+  browser.storage.sync.set({ searxTorCustomRedirects })
+  console.log("searxTorCustomRedirects: ", val)
 }
 
 let disable;
@@ -218,6 +145,14 @@ function setFrontend(val) {
   console.log("searchFrontend: ", frontend)
 };
 
+let protocol;
+const getprotocol = () => protocol;
+function setProtocol(val) {
+  protocol = val;
+  browser.storage.sync.set({ searchProtocol: val })
+  console.log("searchProtocol: ", val)
+}
+
 function isSearch(url, initiator) {
   if (disable) return false;
   return targets.some((rx) => rx.test(url.href));
@@ -227,13 +162,17 @@ function redirect(url) {
   let randomInstance;
   let path;
   if (frontend == 'searx') {
-    let instancesList = [...searxRedirectsChecks, ...searxCustomRedirects];
+    let instancesList;
+    if (protocol == 'normal') instancesList = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
     if (instancesList.length === 0) return null;
     randomInstance = commonHelper.getRandomInstance(instancesList)
     path = "/";
   }
   if (frontend == 'whoogle') {
-    let instancesList = [...whoogleRedirectsChecks, ...whoogleCustomRedirects];
+    let instancesList
+    if (protocol == 'normal') instancesList = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects];
+    if (protocol == 'tor') instancesList = [...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects];
     if (instancesList.length === 0) return null;
     randomInstance = commonHelper.getRandomInstance(instancesList)
     path = "/search";
@@ -249,32 +188,55 @@ function redirect(url) {
 
 async function init() {
   return new Promise((resolve) => {
-    browser.storage.sync.get(
-      [
-        "disableSearch",
-        "searchFrontend",
-        "searchRedirects",
-        "whoogleRedirectsChecks",
-        "whoogleCustomRedirects",
-        "searxRedirectsChecks",
-        "searxCustomRedirects",
-      ],
-      (result) => {
-        disable = result.disableSearch ?? false;
+    fetch('/instances/data.json').then(response => response.text()).then(data => {
+      let dataJson = JSON.parse(data);
+      browser.storage.sync.get(
+        [
+          "disableSearch",
+          "searchFrontend",
+          "searchRedirects",
 
-        frontend = result.searchFrontend ?? 'searx';
+          "whoogleNormalRedirectsChecks",
+          "whoogleNormalCustomRedirects",
+          
+          "whoogleTorRedirectsChecks",
+          "whoogleTorCustomRedirects",
 
-        if (result.searchRedirects) redirects = result.searchRedirects;
+          "searxNormalRedirectsChecks",
+          "searxNormalCustomRedirects",
+          
+          "searxTorRedirectsChecks",
+          "searxTorCustomRedirects",
 
-        whoogleRedirectsChecks = result.whoogleRedirectsChecks ?? [...redirects.whoogle.normal];
-        whoogleCustomRedirects = result.whoogleCustomRedirects ?? [];
+          "searchProtocol",
+        ],
+        (result) => {
+          disable = result.disableSearch ?? false;
 
-        searxRedirectsChecks = result.searxRedirectsChecks ?? [...redirects.searx.normal];
-        searxCustomRedirects = result.searxCustomRedirects ?? [];
+          protocol = result.searchProtocol ?? 'normal';
 
-        resolve();
-      }
-    );
+          frontend = result.searchFrontend ?? 'searx';
+
+          redirects.searx = dataJson.searx;
+          redirects.whoogle = dataJson.whoogle;
+          if (result.searchRedirects) redirects = result.searchRedirects;
+
+          whoogleNormalRedirectsChecks = result.whoogleNormalRedirectsChecks ?? [...redirects.whoogle.normal];
+          whoogleNormalCustomRedirects = result.whoogleNormalCustomRedirects ?? [];
+
+          whoogleTorRedirectsChecks = result.whoogleTorRedirectsChecks ?? [...redirects.whoogle.tor];
+          whoogleTorCustomRedirects = result.whoogleTorCustomRedirects ?? [];
+
+          searxNormalRedirectsChecks = result.searxNormalRedirectsChecks ?? [...redirects.searx.normal];
+          searxNormalCustomRedirects = result.searxNormalCustomRedirects ?? [];
+
+          searxTorRedirectsChecks = result.searxTorRedirectsChecks ?? [...redirects.searx.tor];
+          searxTorCustomRedirects = result.searxTorCustomRedirects ?? [];
+
+          resolve();
+        }
+      );
+    });
   });
 }
 
@@ -292,17 +254,28 @@ export default {
   getFrontend,
   setFrontend,
 
-  getWhoogleRedirectsChecks,
-  setWhoogleRedirectsChecks,
+  getWhoogleNormalRedirectsChecks,
+  setWhoogleNormalRedirectsChecks,
+  getWhoogleNormalCustomRedirects,
+  setWhoogleNormalCustomRedirects,
 
-  getWhoogleCustomRedirects,
-  setWhoogleCustomRedirects,
+  getWhoogleTorRedirectsChecks,
+  setWhoogleTorRedirectsChecks,
+  getWhoogleTorCustomRedirects,
+  setWhoogleTorCustomRedirects,
 
-  getSearxRedirectsChecks,
-  setSearxRedirectsChecks,
+  getSearxNormalRedirectsChecks,
+  setSearxNormalRedirectsChecks,
+  getSearxNormalCustomRedirects,
+  setSearxNormalCustomRedirects,
 
-  getSearxCustomRedirects,
-  setSearxCustomRedirects,
+  getSearxTorRedirectsChecks,
+  setSearxTorRedirectsChecks,
+  getSearxTorCustomRedirects,
+  setSearxTorCustomRedirects,
+
+  getprotocol,
+  setProtocol,
 
   redirect,
   init,

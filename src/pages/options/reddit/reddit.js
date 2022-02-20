@@ -40,10 +40,10 @@ redditHelper.init().then(() => {
         'normal',
         redditHelper,
         document,
-        redditHelper.getLibredditRedirectsChecks,
-        redditHelper.setLibredditRedirectsChecks,
-        redditHelper.getLibredditCustomRedirects,
-        redditHelper.setLibredditCustomRedirects
+        redditHelper.getLibredditNormalRedirectsChecks,
+        redditHelper.setLibredditNormalRedirectsChecks,
+        redditHelper.getLibredditNormalCustomRedirects,
+        redditHelper.setLibredditNormalCustomRedirects
     )
 
     commonHelper.processDefaultCustomInstances(
@@ -51,10 +51,10 @@ redditHelper.init().then(() => {
         'normal',
         redditHelper,
         document,
-        redditHelper.getTedditRedirectsChecks,
-        redditHelper.setTedditRedirectsChecks,
-        redditHelper.getTedditCustomRedirects,
-        redditHelper.setTedditCustomRedirects
+        redditHelper.getTedditNormalRedirectsChecks,
+        redditHelper.setTedditNormalRedirectsChecks,
+        redditHelper.getTedditNormalCustomRedirects,
+        redditHelper.setTedditNormalCustomRedirects
     );
 
 })

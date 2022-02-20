@@ -13,9 +13,9 @@ wikipediaHelper.init().then(() => {
         'normal',
         wikipediaHelper,
         document,
-        wikipediaHelper.getWikilessRedirectsChecks,
-        wikipediaHelper.setWikilessRedirectsChecks,
-        wikipediaHelper.getWikilessCustomRedirects,
-        wikipediaHelper.setWikilessCustomRedirects
+        wikipediaHelper.getWikilessNormalRedirectsChecks,
+        wikipediaHelper.setWikilessNormalRedirectsChecks,
+        wikipediaHelper.getWikilessNormalCustomRedirects,
+        wikipediaHelper.setWikilessNormalCustomRedirects
     )
 })
