@@ -24,6 +24,8 @@ Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)
 [![Firefox Add-on](src/assets/images/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)
 
 ## Donate
+[![Liberapay](./src/assets/images/liberapay.svg)](https://liberapay.com/LibRedirect)
+
 **BTC:** `bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q`
 
 ## Development
