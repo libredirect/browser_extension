@@ -23,7 +23,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests bs4
       - name: run script
-        run: python instances/get_instances.py
+        run: python src/instances/get_instances.py
       
       - name: commit files
         run: |
