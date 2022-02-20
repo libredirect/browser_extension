@@ -15,21 +15,21 @@ import exceptionsHelper from "../../assets/javascripts/helpers/exceptions.js";
 
 window.browser = window.browser || window.chrome;
 
-function wholeInit() {
+async function wholeInit() {
+  youtubeHelper.init()
+  twitterHelper.init()
+  instagramHelper.init()
   mapsHelper.init()
   searchHelper.init()
   translateHelper.init()
-  instagramHelper.init()
   mediumHelper.init()
   redditHelper.init()
-  twitterHelper.init()
   wikipediaHelper.init()
-  youtubeHelper.init()
   imgurHelper.init()
   tiktokHelper.init()
   exceptionsHelper.init()
-}
 
+}
 wholeInit();
 
 browser.storage.onChanged.addListener(wholeInit);

@@ -3,7 +3,7 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-  /https?:\/\/(www\.|maps\.|search\.|)google\.com(\/search\?q=..*|\/$)/,
+  /https?:\/\/(www\.|maps\.|search\.|)google\.com(\/search\?..*|\/$)/,
 ];
 let redirects = {
   "searx": {
@@ -132,7 +132,8 @@ let redirects = {
       "https://whooglesearch.net",
       "https://www.whooglesearch.ml",
       "https://whoogle.dcs0.hu"
-    ]
+    ],
+    "tor": []
   },
 };
 const getRedirects = () => redirects;

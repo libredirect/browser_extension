@@ -18,29 +18,8 @@ const targets = [
 ];
 let redirects = {
   "invidious": {
-    "normal": [
-      "https://yewtu.be",
-      "https://invidious.snopyta.org",
-      "https://vid.puffyan.us",
-      "https://invidious.kavin.rocks",
-      "https://invidio.xamh.de",
-      "https://inv.riverside.rocks",
-      "https://invidious-us.kavin.rocks",
-      "https://invidious.osi.kr",
-      "https://inv.cthd.icu",
-      "https://yt.artemislena.eu",
-      "https://youtube.076.ne.jp",
-      "https://invidious.namazso.eu"
-    ],
-    "tor": [
-      "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
-      "http://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
-      "http://kbjggqkzv65ivcqj6bumvp337z6264huv5kpkwuv6gu5yjiskvan7fad.onion",
-      "http://grwp24hodrefzvjjuccrkw3mjq4tzhaaq32amf33dzpmuxe7ilepcmad.onion",
-      "http://hpniueoejy4opn7bc4ftgazyqjoeqwlvh2uiku2xqku6zpoa4bf5ruid.onion",
-      "http://osbivz6guyeahrwp2lnwyjk2xos342h4ocsxyqrlaopqjuhwn2djiiyd.onion",
-      "http://u2cvlit75owumwpy4dj2hsmvkq7nvrclkpht7xgyye2pyoxhpmclkrad.onion"
-    ]
+    "normal": [],
+    "tor": []
   },
   "piped": {
     "normal": [
@@ -55,7 +34,7 @@ let redirects = {
 
 const getRedirects = () => redirects;
 
-const getCustomRedirects = function () {
+function getCustomRedirects() {
   return {
     "invidious": {
       "normal": [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects],
@@ -140,9 +119,6 @@ function setPipedTorCustomRedirects(val) {
   browser.storage.sync.set({ pipedTorCustomRedirects })
   console.log("pipedTorCustomRedirects: ", val)
 }
-
-
-
 
 function setPipedRedirects(val) {
   redirects.piped = val;
@@ -418,8 +394,9 @@ function addUrlParams(url) {
       ...redirects.invidious.normal,
       ...redirects.invidious.tor,
       ...invidiousNormalCustomRedirects,
-      ...invidiousTorCustomRedirects,
-    ].includes(protocolHost)) {
+      ...invidiousTorCustomRedirects
+    ].includes(protocolHost)
+  ) {
     if (!url.searchParams.has("dark_mode") && theme != "DEFAULT") {
       url.searchParams.append("dark_mode", theme);
       isChanged = true;
@@ -461,7 +438,8 @@ function addUrlParams(url) {
       ...redirects.piped.tor,
       ...pipedNormalCustomRedirects,
       ...pipedTorCustomRedirects,
-    ].includes(protocolHost)) {
+    ].includes(protocolHost)
+  ) {
 
     if (!url.searchParams.has("theme") && theme != "DEFAULT") {
       url.searchParams.append("theme", theme);
@@ -493,76 +471,81 @@ function invidiousInitCookies(tabId) {
   );
 }
 
+
 async function init() {
   return new Promise((resolve) => {
-    browser.storage.sync.get(
-      [
-        "invidiousAlwaysProxy",
-        "invidiousVideoQuality",
-        "youtubeTheme",
-        "persistInvidiousPrefs",
-        "disableYoutube",
-        "OnlyEmbeddedVideo",
-        "youtubeVolume",
-        "invidiousPlayerStyle",
-        "invidiousSubtitles",
-        "youtubeAutoplay",
-        "youtubeRedirects",
-        "youtubeFrontend",
+    fetch('/instances/data.json').then(response => response.text()).then(data => {
+      let dataJson = JSON.parse(data);
+      browser.storage.sync.get(
+        [
+          "invidiousAlwaysProxy",
+          "invidiousVideoQuality",
+          "youtubeTheme",
+          "persistInvidiousPrefs",
+          "disableYoutube",
+          "OnlyEmbeddedVideo",
+          "youtubeVolume",
+          "invidiousPlayerStyle",
+          "invidiousSubtitles",
+          "youtubeAutoplay",
+          "youtubeRedirects",
+          "youtubeFrontend",
 
-        "invidiousNormalRedirectsChecks",
-        "invidiousNormalCustomRedirects",
+          "invidiousNormalRedirectsChecks",
+          "invidiousNormalCustomRedirects",
 
-        "invidiousTorRedirectsChecks",
-        "invidiousTorCustomRedirects",
+          "invidiousTorRedirectsChecks",
+          "invidiousTorCustomRedirects",
 
-        "pipedNormalRedirectsChecks",
-        "pipedNormalCustomRedirects",
+          "pipedNormalRedirectsChecks",
+          "pipedNormalCustomRedirects",
 
-        "pipedTorRedirectsChecks",
-        "pipedTorCustomRedirects",
-        "alwaysusePreferred",
-        "freetubeFrontend",
+          "pipedTorRedirectsChecks",
+          "pipedTorCustomRedirects",
+          "alwaysusePreferred",
+          "freetubeFrontend",
 
-        "youtubeProtocol",
-      ],
-      (result) => {
-        if (result.youtubeRedirects) redirects = result.youtubeRedirects;
+          "youtubeProtocol",
+        ],
+        (result) => {
+          redirects.invidious = dataJson.invidious;
+          if (result.youtubeRedirects) redirects = result.youtubeRedirects;
 
-        disable = result.disableYoutube ?? false;
-        protocol = result.youtubeProtocol ?? 'normal';
-        frontend = result.youtubeFrontend ?? 'piped';
-        freetubeFrontend = result.freetubeFrontend ?? 'invidious';
 
-        theme = result.youtubeTheme ?? 'DEFAULT';
-        volume = result.youtubeVolume ?? '--';
-        autoplay = result.youtubeAutoplay ?? 'DEFAULT';
+          disable = result.disableYoutube ?? false;
+          protocol = result.youtubeProtocol ?? 'normal';
+          frontend = result.youtubeFrontend ?? 'piped';
+          freetubeFrontend = result.freetubeFrontend ?? 'invidious';
 
-        invidiousAlwaysProxy = result.invidiousAlwaysProxy ?? 'DEFAULT';
-        OnlyEmbeddedVideo = result.OnlyEmbeddedVideo ?? 'both';
-        invidiousVideoQuality = result.invidiousVideoQuality ?? 'DEFAULT';
-        invidiousPlayerStyle = result.invidiousPlayerStyle ?? 'DEFAULT';
-        invidiousSubtitles = result.invidiousSubtitles || '';
+          theme = result.youtubeTheme ?? 'DEFAULT';
+          volume = result.youtubeVolume ?? '--';
+          autoplay = result.youtubeAutoplay ?? 'DEFAULT';
 
-        invidiousNormalRedirectsChecks = result.invidiousNormalRedirectsChecks ?? [...redirects.invidious.normal];
-        invidiousNormalCustomRedirects = result.invidiousNormalCustomRedirects ?? [];
+          invidiousAlwaysProxy = result.invidiousAlwaysProxy ?? 'DEFAULT';
+          OnlyEmbeddedVideo = result.OnlyEmbeddedVideo ?? 'both';
+          invidiousVideoQuality = result.invidiousVideoQuality ?? 'DEFAULT';
+          invidiousPlayerStyle = result.invidiousPlayerStyle ?? 'DEFAULT';
+          invidiousSubtitles = result.invidiousSubtitles || '';
 
-        invidiousTorRedirectsChecks = result.invidiousTorRedirectsChecks ?? [...redirects.invidious.tor];
-        invidiousTorCustomRedirects = result.invidiousTorCustomRedirects ?? [];
+          invidiousNormalRedirectsChecks = result.invidiousNormalRedirectsChecks ?? [...redirects.invidious.normal];
+          invidiousNormalCustomRedirects = result.invidiousNormalCustomRedirects ?? [];
 
-        pipedNormalRedirectsChecks = result.pipedNormalRedirectsChecks ?? [...redirects.piped.normal];
-        pipedNormalCustomRedirects = result.pipedNormalCustomRedirects ?? [];
+          invidiousTorRedirectsChecks = result.invidiousTorRedirectsChecks ?? [...redirects.invidious.tor];
+          invidiousTorCustomRedirects = result.invidiousTorCustomRedirects ?? [];
 
-        pipedTorRedirectsChecks = result.pipedTorRedirectsChecks ?? [...redirects.piped.tor];
-        pipedTorCustomRedirects = result.pipedTorCustomRedirects ?? [];
+          pipedNormalRedirectsChecks = result.pipedNormalRedirectsChecks ?? [...redirects.piped.normal];
+          pipedNormalCustomRedirects = result.pipedNormalCustomRedirects ?? [];
 
-        persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
+          pipedTorRedirectsChecks = result.pipedTorRedirectsChecks ?? [...redirects.piped.tor];
+          pipedTorCustomRedirects = result.pipedTorCustomRedirects ?? [];
 
-        alwaysusePreferred = result.alwaysusePreferred ?? true;
+          persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
 
-        resolve();
-      });
+          alwaysusePreferred = result.alwaysusePreferred ?? true;
 
+          resolve();
+        });
+    });
   })
 }
 
