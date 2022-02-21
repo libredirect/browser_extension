@@ -30,7 +30,7 @@ function getCustomRedirects() {
 
 function setRedirects(val) {
   redirects.nitter = val;
-  browser.storage.sync.set({ twitterRedirects: redirects })
+  browser.storage.local.set({ twitterRedirects: redirects })
   console.log("twitterRedirects:", val)
   for (const item of nitterNormalRedirectsChecks)
     if (!redirects.nitter.normal.includes(item)) {
@@ -51,7 +51,7 @@ let nitterNormalRedirectsChecks;
 const getNitterNormalRedirectsChecks = () => nitterNormalRedirectsChecks;
 function setNitterNormalRedirectsChecks(val) {
   nitterNormalRedirectsChecks = val;
-  browser.storage.sync.set({ nitterNormalRedirectsChecks })
+  browser.storage.local.set({ nitterNormalRedirectsChecks })
   console.log("nitterNormalRedirectsChecks: ", val)
 }
 
@@ -59,7 +59,7 @@ let nitterNormalCustomRedirects = [];
 const getNitterNormalCustomRedirects = () => nitterNormalCustomRedirects;
 function setNitterNormalCustomRedirects(val) {
   nitterNormalCustomRedirects = val;
-  browser.storage.sync.set({ nitterNormalCustomRedirects })
+  browser.storage.local.set({ nitterNormalCustomRedirects })
   console.log("nitterNormalCustomRedirects: ", val)
 }
 
@@ -67,7 +67,7 @@ let nitterTorRedirectsChecks;
 const getNitterTorRedirectsChecks = () => nitterTorRedirectsChecks;
 function setNitterTorRedirectsChecks(val) {
   nitterTorRedirectsChecks = val;
-  browser.storage.sync.set({ nitterTorRedirectsChecks })
+  browser.storage.local.set({ nitterTorRedirectsChecks })
   console.log("nitterTorRedirectsChecks: ", val)
 }
 
@@ -75,7 +75,7 @@ let nitterTorCustomRedirects = [];
 const getNitterTorCustomRedirects = () => nitterTorCustomRedirects;
 function setNitterTorCustomRedirects(val) {
   nitterTorCustomRedirects = val;
-  browser.storage.sync.set({ nitterTorCustomRedirects })
+  browser.storage.local.set({ nitterTorCustomRedirects })
   console.log("nitterTorCustomRedirects: ", val)
 }
 
@@ -84,14 +84,14 @@ let disable;
 const getDisable = () => disable;
 function setDisable(val) {
   disable = val;
-  browser.storage.sync.set({ disableTwitter: disable })
+  browser.storage.local.set({ disableTwitter: disable })
 }
 
 let protocol;
 const getprotocol = () => protocol;
 function setProtocol(val) {
   protocol = val;
-  browser.storage.sync.set({ nitterProtocol: val })
+  browser.storage.local.set({ nitterProtocol: val })
   console.log("nitterProtocol: ", val)
 }
 
@@ -136,7 +136,7 @@ async function init() {
   return new Promise((resolve) => {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
       let dataJson = JSON.parse(data);
-      browser.storage.sync.get(
+      browser.storage.local.get(
         [
           "disableTwitter",
           "twitterRedirects",

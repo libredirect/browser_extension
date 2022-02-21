@@ -7,7 +7,7 @@ import exceptionsHelper from "../../../assets/javascripts/helpers/exceptions.js"
 let themeElement = document.getElementById("theme");
 
 
-browser.storage.sync.get(
+browser.storage.local.get(
   ["theme"],
   (result) => {
     themeElement.value = result.theme || "";
@@ -17,7 +17,7 @@ browser.storage.sync.get(
 
 themeElement.addEventListener("change", (event) => {
   const value = event.target.options[theme.selectedIndex].value;
-  browser.storage.sync.set({ theme: value });
+  browser.storage.local.set({ theme: value });
 });
 
 document.querySelector("#update-instances").addEventListener("click", () => {

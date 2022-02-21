@@ -73,7 +73,7 @@ const getCustomRedirects = function () {
 
 function setLibredditRedirects(val) {
   redirects.libreddit = val;
-  browser.storage.sync.set({ redditRedirects: redirects })
+  browser.storage.local.set({ redditRedirects: redirects })
   console.log("libredditRedirects:", val)
   for (const item of libredditNormalRedirectsChecks)
     if (!redirects.libreddit.normal.includes(item)) {
@@ -85,7 +85,7 @@ function setLibredditRedirects(val) {
 
 function setTedditRedirects(val) {
   redirects.teddit = val;
-  browser.storage.sync.set({ redditRedirects: redirects })
+  browser.storage.local.set({ redditRedirects: redirects })
   console.log("tedditRedirects:", val)
   for (const item of tedditNormalRedirectsChecks)
     if (!redirects.teddit.normal.includes(item)) {
@@ -100,7 +100,7 @@ let libredditNormalRedirectsChecks;
 const getLibredditNormalRedirectsChecks = () => libredditNormalRedirectsChecks;
 function setLibredditNormalRedirectsChecks(val) {
   libredditNormalRedirectsChecks = val;
-  browser.storage.sync.set({ libredditNormalRedirectsChecks })
+  browser.storage.local.set({ libredditNormalRedirectsChecks })
   console.log("libredditNormalRedirectsChecks: ", val)
 }
 
@@ -108,7 +108,7 @@ let libredditNormalCustomRedirects = [];
 const getLibredditNormalCustomRedirects = () => libredditNormalCustomRedirects;
 function setLibredditNormalCustomRedirects(val) {
   libredditNormalCustomRedirects = val;
-  browser.storage.sync.set({ libredditNormalCustomRedirects })
+  browser.storage.local.set({ libredditNormalCustomRedirects })
   console.log("libredditNormalCustomRedirects: ", val)
 }
 
@@ -116,7 +116,7 @@ let tedditNormalRedirectsChecks;
 const getTedditNormalRedirectsChecks = () => tedditNormalRedirectsChecks;
 function setTedditNormalRedirectsChecks(val) {
   tedditNormalRedirectsChecks = val;
-  browser.storage.sync.set({ tedditNormalRedirectsChecks })
+  browser.storage.local.set({ tedditNormalRedirectsChecks })
   console.log("tedditNormalRedirectsChecks: ", val)
 }
 
@@ -124,7 +124,7 @@ let tedditNormalCustomRedirects = [];
 const getTedditNormalCustomRedirects = () => tedditNormalCustomRedirects;
 function setTedditNormalCustomRedirects(val) {
   tedditNormalCustomRedirects = val;
-  browser.storage.sync.set({ tedditNormalCustomRedirects })
+  browser.storage.local.set({ tedditNormalCustomRedirects })
   console.log("tedditNormalCustomRedirects: ", val)
 }
 
@@ -134,14 +134,14 @@ let disableReddit;
 const getDisableReddit = () => disableReddit;
 function setDisableReddit(val) {
   disableReddit = val;
-  browser.storage.sync.set({ disableReddit })
+  browser.storage.local.set({ disableReddit })
 }
 
 let redditFrontend;
 const getRedditFrontend = () => redditFrontend;
 function setRedditFrontend(val) {
   redditFrontend = val;
-  browser.storage.sync.set({ redditFrontend })
+  browser.storage.local.set({ redditFrontend })
 };
 
 function isReddit(url, initiator) {
@@ -207,7 +207,7 @@ function redirect(url, type) {
 
 async function init() {
   return new Promise((resolve) => {
-    browser.storage.sync.get(
+    browser.storage.local.get(
       [
         "disableReddit",
         "redditFrontend",

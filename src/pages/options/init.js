@@ -1,7 +1,7 @@
 window.browser = window.browser || window.chrome;
 
 function changeTheme() {
-    browser.storage.sync.get("theme", (result) => {
+    browser.storage.local.get("theme", (result) => {
         switch (result.theme) {
             case "dark-theme":
                 document.body.classList.add("dark-theme");

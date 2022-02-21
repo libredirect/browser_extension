@@ -34,7 +34,7 @@ Promise.all([
         return `${nitterInstance}${url.pathname}${url.search}`;
     }
 
-    browser.storage.sync.get(
+    browser.storage.local.get(
       [
         "nitterInstance",
         "disableTwitter",
@@ -44,7 +44,7 @@ Promise.all([
       ],
       (result) => {
         redirectBypassFlag = result.redirectBypassFlag;
-        browser.storage.sync.set({ redirectBypassFlag: false });
+        browser.storage.local.set({ redirectBypassFlag: false });
         if (!result.removeTwitterSW) {
           disableTwitter = result.disableTwitter;
           nitterInstance = result.nitterInstance ?? commonHelper.default.getRandomInstance(twitterHelper.default.redirects);

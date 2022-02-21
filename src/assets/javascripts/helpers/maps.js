@@ -49,7 +49,7 @@ let disable;
 const getDisable = () => disable;
 function setDisable(val) {
   disable = val;
-  browser.storage.sync.set({ disableMaps: disable })
+  browser.storage.local.set({ disableMaps: disable })
 }
 
 function isMaps(url, initiator) {
@@ -128,7 +128,7 @@ function redirect(url) {
 
 async function init() {
   return new Promise((resolve) => {
-    browser.storage.sync.get(
+    browser.storage.local.get(
       "disableMaps",
       (result) => {
         disable = result.disableMaps ?? false

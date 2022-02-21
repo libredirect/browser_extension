@@ -10,7 +10,7 @@ function getCookie() {
     return {};
 }
 
-browser.storage.sync.get(
+browser.storage.local.get(
     [
         "invidiousAlwaysProxy",
         "invidiousSubtitles",

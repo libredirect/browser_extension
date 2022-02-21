@@ -33,7 +33,7 @@ const getCustomRedirects = () => {
 
 function setSearxRedirects(val) {
   redirects.searx = val;
-  browser.storage.sync.set({ searchRedirects: redirects })
+  browser.storage.local.set({ searchRedirects: redirects })
   console.log("searxRedirects:", val)
   for (const item of searxNormalRedirectsChecks) if (!redirects.searx.normal.includes(item)) {
     var index = searxNormalRedirectsChecks.indexOf(item);
@@ -50,7 +50,7 @@ function setSearxRedirects(val) {
 
 function setWhoogleRedirects(val) {
   redirects.whoogle = val;
-  browser.storage.sync.set({ searchRedirects: redirects })
+  browser.storage.local.set({ searchRedirects: redirects })
   console.log("whoogleRedirects:", val)
   for (const item of whoogleNormalRedirectsChecks) if (!redirects.whoogle.normal.includes(item)) {
     var index = whoogleNormalRedirectsChecks.indexOf(item);
@@ -69,7 +69,7 @@ let whoogleNormalRedirectsChecks;
 const getWhoogleNormalRedirectsChecks = () => whoogleNormalRedirectsChecks;
 function setWhoogleNormalRedirectsChecks(val) {
   whoogleNormalRedirectsChecks = val;
-  browser.storage.sync.set({ whoogleNormalRedirectsChecks })
+  browser.storage.local.set({ whoogleNormalRedirectsChecks })
   console.log("whoogleNormalRedirectsChecks: ", val)
 }
 
@@ -77,7 +77,7 @@ let whoogleTorRedirectsChecks;
 const getWhoogleTorRedirectsChecks = () => whoogleTorRedirectsChecks;
 function setWhoogleTorRedirectsChecks(val) {
   whoogleTorRedirectsChecks = val;
-  browser.storage.sync.set({ whoogleTorRedirectsChecks })
+  browser.storage.local.set({ whoogleTorRedirectsChecks })
   console.log("whoogleTorRedirectsChecks: ", val)
 }
 
@@ -85,7 +85,7 @@ let whoogleNormalCustomRedirects = [];
 const getWhoogleNormalCustomRedirects = () => whoogleNormalCustomRedirects;
 function setWhoogleNormalCustomRedirects(val) {
   whoogleNormalCustomRedirects = val;
-  browser.storage.sync.set({ whoogleNormalCustomRedirects })
+  browser.storage.local.set({ whoogleNormalCustomRedirects })
   console.log("whoogleNormalCustomRedirects: ", val)
 }
 
@@ -93,7 +93,7 @@ let whoogleTorCustomRedirects = [];
 const getWhoogleTorCustomRedirects = () => whoogleTorCustomRedirects;
 function setWhoogleTorCustomRedirects(val) {
   whoogleTorCustomRedirects = val;
-  browser.storage.sync.set({ whoogleTorCustomRedirects })
+  browser.storage.local.set({ whoogleTorCustomRedirects })
   console.log("whoogleTorCustomRedirects: ", val)
 }
 
@@ -101,7 +101,7 @@ let searxNormalRedirectsChecks;
 const getSearxNormalRedirectsChecks = () => searxNormalRedirectsChecks;
 function setSearxNormalRedirectsChecks(val) {
   searxNormalRedirectsChecks = val;
-  browser.storage.sync.set({ searxNormalRedirectsChecks })
+  browser.storage.local.set({ searxNormalRedirectsChecks })
   console.log("searxNormalRedirectsChecks: ", val)
 }
 
@@ -109,7 +109,7 @@ let searxTorRedirectsChecks;
 const getSearxTorRedirectsChecks = () => searxTorRedirectsChecks;
 function setSearxTorRedirectsChecks(val) {
   searxTorRedirectsChecks = val;
-  browser.storage.sync.set({ searxTorRedirectsChecks })
+  browser.storage.local.set({ searxTorRedirectsChecks })
   console.log("searxTorRedirectsChecks: ", val)
 }
 
@@ -117,7 +117,7 @@ let searxNormalCustomRedirects = [];
 const getSearxNormalCustomRedirects = () => searxNormalCustomRedirects;
 function setSearxNormalCustomRedirects(val) {
   searxNormalCustomRedirects = val;
-  browser.storage.sync.set({ searxNormalCustomRedirects })
+  browser.storage.local.set({ searxNormalCustomRedirects })
   console.log("searxNormalCustomRedirects: ", val)
 }
 
@@ -125,7 +125,7 @@ let searxTorCustomRedirects = [];
 const getSearxTorCustomRedirects = () => searxTorCustomRedirects;
 function setSearxTorCustomRedirects(val) {
   searxTorCustomRedirects = val;
-  browser.storage.sync.set({ searxTorCustomRedirects })
+  browser.storage.local.set({ searxTorCustomRedirects })
   console.log("searxTorCustomRedirects: ", val)
 }
 
@@ -133,7 +133,7 @@ let disable;
 const getDisable = () => disable;
 function setDisable(val) {
   disable = val;
-  browser.storage.sync.set({ disableSearch: disable })
+  browser.storage.local.set({ disableSearch: disable })
   console.log("disableSearch: ", disable)
 }
 
@@ -141,7 +141,7 @@ let frontend;
 const getFrontend = () => frontend;
 function setFrontend(val) {
   frontend = val;
-  browser.storage.sync.set({ searchFrontend: frontend })
+  browser.storage.local.set({ searchFrontend: frontend })
   console.log("searchFrontend: ", frontend)
 };
 
@@ -149,7 +149,7 @@ let protocol;
 const getprotocol = () => protocol;
 function setProtocol(val) {
   protocol = val;
-  browser.storage.sync.set({ searchProtocol: val })
+  browser.storage.local.set({ searchProtocol: val })
   console.log("searchProtocol: ", val)
 }
 
@@ -190,7 +190,7 @@ async function init() {
   return new Promise((resolve) => {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
       let dataJson = JSON.parse(data);
-      browser.storage.sync.get(
+      browser.storage.local.get(
         [
           "disableSearch",
           "searchFrontend",

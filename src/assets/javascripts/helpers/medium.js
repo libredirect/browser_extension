@@ -38,7 +38,7 @@ const getCustomRedirects = function () {
 };
 function setRedirects(val) {
   redirects.scribe = val;
-  browser.storage.sync.set({ mediumRedirects: redirects })
+  browser.storage.local.set({ mediumRedirects: redirects })
   console.log("mediumRedirects: ", val)
   for (const item of scribeNormalRedirectsChecks) if (!redirects.scribe.normal.includes(item)) {
     var index = scribeNormalRedirectsChecks.indexOf(item);
@@ -51,7 +51,7 @@ let scribeNormalRedirectsChecks;
 const getScribeNormalRedirectsChecks = () => scribeNormalRedirectsChecks;
 function setScribeNormalRedirectsChecks(val) {
   scribeNormalRedirectsChecks = val;
-  browser.storage.sync.set({ scribeNormalRedirectsChecks })
+  browser.storage.local.set({ scribeNormalRedirectsChecks })
   console.log("scribeNormalRedirectsChecks: ", val)
 }
 
@@ -59,7 +59,7 @@ let scribeNormalCustomRedirects = [];
 const getScribeNormalCustomRedirects = () => scribeNormalCustomRedirects;
 function setScribeNormalCustomRedirects(val) {
   scribeNormalCustomRedirects = val;
-  browser.storage.sync.set({ scribeNormalCustomRedirects })
+  browser.storage.local.set({ scribeNormalCustomRedirects })
   console.log("scribeNormalCustomRedirects: ", val)
 }
 
@@ -67,7 +67,7 @@ let disable;
 const getDisable = () => disable;
 function setDisable(val) {
   disable = val;
-  browser.storage.sync.set({ disableMedium: disable })
+  browser.storage.local.set({ disableMedium: disable })
   console.log("disableMedium", disable)
 }
 
@@ -95,7 +95,7 @@ function redirect(url, type) {
 
 async function init() {
   return new Promise((resolve) => {
-    browser.storage.sync.get(
+    browser.storage.local.get(
       [
         "disableMedium",
         "mediumRedirects",

@@ -25,7 +25,7 @@ const getCustomRedirects = function () {
 
 function setRedirects(val) {
     redirects.proxiTok = val;
-    browser.storage.sync.set({ tiktokRedirects: redirects })
+    browser.storage.local.set({ tiktokRedirects: redirects })
     console.log("tiktokRedirects: ", val)
     for (const item of proxiTokNormalRedirectsChecks)
         if (!redirects.proxiTok.normal.includes(item)) {
@@ -39,7 +39,7 @@ let proxiTokNormalRedirectsChecks;
 const getProxiTokNormalRedirectsChecks = () => proxiTokNormalRedirectsChecks;
 function setProxiTokNormalRedirectsChecks(val) {
     proxiTokNormalRedirectsChecks = val;
-    browser.storage.sync.set({ proxiTokNormalRedirectsChecks })
+    browser.storage.local.set({ proxiTokNormalRedirectsChecks })
     console.log("proxiTokNormalRedirectsChecks: ", val)
 }
 
@@ -47,7 +47,7 @@ let proxiTokNormalCustomRedirects = [];
 const getProxiTokNormalCustomRedirects = () => proxiTokNormalCustomRedirects;
 function setProxiTokNormalCustomRedirects(val) {
     proxiTokNormalCustomRedirects = val;
-    browser.storage.sync.set({ proxiTokNormalCustomRedirects })
+    browser.storage.local.set({ proxiTokNormalCustomRedirects })
     console.log("proxiTokNormalCustomRedirects: ", val)
 }
 
@@ -55,7 +55,7 @@ let disable;
 const getDisable = () => disable;
 function setDisable(val) {
     disable = val;
-    browser.storage.sync.set({ disableTiktok: disable })
+    browser.storage.local.set({ disableTiktok: disable })
 }
 
 function isTiktok(url, initiator) {
@@ -81,7 +81,7 @@ function redirect(url, type) {
 
 async function init() {
     return new Promise((resolve) => {
-        browser.storage.sync.get(
+        browser.storage.local.get(
             [
                 "disableTiktok",
                 "tiktokRedirects",

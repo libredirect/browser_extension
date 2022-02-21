@@ -49,7 +49,7 @@ function getCustomRedirects() {
 
 function setInvidiousRedirects(val) {
   redirects.invidious = val;
-  browser.storage.sync.set({ youtubeRedirects: redirects })
+  browser.storage.local.set({ youtubeRedirects: redirects })
   console.log("invidiousRedirects: ", val)
 }
 
@@ -57,7 +57,7 @@ let invidiousNormalRedirectsChecks;
 const getInvidiousNormalRedirectsChecks = () => invidiousNormalRedirectsChecks;
 function setInvidiousNormalRedirectsChecks(val) {
   invidiousNormalRedirectsChecks = val;
-  browser.storage.sync.set({ invidiousNormalRedirectsChecks })
+  browser.storage.local.set({ invidiousNormalRedirectsChecks })
   console.log("invidiousNormalRedirectsChecks: ", val)
 }
 
@@ -65,7 +65,7 @@ let invidiousNormalCustomRedirects = [];
 const getInvidiousNormalCustomRedirects = () => invidiousNormalCustomRedirects;
 function setInvidiousNormalCustomRedirects(val) {
   invidiousNormalCustomRedirects = val;
-  browser.storage.sync.set({ invidiousNormalCustomRedirects })
+  browser.storage.local.set({ invidiousNormalCustomRedirects })
   console.log("invidiousNormalCustomRedirects: ", val)
 }
 
@@ -74,7 +74,7 @@ let invidiousTorRedirectsChecks;
 const getInvidiousTorRedirectsChecks = () => invidiousTorRedirectsChecks;
 function setInvidiousTorRedirectsChecks(val) {
   invidiousTorRedirectsChecks = val;
-  browser.storage.sync.set({ invidiousTorRedirectsChecks })
+  browser.storage.local.set({ invidiousTorRedirectsChecks })
   console.log("invidiousTorRedirectsChecks: ", val)
 }
 
@@ -82,7 +82,7 @@ let invidiousTorCustomRedirects = [];
 const getInvidiousTorCustomRedirects = () => invidiousTorCustomRedirects;
 function setInvidiousTorCustomRedirects(val) {
   invidiousTorCustomRedirects = val;
-  browser.storage.sync.set({ invidiousTorCustomRedirects })
+  browser.storage.local.set({ invidiousTorCustomRedirects })
   console.log("invidiousTorCustomRedirects: ", val)
 }
 
@@ -91,7 +91,7 @@ let pipedNormalRedirectsChecks;
 const getPipedNormalRedirectsChecks = () => pipedNormalRedirectsChecks;
 function setPipedNormalRedirectsChecks(val) {
   pipedNormalRedirectsChecks = val;
-  browser.storage.sync.set({ pipedNormalRedirectsChecks })
+  browser.storage.local.set({ pipedNormalRedirectsChecks })
   console.log("pipedNormalRedirectsChecks: ", val)
 }
 
@@ -99,7 +99,7 @@ let pipedNormalCustomRedirects = [];
 const getPipedNormalCustomRedirects = () => pipedNormalCustomRedirects;
 function setPipedNormalCustomRedirects(val) {
   pipedNormalCustomRedirects = val;
-  browser.storage.sync.set({ pipedNormalCustomRedirects })
+  browser.storage.local.set({ pipedNormalCustomRedirects })
   console.log("pipedNormalCustomRedirects: ", val)
 }
 
@@ -108,7 +108,7 @@ let pipedTorRedirectsChecks;
 const getPipedTorRedirectsChecks = () => pipedTorRedirectsChecks;
 function setPipedTorRedirectsChecks(val) {
   pipedTorRedirectsChecks = val;
-  browser.storage.sync.set({ pipedTorRedirectsChecks })
+  browser.storage.local.set({ pipedTorRedirectsChecks })
   console.log("pipedTorRedirectsChecks: ", val)
 }
 
@@ -116,13 +116,13 @@ let pipedTorCustomRedirects = [];
 const getPipedTorCustomRedirects = () => pipedTorCustomRedirects;
 function setPipedTorCustomRedirects(val) {
   pipedTorCustomRedirects = val;
-  browser.storage.sync.set({ pipedTorCustomRedirects })
+  browser.storage.local.set({ pipedTorCustomRedirects })
   console.log("pipedTorCustomRedirects: ", val)
 }
 
 function setPipedRedirects(val) {
   redirects.piped = val;
-  browser.storage.sync.set({ youtubeRedirects: redirects })
+  browser.storage.local.set({ youtubeRedirects: redirects })
   console.log("pipedRedirects: ", val)
 }
 
@@ -130,7 +130,7 @@ let disable;
 const getDisable = () => disable;
 function setDisable(val) {
   disable = val;
-  browser.storage.sync.set({ disableYoutube: disable })
+  browser.storage.local.set({ disableYoutube: disable })
   console.log("disableYoutube: ", disable)
 }
 
@@ -139,14 +139,14 @@ let protocol;
 const getprotocol = () => protocol;
 function setProtocol(val) {
   protocol = val;
-  browser.storage.sync.set({ youtubeProtocol: val })
+  browser.storage.local.set({ youtubeProtocol: val })
   console.log("youtubeProtocol: ", val)
 }
 
 let invidiousAlwaysProxy;
 function setInvidiousAlwaysProxy(val) {
   invidiousAlwaysProxy = val;
-  browser.storage.sync.set({ invidiousAlwaysProxy })
+  browser.storage.local.set({ invidiousAlwaysProxy })
   console.log("invidiousAlwaysProxy: ", invidiousAlwaysProxy);
 }
 const getInvidiousAlwaysProxy = () => invidiousAlwaysProxy;
@@ -154,7 +154,7 @@ const getInvidiousAlwaysProxy = () => invidiousAlwaysProxy;
 let OnlyEmbeddedVideo;
 function setOnlyEmbeddedVideo(val) {
   OnlyEmbeddedVideo = val;
-  browser.storage.sync.set({ OnlyEmbeddedVideo })
+  browser.storage.local.set({ OnlyEmbeddedVideo })
   console.log("OnlyEmbeddedVideo: ", OnlyEmbeddedVideo)
 }
 const getOnlyEmbeddedVideo = () => OnlyEmbeddedVideo;
@@ -162,7 +162,7 @@ const getOnlyEmbeddedVideo = () => OnlyEmbeddedVideo;
 let invidiousVideoQuality;
 function setInvidiousVideoQuality(val) {
   invidiousVideoQuality = val;
-  browser.storage.sync.set({ invidiousVideoQuality })
+  browser.storage.local.set({ invidiousVideoQuality })
   console.log("invidiousVideoQuality: ", invidiousVideoQuality)
 }
 const getInvidiousVideoQuality = () => invidiousVideoQuality;
@@ -171,7 +171,7 @@ let theme;
 const getTheme = () => theme;
 function setTheme(val) {
   theme = val;
-  browser.storage.sync.set({ youtubeTheme: theme })
+  browser.storage.local.set({ youtubeTheme: theme })
   console.log("theme: ", theme)
 }
 
@@ -179,7 +179,7 @@ let volume;
 const getVolume = () => volume;
 function setVolume(val) {
   volume = val;
-  browser.storage.sync.set({ youtubeVolume: volume })
+  browser.storage.local.set({ youtubeVolume: volume })
   console.log("youtubeVolume: ", volume)
 }
 
@@ -187,7 +187,7 @@ let invidiousPlayerStyle;
 const getInvidiousPlayerStyle = () => invidiousPlayerStyle;
 function setInvidiousPlayerStyle(val) {
   invidiousPlayerStyle = val;
-  browser.storage.sync.set({ invidiousPlayerStyle })
+  browser.storage.local.set({ invidiousPlayerStyle })
   console.log("invidiousPlayerStyle: ", invidiousPlayerStyle)
 }
 
@@ -195,7 +195,7 @@ let invidiousSubtitles;
 let getInvidiousSubtitles = () => invidiousSubtitles;
 function setInvidiousSubtitles(val) {
   invidiousSubtitles = val;
-  browser.storage.sync.set({ invidiousSubtitles })
+  browser.storage.local.set({ invidiousSubtitles })
   console.log("invidiousSubtitles: ", invidiousSubtitles)
 }
 
@@ -203,7 +203,7 @@ let autoplay;
 const getAutoplay = () => autoplay;
 function setAutoplay(val) {
   autoplay = val;
-  browser.storage.sync.set({ youtubeAutoplay: autoplay })
+  browser.storage.local.set({ youtubeAutoplay: autoplay })
   console.log("autoplay: ", autoplay)
 }
 
@@ -211,7 +211,7 @@ let frontend;
 const getFrontend = () => frontend;
 function setFrontend(val) {
   frontend = val;
-  browser.storage.sync.set({ youtubeFrontend: val })
+  browser.storage.local.set({ youtubeFrontend: val })
   console.log("youtubeFrontend: ", val)
 }
 
@@ -219,7 +219,7 @@ let freetubeFrontend;
 const getFreetubeFrontend = () => freetubeFrontend;
 function setFreetubeFrontend(val) {
   freetubeFrontend = val;
-  browser.storage.sync.set({ freetubeFrontend })
+  browser.storage.local.set({ freetubeFrontend })
   console.log("freetubeFrontend: ", freetubeFrontend)
 }
 
@@ -227,7 +227,7 @@ let persistInvidiousPrefs;
 const getPersistInvidiousPrefs = () => persistInvidiousPrefs;
 function setPersistInvidiousPrefs(val) {
   persistInvidiousPrefs = val;
-  browser.storage.sync.set({ persistInvidiousPrefs })
+  browser.storage.local.set({ persistInvidiousPrefs })
   console.log("persistInvidiousPrefs: ", persistInvidiousPrefs)
 }
 
@@ -235,7 +235,7 @@ let alwaysusePreferred;
 const getAlwaysusePreferred = () => alwaysusePreferred;
 function setAlwaysusePreferred(val) {
   alwaysusePreferred = val;
-  browser.storage.sync.set({ alwaysusePreferred })
+  browser.storage.local.set({ alwaysusePreferred })
   console.log("alwaysusePreferred: ", alwaysusePreferred)
 }
 
@@ -476,7 +476,7 @@ async function init() {
   return new Promise((resolve) => {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
       let dataJson = JSON.parse(data);
-      browser.storage.sync.get(
+      browser.storage.local.get(
         [
           "invidiousAlwaysProxy",
           "invidiousVideoQuality",

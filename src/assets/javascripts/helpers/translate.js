@@ -52,7 +52,7 @@ const getCustomRedirects = function () {
 
 function setSimplyTranslateRedirects(val) {
   redirects.simplyTranslate = val;
-  browser.storage.sync.set({ translateRedirects: redirects })
+  browser.storage.local.set({ translateRedirects: redirects })
   console.log("simplyTranslateRedirects:", val)
   for (const item of simplyTranslateNormalRedirectsChecks)
     if (!redirects.simplyTranslate.normal.includes(item)) {
@@ -66,7 +66,7 @@ let simplyTranslateNormalRedirectsChecks;
 const getSimplyTranslateNormalRedirectsChecks = () => simplyTranslateNormalRedirectsChecks;
 function setSimplyTranslateNormalRedirectsChecks(val) {
   simplyTranslateNormalRedirectsChecks = val;
-  browser.storage.sync.set({ simplyTranslateNormalRedirectsChecks })
+  browser.storage.local.set({ simplyTranslateNormalRedirectsChecks })
   console.log("simplyTranslateNormalRedirectsChecks: ", val)
 }
 
@@ -74,13 +74,13 @@ let simplyTranslateNormalCustomRedirects = [];
 const getSimplyTranslateNormalCustomRedirects = () => simplyTranslateNormalCustomRedirects;
 function setSimplyTranslateNormalCustomRedirects(val) {
   simplyTranslateNormalCustomRedirects = val;
-  browser.storage.sync.set({ simplyTranslateNormalCustomRedirects })
+  browser.storage.local.set({ simplyTranslateNormalCustomRedirects })
   console.log("simplyTranslateNormalCustomRedirects: ", val)
 }
 
 function setLingvaRedirects(val) {
   redirects.lingva = val;
-  browser.storage.sync.set({ translateRedirects: redirects })
+  browser.storage.local.set({ translateRedirects: redirects })
   console.log("lingvaRedirects:", val)
   for (const item of lingvaNormalRedirectsChecks)
     if (!redirects.lingva.normal.includes(item)) {
@@ -94,7 +94,7 @@ let lingvaNormalRedirectsChecks;
 const getLingvaNormalRedirectsChecks = () => lingvaNormalRedirectsChecks;
 function setLingvaNormalRedirectsChecks(val) {
   lingvaNormalRedirectsChecks = val;
-  browser.storage.sync.set({ lingvaNormalRedirectsChecks })
+  browser.storage.local.set({ lingvaNormalRedirectsChecks })
   console.log("lingvaNormalRedirectsChecks: ", val)
 }
 
@@ -102,7 +102,7 @@ let lingvaNormalCustomRedirects = [];
 const getLingvaNormalCustomRedirects = () => lingvaNormalCustomRedirects;
 function setLingvaNormalCustomRedirects(val) {
   lingvaNormalCustomRedirects = val;
-  browser.storage.sync.set({ lingvaNormalCustomRedirects })
+  browser.storage.local.set({ lingvaNormalCustomRedirects })
   console.log("lingvaNormalCustomRedirects: ", val)
 }
 
@@ -110,7 +110,7 @@ let disable;
 const getDisable = () => disable;
 function setDisable(val) {
   disable = val;
-  browser.storage.sync.set({ translateDisable: disable })
+  browser.storage.local.set({ translateDisable: disable })
   console.log("disable: ", disable)
 }
 
@@ -118,7 +118,7 @@ let frontend;
 const getFrontend = () => frontend;
 function setFrontend(val) {
   frontend = val;
-  browser.storage.sync.set({ translateFrontend: frontend })
+  browser.storage.local.set({ translateFrontend: frontend })
   console.log("translateFrontend: ", frontend)
 }
 
@@ -126,7 +126,7 @@ let from;
 const getFrom = () => from;
 function setFrom(val) {
   from = val;
-  browser.storage.sync.set({ translateFrom: from })
+  browser.storage.local.set({ translateFrom: from })
   console.log("from: ", from)
 }
 
@@ -134,7 +134,7 @@ let to;
 const getTo = () => to;
 function setTo(val) {
   to = val;
-  browser.storage.sync.set({ translateTo: to })
+  browser.storage.local.set({ translateTo: to })
   console.log("to: ", to)
 }
 
@@ -175,7 +175,7 @@ function redirect(url) {
 
 async function init() {
   return new Promise((resolve) => {
-    browser.storage.sync.get(
+    browser.storage.local.get(
       [
         "translateDisable",
         "translateFrontend",

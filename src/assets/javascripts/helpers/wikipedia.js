@@ -27,7 +27,7 @@ const getCustomRedirects = function () {
 };
 function setRedirects(val) {
   redirects.wikiless = val;
-  browser.storage.sync.set({ wikipediaRedirects: redirects })
+  browser.storage.local.set({ wikipediaRedirects: redirects })
   console.log("wikipediaRedirects: ", val)
   for (const item of wikilessNormalRedirectsChecks)
     if (!redirects.wikiless.normal.includes(item)) {
@@ -41,14 +41,14 @@ let disable;
 const getDisable = () => disable;
 function setDisable(val) {
   disable = val;
-  browser.storage.sync.set({ disableWikipedia: disable })
+  browser.storage.local.set({ disableWikipedia: disable })
 }
 
 let wikilessNormalRedirectsChecks;
 const getWikilessNormalRedirectsChecks = () => wikilessNormalRedirectsChecks;
 function setWikilessNormalRedirectsChecks(val) {
   wikilessNormalRedirectsChecks = val;
-  browser.storage.sync.set({ wikilessNormalRedirectsChecks })
+  browser.storage.local.set({ wikilessNormalRedirectsChecks })
   console.log("wikilessNormalRedirectsChecks: ", val)
 }
 
@@ -56,7 +56,7 @@ let wikilessNormalCustomRedirects = [];
 const getWikilessNormalCustomRedirects = () => wikilessNormalCustomRedirects;
 function setWikilessNormalCustomRedirects(val) {
   wikilessNormalCustomRedirects = val;
-  browser.storage.sync.set({ wikilessNormalCustomRedirects })
+  browser.storage.local.set({ wikilessNormalCustomRedirects })
   console.log("wikilessNormalCustomRedirects: ", val)
 }
 
@@ -100,7 +100,7 @@ function redirect(url) {
 
 async function init() {
   return new Promise((resolve) => {
-    browser.storage.sync.get(
+    browser.storage.local.get(
       [
         "disableWikipedia",
         "wikipediaRedirects",

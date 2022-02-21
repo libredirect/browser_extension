@@ -35,7 +35,7 @@ const getCustomRedirects = function () {
 
 function setRedirects(val) {
     redirects.rimgo = val;
-    browser.storage.sync.set({ imgurRedirects: redirects })
+    browser.storage.local.set({ imgurRedirects: redirects })
     console.log("imgurRedirects: ", val)
     for (const item of rimgoNormalRedirectsChecks)
         if (!redirects.rimgo.normal.includes(item)) {
@@ -49,7 +49,7 @@ let rimgoNormalRedirectsChecks;
 const getRimgoNormalRedirectsChecks = () => rimgoNormalRedirectsChecks;
 function setRimgoNormalRedirectsChecks(val) {
     rimgoNormalRedirectsChecks = val;
-    browser.storage.sync.set({ rimgoNormalRedirectsChecks })
+    browser.storage.local.set({ rimgoNormalRedirectsChecks })
     console.log("rimgoNormalRedirectsChecks: ", val)
 }
 
@@ -57,7 +57,7 @@ let rimgoNormalCustomRedirects = [];
 const getRimgoNormalCustomRedirects = () => rimgoNormalCustomRedirects;
 function setRimgoNormalCustomRedirects(val) {
     rimgoNormalCustomRedirects = val;
-    browser.storage.sync.set({ rimgoNormalCustomRedirects })
+    browser.storage.local.set({ rimgoNormalCustomRedirects })
     console.log("rimgoNormalCustomRedirects: ", val)
 }
 
@@ -65,7 +65,7 @@ let disable;
 const getDisable = () => disable;
 function setDisable(val) {
     disable = val;
-    browser.storage.sync.set({ disableImgur: disable })
+    browser.storage.local.set({ disableImgur: disable })
 }
 
 function isImgur(url, initiator) {
@@ -96,7 +96,7 @@ function redirect(url, type) {
 
 async function init() {
     return new Promise((resolve) => {
-        browser.storage.sync.get(
+        browser.storage.local.get(
             [
                 "disableImgur",
                 "imgurRedirects",

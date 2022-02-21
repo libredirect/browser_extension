@@ -9,13 +9,13 @@ let exceptions = {
 const getExceptions = () => exceptions;
 function setExceptions(val) {
     exceptions = val;
-    browser.storage.sync.set({ exceptions })
+    browser.storage.local.set({ exceptions })
     console.log("exceptions: ", val)
 }
 
 async function init() {
     return new Promise((resolve) => {
-        browser.storage.sync.get("exceptions", (result) => {
+        browser.storage.local.get("exceptions", (result) => {
             if (result.exceptions) exceptions = result.exceptions;
             resolve();
         });

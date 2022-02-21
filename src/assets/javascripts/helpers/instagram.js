@@ -32,7 +32,7 @@ const getCustomRedirects = function () {
 };
 function setRedirects(val) {
   redirects.bibliogram = val;
-  browser.storage.sync.set({ instagramRedirects: redirects })
+  browser.storage.local.set({ instagramRedirects: redirects })
   console.log("instagramRedirects: ", val)
   for (const item of bibliogramNormalRedirectsChecks)
     if (!redirects.bibliogram.normal.includes(item)) {
@@ -46,7 +46,7 @@ let bibliogramNormalRedirectsChecks;
 const getBibliogramNormalRedirectsChecks = () => bibliogramNormalRedirectsChecks;
 function setBibliogramNormalRedirectsChecks(val) {
   bibliogramNormalRedirectsChecks = val;
-  browser.storage.sync.set({ bibliogramNormalRedirectsChecks })
+  browser.storage.local.set({ bibliogramNormalRedirectsChecks })
   console.log("bibliogramNormalRedirectsChecks: ", val)
 }
 
@@ -54,7 +54,7 @@ let bibliogramNormalCustomRedirects = [];
 const getBibliogramNormalCustomRedirects = () => bibliogramNormalCustomRedirects;
 function setBibliogramNormalCustomRedirects(val) {
   bibliogramNormalCustomRedirects = val;
-  browser.storage.sync.set({ bibliogramNormalCustomRedirects })
+  browser.storage.local.set({ bibliogramNormalCustomRedirects })
   console.log("bibliogramNormalCustomRedirects: ", val)
 }
 
@@ -90,7 +90,7 @@ let disable;
 const getDisable = () => disable;
 function setDisable(val) {
   disable = val;
-  browser.storage.sync.set({ disableInstagram: disable })
+  browser.storage.local.set({ disableInstagram: disable })
 }
 
 function isInstagram(url, initiator) {
@@ -120,7 +120,7 @@ function redirect(url, type) {
 
 async function init() {
   return new Promise((resolve) => {
-    browser.storage.sync.get(
+    browser.storage.local.get(
       [
         "disableInstagram",
         "instagramRedirects",
