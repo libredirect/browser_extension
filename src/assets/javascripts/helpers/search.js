@@ -153,7 +153,7 @@ function setProtocol(val) {
   console.log("searchProtocol: ", val)
 }
 
-function isSearch(url, initiator) {
+function isSearch(url) {
   if (disable) return false;
   return targets.some((rx) => rx.test(url.href));
 }

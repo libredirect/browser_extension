@@ -52,7 +52,7 @@ Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)
 - open `about:config`
 - set `xpinstall.signatures.required` to `false`
 - open `about:addons`
-- click on the settings button below the addon search bar and select install add-on from file
+- click on the gear shaped `settings` button and select `Install Add-on From File...`
 - select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
 
 ### Install in Chromium, Brave and Chrome

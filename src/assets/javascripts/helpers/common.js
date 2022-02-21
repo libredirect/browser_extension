@@ -7,9 +7,6 @@ import redditHelper from "./reddit.js";
 import searchHelper from "./search.js";
 import translateHelper from "./translate.js";
 import wikipediaHelper from "./wikipedia.js";
-import mapsHelper from "./maps.js";
-import medium from "./medium.js";
-
 
 function getRandomInstance(instances) {
   return instances[~~(instances.length * Math.random())];

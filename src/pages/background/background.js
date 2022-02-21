@@ -65,7 +65,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     else if (translateHelper.isTranslate(url, initiator)) newUrl = translateHelper.redirect(url);
 
-    else if (searchHelper.isSearch(url, initiator)) newUrl = searchHelper.redirect(url)
+    else if (searchHelper.isSearch(url)) newUrl = searchHelper.redirect(url)
 
     else if (wikipediaHelper.isWikipedia(url, initiator)) newUrl = wikipediaHelper.redirect(url);
 

@@ -28,12 +28,46 @@ redditFrontendElement.addEventListener("change",
     }
 );
 
+let protocolElement = document.getElementById("protocol")
+protocolElement.addEventListener("change",
+    (event) => {
+        let protocol = event.target.options[protocolElement.selectedIndex].value
+        redditHelper.setProtocol(protocol);
+        changeProtocolSettings(protocol);
+    }
+);
+
+function changeProtocolSettings(protocol) {
+    let normalLibredditDiv = document.getElementById("libreddit-normal");
+    let torLibredditDiv = document.getElementById("libreddit-tor");
+
+    let normalTedditDiv = document.getElementById("teddit-normal");
+    let torTedditDiv = document.getElementById("teddit-tor");
+    if (protocol == 'normal') {
+        normalLibredditDiv.style.display = 'block';
+        normalTedditDiv.style.display = 'block';
+        torTedditDiv.style.display = 'none';
+        torLibredditDiv.style.display = 'none';
+    }
+    else if (protocol == 'tor') {
+        normalLibredditDiv.style.display = 'none';
+        normalTedditDiv.style.display = 'none';
+        torTedditDiv.style.display = 'block';
+        torLibredditDiv.style.display = 'block';
+    }
+}
+
+
 redditHelper.init().then(() => {
     disableRedditElement.checked = !redditHelper.getDisableReddit();
 
     let frontend = redditHelper.getRedditFrontend();
     redditFrontendElement.value = frontend;
     changeFrontendsSettings(frontend);
+
+    let protocol = redditHelper.getprotocol();
+    protocolElement.value = protocol;
+    changeProtocolSettings(protocol);
 
     commonHelper.processDefaultCustomInstances(
         'libreddit',
@@ -47,6 +81,17 @@ redditHelper.init().then(() => {
     )
 
     commonHelper.processDefaultCustomInstances(
+        'libreddit',
+        'tor',
+        redditHelper,
+        document,
+        redditHelper.getLibredditTorRedirectsChecks,
+        redditHelper.setLibredditTorRedirectsChecks,
+        redditHelper.getLibredditTorCustomRedirects,
+        redditHelper.setLibredditTorCustomRedirects
+    )
+
+    commonHelper.processDefaultCustomInstances(
         'teddit',
         'normal',
         redditHelper,
@@ -55,6 +100,17 @@ redditHelper.init().then(() => {
         redditHelper.setTedditNormalRedirectsChecks,
         redditHelper.getTedditNormalCustomRedirects,
         redditHelper.setTedditNormalCustomRedirects
+    );
+
+    commonHelper.processDefaultCustomInstances(
+        'teddit',
+        'tor',
+        redditHelper,
+        document,
+        redditHelper.getTedditTorRedirectsChecks,
+        redditHelper.setTedditTorRedirectsChecks,
+        redditHelper.getTedditTorCustomRedirects,
+        redditHelper.setTedditTorCustomRedirects
     );
 
 })
