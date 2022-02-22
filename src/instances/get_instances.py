@@ -59,6 +59,7 @@ r = requests.get('https://bibliogram.art/api/instances')
 rJson = json.loads(r.text)
 bibliogramList = {}
 bibliogramList['normal'] = []
+bibliogramList['tor'] = []
 for item in rJson['data']:
     bibliogramList['normal'].append(item['address'])
 mightyList['bibliogram'] = bibliogramList

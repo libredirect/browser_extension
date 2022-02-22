@@ -5,8 +5,36 @@ let disableWikipediaElement = document.getElementById("disable-wikipedia");
 disableWikipediaElement.addEventListener("change",
     (event) => wikipediaHelper.setDisable(!event.target.checked)
 );
+
+let protocolElement = document.getElementById("protocol")
+protocolElement.addEventListener("change",
+    (event) => {
+        let protocol = event.target.options[protocolElement.selectedIndex].value
+        wikipediaHelper.setProtocol(protocol);
+        changeProtocolSettings(protocol);
+    }
+);
+
+
+function changeProtocolSettings(protocol) {
+    let normalDiv = document.getElementById("normal");
+    let torDiv = document.getElementById("tor");
+    if (protocol == 'normal') {
+        normalDiv.style.display = 'block';
+        torDiv.style.display = 'none';
+    }
+    else if (protocol == 'tor') {
+        normalDiv.style.display = 'none';
+        torDiv.style.display = 'block';
+    }
+}
+
 wikipediaHelper.init().then(() => {
     disableWikipediaElement.checked = !wikipediaHelper.getDisable();
+
+    let protocol = wikipediaHelper.getProtocol();
+    protocolElement.value = protocol;
+    changeProtocolSettings(protocol);
 
     commonHelper.processDefaultCustomInstances(
         'wikiless',
@@ -17,5 +45,16 @@ wikipediaHelper.init().then(() => {
         wikipediaHelper.setWikilessNormalRedirectsChecks,
         wikipediaHelper.getWikilessNormalCustomRedirects,
         wikipediaHelper.setWikilessNormalCustomRedirects
+    )
+
+    commonHelper.processDefaultCustomInstances(
+        'wikiless',
+        'tor',
+        wikipediaHelper,
+        document,
+        wikipediaHelper.getWikilessTorRedirectsChecks,
+        wikipediaHelper.setWikilessTorRedirectsChecks,
+        wikipediaHelper.getWikilessTorCustomRedirects,
+        wikipediaHelper.setWikilessTorCustomRedirects
     )
 })

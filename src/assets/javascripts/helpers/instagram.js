@@ -9,17 +9,8 @@ const targets = [
 ];
 let redirects = {
   "bibliogram": {
-    "normal": [
-      "https://bibliogram.art",
-      "https://bibliogram.snopyta.org",
-      "https://bibliogram.pussthecat.org",
-      "https://bibliogram.1d4.us",
-      "https://insta.trom.tf",
-      "https://bib.riverside.rocks",
-      "https://bibliogram.esmailelbob.xyz",
-      "https://bib.actionsack.com",
-      "https://biblio.alefvanoon.xyz"
-    ]
+    "normal": [],
+    "tor": []
   }
 };
 const getRedirects = () => redirects;
@@ -50,12 +41,28 @@ function setBibliogramNormalRedirectsChecks(val) {
   console.log("bibliogramNormalRedirectsChecks: ", val)
 }
 
+let bibliogramTorRedirectsChecks;
+const getBibliogramTorRedirectsChecks = () => bibliogramTorRedirectsChecks;
+function setBibliogramTorRedirectsChecks(val) {
+  bibliogramTorRedirectsChecks = val;
+  browser.storage.local.set({ bibliogramTorRedirectsChecks })
+  console.log("bibliogramTorRedirectsChecks: ", val)
+}
+
 let bibliogramNormalCustomRedirects = [];
 const getBibliogramNormalCustomRedirects = () => bibliogramNormalCustomRedirects;
 function setBibliogramNormalCustomRedirects(val) {
   bibliogramNormalCustomRedirects = val;
   browser.storage.local.set({ bibliogramNormalCustomRedirects })
   console.log("bibliogramNormalCustomRedirects: ", val)
+}
+
+let bibliogramTorCustomRedirects = [];
+const getBibliogramTorCustomRedirects = () => bibliogramTorCustomRedirects;
+function setBibliogramTorCustomRedirects(val) {
+  bibliogramTorCustomRedirects = val;
+  browser.storage.local.set({ bibliogramTorCustomRedirects })
+  console.log("bibliogramTorCustomRedirects: ", val)
 }
 
 const reservedPaths = [
@@ -93,6 +100,14 @@ function setDisable(val) {
   browser.storage.local.set({ disableInstagram: disable })
 }
 
+let protocol;
+const getprotocol = () => protocol;
+function setProtocol(val) {
+  protocol = val;
+  browser.storage.local.set({ nitterProtocol: val })
+  console.log("nitterProtocol: ", val)
+}
+
 function isInstagram(url, initiator) {
   if (disable) return false;
   if (
@@ -107,7 +122,10 @@ function redirect(url, type) {
   if (type !== "main_frame" || url.pathname.match(bypassPaths))
     return 'CANCEL'; // Do not redirect /accounts, /embeds.js, or anything other than main_frame
 
-  let instancesList = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects];
+
+  let instancesList;
+  if (protocol == 'normal') instancesList = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects];
+  else if (protocol == 'tor') instancesList = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects];
   if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList)
 
@@ -120,24 +138,39 @@ function redirect(url, type) {
 
 async function init() {
   return new Promise((resolve) => {
-    browser.storage.local.get(
-      [
-        "disableInstagram",
-        "instagramRedirects",
-        "bibliogramNormalRedirectsChecks",
-        "bibliogramNormalCustomRedirects",
-      ],
-      (result) => {
-        disable = result.disableInstagram ?? false;
+    fetch('/instances/data.json').then(response => response.text()).then(data => {
+      let dataJson = JSON.parse(data);
+      browser.storage.local.get(
+        [
+          "disableInstagram",
+          "instagramRedirects",
 
-        if (result.instagramRedirects) redirects = result.instagramRedirects
+          "bibliogramNormalRedirectsChecks",
+          "bibliogramTorRedirectsChecks",
 
-        bibliogramNormalRedirectsChecks = result.bibliogramNormalRedirectsChecks ?? [...redirects.bibliogram.normal];
-        bibliogramNormalCustomRedirects = result.bibliogramNormalCustomRedirects ?? [];
+          "bibliogramNormalCustomRedirects",
+          "bibliogramTorCustomRedirects",
+          "bibliogramProtocol"
+        ],
+        (result) => {
+          disable = result.disableInstagram ?? false;
 
-        resolve();
-      }
-    )
+          redirects.bibliogram = dataJson.bibliogram;
+
+          if (result.instagramRedirects) redirects = result.instagramRedirects
+
+          bibliogramNormalRedirectsChecks = result.bibliogramNormalRedirectsChecks ?? [...redirects.bibliogram.normal];
+          bibliogramNormalCustomRedirects = result.bibliogramNormalCustomRedirects ?? [];
+
+          bibliogramTorRedirectsChecks = result.bibliogramTorRedirectsChecks ?? [...redirects.bibliogram.tor];
+          bibliogramTorCustomRedirects = result.bibliogramTorCustomRedirects ?? [];
+
+          protocol = result.bibliogramProtocol ?? "normal";
+
+          resolve();
+        }
+      )
+    })
   })
 }
 
@@ -149,11 +182,18 @@ export default {
   getDisable,
   setDisable,
 
+  getprotocol,
+  setProtocol,
+
   getBibliogramNormalRedirectsChecks,
   setBibliogramNormalRedirectsChecks,
+  getBibliogramTorRedirectsChecks,
+  setBibliogramTorRedirectsChecks,
 
   getBibliogramNormalCustomRedirects,
   setBibliogramNormalCustomRedirects,
+  getBibliogramTorCustomRedirects,
+  setBibliogramTorCustomRedirects,
 
   isInstagram,
 

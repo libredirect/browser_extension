@@ -149,6 +149,8 @@ async function init() {
         (result) => {
           disable = result.disableTwitter ?? false;
 
+          protocol = result.nitterProtocol ?? "normal";
+
           redirects.nitter = dataJson.nitter;
           if (result.twitterRedirects) redirects = result.twitterRedirects;
 
@@ -157,8 +159,6 @@ async function init() {
 
           nitterTorRedirectsChecks = result.nitterTorRedirectsChecks ?? [...redirects.nitter.tor];
           nitterTorCustomRedirects = result.nitterTorCustomRedirects ?? [];
-
-          protocol = result.nitterProtocol ?? "normal";
 
           resolve();
         }

@@ -73,7 +73,8 @@
       "https://tw.artemislena.eu",
       "https://de.nttr.stream",
       "https://nitter.winscloud.net",
-      "https://nitter.tiekoetter.com"
+      "https://nitter.tiekoetter.com",
+      "https://nitter.spaceint.fr"
     ],
     "tor": [
       "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
@@ -105,7 +106,8 @@
       "https://bibliogram.esmailelbob.xyz",
       "https://bib.actionsack.com",
       "https://biblio.alefvanoon.xyz"
-    ]
+    ],
+    "tor": []
   },
   "teddit": {
     "normal": [

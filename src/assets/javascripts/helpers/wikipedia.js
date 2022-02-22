@@ -21,10 +21,12 @@ const getRedirects = () => redirects;
 const getCustomRedirects = function () {
   return {
     "wikiless": {
-      "normal": [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects]
+      "normal": [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects],
+      "tor": [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects]
     },
   };
 };
+
 function setRedirects(val) {
   redirects.wikiless = val;
   browser.storage.local.set({ wikipediaRedirects: redirects })
@@ -35,6 +37,13 @@ function setRedirects(val) {
       if (index !== -1) wikilessNormalRedirectsChecks.splice(index, 1);
     }
   setWikilessNormalRedirectsChecks(wikilessNormalRedirectsChecks);
+
+  for (const item of wikilessTorRedirectsChecks)
+    if (!redirects.wikiless.normal.includes(item)) {
+      var index = wikilessTorRedirectsChecks.indexOf(item);
+      if (index !== -1) wikilessTorRedirectsChecks.splice(index, 1);
+    }
+  setWikilessTorRedirectsChecks(wikilessTorRedirectsChecks);
 }
 
 let disable;
@@ -44,6 +53,15 @@ function setDisable(val) {
   browser.storage.local.set({ disableWikipedia: disable })
 }
 
+let protocol;
+const getProtocol = () => protocol;
+function setProtocol(val) {
+  protocol = val;
+  browser.storage.local.set({ wikilessProtocol: val })
+  console.log("wikilessProtocol: ", val)
+}
+
+
 let wikilessNormalRedirectsChecks;
 const getWikilessNormalRedirectsChecks = () => wikilessNormalRedirectsChecks;
 function setWikilessNormalRedirectsChecks(val) {
@@ -52,12 +70,29 @@ function setWikilessNormalRedirectsChecks(val) {
   console.log("wikilessNormalRedirectsChecks: ", val)
 }
 
+let wikilessTorRedirectsChecks;
+const getWikilessTorRedirectsChecks = () => wikilessTorRedirectsChecks;
+function setWikilessTorRedirectsChecks(val) {
+  wikilessTorRedirectsChecks = val;
+  browser.storage.local.set({ wikilessTorRedirectsChecks })
+  console.log("wikilessTorRedirectsChecks: ", val)
+}
+
+
 let wikilessNormalCustomRedirects = [];
 const getWikilessNormalCustomRedirects = () => wikilessNormalCustomRedirects;
 function setWikilessNormalCustomRedirects(val) {
   wikilessNormalCustomRedirects = val;
   browser.storage.local.set({ wikilessNormalCustomRedirects })
   console.log("wikilessNormalCustomRedirects: ", val)
+}
+
+let wikilessTorCustomRedirects = [];
+const getWikilessTorCustomRedirects = () => wikilessTorCustomRedirects;
+function setWikilessTorCustomRedirects(val) {
+  wikilessTorCustomRedirects = val;
+  browser.storage.local.set({ wikilessTorCustomRedirects })
+  console.log("wikilessTorCustomRedirects: ", val)
 }
 
 function isWikipedia(url, initiator) {
@@ -75,8 +110,9 @@ function redirect(url) {
       GETArguments.push([args[0], args[1]]);
     }
   }
-
-  let instancesList = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
+  let instancesList;
+  if (protocol == 'normal') instancesList = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
+  else if (protocol == 'tor') instancesList = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects];
   if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList)
 
@@ -100,23 +136,36 @@ function redirect(url) {
 
 async function init() {
   return new Promise((resolve) => {
-    browser.storage.local.get(
-      [
-        "disableWikipedia",
-        "wikipediaRedirects",
-        "wikilessNormalRedirectsChecks",
-        "wikilessNormalCustomRedirects",
-      ], (result) => {
-        disable = result.disableWikipedia ?? false;
+    fetch('/instances/data.json').then(response => response.text()).then(data => {
+      let dataJson = JSON.parse(data);
+      browser.storage.local.get(
+        [
+          "disableWikipedia",
+          "wikipediaRedirects",
+          "wikilessNormalRedirectsChecks",
+          "wikilessTorRedirectsChecks",
+          "wikilessNormalCustomRedirects",
+          "wikilessTorCustomRedirects",
+          "wikilessProtocol"
 
-        if (result.wikipediaRedirects) redirects = result.wikipediaRedirects;
+        ], (result) => {
+          disable = result.disableWikipedia ?? false;
 
-        wikilessNormalRedirectsChecks = result.wikilessNormalRedirectsChecks ?? [...redirects.wikiless.normal];
-        wikilessNormalCustomRedirects = result.wikilessNormalCustomRedirects ?? [];
+          protocol = result.wikilessProtocol ?? "normal";
 
-        resolve();
-      }
-    );
+          redirects.wikiless = dataJson.wikiless;
+          if (result.wikipediaRedirects) redirects = result.wikipediaRedirects;
+
+          wikilessNormalRedirectsChecks = result.wikilessNormalRedirectsChecks ?? [...redirects.wikiless.normal];
+          wikilessNormalCustomRedirects = result.wikilessNormalCustomRedirects ?? [];
+
+          wikilessTorRedirectsChecks = result.wikilessTorRedirectsChecks ?? [...redirects.wikiless.tor];
+          wikilessTorCustomRedirects = result.wikilessTorCustomRedirects ?? [];
+
+          resolve();
+        }
+      );
+    });
   });
 }
 
@@ -128,11 +177,18 @@ export default {
   setDisable,
   getDisable,
 
+  getProtocol,
+  setProtocol,
+
   getWikilessNormalRedirectsChecks,
   setWikilessNormalRedirectsChecks,
+  getWikilessTorRedirectsChecks,
+  setWikilessTorRedirectsChecks,
 
   getWikilessNormalCustomRedirects,
   setWikilessNormalCustomRedirects,
+  getWikilessTorCustomRedirects,
+  setWikilessTorCustomRedirects,
 
   redirect,
   isWikipedia,
