@@ -100,8 +100,8 @@ let protocol;
 const getProtocol = () => protocol;
 function setProtocol(val) {
   protocol = val;
-  browser.storage.local.set({ mediumProtocol: val })
-  console.log("mediumProtocol: ", val)
+  browser.storage.local.set({ mediumProtocol: val });
+  console.log("mediumProtocol: ", val);
 }
 
 function isMedium(url, initiator) {

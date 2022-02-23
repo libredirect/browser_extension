@@ -57,7 +57,6 @@ function changeProtocolSettings(protocol) {
     }
 }
 
-
 redditHelper.init().then(() => {
     disableRedditElement.checked = !redditHelper.getDisableReddit();
 

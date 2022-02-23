@@ -134,7 +134,6 @@ function setDisable(val) {
   console.log("disableYoutube: ", disable)
 }
 
-
 let protocol;
 const getProtocol = () => protocol;
 function setProtocol(val) {
@@ -510,7 +509,6 @@ async function init() {
         (result) => {
           redirects.invidious = dataJson.invidious;
           if (result.youtubeRedirects) redirects = result.youtubeRedirects;
-
 
           disable = result.disableYoutube ?? false;
           protocol = result.youtubeProtocol ?? 'normal';

@@ -134,6 +134,7 @@ r = requests.get(
 rJson = json.loads(r.text)
 lingvaList = {}
 lingvaList['normal'] = []
+lingvaList['tor'] = []
 for item in rJson:
     lingvaList['normal'].append(item)
 mightyList['lingva'] = lingvaList

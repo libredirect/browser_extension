@@ -120,12 +120,21 @@
             </select>
         </div>
 
+        <div class="some-block option-block">
+            <h4>Protocol</h4>
+            <select id="protocol">
+                <option value="normal">Normal</option>
+                <option value="tor">Tor</option>
+            </select>
+        </div>
+
         <hr>
 
         <div id="simplyTranslate-lingva">
             <div class="some-block option-block">
                 <h4>From</h4>
                 <select id="from">
+                    <option value="DEFAULT">Default</option>
                     <option value="auto">Auto</option>
                     <option value="af">Afrikaans</option>
                     <option value="sq">Albanian</option>
@@ -237,10 +246,10 @@
                     <option value="zu">Zulu</option>
                 </select>
             </div>
-
             <div class="some-block option-block">
                 <h4>To</h4>
                 <select id="to">
+                    <option value="DEFAULT">Default</option>
                     <option value="af">Afrikaans</option>
                     <option value="sq">Albanian</option>
                     <option value="am">Amharic</option>
@@ -354,54 +363,107 @@
         </div>
 
         <div id="simplyTranslate">
-            <div class="some-block option-block">
-                <h4>Default Instances</h4>
-            </div>
-            <div class="checklist" id="simplyTranslate-normal-checklist">
-            </div>
-            <hr>
-            <div class="some-block option-block">
-                <h4>Custom Instances</h4>
-            </div>
-            <form id="custom-simplyTranslate-normal-instance-form">
+            <div id="simplyTranslate-normal">
                 <div class="some-block option-block">
-                    <input id="simplyTranslate-normal-custom-instance" placeholder="https://simplyTranslate.com"
-                        type="url" />
-                    <button type="submit" class="add" id="simplyTranslate-normal-add-instance">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
-                            fill="currentColor">
-                            <path d="M0 0h24v24H0V0z" fill="none" />
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                        </svg>
-                    </button>
+                    <h4>Default Instances</h4>
                 </div>
-            </form>
-            <div class="checklist" id="simplyTranslate-normal-custom-checklist"></div>
+                <div class="checklist" id="simplyTranslate-normal-checklist">
+                </div>
+                <hr>
+                <div class="some-block option-block">
+                    <h4>Custom Instances</h4>
+                </div>
+                <form id="custom-simplyTranslate-normal-instance-form">
+                    <div class="some-block option-block">
+                        <input id="simplyTranslate-normal-custom-instance" placeholder="https://simplyTranslate.com"
+                            type="url" />
+                        <button type="submit" class="add" id="simplyTranslate-normal-add-instance">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                                fill="currentColor">
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+                <div class="checklist" id="simplyTranslate-normal-custom-checklist"></div>
+            </div>
+            <div id="simplyTranslate-tor">
+                <div class="some-block option-block">
+                    <h4>Default Instances</h4>
+                </div>
+                <div class="checklist" id="simplyTranslate-tor-checklist">
+                </div>
+                <hr>
+                <div class="some-block option-block">
+                    <h4>Custom Instances</h4>
+                </div>
+                <form id="custom-simplyTranslate-tor-instance-form">
+                    <div class="some-block option-block">
+                        <input id="simplyTranslate-tor-custom-instance" placeholder="https://simplyTranslate.com"
+                            type="url" />
+                        <button type="submit" class="add" id="simplyTranslate-tor-add-instance">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                                fill="currentColor">
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+                <div class="checklist" id="simplyTranslate-tor-custom-checklist"></div>
+            </div>
         </div>
 
         <div id="lingva">
-            <div class="some-block option-block">
-                <h4>Default Instances</h4>
-            </div>
-            <div class="checklist" id="lingva-normal-checklist">
-            </div>
-            <hr>
-            <div class="some-block option-block">
-                <h4>Custom Instances</h4>
-            </div>
-            <form id="custom-lingva-normal-instance-form">
+            <div id="lingva-normal">
                 <div class="some-block option-block">
-                    <input id="lingva-normal-custom-instance" placeholder="https://lingva.com" type="url" />
-                    <button type="submit" class="add" id="lingva-normal-add-instance">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
-                            fill="currentColor">
-                            <path d="M0 0h24v24H0V0z" fill="none" />
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                        </svg>
-                    </button>
+                    <h4>Default Instances</h4>
                 </div>
-            </form>
-            <div class="checklist" id="lingva-normal-custom-checklist"></div>
+                <div class="checklist" id="lingva-normal-checklist">
+                </div>
+                <hr>
+                <div class="some-block option-block">
+                    <h4>Custom Instances</h4>
+                </div>
+                <form id="custom-lingva-normal-instance-form">
+                    <div class="some-block option-block">
+                        <input id="lingva-normal-custom-instance" placeholder="https://lingva.com" type="url" />
+                        <button type="submit" class="add" id="lingva-normal-add-instance">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                                fill="currentColor">
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+                <div class="checklist" id="lingva-normal-custom-checklist"></div>
+            </div>
+            <div id="lingva-tor">
+                <div class="some-block option-block">
+                    <h4>Default Instances</h4>
+                </div>
+                <div class="checklist" id="lingva-tor-checklist">
+                </div>
+                <hr>
+                <div class="some-block option-block">
+                    <h4>Custom Instances</h4>
+                </div>
+                <form id="custom-lingva-tor-instance-form">
+                    <div class="some-block option-block">
+                        <input id="lingva-tor-custom-instance" placeholder="https://lingva.com" type="url" />
+                        <button type="submit" class="add" id="lingva-tor-add-instance">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                                fill="currentColor">
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+                <div class="checklist" id="lingva-tor-custom-checklist"></div>
+            </div>
         </div>
 
     </section>

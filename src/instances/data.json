@@ -64,7 +64,6 @@
       "https://nitter.cutelab.space",
       "https://nitter.nl",
       "https://nitter.mint.lgbt",
-      "https://nitter.tokhmi.xyz",
       "https://nitter.bus-hit.me",
       "https://fuckthesacklers.network",
       "https://nitter.govt.land",
@@ -186,7 +185,8 @@
       "https://lingva.pussthecat.org",
       "https://translate.datatunnel.xyz",
       "https://lingva.esmailelbob.xyz"
-    ]
+    ],
+    "tor": []
   },
   "searx": {
     "normal": [

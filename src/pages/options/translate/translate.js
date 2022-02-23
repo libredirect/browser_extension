@@ -32,27 +32,56 @@ translateFrontendElement.addEventListener("change",
     }
 );
 
+let protocolElement = document.getElementById("protocol")
+protocolElement.addEventListener("change",
+    (event) => {
+        let protocol = event.target.options[protocolElement.selectedIndex].value
+        translateHelper.setProtocol(protocol);
+        changeProtocolSettings(protocol);
+    }
+);
+
+function changeProtocolSettings(protocol) {
+    let normalSimplyTranslateDiv = document.getElementById("simplyTranslate-normal");
+    let torSimplyTranslateDiv = document.getElementById("simplyTranslate-tor");
+
+    let normalLingvaDiv = document.getElementById("lingva-normal");
+    let torLingvaDiv = document.getElementById("lingva-tor");
+    if (protocol == 'normal') {
+        normalSimplyTranslateDiv.style.display = 'block';
+        normalLingvaDiv.style.display = 'block';
+        torLingvaDiv.style.display = 'none';
+        torSimplyTranslateDiv.style.display = 'none';
+    }
+    else if (protocol == 'tor') {
+        normalSimplyTranslateDiv.style.display = 'none';
+        normalLingvaDiv.style.display = 'none';
+        torLingvaDiv.style.display = 'block';
+        torSimplyTranslateDiv.style.display = 'block';
+    }
+}
+
 let fromElement = document.getElementById("from");
 fromElement.addEventListener("change",
-    (event) => {
-        let from = event.target.options[fromElement.selectedIndex].value;
-        translateHelper.setFrom(from);
-    }
+    event => translateHelper.setFrom(event.target.options[fromElement.selectedIndex].value)
 );
 
 let toElement = document.getElementById("to");
 toElement.addEventListener("change",
-    (event) => {
-        let to = event.target.options[toElement.selectedIndex].value;
-        translateHelper.setTo(to);
-    }
+    event => translateHelper.setTo(event.target.options[toElement.selectedIndex].value)
 );
 
 translateHelper.init().then(() => {
     disableElement.checked = !translateHelper.getDisable();
+
     let frontend = translateHelper.getFrontend();
     translateFrontendElement.value = frontend;
     changeFrontendsSettings(frontend);
+
+    let protocol = translateHelper.getProtocol();
+    protocolElement.value = protocol;
+    changeProtocolSettings(protocol);
+
     fromElement.value = translateHelper.getFrom();
     toElement.value = translateHelper.getTo();
 
@@ -65,7 +94,19 @@ translateHelper.init().then(() => {
         translateHelper.setSimplyTranslateNormalRedirectsChecks,
         translateHelper.getSimplyTranslateNormalCustomRedirects,
         translateHelper.setSimplyTranslateNormalCustomRedirects
-    )
+    );
+
+    commonHelper.processDefaultCustomInstances(
+        'simplyTranslate',
+        'tor',
+        translateHelper,
+        document,
+        translateHelper.getSimplyTranslateTorRedirectsChecks,
+        translateHelper.setSimplyTranslateTorRedirectsChecks,
+        translateHelper.getSimplyTranslateTorCustomRedirects,
+        translateHelper.setSimplyTranslateTorCustomRedirects
+    );
+
 
     commonHelper.processDefaultCustomInstances(
         'lingva',
@@ -76,5 +117,16 @@ translateHelper.init().then(() => {
         translateHelper.setLingvaNormalRedirectsChecks,
         translateHelper.getLingvaNormalCustomRedirects,
         translateHelper.setLingvaNormalCustomRedirects
+    );
+
+    commonHelper.processDefaultCustomInstances(
+        'lingva',
+        'tor',
+        translateHelper,
+        document,
+        translateHelper.getLingvaTorRedirectsChecks,
+        translateHelper.setLingvaTorRedirectsChecks,
+        translateHelper.getLingvaTorCustomRedirects,
+        translateHelper.setLingvaTorCustomRedirects
     )
 });
