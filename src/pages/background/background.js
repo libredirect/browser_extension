@@ -12,11 +12,13 @@ import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import exceptionsHelper from "../../assets/javascripts/helpers/exceptions.js";
+import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
 
 window.browser = window.browser || window.chrome;
 
 async function wholeInit() {
   youtubeHelper.init()
+  youtubeMusicHelper.init()
   twitterHelper.init()
   instagramHelper.init()
   mapsHelper.init()
@@ -46,6 +48,8 @@ browser.webRequest.onBeforeRequest.addListener(
     var newUrl;
 
     if (exceptionsHelper.isException(url, initiator)) newUrl = null;
+
+    else if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
 
     else if (youtubeHelper.isYoutube(url, initiator)) newUrl = youtubeHelper.redirect(url, details.type)
 
@@ -156,18 +160,28 @@ function getMightyList() {
   return [
     ...youtubeHelper.getCustomRedirects().invidious.normal,
     ...youtubeHelper.getCustomRedirects().piped.normal,
+
     ...twitterHelper.getCustomRedirects().nitter.normal,
+
+    ...youtubeMusicHelper.getCustomRedirects().beatbump.normal,
+
     ...instagramHelper.getCustomRedirects().bibliogram.normal,
+
     ...redditHelper.getCustomRedirects().libreddit.normal,
     ...redditHelper.getCustomRedirects().teddit.normal,
     redditHelper.getCustomRedirects().desktop,
     redditHelper.getCustomRedirects().mobile,
+
     ...searchHelper.getCustomRedirects().searx.normal,
     ...searchHelper.getCustomRedirects().whoogle.normal,
+
     ...translateHelper.getCustomRedirects().simplyTranslate.normal,
     ...translateHelper.getCustomRedirects().lingva.normal,
+
     ...mediumHelper.getCustomRedirects().scribe.normal,
+
     ...imgurHelper.getCustomRedirects().rimgo.normal,
+
     ...wikipediaHelper.getCustomRedirects().wikiless.normal
   ];
 }
