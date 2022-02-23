@@ -91,8 +91,8 @@ let protocol;
 const getProtocol = () => protocol;
 function setProtocol(val) {
   protocol = val;
-  browser.storage.local.set({ nitterProtocol: val })
-  console.log("nitterProtocol: ", val)
+  browser.storage.local.set({ twitterProtocol: val })
+  console.log("twitterProtocol: ", val)
 }
 
 function isTwitter(url, initiator) {
@@ -144,12 +144,12 @@ async function init() {
           "nitterNormalCustomRedirects",
           "nitterTorRedirectsChecks",
           "nitterTorCustomRedirects",
-          "nitterProtocol",
+          "twitterProtocol",
         ],
         (result) => {
           disable = result.disableTwitter ?? false;
 
-          protocol = result.nitterProtocol ?? "normal";
+          protocol = result.twitterProtocol ?? "normal";
 
           redirects.nitter = dataJson.nitter;
           if (result.twitterRedirects) redirects = result.twitterRedirects;

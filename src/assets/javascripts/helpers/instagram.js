@@ -150,7 +150,7 @@ async function init() {
 
           "bibliogramNormalCustomRedirects",
           "bibliogramTorCustomRedirects",
-          "bibliogramProtocol"
+          "instagramProtocol"
         ],
         (result) => {
           disable = result.disableInstagram ?? false;
@@ -165,7 +165,7 @@ async function init() {
           bibliogramTorRedirectsChecks = result.bibliogramTorRedirectsChecks ?? [...redirects.bibliogram.tor];
           bibliogramTorCustomRedirects = result.bibliogramTorCustomRedirects ?? [];
 
-          protocol = result.bibliogramProtocol ?? "normal";
+          protocol = result.instagramProtocol ?? "normal";
 
           resolve();
         }

@@ -3,23 +3,13 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-    /^https?:\/\/(i|).?imgur.com/
+    /^https?:\/\/(i|).?imgur\.com(\/.*)?$/
 ];
 
 let redirects = {
     "rimgo": {
-        "normal": [
-            "https://i.bcow.xyz",
-            "https://rimgo.bcow.xyz",
-            "https://rimgo.pussthecat.org",
-            "https://img.riverside.rocks",
-            "https://rimgo.totaldarkness.net",
-            "https://rimgo.bus-hit.me"
-        ],
-        "tor": [
-            "http://l4d4owboqr6xcmd6lf64gbegel62kbudu3x3jnldz2mx6mhn3bsv3zyd.onion",
-            "http://jx3dpcwedpzu2mh54obk5gvl64i2ln7pt5mrzd75s4jnndkqwzaim7ad.onion"
-        ]
+        "normal": [],
+        "tor": []
     }
 }
 
@@ -28,7 +18,8 @@ const getRedirects = () => redirects;
 const getCustomRedirects = function () {
     return {
         "rimgo": {
-            "normal": [...rimgoNormalRedirectsChecks, ...rimgoNormalCustomRedirects]
+            "normal": [...rimgoNormalRedirectsChecks, ...rimgoNormalCustomRedirects],
+            "tor": [...rimgoTorRedirectsChecks, ...rimgoTorCustomRedirects]
         },
     };
 };
@@ -43,6 +34,13 @@ function setRedirects(val) {
             if (index !== -1) rimgoNormalRedirectsChecks.splice(index, 1);
         }
     setRimgoNormalRedirectsChecks(rimgoNormalRedirectsChecks);
+
+    for (const item of rimgoTorRedirectsChecks)
+        if (!redirects.rimgo.normal.includes(item)) {
+            var index = rimgoTorRedirectsChecks.indexOf(item);
+            if (index !== -1) rimgoTorRedirectsChecks.splice(index, 1);
+        }
+    setRimgoTorRedirectsChecks(rimgoTorRedirectsChecks);
 }
 
 let rimgoNormalRedirectsChecks;
@@ -53,6 +51,14 @@ function setRimgoNormalRedirectsChecks(val) {
     console.log("rimgoNormalRedirectsChecks: ", val)
 }
 
+let rimgoTorRedirectsChecks;
+const getRimgoTorRedirectsChecks = () => rimgoTorRedirectsChecks;
+function setRimgoTorRedirectsChecks(val) {
+    rimgoTorRedirectsChecks = val;
+    browser.storage.local.set({ rimgoTorRedirectsChecks })
+    console.log("rimgoTorRedirectsChecks: ", val)
+}
+
 let rimgoNormalCustomRedirects = [];
 const getRimgoNormalCustomRedirects = () => rimgoNormalCustomRedirects;
 function setRimgoNormalCustomRedirects(val) {
@@ -61,11 +67,27 @@ function setRimgoNormalCustomRedirects(val) {
     console.log("rimgoNormalCustomRedirects: ", val)
 }
 
+let rimgoTorCustomRedirects = [];
+const getRimgoTorCustomRedirects = () => rimgoTorCustomRedirects;
+function setRimgoTorCustomRedirects(val) {
+    rimgoTorCustomRedirects = val;
+    browser.storage.local.set({ rimgoTorCustomRedirects })
+    console.log("rimgoTorCustomRedirects: ", val)
+}
+
 let disable;
 const getDisable = () => disable;
 function setDisable(val) {
     disable = val;
     browser.storage.local.set({ disableImgur: disable })
+}
+
+let protocol;
+const getProtocol = () => protocol;
+function setProtocol(val) {
+    protocol = val;
+    browser.storage.local.set({ imgurProtocol: val })
+    console.log("imgurProtocol: ", val)
 }
 
 function isImgur(url, initiator) {
@@ -85,9 +107,11 @@ function redirect(url, type) {
     // https://imgur.com/gallery/cTRwaJU
     // https://i.imgur.com/CFSQArP.jpeg
 
-    if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") return null;
+    if (type != "main_frame" && type != "sub_frame" && type != "xmlhttprequest" && type != "other") return null;
 
-    let instancesList = [...rimgoNormalRedirectsChecks, ...rimgoNormalCustomRedirects];
+    let instancesList;
+    if (protocol == 'normal') instancesList = [...rimgoNormalRedirectsChecks, ...rimgoNormalCustomRedirects];
+    if (protocol == 'tor') instancesList = [...rimgoTorRedirectsChecks, ...rimgoTorCustomRedirects];
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList)
 
@@ -96,24 +120,38 @@ function redirect(url, type) {
 
 async function init() {
     return new Promise((resolve) => {
-        browser.storage.local.get(
-            [
-                "disableImgur",
-                "imgurRedirects",
-                "rimgoNormalRedirectsChecks",
-                "rimgoNormalCustomRedirects",
-            ],
-            (result) => {
-                disable = result.disableImgur ?? false;
+        fetch('/instances/data.json').then(response => response.text()).then(data => {
+            let dataJson = JSON.parse(data);
+            browser.storage.local.get(
+                [
+                    "disableImgur",
+                    "imgurRedirects",
 
-                if (result.imgurRedirects) redirects = result.imgurRedirects;
+                    "rimgoNormalRedirectsChecks",
+                    "rimgoNormalCustomRedirects",
+                    "rimgoTorRedirectsChecks",
+                    "rimgoTorCustomRedirects",
 
-                rimgoNormalRedirectsChecks = result.rimgoNormalRedirectsChecks ?? [...redirects.rimgo.normal];
-                rimgoNormalCustomRedirects = result.rimgoNormalCustomRedirects ?? [];
+                    "imgurProtocol",
+                ],
+                (result) => {
+                    disable = result.disableImgur ?? false;
 
-                resolve();
-            }
-        )
+                    protocol = result.imgurProtocol ?? "normal";
+
+                    redirects.rimgo = dataJson.rimgo;
+                    if (result.imgurRedirects) redirects = result.imgurRedirects;
+
+                    rimgoNormalRedirectsChecks = result.rimgoNormalRedirectsChecks ?? [...redirects.rimgo.normal];
+                    rimgoNormalCustomRedirects = result.rimgoNormalCustomRedirects ?? [];
+
+                    rimgoTorRedirectsChecks = result.rimgoTorRedirectsChecks ?? [...redirects.rimgo.tor];
+                    rimgoTorCustomRedirects = result.rimgoTorCustomRedirects ?? [];
+
+                    resolve();
+                }
+            )
+        });
     });
 }
 
@@ -125,11 +163,18 @@ export default {
     getDisable,
     setDisable,
 
+    getProtocol,
+    setProtocol,
+
     getRimgoNormalRedirectsChecks,
     setRimgoNormalRedirectsChecks,
+    getRimgoTorRedirectsChecks,
+    setRimgoTorRedirectsChecks,
 
     getRimgoNormalCustomRedirects,
     setRimgoNormalCustomRedirects,
+    getRimgoTorCustomRedirects,
+    setRimgoTorCustomRedirects,
 
     redirect,
     isImgur,
