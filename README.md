@@ -4,6 +4,7 @@
 A web extension that redirects YouTube, Twitter, Instagram... requests to alternative privacy friendly frontends and backends.
 
 Youtube => [Piped](https://github.com/TeamPiped/Piped), [Invidious](https://github.com/iv-org/invidious), [FreeTube](https://github.com/FreeTubeApp/FreeTube)\
+YoutubeMusic => [Beatbump](https://github.com/snuffyDev/Beatbump)\
 Twitter => [Nitter](https://github.com/zedeus/nitter)\
 Instagram => [Bibliogram](https://sr.ht/~cadence/bibliogram/)\
 TikTok => [ProxiTok](https://github.com/pablouser1/ProxiTok)\
