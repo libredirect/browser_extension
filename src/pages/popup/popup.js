@@ -3,6 +3,7 @@ window.browser = window.browser || window.chrome;
 
 import commonHelper from "../../assets/javascripts/helpers/common.js";
 import youtubeHelper from "../../assets/javascripts/helpers/youtube/youtube.js";
+import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
 import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
 import mapsHelper from "../../assets/javascripts/helpers/maps.js";
@@ -14,20 +15,22 @@ import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 
-let disableTwitterElement = document.querySelector("#disable-nitter");
-let disableYoutubeElement = document.querySelector("#disable-invidious");
-let disableInstagramElement = document.querySelector("#disable-bibliogram");
-let disableMapsElement = document.querySelector("#disable-osm");
-let disableRedditElement = document.querySelector("#disable-reddit");
-let disableSearchElement = document.querySelector("#disable-search");
-let disableElement = document.querySelector("#disable-simplyTranslate");
-let disableWikipediaElement = document.querySelector("#disable-wikipedia");
-let disableMediumElement = document.querySelector("#disable-medium");
-let disableImgurElement = document.querySelector("#disable-imgur");
-let disableTiktokElement = document.querySelector("#disable-tiktok");
+let disableTwitterElement = document.getElementById("disable-nitter");
+let disableYoutubeElement = document.getElementById("disable-youtube");
+let disableYoutubeMusicElement = document.getElementById("disable-youtubeMusic");
+let disableInstagramElement = document.getElementById("disable-bibliogram");
+let disableMapsElement = document.getElementById("disable-osm");
+let disableRedditElement = document.getElementById("disable-reddit");
+let disableSearchElement = document.getElementById("disable-search");
+let disableElement = document.getElementById("disable-simplyTranslate");
+let disableWikipediaElement = document.getElementById("disable-wikipedia");
+let disableMediumElement = document.getElementById("disable-medium");
+let disableImgurElement = document.getElementById("disable-imgur");
+let disableTiktokElement = document.getElementById("disable-tiktok");
 
 async function wholeInit() {
   await youtubeHelper.init();
+  await youtubeMusicHelper.init();
   await twitterHelper.init();
   await instagramHelper.init();
   await mapsHelper.init();
@@ -43,6 +46,7 @@ async function wholeInit() {
 wholeInit().then(() => {
   disableTwitterElement.checked = !twitterHelper.getDisable();
   disableYoutubeElement.checked = !youtubeHelper.getDisable();
+  disableYoutubeMusicElement.checked = !youtubeMusicHelper.getDisable();
   disableInstagramElement.checked = !instagramHelper.getDisable();
   disableMapsElement.checked = !mapsHelper.getDisable();
   disableRedditElement.checked = !redditHelper.getDisableReddit();
@@ -55,49 +59,53 @@ wholeInit().then(() => {
 })
 
 disableTwitterElement.addEventListener("change",
-  (event) => twitterHelper.setDisable(!event.target.checked)
+  event => twitterHelper.setDisable(!event.target.checked)
 );
 
 disableYoutubeElement.addEventListener("change",
-  (event) => youtubeHelper.setDisable(!event.target.checked)
+  event => youtubeHelper.setDisable(!event.target.checked)
+);
+
+disableYoutubeMusicElement.addEventListener("change",
+  event => youtubeMusicHelper.setDisable(!event.target.checked)
 );
 
 disableInstagramElement.addEventListener("change",
-  (event) => instagramHelper.setDisable(!event.target.checked)
+  event => instagramHelper.setDisable(!event.target.checked)
 );
 
 disableMapsElement.addEventListener("change",
-  (event) => mapsHelper.setDisable(!event.target.checked)
+  event => mapsHelper.setDisable(!event.target.checked)
 );
 
 disableRedditElement.addEventListener("change",
-  (event) => redditHelper.setDisableReddit(!event.target.checked)
+  event => redditHelper.setDisableReddit(!event.target.checked)
 );
 
 disableSearchElement.addEventListener("change",
-  (event) => searchHelper.setDisable(!event.target.checked)
+  event => searchHelper.setDisable(!event.target.checked)
 );
 
 disableElement.addEventListener("change",
-  (event) => translateHelper.setDisable(!event.target.checked)
+  event => translateHelper.setDisable(!event.target.checked)
 );
 
 disableWikipediaElement.addEventListener("change",
-  (event) => wikipediaHelper.setDisable(!event.target.checked)
+  event => wikipediaHelper.setDisable(!event.target.checked)
 );
 
 disableImgurElement.addEventListener("change",
-  (event) => imgurHelper.setDisable(!event.target.checked)
+  event => imgurHelper.setDisable(!event.target.checked)
 );
 
 disableTiktokElement.addEventListener("change",
-  (event) => tiktokHelper.setDisable(!event.target.checked)
+  event => tiktokHelper.setDisable(!event.target.checked)
 );
 
 disableMediumElement.addEventListener("change",
-  (event) => mediumHelper.setDisable(!event.target.checked)
+  event => mediumHelper.setDisable(!event.target.checked)
 );
 
-document.querySelector("#more-options").addEventListener("click", () => {
-  browser.runtime.openOptionsPage();
-});
+document.getElementById("more-options").addEventListener("click",
+  () => browser.runtime.openOptionsPage()
+);

@@ -71,7 +71,6 @@ function redirect(url, type) {
 
 async function init() {
     return new Promise((resolve) => {
-        console.log("Init music")
         browser.storage.local.get(
             [
                 "disableYoutubeMusic",
@@ -88,7 +87,6 @@ async function init() {
                 if (result.youtubeMusicRedirects) redirects = result.youtubeMusicRedirects;
 
                 beatbumpNormalRedirectsChecks = result.beatbumpNormalRedirectsChecks ?? [...redirects.beatbump.normal];
-                console.log("beatbumpNormalRedirectsChecks", beatbumpNormalRedirectsChecks)
                 beatbumpNormalCustomRedirects = result.beatbumpNormalCustomRedirects ?? [];
 
                 resolve();
