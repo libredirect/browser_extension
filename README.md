@@ -15,10 +15,10 @@ Maps => [OpenStreetMap](https://www.openstreetmap.org/)\
 Wikipedia => [Wikiless](https://codeberg.org/orenom/wikiless)\
 Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)
 
-**Note**: It will default to using random instances if none are selected. You can also set custom instances.
+**Note**: It will be using random instances by default. You can also add custom instances.
 
+[![Mozilla Users](https://badges.alefvanoon.xyz/amo/users/libredirect?label=Firefox%20Users)](https://addons.mozilla.org/firefox/addon/libredirect/)
 [![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=Matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
-[![PrivacyPolicy](https://badges.alefvanoon.xyz/badge/-PrivacyPolicy-orange)](Privacy-Policy.md)
 
 ## Get
 [![Firefox Add-on](src/assets/images/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)
@@ -61,5 +61,6 @@ Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)
 - select `load unpacked extension`
 - select `src` folder
 
-## Credits
-- [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)
+
+Privacy Policy: [Privacy-Policy.md](Privacy-Policy.md)\
+Credits: [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)
