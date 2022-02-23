@@ -65,7 +65,7 @@ searchHelper.init().then(() => {
   searchFrontendElement.value = frontend;
   changeFrontendsSettings(frontend);
 
-  let protocol = searchHelper.getprotocol();
+  let protocol = searchHelper.getProtocol();
   protocolElement.value = protocol;
   changeProtocolSettings(protocol);
 

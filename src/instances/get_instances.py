@@ -106,6 +106,7 @@ r = requests.get(
 rJson = json.loads(r.text)
 scribeList = {}
 scribeList['normal'] = []
+scribeList['tor'] = []
 for item in rJson:
     scribeList['normal'].append(item)
 mightyList['scribe'] = scribeList

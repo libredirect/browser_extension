@@ -177,7 +177,7 @@ function setRedditFrontend(val) {
 };
 
 let protocol;
-const getprotocol = () => protocol;
+const getProtocol = () => protocol;
 function setProtocol(val) {
   protocol = val;
   browser.storage.local.set({ redditProtocol: val })
@@ -316,7 +316,7 @@ export default {
   getRedditFrontend,
   setRedditFrontend,
 
-  getprotocol,
+  getProtocol,
   setProtocol,
 
   getLibredditNormalRedirectsChecks,

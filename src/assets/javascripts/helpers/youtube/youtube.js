@@ -136,7 +136,7 @@ function setDisable(val) {
 
 
 let protocol;
-const getprotocol = () => protocol;
+const getProtocol = () => protocol;
 function setProtocol(val) {
   protocol = val;
   browser.storage.local.set({ youtubeProtocol: val })
@@ -573,7 +573,7 @@ export default {
   getDisable,
   setDisable,
 
-  getprotocol,
+  getProtocol,
   setProtocol,
 
   setInvidiousAlwaysProxy,

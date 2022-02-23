@@ -32,7 +32,7 @@ function changeProtocolSettings(protocol) {
 twitterHelper.init().then(() => {
     disableTwitterElement.checked = !twitterHelper.getDisable();
 
-    let protocol = twitterHelper.getprotocol();
+    let protocol = twitterHelper.getProtocol();
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 

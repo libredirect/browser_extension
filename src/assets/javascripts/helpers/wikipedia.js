@@ -146,12 +146,12 @@ async function init() {
           "wikilessTorRedirectsChecks",
           "wikilessNormalCustomRedirects",
           "wikilessTorCustomRedirects",
-          "wikilessProtocol"
+          "wikipediaProtocol"
 
         ], (result) => {
           disable = result.disableWikipedia ?? false;
 
-          protocol = result.wikilessProtocol ?? "normal";
+          protocol = result.wikipediaProtocol ?? "normal";
 
           redirects.wikiless = dataJson.wikiless;
           if (result.wikipediaRedirects) redirects = result.wikipediaRedirects;

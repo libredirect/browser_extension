@@ -146,7 +146,7 @@ function setFrontend(val) {
 };
 
 let protocol;
-const getprotocol = () => protocol;
+const getProtocol = () => protocol;
 function setProtocol(val) {
   protocol = val;
   browser.storage.local.set({ searchProtocol: val })
@@ -274,7 +274,7 @@ export default {
   getSearxTorCustomRedirects,
   setSearxTorCustomRedirects,
 
-  getprotocol,
+  getProtocol,
   setProtocol,
 
   redirect,

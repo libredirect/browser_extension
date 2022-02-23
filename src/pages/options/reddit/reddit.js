@@ -65,7 +65,7 @@ redditHelper.init().then(() => {
     redditFrontendElement.value = frontend;
     changeFrontendsSettings(frontend);
 
-    let protocol = redditHelper.getprotocol();
+    let protocol = redditHelper.getProtocol();
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 

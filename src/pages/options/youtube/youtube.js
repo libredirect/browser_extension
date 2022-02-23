@@ -144,7 +144,7 @@ youtubeHelper.init().then(() => {
     youtubeFrontendElement.value = frontend;
     changeFrontendsSettings(frontend);
 
-    let protocol = youtubeHelper.getprotocol();
+    let protocol = youtubeHelper.getProtocol();
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
