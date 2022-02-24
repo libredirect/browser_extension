@@ -62,11 +62,27 @@ function isYoutubeMusic(url, initiator) {
 }
 
 function redirect(url, type) {
+
+    // Video
+    // https://music.youtube.com/watch?v=_PkGiKBW-DA&list=RDAMVM_PkGiKBW-DA
+    // https://beatbump.ml/listen?id=_PkGiKBW-DA&list=RDAMVM_PkGiKBW-DA
+
+    // Playlist
+    // https://music.youtube.com/playlist?list=PLqxd0OMLeWy64zlwhjouj92ISc38FbOns
+    // https://beatbump.ml/playlist/VLPLqxd0OMLeWy64zlwhjouj92ISc38FbOns
+
+    // Channel
+    // https://music.youtube.com/channel/UCfgmMDI7T5tOQqjnOBRe_wg
+    // https://beatbump.ml/artist/UCfgmMDI7T5tOQqjnOBRe_wg
+
     let instancesList = [...beatbumpNormalRedirectsChecks, ...beatbumpNormalCustomRedirects];
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-    return `${randomInstance}${url.pathname}${url.search}`.replace("/watch?v=", "/listen?id=");
+    return `${randomInstance}${url.pathname}${url.search}`
+        .replace("/watch?v=", "/listen?id=")
+        .replace("/channel/", "/artist/")
+        .replace("/playlist?list=", "/playlist/VL");
 }
 
 async function init() {
