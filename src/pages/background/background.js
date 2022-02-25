@@ -118,17 +118,17 @@ function changeInstance(url) {
   var protocolHost = `${tabUrl.protocol}//${tabUrl.host}`;
   var newUrl;
 
-  if (
-    youtubeHelper.getCustomRedirects().invidious.normal.includes(protocolHost) ||
-    youtubeHelper.getCustomRedirects().piped.normal.includes(protocolHost)
-  )
-    newUrl = 'https://youtube.com';
+  console.log("wewe")
+  newUrl = youtubeHelper.changeInstance(url);
 
-  if (twitterHelper.getRedirects().nitter.normal.includes(protocolHost)) newUrl = 'https://twitter.com';
+  let twitterList = [...twitterHelper.getRedirects().nitter.normal];
+  if (twitterList.includes(protocolHost) && twitterList.length > 1) newUrl = 'https://twitter.com';
 
-  if (instagramHelper.getRedirects().bibliogram.normal.includes(protocolHost)) newUrl = 'https://instagram.com';
+  let instagramList = [...instagramHelper.getRedirects().bibliogram.normal];
+  if (instagramList.includes(protocolHost) && instagramList.length > 1) newUrl = 'https://instagram.com';
 
-  if (redditHelper.getRedirects().libreddit.normal.includes(protocolHost) || redditHelper.getRedirects().teddit.normal.includes(protocolHost)) {
+  let redditList = [...redditHelper.getRedirects().libreddit.normal, ...redditHelper.getRedirects().teddit.normal]
+  if (redditList.includes(protocolHost) && redditList.length > 1) {
     if (tabUrl.pathname.startsWith('/img')) {
       newUrl = "https://i.redd.it"
       tabUrl.href = tabUrl.href.replace("/img", "")
@@ -137,21 +137,20 @@ function changeInstance(url) {
       newUrl = 'https://reddit.com';
   }
 
-  if (
-    searchHelper.getRedirects().searx.normal.includes(protocolHost) ||
-    searchHelper.getRedirects().whoogle.normal.includes(protocolHost)
-  ) newUrl = 'https://google.com';
+  let searchList = [...searchHelper.getRedirects().searx.normal, ...searchHelper.getRedirects().whoogle.normal]
+  if (searchList.includes(protocolHost) && searchList.length > 1) newUrl = 'https://google.com';
 
-  if (
-    translateHelper.getRedirects().simplyTranslate.normal.includes(protocolHost) ||
-    translateHelper.getRedirects().lingva.normal.includes(protocolHost)
-  ) newUrl = 'https://translate.google.com';
+  let translateList = [...translateHelper.getRedirects().simplyTranslate.normal, ...translateHelper.getRedirects().lingva.normal]
+  if (translateList.includes(protocolHost) && translateList.length > 1) newUrl = 'https://translate.google.com';
 
-  if (mediumHelper.getRedirects().scribe.normal.includes(protocolHost)) newUrl = 'https://medium.com';
+  let mediumList = [...mediumHelper.getRedirects().scribe.normal]
+  if (mediumList.includes(protocolHost) && mediumList.length > 1) newUrl = 'https://medium.com';
 
-  if (imgurHelper.getRedirects().rimgo.normal.includes(protocolHost)) newUrl = 'https://imgur.com';
+  let imgurList = [...imgurHelper.getRedirects().rimgo.normal];
+  if (imgurList.includes(protocolHost) && imgurList.length > 1) newUrl = 'https://imgur.com';
 
-  if (wikipediaHelper.getRedirects().wikiless.normal.includes(protocolHost)) newUrl = 'https://wikipedia.com';
+  let wikipediaList = [...wikipediaHelper.getRedirects().wikiless.normal]
+  if (wikipediaList.includes(protocolHost) && wikipediaList.length > 1) newUrl = 'https://wikipedia.com';
 
   if (newUrl) browser.tabs.update({ url: tabUrl.href.replace(protocolHost, newUrl) });
 }

@@ -214,12 +214,12 @@ function setFrontend(val) {
   console.log("youtubeFrontend: ", val)
 }
 
-let freetubeFrontend;
-const getFreetubeFrontend = () => freetubeFrontend;
-function setFreetubeFrontend(val) {
-  freetubeFrontend = val;
-  browser.storage.local.set({ freetubeFrontend })
-  console.log("freetubeFrontend: ", freetubeFrontend)
+let youtubeEmbedFrontend;
+const getYoutubeEmbedFrontend = () => youtubeEmbedFrontend;
+function setYoutubeEmbedFrontend(val) {
+  youtubeEmbedFrontend = val;
+  browser.storage.local.set({ youtubeEmbedFrontend })
+  console.log("youtubeEmbedFrontend: ", youtubeEmbedFrontend)
 }
 
 let persistInvidiousPrefs;
@@ -303,18 +303,24 @@ function isYoutube(url, initiator) {
 function redirect(url, type) {
   if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
 
-  if (frontend == 'freetube' && type === "main_frame")
+  if (frontend == 'yatte' && type === "main_frame")
+    return url.href.replace(/^https?:\/\//, 'yattee://');
+
+  else if (frontend == 'freetube' && type === "main_frame")
     return `freetube://${url}`;
 
-  else if (frontend == 'freetube' && type !== "main_frame" && freetubeFrontend == "youtube")
+  else if (frontend == 'freetube' && type !== "main_frame" && youtubeEmbedFrontend == "youtube")
     return null;
 
-  else if (frontend == 'invidious' || (frontend == 'freetube' && freetubeFrontend == 'invidious' && type == "sub_frame")) {
+  else if (
+    frontend == 'invidious' ||
+    ((frontend == 'freetube' || frontend == 'yatte') && youtubeEmbedFrontend == 'invidious' && type == "sub_frame")
+  ) {
 
     if (OnlyEmbeddedVideo == 'onlyEmbedded' && type !== "sub_frame") return null;
     if (
       OnlyEmbeddedVideo == 'onlyNotEmbedded' && type !== "main_frame" &&
-      !(frontend == 'freetube' && freetubeFrontend == 'invidious' && type === "sub_frame")
+      !((frontend == 'freetube' || frontend == 'yatte') && youtubeEmbedFrontend == 'invidious' && type === "sub_frame")
     ) return null;
 
     let instancesList;
@@ -326,12 +332,15 @@ function redirect(url, type) {
 
     return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
 
-  } else if (frontend == 'piped' || (frontend == 'freetube' && freetubeFrontend == 'piped' && type === "sub_frame")) {
+  } else if (
+    frontend == 'piped' ||
+    ((frontend == 'freetube' || frontend == 'yatte') && youtubeEmbedFrontend == 'piped' && type === "sub_frame")
+  ) {
 
     if (OnlyEmbeddedVideo == 'onlyEmbedded' && type !== "sub_frame") return null;
     if (
       OnlyEmbeddedVideo == 'onlyNotEmbedded' && type !== "main_frame" &&
-      !(frontend == 'freetube' && freetubeFrontend == 'piped' && type == "sub_frame")
+      !((frontend == 'freetube' || frontend == 'yatte') && youtubeEmbedFrontend == 'piped' && type == "sub_frame")
     ) return null;
 
     let instancesList;
@@ -343,6 +352,28 @@ function redirect(url, type) {
     return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
   }
   return 'CANCEL';
+}
+
+function changeInstance(url) {
+
+  let protocolHost = `${url.protocol}//${url.host}`;
+  let instancesList;
+  if (frontend == 'invidious') {
+    if (protocol == 'normal') instancesList = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
+  }
+  else if (frontend == 'piped') {
+    if (protocol == 'normal') instancesList = [...pipedNormalRedirectsChecks, ...pipedNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
+  }
+
+  console.log("instancesList", instancesList);
+  let index = instancesList.indexOf(protocolHost);
+  if (index > -1) instancesList.splice(index, 1);
+
+  if (instancesList.length === 0) return null;
+  let randomInstance = commonHelper.getRandomInstance(instancesList);
+  return `${randomInstance}${url.pathname}${url.search}`;
 }
 
 function isPipedorInvidious(url, type) {
@@ -502,7 +533,7 @@ async function init() {
           "pipedTorRedirectsChecks",
           "pipedTorCustomRedirects",
           "alwaysusePreferred",
-          "freetubeFrontend",
+          "youtubeEmbedFrontend",
 
           "youtubeProtocol",
         ],
@@ -513,7 +544,7 @@ async function init() {
           disable = result.disableYoutube ?? false;
           protocol = result.youtubeProtocol ?? 'normal';
           frontend = result.youtubeFrontend ?? 'piped';
-          freetubeFrontend = result.freetubeFrontend ?? 'invidious';
+          youtubeEmbedFrontend = result.youtubeEmbedFrontend ?? 'invidious';
 
           theme = result.youtubeTheme ?? 'DEFAULT';
           volume = result.youtubeVolume ?? '--';
@@ -553,8 +584,8 @@ export default {
   getFrontend,
   setFrontend,
 
-  getFreetubeFrontend,
-  setFreetubeFrontend,
+  getYoutubeEmbedFrontend,
+  setYoutubeEmbedFrontend,
 
   getRedirects,
   getCustomRedirects,
@@ -563,6 +594,7 @@ export default {
 
   redirect,
   isYoutube,
+  changeInstance,
 
   isPipedorInvidious,
   isUrlPipedorInvidious,

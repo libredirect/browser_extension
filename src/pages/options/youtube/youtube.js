@@ -6,42 +6,42 @@ let youtubeFrontendElement = document.getElementById("youtube-frontend");
 let invidiousDivElement = document.getElementById("invidious");
 let pipedDivElement = document.getElementById("piped");
 let invidiousPipedDivElement = document.getElementById("invidious-piped");
-let freetubeDivElement = document.getElementById("freetube");
-let freetubeFrontendElement = document.getElementById("freetube-embedded-frontend");
+let freetubeYatteDivElement = document.getElementById("freetube-yatte");
+
 
 function changeFrontendsSettings(frontend) {
     if (frontend == 'piped') {
         invidiousPipedDivElement.style.display = 'block'
         pipedDivElement.style.display = 'block';
         invidiousDivElement.style.display = 'none';
-        freetubeDivElement.style.display = 'none';
+        freetubeYatteDivElement.style.display = 'none';
     }
     else if (frontend == 'invidious') {
         invidiousPipedDivElement.style.display = 'block'
         pipedDivElement.style.display = 'none';
         invidiousDivElement.style.display = 'block';
-        freetubeDivElement.style.display = 'none';
+        freetubeYatteDivElement.style.display = 'none';
     }
-    else if (frontend == 'freetube') {
+    else if (frontend == 'freetube' || frontend == 'yatte') {
         invidiousPipedDivElement.style.display = 'none'
         pipedDivElement.style.display = 'none';
         invidiousDivElement.style.display = 'none';
-        freetubeDivElement.style.display = 'block';
+        freetubeYatteDivElement.style.display = 'block';
     }
 }
 
-function changeFreetubeFrontendsSettings(freetubeFrontend) {
-    if (freetubeFrontend == 'invidious') {
+function changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontend) {
+    if (youtubeEmbedFrontend == 'invidious') {
         invidiousPipedDivElement.style.display = 'block'
         pipedDivElement.style.display = 'none';
         invidiousDivElement.style.display = 'block';
     }
-    if (freetubeFrontend == 'piped') {
+    if (youtubeEmbedFrontend == 'piped') {
         invidiousPipedDivElement.style.display = 'block'
         pipedDivElement.style.display = 'block';
         invidiousDivElement.style.display = 'none';
     }
-    else if (freetubeFrontend == 'youtube') {
+    else if (youtubeEmbedFrontend == 'youtube') {
         invidiousPipedDivElement.style.display = 'none'
         pipedDivElement.style.display = 'none';
         invidiousDivElement.style.display = 'none';
@@ -52,13 +52,16 @@ youtubeFrontendElement.addEventListener("change",
         let frontend = event.target.options[youtubeFrontendElement.selectedIndex].value
         youtubeHelper.setFrontend(frontend);
         changeFrontendsSettings(frontend);
+        changeYoutubeEmbedFrontendsSettings(youtubeHelper.getYoutubeEmbedFrontend());
     }
 );
-freetubeFrontendElement.addEventListener("change",
+
+let youtubeEmbedFrontendElement = document.getElementById("youtube-embed-frontend");
+youtubeEmbedFrontendElement.addEventListener("change",
     (event) => {
-        let freetubeFrontend = event.target.options[freetubeFrontendElement.selectedIndex].value
-        youtubeHelper.setFreetubeFrontend(freetubeFrontend);
-        changeFreetubeFrontendsSettings(freetubeFrontend);
+        let youtubeEmbedFrontend = event.target.options[youtubeEmbedFrontendElement.selectedIndex].value
+        youtubeHelper.setYoutubeEmbedFrontend(youtubeEmbedFrontend);
+        changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontend);
     }
 );
 
@@ -148,7 +151,10 @@ youtubeHelper.init().then(() => {
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
-    let freetubeFrontend = youtubeHelper.getFreetubeFrontend()
-    freetubeFrontendElement.value = freetubeFrontend
-    if (frontend == "freetube") changeFreetubeFrontendsSettings(freetubeFrontend);
+    let youtubeEmbedFrontend = youtubeHelper.getYoutubeEmbedFrontend()
+    youtubeEmbedFrontendElement.value = youtubeEmbedFrontend
+    if (frontend == "freetube" || frontend == "yatte") {
+        console.log("youtubeEmbedFrontend", youtubeEmbedFrontend);
+        changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontend)
+    };
 });
