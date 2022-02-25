@@ -176,6 +176,14 @@ function setTo(val) {
   console.log("to: ", to)
 }
 
+let simplyTranslateEngine;
+const getSimplyTranslateEngine = () => simplyTranslateEngine;
+function setSimplyTranslateEngine(val) {
+  simplyTranslateEngine = val;
+  browser.storage.local.set({ simplyTranslateEngine: val })
+  console.log("simplyTranslateEngine: ", val)
+}
+
 function isTranslate(url, initiator) {
   if (disable) return false;
   return targets.includes(url.host)
@@ -201,6 +209,7 @@ function redirect(url) {
     else {
       if (from != "DEFAULT") url.searchParams.append("sl", from);
       if (to != "DEFAULT") url.searchParams.append("tl", to);
+      if (simplyTranslateEngine != "DEFAULT") url.searchParams.append("engine", simplyTranslateEngine);
       return `${randomInstance}/${url.search}`
     }
 
@@ -283,6 +292,7 @@ async function init() {
 
           "translateFrom",
           "translateTo",
+          "simplyTranslateEngine",
         ],
         (result) => {
           disable = result.translateDisable ?? false;
@@ -291,6 +301,7 @@ async function init() {
 
           from = result.translateFrom ?? "DEFAULT";
           to = result.translateTo ?? 'DEFAULT';
+          simplyTranslateEngine = result.simplyTranslateEngine ?? 'DEFAULT';
 
           redirects.simplyTranslate = dataJson.simplyTranslate;
           redirects.lingva = dataJson.lingva;
@@ -335,6 +346,9 @@ export default {
   setFrom,
   getTo,
   setTo,
+
+  getSimplyTranslateEngine,
+  setSimplyTranslateEngine,
 
   getSimplyTranslateNormalRedirectsChecks,
   setSimplyTranslateNormalRedirectsChecks,

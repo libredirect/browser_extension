@@ -32,9 +32,9 @@ document.querySelector("#update-instances").addEventListener("click", () => {
     document.querySelector("#update-instances").innerHTML = 'Failed Miserabely';
 });
 
-document.querySelector("#export-settings").addEventListener("click", () => {
-  browser.storage.local.get(null, result => console.log(result))
-});
+// document.querySelector("#export-settings").addEventListener("click", () => {
+//   browser.storage.local.get(null, result => console.log(result))
+// });
 
 let nameCustomInstanceInput = document.getElementById("exceptions-custom-instance");
 let instanceTypeElement = document.getElementById("exceptions-custom-instance-type");

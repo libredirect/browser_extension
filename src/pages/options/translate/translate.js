@@ -6,19 +6,16 @@ disableElement.addEventListener("change",
     (event) => translateHelper.setDisable(!event.target.checked)
 );
 
-let simplyTranslateLingvaDivElement = document.getElementById("simplyTranslate-lingva")
 let simplyTranslateDivElement = document.getElementById("simplyTranslate")
 let lingvaDivElement = document.getElementById("lingva")
 
 
 function changeFrontendsSettings(frontend) {
     if (frontend == 'simplyTranslate') {
-        simplyTranslateLingvaDivElement.style.display = 'block';
         simplyTranslateDivElement.style.display = 'block';
         lingvaDivElement.style.display = 'none';
     }
     else if (frontend == 'lingva') {
-        simplyTranslateLingvaDivElement.style.display = 'block';
         simplyTranslateDivElement.style.display = 'none';
         lingvaDivElement.style.display = 'block';
     }
@@ -71,6 +68,11 @@ toElement.addEventListener("change",
     event => translateHelper.setTo(event.target.options[toElement.selectedIndex].value)
 );
 
+let simplyTranslateEngineElement = document.getElementById("simplyTranslate-engine");
+simplyTranslateEngineElement.addEventListener("change",
+    event => translateHelper.setSimplyTranslateEngine(event.target.options[simplyTranslateEngineElement.selectedIndex].value)
+);
+
 translateHelper.init().then(() => {
     disableElement.checked = !translateHelper.getDisable();
 
@@ -84,6 +86,7 @@ translateHelper.init().then(() => {
 
     fromElement.value = translateHelper.getFrom();
     toElement.value = translateHelper.getTo();
+    simplyTranslateEngineElement.value = translateHelper.getSimplyTranslateEngine();
 
     commonHelper.processDefaultCustomInstances(
         'simplyTranslate',
