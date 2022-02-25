@@ -1,7 +1,6 @@
 "use strict";
 window.browser = window.browser || window.chrome;
 
-
 let exceptions = {
     "url": [],
     "regex": [],

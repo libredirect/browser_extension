@@ -346,12 +346,41 @@
       </div>
     </div>
 
+    <hr>
+
+    <div class="some-block option-block">
+      <h4>Embed Exceptions</h4>
+    </div>
+    <form id="custom-exceptions-instance-form">
+      <div class="some-block option-block">
+        <div class="some-block" style="padding:0;">
+          <input id="exceptions-custom-instance" placeholder="https://www.google.com" type="url" />
+          &nbsp;
+          <select id="exceptions-custom-instance-type">
+            <option value="url">URL</option>
+            <option value="regex">Regex</option>
+          </select>
+          &nbsp;
+        </div>
+        <button type="submit" class="add" id="exceptions-add-instance">
+          <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+          </svg>
+        </button>
+      </div>
+    </form>
+    <div class="checklist" id="exceptions-custom-checklist"></div>
+    </a>
+  </section>
+
   </section>
 
   <script type="module" src="../init.js"></script>
   <script type="module" src="./youtube.js"></script>
   <script type="module" src="./invidious.js"></script>
   <script type="module" src="./piped.js"></script>
+  <script type="module" src="./embed-exceptions.js"></script>
   <!-- <script src="../../assets/javascripts/localise.js"></script> -->
 </body>
 

@@ -238,6 +238,28 @@ function setAlwaysusePreferred(val) {
   console.log("alwaysusePreferred: ", alwaysusePreferred)
 }
 
+let exceptions = {
+  "url": [],
+  "regex": [],
+};
+const getExceptions = () => exceptions;
+function setExceptions(val) {
+  exceptions = val;
+  browser.storage.local.set({ youtubeEmbedExceptions: val })
+  console.log("youtubeEmbedExceptions: ", val)
+}
+
+function isException(url) {
+  for (const item of exceptions.url) {
+    let protocolHost = `${url.protocol}//${url.host}`
+    console.log(item, protocolHost)
+    if (item == protocolHost) return true;
+  }
+  for (const item of exceptions.regex)
+    if (new RegExp(item).test(url.href)) return true;
+  return false;
+}
+
 function isYoutube(url, initiator) {
   if (disable) return false;
   if (
@@ -300,7 +322,11 @@ function isYoutube(url, initiator) {
     return isTargets
 }
 
-function redirect(url, type) {
+function redirect(url, type, details) {
+  if (type != "main_frame" && details.frameAncestors.length > 0 && isException(new URL(details.frameAncestors[0].url))) {
+    console.log(`Canceled ${url.href}`, details.frameAncestors[0].url)
+    return null;
+  }
   if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
 
   if (frontend == 'yatte' && type === "main_frame")
@@ -536,6 +562,8 @@ async function init() {
           "youtubeEmbedFrontend",
 
           "youtubeProtocol",
+
+          "youtubeEmbedExceptions"
         ],
         (result) => {
           redirects.invidious = dataJson.invidious;
@@ -571,6 +599,8 @@ async function init() {
           persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
 
           alwaysusePreferred = result.alwaysusePreferred ?? true;
+
+          if (result.youtubeEmbedExceptions) exceptions = result.youtubeEmbedExceptions;
 
           resolve();
         });
@@ -659,6 +689,10 @@ export default {
 
   getAlwaysusePreferred,
   setAlwaysusePreferred,
+
+  getExceptions,
+  setExceptions,
+  isException,
 
   init,
 };
