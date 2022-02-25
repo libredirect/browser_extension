@@ -134,6 +134,32 @@ function redirect(url) {
 
 }
 
+function changeInstance(url) {
+  let protocolHost = `${url.protocol}//${url.host}`;
+
+  let wikipediaList = [
+    ...redirects.wikiless.normal,
+    ...redirects.wikiless.tor,
+
+    ...wikilessNormalCustomRedirects,
+    ...wikilessTorCustomRedirects,
+  ]
+  if (!wikipediaList.includes(protocolHost)) return null;
+
+  let instancesList;
+  if (protocol == 'normal') instancesList = [...wikilessNormalCustomRedirects, ...wikilessNormalRedirectsChecks];
+  else if (protocol == 'tor') instancesList = [...wikilessTorCustomRedirects, ...wikilessTorRedirectsChecks];
+
+  console.log("instancesList", instancesList);
+  let index = instancesList.indexOf(protocolHost);
+  if (index > -1) instancesList.splice(index, 1);
+
+  if (instancesList.length === 0) return null;
+
+  let randomInstance = commonHelper.getRandomInstance(instancesList);
+  return randomInstance;
+}
+
 async function init() {
   return new Promise((resolve) => {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
@@ -193,4 +219,5 @@ export default {
   redirect,
   isWikipedia,
   init,
+  changeInstance,
 };

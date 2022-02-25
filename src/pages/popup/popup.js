@@ -109,3 +109,38 @@ disableMediumElement.addEventListener("change",
 document.getElementById("more-options").addEventListener("click",
   () => browser.runtime.openOptionsPage()
 );
+
+document.getElementById("change-instance").addEventListener("click",
+  () => browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    let currTab = tabs[0];
+    if (currTab) {
+      changeInstance(currTab.url)
+    }
+  })
+);
+
+function changeInstance(url) {
+  var tabUrl = new URL(url);
+  var protocolHost = `${tabUrl.protocol}//${tabUrl.host}`;
+  var newUrl;
+
+  newUrl = youtubeHelper.changeInstance(tabUrl);
+
+  if (!newUrl) newUrl = twitterHelper.changeInstance(tabUrl);
+
+  if (!newUrl) newUrl = instagramHelper.changeInstance(tabUrl);
+
+  if (!newUrl) newUrl = redditHelper.changeInstance(tabUrl);
+
+  if (!newUrl) newUrl = searchHelper.changeInstance(tabUrl);
+
+  if (!newUrl) newUrl = translateHelper.changeInstance(tabUrl);
+
+  if (!newUrl) newUrl = mediumHelper.changeInstance(tabUrl);
+
+  if (!newUrl) newUrl = imgurHelper.changeInstance(tabUrl);
+
+  if (!newUrl) newUrl = wikipediaHelper.changeInstance(tabUrl)
+
+  if (newUrl) browser.tabs.update({ url: tabUrl.href.replace(protocolHost, newUrl) });
+}

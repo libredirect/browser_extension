@@ -23,7 +23,7 @@ let redditFrontendElement = document.getElementById("reddit-frontend");
 redditFrontendElement.addEventListener("change",
     (event) => {
         let frontend = event.target.options[redditFrontendElement.selectedIndex].value
-        redditHelper.setRedditFrontend(frontend)
+        redditHelper.setFrontend(frontend)
         changeFrontendsSettings(frontend);
     }
 );
@@ -60,7 +60,7 @@ function changeProtocolSettings(protocol) {
 redditHelper.init().then(() => {
     disableRedditElement.checked = !redditHelper.getDisableReddit();
 
-    let frontend = redditHelper.getRedditFrontend();
+    let frontend = redditHelper.getFrontend();
     redditFrontendElement.value = frontend;
     changeFrontendsSettings(frontend);
 

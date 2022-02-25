@@ -135,6 +135,32 @@ function redirect(url, type) {
     return `${randomInstance}/u${url.pathname}${url.search}`; // Likely a user profile, redirect to '/u/...'
 }
 
+function changeInstance(url) {
+  let protocolHost = `${url.protocol}//${url.host}`;
+
+  let instagramList = [
+    ...redirects.bibliogram.normal,
+    ...redirects.bibliogram.tor,
+    ...bibliogramNormalCustomRedirects,
+    ...bibliogramTorCustomRedirects,
+  ];
+
+  if (!instagramList.includes(protocolHost)) return null;
+
+  let instancesList;
+  if (protocol == 'normal') instancesList = [...bibliogramNormalCustomRedirects, ...bibliogramNormalRedirectsChecks];
+  else if (protocol == 'tor') instancesList = [...bibliogramTorCustomRedirects, ...bibliogramTorRedirectsChecks];
+
+  console.log("instancesList", instancesList);
+  let index = instancesList.indexOf(protocolHost);
+  if (index > -1) instancesList.splice(index, 1);
+
+  if (instancesList.length === 0) return null;
+
+  let randomInstance = commonHelper.getRandomInstance(instancesList);
+  return randomInstance;
+}
+
 
 async function init() {
   return new Promise((resolve) => {
@@ -199,4 +225,5 @@ export default {
 
   redirect,
   init,
+  changeInstance,
 };

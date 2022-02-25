@@ -186,6 +186,45 @@ function redirect(url) {
   return `${randomInstance}${path}?${searchQuery}`;
 }
 
+function changeInstance(url) {
+  let protocolHost = `${url.protocol}//${url.host}`;
+
+  let searchList = [
+    ...redirects.searx.normal,
+    ...redirects.searx.tor,
+
+    ...searxNormalCustomRedirects,
+    ...searxTorCustomRedirects,
+
+    ...redirects.whoogle.normal,
+    ...redirects.whoogle.tor,
+
+    ...whoogleNormalCustomRedirects,
+    ...whoogleTorCustomRedirects,
+  ]
+
+  if (!searchList.includes(protocolHost)) return null;
+
+  let instancesList;
+  if (frontend == 'searx') {
+    if (protocol == 'normal') instancesList = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
+  }
+  else if (frontend == 'whoogle') {
+    if (protocol == 'normal') instancesList = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects];
+  }
+
+  console.log("instancesList", instancesList);
+  let index = instancesList.indexOf(protocolHost);
+  if (index > -1) instancesList.splice(index, 1);
+
+  if (instancesList.length === 0) return null;
+
+  let randomInstance = commonHelper.getRandomInstance(instancesList);
+  return randomInstance;
+}
+
 async function init() {
   return new Promise((resolve) => {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
@@ -198,13 +237,13 @@ async function init() {
 
           "whoogleNormalRedirectsChecks",
           "whoogleNormalCustomRedirects",
-          
+
           "whoogleTorRedirectsChecks",
           "whoogleTorCustomRedirects",
 
           "searxNormalRedirectsChecks",
           "searxNormalCustomRedirects",
-          
+
           "searxTorRedirectsChecks",
           "searxTorCustomRedirects",
 
@@ -279,4 +318,5 @@ export default {
 
   redirect,
   init,
+  changeInstance,
 };

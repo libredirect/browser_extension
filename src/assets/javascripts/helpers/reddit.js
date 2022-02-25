@@ -169,11 +169,11 @@ function setDisableReddit(val) {
   browser.storage.local.set({ disableReddit })
 }
 
-let redditFrontend;
-const getRedditFrontend = () => redditFrontend;
-function setRedditFrontend(val) {
-  redditFrontend = val;
-  browser.storage.local.set({ redditFrontend })
+let frontend;
+const getFrontend = () => frontend;
+function setFrontend(val) {
+  frontend = val;
+  browser.storage.local.set({ redditFrontend: frontend })
 };
 
 let protocol;
@@ -183,7 +183,6 @@ function setProtocol(val) {
   browser.storage.local.set({ redditProtocol: val })
   console.log("redditProtocol: ", val)
 }
-
 
 function isReddit(url, initiator) {
   if (
@@ -223,12 +222,12 @@ function redirect(url, type) {
     return `${libredditRandomInstance}/img${url.pathname}${url.search}`;
   }
   else if (url.host === "redd.it") {
-    if (redditFrontend == 'libreddit') {
+    if (frontend == 'libreddit') {
       if (libredditInstancesList.length === 0) return null;
       let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
       return `${libredditRandomInstance}${url.pathname}${url.search}`;
     }
-    if (redditFrontend == 'teddit' && !url.pathname.match(/^\/+[^\/]+\/+[^\/]/)) {
+    if (frontend == 'teddit' && !url.pathname.match(/^\/+[^\/]+\/+[^\/]/)) {
       if (tedditInstancesList.length === 0) return null;
       let tedditRandomInstance = commonHelper.getRandomInstance(tedditInstancesList);
       // As of 2021-04-22, redirects for teddit redd.it/foo links don't work.
@@ -241,16 +240,55 @@ function redirect(url, type) {
       return `${tedditRandomInstance}/comments${url.pathname}${url.search}`;
     }
   }
-  if (redditFrontend == 'libreddit') {
+  if (frontend == 'libreddit') {
     if (libredditInstancesList.length === 0) return null;
     let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
     return `${libredditRandomInstance}${url.pathname}${url.search}`;
   }
-  if (redditFrontend == 'teddit') {
+  if (frontend == 'teddit') {
     if (tedditInstancesList.length === 0) return null;
     let tedditRandomInstance = commonHelper.getRandomInstance(tedditInstancesList);
     return `${tedditRandomInstance}${url.pathname}${url.search}`;
   }
+}
+
+function changeInstance(url) {
+  let protocolHost = `${url.protocol}//${url.host}`;
+
+  let redditList = [
+    ...redirects.libreddit.normal,
+    ...redirects.libreddit.tor,
+
+    ...libredditNormalCustomRedirects,
+    ...libredditTorCustomRedirects,
+
+    ...redirects.teddit.normal,
+    ...redirects.teddit.tor,
+
+    ...tedditNormalCustomRedirects,
+    ...tedditTorCustomRedirects,
+  ]
+
+  if (!redditList.includes(protocolHost)) return null;
+
+  let instancesList;
+  if (frontend == 'libreddit') {
+    if (protocol == 'normal') instancesList = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...libredditTorRedirectsChecks, ...libredditTorCustomRedirects];
+  }
+  else if (frontend == 'teddit') {
+    if (protocol == 'normal') instancesList = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...tedditTorRedirectsChecks, ...tedditTorCustomRedirects];
+  }
+
+  console.log("instancesList", instancesList);
+  let index = instancesList.indexOf(protocolHost);
+  if (index > -1) instancesList.splice(index, 1);
+
+  if (instancesList.length === 0) return null;
+
+  let randomInstance = commonHelper.getRandomInstance(instancesList);
+  return randomInstance;
 }
 
 async function init() {
@@ -277,7 +315,7 @@ async function init() {
         ], (result) => {
           disableReddit = result.disableReddit ?? false;
           protocol = result.redditProtocol ?? 'normal';
-          redditFrontend = result.redditFrontend ?? 'libreddit';
+          frontend = result.redditFrontend ?? 'libreddit';
 
           redirects.teddit = dataJson.teddit;
           if (result.redditRedirects) redirects = result.redditRedirects;
@@ -313,8 +351,8 @@ export default {
   getDisableReddit,
   setDisableReddit,
 
-  getRedditFrontend,
-  setRedditFrontend,
+  getFrontend,
+  setFrontend,
 
   getProtocol,
   setProtocol,
@@ -342,4 +380,5 @@ export default {
   redirect,
   isReddit,
   init,
+  changeInstance,
 };

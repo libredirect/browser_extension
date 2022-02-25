@@ -17,6 +17,7 @@ body {
   font-family: Sans-Serif;
   background-color: var(--bg-main);
   color: var(--text);
+  overflow-x:hidden
 }
 
 div.some-block input[type="checkbox"] {
@@ -60,9 +61,9 @@ select {
   border-radius: 3px;
 }
 
-a.button * {
+/* a.button * {
   vertical-align: middle;
-}
+} */
 
 a.button:hover {
   background-color: var(--active);
@@ -209,19 +210,22 @@ div.some-block input[type="checkbox"]:checked::before {
 
 div.buttons {
   margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 a.button {
   stroke: var(--text);
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 5px;
   border: var(--active) solid 1px;
   color: var(--text);
   font-size: 12px;
   font-weight: bold;
-  margin: 7.5px 15px;
+  /* width: 180px; */
+  margin: 8px 20px;
   padding: 10px;
-  text-align: center;
   text-decoration: none;
   cursor: pointer;
   transition-duration: 0.1s;

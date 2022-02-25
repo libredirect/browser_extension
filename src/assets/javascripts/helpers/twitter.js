@@ -132,6 +132,32 @@ function redirect(url) {
     return `${randomInstance}${url.pathname}${url.search}`;
 }
 
+function changeInstance(url) {
+  let protocolHost = `${url.protocol}//${url.host}`;
+
+  let twitterList = [
+    ...redirects.nitter.normal,
+    ...redirects.nitter.tor,
+    ...nitterNormalCustomRedirects,
+    ...nitterTorCustomRedirects,
+  ];
+
+  if (!twitterList.includes(protocolHost)) return null;
+
+  let instancesList;
+  if (protocol == 'normal') instancesList = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
+  else if (protocol == 'tor') instancesList = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+
+  console.log("instancesList", instancesList);
+  let index = instancesList.indexOf(protocolHost);
+  if (index > -1) instancesList.splice(index, 1);
+
+  if (instancesList.length === 0) return null;
+
+  let randomInstance = commonHelper.getRandomInstance(instancesList);
+  return randomInstance;
+}
+
 async function init() {
   return new Promise((resolve) => {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
@@ -193,4 +219,5 @@ export default {
   redirect,
   isTwitter,
   init,
+  changeInstance,
 };

@@ -383,6 +383,23 @@ function redirect(url, type, details) {
 function changeInstance(url) {
 
   let protocolHost = `${url.protocol}//${url.host}`;
+
+  if (
+    protocol == 'normal' &&
+    ![
+      ...redirects.invidious.normal,
+      ...redirects.piped.normal,
+      ...invidiousNormalCustomRedirects,
+      ...pipedNormalCustomRedirects
+    ].includes(protocolHost)
+  ) return null;
+  if (protocol == 'tor' && ![
+    ...redirects.invidious.tor,
+    ...redirects.piped.tor,
+    ...invidiousTorCustomRedirects,
+    ...pipedTorCustomRedirects
+  ].includes(protocolHost)) return null;
+
   let instancesList;
   if (frontend == 'invidious') {
     if (protocol == 'normal') instancesList = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
@@ -399,7 +416,7 @@ function changeInstance(url) {
 
   if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList);
-  return `${randomInstance}${url.pathname}${url.search}`;
+  return randomInstance;
 }
 
 function isPipedorInvidious(url, type) {
@@ -526,7 +543,6 @@ function invidiousInitCookies(tabId) {
     }
   );
 }
-
 
 async function init() {
   return new Promise((resolve) => {
