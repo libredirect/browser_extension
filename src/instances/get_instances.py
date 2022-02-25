@@ -56,6 +56,7 @@ print('fetched Nitter')
 
 # Bibliogram
 r = requests.get('https://bibliogram.art/api/instances')
+print(r.text)
 rJson = json.loads(r.text)
 bibliogramList = {}
 bibliogramList['normal'] = []

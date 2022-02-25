@@ -18,6 +18,10 @@ function changeFrontendsSettings(frontend) {
         libredditDivElement.style.display = 'none';
         tedditDivElement.style.display = 'block';
     }
+    else if (frontend == 'old') {
+        libredditDivElement.style.display = 'none';
+        tedditDivElement.style.display = 'none';
+    }
 }
 let redditFrontendElement = document.getElementById("reddit-frontend");
 redditFrontendElement.addEventListener("change",

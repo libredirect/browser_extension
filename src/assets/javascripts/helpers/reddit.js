@@ -201,6 +201,8 @@ function redirect(url, type) {
 
   if (type !== "main_frame" || url.pathname.match(bypassPaths)) return null;
 
+  if (frontend == 'old') return `${redirects.desktop}${url.pathname}${url.search}`;
+
   let libredditInstancesList;
   let tedditInstancesList;
   if (protocol == 'normal') {
