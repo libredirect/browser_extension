@@ -55,8 +55,7 @@ mightyList['nitter'] = nitterList
 print('fetched Nitter')
 
 # Bibliogram
-r = requests.get('https://bibliogram.art/api/instances')
-print(r.text)
+r = requests.get('https://bibliogram.1d4.us/api/instances')
 rJson = json.loads(r.text)
 bibliogramList = {}
 bibliogramList['normal'] = []

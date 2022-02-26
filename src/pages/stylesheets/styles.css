@@ -17,7 +17,7 @@ body {
   font-family: Sans-Serif;
   background-color: var(--bg-main);
   color: var(--text);
-  overflow-x:hidden
+  overflow-x: hidden
 }
 
 div.some-block input[type="checkbox"] {
@@ -61,17 +61,14 @@ select {
   border-radius: 3px;
 }
 
-/* a.button * {
-  vertical-align: middle;
-} */
 
-a.button:hover {
+.button:hover {
   background-color: var(--active);
   color: var(--text);
   stroke: var(--text);
 }
 
-a.button:active {
+.button:active {
   background-color: var(--active);
   box-shadow: 0 var(--space) var(--bg-main);
   transform: translateY(4px);
@@ -213,9 +210,10 @@ div.buttons {
   margin-top: 15px;
 }
 
-a.button {
+.button {
   stroke: var(--text);
   display: flex;
+  text-align: center;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
@@ -223,7 +221,6 @@ a.button {
   color: var(--text);
   font-size: 12px;
   font-weight: bold;
-  /* width: 180px; */
   margin: 8px 20px;
   padding: 10px;
   text-decoration: none;
@@ -237,18 +234,18 @@ div.buttons-inline {
   padding: 0 15px;
 }
 
-a.button-inline {
+.button-inline {
   display: inline-block;
   margin: 7.5px 0;
 }
 
-a.button:hover {
+.button:hover {
   background-color: var(--active);
   color: var(--text);
   stroke: var(--text);
 }
 
-a.button:active {
+.button:active {
   background-color: var(--active);
   box-shadow: 0 var(--space) var(--bg-main);
   transform: translateY(1px);

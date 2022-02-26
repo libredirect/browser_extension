@@ -22,5 +22,8 @@
   "homepage": "https://github.com/LibRedirect/LibRedirect#readme",
   "devDependencies": {
     "web-ext": "^6.7.0"
+  },
+  "dependencies": {
+    "buffer": "^6.0.3"
   }
 }

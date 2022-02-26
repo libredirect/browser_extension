@@ -74,7 +74,9 @@
       "https://nitter.winscloud.net",
       "https://nitter.tiekoetter.com",
       "https://nitter.spaceint.fr",
-      "https://twtr.bch.bar"
+      "https://twtr.bch.bar",
+      "https://nitter.exonip.de",
+      "https://nitter.mastodon.pro"
     ],
     "tor": [
       "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
@@ -272,6 +274,7 @@
       "https://serx.cf",
       "https://spot.ecloud.global",
       "https://suche.dasnetzundich.de",
+      "https://suche.tromdienste.de",
       "https://suche.uferwerk.org",
       "https://swag.pw",
       "https://sx.catgirl.cloud",

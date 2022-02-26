@@ -20,21 +20,34 @@ themeElement.addEventListener("change", (event) => {
   browser.storage.local.set({ theme: value });
 });
 
-document.querySelector("#update-instances").addEventListener("click", () => {
-  document.querySelector("#update-instances").innerHTML = '...';
+document.getElementById("update-instances").addEventListener("click", () => {
+  document.getElementById("update-instances").innerHTML = '...';
   if (commonHelper.updateInstances()) {
-    document.querySelector("#update-instances").innerHTML = 'Done!';
+    document.getElementById("update-instances").innerHTML = 'Done!';
     new Promise(resolve => setTimeout(resolve, 1500)).then( // sleep 1500ms
-      () => document.querySelector("#update-instances").innerHTML = 'Update Instances'
+      () => document.getElementById("update-instances").innerHTML = 'Update Instances'
     )
   }
   else
-    document.querySelector("#update-instances").innerHTML = 'Failed Miserabely';
+    document.getElementById("update-instances").innerHTML = 'Failed Miserabely';
 });
 
-// document.querySelector("#export-settings").addEventListener("click", () => {
-//   browser.storage.local.get(null, result => console.log(result))
-// });
+let exportSettingsElement = document.getElementById("export-settings");
+browser.storage.local.get(null, result => {
+  let resultString = JSON.stringify(result, null, '  ');
+  exportSettingsElement.href = 'data:application/json;base64,' + btoa(resultString);
+  exportSettingsElement.download = 'libredirect-settings.json';
+});
+
+let importSettingsElement = document.getElementById("import-settings");
+importSettingsElement.addEventListener("change",
+  _ => {
+    let file = importSettingsElement.files[0];
+    const reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = () => browser.storage.local.set({ ...JSON.parse(reader.result) })
+    reader.onerror = error => reject(error);
+  })
 
 let nameCustomInstanceInput = document.getElementById("exceptions-custom-instance");
 let instanceTypeElement = document.getElementById("exceptions-custom-instance-type");

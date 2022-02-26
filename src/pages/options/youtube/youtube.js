@@ -77,7 +77,7 @@ themeElement.addEventListener("change",
 );
 
 let volumeElement = document.getElementById("invidious-volume");
-let volumeValueElement = document.querySelector("#volume-value");
+let volumeValueElement = document.getElementById("volume-value");
 volumeElement.addEventListener("input",
     () => {
         youtubeHelper.setVolume(volumeElement.value);
