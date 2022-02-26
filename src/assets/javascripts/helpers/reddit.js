@@ -184,20 +184,39 @@ function setProtocol(val) {
   console.log("redditProtocol: ", val)
 }
 
-function isReddit(url, initiator) {
-  if (
-    initiator &&
-    (
-      [...redirects.libreddit.normal, ...libredditNormalCustomRedirects].includes(initiator.origin) ||
-      [...redirects.teddit.normal, ...tedditNormalCustomRedirects].includes(initiator.origin) ||
-      targets.includes(initiator.host)
-    )
-  ) return false;
-  return targets.includes(url.host)
+function isReddit(url,) {
+
 }
 
-function redirect(url, type) {
+let bypassWatchOnReddit;
+const getBypassWatchOnReddit = () => bypassWatchOnReddit;
+function setBypassWatchOnReddit(val) {
+  bypassWatchOnReddit = val;
+  browser.storage.local.set({ bypassWatchOnReddit })
+  console.log("bypassWatchOnReddit: ", bypassWatchOnReddit)
+}
+
+function redirect(url, type, initiator) {
   if (disableReddit) return null;
+
+  if (
+    bypassWatchOnReddit &&
+    initiator &&
+    (
+      [...redirects.libreddit.normal,
+      ...redirects.libreddit.tor,
+      ...libredditNormalCustomRedirects,
+      ...libredditTorCustomRedirects,
+      ...redirects.teddit.normal,
+      ...redirects.teddit.tor,
+      ...tedditNormalCustomRedirects,
+      ...tedditTorCustomRedirects,
+      ].includes(initiator.origin) ||
+      targets.includes(initiator.host)
+    )
+  ) return 'BYBASSTAB';
+
+  if ((!targets.includes(url.host))) return null;
 
   if (type !== "main_frame" || url.pathname.match(bypassPaths)) return null;
 
@@ -314,10 +333,13 @@ async function init() {
           "tedditTorCustomRedirects",
 
           "redditProtocol",
+          "bypassWatchOnReddit",
         ], (result) => {
           disableReddit = result.disableReddit ?? false;
           protocol = result.redditProtocol ?? 'normal';
           frontend = result.redditFrontend ?? 'libreddit';
+
+          bypassWatchOnReddit = result.bypassWatchOnReddit ?? true;
 
           redirects.teddit = dataJson.teddit;
           if (result.redditRedirects) redirects = result.redditRedirects;
@@ -358,6 +380,9 @@ export default {
 
   getProtocol,
   setProtocol,
+
+  getBypassWatchOnReddit,
+  setBypassWatchOnReddit,
 
   getLibredditNormalRedirectsChecks,
   setLibredditNormalRedirectsChecks,

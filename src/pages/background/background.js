@@ -60,7 +60,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (mapsHelper.isMaps(url, initiator)) newUrl = mapsHelper.redirect(url);
 
-    if (redditHelper.isReddit(url, initiator)) newUrl = redditHelper.redirect(url, details.type);
+    if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator);
 
     if (mediumHelper.isMedium(url, initiator)) newUrl = mediumHelper.redirect(url, details.type);
 

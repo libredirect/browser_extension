@@ -61,8 +61,14 @@ function changeProtocolSettings(protocol) {
     }
 }
 
+let bypassWatchOnRedditElement = document.getElementById("bypass-watch-on-reddit")
+bypassWatchOnRedditElement.addEventListener("change",
+    event => redditHelper.setBypassWatchOnReddit(event.target.checked)
+);
+
 redditHelper.init().then(() => {
     disableRedditElement.checked = !redditHelper.getDisableReddit();
+    bypassWatchOnRedditElement.checked = redditHelper.getBypassWatchOnReddit();
 
     let frontend = redditHelper.getFrontend();
     redditFrontendElement.value = frontend;
