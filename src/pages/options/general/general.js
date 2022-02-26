@@ -47,7 +47,16 @@ importSettingsElement.addEventListener("change",
     reader.readAsText(file);
     reader.onload = () => browser.storage.local.set({ ...JSON.parse(reader.result) })
     reader.onerror = error => reject(error);
-  })
+  }
+);
+
+let resetSettingsElement = document.getElementById("reset-settings");
+resetSettingsElement.addEventListener("click",
+  () => {
+    console.log("reset");
+    browser.storage.local.clear();
+  }
+);
 
 let nameCustomInstanceInput = document.getElementById("exceptions-custom-instance");
 let instanceTypeElement = document.getElementById("exceptions-custom-instance-type");
