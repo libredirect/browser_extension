@@ -36,6 +36,8 @@ wholeInit();
 
 browser.storage.onChanged.addListener(wholeInit);
 
+let bybassTabs = [];
+
 browser.webRequest.onBeforeRequest.addListener(
   (details) => {
     const url = new URL(details.url);
@@ -49,35 +51,42 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (exceptionsHelper.isException(url, initiator)) newUrl = null;
 
-    else if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
-    else if (youtubeHelper.isYoutube(url, initiator)) newUrl = youtubeHelper.redirect(url, details.type, details)
+    if (!newUrl) newUrl = youtubeHelper.redirect(url, details, initiator)
+    if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
 
-    else if (twitterHelper.isTwitter(url, initiator)) newUrl = twitterHelper.redirect(url);
+    if (twitterHelper.isTwitter(url, initiator)) newUrl = twitterHelper.redirect(url);
 
-    else if (instagramHelper.isInstagram(url, initiator)) newUrl = instagramHelper.redirect(url, details.type);
+    if (instagramHelper.isInstagram(url, initiator)) newUrl = instagramHelper.redirect(url, details.type);
 
-    else if (mapsHelper.isMaps(url, initiator)) newUrl = mapsHelper.redirect(url);
+    if (mapsHelper.isMaps(url, initiator)) newUrl = mapsHelper.redirect(url);
 
-    else if (redditHelper.isReddit(url, initiator)) newUrl = redditHelper.redirect(url, details.type);
+    if (redditHelper.isReddit(url, initiator)) newUrl = redditHelper.redirect(url, details.type);
 
-    else if (mediumHelper.isMedium(url, initiator)) newUrl = mediumHelper.redirect(url, details.type);
+    if (mediumHelper.isMedium(url, initiator)) newUrl = mediumHelper.redirect(url, details.type);
 
-    else if (imgurHelper.isImgur(url, initiator)) newUrl = imgurHelper.redirect(url, details.type);
+    if (imgurHelper.isImgur(url, initiator)) newUrl = imgurHelper.redirect(url, details.type);
 
-    else if (tiktokHelper.isTiktok(url, initiator)) newUrl = tiktokHelper.redirect(url, details.type);
+    if (tiktokHelper.isTiktok(url, initiator)) newUrl = tiktokHelper.redirect(url, details.type);
 
-    else if (translateHelper.isTranslate(url, initiator)) newUrl = translateHelper.redirect(url);
+    if (translateHelper.isTranslate(url, initiator)) newUrl = translateHelper.redirect(url);
 
-    else if (searchHelper.isSearch(url)) newUrl = searchHelper.redirect(url)
+    if (searchHelper.isSearch(url)) newUrl = searchHelper.redirect(url)
 
-    else if (wikipediaHelper.isWikipedia(url, initiator)) newUrl = wikipediaHelper.redirect(url);
+    if (wikipediaHelper.isWikipedia(url, initiator)) newUrl = wikipediaHelper.redirect(url);
 
     if (youtubeHelper.isPipedorInvidious(newUrl ?? url, details.type)) newUrl = youtubeHelper.addUrlParams(newUrl ?? url);
+
+    if (bybassTabs.includes(details.tabId)) newUrl = null;
 
     if (newUrl) {
       if (newUrl == 'CANCEL') {
         console.log(`Canceled ${url}`);
         return { cancel: true };
+      }
+      else if (newUrl == 'BYBASSTAB') {
+        console.log(`Bybassed ${details.tabId}`);
+        bybassTabs.push(details.tabId);
+        return null;
       }
       else {
         console.info("Redirecting", url.href, "=>", newUrl);
@@ -89,6 +98,13 @@ browser.webRequest.onBeforeRequest.addListener(
   { urls: ["<all_urls>"], },
   ["blocking"]
 );
+
+browser.tabs.onRemoved.addListener((tabId) => {
+  let index = bybassTabs.indexOf(tabId);
+  if (index > -1) bybassTabs.splice(index, 1);
+  console.log("Removed bybassTabs", tabId);
+});
+
 
 browser.tabs.onUpdated.addListener(
   (tabId, changeInfo) => {

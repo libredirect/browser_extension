@@ -9,6 +9,8 @@ let invidiousPipedDivElement = document.getElementById("invidious-piped");
 let freetubeYatteDivElement = document.getElementById("freetube-yatte");
 
 
+
+
 function changeFrontendsSettings(frontend) {
     if (frontend == 'piped') {
         invidiousPipedDivElement.style.display = 'block'
@@ -27,6 +29,7 @@ function changeFrontendsSettings(frontend) {
         pipedDivElement.style.display = 'none';
         invidiousDivElement.style.display = 'none';
         freetubeYatteDivElement.style.display = 'block';
+        changeYoutubeEmbedFrontendsSettings(youtubeHelper.getYoutubeEmbedFrontend());
     }
 }
 
@@ -48,17 +51,16 @@ function changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontend) {
     }
 }
 youtubeFrontendElement.addEventListener("change",
-    (event) => {
+    event => {
         let frontend = event.target.options[youtubeFrontendElement.selectedIndex].value
         youtubeHelper.setFrontend(frontend);
         changeFrontendsSettings(frontend);
-        changeYoutubeEmbedFrontendsSettings(youtubeHelper.getYoutubeEmbedFrontend());
     }
 );
 
 let youtubeEmbedFrontendElement = document.getElementById("youtube-embed-frontend");
 youtubeEmbedFrontendElement.addEventListener("change",
-    (event) => {
+    event => {
         let youtubeEmbedFrontend = event.target.options[youtubeEmbedFrontendElement.selectedIndex].value
         youtubeHelper.setYoutubeEmbedFrontend(youtubeEmbedFrontend);
         changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontend);
@@ -66,12 +68,12 @@ youtubeEmbedFrontendElement.addEventListener("change",
 );
 
 disableYoutubeElement.addEventListener("change",
-    (event) => youtubeHelper.setDisable(!event.target.checked)
+    event => youtubeHelper.setDisable(!event.target.checked)
 );
 
 let themeElement = document.getElementById("invidious-theme");
 themeElement.addEventListener("change",
-    (event) => youtubeHelper.setTheme(event.target.options[themeElement.selectedIndex].value)
+    event => youtubeHelper.setTheme(event.target.options[themeElement.selectedIndex].value)
 );
 
 let volumeElement = document.getElementById("invidious-volume");
@@ -93,22 +95,27 @@ invidiousClearVolumeElement.addEventListener("click",
 
 let autoplayElement = document.getElementById("invidious-autoplay");
 autoplayElement.addEventListener("change",
-    (event) => youtubeHelper.setAutoplay(event.target.options[autoplayElement.selectedIndex].value)
+    event => youtubeHelper.setAutoplay(event.target.options[autoplayElement.selectedIndex].value)
 );
 
 let OnlyEmbeddedVideoElement = document.getElementById("only-embed");
 OnlyEmbeddedVideoElement.addEventListener("change",
-    (event) => youtubeHelper.setOnlyEmbeddedVideo(event.target.options[OnlyEmbeddedVideoElement.selectedIndex].value)
+    event => youtubeHelper.setOnlyEmbeddedVideo(event.target.options[OnlyEmbeddedVideoElement.selectedIndex].value)
 );
 
 let alwaysUsePreferredElement = document.getElementById("always-use-preferred")
 alwaysUsePreferredElement.addEventListener("change",
-    (event) => youtubeHelper.setAlwaysusePreferred(event.target.checked)
+    event => youtubeHelper.setAlwaysusePreferred(event.target.checked)
+);
+
+let bypassWatchOnYoutubeElement = document.getElementById("bypass-watch-on-youtube")
+bypassWatchOnYoutubeElement.addEventListener("change",
+    event => youtubeHelper.setBypassWatchOnYoutube(event.target.checked)
 );
 
 let protocolElement = document.getElementById("protocol")
 protocolElement.addEventListener("change",
-    (event) => {
+    event => {
         let protocol = event.target.options[protocolElement.selectedIndex].value
         youtubeHelper.setProtocol(protocol);
         changeProtocolSettings(protocol);
@@ -142,6 +149,7 @@ youtubeHelper.init().then(() => {
     volumeValueElement.textContent = `${youtubeHelper.getVolume()}%`;
     OnlyEmbeddedVideoElement.value = youtubeHelper.getOnlyEmbeddedVideo();
     alwaysUsePreferredElement.checked = youtubeHelper.getAlwaysusePreferred();
+    bypassWatchOnYoutubeElement.checked = youtubeHelper.getBypassWatchOnYoutube();
     autoplayElement.checked = youtubeHelper.getAutoplay();
     let frontend = youtubeHelper.getFrontend();
     youtubeFrontendElement.value = frontend;
