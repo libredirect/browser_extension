@@ -144,13 +144,13 @@ function changeProtocolSettings(protocol) {
 
 youtubeHelper.init().then(() => {
     disableYoutubeElement.checked = !youtubeHelper.getDisable();
-    themeElement.checked = youtubeHelper.getTheme();
+    themeElement.value = youtubeHelper.getTheme();
     volumeElement.value = youtubeHelper.getVolume();
     volumeValueElement.textContent = `${youtubeHelper.getVolume()}%`;
     OnlyEmbeddedVideoElement.value = youtubeHelper.getOnlyEmbeddedVideo();
     alwaysUsePreferredElement.checked = youtubeHelper.getAlwaysusePreferred();
     bypassWatchOnYoutubeElement.checked = youtubeHelper.getBypassWatchOnYoutube();
-    autoplayElement.checked = youtubeHelper.getAutoplay();
+    autoplayElement.value = youtubeHelper.getAutoplay();
     let frontend = youtubeHelper.getFrontend();
     youtubeFrontendElement.value = frontend;
     changeFrontendsSettings(frontend);
@@ -162,7 +162,6 @@ youtubeHelper.init().then(() => {
     let youtubeEmbedFrontend = youtubeHelper.getYoutubeEmbedFrontend()
     youtubeEmbedFrontendElement.value = youtubeEmbedFrontend
     if (frontend == "freetube" || frontend == "yatte") {
-        console.log("youtubeEmbedFrontend", youtubeEmbedFrontend);
         changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontend)
     };
 });

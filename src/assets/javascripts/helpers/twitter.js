@@ -3,12 +3,12 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-  "twitter.com",
-  "www.twitter.com",
-  "mobile.twitter.com",
-  "pbs.twimg.com",
-  "video.twimg.com",
-  "platform.twitter.com"
+  /https?:\/\/twitter\.com/,
+  /https?:\/\/www\.twitter\.com/,
+  /https?:\/\/mobile\.twitter\.com/,
+  /https?:\/\/pbs\.twimg\.com/,
+  /https?:\/\/video\.twimg\.com/,
+  /https?:\/\/platform\.twitter\.com\/embed/
 ];
 
 let redirects = {
@@ -79,7 +79,6 @@ function setNitterTorCustomRedirects(val) {
   console.log("nitterTorCustomRedirects: ", val)
 }
 
-
 let disable;
 const getDisable = () => disable;
 function setDisable(val) {
@@ -109,7 +108,7 @@ function isTwitter(url, initiator) {
       ].includes(initiator.origin) || targets.includes(initiator.host))
   ) return false;
 
-  return targets.includes(url.host)
+  return targets.some((rx) => rx.test(url.href));
 }
 
 function redirect(url) {

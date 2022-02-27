@@ -29,7 +29,8 @@ persistInvidiousPrefsElement.addEventListener("change",
 
 youtubeHelper.init().then(() => {
     invidiousPlayerStyleElement.value = youtubeHelper.getInvidiousPlayerStyle();
-    invidiousAlwaysProxyElement.checked = youtubeHelper.getInvidiousAlwaysProxy();
+    invidiousAlwaysProxyElement.value = youtubeHelper.getInvidiousAlwaysProxy();
+    console.log("youtubeHelper.getInvidiousAlwaysProxy()", youtubeHelper.getInvidiousAlwaysProxy())
     invidiousVideoQualityElement.value = youtubeHelper.getInvidiousVideoQuality();
     invidiousSubtitlesElement.value = youtubeHelper.getInvidiousSubtitles();
     persistInvidiousPrefsElement.checked = youtubeHelper.getPersistInvidiousPrefs();
