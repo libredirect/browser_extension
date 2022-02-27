@@ -29,7 +29,9 @@ let redirects = {
       "https://piped.mint.lgbt",
       "https://il.ax"
     ],
-    "tor": []
+    "tor": [
+      "http://piped2bbch4xslbl2ckr6k62q56kon56ffowxaqzy42ai22a4sash3ad.onion"
+    ]
   }
 };
 

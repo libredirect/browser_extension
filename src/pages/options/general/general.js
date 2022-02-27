@@ -21,11 +21,12 @@ themeElement.addEventListener("change", (event) => {
 });
 
 document.getElementById("update-instances").addEventListener("click", () => {
+  let oldHtml = document.getElementById("update-instances").innerHTML
   document.getElementById("update-instances").innerHTML = '...';
   if (commonHelper.updateInstances()) {
     document.getElementById("update-instances").innerHTML = 'Done!';
     new Promise(resolve => setTimeout(resolve, 1500)).then( // sleep 1500ms
-      () => document.getElementById("update-instances").innerHTML = 'Update Instances'
+      () => document.getElementById("update-instances").innerHTML = oldHtml
     )
   }
   else

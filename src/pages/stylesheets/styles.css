@@ -10,11 +10,17 @@ body {
   --light-grey: #c3c3c3;
 }
 
+@font-face {
+  font-family: 'OpenSans';
+  src: url('Open_Sans/OpenSans-VariableFont_wdth,wght.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
 
 body {
   margin: auto;
   padding: 0;
-  font-family: Sans-Serif;
+  font-family: 'OpenSans';
   background-color: var(--bg-main);
   color: var(--text);
   overflow-x: hidden
@@ -52,26 +58,12 @@ select {
 
 select {
   font-size: 16px;
-  font-weight: bold;
   padding: 8px;
   background-color: var(--bg-secondary);
   border: none;
   margin: 0;
   width: auto;
   border-radius: 3px;
-}
-
-
-.button:hover {
-  background-color: var(--active);
-  color: var(--text);
-  stroke: var(--text);
-}
-
-.button:active {
-  background-color: var(--active);
-  box-shadow: 0 var(--space) var(--bg-main);
-  transform: translateY(4px);
 }
 
 input:invalid {
@@ -102,11 +94,9 @@ section.links div {
 section.links a {
   display: flex;
   align-items: center;
-  font-size: 30px;
+  font-size: 24px;
   text-decoration: none;
   color: white;
-  /* margin: 20px 0; */
-  font-weight: bold;
   transition: 0.1s;
 }
 
@@ -206,48 +196,72 @@ div.some-block input[type="checkbox"]:checked::before {
 }
 
 div.buttons {
+  display: flex;
+  margin: 0 15px;
   margin-bottom: 15px;
   margin-top: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+div.buttons-popup {
+  border: 2px solid var(--bg-secondary);
+  border-radius: 5px;
+  display: flex;
+  margin: 0 15px;
+  margin-bottom: 15px;
+  margin-top: 5px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .button {
-  stroke: var(--text);
   display: flex;
   text-align: center;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  border-radius: 5px;
-  border: var(--active) solid 1px;
   color: var(--text);
-  font-size: 12px;
+  font-size: 16px;
   font-weight: bold;
-  margin: 8px 20px;
-  padding: 10px;
+  margin: 5px 0px;
+  padding: 5px 5px;
   text-decoration: none;
   cursor: pointer;
   transition-duration: 0.1s;
 }
 
+.button:hover {
+  color: var(--active);
+}
+
+.button svg {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  margin-right: 0;
+}
+
+.button:hover svg {
+  color: var(--active);
+}
+
 div.buttons-inline {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   padding: 0 15px;
 }
 
 .button-inline {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   margin: 7.5px 0;
+  background-color: var(--bg-secondary);
+  border-radius: 5px;
+  padding: 10px;
 }
 
-.button:hover {
-  background-color: var(--active);
-  color: var(--text);
-  stroke: var(--text);
-}
-
-.button:active {
-  background-color: var(--active);
-  box-shadow: 0 var(--space) var(--bg-main);
+.button:active{
   transform: translateY(1px);
 }
 
@@ -287,7 +301,6 @@ button.add {
   display: inline-block;
   cursor: pointer;
 }
-
 
 .light-theme.popup,
 .light-theme .popup {
