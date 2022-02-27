@@ -40,6 +40,7 @@ div.title {
 img, svg {
   margin-right: 10px;
   height: 26px;
+  width: 26px;
   color: var(--text);
 }
 
