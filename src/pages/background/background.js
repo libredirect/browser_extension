@@ -49,8 +49,6 @@ browser.webRequest.onBeforeRequest.addListener(
 
     var newUrl;
 
-    if (exceptionsHelper.isException(url, initiator)) newUrl = null;
-
     if (!newUrl) newUrl = youtubeHelper.redirect(url, details, initiator)
     if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
 
@@ -75,9 +73,11 @@ browser.webRequest.onBeforeRequest.addListener(
     if (wikipediaHelper.isWikipedia(url, initiator)) newUrl = wikipediaHelper.redirect(url);
 
     if (youtubeHelper.isPipedorInvidious(newUrl ?? url, details.type)) newUrl = youtubeHelper.addUrlParams(newUrl ?? url);
-    else console.log("isPipedorInvidiousisFalse");
+
+    if (exceptionsHelper.isException(url, initiator)) newUrl = null;
 
     if (bybassTabs.includes(details.tabId)) newUrl = null;
+
 
     if (newUrl) {
       if (newUrl == 'CANCEL') {
