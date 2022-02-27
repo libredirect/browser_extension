@@ -27,6 +27,7 @@ let redirects = {
       "https://piped.silkky.cloud",
       "https://piped.tokhmi.xyz",
       "https://piped.mint.lgbt",
+      "https://il.ax"
     ],
     "tor": []
   }
