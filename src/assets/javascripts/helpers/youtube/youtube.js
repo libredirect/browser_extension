@@ -435,12 +435,12 @@ function changeInstance(url) {
   return randomInstance;
 }
 
-function isPipedorInvidious(url, details) {
+function isPipedorInvidious(url, type) {
   let protocolHost = `${url.protocol}//${url.host}`;
-  return (details.type === "main_frame" || details.type === "sub_frame") && [
+  return (type === "main_frame" || type === "sub_frame") && [
     ...redirects.invidious.normal,
-    ...invidiousNormalCustomRedirects,
     ...redirects.invidious.tor,
+    ...invidiousNormalCustomRedirects,
     ...invidiousTorCustomRedirects,
 
     ...redirects.piped.normal,
@@ -450,9 +450,26 @@ function isPipedorInvidious(url, details) {
   ].includes(protocolHost);
 }
 
-function isUrlPipedorInvidious(url) {
+function isUrlPipedorInvidious(url, frontend) {
   url = new URL(url);
   let protocolHost = `${url.protocol}//${url.host}`;
+
+  if (frontend == 'invidious')
+    return [
+      ...redirects.invidious.normal,
+      ...redirects.invidious.tor,
+      ...invidiousNormalCustomRedirects,
+      ...invidiousTorCustomRedirects,
+    ].includes(protocolHost);
+
+  if (frontend == 'piped')
+    return [
+      ...redirects.piped.normal,
+      ...redirects.piped.tor,
+      ...pipedNormalCustomRedirects,
+      ...pipedTorCustomRedirects,
+    ].includes(protocolHost);
+
   return [
     ...redirects.invidious.normal,
     ...redirects.invidious.tor,
@@ -463,15 +480,14 @@ function isUrlPipedorInvidious(url) {
     ...redirects.piped.tor,
     ...pipedNormalCustomRedirects,
     ...pipedTorCustomRedirects,
-
   ].includes(protocolHost);
 }
 
 function addUrlParams(url) {
-
+  console.log("addUrlParams");
   let protocolHost = `${url.protocol}//${url.host}`;
   let isChanged = false;
-  console.log("protocolHost", protocolHost);
+  console.log("AddingprotocolHost", protocolHost);
   console.log([
     ...redirects.invidious.normal,
     ...redirects.invidious.tor,

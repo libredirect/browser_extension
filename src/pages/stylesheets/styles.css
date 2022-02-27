@@ -49,6 +49,7 @@ input[type="text"],
 select {
   padding: 5px 10px;
   width: 350px;
+  font-weight: bold;
   border-radius: 3px;
   box-sizing: border-box;
   background-color: var(--bg-main);

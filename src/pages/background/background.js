@@ -75,6 +75,7 @@ browser.webRequest.onBeforeRequest.addListener(
     if (wikipediaHelper.isWikipedia(url, initiator)) newUrl = wikipediaHelper.redirect(url);
 
     if (youtubeHelper.isPipedorInvidious(newUrl ?? url, details.type)) newUrl = youtubeHelper.addUrlParams(newUrl ?? url);
+    else console.log("isPipedorInvidiousisFalse");
 
     if (bybassTabs.includes(details.tabId)) newUrl = null;
 
@@ -108,6 +109,6 @@ browser.tabs.onRemoved.addListener((tabId) => {
 
 browser.tabs.onUpdated.addListener(
   (tabId, changeInfo) => {
-    if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url))
+    if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'invidious'))
       youtubeHelper.invidiousInitCookies(tabId);
   });

@@ -38,11 +38,5 @@
   },
   "web_accessible_resources": [
     "assets/javascripts/helpers/youtube/invidious-cookies.js"
-  ],
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "7esoorv3@alefvanoon.anonaddy.me",
-      "strict_min_version": "67.0"
-    }
-  }
+  ]
 }

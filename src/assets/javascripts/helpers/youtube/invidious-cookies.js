@@ -1,4 +1,6 @@
 
+window.browser = window.browser || window.chrome;
+
 function getCookie() {
     for (const c of document.cookie.split(";")) {
         while (c.charAt(0) == " ") c = c.substring(1, c.length);
