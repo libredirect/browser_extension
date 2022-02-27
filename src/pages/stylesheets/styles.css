@@ -250,8 +250,8 @@ div.buttons-popup {
 
 div.buttons-inline {
   display: flex;
-  justify-content: space-between;
-  padding: 0 15px;
+  justify-content: start;
+  /* padding: 0 15px; */
 }
 
 .button-inline {
