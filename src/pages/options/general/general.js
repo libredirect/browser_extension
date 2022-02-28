@@ -34,11 +34,15 @@ document.getElementById("update-instances").addEventListener("click", () => {
 });
 
 let exportSettingsElement = document.getElementById("export-settings");
-browser.storage.local.get(null, result => {
-  let resultString = JSON.stringify(result, null, '  ');
-  exportSettingsElement.href = 'data:application/json;base64,' + btoa(resultString);
-  exportSettingsElement.download = 'libredirect-settings.json';
-});
+
+function exportSettings() {
+  browser.storage.local.get(null, result => {
+    let resultString = JSON.stringify(result, null, '  ');
+    exportSettingsElement.href = 'data:application/json;base64,' + btoa(resultString);
+    exportSettingsElement.download = 'libredirect-settings.json';
+  });
+}
+exportSettings();
 
 let importSettingsElement = document.getElementById("import-settings");
 importSettingsElement.addEventListener("change",
@@ -48,6 +52,7 @@ importSettingsElement.addEventListener("change",
     reader.readAsText(file);
     reader.onload = () => browser.storage.local.set({ ...JSON.parse(reader.result) })
     reader.onerror = error => reject(error);
+    exportSettings();
   }
 );
 
@@ -56,6 +61,7 @@ resetSettingsElement.addEventListener("click",
   () => {
     console.log("reset");
     browser.storage.local.clear();
+    exportSettings();
   }
 );
 
