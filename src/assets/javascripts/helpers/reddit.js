@@ -220,8 +220,11 @@ function redirect(url, type, initiator) {
 
   if (type !== "main_frame" || url.pathname.match(bypassPaths)) return null;
 
-  if (frontend == 'old') return `${redirects.desktop}${url.pathname}${url.search}`;
+  if (frontend == 'old') {
+    if (url.host === "i.redd.it") return null;
 
+    return `${redirects.desktop}${url.pathname}${url.search}`;
+  }
   let libredditInstancesList;
   let tedditInstancesList;
   if (protocol == 'normal') {
