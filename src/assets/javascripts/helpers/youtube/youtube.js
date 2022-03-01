@@ -564,7 +564,7 @@ function addUrlParams(url) {
   else return;
 }
 
-function initPipedLocalStorage(url, tabId) {
+function initPipedLocalStorage(tabId) {
   browser.tabs.executeScript(
     tabId,
     {
@@ -574,37 +574,12 @@ function initPipedLocalStorage(url, tabId) {
   );
 }
 
-function invidiousInitCookies(url) {
-  console.log("invidiousInitCookies");
-  browser.cookies.get({
-    url: url,
-    name: "PREFS"
-  }).then(
-    cookie => {
-      let prefs = {};
-      if (cookie) prefs = JSON.parse(decodeURIComponent(cookie.value));
-      let oldPrefs = { ...prefs };
-
-      if (invidiousAlwaysProxy != "DEFAULT" && prefs.local !== invidiousAlwaysProxy) prefs.local = invidiousAlwaysProxy;
-
-      if (invidiousVideoQuality != "DEFAULT" && prefs.quality !== invidiousVideoQuality) prefs.quality = invidiousVideoQuality;
-
-      if (theme != "DEFAULT" && prefs.dark_mode !== theme) prefs.dark_mode = theme;
-
-      if (volume != "--" && prefs.volume !== volume) prefs.volume = volume;
-
-      if (invidiousPlayerStyle != "DEFAULT" && prefs.player_style !== invidiousPlayerStyle) prefs.player_style = invidiousPlayerStyle;
-
-      if (invidiousSubtitles != "DEFAULT" && prefs.subtitles === invidiousSubtitles) prefs.subtitles = invidiousSubtitles;
-
-      if (autoplay != "DEFAULT" && prefs.autoplay !== autoplay) prefs.autoplay = autoplay;
-
-      if (oldPrefs != prefs)
-        browser.cookies.set({
-          url: url,
-          name: "PREFS",
-          value: encodeURIComponent(JSON.stringify(prefs))
-        })
+function initInvidiousCookies(tabId) {
+  browser.tabs.executeScript(
+    tabId,
+    {
+      file: "/assets/javascripts/helpers/youtube/invidious-preferences.js",
+      runAt: "document_start"
     }
   );
 }
@@ -695,7 +670,7 @@ async function init() {
 export default {
   getBypassWatchOnYoutube,
   setBypassWatchOnYoutube,
-  invidiousInitCookies,
+  initInvidiousCookies,
   initPipedLocalStorage,
 
   getFrontend,

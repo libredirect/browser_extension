@@ -16,9 +16,9 @@
   },
   "permissions": [
     "storage",
+    "cookies",
     "webRequest",
     "webRequestBlocking",
-    "cookies",
     "<all_urls>"
   ],
   "browser_action": {

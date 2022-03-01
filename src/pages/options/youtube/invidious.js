@@ -21,10 +21,10 @@ invidiousSubtitlesElement.addEventListener("change",
     () => youtubeHelper.setInvidiousSubtitles(invidiousSubtitlesElement.value)
 );
 
-let persistInvidiousPrefsElement = document.getElementById("persist-invidious-prefs");
-persistInvidiousPrefsElement.addEventListener("change",
-    (event) => youtubeHelper.setPersistInvidiousPrefs(event.target.checked)
-);
+// let persistInvidiousPrefsElement = document.getElementById("persist-invidious-prefs");
+// persistInvidiousPrefsElement.addEventListener("change",
+//     (event) => youtubeHelper.setPersistInvidiousPrefs(event.target.checked)
+// );
 
 
 youtubeHelper.init().then(() => {
@@ -33,7 +33,7 @@ youtubeHelper.init().then(() => {
     console.log("youtubeHelper.getInvidiousAlwaysProxy()", youtubeHelper.getInvidiousAlwaysProxy())
     invidiousVideoQualityElement.value = youtubeHelper.getInvidiousVideoQuality();
     invidiousSubtitlesElement.value = youtubeHelper.getInvidiousSubtitles();
-    persistInvidiousPrefsElement.checked = youtubeHelper.getPersistInvidiousPrefs();
+    // persistInvidiousPrefsElement.checked = youtubeHelper.getPersistInvidiousPrefs();
 
     commonHelper.processDefaultCustomInstances(
         'invidious',

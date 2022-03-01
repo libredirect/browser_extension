@@ -50,6 +50,7 @@ browser.webRequest.onBeforeRequest.addListener(
     var newUrl;
 
     if (!newUrl) newUrl = youtubeHelper.redirect(url, details, initiator)
+    if (youtubeHelper.isPipedorInvidious(newUrl ?? url, details.type)) newUrl = youtubeHelper.addUrlParams(newUrl ?? url);
     if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
 
     if (twitterHelper.isTwitter(url, initiator)) newUrl = twitterHelper.redirect(url);
@@ -106,6 +107,6 @@ browser.tabs.onRemoved.addListener((tabId) => {
 
 browser.tabs.onUpdated.addListener(
   (tabId, changeInfo, _) => {
-    if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'piped')) youtubeHelper.initPipedLocalStorage(changeInfo.url, tabId);
-    if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'invidious')) youtubeHelper.invidiousInitCookies(changeInfo.url);
+    if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'piped')) youtubeHelper.initPipedLocalStorage(tabId);
+    // if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'invidious')) youtubeHelper.initInvidiousCookies(tabId);
   });
