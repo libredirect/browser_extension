@@ -8,9 +8,6 @@ let pipedDivElement = document.getElementById("piped");
 let invidiousPipedDivElement = document.getElementById("invidious-piped");
 let freetubeYatteeDivElement = document.getElementById("freetube-yatte");
 
-
-
-
 function changeFrontendsSettings(frontend) {
     if (frontend == 'piped') {
         invidiousPipedDivElement.style.display = 'block'

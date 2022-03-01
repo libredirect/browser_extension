@@ -18,6 +18,7 @@
     "storage",
     "webRequest",
     "webRequestBlocking",
+    "cookies",
     "<all_urls>"
   ],
   "browser_action": {
@@ -37,6 +38,6 @@
     "open_in_tab": true
   },
   "web_accessible_resources": [
-    "assets/javascripts/helpers/youtube/invidious-cookies.js"
+    "assets/javascripts/helpers/youtube/piped-preferences.js"
   ]
 }
