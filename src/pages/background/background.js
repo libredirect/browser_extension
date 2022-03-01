@@ -36,7 +36,7 @@ wholeInit();
 
 browser.storage.onChanged.addListener(wholeInit);
 
-let bybassTabs = [];
+let BYPASSTABs = [];
 
 browser.webRequest.onBeforeRequest.addListener(
   (details) => {
@@ -53,7 +53,7 @@ browser.webRequest.onBeforeRequest.addListener(
     if (youtubeHelper.isPipedorInvidious(newUrl ?? url, details.type)) newUrl = youtubeHelper.addUrlParams(newUrl ?? url);
     if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
 
-    if (twitterHelper.isTwitter(url, initiator)) newUrl = twitterHelper.redirect(url);
+    if (!newUrl) newUrl = twitterHelper.redirect(url, initiator);
 
     if (instagramHelper.isInstagram(url, initiator)) newUrl = instagramHelper.redirect(url, details.type);
 
@@ -75,16 +75,16 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (exceptionsHelper.isException(url, initiator)) newUrl = null;
 
-    if (bybassTabs.includes(details.tabId)) newUrl = null;
+    if (BYPASSTABs.includes(details.tabId)) newUrl = null;
 
     if (newUrl) {
       if (newUrl == 'CANCEL') {
         console.log(`Canceled ${url}`);
         return { cancel: true };
       }
-      else if (newUrl == 'BYBASSTAB') {
-        console.log(`Bybassed ${details.tabId}`);
-        bybassTabs.push(details.tabId);
+      else if (newUrl == 'BYPASSTAB') {
+        console.log(`Bybassed ${details.tabId} ${url}`);
+        BYPASSTABs.push(details.tabId);
         return null;
       }
       else {
@@ -99,9 +99,11 @@ browser.webRequest.onBeforeRequest.addListener(
 );
 
 browser.tabs.onRemoved.addListener((tabId) => {
-  let index = bybassTabs.indexOf(tabId);
-  if (index > -1) bybassTabs.splice(index, 1);
-  console.log("Removed bybassTabs", tabId);
+  let index = BYPASSTABs.indexOf(tabId);
+  if (index > -1) {
+    BYPASSTABs.splice(index, 1);
+    console.log("Removed BYPASSTABs", tabId);
+  }
 });
 
 

@@ -214,7 +214,7 @@ function redirect(url, type, initiator) {
       ].includes(initiator.origin) ||
       targets.includes(initiator.host)
     )
-  ) return 'BYBASSTAB';
+  ) return 'BYPASSTAB';
 
   if ((!targets.includes(url.host))) return null;
 

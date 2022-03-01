@@ -94,24 +94,24 @@ function setProtocol(val) {
   console.log("twitterProtocol: ", val)
 }
 
-function isTwitter(url, initiator) {
-  if (disable) return false;
+function redirect(url, initiator) {
+
+  if (disable) return null;
+
+  if (!targets.some((rx) => rx.test(url.href))) return null;
+
   if (url.pathname.split("/").includes("home")) return null;
+
   if (
-    commonHelper.isFirefox() &&
     initiator && (
-      [
-        ...redirects.nitter.normal,
-        ...redirects.nitter.tor,
-        ...nitterTorCustomRedirects,
-        ...nitterNormalCustomRedirects
-      ].includes(initiator.origin) || targets.includes(initiator.host))
-  ) return false;
+      [...redirects.nitter.normal,
+      ...redirects.nitter.tor,
+      ...nitterTorCustomRedirects,
+      ...nitterNormalCustomRedirects
+      ].includes(initiator.origin)
+    )
+  ) return 'BYPASSTAB';
 
-  return targets.some((rx) => rx.test(url.href));
-}
-
-function redirect(url) {
   let instancesList;
   if (protocol == 'normal')
     instancesList = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
@@ -216,7 +216,6 @@ export default {
   setProtocol,
 
   redirect,
-  isTwitter,
   init,
   changeInstance,
 };

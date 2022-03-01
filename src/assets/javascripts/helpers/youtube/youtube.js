@@ -328,20 +328,18 @@ function redirect(url, details, initiator) {
   if (
     bypassWatchOnYoutube &&
     initiator && (
-      [
-        ...redirects.invidious.normal,
-        ...invidiousNormalCustomRedirects,
-        ...redirects.invidious.tor,
-        ...invidiousTorCustomRedirects,
+      [...redirects.invidious.normal,
+      ...invidiousNormalCustomRedirects,
+      ...redirects.invidious.tor,
+      ...invidiousTorCustomRedirects,
 
-        ...redirects.piped.normal,
-        ...redirects.piped.tor,
-        ...pipedNormalCustomRedirects,
-        ...pipedTorCustomRedirects
-      ].includes(initiator.origin) ||
-      targets.includes(initiator.host)
+      ...redirects.piped.normal,
+      ...redirects.piped.tor,
+      ...pipedNormalCustomRedirects,
+      ...pipedTorCustomRedirects
+      ].includes(initiator.origin)
     )
-  ) return 'BYBASSTAB';
+  ) return 'BYPASSTAB';
 
   if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
 
