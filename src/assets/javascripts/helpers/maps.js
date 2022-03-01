@@ -1,7 +1,7 @@
 window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
-const targets = /https?:\/\/(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
+const targets = /^https?:\/\/(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
 let redirects = {
   "normal": [
     "https://openstreetmap.org"

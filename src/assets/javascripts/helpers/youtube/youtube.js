@@ -5,16 +5,16 @@ import commonHelper from '../common.js'
 window.browser = window.browser || window.chrome;
 
 const targets = [
-  /https?:\/\/(www\.|music\.|m\.|)youtube\.com(\/.*|$)/,
+  /^https?:\/\/(www\.|music\.|m\.|)youtube\.com(\/.*|$)/,
 
-  /https?:\/\/img\.youtube\.com\/vi\/.*\/..*/, // https://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api
-  /https?:\/\/(i|s)\.ytimg\.com\/vi\/.*\/..*/,
+  /^https?:\/\/img\.youtube\.com\/vi\/.*\/..*/, // https://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api
+  /^https?:\/\/(i|s)\.ytimg\.com\/vi\/.*\/..*/,
 
-  /https?:\/\/(www\.|music\.|)youtube\.com\/watch\?v\=..*/,
+  /^https?:\/\/(www\.|music\.|)youtube\.com\/watch\?v\=..*/,
 
-  /https?:\/\/youtu\.be\/..*/,
+  /^https?:\/\/youtu\.be\/..*/,
 
-  /https?:\/\/(www\.|)(youtube|youtube-nocookie)\.com\/embed\/..*/,
+  /^https?:\/\/(www\.|)(youtube|youtube-nocookie)\.com\/embed\/..*/,
 ];
 let redirects = {
   "invidious": {

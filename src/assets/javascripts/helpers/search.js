@@ -3,8 +3,8 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-  /https?:\/\/(www\.|maps\.|search\.|)google\.com(\...|)(\/search\?..*|\/$)/,
-  // /https?:\/\/yandex\.com(\...|)(\/search\/..*|\/$)/,
+  /^https?:\/\/(www\.|maps\.|search\.|)google\.com(\...|)(\/search\?..*|\/$)/,
+  // /^https?:\/\/yandex\.com(\...|)(\/search\/..*|\/$)/,
 ];
 let redirects = {
   "searx": {
