@@ -100,11 +100,6 @@ OnlyEmbeddedVideoElement.addEventListener("change",
     event => youtubeHelper.setOnlyEmbeddedVideo(event.target.options[OnlyEmbeddedVideoElement.selectedIndex].value)
 );
 
-let alwaysUsePreferredElement = document.getElementById("always-use-preferred")
-alwaysUsePreferredElement.addEventListener("change",
-    event => youtubeHelper.setAlwaysusePreferred(event.target.checked)
-);
-
 let bypassWatchOnYoutubeElement = document.getElementById("bypass-watch-on-youtube")
 bypassWatchOnYoutubeElement.addEventListener("change",
     event => youtubeHelper.setBypassWatchOnYoutube(event.target.checked)
@@ -145,7 +140,6 @@ youtubeHelper.init().then(() => {
     volumeElement.value = youtubeHelper.getVolume();
     volumeValueElement.textContent = `${youtubeHelper.getVolume()}%`;
     OnlyEmbeddedVideoElement.value = youtubeHelper.getOnlyEmbeddedVideo();
-    alwaysUsePreferredElement.checked = youtubeHelper.getAlwaysusePreferred();
     bypassWatchOnYoutubeElement.checked = youtubeHelper.getBypassWatchOnYoutube();
     autoplayElement.value = youtubeHelper.getAutoplay();
     let frontend = youtubeHelper.getFrontend();

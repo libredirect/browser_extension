@@ -2,7 +2,7 @@
 window.browser = window.browser || window.chrome;
 
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
-import exceptionsHelper from "../../../assets/javascripts/helpers/exceptions.js";
+import generalHelper from "../../../assets/javascripts/helpers/general.js";
 
 let themeElement = document.getElementById("theme");
 
@@ -44,32 +44,42 @@ function exportSettings() {
 }
 exportSettings();
 
+browser.storage.onChanged.addListener(exportSettings);
+
 let importSettingsElement = document.getElementById("import-settings");
 importSettingsElement.addEventListener("change",
-  _ => {
+  () => {
     let file = importSettingsElement.files[0];
     const reader = new FileReader();
     reader.readAsText(file);
     reader.onload = () => browser.storage.local.set({ ...JSON.parse(reader.result) })
     reader.onerror = error => reject(error);
-    exportSettings();
+    location.reload();
   }
 );
 
 let resetSettingsElement = document.getElementById("reset-settings");
+
 resetSettingsElement.addEventListener("click",
   () => {
     console.log("reset");
     browser.storage.local.clear();
-    exportSettings();
+    location.reload();
   }
+);
+
+let alwaysUsePreferredElement = document.getElementById("always-use-preferred")
+alwaysUsePreferredElement.addEventListener("change",
+  event => generalHelper.setAlwaysUsePreferred(event.target.checked)
 );
 
 let nameCustomInstanceInput = document.getElementById("exceptions-custom-instance");
 let instanceTypeElement = document.getElementById("exceptions-custom-instance-type");
 let instanceType = "url"
 
-exceptionsHelper.init().then(() => {
+generalHelper.init().then(() => {
+  alwaysUsePreferredElement.checked = generalHelper.getAlwaysUsePreferred();
+  console.log("generalHelper.getAlwaysUsePreferred()");
   instanceTypeElement.addEventListener("change",
     (event) => {
       instanceType = event.target.options[instanceTypeElement.selectedIndex].value
@@ -83,7 +93,7 @@ exceptionsHelper.init().then(() => {
       }
     }
   )
-  let exceptionsCustomInstances = exceptionsHelper.getExceptions();
+  let exceptionsCustomInstances = generalHelper.getExceptions();
   function calcExceptionsCustomInstances() {
     console.log("exceptionsCustomInstances", exceptionsCustomInstances)
     document.getElementById("exceptions-custom-checklist").innerHTML =
@@ -112,7 +122,7 @@ exceptionsHelper.init().then(() => {
             if (index > -1)
               exceptionsCustomInstances.regex.splice(index, 1);
           }
-          exceptionsHelper.setExceptions(exceptionsCustomInstances);
+          generalHelper.setExceptions(exceptionsCustomInstances);
           calcExceptionsCustomInstances();
         });
     }
@@ -133,7 +143,7 @@ exceptionsHelper.init().then(() => {
       if (val.trim() != '' && !exceptionsCustomInstances.regex.includes(val)) exceptionsCustomInstances.regex.push(val)
     }
     if (val) {
-      exceptionsHelper.setExceptions(exceptionsCustomInstances);
+      generalHelper.setExceptions(exceptionsCustomInstances);
       console.log("exceptionsCustomInstances", exceptionsCustomInstances)
       nameCustomInstanceInput.value = '';
     }

@@ -11,7 +11,7 @@ import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
-import exceptionsHelper from "../../assets/javascripts/helpers/exceptions.js";
+import generalHelper from "../../assets/javascripts/helpers/general.js";
 import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
 
 window.browser = window.browser || window.chrome;
@@ -29,7 +29,7 @@ async function wholeInit() {
   wikipediaHelper.init()
   imgurHelper.init()
   tiktokHelper.init()
-  exceptionsHelper.init()
+  generalHelper.init()
 
 }
 wholeInit();
@@ -73,7 +73,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (wikipediaHelper.isWikipedia(url, initiator)) newUrl = wikipediaHelper.redirect(url);
 
-    if (exceptionsHelper.isException(url, initiator)) newUrl = null;
+    if (generalHelper.isException(url, initiator)) newUrl = null;
 
     if (BYPASSTABs.includes(details.tabId)) newUrl = null;
 

@@ -233,14 +233,6 @@ function setPersistInvidiousPrefs(val) {
   console.log("persistInvidiousPrefs: ", persistInvidiousPrefs)
 }
 
-let alwaysusePreferred;
-const getAlwaysusePreferred = () => alwaysusePreferred;
-function setAlwaysusePreferred(val) {
-  alwaysusePreferred = val;
-  browser.storage.local.set({ alwaysusePreferred })
-  console.log("alwaysusePreferred: ", alwaysusePreferred)
-}
-
 let bypassWatchOnYoutube;
 const getBypassWatchOnYoutube = () => bypassWatchOnYoutube;
 function setBypassWatchOnYoutube(val) {
@@ -271,57 +263,54 @@ function isException(url) {
   return false;
 }
 
+
+let alwaysUsePreferred;
 function redirect(url, details, initiator) {
   if (disable) return null;
 
-  let isTargets = targets.some((rx) => rx.test(url.href));
   let protocolHost = `${url.protocol}//${url.host}`;
 
-  let isInvidious = [...redirects.invidious.normal, ...redirects.invidious.tor].includes(protocolHost);
-  if (isInvidious) {
-    let myInvidiousInstances = [
-      ...invidiousNormalRedirectsChecks,
-      ...invidiousNormalCustomRedirects,
+  let isInvidious = [
+    ...redirects.invidious.normal,
+    ...redirects.invidious.tor
+  ].includes(protocolHost);
 
-      ...invidiousTorRedirectsChecks,
-      ...invidiousTorCustomRedirects,
-    ];
-    for (const item of myInvidiousInstances) if (item == protocolHost) isInvidious = false;
-  }
+  let isCheckedInvidious = [
+    ...invidiousNormalRedirectsChecks,
+    ...invidiousNormalCustomRedirects,
+    ...invidiousTorRedirectsChecks,
+    ...invidiousTorCustomRedirects,
+  ].includes(protocolHost);
 
-  let isPiped = [...redirects.piped.normal, ...redirects.piped.tor].includes(protocolHost);
-  if (isPiped) {
-    let myPipedInstances = [
-      ...pipedNormalRedirectsChecks,
-      ...pipedNormalCustomRedirects,
+  let isPiped = [
+    ...redirects.piped.normal,
+    ...redirects.piped.tor
+  ].includes(protocolHost);
 
-      ...pipedTorRedirectsChecks,
-      ...pipedTorCustomRedirects,
-    ];
-    for (const item of myPipedInstances) if (item == protocolHost) isPiped = false;
-  }
+  let isCheckedPiped = [
+    ...pipedNormalRedirectsChecks,
+    ...pipedNormalCustomRedirects,
+    ...pipedTorRedirectsChecks,
+    ...pipedTorCustomRedirects,
+  ].includes(protocolHost)
 
-  if (frontend == 'invidious') {
-    if (alwaysusePreferred) {
-      if (!(isTargets | redirects.piped.normal.includes(protocolHost) | isInvidious)) return null;
-    }
-    else {
-      if (!(isTargets | isPiped)) return null;
-    }
-  }
-  if (frontend == 'piped') {
-    if (alwaysusePreferred) {
-      if (!(isTargets | isPiped | redirects.invidious.normal.includes(protocolHost))) return null;
-    }
-    else {
-      if (!(isTargets | isInvidious)) return null;
-    }
-  }
-  else
-    if (!isTargets) return null;
+  if (
+    alwaysUsePreferred && frontend == 'invidious' &&
+    (isInvidious || isPiped) && !isCheckedInvidious
+  ) return changeInstance(url);
 
+  if (
+    alwaysUsePreferred && frontend == 'piped' &&
+    (isInvidious || isPiped) && !isCheckedPiped
+  ) return changeInstance(url);
 
-  if (details.type != "main_frame" && details.frameAncestors && details.frameAncestors.length > 0 && isException(new URL(details.frameAncestors[0].url))) {
+  if (!targets.some((rx) => rx.test(url.href))) return null;
+
+  if (
+    details.type != "main_frame" &&
+    details.frameAncestors && details.frameAncestors.length > 0 &&
+    isException(new URL(details.frameAncestors[0].url))
+  ) {
     console.log(`Canceled ${url.href}`, details.frameAncestors[0].url)
     return null;
   }
@@ -366,11 +355,10 @@ function redirect(url, details, initiator) {
     let instancesList;
     if (protocol == 'normal') instancesList = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
     else if (protocol == 'tor') instancesList = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
-
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-    return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
+    return `${randomInstance}${url.pathname}${url.search}`;
 
   } else if (
     frontend == 'piped' ||
@@ -389,7 +377,7 @@ function redirect(url, details, initiator) {
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-    return `${randomInstance}${url.pathname.replace("/shorts/", "/watch?v=")}${url.search}`;
+    return `${randomInstance}${url.pathname}${url.search}`;
   }
   return 'CANCEL';
 }
@@ -612,7 +600,7 @@ async function init() {
 
           "pipedTorRedirectsChecks",
           "pipedTorCustomRedirects",
-          "alwaysusePreferred",
+          "alwaysUsePreferred",
           "youtubeEmbedFrontend",
 
           "youtubeProtocol",
@@ -653,7 +641,7 @@ async function init() {
 
           persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
 
-          alwaysusePreferred = result.alwaysusePreferred ?? true;
+          alwaysUsePreferred = result.alwaysUsePreferred ?? true;
 
           bypassWatchOnYoutube = result.bypassWatchOnYoutube ?? true;
 
@@ -745,9 +733,6 @@ export default {
 
   getPipedTorCustomRedirects,
   setPipedTorCustomRedirects,
-
-  getAlwaysusePreferred,
-  setAlwaysusePreferred,
 
   getExceptions,
   setExceptions,

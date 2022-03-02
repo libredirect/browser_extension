@@ -3,13 +3,13 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-  "reddit.com",
-  "www.reddit.com",
-  "np.reddit.com",
-  "new.reddit.com",
-  "amp.reddit.com",
-  "i.redd.it",
-  "redd.it",
+  /^https?:\/\/reddit\.com/,
+  /^https?:\/\/www\.reddit\.com/,
+  /^https?:\/\/np\.reddit\.com/,
+  /^https?:\/\/new\.reddit\.com/,
+  /^https?:\/\/amp\.reddit\.com/,
+  /^https?:\/\/i\.redd\.it/,
+  /^https?:\/\/redd\.it/,
 ];
 let redirects = {
   // modern UI
@@ -184,10 +184,6 @@ function setProtocol(val) {
   console.log("redditProtocol: ", val)
 }
 
-function isReddit(url,) {
-
-}
-
 let bypassWatchOnReddit;
 const getBypassWatchOnReddit = () => bypassWatchOnReddit;
 function setBypassWatchOnReddit(val) {
@@ -196,8 +192,60 @@ function setBypassWatchOnReddit(val) {
   console.log("bypassWatchOnReddit: ", bypassWatchOnReddit)
 }
 
+let alwaysUsePreferred;
+
+
+// https://libreddit.exonip.de/vid/1mq8d0ma3yk81/720.mp4
+// https://libreddit.exonip.de/img/4v3t1vgvrzk81.png
+
+// https://teddit.net/vids/1mq8d0ma3yk81.mp4
+// https://teddit.net/pics/w:null_4v3t1vgvrzk81.png
+
+
+// redd.it/t5379n
+// https://v.redd.it/z08avb339n801/DASH_1_2_M
+// https://i.redd.it/bfkhs659tzk81.jpg
+
 function redirect(url, type, initiator) {
   if (disableReddit) return null;
+
+  let protocolHost = `${url.protocol}//${url.host}`;
+
+  let isTeddit = [
+    ...redirects.teddit.normal,
+    ...redirects.teddit.tor
+  ].includes(protocolHost);
+
+  let isCheckedTeddit = [
+    ...tedditNormalRedirectsChecks,
+    ...tedditNormalCustomRedirects,
+    ...tedditTorRedirectsChecks,
+    ...tedditTorCustomRedirects,
+  ].includes(protocolHost);
+
+  let isLibreddit = [
+    ...redirects.libreddit.normal,
+    ...redirects.libreddit.tor
+  ].includes(protocolHost);
+
+  let isCheckedLibreddit = [
+    ...libredditNormalRedirectsChecks,
+    ...libredditNormalCustomRedirects,
+    ...libredditTorRedirectsChecks,
+    ...libredditTorCustomRedirects,
+  ].includes(protocolHost)
+
+  if (
+    alwaysUsePreferred && frontend == 'teddit' &&
+    (isTeddit || isLibreddit) && !isCheckedTeddit
+  ) return changeInstance(url);
+
+  if (
+    alwaysUsePreferred && frontend == 'libreddit' &&
+    (isTeddit || isLibreddit) && !isCheckedLibreddit
+  ) return changeInstance(url);
+
+  if (!targets.some((rx) => rx.test(url.href))) return null;
 
   if (
     bypassWatchOnReddit &&
@@ -211,20 +259,15 @@ function redirect(url, type, initiator) {
       ...redirects.teddit.tor,
       ...tedditNormalCustomRedirects,
       ...tedditTorCustomRedirects,
-      ].includes(initiator.origin) ||
-      targets.includes(initiator.host)
+      ].includes(initiator.origin)
     )
   ) return 'BYPASSTAB';
 
-  if ((!targets.includes(url.host))) return null;
-
   if (type !== "main_frame" || url.pathname.match(bypassPaths)) return null;
 
-  if (frontend == 'old') {
-    if (url.host === "i.redd.it") return null;
-
+  if (frontend == 'old' && url.host !== "i.redd.it")
     return `${redirects.desktop}${url.pathname}${url.search}`;
-  }
+
   let libredditInstancesList;
   let tedditInstancesList;
   if (protocol == 'normal') {
@@ -236,31 +279,28 @@ function redirect(url, type, initiator) {
   }
 
   if (url.host === "i.redd.it") {
-    if (libredditInstancesList.length === 0) return null;
-    let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
-    // As of 2021-04-09, redirects for teddit images are nontrivial:
-    // - navigating to the image before ever navigating to its page causes
-    //   404 error (probably needs fix on teddit project)
-    // - some image links on teddit are very different
-    // Therefore, don't support redirecting image links for teddit.
-    return `${libredditRandomInstance}/img${url.pathname}${url.search}`;
-  }
-  else if (url.host === "redd.it") {
+    if (frontend == 'teddit') {
+      if (tedditInstancesList.length === 0) return null;
+      let tedditRandomInstance = commonHelper.getRandomInstance(tedditInstancesList);
+      return `${tedditRandomInstance}/pics/w:null_${url.pathname.substring(1)}${url.search}`;
+    }
     if (frontend == 'libreddit') {
       if (libredditInstancesList.length === 0) return null;
       let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
-      return `${libredditRandomInstance}${url.pathname}${url.search}`;
+      return `${libredditRandomInstance}/img${url.pathname}${url.search}`;
+    }
+  }
+  else if (url.host === "redd.it") {
+    if (frontend == 'libreddit' && !url.pathname.match(/^\/+[^\/]+\/+[^\/]/)) {
+      if (libredditInstancesList.length === 0) return null;
+      let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
+      // https://redd.it/foo => https://libredd.it/comments/foo
+      return `${libredditRandomInstance}/comments${url.pathname}${url.search}`;
     }
     if (frontend == 'teddit' && !url.pathname.match(/^\/+[^\/]+\/+[^\/]/)) {
       if (tedditInstancesList.length === 0) return null;
       let tedditRandomInstance = commonHelper.getRandomInstance(tedditInstancesList);
-      // As of 2021-04-22, redirects for teddit redd.it/foo links don't work.
-      // It appears that adding "/comments" as a prefix works, so manually add
-      // that prefix if it is missing. Even though redd.it/comments/foo links
-      // don't seem to work or exist, guard against affecting those kinds of
-      // paths.
-      // Note the difference between redd.it/comments/foo (doesn't work) and
-      // teddit.net/comments/foo (works).
+      // https://redd.it/foo => https://teddit.net/comments/foo
       return `${tedditRandomInstance}/comments${url.pathname}${url.search}`;
     }
   }
@@ -278,6 +318,16 @@ function redirect(url, type, initiator) {
 
 function changeInstance(url) {
   let protocolHost = `${url.protocol}//${url.host}`;
+
+  let isTeddit = [
+    ...redirects.teddit.normal,
+    ...redirects.teddit.tor
+  ].includes(protocolHost);
+
+  let isLibreddit = [
+    ...redirects.libreddit.normal,
+    ...redirects.libreddit.tor
+  ].includes(protocolHost);
 
   let redditList = [
     ...redirects.libreddit.normal,
@@ -299,20 +349,21 @@ function changeInstance(url) {
   if (frontend == 'libreddit') {
     if (protocol == 'normal') instancesList = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects];
     else if (protocol == 'tor') instancesList = [...libredditTorRedirectsChecks, ...libredditTorCustomRedirects];
+    if (isTeddit) url.pathname = url.pathname.replace("/pics/w:null_", "/img/");
   }
   else if (frontend == 'teddit') {
     if (protocol == 'normal') instancesList = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects];
     else if (protocol == 'tor') instancesList = [...tedditTorRedirectsChecks, ...tedditTorCustomRedirects];
+    if (isLibreddit) url.pathname = url.pathname.replace("/img/", "/pics/w:null_");
   }
 
-  console.log("instancesList", instancesList);
   let index = instancesList.indexOf(protocolHost);
   if (index > -1) instancesList.splice(index, 1);
-
   if (instancesList.length === 0) return null;
 
   let randomInstance = commonHelper.getRandomInstance(instancesList);
-  return randomInstance;
+
+  return `${randomInstance}${url.pathname}${url.search}`;
 }
 
 async function init() {
@@ -337,12 +388,16 @@ async function init() {
 
           "redditProtocol",
           "bypassWatchOnReddit",
+
+          "alwaysUsePreferred",
         ], (result) => {
           disableReddit = result.disableReddit ?? false;
           protocol = result.redditProtocol ?? 'normal';
           frontend = result.redditFrontend ?? 'libreddit';
 
           bypassWatchOnReddit = result.bypassWatchOnReddit ?? true;
+
+          alwaysUsePreferred = result.alwaysUsePreferred ?? true;
 
           redirects.teddit = dataJson.teddit;
           if (result.redditRedirects) redirects = result.redditRedirects;
@@ -408,7 +463,6 @@ export default {
   setTedditTorCustomRedirects,
 
   redirect,
-  isReddit,
   init,
   changeInstance,
 };

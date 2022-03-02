@@ -102,7 +102,23 @@ function setBypassWatchOnTwitter(val) {
   console.log("bypassWatchOnTwitter: ", bypassWatchOnTwitter)
 }
 
+let alwaysUsePreferred;
+
 function redirect(url, initiator) {
+  let protocolHost = `${url.protocol}//${url.host}`;
+  let isNitter = [
+    ...redirects.nitter.normal,
+    ...redirects.nitter.tor
+  ].includes(protocolHost);
+
+  let isCheckedNitter = [
+    ...nitterNormalRedirectsChecks,
+    ...nitterNormalCustomRedirects,
+    ...nitterTorRedirectsChecks,
+    ...nitterTorCustomRedirects
+  ].includes(protocolHost);
+
+  if (alwaysUsePreferred && isNitter && !isCheckedNitter) return changeInstance(url);
 
   if (disable) return null;
 
@@ -112,13 +128,13 @@ function redirect(url, initiator) {
 
   if (
     bypassWatchOnTwitter &&
-    initiator && (
-      [...redirects.nitter.normal,
-      ...redirects.nitter.tor,
-      ...nitterTorCustomRedirects,
-      ...nitterNormalCustomRedirects
-      ].includes(initiator.origin)
-    )
+    initiator &&
+    [...redirects.nitter.normal,
+    ...redirects.nitter.tor,
+    ...nitterTorCustomRedirects,
+    ...nitterNormalCustomRedirects
+    ].includes(initiator.origin)
+
   ) return 'BYPASSTAB';
 
   let instancesList;
@@ -179,6 +195,7 @@ async function init() {
           "nitterTorRedirectsChecks",
           "nitterTorCustomRedirects",
           "twitterProtocol",
+          "alwaysUsePreferred",
         ],
         (result) => {
           disable = result.disableTwitter ?? false;
@@ -186,6 +203,8 @@ async function init() {
           protocol = result.twitterProtocol ?? "normal";
 
           bypassWatchOnTwitter = result.bypassWatchOnTwitter ?? true;
+
+          alwaysUsePreferred = result.alwaysUsePreferred ?? true;
 
           redirects.nitter = dataJson.nitter;
           if (result.twitterRedirects) redirects = result.twitterRedirects;
