@@ -29,8 +29,14 @@ function changeProtocolSettings(protocol) {
     }
 }
 
+let bypassWatchOnTwitterElement = document.getElementById("bypass-watch-on-twitter")
+bypassWatchOnTwitterElement.addEventListener("change",
+    event => twitterHelper.setBypassWatchOnTwitter(event.target.checked)
+);
+
 twitterHelper.init().then(() => {
     disableTwitterElement.checked = !twitterHelper.getDisable();
+    bypassWatchOnTwitterElement.checked = twitterHelper.getBypassWatchOnTwitter();
 
     let protocol = twitterHelper.getProtocol();
     protocolElement.value = protocol;

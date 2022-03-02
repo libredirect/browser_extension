@@ -94,6 +94,14 @@ function setProtocol(val) {
   console.log("twitterProtocol: ", val)
 }
 
+let bypassWatchOnTwitter;
+const getBypassWatchOnTwitter = () => bypassWatchOnTwitter;
+function setBypassWatchOnTwitter(val) {
+  bypassWatchOnTwitter = val;
+  browser.storage.local.set({ bypassWatchOnTwitter })
+  console.log("bypassWatchOnTwitter: ", bypassWatchOnTwitter)
+}
+
 function redirect(url, initiator) {
 
   if (disable) return null;
@@ -103,6 +111,7 @@ function redirect(url, initiator) {
   if (url.pathname.split("/").includes("home")) return null;
 
   if (
+    bypassWatchOnTwitter &&
     initiator && (
       [...redirects.nitter.normal,
       ...redirects.nitter.tor,
@@ -176,6 +185,8 @@ async function init() {
 
           protocol = result.twitterProtocol ?? "normal";
 
+          bypassWatchOnTwitter = result.bypassWatchOnTwitter ?? true;
+
           redirects.nitter = dataJson.nitter;
           if (result.twitterRedirects) redirects = result.twitterRedirects;
 
@@ -211,6 +222,9 @@ export default {
 
   getNitterTorCustomRedirects,
   setNitterTorCustomRedirects,
+
+  getBypassWatchOnTwitter,
+  setBypassWatchOnTwitter,
 
   getProtocol,
   setProtocol,
