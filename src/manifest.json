@@ -1,7 +1,7 @@
 {
-  "name": "__MSG_extensionName__",
+  "name": "LibRedirect",
   "description": "__MSG_extensionDescription__",
-  "version": "1.4.6",
+  "version": "1.4.7",
   "manifest_version": 2,
   "background": {
     "page": "pages/background/background.html",
