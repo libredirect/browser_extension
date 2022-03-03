@@ -157,7 +157,7 @@ function changeInstance(url) {
   if (instancesList.length === 0) return null;
 
   let randomInstance = commonHelper.getRandomInstance(instancesList);
-  return randomInstance;
+  return `${randomInstance}${url.pathname}${url.search}`;
 }
 
 async function init() {
@@ -173,20 +173,19 @@ async function init() {
           "wikilessNormalCustomRedirects",
           "wikilessTorCustomRedirects",
           "wikipediaProtocol"
+        ], r => { // r = result
+          disable = r.disableWikipedia ?? false;
 
-        ], (result) => {
-          disable = result.disableWikipedia ?? false;
-
-          protocol = result.wikipediaProtocol ?? "normal";
+          protocol = r.wikipediaProtocol ?? "normal";
 
           redirects.wikiless = dataJson.wikiless;
-          if (result.wikipediaRedirects) redirects = result.wikipediaRedirects;
+          if (r.wikipediaRedirects) redirects = r.wikipediaRedirects;
 
-          wikilessNormalRedirectsChecks = result.wikilessNormalRedirectsChecks ?? [...redirects.wikiless.normal];
-          wikilessNormalCustomRedirects = result.wikilessNormalCustomRedirects ?? [];
+          wikilessNormalRedirectsChecks = r.wikilessNormalRedirectsChecks ?? [...redirects.wikiless.normal];
+          wikilessNormalCustomRedirects = r.wikilessNormalCustomRedirects ?? [];
 
-          wikilessTorRedirectsChecks = result.wikilessTorRedirectsChecks ?? [...redirects.wikiless.tor];
-          wikilessTorCustomRedirects = result.wikilessTorCustomRedirects ?? [];
+          wikilessTorRedirectsChecks = r.wikilessTorRedirectsChecks ?? [...redirects.wikiless.tor];
+          wikilessTorCustomRedirects = r.wikilessTorCustomRedirects ?? [];
 
           resolve();
         }

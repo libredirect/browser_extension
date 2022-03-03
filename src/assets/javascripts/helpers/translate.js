@@ -265,8 +265,7 @@ function changeInstance(url) {
   if (instancesList.length === 0) return null;
 
   let randomInstance = commonHelper.getRandomInstance(instancesList);
-  return randomInstance;
-
+  return `${randomInstance}${url.pathname}${url.search}`;
 }
 
 async function init() {

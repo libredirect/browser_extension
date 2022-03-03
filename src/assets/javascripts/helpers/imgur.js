@@ -141,43 +141,45 @@ function changeInstance(url) {
     if (instancesList.length === 0) return null;
 
     let randomInstance = commonHelper.getRandomInstance(instancesList);
-    return randomInstance;
+    return `${randomInstance}${url.pathname}${url.search}`;
 }
 
 async function init() {
-    return new Promise((resolve) => {
-        fetch('/instances/data.json').then(response => response.text()).then(data => {
-            let dataJson = JSON.parse(data);
-            browser.storage.local.get(
-                [
-                    "disableImgur",
-                    "imgurRedirects",
+    return new Promise(resolve => {
+        fetch('/instances/data.json')
+            .then(response => response.text())
+            .then(text => {
+                let data = JSON.parse(text);
+                browser.storage.local.get(
+                    [
+                        "disableImgur",
+                        "imgurRedirects",
 
-                    "rimgoNormalRedirectsChecks",
-                    "rimgoNormalCustomRedirects",
-                    "rimgoTorRedirectsChecks",
-                    "rimgoTorCustomRedirects",
+                        "rimgoNormalRedirectsChecks",
+                        "rimgoNormalCustomRedirects",
+                        "rimgoTorRedirectsChecks",
+                        "rimgoTorCustomRedirects",
 
-                    "imgurProtocol",
-                ],
-                (result) => {
-                    disable = result.disableImgur ?? false;
+                        "imgurProtocol",
+                    ],
+                    r => { // r = result
+                        disable = r.disableImgur ?? false;
 
-                    protocol = result.imgurProtocol ?? "normal";
+                        protocol = r.imgurProtocol ?? "normal";
 
-                    redirects.rimgo = dataJson.rimgo;
-                    if (result.imgurRedirects) redirects = result.imgurRedirects;
+                        redirects.rimgo = data.rimgo;
+                        if (r.imgurRedirects) redirects = r.imgurRedirects;
 
-                    rimgoNormalRedirectsChecks = result.rimgoNormalRedirectsChecks ?? [...redirects.rimgo.normal];
-                    rimgoNormalCustomRedirects = result.rimgoNormalCustomRedirects ?? [];
+                        rimgoNormalRedirectsChecks = r.rimgoNormalRedirectsChecks ?? [...redirects.rimgo.normal];
+                        rimgoNormalCustomRedirects = r.rimgoNormalCustomRedirects ?? [];
 
-                    rimgoTorRedirectsChecks = result.rimgoTorRedirectsChecks ?? [...redirects.rimgo.tor];
-                    rimgoTorCustomRedirects = result.rimgoTorCustomRedirects ?? [];
+                        rimgoTorRedirectsChecks = r.rimgoTorRedirectsChecks ?? [...redirects.rimgo.tor];
+                        rimgoTorCustomRedirects = r.rimgoTorCustomRedirects ?? [];
 
-                    resolve();
-                }
-            )
-        });
+                        resolve();
+                    }
+                )
+            });
     });
 }
 

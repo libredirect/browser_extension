@@ -32,6 +32,13 @@ let redirects = {
     "tor": [
       "http://piped2bbch4xslbl2ckr6k62q56kon56ffowxaqzy42ai22a4sash3ad.onion"
     ]
+  },
+  "pipedMaterial": {
+    "normal": [
+      "https://piped-material.১.net/",
+      "https://piped-material.ftp.sh/",
+    ],
+    "tor": []
   }
 };
 
@@ -418,7 +425,7 @@ function changeInstance(url) {
 
   if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList);
-  return randomInstance;
+  return `${randomInstance}${url.pathname}${url.search}`;
 }
 
 function isPipedorInvidious(url, type) {
