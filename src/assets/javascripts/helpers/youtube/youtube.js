@@ -35,8 +35,8 @@ let redirects = {
   },
   "pipedMaterial": {
     "normal": [
-      "https://piped-material.১.net/",
-      "https://piped-material.ftp.sh/",
+      "https://piped-material.xn--17b.net",
+      "https://piped-material.ftp.sh",
     ],
     "tor": []
   }
@@ -79,7 +79,6 @@ function setInvidiousNormalCustomRedirects(val) {
   console.log("invidiousNormalCustomRedirects: ", val)
 }
 
-
 let invidiousTorRedirectsChecks;
 const getInvidiousTorRedirectsChecks = () => invidiousTorRedirectsChecks;
 function setInvidiousTorRedirectsChecks(val) {
@@ -96,7 +95,6 @@ function setInvidiousTorCustomRedirects(val) {
   console.log("invidiousTorCustomRedirects: ", val)
 }
 
-
 let pipedNormalRedirectsChecks;
 const getPipedNormalRedirectsChecks = () => pipedNormalRedirectsChecks;
 function setPipedNormalRedirectsChecks(val) {
@@ -112,7 +110,6 @@ function setPipedNormalCustomRedirects(val) {
   browser.storage.local.set({ pipedNormalCustomRedirects })
   console.log("pipedNormalCustomRedirects: ", val)
 }
-
 
 let pipedTorRedirectsChecks;
 const getPipedTorRedirectsChecks = () => pipedTorRedirectsChecks;
@@ -134,6 +131,44 @@ function setPipedRedirects(val) {
   redirects.piped = val;
   browser.storage.local.set({ youtubeRedirects: redirects })
   console.log("pipedRedirects: ", val)
+}
+
+let pipedMaterialNormalRedirectsChecks;
+const getPipedMaterialNormalRedirectsChecks = () => pipedMaterialNormalRedirectsChecks;
+function setPipedMaterialNormalRedirectsChecks(val) {
+  pipedMaterialNormalRedirectsChecks = val;
+  browser.storage.local.set({ pipedMaterialNormalRedirectsChecks })
+  console.log("pipedMaterialNormalRedirectsChecks: ", val)
+}
+
+let pipedMaterialNormalCustomRedirects = [];
+const getPipedMaterialNormalCustomRedirects = () => pipedMaterialNormalCustomRedirects;
+function setPipedMaterialNormalCustomRedirects(val) {
+  pipedMaterialNormalCustomRedirects = val;
+  browser.storage.local.set({ pipedMaterialNormalCustomRedirects })
+  console.log("pipedMaterialNormalCustomRedirects: ", val)
+}
+
+let pipedMaterialTorRedirectsChecks;
+const getPipedMaterialTorRedirectsChecks = () => pipedMaterialTorRedirectsChecks;
+function setPipedMaterialTorRedirectsChecks(val) {
+  pipedMaterialTorRedirectsChecks = val;
+  browser.storage.local.set({ pipedMaterialTorRedirectsChecks })
+  console.log("pipedMaterialTorRedirectsChecks: ", val)
+}
+
+let pipedMaterialTorCustomRedirects = [];
+const getPipedMaterialTorCustomRedirects = () => pipedMaterialTorCustomRedirects;
+function setPipedMaterialTorCustomRedirects(val) {
+  pipedMaterialTorCustomRedirects = val;
+  browser.storage.local.set({ pipedMaterialTorCustomRedirects })
+  console.log("pipedMaterialTorCustomRedirects: ", val)
+}
+
+function setPipedMaterialRedirects(val) {
+  redirects.pipedMaterial = val;
+  browser.storage.local.set({ youtubeRedirects: redirects })
+  console.log("pipedMaterialRedirects: ", val)
 }
 
 let disable;
@@ -386,28 +421,55 @@ function redirect(url, details, initiator) {
 
     return `${randomInstance}${url.pathname}${url.search}`;
   }
+  else if (frontend == 'pipedMaterial' ||
+    ((frontend == 'freetube' || frontend == 'yatte') && youtubeEmbedFrontend == 'pipedMaterial' && details.type === "sub_frame")) {
+    if (OnlyEmbeddedVideo == 'onlyEmbedded' && details.type !== "sub_frame") return null;
+    if (
+      OnlyEmbeddedVideo == 'onlyNotEmbedded' && details.type !== "main_frame" &&
+      !((frontend == 'freetube' || frontend == 'yatte') && youtubeEmbedFrontend == 'pipedMaterial' && details.type == "sub_frame")
+    ) return null;
+
+    let instancesList;
+    if (protocol == 'normal') instancesList = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects];
+    let randomInstance = commonHelper.getRandomInstance(instancesList);
+
+    return `${randomInstance}${url.pathname}${url.search}`;
+  }
   return 'CANCEL';
 }
 
 function changeInstance(url) {
+  console.log("changeInstance Youtube");
 
   let protocolHost = `${url.protocol}//${url.host}`;
+
+  console.log("protocolHost", protocolHost);
 
   if (
     protocol == 'normal' &&
     ![
       ...redirects.invidious.normal,
       ...redirects.piped.normal,
+      ...redirects.pipedMaterial.normal,
+
       ...invidiousNormalCustomRedirects,
-      ...pipedNormalCustomRedirects
+      ...pipedNormalCustomRedirects,
+      ...pipedMaterialNormalCustomRedirects
     ].includes(protocolHost)
   ) return null;
-  if (protocol == 'tor' && ![
-    ...redirects.invidious.tor,
-    ...redirects.piped.tor,
-    ...invidiousTorCustomRedirects,
-    ...pipedTorCustomRedirects
-  ].includes(protocolHost)) return null;
+
+  if (protocol == 'tor' &&
+    ![
+      ...redirects.invidious.tor,
+      ...redirects.piped.tor,
+      ...redirects.pipedMaterial.tor,
+
+      ...invidiousTorCustomRedirects,
+      ...pipedTorCustomRedirects,
+      ...pipedMaterialTorCustomRedirects
+    ].includes(protocolHost)
+  ) return null;
 
   let instancesList;
   if (frontend == 'invidious') {
@@ -417,6 +479,11 @@ function changeInstance(url) {
   else if (frontend == 'piped') {
     if (protocol == 'normal') instancesList = [...pipedNormalRedirectsChecks, ...pipedNormalCustomRedirects];
     else if (protocol == 'tor') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
+  }
+  else if (frontend == 'pipedMaterial') {
+
+    if (protocol == 'normal') instancesList = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects];
   }
 
   console.log("instancesList", instancesList);
@@ -466,6 +533,14 @@ function isUrlPipedorInvidious(url, frontend) {
       ...redirects.piped.tor,
       ...pipedNormalCustomRedirects,
       ...pipedTorCustomRedirects,
+    ].includes(protocolHost);
+
+  if (frontend == 'pipedMaterial')
+    return [
+      ...redirects.pipedMaterial.normal,
+      ...redirects.pipedMaterial.tor,
+      ...pipedMaterialNormalCustomRedirects,
+      ...pipedMaterialTorCustomRedirects,
     ].includes(protocolHost);
 
   return [
@@ -567,6 +642,16 @@ function initPipedLocalStorage(tabId) {
   );
 }
 
+function initPipedMaterialLocalStorage(tabId) {
+  browser.tabs.executeScript(
+    tabId,
+    {
+      file: "/assets/javascripts/helpers/youtube/pipedMaterial-preferences.js",
+      runAt: "document_start"
+    }
+  );
+}
+
 function initInvidiousCookies(tabId) {
   browser.tabs.executeScript(
     tabId,
@@ -604,6 +689,12 @@ async function init() {
 
           "pipedNormalRedirectsChecks",
           "pipedNormalCustomRedirects",
+
+          "pipedMaterialNormalRedirectsChecks",
+          "pipedMaterialNormalCustomRedirects",
+
+          "pipedMaterialTorRedirectsChecks",
+          "pipedMaterialTorCustomRedirects",
 
           "pipedTorRedirectsChecks",
           "pipedTorCustomRedirects",
@@ -646,6 +737,13 @@ async function init() {
           pipedTorRedirectsChecks = result.pipedTorRedirectsChecks ?? [...redirects.piped.tor];
           pipedTorCustomRedirects = result.pipedTorCustomRedirects ?? [];
 
+
+          pipedMaterialNormalRedirectsChecks = result.pipedMaterialNormalRedirectsChecks ?? [...redirects.pipedMaterial.normal];
+          pipedMaterialNormalCustomRedirects = result.pipedMaterialNormalCustomRedirects ?? [];
+
+          pipedMaterialTorRedirectsChecks = result.pipedMaterialTorRedirectsChecks ?? [...redirects.pipedMaterial.tor];
+          pipedMaterialTorCustomRedirects = result.pipedMaterialTorCustomRedirects ?? [];
+
           persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
 
           alwaysUsePreferred = result.alwaysUsePreferred ?? true;
@@ -665,6 +763,7 @@ export default {
   setBypassWatchOnYoutube,
   initInvidiousCookies,
   initPipedLocalStorage,
+  initPipedMaterialLocalStorage,
 
   getFrontend,
   setFrontend,
@@ -740,6 +839,20 @@ export default {
 
   getPipedTorCustomRedirects,
   setPipedTorCustomRedirects,
+
+  getPipedMaterialNormalRedirectsChecks,
+  setPipedMaterialNormalRedirectsChecks,
+
+  getPipedMaterialNormalCustomRedirects,
+  setPipedMaterialNormalCustomRedirects,
+
+  getPipedMaterialTorRedirectsChecks,
+  setPipedMaterialTorRedirectsChecks,
+
+  getPipedMaterialTorCustomRedirects,
+  setPipedMaterialTorCustomRedirects,
+
+  setPipedMaterialRedirects,
 
   getExceptions,
   setExceptions,

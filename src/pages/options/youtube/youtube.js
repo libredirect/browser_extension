@@ -5,26 +5,44 @@ let disableYoutubeElement = document.getElementById("disable-invidious");
 let youtubeFrontendElement = document.getElementById("youtube-frontend");
 let invidiousDivElement = document.getElementById("invidious");
 let pipedDivElement = document.getElementById("piped");
+let pipedMaterialDivElement = document.getElementById("pipedMaterial");
 let invidiousPipedDivElement = document.getElementById("invidious-piped");
 let freetubeYatteeDivElement = document.getElementById("freetube-yatte");
 
 function changeFrontendsSettings(frontend) {
-    if (frontend == 'piped') {
+    if (frontend == 'invidious') {
         invidiousPipedDivElement.style.display = 'block'
-        pipedDivElement.style.display = 'block';
-        invidiousDivElement.style.display = 'none';
+        invidiousDivElement.style.display = 'block';
+        pipedDivElement.style.display = 'none';
+        pipedMaterialDivElement.style.display = 'none';
         freetubeYatteeDivElement.style.display = 'none';
     }
-    else if (frontend == 'invidious') {
+    else if (frontend == 'piped') {
         invidiousPipedDivElement.style.display = 'block'
+        invidiousDivElement.style.display = 'none';
+        pipedDivElement.style.display = 'block';
+        pipedMaterialDivElement.style.display = 'none';
+        freetubeYatteeDivElement.style.display = 'none';
+    }
+    else if (frontend == 'piped') {
+        invidiousPipedDivElement.style.display = 'block'
+        invidiousDivElement.style.display = 'none';
+        pipedDivElement.style.display = 'block';
+        pipedMaterialDivElement.style.display = 'none';
+        freetubeYatteeDivElement.style.display = 'none';
+    }
+    else if (frontend == 'pipedMaterial') {
+        invidiousPipedDivElement.style.display = 'block'
+        invidiousDivElement.style.display = 'none';
         pipedDivElement.style.display = 'none';
-        invidiousDivElement.style.display = 'block';
+        pipedMaterialDivElement.style.display = 'block';
         freetubeYatteeDivElement.style.display = 'none';
     }
     else if (frontend == 'freetube' || frontend == 'yatte') {
         invidiousPipedDivElement.style.display = 'none'
-        pipedDivElement.style.display = 'none';
         invidiousDivElement.style.display = 'none';
+        pipedDivElement.style.display = 'none';
+        pipedMaterialDivElement.style.display = 'none';
         freetubeYatteeDivElement.style.display = 'block';
         changeYoutubeEmbedFrontendsSettings(youtubeHelper.getYoutubeEmbedFrontend());
     }
@@ -118,19 +136,31 @@ function changeProtocolSettings(protocol) {
     let normalPipedDiv = document.getElementById("piped-normal");
     let torPipedDiv = document.getElementById("piped-tor");
 
+    let normalPipedMaterialDiv = document.getElementById("pipedMaterial-normal");
+    let torPipedMaterialDiv = document.getElementById("pipedMaterial-tor");
+
     let normalInvidiousDiv = document.getElementById("invidious-normal");
     let torInvidiousDiv = document.getElementById("invidious-tor");
+
     if (protocol == 'normal') {
-        normalPipedDiv.style.display = 'block';
         normalInvidiousDiv.style.display = 'block';
         torInvidiousDiv.style.display = 'none';
+
+        normalPipedDiv.style.display = 'block';
         torPipedDiv.style.display = 'none';
+
+        normalPipedMaterialDiv.style.display = 'block';
+        torPipedMaterialDiv.style.display = 'none';
     }
     else if (protocol == 'tor') {
-        normalPipedDiv.style.display = 'none';
         normalInvidiousDiv.style.display = 'none';
         torInvidiousDiv.style.display = 'block';
+
+        normalPipedDiv.style.display = 'none';
         torPipedDiv.style.display = 'block';
+
+        normalPipedMaterialDiv.style.display = 'none';
+        torPipedMaterialDiv.style.display = 'block';
     }
 }
 

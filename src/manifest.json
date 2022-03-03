@@ -38,6 +38,7 @@
     "open_in_tab": true
   },
   "web_accessible_resources": [
-    "assets/javascripts/helpers/youtube/piped-preferences.js"
+    "assets/javascripts/helpers/youtube/piped-preferences.js",
+    "assets/javascripts/helpers/youtube/pipedMaterial-preferences.js"
   ]
 }

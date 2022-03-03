@@ -23,11 +23,3 @@ youtubeHelper.init().then(() => {
         youtubeHelper.setPipedTorCustomRedirects
     );
 });
-
-
-
-
-
-
-
-

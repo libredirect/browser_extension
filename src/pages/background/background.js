@@ -110,5 +110,6 @@ browser.tabs.onRemoved.addListener((tabId) => {
 browser.tabs.onUpdated.addListener(
   (tabId, changeInfo, _) => {
     if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'piped')) youtubeHelper.initPipedLocalStorage(tabId);
+    if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
     // if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'invidious')) youtubeHelper.initInvidiousCookies(tabId);
   });

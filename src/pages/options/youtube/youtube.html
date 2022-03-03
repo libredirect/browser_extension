@@ -112,6 +112,7 @@
         <select id="youtube-embed-frontend">
           <option value="invidious">Invidious</option>
           <option value="piped">Piped</option>
+          <option value="pipedMaterial">Piped-Material</option>
           <option value="youtube">Youtube</option>
         </select>
       </div>
@@ -321,6 +322,58 @@
       </div>
     </div>
 
+    <div id="pipedMaterial">
+      <hr>
+
+      <div id="pipedMaterial-normal">
+        <div class="some-block option-block">
+          <h4>Default Instances</h4>
+        </div>
+        <div class="checklist" id="pipedMaterial-normal-checklist"></div>
+        <hr>
+        <div class="some-block option-block">
+          <h4>Custom Instances</h4>
+        </div>
+        <form id="custom-pipedMaterial-normal-instance-form">
+          <div class="some-block option-block">
+            <input id="pipedMaterial-normal-custom-instance" placeholder="https://piped-material.com" type="url" />
+            <button type="submit" class="add" id="pipedMaterial-normal-add-instance">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                fill="currentColor">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+        <div class="checklist" id="pipedMaterial-normal-custom-checklist"></div>
+      </div>
+
+      <div id="pipedMaterial-tor">
+        <div class="some-block option-block">
+          <h4>Default Instances</h4>
+        </div>
+        <div class="checklist" id="pipedMaterial-tor-checklist"></div>
+        <hr>
+        <div class="some-block option-block">
+          <h4>Custom Instances</h4>
+        </div>
+        <form id="custom-pipedMaterial-tor-instance-form">
+          <div class="some-block option-block">
+            <input id="pipedMaterial-tor-custom-instance" placeholder="https://pipedMaterial.com" type="url" />
+            <button type="submit" class="add" id="pipedMaterial-tor-add-instance">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                fill="currentColor">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+        <div class="checklist" id="pipedMaterial-tor-custom-checklist"></div>
+      </div>
+    </div>
+
     <hr>
 
     <div class="some-block option-block">
@@ -355,6 +408,7 @@
   <script type="module" src="./youtube.js"></script>
   <script type="module" src="./invidious.js"></script>
   <script type="module" src="./piped.js"></script>
+  <script type="module" src="./pipedMaterial.js"></script>
   <script type="module" src="./embed-exceptions.js"></script>
   <!-- <script src="../../assets/javascripts/localise.js"></script> -->
 </body>
