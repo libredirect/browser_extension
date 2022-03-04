@@ -1,4 +1,4 @@
-<img src="src/assets/images/libredirect.svg" width="150" align="right" />
+<img src="./src/assets/images/libredirect.svg" width="150" align="right" />
 
 # LibRedirect
 A web extension that redirects YouTube, Twitter, Instagram... requests to alternative privacy friendly frontends and backends.
@@ -18,14 +18,24 @@ Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)
 
 **Note**: It will be using random instances by default. You can also add custom instances.
 
+<div align=center>
+    <img src ="./img/1.png" width=300>&nbsp;
+    <img src ="./img/2.png" width=300>&nbsp;
+    <img src ="./img/3.png" width=300>&nbsp;
+    <img src ="./img/4.png" width=300>&nbsp;
+    <img src ="./img/5.png" width=300>&nbsp;
+</div>
+<br>
+
+
 [![Mozilla Users](https://badges.alefvanoon.xyz/amo/users/libredirect?label=Firefox%20Users)](https://addons.mozilla.org/firefox/addon/libredirect/)
 [![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=Matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
 
 ## Get
-[![Firefox Add-on](src/assets/images/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)
+[![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)
 
 ## Donate
-[![Liberapay](./src/assets/images/liberapay.svg)](https://liberapay.com/LibRedirect)
+[![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)
 
 **BTC:** `bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q`
 
