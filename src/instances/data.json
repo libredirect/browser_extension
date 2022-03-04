@@ -12,6 +12,7 @@
       "https://tube.cthd.icu",
       "https://invidious.flokinet.to",
       "https://yt.artemislena.eu",
+      "https://invidious.weblibre.org",
       "https://youtube.076.ne.jp",
       "https://invidious.privacy.gd",
       "https://invidious.namazso.eu"
@@ -76,7 +77,8 @@
       "https://nitter.spaceint.fr",
       "https://twtr.bch.bar",
       "https://nitter.exonip.de",
-      "https://nitter.mastodon.pro"
+      "https://nitter.mastodon.pro",
+      "https://nitter.notraxx.ch"
     ],
     "tor": [
       "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
@@ -334,7 +336,8 @@
     ],
     "tor": [
       "http://l4d4owboqr6xcmd6lf64gbegel62kbudu3x3jnldz2mx6mhn3bsv3zyd.onion",
-      "http://jx3dpcwedpzu2mh54obk5gvl64i2ln7pt5mrzd75s4jnndkqwzaim7ad.onion"
+      "http://jx3dpcwedpzu2mh54obk5gvl64i2ln7pt5mrzd75s4jnndkqwzaim7ad.onion",
+      "http://rimgo.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion"
     ]
   }
 }
