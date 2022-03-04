@@ -18,13 +18,12 @@ Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)
 
 **Note**: It will be using random instances by default. You can also add custom instances.
 
-<div align=center>
-    <img src ="./img/1.png" width=300>&nbsp;
-    <img src ="./img/2.png" width=300>&nbsp;
-    <img src ="./img/3.png" width=300>&nbsp;
-    <img src ="./img/4.png" width=300>&nbsp;
-    <img src ="./img/5.png" width=300>&nbsp;
-</div>
+<img src ="./img/1.png" width=300>&nbsp;
+<img src ="./img/2.png" width=300>&nbsp;
+<img src ="./img/3.png" width=300>&nbsp;
+<img src ="./img/4.png" width=300>&nbsp;
+<img src ="./img/5.png" width=300>&nbsp;
+
 <br>
 
 
