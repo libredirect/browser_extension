@@ -215,7 +215,7 @@ let theme;
 const getTheme = () => theme;
 function setTheme(val) {
   theme = val;
-  browser.storage.local.set({ youtubeTheme: theme })
+  browser.storage.local.set({ theme: theme })
   console.log("theme: ", theme)
 }
 
@@ -495,29 +495,10 @@ function changeInstance(url) {
   return `${randomInstance}${url.pathname}${url.search}`;
 }
 
-function isPipedorInvidious(url, type) {
+function isPipedorInvidious(url, type, frontend) {
   let protocolHost = `${url.protocol}//${url.host}`;
-  return (type === "main_frame" || type === "sub_frame") && [
-    ...redirects.invidious.normal,
-    ...redirects.invidious.tor,
-    ...invidiousNormalCustomRedirects,
-    ...invidiousTorCustomRedirects,
 
-    ...redirects.piped.normal,
-    ...redirects.piped.tor,
-    ...pipedNormalCustomRedirects,
-    ...pipedTorCustomRedirects,
-  ].includes(protocolHost);
-}
-
-function isUrlPipedorInvidious(url, frontend) {
-  try {
-    url = new URL(url);
-  }
-  catch (error) {
-    return
-  }
-  let protocolHost = `${url.protocol}//${url.host}`;
+  if (type !== "main_frame" && type !== "sub_frame") return false;
 
   if (frontend == 'invidious')
     return [
@@ -556,10 +537,13 @@ function isUrlPipedorInvidious(url, frontend) {
   ].includes(protocolHost);
 }
 
+let applyThemeToSites;
 function addUrlParams(url) {
   let protocolHost = `${url.protocol}//${url.host}`;
   let isChanged = false;
   console.log("Adding URL Params", protocolHost);
+  console.log("searchParams", url.searchParams);
+  let oldParams = { ...url.searchParams };
   if (
     [
       ...redirects.invidious.normal,
@@ -568,8 +552,10 @@ function addUrlParams(url) {
       ...invidiousTorCustomRedirects
     ].includes(protocolHost)
   ) {
-    if (!url.searchParams.has("dark_mode") && theme != "DEFAULT") {
-      url.searchParams.append("dark_mode", theme);
+
+    if (applyThemeToSites && !url.searchParams.has("dark_mode") && theme != 'DEFAULT') {
+      if (theme == 'dark') url.searchParams.append("dark_mode", true);
+      else if (theme == 'light') url.searchParams.append("dark_mode", false);
       isChanged = true;
     }
 
@@ -602,8 +588,8 @@ function addUrlParams(url) {
       url.searchParams.append("subtitles", invidiousSubtitles);
       isChanged = true;
     }
-
-  } else if (
+  }
+  else if (
     [
       ...redirects.piped.normal,
       ...redirects.piped.tor,
@@ -626,11 +612,12 @@ function addUrlParams(url) {
       url.searchParams.append("playerAutoPlay", autoplay);
       isChanged = true;
     }
-
   }
+
   if (isChanged) return url.href;
   else return;
 }
+
 
 function initPipedLocalStorage(tabId) {
   browser.tabs.executeScript(
@@ -670,7 +657,8 @@ async function init() {
         [
           "invidiousAlwaysProxy",
           "invidiousVideoQuality",
-          "youtubeTheme",
+          "theme",
+          "applyThemeToSites",
           "persistInvidiousPrefs",
           "disableYoutube",
           "OnlyEmbeddedVideo",
@@ -706,51 +694,53 @@ async function init() {
           "youtubeEmbedExceptions",
           "bypassWatchOnYoutube"
         ],
-        (result) => {
+        r => { // r = result
           redirects.invidious = dataJson.invidious;
-          if (result.youtubeRedirects) redirects = result.youtubeRedirects;
+          if (r.youtubeRedirects) redirects = r.youtubeRedirects;
 
-          disable = result.disableYoutube ?? false;
-          protocol = result.youtubeProtocol ?? 'normal';
-          frontend = result.youtubeFrontend ?? 'invidious';
-          youtubeEmbedFrontend = result.youtubeEmbedFrontend ?? 'invidious';
+          disable = r.disableYoutube ?? false;
+          protocol = r.youtubeProtocol ?? 'normal';
+          frontend = r.youtubeFrontend ?? 'invidious';
+          youtubeEmbedFrontend = r.youtubeEmbedFrontend ?? 'invidious';
 
-          theme = result.youtubeTheme ?? 'DEFAULT';
-          volume = result.youtubeVolume ?? '--';
-          autoplay = result.youtubeAutoplay ?? 'DEFAULT';
+          theme = r.theme ?? 'DEFAULT';
+          applyThemeToSites = r.applyThemeToSites ?? false;
 
-          invidiousAlwaysProxy = result.invidiousAlwaysProxy ?? 'DEFAULT';
-          OnlyEmbeddedVideo = result.OnlyEmbeddedVideo ?? 'both';
-          invidiousVideoQuality = result.invidiousVideoQuality ?? 'DEFAULT';
-          invidiousPlayerStyle = result.invidiousPlayerStyle ?? 'DEFAULT';
-          invidiousSubtitles = result.invidiousSubtitles || '';
+          volume = r.youtubeVolume ?? '--';
+          autoplay = r.youtubeAutoplay ?? 'DEFAULT';
 
-          invidiousNormalRedirectsChecks = result.invidiousNormalRedirectsChecks ?? [...redirects.invidious.normal];
-          invidiousNormalCustomRedirects = result.invidiousNormalCustomRedirects ?? [];
+          invidiousAlwaysProxy = r.invidiousAlwaysProxy ?? 'DEFAULT';
+          OnlyEmbeddedVideo = r.OnlyEmbeddedVideo ?? 'both';
+          invidiousVideoQuality = r.invidiousVideoQuality ?? 'DEFAULT';
+          invidiousPlayerStyle = r.invidiousPlayerStyle ?? 'DEFAULT';
+          invidiousSubtitles = r.invidiousSubtitles || '';
 
-          invidiousTorRedirectsChecks = result.invidiousTorRedirectsChecks ?? [...redirects.invidious.tor];
-          invidiousTorCustomRedirects = result.invidiousTorCustomRedirects ?? [];
+          invidiousNormalRedirectsChecks = r.invidiousNormalRedirectsChecks ?? [...redirects.invidious.normal];
+          invidiousNormalCustomRedirects = r.invidiousNormalCustomRedirects ?? [];
 
-          pipedNormalRedirectsChecks = result.pipedNormalRedirectsChecks ?? [...redirects.piped.normal];
-          pipedNormalCustomRedirects = result.pipedNormalCustomRedirects ?? [];
+          invidiousTorRedirectsChecks = r.invidiousTorRedirectsChecks ?? [...redirects.invidious.tor];
+          invidiousTorCustomRedirects = r.invidiousTorCustomRedirects ?? [];
 
-          pipedTorRedirectsChecks = result.pipedTorRedirectsChecks ?? [...redirects.piped.tor];
-          pipedTorCustomRedirects = result.pipedTorCustomRedirects ?? [];
+          pipedNormalRedirectsChecks = r.pipedNormalRedirectsChecks ?? [...redirects.piped.normal];
+          pipedNormalCustomRedirects = r.pipedNormalCustomRedirects ?? [];
+
+          pipedTorRedirectsChecks = r.pipedTorRedirectsChecks ?? [...redirects.piped.tor];
+          pipedTorCustomRedirects = r.pipedTorCustomRedirects ?? [];
 
 
-          pipedMaterialNormalRedirectsChecks = result.pipedMaterialNormalRedirectsChecks ?? [...redirects.pipedMaterial.normal];
-          pipedMaterialNormalCustomRedirects = result.pipedMaterialNormalCustomRedirects ?? [];
+          pipedMaterialNormalRedirectsChecks = r.pipedMaterialNormalRedirectsChecks ?? [...redirects.pipedMaterial.normal];
+          pipedMaterialNormalCustomRedirects = r.pipedMaterialNormalCustomRedirects ?? [];
 
-          pipedMaterialTorRedirectsChecks = result.pipedMaterialTorRedirectsChecks ?? [...redirects.pipedMaterial.tor];
-          pipedMaterialTorCustomRedirects = result.pipedMaterialTorCustomRedirects ?? [];
+          pipedMaterialTorRedirectsChecks = r.pipedMaterialTorRedirectsChecks ?? [...redirects.pipedMaterial.tor];
+          pipedMaterialTorCustomRedirects = r.pipedMaterialTorCustomRedirects ?? [];
 
-          persistInvidiousPrefs = result.persistInvidiousPrefs ?? false;
+          persistInvidiousPrefs = r.persistInvidiousPrefs ?? false;
 
-          alwaysUsePreferred = result.alwaysUsePreferred ?? true;
+          alwaysUsePreferred = r.alwaysUsePreferred ?? true;
 
-          bypassWatchOnYoutube = result.bypassWatchOnYoutube ?? true;
+          bypassWatchOnYoutube = r.bypassWatchOnYoutube ?? true;
 
-          if (result.youtubeEmbedExceptions) exceptions = result.youtubeEmbedExceptions;
+          if (r.youtubeEmbedExceptions) exceptions = r.youtubeEmbedExceptions;
 
           resolve();
         });
@@ -780,7 +770,6 @@ export default {
   changeInstance,
 
   isPipedorInvidious,
-  isUrlPipedorInvidious,
   addUrlParams,
 
   getDisable,

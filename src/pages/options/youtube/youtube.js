@@ -86,11 +86,6 @@ disableYoutubeElement.addEventListener("change",
     event => youtubeHelper.setDisable(!event.target.checked)
 );
 
-let themeElement = document.getElementById("invidious-theme");
-themeElement.addEventListener("change",
-    event => youtubeHelper.setTheme(event.target.options[themeElement.selectedIndex].value)
-);
-
 let volumeElement = document.getElementById("invidious-volume");
 let volumeValueElement = document.getElementById("volume-value");
 volumeElement.addEventListener("input",
@@ -166,7 +161,6 @@ function changeProtocolSettings(protocol) {
 
 youtubeHelper.init().then(() => {
     disableYoutubeElement.checked = !youtubeHelper.getDisable();
-    themeElement.value = youtubeHelper.getTheme();
     volumeElement.value = youtubeHelper.getVolume();
     volumeValueElement.textContent = `${youtubeHelper.getVolume()}%`;
     OnlyEmbeddedVideoElement.value = youtubeHelper.getOnlyEmbeddedVideo();

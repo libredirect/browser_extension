@@ -2,28 +2,33 @@ window.browser = window.browser || window.chrome;
 
 browser.storage.local.get(
     [
-        "youtubeTheme",
+        "theme",
+        "applyThemeToSites",
+
         "youtubeVolume",
         "youtubeAutoplay"
     ],
-    res => {
-        if (
-            res.youtubeTheme != "DEFAULT" &&
-            localStorage.getItem("theme") != res.youtubeTheme
-        )
-            localStorage.setItem("theme", res.youtubeTheme);
+    r => {
+        let applyThemeToSites = r.applyThemeToSites ?? false;
 
         if (
-            res.youtubeVolume != "--" &&
-            localStorage.getItem("volume") != res.youtubeVolume
+            applyThemeToSites &&
+            r.theme != "DEFAULT" &&
+            localStorage.getItem("theme") != r.theme
         )
-            localStorage.setItem("volume", res.youtubeVolume / 100);
+            localStorage.setItem("theme", r.theme);
 
         if (
-            res.youtubeAutoplay != "DEFAULT" &&
-            localStorage.getItem("playerAutoPlay") != res.youtubeAutoplay
+            r.youtubeVolume != "--" &&
+            localStorage.getItem("volume") != r.youtubeVolume
         )
-            localStorage.setItem("playerAutoPlay", res.youtubeAutoplay);
+            localStorage.setItem("volume", r.youtubeVolume / 100);
+
+        if (
+            r.youtubeAutoplay != "DEFAULT" &&
+            localStorage.getItem("playerAutoPlay") != r.youtubeAutoplay
+        )
+            localStorage.setItem("playerAutoPlay", r.youtubeAutoplay);
     }
 )
 

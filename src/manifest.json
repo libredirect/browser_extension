@@ -14,9 +14,10 @@
     "128": "assets/images/libredirect-128.png"
   },
   "permissions": [
-    "storage",
     "webRequest",
     "webRequestBlocking",
+    "storage",
+    "cookies",
     "<all_urls>"
   ],
   "browser_action": {

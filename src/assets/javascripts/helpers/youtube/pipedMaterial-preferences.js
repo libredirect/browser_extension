@@ -2,7 +2,7 @@ window.browser = window.browser || window.chrome;
 
 browser.storage.local.get(
     [
-        "youtubeTheme",
+        "theme",
         "youtubeAutoplay"
     ],
     res => {
@@ -13,8 +13,8 @@ browser.storage.local.get(
         ) ?? {};
         let oldPrefs = { ...prefs };
 
-        if (res.youtubeTheme == 'dark') prefs.darkMode = true;
-        if (res.youtubeTheme == 'light') prefs.darkMode = false;
+        if (res.theme == 'dark') prefs.darkMode = true;
+        if (res.theme == 'light') prefs.darkMode = false;
 
         if (res.youtubeAutoplay != "DEFAULT") prefs.playerAutoplay = res.youtubeAutoplay;
 

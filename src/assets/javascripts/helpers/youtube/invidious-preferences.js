@@ -19,7 +19,7 @@ browser.storage.local.get(
         "youtubeVolume",
         "youtubeAutoplay",
         "OnlyEmbeddedVideo",
-        "youtubeTheme",
+        "theme",
         "invidiousVideoQuality",
     ], (result) => {
         let prefs = getCookie();
@@ -31,8 +31,8 @@ browser.storage.local.get(
         if (result.invidiousVideoQuality !== undefined && prefs.quality !== result.invidiousVideoQuality)
             prefs.quality = result.invidiousVideoQuality;
 
-        if (result.youtubeTheme !== undefined && prefs.dark_mode !== result.youtubeTheme)
-            prefs.dark_mode = result.youtubeTheme;
+        if (result.theme !== undefined && prefs.dark_mode !== result.theme)
+            prefs.dark_mode = result.theme;
 
         if (result.youtubeVolume !== undefined && prefs.volume !== result.youtubeVolume)
             prefs.volume = result.youtubeVolume;

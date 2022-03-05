@@ -182,6 +182,35 @@ function changeInstance(url) {
   return `${randomInstance}${url.pathname}${url.search}`;
 }
 
+function isNitter(url, type) {
+  let protocolHost = `${url.protocol}//${url.host}`;
+
+  if (type !== "main_frame" && type !== "sub_frame") return false;
+
+  return [
+    ...redirects.nitter.normal,
+    ...redirects.nitter.tor,
+    ...nitterNormalCustomRedirects,
+    ...nitterTorCustomRedirects,
+  ].includes(protocolHost);
+}
+
+let theme;
+let applyThemeToSites;
+function initNitterCookies(url) {
+  let protocolHost = `${url.protocol}//${url.host}`;
+  let themeValue;
+  if (theme == 'light') themeValue = 'Twitter';
+  if (theme == 'dark') themeValue = 'Twitter Dark';
+
+  if (applyThemeToSites && themeValue != 'DEFAULT')
+    browser.cookies.set({
+      url: protocolHost,
+      name: "theme",
+      value: themeValue
+    })
+}
+
 async function init() {
   return new Promise((resolve) => {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
@@ -189,31 +218,42 @@ async function init() {
       browser.storage.local.get(
         [
           "disableTwitter",
+
           "twitterRedirects",
+
+          "theme",
+          "applyThemeToSites",
+
           "nitterNormalRedirectsChecks",
           "nitterNormalCustomRedirects",
+
           "nitterTorRedirectsChecks",
           "nitterTorCustomRedirects",
+
           "twitterProtocol",
+
           "alwaysUsePreferred",
         ],
-        (result) => {
-          disable = result.disableTwitter ?? false;
+        r => {
+          disable = r.disableTwitter ?? false;
 
-          protocol = result.twitterProtocol ?? "normal";
+          protocol = r.twitterProtocol ?? "normal";
 
-          bypassWatchOnTwitter = result.bypassWatchOnTwitter ?? true;
+          bypassWatchOnTwitter = r.bypassWatchOnTwitter ?? true;
 
-          alwaysUsePreferred = result.alwaysUsePreferred ?? true;
+          alwaysUsePreferred = r.alwaysUsePreferred ?? true;
+
+          theme = r.theme ?? 'DEFAULT';
+          applyThemeToSites = r.applyThemeToSites ?? false;
 
           redirects.nitter = dataJson.nitter;
-          if (result.twitterRedirects) redirects = result.twitterRedirects;
+          if (r.twitterRedirects) redirects = r.twitterRedirects;
 
-          nitterNormalRedirectsChecks = result.nitterNormalRedirectsChecks ?? [...redirects.nitter.normal];
-          nitterNormalCustomRedirects = result.nitterNormalCustomRedirects ?? [];
+          nitterNormalRedirectsChecks = r.nitterNormalRedirectsChecks ?? [...redirects.nitter.normal];
+          nitterNormalCustomRedirects = r.nitterNormalCustomRedirects ?? [];
 
-          nitterTorRedirectsChecks = result.nitterTorRedirectsChecks ?? [...redirects.nitter.tor];
-          nitterTorCustomRedirects = result.nitterTorCustomRedirects ?? [];
+          nitterTorRedirectsChecks = r.nitterTorRedirectsChecks ?? [...redirects.nitter.tor];
+          nitterTorCustomRedirects = r.nitterTorCustomRedirects ?? [];
 
           resolve();
         }
@@ -247,6 +287,9 @@ export default {
 
   getProtocol,
   setProtocol,
+
+  isNitter,
+  initNitterCookies,
 
   redirect,
   init,

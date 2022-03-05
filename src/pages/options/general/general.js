@@ -4,43 +4,33 @@ window.browser = window.browser || window.chrome;
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 import generalHelper from "../../../assets/javascripts/helpers/general.js";
 
-let themeElement = document.getElementById("theme");
 
 
-browser.storage.local.get(
-  ["theme"],
-  (result) => {
-    themeElement.value = result.theme || "";
-
-  }
-);
-
-themeElement.addEventListener("change", (event) => {
-  const value = event.target.options[theme.selectedIndex].value;
-  browser.storage.local.set({ theme: value });
-});
-
-document.getElementById("update-instances").addEventListener("click", () => {
-  let oldHtml = document.getElementById("update-instances").innerHTML
-  document.getElementById("update-instances").innerHTML = '...';
+let updateInstancesElement = document.getElementById("update-instances");
+updateInstancesElement.addEventListener("click", () => {
+  let oldHtml = updateInstancesElement.innerHTML
+  updateInstancesElement.innerHTML = '...';
   if (commonHelper.updateInstances()) {
-    document.getElementById("update-instances").innerHTML = 'Done!';
+    updateInstancesElement.innerHTML = 'Done!';
     new Promise(resolve => setTimeout(resolve, 1500)).then( // sleep 1500ms
-      () => document.getElementById("update-instances").innerHTML = oldHtml
+      () => updateInstancesElement.innerHTML = oldHtml
     )
   }
   else
-    document.getElementById("update-instances").innerHTML = 'Failed Miserabely';
+    updateInstancesElement.innerHTML = 'Failed Miserabely';
 });
 
 let exportSettingsElement = document.getElementById("export-settings");
 
 function exportSettings() {
-  browser.storage.local.get(null, result => {
-    let resultString = JSON.stringify(result, null, '  ');
-    exportSettingsElement.href = 'data:application/json;base64,' + btoa(resultString);
-    exportSettingsElement.download = 'libredirect-settings.json';
-  });
+  browser.storage.local.get(
+    null,
+    result => {
+      let resultString = JSON.stringify(result, null, '  ');
+      exportSettingsElement.href = 'data:application/json;base64,' + btoa(resultString);
+      exportSettingsElement.download = 'libredirect-settings.json';
+    }
+  );
 }
 exportSettings();
 
@@ -59,7 +49,6 @@ importSettingsElement.addEventListener("change",
 );
 
 let resetSettingsElement = document.getElementById("reset-settings");
-
 resetSettingsElement.addEventListener("click",
   () => {
     console.log("reset");
@@ -73,12 +62,24 @@ alwaysUsePreferredElement.addEventListener("change",
   event => generalHelper.setAlwaysUsePreferred(event.target.checked)
 );
 
+let applyThemeToSitesElement = document.getElementById("apply-theme-to-sites")
+applyThemeToSitesElement.addEventListener("change",
+  event => generalHelper.setApplyThemeToSites(event.target.checked)
+);
+let themeElement = document.getElementById("theme");
+themeElement.addEventListener("change", event => {
+  const value = event.target.options[theme.selectedIndex].value;
+  generalHelper.setTheme(value);
+})
+
 let nameCustomInstanceInput = document.getElementById("exceptions-custom-instance");
 let instanceTypeElement = document.getElementById("exceptions-custom-instance-type");
 let instanceType = "url"
 
 generalHelper.init().then(() => {
   alwaysUsePreferredElement.checked = generalHelper.getAlwaysUsePreferred();
+  themeElement.value = generalHelper.getTheme();
+  applyThemeToSitesElement.checked = generalHelper.getApplyThemeToSites();
   console.log("generalHelper.getAlwaysUsePreferred()");
   instanceTypeElement.addEventListener("change",
     (event) => {

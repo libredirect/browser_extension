@@ -9,6 +9,22 @@ function setAlwaysUsePreferred(val) {
     console.log("alwaysUsePreferred: ", alwaysUsePreferred)
 }
 
+let theme;
+const getTheme = () => theme;
+function setTheme(val) {
+    theme = val
+    browser.storage.local.set({ theme });
+    console.log("theme: ", theme)
+}
+
+let applyThemeToSites;
+const getApplyThemeToSites = () => applyThemeToSites;
+function setApplyThemeToSites(val) {
+    applyThemeToSites = val;
+    browser.storage.local.set({ applyThemeToSites })
+    console.log("applyThemeToSites: ", applyThemeToSites)
+}
+
 let exceptions = {
     "url": [],
     "regex": [],
@@ -36,11 +52,17 @@ async function init() {
         resolve => browser.storage.local.get(
             [
                 "exceptions",
-                "alwaysUsePreferred"
+                "alwaysUsePreferred",
+                "theme",
+                "applyThemeToSites",
             ],
             r => { // r = result
                 if (r.exceptions) exceptions = r.exceptions;
                 alwaysUsePreferred = r.alwaysUsePreferred ?? false;
+
+                theme = r.them ?? "DEFAULT"
+                applyThemeToSites = r.applyThemeToSites ?? false;
+
                 resolve();
             }
         )
@@ -53,6 +75,12 @@ export default {
 
     getAlwaysUsePreferred,
     setAlwaysUsePreferred,
+
+    getApplyThemeToSites,
+    setApplyThemeToSites,
+
+    getTheme,
+    setTheme,
 
     isException,
     init,

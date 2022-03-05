@@ -39,7 +39,7 @@ browser.storage.onChanged.addListener(wholeInit);
 let BYPASSTABs = [];
 
 browser.webRequest.onBeforeRequest.addListener(
-  (details) => {
+  details => {
     const url = new URL(details.url);
     let initiator;
     if (details.originUrl)
@@ -50,7 +50,7 @@ browser.webRequest.onBeforeRequest.addListener(
     var newUrl;
 
     if (!newUrl) newUrl = youtubeHelper.redirect(url, details, initiator)
-    if (youtubeHelper.isPipedorInvidious(newUrl ?? url, details.type)) newUrl = youtubeHelper.addUrlParams(newUrl ?? url);
+    if (youtubeHelper.isPipedorInvidious(newUrl ?? url, details.type, 'invidious')) newUrl = youtubeHelper.addUrlParams(newUrl ?? url);
     if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
 
     if (!newUrl) newUrl = twitterHelper.redirect(url, initiator);
@@ -76,6 +76,8 @@ browser.webRequest.onBeforeRequest.addListener(
     if (generalHelper.isException(url, initiator)) newUrl = null;
 
     if (BYPASSTABs.includes(details.tabId)) newUrl = null;
+
+
 
     if (newUrl) {
       if (newUrl == 'CANCEL') {
@@ -109,7 +111,11 @@ browser.tabs.onRemoved.addListener((tabId) => {
 
 browser.tabs.onUpdated.addListener(
   (tabId, changeInfo, _) => {
-    if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'piped')) youtubeHelper.initPipedLocalStorage(tabId);
-    if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
+    let url;
+    try { url = new URL(changeInfo.url); }
+    catch (_) { return }
+    if (youtubeHelper.isPipedorInvidious(url, 'main_frame', 'piped')) youtubeHelper.initPipedLocalStorage(tabId);
+    if (twitterHelper.isNitter(url, 'main_frame')) newUrl = twitterHelper.initNitterCookies(url);
+    // if (changeInfo.url && youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
     // if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'invidious')) youtubeHelper.initInvidiousCookies(tabId);
   });
