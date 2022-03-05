@@ -175,10 +175,11 @@ let theme;
 let applyThemeToSites;
 function initBibliogramCookies(url) {
   let protocolHost = `${url.protocol}//${url.host}`;
-  browser.cookies.get({
-    url: protocolHost,
-    name: "settings"
-  }).then(
+  browser.cookies.get(
+    {
+      url: protocolHost,
+      name: "settings"
+    },
     cookie => {
       if (!cookie || !instancesCookies.includes(protocolHost)) {
         console.log(`initing cookie for ${protocolHost}`);
