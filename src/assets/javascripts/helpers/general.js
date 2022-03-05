@@ -13,7 +13,7 @@ let theme;
 const getTheme = () => theme;
 function setTheme(val) {
     theme = val
-    browser.storage.local.set({ theme });
+    browser.storage.local.set({ theme, instancesCookies: [] });
     console.log("theme: ", theme)
 }
 
@@ -60,7 +60,7 @@ async function init() {
                 if (r.exceptions) exceptions = r.exceptions;
                 alwaysUsePreferred = r.alwaysUsePreferred ?? false;
 
-                theme = r.them ?? "DEFAULT"
+                theme = r.theme ?? "DEFAULT"
                 applyThemeToSites = r.applyThemeToSites ?? false;
 
                 resolve();

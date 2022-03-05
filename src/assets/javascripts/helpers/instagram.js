@@ -122,7 +122,6 @@ function redirect(url, type) {
   if (type !== "main_frame" || url.pathname.match(bypassPaths))
     return 'CANCEL'; // Do not redirect /accounts, /embeds.js, or anything other than main_frame
 
-
   let instancesList;
   if (protocol == 'normal') instancesList = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects];
   else if (protocol == 'tor') instancesList = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects];
@@ -161,6 +160,50 @@ function changeInstance(url) {
   return `${randomInstance}${url.pathname}${url.search}`;
 }
 
+function isBibliogram(url) {
+  let protocolHost = `${url.protocol}//${url.host}`;
+  return [
+    ...redirects.bibliogram.normal,
+    ...redirects.bibliogram.tor,
+    ...bibliogramNormalCustomRedirects,
+    ...bibliogramTorCustomRedirects,
+  ].includes(protocolHost);
+}
+
+let instancesCookies;
+let theme;
+let applyThemeToSites;
+function initBibliogramCookies(url) {
+  let protocolHost = `${url.protocol}//${url.host}`;
+  browser.cookies.get({
+    url: protocolHost,
+    name: "settings"
+  }).then(
+    cookie => {
+      if (!cookie || !instancesCookies.includes(protocolHost)) {
+        console.log(`initing cookie for ${protocolHost}`);
+        let request = new XMLHttpRequest();
+        request.open("POST", `${protocolHost}/settings/return?referrer=%2F`);
+
+        if (applyThemeToSites) {
+          let themeValue;
+          if (theme == 'light') themeValue = "classic";
+          if (theme == 'dark') themeValue = "pussthecat.org-v2"
+
+          if (themeValue) {
+            let data = `csrf=x&theme=${themeValue}`;
+            request.send(data);
+            if (!instancesCookies.includes(protocolHost)) instancesCookies.push(protocolHost);
+            browser.storage.local.set({ instancesCookies })
+          }
+        }
+      } else {
+        console.log("cookie url", protocolHost);
+        console.log("instancesCookies", instancesCookies);
+      };
+    })
+
+}
 
 async function init() {
   return new Promise((resolve) => {
@@ -171,6 +214,11 @@ async function init() {
           "disableInstagram",
           "instagramRedirects",
 
+          "theme",
+          "applyThemeToSites",
+
+          "instancesCookies",
+
           "bibliogramNormalRedirectsChecks",
           "bibliogramTorRedirectsChecks",
 
@@ -178,20 +226,25 @@ async function init() {
           "bibliogramTorCustomRedirects",
           "instagramProtocol"
         ],
-        (result) => {
-          disable = result.disableInstagram ?? false;
+        r => {
+          disable = r.disableInstagram ?? false;
 
           redirects.bibliogram = dataJson.bibliogram;
 
-          if (result.instagramRedirects) redirects = result.instagramRedirects
+          if (r.instagramRedirects) redirects = r.instagramRedirects
 
-          bibliogramNormalRedirectsChecks = result.bibliogramNormalRedirectsChecks ?? [...redirects.bibliogram.normal];
-          bibliogramNormalCustomRedirects = result.bibliogramNormalCustomRedirects ?? [];
+          theme = r.theme ?? 'DEFAULT';
+          applyThemeToSites = r.applyThemeToSites ?? false;
 
-          bibliogramTorRedirectsChecks = result.bibliogramTorRedirectsChecks ?? [...redirects.bibliogram.tor];
-          bibliogramTorCustomRedirects = result.bibliogramTorCustomRedirects ?? [];
+          instancesCookies = r.instancesCookies ?? [];
 
-          protocol = result.instagramProtocol ?? "normal";
+          bibliogramNormalRedirectsChecks = r.bibliogramNormalRedirectsChecks ?? [...redirects.bibliogram.normal];
+          bibliogramNormalCustomRedirects = r.bibliogramNormalCustomRedirects ?? [];
+
+          bibliogramTorRedirectsChecks = r.bibliogramTorRedirectsChecks ?? [...redirects.bibliogram.tor];
+          bibliogramTorCustomRedirects = r.bibliogramTorCustomRedirects ?? [];
+
+          protocol = r.instagramProtocol ?? "normal";
 
           resolve();
         }
@@ -210,6 +263,9 @@ export default {
 
   getProtocol,
   setProtocol,
+
+  isBibliogram,
+  initBibliogramCookies,
 
   getBibliogramNormalRedirectsChecks,
   setBibliogramNormalRedirectsChecks,

@@ -80,7 +80,6 @@ generalHelper.init().then(() => {
   alwaysUsePreferredElement.checked = generalHelper.getAlwaysUsePreferred();
   themeElement.value = generalHelper.getTheme();
   applyThemeToSitesElement.checked = generalHelper.getApplyThemeToSites();
-  console.log("generalHelper.getAlwaysUsePreferred()");
   instanceTypeElement.addEventListener("change",
     (event) => {
       instanceType = event.target.options[instanceTypeElement.selectedIndex].value
