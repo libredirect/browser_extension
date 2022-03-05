@@ -35,6 +35,7 @@ Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)
 
 ## Donate
 [![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)
+[![Patreon](./img/patreon.svg)](https://patreon.com/LibRedirect)
 
 **BTC:** `bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q`
 
