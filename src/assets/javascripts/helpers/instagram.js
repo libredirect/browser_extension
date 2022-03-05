@@ -4,8 +4,6 @@ import commonHelper from './common.js'
 const targets = [
   "instagram.com",
   "www.instagram.com",
-  "help.instagram.com",
-  "about.instagram.com",
 ];
 let redirects = {
   "bibliogram": {
@@ -66,32 +64,22 @@ function setBibliogramTorCustomRedirects(val) {
 }
 
 const reservedPaths = [
-  "about",
-  "explore",
-  "support",
-  "press",
-  "api",
-  "privacy",
-  "safety",
-  "admin",
-  "graphql",
-  "accounts",
-  "help",
-  "terms",
-  "contact",
-  "blog",
-  "igtv",
   "u",
   "p",
-  "fragment",
-  "imageproxy",
-  "videoproxy",
-  ".well-known",
-  "tv",
-  "reel",
+  "privacy",
 ];
 
-const bypassPaths = /\/(accounts\/|embeds?.js)/;
+const bypassPaths = [
+  /about/,
+  /explore/,
+  /support/,
+  /press/,
+  /api/,
+  /privacy/,
+  /safety/,
+  /admin/,
+  /\/(accounts\/|embeds?.js)/
+];
 
 let disable;
 const getDisable = () => disable;
@@ -108,19 +96,17 @@ function setProtocol(val) {
   console.log("nitterProtocol: ", val)
 }
 
-function isInstagram(url, initiator) {
-  if (disable) return false;
+function redirect(url, type, initiator) {
+
+  if (disable) return;
   if (
     initiator &&
     ([...redirects.bibliogram.normal, ...bibliogramNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))
-  )
-    return false; // Do not redirect Bibliogram view on Instagram links
-  return targets.includes(url.host)
-}
+  ) return;
 
-function redirect(url, type) {
-  if (type !== "main_frame" || url.pathname.match(bypassPaths))
-    return 'CANCEL'; // Do not redirect /accounts, /embeds.js, or anything other than main_frame
+  if (!targets.includes(url.host)) return;
+
+  if (type !== "main_frame" || bypassPaths.some(rx => rx.test(url.pathname))) return;
 
   let instancesList;
   if (protocol == 'normal') instancesList = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects];
@@ -277,8 +263,6 @@ export default {
   setBibliogramNormalCustomRedirects,
   getBibliogramTorCustomRedirects,
   setBibliogramTorCustomRedirects,
-
-  isInstagram,
 
   redirect,
   init,

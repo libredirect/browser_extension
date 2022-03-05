@@ -110,12 +110,14 @@ document.getElementById("more-options").addEventListener("click",
   () => browser.runtime.openOptionsPage()
 );
 
-document.getElementById("change-instance").addEventListener("click",
-  () => browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+function changeInstance() {
+  browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     let currTab = tabs[0];
     if (currTab) {
       let url = currTab.url;
-      let tabUrl = new URL(url);
+      let tabUrl
+      try { tabUrl = new URL(url); }
+      catch (_) { return false; }
       let newUrl;
 
       newUrl = youtubeHelper.changeInstance(tabUrl);
@@ -136,7 +138,14 @@ document.getElementById("change-instance").addEventListener("click",
 
       if (!newUrl) newUrl = wikipediaHelper.changeInstance(tabUrl)
 
-      if (newUrl) browser.tabs.update({ url: newUrl });
+      if (newUrl) {
+        browser.tabs.update({ url: newUrl });
+        return true;
+      }
     }
   })
-);
+  return false;
+}
+let changeInstanceElement = document.getElementById("change-instance")
+changeInstanceElement.disabled = !changeInstance();
+changeInstanceElement.addEventListener("click", changeInstance);

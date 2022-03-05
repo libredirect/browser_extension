@@ -55,7 +55,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (!newUrl) newUrl = twitterHelper.redirect(url, initiator);
 
-    if (instagramHelper.isInstagram(url, initiator)) newUrl = instagramHelper.redirect(url, details.type);
+    if (!newUrl) newUrl = instagramHelper.redirect(url, details.type, initiator);
 
     if (mapsHelper.isMaps(url, initiator)) newUrl = mapsHelper.redirect(url);
 

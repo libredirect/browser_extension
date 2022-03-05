@@ -481,10 +481,10 @@ function changeInstance(url) {
     else if (protocol == 'tor') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
   }
   else if (frontend == 'pipedMaterial') {
-
     if (protocol == 'normal') instancesList = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects];
     else if (protocol == 'tor') instancesList = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects];
   }
+  else return null;
 
   console.log("instancesList", instancesList);
   let index = instancesList.indexOf(protocolHost);

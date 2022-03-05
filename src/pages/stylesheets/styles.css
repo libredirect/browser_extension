@@ -11,8 +11,8 @@ body {
 }
 
 @font-face {
-  font-family: 'OpenSans';
-  src: url('Open_Sans/OpenSans-VariableFont_wdth,wght.ttf');
+  font-family: 'Inter';
+  src: url('Inter-VariableFont_slnt,wght.ttf');
   font-weight: normal;
   font-style: normal;
 }
@@ -20,7 +20,7 @@ body {
 body {
   margin: auto;
   padding: 0;
-  font-family: 'OpenSans';
+  font-family: 'Inter';
   background-color: var(--bg-main);
   color: var(--text);
   overflow-x: hidden
@@ -263,7 +263,7 @@ div.buttons-inline {
   padding: 10px;
 }
 
-.button:active{
+.button:active {
   transform: translateY(1px);
 }
 
