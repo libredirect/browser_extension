@@ -77,8 +77,6 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (BYPASSTABs.includes(details.tabId)) newUrl = null;
 
-
-
     if (newUrl) {
       if (newUrl == 'CANCEL') {
         console.log(`Canceled ${url}`);
@@ -107,7 +105,6 @@ browser.tabs.onRemoved.addListener((tabId) => {
     console.log("Removed BYPASSTABs", tabId);
   }
 });
-
 
 browser.tabs.onUpdated.addListener(
   (tabId, changeInfo, _) => {

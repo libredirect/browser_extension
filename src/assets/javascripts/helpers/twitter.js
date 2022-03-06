@@ -224,6 +224,8 @@ async function init() {
           "theme",
           "applyThemeToSites",
 
+          "bypassWatchOnTwitter",
+
           "nitterNormalRedirectsChecks",
           "nitterNormalCustomRedirects",
 
