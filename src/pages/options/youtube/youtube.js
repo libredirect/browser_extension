@@ -32,7 +32,7 @@ function changeFrontendsSettings(frontend) {
         freetubeYatteeDivElement.style.display = 'none';
     }
     else if (frontend == 'pipedMaterial') {
-        invidiousPipedDivElement.style.display = 'block'
+        invidiousPipedDivElement.style.display = 'none'
         invidiousDivElement.style.display = 'none';
         pipedDivElement.style.display = 'none';
         pipedMaterialDivElement.style.display = 'block';
