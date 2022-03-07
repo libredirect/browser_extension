@@ -40,6 +40,7 @@ let BYPASSTABs = [];
 
 browser.webRequest.onBeforeRequest.addListener(
   details => {
+    // console.log("url", details.url);
     const url = new URL(details.url);
     let initiator;
     if (details.originUrl)
@@ -57,7 +58,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (!newUrl) newUrl = instagramHelper.redirect(url, details.type, initiator);
 
-    if (mapsHelper.isMaps(url, initiator)) newUrl = mapsHelper.redirect(url);
+    if (!newUrl) newUrl = mapsHelper.redirect(url, initiator);
 
     if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator);
 
