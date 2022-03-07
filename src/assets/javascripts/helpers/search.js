@@ -4,6 +4,7 @@ import commonHelper from './common.js'
 
 const targets = [
   /^https?:\/\/(www\.|maps\.|search\.|)google\.com(\...|)(\/search\?..*|\/$)/,
+  /^https?:\/\/libredirect\.onion/
   // /^https?:\/\/yandex\.com(\...|)(\/search\/..*|\/$)/,
 ];
 let redirects = {
@@ -159,6 +160,7 @@ function isSearch(url) {
 }
 
 function redirect(url) {
+  console.log(url.href);
   let randomInstance;
   let path;
   if (frontend == 'searx') {
