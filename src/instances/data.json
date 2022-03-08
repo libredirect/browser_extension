@@ -15,6 +15,7 @@
       "https://invidious.weblibre.org",
       "https://youtube.076.ne.jp",
       "https://invidious.privacy.gd",
+      "https://invidious.esmailelbob.xyz",
       "https://invidious.namazso.eu"
     ],
     "tor": [
@@ -108,6 +109,7 @@
       "https://insta.trom.tf",
       "https://bib.riverside.rocks",
       "https://bibliogram.esmailelbob.xyz",
+      "https://insta.tromdienste.de",
       "https://bib.actionsack.com",
       "https://biblio.alefvanoon.xyz"
     ],
@@ -188,7 +190,8 @@
       "https://translate.igna.rocks",
       "https://lingva.pussthecat.org",
       "https://translate.datatunnel.xyz",
-      "https://lingva.esmailelbob.xyz"
+      "https://lingva.esmailelbob.xyz",
+      "https://translate.plausibility.cloud"
     ],
     "tor": []
   },
@@ -199,7 +202,6 @@
       "https://dynabyte.ca",
       "https://engo.mint.lgbt",
       "https://jsearch.pw",
-      "https://metasearch.nl",
       "https://nibblehole.com",
       "https://northboot.xyz",
       "https://paulgo.io",
@@ -207,7 +209,6 @@
       "https://s.zhaocloud.net",
       "https://search.antonkling.se",
       "https://search.asynchronousexchange.com",
-      "https://search.biboumail.fr",
       "https://search.bus-hit.me",
       "https://search.disroot.org",
       "https://search.ethibox.fr",
@@ -235,6 +236,7 @@
       "https://searx.gnous.eu",
       "https://searx.gnu.style",
       "https://searx.hardwired.link",
+      "https://searx.josie.lol",
       "https://searx.lavatech.top",
       "https://searx.mastodontech.de",
       "https://searx.mha.fi",
@@ -266,7 +268,6 @@
       "https://searx.tux.land",
       "https://searx.tuxcloud.net",
       "https://searx.tyil.nl",
-      "https://searx.vitanetworks.link",
       "https://searx.webheberg.info",
       "https://searx.xkek.net",
       "https://searx.xyz",
@@ -280,12 +281,10 @@
       "https://suche.uferwerk.org",
       "https://swag.pw",
       "https://sx.catgirl.cloud",
-      "https://sx.fedi.tech",
       "https://timdor.noip.me/searx",
       "https://trovu.komun.org",
       "https://www.gruble.de",
       "https://www.webrats.xyz",
-      "https://xeek.com",
       "https://searx.roflcopter.fr"
     ],
     "tor": [
