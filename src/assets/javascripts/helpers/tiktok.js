@@ -100,7 +100,7 @@ function redirect(url, type) {
     // https://www.tiktok.com/@keysikaspol/video/7061265241887345946
     // https://www.tiktok.com/@keysikaspol
 
-    if (type != "main_frame" && "sub_frame" && "xmlhttprequest") return null;
+    if (type != "main_frame" && type != "sub_frame" && type != "xmlhttprequest") return null;
 
     let instancesList;
     if (protocol == 'normal') instancesList = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];

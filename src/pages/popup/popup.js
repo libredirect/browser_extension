@@ -14,6 +14,7 @@ import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
+import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
 
 let disableTwitterElement = document.getElementById("disable-nitter");
 let disableYoutubeElement = document.getElementById("disable-youtube");
@@ -27,20 +28,22 @@ let disableWikipediaElement = document.getElementById("disable-wikipedia");
 let disableMediumElement = document.getElementById("disable-medium");
 let disableImgurElement = document.getElementById("disable-imgur");
 let disableTiktokElement = document.getElementById("disable-tiktok");
+let disablePixivElement = document.getElementById("disable-pixiv");
 
 async function wholeInit() {
-  await youtubeHelper.init();
-  await youtubeMusicHelper.init();
-  await twitterHelper.init();
-  await instagramHelper.init();
-  await mapsHelper.init();
-  await redditHelper.init();
-  await searchHelper.init();
-  await translateHelper.init();
-  await wikipediaHelper.init();
-  await imgurHelper.init();
-  await tiktokHelper.init();
-  await mediumHelper.init();
+  await youtubeHelper.init()
+  await youtubeMusicHelper.init()
+  await twitterHelper.init()
+  await instagramHelper.init()
+  await mapsHelper.init()
+  await redditHelper.init()
+  await searchHelper.init()
+  await translateHelper.init()
+  await wikipediaHelper.init()
+  await imgurHelper.init()
+  await tiktokHelper.init()
+  await pixivHelper.init()
+  await mediumHelper.init()
 };
 
 wholeInit().then(() => {
@@ -55,6 +58,7 @@ wholeInit().then(() => {
   disableWikipediaElement.checked = !wikipediaHelper.getDisable();
   disableImgurElement.checked = !imgurHelper.getDisable();
   disableTiktokElement.checked = !tiktokHelper.getDisable();
+  disablePixivElement.checked = !pixivHelper.getDisable();
   disableMediumElement.checked = !mediumHelper.getDisable();
 })
 
@@ -100,6 +104,10 @@ disableImgurElement.addEventListener("change",
 
 disableTiktokElement.addEventListener("change",
   event => tiktokHelper.setDisable(!event.target.checked)
+);
+
+disablePixivElement.addEventListener("change",
+  event => pixivHelper.setDisable(!event.target.checked)
 );
 
 disableMediumElement.addEventListener("change",

@@ -11,6 +11,7 @@ import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
+import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
 import generalHelper from "../../assets/javascripts/helpers/general.js";
 import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
 
@@ -29,6 +30,7 @@ async function wholeInit() {
   wikipediaHelper.init()
   imgurHelper.init()
   tiktokHelper.init()
+  pixivHelper.init()
   generalHelper.init()
 
 }
@@ -67,6 +69,8 @@ browser.webRequest.onBeforeRequest.addListener(
     if (imgurHelper.isImgur(url, initiator)) newUrl = imgurHelper.redirect(url, details.type);
 
     if (tiktokHelper.isTiktok(url, initiator)) newUrl = tiktokHelper.redirect(url, details.type);
+
+    if (!newUrl) newUrl = pixivHelper.redirect(url, details.type, initiator);
 
     if (translateHelper.isTranslate(url, initiator)) newUrl = translateHelper.redirect(url);
 

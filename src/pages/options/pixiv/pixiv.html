@@ -38,7 +38,7 @@
     </div>
     <div class="title">
       <img src="../../../assets/images/tiktok-icon.png" />
-      <a href="../tiktok/tiktok.html" class="selected">TikTok</a>
+      <a href="../tiktok/tiktok.html">TikTok</a>
     </div>
     <div class="title">
       <img src="../../../assets/images/reddit-icon.png" />
@@ -50,7 +50,7 @@
     </div>
     <div class="title">
       <img src="../../../assets/images/pixiv-icon.png" />
-      <a href="../pixiv/pixiv.html">Pixiv</a>
+      <a href="../pixiv/pixiv.html" class="selected">Pixiv</a>
     </div>
     <div class="title">
       <img src="../../../assets/images/wikipedia-icon.svg" />
@@ -93,7 +93,7 @@
   <section class="option-block">
     <div class="some-block option-block">
       <h4>Enable</h4>
-      <input id="disable-tiktok" type="checkbox" checked />
+      <input id="disable-pixiv" type="checkbox" checked />
     </div>
 
     <div class="some-block option-block">
@@ -110,15 +110,15 @@
       <div class="some-block option-block">
         <h4>Default Instances</h4>
       </div>
-      <div class="checklist" id="proxiTok-normal-checklist"></div>
+      <div class="checklist" id="pixivMoe-normal-checklist"></div>
       <hr>
       <div class="some-block option-block">
         <h4>Custom Instances</h4>
       </div>
-      <form id="custom-proxiTok-normal-instance-form">
+      <form id="custom-pixivMoe-normal-instance-form">
         <div class="some-block option-block">
-          <input id="proxiTok-normal-custom-instance" placeholder="https://proxiTok.com" type="url" />
-          <button type="submit" class="add" id="proxiTok-normal-add-instance">
+          <input id="pixivMoe-normal-custom-instance" placeholder="https://pixiv.moe" type="url" />
+          <button type="submit" class="add" id="pixivMoe-normal-add-instance">
             <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
               <path d="M0 0h24v24H0V0z" fill="none" />
               <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
@@ -126,21 +126,21 @@
           </button>
         </div>
       </form>
-      <div class="checklist" id="proxiTok-normal-custom-checklist"></div>
+      <div class="checklist" id="pixivMoe-normal-custom-checklist"></div>
     </div>
     <div id="tor">
       <div class="some-block option-block">
         <h4>Default Instances</h4>
       </div>
-      <div class="checklist" id="proxiTok-tor-checklist"></div>
+      <div class="checklist" id="pixivMoe-tor-checklist"></div>
       <hr>
       <div class="some-block option-block">
         <h4>Custom Instances</h4>
       </div>
-      <form id="custom-proxiTok-tor-instance-form">
+      <form id="custom-pixivMoe-tor-instance-form">
         <div class="some-block option-block">
-          <input id="proxiTok-tor-custom-instance" placeholder="https://proxiTok.com" type="url" />
-          <button type="submit" class="add" id="proxiTok-tor-add-instance">
+          <input id="pixivMoe-tor-custom-instance" placeholder="https://pixivMoe.com" type="url" />
+          <button type="submit" class="add" id="pixivMoe-tor-add-instance">
             <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
               <path d="M0 0h24v24H0V0z" fill="none" />
               <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
@@ -148,13 +148,13 @@
           </button>
         </div>
       </form>
-      <div class="checklist" id="proxiTok-tor-custom-checklist"></div>
+      <div class="checklist" id="pixivMoe-tor-custom-checklist"></div>
     </div>
   </section>
 
 
   <script type="module" src="../init.js"></script>
-  <script type="module" src="./tiktok.js"></script>
+  <script type="module" src="./pixiv.js"></script>
   <!-- <script src="../../assets/javascripts/localise.js"></script> -->
 </body>
 
