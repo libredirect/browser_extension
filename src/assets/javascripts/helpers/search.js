@@ -3,7 +3,7 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-  /^https?:\/\/(www\.|maps\.|search\.|)google\.com(\...|)(\/search\?..*|\/$)/,
+  /^https?:\/\/(www\.|maps\.|search\.|)google\.com(\...|)(\/search\?q=..*|\/$)/,
   /^https?:\/\/libredirect\.onion/
   // /^https?:\/\/yandex\.com(\...|)(\/search\/..*|\/$)/,
 ];
