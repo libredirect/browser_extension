@@ -8,7 +8,8 @@ const targets = [
   /^https?:\/\/mobile\.twitter\.com/,
   /^https?:\/\/pbs\.twimg\.com/,
   /^https?:\/\/video\.twimg\.com/,
-  /^https?:\/\/platform\.twitter\.com\/embed/
+  /^https?:\/\/platform\.twitter\.com\/embed/,
+  /^https?:\/\/t\.co/
 ];
 
 let redirects = {
@@ -151,7 +152,8 @@ function redirect(url, initiator) {
 
   else if (url.pathname.split("/").includes("tweets"))
     return `${randomInstance}${url.pathname.replace("/tweets", "")}${url.search}`;
-
+  else if (url.host == 't.co')
+    return `${randomInstance}/t.co${url.pathname}`;
   else
     return `${randomInstance}${url.pathname}${url.search}`;
 }

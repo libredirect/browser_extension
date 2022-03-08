@@ -113,7 +113,7 @@ browser.tabs.onUpdated.addListener(
     try { url = new URL(changeInfo.url); }
     catch (_) { return }
     if (youtubeHelper.isPipedorInvidious(url, 'main_frame', 'piped')) youtubeHelper.initPipedLocalStorage(tabId);
-    if (twitterHelper.isNitter(url, 'main_frame')) newUrl = twitterHelper.initNitterCookies(url);
+    if (twitterHelper.isNitter(url, 'main_frame')) twitterHelper.initNitterCookies(url);
     if (instagramHelper.isBibliogram(url)) instagramHelper.initBibliogramCookies(url);
     // if (changeInfo.url && youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
     // if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'invidious')) youtubeHelper.initInvidiousCookies(tabId);
