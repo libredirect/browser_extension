@@ -164,11 +164,9 @@ let popupFrontends;
 generalHelper.init().then(() => {
   popupFrontends = generalHelper.getPopupFrontends();
 
-  for (const frontend of generalHelper.allPopupFrontends) {
-    console.log(frontend)
+  for (const frontend of generalHelper.allPopupFrontends)
     if (!popupFrontends.includes(frontend))
       document.getElementById(frontend).classList.add("hide")
     else
       document.getElementById(frontend).classList.remove("hide")
-  }
 });

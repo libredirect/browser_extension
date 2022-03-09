@@ -110,6 +110,52 @@ browser.tabs.onRemoved.addListener((tabId) => {
   }
 });
 
+
+
+
+
+browser.webRequest.onResponseStarted.addListener(
+  details => {
+    console.log("onResponseStarted");
+    let autoRedirect = generalHelper.getAutoRedirect();
+
+    if (!autoRedirect) return null;
+
+    if (details.statusCode >= 500) {
+
+      const url = new URL(details.url);
+      let newUrl;
+
+      newUrl = youtubeHelper.changeInstance(url);
+
+      if (!newUrl) newUrl = twitterHelper.changeInstance(url);
+
+      if (!newUrl) newUrl = instagramHelper.changeInstance(url);
+
+      if (!newUrl) newUrl = redditHelper.changeInstance(url);
+
+      if (!newUrl) newUrl = searchHelper.changeInstance(url);
+
+      if (!newUrl) newUrl = translateHelper.changeInstance(url);
+
+      if (!newUrl) newUrl = mediumHelper.changeInstance(url);
+
+      if (!newUrl) newUrl = imgurHelper.changeInstance(url);
+
+      if (!newUrl) newUrl = wikipediaHelper.changeInstance(url)
+
+      if (newUrl) {
+        browser.tabs.update({ url: '../errors/instance_offline.html' });
+
+        setTimeout(() => browser.tabs.update({ url: newUrl }), 2000);
+      }
+
+
+    }
+  },
+  { urls: ["<all_urls>"], }
+)
+
 browser.tabs.onUpdated.addListener(
   (tabId, changeInfo, _) => {
     let url;

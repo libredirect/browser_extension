@@ -62,6 +62,11 @@ alwaysUsePreferredElement.addEventListener("change",
   event => generalHelper.setAlwaysUsePreferred(event.target.checked)
 );
 
+let autoRedirectElement = document.getElementById("auto-redirect")
+autoRedirectElement.addEventListener("change",
+  event => generalHelper.setAutoRedirect(event.target.checked)
+);
+
 let applyThemeToSitesElement = document.getElementById("apply-theme-to-sites")
 applyThemeToSitesElement.addEventListener("change",
   event => generalHelper.setApplyThemeToSites(event.target.checked)
@@ -92,7 +97,7 @@ for (const frontend of generalHelper.allPopupFrontends)
 
 generalHelper.init().then(() => {
   alwaysUsePreferredElement.checked = generalHelper.getAlwaysUsePreferred();
-  console.log("alwaysUsePreferredElement.checked", alwaysUsePreferredElement.checked);
+  autoRedirectElement.checked = generalHelper.getAutoRedirect();
   themeElement.value = generalHelper.getTheme();
   applyThemeToSitesElement.checked = generalHelper.getApplyThemeToSites();
   instanceTypeElement.addEventListener("change",

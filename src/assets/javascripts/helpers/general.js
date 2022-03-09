@@ -29,12 +29,19 @@ let exceptions = {
     "url": [],
     "regex": [],
 };
-
 const getExceptions = () => exceptions;
 function setExceptions(val) {
     exceptions = val;
     browser.storage.local.set({ exceptions })
     console.log("exceptions: ", val)
+}
+
+let autoRedirect;
+const getAutoRedirect = () => autoRedirect;
+function setAutoRedirect(val) {
+    autoRedirect = val;
+    browser.storage.local.set({ autoRedirect })
+    console.log("autoRedirect: ", val)
 }
 
 function isException(url) {
@@ -55,7 +62,8 @@ async function init() {
                 "alwaysUsePreferred",
                 "theme",
                 "applyThemeToSites",
-                "popupFrontends"
+                "popupFrontends",
+                "autoRedirect"
             ],
             r => { // r = result
                 if (r.exceptions) exceptions = r.exceptions;
@@ -78,6 +86,9 @@ async function init() {
                     "wikipedia",
                     "medium",
                 ];
+
+                autoRedirect = r.autoRedirect ?? false;
+
                 resolve();
             }
         )
@@ -113,6 +124,9 @@ let allPopupFrontends = [
 export default {
     getExceptions,
     setExceptions,
+
+    getAutoRedirect,
+    setAutoRedirect,
 
     getAlwaysUsePreferred,
     setAlwaysUsePreferred,
