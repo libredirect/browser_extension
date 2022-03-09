@@ -10,6 +10,7 @@ Instagram => [Bibliogram](https://sr.ht/~cadence/bibliogram/)\
 TikTok => [ProxiTok](https://github.com/pablouser1/ProxiTok)\
 Imgur => [Rimgo](https://codeberg.org/video-prize-ranch/rimgo)\
 Reddit => [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances), [Old Reddit](https://old.reddit.com), [Mobile Reddit](https://i.reddit.com)\
+Pixiv => [pixiv萌え](https://github.com/kokororin/pixiv.moe)\
 Search => [SearX](https://searx.github.io/searx/), [Whoogle](https://benbusby.com/projects/whoogle-search/)\
 Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web), [LingvaTranslate](https://github.com/TheDavidDelta/lingva-translate)\
 Maps => [OpenStreetMap](https://www.openstreetmap.org/)\
