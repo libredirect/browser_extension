@@ -8,17 +8,20 @@ disableRedditElement.addEventListener("change",
 let libredditDivElement = document.getElementById("libreddit")
 let tedditDivElement = document.getElementById("teddit")
 
-
 function changeFrontendsSettings(frontend) {
+    let frontendElement = document.getElementById("frontend");
     if (frontend == 'libreddit') {
+        frontendElement.innerHTML = 'Frontend';
         libredditDivElement.style.display = 'block';
         tedditDivElement.style.display = 'none';
     }
     else if (frontend == 'teddit') {
+        frontendElement.innerHTML = 'Frontend';
         libredditDivElement.style.display = 'none';
         tedditDivElement.style.display = 'block';
     }
     else if (frontend == 'old') {
+        frontendElement.innerHTML = `Frontend: <span style="color:red;">This isn't a truly privacy frontend</span>`;
         libredditDivElement.style.display = 'none';
         tedditDivElement.style.display = 'none';
     }
