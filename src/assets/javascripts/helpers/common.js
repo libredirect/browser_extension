@@ -121,7 +121,7 @@ function processDefaultCustomInstances(
     ].join('\n<hr>\n');
 
   calcNameCheckBoxes();
-  document.getElementById(`${name}-${protocol}-toogle-all`).addEventListener("change", (event) => {
+  document.getElementById(`${name}-${protocol}-toogle-all`).addEventListener("change", event => {
     if (event.target.checked)
       nameDefaultRedirects = [...nameHelper.getRedirects()[name][protocol]];
     else

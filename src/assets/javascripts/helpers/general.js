@@ -55,6 +55,7 @@ async function init() {
                 "alwaysUsePreferred",
                 "theme",
                 "applyThemeToSites",
+                "popupFrontends"
             ],
             r => { // r = result
                 if (r.exceptions) exceptions = r.exceptions;
@@ -63,11 +64,51 @@ async function init() {
                 theme = r.theme ?? "DEFAULT"
                 applyThemeToSites = r.applyThemeToSites ?? false;
 
+                popupFrontends = r.popupFrontends ?? [
+                    "youtube",
+                    "youtubeMusic",
+                    "twitter",
+                    "instagram",
+                    "tikTok",
+                    "imgur",
+                    "reddit",
+                    "search",
+                    "translate",
+                    "maps",
+                    "wikipedia",
+                    "medium",
+                ];
                 resolve();
             }
         )
     )
 }
+
+
+let popupFrontends;
+const getPopupFrontends = () => popupFrontends;
+function setPopupFrontends(val) {
+    popupFrontends = val;
+    browser.storage.local.set({ popupFrontends })
+    console.log("popupFrontends: ", val)
+}
+
+let allPopupFrontends = [
+    "youtube",
+    "youtubeMusic",
+    "twitter",
+    "instagram",
+    "tikTok",
+    "imgur",
+    "reddit",
+    "pixiv",
+    "search",
+    "translate",
+    "maps",
+    "wikipedia",
+    "medium",
+];
+
 
 export default {
     getExceptions,
@@ -78,6 +119,11 @@ export default {
 
     getApplyThemeToSites,
     setApplyThemeToSites,
+
+    getPopupFrontends,
+    setPopupFrontends,
+
+    allPopupFrontends,
 
     getTheme,
     setTheme,

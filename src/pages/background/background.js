@@ -32,7 +32,6 @@ async function wholeInit() {
   tiktokHelper.init()
   pixivHelper.init()
   generalHelper.init()
-
 }
 wholeInit();
 

@@ -618,7 +618,6 @@ function addUrlParams(url) {
   else return;
 }
 
-
 function initPipedLocalStorage(tabId) {
   browser.tabs.executeScript(
     tabId,
@@ -736,7 +735,7 @@ async function init() {
 
           persistInvidiousPrefs = r.persistInvidiousPrefs ?? false;
 
-          alwaysUsePreferred = r.alwaysUsePreferred ?? true;
+          alwaysUsePreferred = r.alwaysUsePreferred ?? false;
 
           bypassWatchOnYoutube = r.bypassWatchOnYoutube ?? true;
 

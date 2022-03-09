@@ -76,12 +76,27 @@ let nameCustomInstanceInput = document.getElementById("exceptions-custom-instanc
 let instanceTypeElement = document.getElementById("exceptions-custom-instance-type");
 let instanceType = "url"
 
+let popupFrontends;
+for (const frontend of generalHelper.allPopupFrontends)
+  document.getElementById(frontend).addEventListener("change",
+    event => {
+      if (event.target.checked && !popupFrontends.includes(frontend))
+        popupFrontends.push(frontend)
+      else if (popupFrontends.includes(frontend)) {
+        var index = popupFrontends.indexOf(frontend);
+        if (index !== -1) popupFrontends.splice(index, 1);
+      }
+      generalHelper.setPopupFrontends(popupFrontends);
+    }
+  )
+
 generalHelper.init().then(() => {
   alwaysUsePreferredElement.checked = generalHelper.getAlwaysUsePreferred();
+  console.log("alwaysUsePreferredElement.checked", alwaysUsePreferredElement.checked);
   themeElement.value = generalHelper.getTheme();
   applyThemeToSitesElement.checked = generalHelper.getApplyThemeToSites();
   instanceTypeElement.addEventListener("change",
-    (event) => {
+    event => {
       instanceType = event.target.options[instanceTypeElement.selectedIndex].value
       if (instanceType == 'url') {
         nameCustomInstanceInput.setAttribute("type", "url");
@@ -149,4 +164,8 @@ generalHelper.init().then(() => {
     }
     calcExceptionsCustomInstances();
   })
+
+  popupFrontends = generalHelper.getPopupFrontends();
+  for (const frontend of generalHelper.allPopupFrontends)
+    document.getElementById(frontend).checked = popupFrontends.includes(frontend);
 })

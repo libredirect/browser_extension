@@ -2,3 +2,7 @@ body {
     width: 240px;
     min-height: auto;
 }
+
+.hide {
+    display: none !important;
+}

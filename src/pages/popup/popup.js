@@ -15,6 +15,7 @@ import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
+import generalHelper from "../../assets/javascripts/helpers/general.js";
 
 let disableTwitterElement = document.getElementById("disable-nitter");
 let disableYoutubeElement = document.getElementById("disable-youtube");
@@ -157,3 +158,17 @@ function changeInstance() {
 let changeInstanceElement = document.getElementById("change-instance")
 changeInstanceElement.disabled = !changeInstance();
 changeInstanceElement.addEventListener("click", changeInstance);
+
+
+let popupFrontends;
+generalHelper.init().then(() => {
+  popupFrontends = generalHelper.getPopupFrontends();
+
+  for (const frontend of generalHelper.allPopupFrontends) {
+    console.log(frontend)
+    if (!popupFrontends.includes(frontend))
+      document.getElementById(frontend).classList.add("hide")
+    else
+      document.getElementById(frontend).classList.remove("hide")
+  }
+});

@@ -245,7 +245,7 @@ async function init() {
 
           bypassWatchOnTwitter = r.bypassWatchOnTwitter ?? true;
 
-          alwaysUsePreferred = r.alwaysUsePreferred ?? true;
+          alwaysUsePreferred = r.alwaysUsePreferred ?? false;
 
           theme = r.theme ?? 'DEFAULT';
           applyThemeToSites = r.applyThemeToSites ?? false;

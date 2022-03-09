@@ -3,13 +3,8 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-  /^https?:\/\/reddit\.com/,
-  /^https?:\/\/www\.reddit\.com/,
-  /^https?:\/\/np\.reddit\.com/,
-  /^https?:\/\/new\.reddit\.com/,
-  /^https?:\/\/amp\.reddit\.com/,
-  /^https?:\/\/i\.redd\.it/,
-  /^https?:\/\/redd\.it/,
+  /^https?:\/\/(www\.|old\.|np\.|new\.|amp\.|)reddit\.com/,
+  /^https?:\/\/(i\.|)redd\.it/,
 ];
 let redirects = {
   // modern UI
@@ -397,7 +392,7 @@ async function init() {
 
           bypassWatchOnReddit = result.bypassWatchOnReddit ?? true;
 
-          alwaysUsePreferred = result.alwaysUsePreferred ?? true;
+          alwaysUsePreferred = result.alwaysUsePreferred ?? false;
 
           redirects.teddit = dataJson.teddit;
           if (result.redditRedirects) redirects = result.redditRedirects;
