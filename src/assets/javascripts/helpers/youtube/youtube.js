@@ -440,8 +440,6 @@ function redirect(url, details, initiator) {
 }
 
 function changeInstance(url) {
-  console.log("changeInstance Youtube");
-
   let protocolHost = `${url.protocol}//${url.host}`;
 
   console.log("protocolHost", protocolHost);

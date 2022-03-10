@@ -98,11 +98,9 @@ function setWikilessTorCustomRedirects(val) {
 let theme;
 let applyThemeToSites;
 function initWikilessCookies() {
-  console.log("applyThemeToSites", applyThemeToSites)
   let themeValue;
   if (theme == 'light') themeValue = 'white';
   if (theme == 'dark') themeValue = 'dark';
-  console.log("themeValue", themeValue)
   if (applyThemeToSites && themeValue) {
     let allInstances = [...redirects.wikiless.normal, ...redirects.wikiless.tor, ...wikilessNormalCustomRedirects, ...wikilessTorCustomRedirects]
     let checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects, ...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects]

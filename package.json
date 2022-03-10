@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/LibRedirect/LibRedirect/issues"
   },
-  "homepage": "https://github.com/LibRedirect/LibRedirect#readme",
+  "homepage": "https://github.com/LibRedirect/LibRedirect",
   "devDependencies": {
     "web-ext": "^6.7.0"
   },

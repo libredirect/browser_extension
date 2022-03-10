@@ -32,9 +32,11 @@ div.some-block input[type="checkbox"] {
   -webkit-appearance: none;
 }
 
-div.title {
+.title {
   display: flex;
   align-items: center;
+  text-decoration: none;
+  color: var(--text);
 }
 
 img, svg {

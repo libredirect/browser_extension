@@ -3,7 +3,8 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-    /^https?:\/\/send\.firefox\.com\/$/,
+    /^https?:\/\/send.onion\/$/,
+    /^ https ?: \/\/send\.firefox\.com\/$/,
     /^https?:\/\/sendfiles\.online\/$/
 ];
 
