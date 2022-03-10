@@ -537,87 +537,6 @@ function isPipedorInvidious(url, type, frontend) {
   ].includes(protocolHost);
 }
 
-let applyThemeToSites;
-function addUrlParams(url) {
-  let protocolHost = `${url.protocol}//${url.host}`;
-  let isChanged = false;
-  console.log("Adding URL Params", protocolHost);
-  console.log("searchParams", url.searchParams);
-  let oldParams = { ...url.searchParams };
-  if (
-    [
-      ...redirects.invidious.normal,
-      ...redirects.invidious.tor,
-      ...invidiousNormalCustomRedirects,
-      ...invidiousTorCustomRedirects
-    ].includes(protocolHost)
-  ) {
-
-    if (applyThemeToSites && !url.searchParams.has("dark_mode") && theme != 'DEFAULT') {
-      if (theme == 'dark') url.searchParams.append("dark_mode", true);
-      else if (theme == 'light') url.searchParams.append("dark_mode", false);
-      isChanged = true;
-    }
-
-    if (!url.searchParams.has("volume") && volume != "--") {
-      url.searchParams.append("volume", volume);
-      isChanged = true;
-    }
-
-    if (!url.searchParams.has("autoplay") && autoplay != "DEFAULT") {
-      url.searchParams.append("autoplay", autoplay);
-      isChanged = true;
-    }
-
-    if (!url.searchParams.has("local") && invidiousAlwaysProxy != "DEFAULT") {
-      url.searchParams.append("local", invidiousAlwaysProxy);
-      isChanged = true;
-    }
-
-    if (!url.searchParams.has("quality") && invidiousVideoQuality != "DEFAULT") {
-      url.searchParams.append("quality", invidiousVideoQuality);
-      isChanged = true;
-    }
-
-    if (!url.searchParams.has("player_style") && invidiousPlayerStyle != "DEFAULT") {
-      url.searchParams.append("player_style", invidiousPlayerStyle);
-      isChanged = true;
-    };
-
-    if (!url.searchParams.has("subtitles") && invidiousSubtitles.trim() != '') {
-      url.searchParams.append("subtitles", invidiousSubtitles);
-      isChanged = true;
-    }
-  }
-  else if (
-    [
-      ...redirects.piped.normal,
-      ...redirects.piped.tor,
-      ...pipedNormalCustomRedirects,
-      ...pipedTorCustomRedirects,
-    ].includes(protocolHost)
-  ) {
-
-    if (!url.searchParams.has("theme") && theme != "DEFAULT") {
-      url.searchParams.append("theme", theme);
-      isChanged = true;
-    }
-
-    if (!url.searchParams.has("volume") && volume != "--") {
-      url.searchParams.append("volume", volume / 100);
-      isChanged = true;
-    }
-
-    if (!url.searchParams.has("playerAutoPlay") && autoplay != "DEFAULT") {
-      url.searchParams.append("playerAutoPlay", autoplay);
-      isChanged = true;
-    }
-  }
-
-  if (isChanged) return url.href;
-  else return;
-}
-
 function initPipedLocalStorage(tabId) {
   browser.tabs.executeScript(
     tabId,
@@ -638,14 +557,46 @@ function initPipedMaterialLocalStorage(tabId) {
   );
 }
 
-function initInvidiousCookies(tabId) {
-  browser.tabs.executeScript(
-    tabId,
-    {
-      file: "/assets/javascripts/helpers/youtube/invidious-preferences.js",
-      runAt: "document_start"
-    }
-  );
+let applyThemeToSites;
+function initInvidiousCookies() {
+  console.log("initInvidiousCookies");
+
+  let prefs = {};
+  if (invidiousAlwaysProxy != "DEFAULT") prefs.local = invidiousAlwaysProxy == 'true';
+  if (invidiousVideoQuality != "DEFAULT") prefs.quality = invidiousVideoQuality;
+  if (applyThemeToSites && theme != "DEFAULT") prefs.dark_mode = theme;
+  if (volume != "--") prefs.volume = parseInt(volume);
+  if (invidiousPlayerStyle != "DEFAULT") prefs.player_style = invidiousPlayerStyle;
+  if (invidiousSubtitles != "DEFAULT") prefs.subtitles = invidiousSubtitles;
+  if (autoplay != "DEFAULT") prefs.autoplay = autoplay == 'true';
+
+  let allInstances = [
+    ...redirects.invidious.normal,
+    ...redirects.invidious.tor,
+    ...invidiousNormalCustomRedirects,
+    ...invidiousTorCustomRedirects,
+  ]
+
+  let checkedInstances = [
+    ...invidiousNormalRedirectsChecks,
+    ...invidiousNormalCustomRedirects,
+    ...invidiousTorRedirectsChecks,
+    ...invidiousTorCustomRedirects,
+  ];
+
+  for (const item of allInstances)
+    if (!checkedInstances.includes(item))
+      browser.cookies.remove({
+        url: item,
+        name: "PREFS",
+      })
+
+  for (const instanceUrl of checkedInstances)
+    browser.cookies.set({
+      url: instanceUrl,
+      name: "PREFS",
+      value: encodeURIComponent(JSON.stringify(prefs))
+    })
 }
 
 async function init() {
@@ -741,6 +692,8 @@ async function init() {
 
           if (r.youtubeEmbedExceptions) exceptions = r.youtubeEmbedExceptions;
 
+          initInvidiousCookies();
+
           resolve();
         });
     });
@@ -769,7 +722,6 @@ export default {
   changeInstance,
 
   isPipedorInvidious,
-  addUrlParams,
 
   getDisable,
   setDisable,

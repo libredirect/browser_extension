@@ -21,7 +21,7 @@ function changeFrontendsSettings(frontend) {
         tedditDivElement.style.display = 'block';
     }
     else if (frontend == 'old') {
-        frontendElement.innerHTML = `Frontend: <span style="color:red;">This isn't a truly privacy frontend</span>`;
+        frontendElement.innerHTML = `Frontend: <span style="color:red;">This isn't a fully private frontend</span>`;
         libredditDivElement.style.display = 'none';
         tedditDivElement.style.display = 'none';
     }

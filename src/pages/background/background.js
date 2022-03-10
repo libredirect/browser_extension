@@ -52,7 +52,7 @@ browser.webRequest.onBeforeRequest.addListener(
     var newUrl;
 
     if (!newUrl) newUrl = youtubeHelper.redirect(url, details, initiator)
-    if (youtubeHelper.isPipedorInvidious(newUrl ?? url, details.type, 'invidious')) newUrl = youtubeHelper.addUrlParams(newUrl ?? url);
+    // if (youtubeHelper.isPipedorInvidious(newUrl ?? url, details.type, 'invidious')) newUrl = youtubeHelper.addUrlParams(newUrl ?? url);
     if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
 
     if (!newUrl) newUrl = twitterHelper.redirect(url, initiator);
@@ -162,7 +162,7 @@ browser.tabs.onUpdated.addListener(
     try { url = new URL(changeInfo.url); }
     catch (_) { return }
     if (youtubeHelper.isPipedorInvidious(url, 'main_frame', 'piped')) youtubeHelper.initPipedLocalStorage(tabId);
-    if (twitterHelper.isNitter(url, 'main_frame')) twitterHelper.initNitterCookies(url);
+    // if (twitterHelper.isNitter(url, 'main_frame')) twitterHelper.initNitterCookies();
     if (instagramHelper.isBibliogram(url)) instagramHelper.initBibliogramCookies(url);
     // if (changeInfo.url && youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
     // if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'invidious')) youtubeHelper.initInvidiousCookies(tabId);

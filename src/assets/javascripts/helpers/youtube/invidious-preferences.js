@@ -21,31 +21,7 @@ browser.storage.local.get(
         "OnlyEmbeddedVideo",
         "theme",
         "invidiousVideoQuality",
-    ], (result) => {
-        let prefs = getCookie();
-        let oldPrefs = { ...prefs };
-
-        if (result.invidiousAlwaysProxy !== undefined && prefs.local !== result.invidiousAlwaysProxy)
-            prefs.local = result.invidiousAlwaysProxy;
-
-        if (result.invidiousVideoQuality !== undefined && prefs.quality !== result.invidiousVideoQuality)
-            prefs.quality = result.invidiousVideoQuality;
-
-        if (result.theme !== undefined && prefs.dark_mode !== result.theme)
-            prefs.dark_mode = result.theme;
-
-        if (result.youtubeVolume !== undefined && prefs.volume !== result.youtubeVolume)
-            prefs.volume = result.youtubeVolume;
-
-        if (result.invidiousPlayerStyle !== undefined && prefs.player_style !== result.invidiousPlayerStyle)
-            prefs.player_style = result.invidiousPlayerStyle;
-
-        if (result.invidiousSubtitles !== undefined && prefs.subtitles === result.invidiousSubtitles)
-            prefs.subtitles = result.invidiousSubtitles;
-
-        if (result.youtubeAutoplay !== undefined && prefs.autoplay !== result.youtubeAutoplay)
-            prefs.autoplay = result.youtubeAutoplay;
-
-        if (prefs != oldPrefs) document.cookie = `PREFS=${encodeURIComponent(JSON.stringify(prefs))}`;
+    ],
+    r => {
     }
 )

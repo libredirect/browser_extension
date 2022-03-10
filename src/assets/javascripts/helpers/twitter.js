@@ -199,18 +199,26 @@ function isNitter(url, type) {
 
 let theme;
 let applyThemeToSites;
-function initNitterCookies(url) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+function initNitterCookies() {
   let themeValue;
   if (theme == 'light') themeValue = 'Twitter';
   if (theme == 'dark') themeValue = 'Twitter Dark';
-
-  if (applyThemeToSites && themeValue != 'DEFAULT')
-    browser.cookies.set({
-      url: protocolHost,
-      name: "theme",
-      value: themeValue
-    })
+  if (applyThemeToSites && themeValue != 'DEFAULT') {
+    let allInstances = [...redirects.nitter.normal, ...redirects.nitter.tor, ...nitterNormalCustomRedirects, ...nitterTorCustomRedirects]
+    let checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects, ...nitterTorRedirectsChecks, ...nitterTorCustomRedirects]
+    for (const item of allInstances)
+      if (!checkedInstances.includes(item))
+        browser.cookies.remove({
+          url: instanceUrl,
+          name: "theme",
+        })
+    for (const instanceUrl of checkedInstances)
+      browser.cookies.set({
+        url: instanceUrl,
+        name: "theme",
+        value: themeValue
+      })
+  }
 }
 
 async function init() {
@@ -258,6 +266,8 @@ async function init() {
 
           nitterTorRedirectsChecks = r.nitterTorRedirectsChecks ?? [...redirects.nitter.tor];
           nitterTorCustomRedirects = r.nitterTorCustomRedirects ?? [];
+
+          initNitterCookies();
 
           resolve();
         }
