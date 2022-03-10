@@ -100,7 +100,7 @@ function redirect(url, type) {
     // https://www.tiktok.com/@keysikaspol/video/7061265241887345946
     // https://www.tiktok.com/@keysikaspol
 
-    if (type != "main_frame" && type != "sub_frame" && type != "xmlhttprequest") return null;
+    if (type != "main_frame") return null;
 
     let instancesList;
     if (protocol == 'normal') instancesList = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];
@@ -114,7 +114,7 @@ function redirect(url, type) {
 }
 
 async function init() {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
         fetch('/instances/data.json').then(response => response.text()).then(data => {
             let dataJson = JSON.parse(data);
             browser.storage.local.get(
@@ -130,18 +130,18 @@ async function init() {
 
                     "tiktokProtocol"
                 ],
-                (result) => {
-                    disable = result.disableTiktok ?? false;
+                r => {
+                    disable = r.disableTiktok ?? false;
 
-                    protocol = result.tiktokProtocol ?? "normal";
+                    protocol = r.tiktokProtocol ?? "normal";
 
-                    if (result.tiktokRedirects) redirects = result.tiktokRedirects;
+                    if (r.tiktokRedirects) redirects = r.tiktokRedirects;
 
-                    proxiTokNormalRedirectsChecks = result.proxiTokNormalRedirectsChecks ?? [...redirects.proxiTok.normal];
-                    proxiTokNormalCustomRedirects = result.proxiTokNormalCustomRedirects ?? [];
+                    proxiTokNormalRedirectsChecks = r.proxiTokNormalRedirectsChecks ?? [...redirects.proxiTok.normal];
+                    proxiTokNormalCustomRedirects = r.proxiTokNormalCustomRedirects ?? [];
 
-                    proxiTokTorRedirectsChecks = result.proxiTokTorRedirectsChecks ?? [...redirects.proxiTok.tor];
-                    proxiTokTorCustomRedirects = result.proxiTokTorCustomRedirects ?? [];
+                    proxiTokTorRedirectsChecks = r.proxiTokTorRedirectsChecks ?? [...redirects.proxiTok.tor];
+                    proxiTokTorCustomRedirects = r.proxiTokTorCustomRedirects ?? [];
 
                     resolve();
                 }
