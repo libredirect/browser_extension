@@ -95,12 +95,36 @@ function setWikilessTorCustomRedirects(val) {
   console.log("wikilessTorCustomRedirects: ", val)
 }
 
-function isWikipedia(url, initiator) {
-  if (disable) return false;
-  return targets.test(url.href);
+let theme;
+let applyThemeToSites;
+function initWikilessCookies() {
+  console.log("applyThemeToSites", applyThemeToSites)
+  let themeValue;
+  if (theme == 'light') themeValue = 'white';
+  if (theme == 'dark') themeValue = 'dark';
+  console.log("themeValue", themeValue)
+  if (applyThemeToSites && themeValue) {
+    let allInstances = [...redirects.wikiless.normal, ...redirects.wikiless.tor, ...wikilessNormalCustomRedirects, ...wikilessTorCustomRedirects]
+    let checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects, ...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects]
+    for (const instanceUrl of allInstances)
+      if (!checkedInstances.includes(instanceUrl))
+        browser.cookies.remove({
+          url: instanceUrl,
+          name: "theme",
+        })
+    for (const instanceUrl of checkedInstances)
+      browser.cookies.set({
+        url: instanceUrl,
+        name: "theme",
+        value: themeValue
+      })
+  }
 }
 
 function redirect(url) {
+  if (disable) return;
+  if (!targets.test(url.href)) return;
+
   let GETArguments = [];
   if (url.search.length > 0) {
     let search = url.search.substring(1); //get rid of '?'
@@ -172,7 +196,11 @@ async function init() {
           "wikilessTorRedirectsChecks",
           "wikilessNormalCustomRedirects",
           "wikilessTorCustomRedirects",
-          "wikipediaProtocol"
+          "wikipediaProtocol",
+
+          "theme",
+          "applyThemeToSites",
+
         ], r => { // r = result
           disable = r.disableWikipedia ?? false;
 
@@ -186,6 +214,11 @@ async function init() {
 
           wikilessTorRedirectsChecks = r.wikilessTorRedirectsChecks ?? [...redirects.wikiless.tor];
           wikilessTorCustomRedirects = r.wikilessTorCustomRedirects ?? [];
+
+          theme = r.theme ?? 'DEFAULT';
+          applyThemeToSites = r.applyThemeToSites ?? false;
+
+          initWikilessCookies();
 
           resolve();
         }
@@ -215,8 +248,9 @@ export default {
   getWikilessTorCustomRedirects,
   setWikilessTorCustomRedirects,
 
+  initWikilessCookies,
+
   redirect,
-  isWikipedia,
   init,
   changeInstance,
 };

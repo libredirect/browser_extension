@@ -1,6 +1,6 @@
 window.browser = window.browser || window.chrome;
 
-import commonHelper from './common.js'
+import commonHelper from '../common.js'
 
 const targets = [
   "translate.google.com",
@@ -184,12 +184,56 @@ function setSimplyTranslateEngine(val) {
   console.log("simplyTranslateEngine: ", val)
 }
 
-function isTranslate(url, initiator) {
-  if (disable) return false;
-  return targets.includes(url.host)
+
+function isTranslateRedirects(url, type, frontend) {
+  let protocolHost = `${url.protocol}//${url.host}`;
+
+  if (type !== "main_frame") return false;
+
+  if (frontend == 'simplyTranslate')
+    return [
+      ...redirects.simplyTranslate.normal,
+      ...redirects.simplyTranslate.tor,
+      ...simplyTranslateNormalCustomRedirects,
+      ...simplyTranslateTorCustomRedirects,
+    ].includes(protocolHost);
+
+  if (frontend == 'lingva')
+    return [
+      ...redirects.lingva.normal,
+      ...redirects.lingva.tor,
+      ...lingvaNormalCustomRedirects,
+      ...lingvaTorCustomRedirects,
+    ].includes(protocolHost);
+
+  return [
+    ...redirects.simplyTranslate.normal,
+    ...redirects.simplyTranslate.tor,
+    ...simplyTranslateNormalCustomRedirects,
+    ...simplyTranslateTorCustomRedirects,
+
+    ...redirects.lingva.normal,
+    ...redirects.lingva.tor,
+    ...lingvaNormalCustomRedirects,
+    ...lingvaTorCustomRedirects,
+  ].includes(protocolHost);
+}
+
+function initLingvaLocalStorage(tabId) {
+  browser.tabs.executeScript(
+    tabId,
+    {
+      file: "/assets/javascripts/helpers/translate/lingva-preferences.js",
+      runAt: "document_start"
+    }
+  );
 }
 
 function redirect(url) {
+
+  if (disable) return;
+  if (!targets.includes(url.host)) return
+
   let params_arr = url.search.split('&');
   params_arr[0] = params_arr[0].substring(1);
   let myMap = {};
@@ -212,8 +256,6 @@ function redirect(url) {
       if (simplyTranslateEngine != "DEFAULT") url.searchParams.append("engine", simplyTranslateEngine);
       return `${randomInstance}/${url.search}`
     }
-
-
   }
   else if (frontend == 'lingva') {
     let instancesList;
@@ -330,8 +372,6 @@ export default {
   setSimplyTranslateRedirects,
   setLingvaRedirects,
 
-  isTranslate,
-
   getDisable,
   setDisable,
 
@@ -368,6 +408,9 @@ export default {
   setLingvaNormalCustomRedirects,
   getLingvaTorCustomRedirects,
   setLingvaTorCustomRedirects,
+
+  isTranslateRedirects,
+  initLingvaLocalStorage,
 
   redirect,
   init,

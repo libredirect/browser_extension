@@ -559,8 +559,6 @@ function initPipedMaterialLocalStorage(tabId) {
 
 let applyThemeToSites;
 function initInvidiousCookies() {
-  console.log("initInvidiousCookies");
-
   let prefs = {};
   if (invidiousAlwaysProxy != "DEFAULT") prefs.local = invidiousAlwaysProxy == 'true';
   if (invidiousVideoQuality != "DEFAULT") prefs.quality = invidiousVideoQuality;

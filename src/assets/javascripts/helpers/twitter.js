@@ -203,11 +203,11 @@ function initNitterCookies() {
   let themeValue;
   if (theme == 'light') themeValue = 'Twitter';
   if (theme == 'dark') themeValue = 'Twitter Dark';
-  if (applyThemeToSites && themeValue != 'DEFAULT') {
+  if (applyThemeToSites && themeValue) {
     let allInstances = [...redirects.nitter.normal, ...redirects.nitter.tor, ...nitterNormalCustomRedirects, ...nitterTorCustomRedirects]
     let checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects, ...nitterTorRedirectsChecks, ...nitterTorCustomRedirects]
-    for (const item of allInstances)
-      if (!checkedInstances.includes(item))
+    for (const instanceUrl of allInstances)
+      if (!checkedInstances.includes(instanceUrl))
         browser.cookies.remove({
           url: instanceUrl,
           name: "theme",

@@ -5,7 +5,7 @@ import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
 import searchHelper from "../../assets/javascripts/helpers/search.js";
-import translateHelper from "../../assets/javascripts/helpers/translate.js";
+import translateHelper from "../../assets/javascripts/helpers/translate/translate.js";
 import mapsHelper from "../../assets/javascripts/helpers/maps.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
@@ -74,11 +74,11 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (!newUrl) newUrl = sendTargetsHelper.redirect(url, details.type, initiator);
 
-    if (translateHelper.isTranslate(url, initiator)) newUrl = translateHelper.redirect(url);
+    if (!newUrl) newUrl = translateHelper.redirect(url);
 
     if (!newUrl) newUrl = searchHelper.redirect(url)
 
-    if (wikipediaHelper.isWikipedia(url, initiator)) newUrl = wikipediaHelper.redirect(url);
+    if (!newUrl) newUrl = wikipediaHelper.redirect(url);
 
     if (generalHelper.isException(url, initiator)) newUrl = null;
 
@@ -115,7 +115,6 @@ browser.tabs.onRemoved.addListener((tabId) => {
 
 browser.webRequest.onResponseStarted.addListener(
   details => {
-    console.log("onResponseStarted");
     let autoRedirect = generalHelper.getAutoRedirect();
 
     if (!autoRedirect) return null;
@@ -158,6 +157,7 @@ browser.tabs.onUpdated.addListener(
     try { url = new URL(changeInfo.url); }
     catch (_) { return }
     if (youtubeHelper.isPipedorInvidious(url, 'main_frame', 'piped')) youtubeHelper.initPipedLocalStorage(tabId);
+    if (translateHelper.isTranslateRedirects(url, 'main_frame', 'lingva')) translateHelper.initLingvaLocalStorage(tabId);
     if (instagramHelper.isBibliogram(url)) instagramHelper.initBibliogramCookies(url);
     // if (changeInfo.url && youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
   });

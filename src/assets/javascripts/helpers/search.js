@@ -3,7 +3,7 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-  /^https?:\/\/(www\.|search\.|)google\.com(\...|)(\/search\?q=..*|\/$)/,
+  /^https?:\/\/(www\.|search\.|)google\.com(\...|)/,
   /^https?:\/\/libredirect\.onion/
   // /^https?:\/\/yandex\.com(\...|)(\/search\/..*|\/$)/,
 ];
@@ -158,6 +158,41 @@ function setProtocol(val) {
   console.log("searchProtocol: ", val)
 }
 
+let theme;
+let applyThemeToSites;
+function initSearxCookies() {
+  let themeValue;
+  if (theme == 'light') themeValue = 'logicodev';
+  if (theme == 'dark') themeValue = 'logicodev-dark';
+  if (applyThemeToSites && themeValue) {
+    let allInstances = [...redirects.searx.normal, ...redirects.searx.tor, ...searxNormalCustomRedirects, ...searxTorCustomRedirects]
+    let checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects, ...searxTorRedirectsChecks, ...searxTorCustomRedirects]
+    for (const instanceUrl of allInstances)
+      if (!checkedInstances.includes(instanceUrl)) {
+        browser.cookies.remove({
+          url: instanceUrl,
+          name: "oscar-style",
+        })
+        browser.cookies.remove({
+          url: instanceUrl,
+          name: "oscar",
+        })
+      }
+    for (const instanceUrl of checkedInstances) {
+      browser.cookies.set({
+        url: instanceUrl,
+        name: "oscar-style",
+        value: themeValue
+      })
+      browser.cookies.set({
+        url: instanceUrl,
+        name: "theme",
+        value: 'oscar'
+      })
+    }
+  }
+}
+
 function redirect(url) {
   if (disable) return;
   if (!targets.some((rx) => rx.test(url.href))) return;
@@ -184,13 +219,12 @@ function redirect(url) {
     randomInstance = redirects.startpage.normal;
     path = "/do/search";
   }
+  if (url.pathname == '/') path = '/';
 
   let searchQuery = "";
-  url.search.slice(1).split("&").forEach((input) => {
-    if (input.startsWith("q=")) searchQuery = input;
-  });
+  if (url.searchParams.has('q')) searchQuery = `?q=${url.searchParams.get('q')}`;
 
-  return `${randomInstance}${path}?${searchQuery}`;
+  return `${randomInstance}${path}${searchQuery}`;
 }
 
 function changeInstance(url) {
@@ -254,30 +288,38 @@ async function init() {
           "searxTorRedirectsChecks",
           "searxTorCustomRedirects",
 
+          "theme",
+          "applyThemeToSites",
+
           "searchProtocol",
         ],
-        (result) => {
-          disable = result.disableSearch ?? false;
+        r => {
+          disable = r.disableSearch ?? false;
 
-          protocol = result.searchProtocol ?? 'normal';
+          protocol = r.searchProtocol ?? 'normal';
 
-          frontend = result.searchFrontend ?? 'searx';
+          frontend = r.searchFrontend ?? 'searx';
+
+          theme = r.theme ?? 'DEFAULT';
+          applyThemeToSites = r.applyThemeToSites ?? false;
 
           redirects.searx = dataJson.searx;
           redirects.whoogle = dataJson.whoogle;
-          if (result.searchRedirects) redirects = result.searchRedirects;
+          if (r.searchRedirects) redirects = r.searchRedirects;
 
-          whoogleNormalRedirectsChecks = result.whoogleNormalRedirectsChecks ?? [...redirects.whoogle.normal];
-          whoogleNormalCustomRedirects = result.whoogleNormalCustomRedirects ?? [];
+          whoogleNormalRedirectsChecks = r.whoogleNormalRedirectsChecks ?? [...redirects.whoogle.normal];
+          whoogleNormalCustomRedirects = r.whoogleNormalCustomRedirects ?? [];
 
-          whoogleTorRedirectsChecks = result.whoogleTorRedirectsChecks ?? [...redirects.whoogle.tor];
-          whoogleTorCustomRedirects = result.whoogleTorCustomRedirects ?? [];
+          whoogleTorRedirectsChecks = r.whoogleTorRedirectsChecks ?? [...redirects.whoogle.tor];
+          whoogleTorCustomRedirects = r.whoogleTorCustomRedirects ?? [];
 
-          searxNormalRedirectsChecks = result.searxNormalRedirectsChecks ?? [...redirects.searx.normal];
-          searxNormalCustomRedirects = result.searxNormalCustomRedirects ?? [];
+          searxNormalRedirectsChecks = r.searxNormalRedirectsChecks ?? [...redirects.searx.normal];
+          searxNormalCustomRedirects = r.searxNormalCustomRedirects ?? [];
 
-          searxTorRedirectsChecks = result.searxTorRedirectsChecks ?? [...redirects.searx.tor];
-          searxTorCustomRedirects = result.searxTorCustomRedirects ?? [];
+          searxTorRedirectsChecks = r.searxTorRedirectsChecks ?? [...redirects.searx.tor];
+          searxTorCustomRedirects = r.searxTorCustomRedirects ?? [];
+
+          initSearxCookies()
 
           resolve();
         }

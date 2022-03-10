@@ -1,4 +1,4 @@
-import translateHelper from "../../../assets/javascripts/helpers/translate.js";
+import translateHelper from "../../../assets/javascripts/helpers/translate/translate.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableElement = document.getElementById("disable-simplyTranslate");

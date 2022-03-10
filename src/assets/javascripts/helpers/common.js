@@ -5,7 +5,7 @@ import instagramHelper from "./instagram.js";
 import mediumHelper from "./medium.js";
 import redditHelper from "./reddit.js";
 import searchHelper from "./search.js";
-import translateHelper from "./translate.js";
+import translateHelper from "./translate/translate.js";
 import wikipediaHelper from "./wikipedia.js";
 
 function getRandomInstance(instances) {

@@ -9,7 +9,7 @@ import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
 import mapsHelper from "../../assets/javascripts/helpers/maps.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
 import searchHelper from "../../assets/javascripts/helpers/search.js";
-import translateHelper from "../../assets/javascripts/helpers/translate.js";
+import translateHelper from "../../assets/javascripts/helpers/translate/translate.js";
 import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
