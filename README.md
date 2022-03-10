@@ -3,19 +3,20 @@
 # LibRedirect
 A web extension that redirects YouTube, Twitter, Instagram... requests to alternative privacy friendly frontends and backends.
 
-Youtube => [Piped](https://github.com/TeamPiped/Piped), [Invidious](https://github.com/iv-org/invidious), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee), [Piped-Material](https://github.com/mmjee/Piped-Material)\
+Youtube => [Piped](https://github.com/TeamPiped/Piped), [Invidious](https://github.com/iv-org/invidious), [Piped-Material](https://github.com/mmjee/Piped-Material), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee)\
 YoutubeMusic => [Beatbump](https://github.com/snuffyDev/Beatbump)\
 Twitter => [Nitter](https://github.com/zedeus/nitter)\
 Instagram => [Bibliogram](https://sr.ht/~cadence/bibliogram/)\
 TikTok => [ProxiTok](https://github.com/pablouser1/ProxiTok)\
 Imgur => [Rimgo](https://codeberg.org/video-prize-ranch/rimgo)\
-Reddit => [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances), [Old Reddit](https://old.reddit.com), [Mobile Reddit](https://i.reddit.com)\
+Reddit => [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances), [Old Reddit](https://old.reddit.com)\
 Pixiv => [pixiv萌え](https://github.com/kokororin/pixiv.moe)\
 Search => [SearX](https://searx.github.io/searx/), [Whoogle](https://benbusby.com/projects/whoogle-search/)\
 Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web), [LingvaTranslate](https://github.com/TheDavidDelta/lingva-translate)\
-Maps => [OpenStreetMap](https://www.openstreetmap.org/)\
+Maps => [OpenStreetMap](https://www.openstreetmap.org/), [FacilMap](https://github.com/FacilMap/facilmap)\
 Wikipedia => [Wikiless](https://codeberg.org/orenom/wikiless)\
-Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)
+Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)\
+Send Files => [Send](https://github.com/timvisee/send)
 
 **Note**: It will be using random instances by default. You can also add custom instances.
 
