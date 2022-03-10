@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="33.866665mm"
+   height="33.866665mm"
+   viewBox="0 0 33.866665 33.866665"
+   version="1.1"
+   id="svg898"
+   sodipodi:docname="send-icon.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs7" />
+  <sodipodi:namedview
+     id="namedview5"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="2.6623698"
+     inkscape:cx="46.950653"
+     inkscape:cy="88.079425"
+     inkscape:window-width="1888"
+     inkscape:window-height="1060"
+     inkscape:window-x="32"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg898" />
+  <circle
+     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.17791"
+     id="path1168"
+     cx="16.933332"
+     cy="16.933332"
+     r="16.933332" />
+  <g
+     id="layer1"
+     transform="matrix(0.36395732,0,0,0.36395732,5.286709,5.2870656)">
+    <path
+       id="cloud-upload"
+       d="m 64,34.286 a 17.033,17.033 0 0 1 -4.406,11.428 14.857,14.857 0 0 1 -10.558,4.572 h -2.179 v -6.857 h 2.179 a 8.004,8.004 0 0 0 5.468,-2.31 10.184,10.184 0 0 0 2.639,-6.833 11.442,11.442 0 0 0 -11.429,-11.429 c -0.377,0 -2.312,0.242 -3.49,0.394 A 1.136,1.136 0 0 1 41.003,22.487 L 40.537,21.13 A 14.103,14.103 0 0 0 28.821,11.498 13.666,13.666 0 0 0 14.091,28.277 l 0.489,2.087 a 1.143,1.143 0 0 1 -0.783,1.355 l -2.054,0.62 a 6.794,6.794 0 0 0 -4.886,6.518 4.604,4.604 0 0 0 0.947,2.808 5.539,5.539 0 0 0 4.089,1.764 h 5.25 v 6.857 h -5.25 A 12.236,12.236 0 0 1 2.213,45.634 11.506,11.506 0 0 1 0,38.857 13.573,13.573 0 0 1 6.944,26.973 19.51,19.51 0 0 1 6.857,25.143 20.563,20.563 0 0 1 45.844,16 18.307,18.307 0 0 1 64,34.286 Z M 32.923,32.123 a 1.143,1.143 0 0 0 -1.846,0 l -8.592,11.775 a 1.143,1.143 0 0 0 0.923,1.816 h 5.163 v 12.572 a 1.143,1.143 0 0 0 1.143,1.143 h 4.572 a 1.143,1.143 0 0 0 1.143,-1.143 V 45.714 h 5.163 a 1.143,1.143 0 0 0 0.923,-1.816 z"
+       stroke-width="2.286"
+       fill="#45a1ff"
+       fill-opacity="1" />
+  </g>
+</svg>

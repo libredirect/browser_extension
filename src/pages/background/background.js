@@ -12,6 +12,7 @@ import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
+import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import generalHelper from "../../assets/javascripts/helpers/general.js";
 import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
 
@@ -31,6 +32,7 @@ async function wholeInit() {
   imgurHelper.init()
   tiktokHelper.init()
   pixivHelper.init()
+  sendTargetsHelper.init()
   generalHelper.init()
 }
 wholeInit();
@@ -52,7 +54,6 @@ browser.webRequest.onBeforeRequest.addListener(
     var newUrl;
 
     if (!newUrl) newUrl = youtubeHelper.redirect(url, details, initiator)
-    // if (youtubeHelper.isPipedorInvidious(newUrl ?? url, details.type, 'invidious')) newUrl = youtubeHelper.addUrlParams(newUrl ?? url);
     if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
 
     if (!newUrl) newUrl = twitterHelper.redirect(url, initiator);
@@ -70,6 +71,8 @@ browser.webRequest.onBeforeRequest.addListener(
     if (tiktokHelper.isTiktok(url, initiator)) newUrl = tiktokHelper.redirect(url, details.type);
 
     if (!newUrl) newUrl = pixivHelper.redirect(url, details.type, initiator);
+
+    if (!newUrl) newUrl = sendTargetsHelper.redirect(url, details.type, initiator);
 
     if (translateHelper.isTranslate(url, initiator)) newUrl = translateHelper.redirect(url);
 
@@ -110,10 +113,6 @@ browser.tabs.onRemoved.addListener((tabId) => {
   }
 });
 
-
-
-
-
 browser.webRequest.onResponseStarted.addListener(
   details => {
     console.log("onResponseStarted");
@@ -121,13 +120,13 @@ browser.webRequest.onResponseStarted.addListener(
 
     if (!autoRedirect) return null;
 
-    if (details.statusCode >= 500) {
+    console.log("statusCode", details.statusCode);
+    if (details.type == 'main_frame' && details.statusCode >= 500) {
 
       const url = new URL(details.url);
       let newUrl;
 
       newUrl = youtubeHelper.changeInstance(url);
-
       if (!newUrl) newUrl = twitterHelper.changeInstance(url);
 
       if (!newUrl) newUrl = instagramHelper.changeInstance(url);
@@ -145,12 +144,9 @@ browser.webRequest.onResponseStarted.addListener(
       if (!newUrl) newUrl = wikipediaHelper.changeInstance(url)
 
       if (newUrl) {
-        browser.tabs.update({ url: '../errors/instance_offline.html' });
-
+        browser.tabs.update({ url: '/pages/errors/instance_offline.html' });
         setTimeout(() => browser.tabs.update({ url: newUrl }), 2000);
       }
-
-
     }
   },
   { urls: ["<all_urls>"], }
@@ -162,8 +158,6 @@ browser.tabs.onUpdated.addListener(
     try { url = new URL(changeInfo.url); }
     catch (_) { return }
     if (youtubeHelper.isPipedorInvidious(url, 'main_frame', 'piped')) youtubeHelper.initPipedLocalStorage(tabId);
-    // if (twitterHelper.isNitter(url, 'main_frame')) twitterHelper.initNitterCookies();
     if (instagramHelper.isBibliogram(url)) instagramHelper.initBibliogramCookies(url);
     // if (changeInfo.url && youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
-    // if (changeInfo.url && youtubeHelper.isUrlPipedorInvidious(changeInfo.url, 'invidious')) youtubeHelper.initInvidiousCookies(tabId);
   });
