@@ -93,6 +93,10 @@ section.links div {
   margin: 20px 0;
 }
 
+a {
+  color: var(--active);
+}
+
 section.links a {
   display: flex;
   align-items: center;
