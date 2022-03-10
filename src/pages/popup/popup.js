@@ -15,6 +15,7 @@ import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
+import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import generalHelper from "../../assets/javascripts/helpers/general.js";
 
 let disableTwitterElement = document.getElementById("disable-nitter");
@@ -27,6 +28,7 @@ let disableSearchElement = document.getElementById("disable-search");
 let disableElement = document.getElementById("disable-simplyTranslate");
 let disableWikipediaElement = document.getElementById("disable-wikipedia");
 let disableMediumElement = document.getElementById("disable-medium");
+let disableSendTargetsElement = document.getElementById("disable-sendTargets");
 let disableImgurElement = document.getElementById("disable-imgur");
 let disableTiktokElement = document.getElementById("disable-tiktok");
 let disablePixivElement = document.getElementById("disable-pixiv");
@@ -44,6 +46,7 @@ async function wholeInit() {
   await imgurHelper.init()
   await tiktokHelper.init()
   await pixivHelper.init()
+  await sendTargetsHelper.init()
   await mediumHelper.init()
 };
 
@@ -115,9 +118,14 @@ disableMediumElement.addEventListener("change",
   event => mediumHelper.setDisable(!event.target.checked)
 );
 
+disableSendTargetsElement.addEventListener("change",
+  event => sendTargetsHelper.setDisable(!event.target.checked)
+);
+
 document.getElementById("more-options").addEventListener("click",
   () => browser.runtime.openOptionsPage()
 );
+
 
 function changeInstance() {
   browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -142,6 +150,8 @@ function changeInstance() {
       if (!newUrl) newUrl = translateHelper.changeInstance(tabUrl);
 
       if (!newUrl) newUrl = mediumHelper.changeInstance(tabUrl);
+
+      if (!newUrl) newUrl = sendTargetsHelper.changeInstance(tabUrl);
 
       if (!newUrl) newUrl = imgurHelper.changeInstance(tabUrl);
 

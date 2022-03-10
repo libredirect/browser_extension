@@ -135,7 +135,7 @@ async function init() {
                     "pixivProtocol"
                 ],
                 r => {
-                    disable = r.disablePixiv ?? false;
+                    disable = r.disablePixiv ?? true;
 
                     protocol = r.pixivProtocol ?? "normal";
 

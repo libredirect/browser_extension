@@ -105,6 +105,34 @@ function setProtocol(val) {
     console.log("sendTargetsProtocol: ", val)
 }
 
+function changeInstance(url) {
+    let protocolHost = `${url.protocol}//${url.host}`;
+
+    let sendList = [
+        ...redirects.send.normal,
+        ...redirects.send.tor,
+        ...sendNormalCustomRedirects,
+        ...sendTorCustomRedirects,
+    ];
+
+    if (!sendList.includes(protocolHost)) return;
+
+    if (url.pathname != '/') return;
+
+    let instancesList;
+    if (protocol == 'normal') instancesList = [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
+
+    console.log("instancesList", instancesList);
+    let index = instancesList.indexOf(protocolHost);
+    if (index > -1) instancesList.splice(index, 1);
+
+    if (instancesList.length === 0) return null;
+
+    let randomInstance = commonHelper.getRandomInstance(instancesList);
+    return `${randomInstance}${url.pathname}${url.search}`;
+}
+
 function redirect(url, type, initiator) {
 
     if (disable) return null;
@@ -182,6 +210,8 @@ export default {
     setSendTorCustomRedirects,
     getSendNormalCustomRedirects,
     setSendNormalCustomRedirects,
+
+    changeInstance,
 
     redirect,
     init,

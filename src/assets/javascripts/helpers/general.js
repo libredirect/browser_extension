@@ -84,7 +84,6 @@ async function init() {
                     "translate",
                     "maps",
                     "wikipedia",
-                    "medium",
                 ];
 
                 autoRedirect = r.autoRedirect ?? false;
@@ -118,6 +117,7 @@ let allPopupFrontends = [
     "maps",
     "wikipedia",
     "medium",
+    "sendTargets"
 ];
 
 
