@@ -17,6 +17,10 @@ let redirects = {
     "normal": [],
     "tor": []
   },
+  "startpage": {
+    "normal": "https://www.startpage.com",
+    "tor": null
+  }
 };
 const getRedirects = () => redirects;
 const getCustomRedirects = () => {
@@ -154,13 +158,10 @@ function setProtocol(val) {
   console.log("searchProtocol: ", val)
 }
 
-function isSearch(url) {
-  if (disable) return false;
-  return targets.some((rx) => rx.test(url.href));
-}
-
 function redirect(url) {
-  console.log(url.href);
+  if (disable) return;
+  if (!targets.some((rx) => rx.test(url.href))) return;
+
   let randomInstance;
   let path;
   if (frontend == 'searx') {
@@ -171,13 +172,17 @@ function redirect(url) {
     randomInstance = commonHelper.getRandomInstance(instancesList)
     path = "/";
   }
-  if (frontend == 'whoogle') {
+  else if (frontend == 'whoogle') {
     let instancesList
     if (protocol == 'normal') instancesList = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects];
     if (protocol == 'tor') instancesList = [...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects];
     if (instancesList.length === 0) return null;
     randomInstance = commonHelper.getRandomInstance(instancesList)
     path = "/search";
+  }
+  else if (frontend == 'startpage') {
+    randomInstance = redirects.startpage.normal;
+    path = "/do/search";
   }
 
   let searchQuery = "";
@@ -282,7 +287,6 @@ async function init() {
 }
 
 export default {
-  isSearch,
 
   getDisable,
   setDisable,

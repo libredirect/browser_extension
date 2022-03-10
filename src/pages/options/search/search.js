@@ -12,13 +12,25 @@ let whoogleDivElement = document.getElementById("whoogle")
 
 
 function changeFrontendsSettings(frontend) {
+  let SearxWhoogleElement = document.getElementById("searx-whoogle");
+  let frontendElement = document.getElementById("frontend");
   if (frontend == 'searx') {
+    frontendElement.innerHTML = 'Frontend';
     searxDivElement.style.display = 'block';
     whoogleDivElement.style.display = 'none';
+    SearxWhoogleElement.style.display = 'block';
   }
   else if (frontend == 'whoogle') {
+    frontendElement.innerHTML = 'Frontend';
     searxDivElement.style.display = 'none';
     whoogleDivElement.style.display = 'block';
+    SearxWhoogleElement.style.display = 'block';
+  }
+  else if (frontend == 'startpage') {
+    frontendElement.innerHTML = `Frontend: <span style="color:red;">This is a centralized service</span>`;
+    searxDivElement.style.display = 'none';
+    whoogleDivElement.style.display = 'none';
+    SearxWhoogleElement.style.display = 'none';
   }
 }
 let searchFrontendElement = document.getElementById("search-frontend");

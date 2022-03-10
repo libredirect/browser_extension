@@ -103,22 +103,25 @@
       <input id="disable-search" type="checkbox" checked />
     </div>
     <div class="some-block option-block">
-      <h4>Frontend</h4>
+      <h4 id="frontend">Frontend</h4>
       <select id="search-frontend">
         <option value="searx">SearX</option>
         <option value="whoogle">Whoogle</option>
+        <option value="startpage">Startpage</option>
       </select>
     </div>
 
-    <div class="some-block option-block">
-      <h4>Protocol</h4>
-      <select id="protocol">
-        <option value="normal">Normal</option>
-        <option value="tor">Tor</option>
-      </select>
-    </div>
+    <div id="searx-whoogle">
+      <div class="some-block option-block">
+        <h4>Protocol</h4>
+        <select id="protocol">
+          <option value="normal">Normal</option>
+          <option value="tor">Tor</option>
+        </select>
+      </div>
 
-    <hr>
+      <hr>
+    </div>
 
     <div id="searx">
       <div id="searx-normal">
@@ -197,32 +200,34 @@
         </form>
         <div class="checklist" id="whoogle-normal-custom-checklist"></div>
       </div>
+      <div id="whoogle-tor">
+        <div class="some-block option-block">
+          <h4>Default Instances</h4>
+        </div>
+        <div class="checklist" id="whoogle-tor-checklist">
+        </div>
+        <hr>
+        <div class="some-block option-block">
+          <h4>Custom Instances</h4>
+        </div>
+        <form id="custom-whoogle-tor-instance-form">
+          <div class="some-block option-block">
+            <input id="whoogle-tor-custom-instance" placeholder="https://whoogle.com" type="url" />
+            <button type="submit" class="add" id="whoogle-tor-add-instance">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                fill="currentColor">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+        <div class="checklist" id="whoogle-tor-custom-checklist"></div>
+      </div>
+    </div>
     </div>
 
-    <div id="whoogle-tor">
-      <div class="some-block option-block">
-        <h4>Default Instances</h4>
-      </div>
-      <div class="checklist" id="whoogle-tor-checklist">
-      </div>
-      <hr>
-      <div class="some-block option-block">
-        <h4>Custom Instances</h4>
-      </div>
-      <form id="custom-whoogle-tor-instance-form">
-        <div class="some-block option-block">
-          <input id="whoogle-tor-custom-instance" placeholder="https://whoogle.com" type="url" />
-          <button type="submit" class="add" id="whoogle-tor-add-instance">
-            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
-              <path d="M0 0h24v24H0V0z" fill="none" />
-              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-          </button>
-        </div>
-      </form>
-      <div class="checklist" id="whoogle-tor-custom-checklist"></div>
-    </div>
-    </div>
+
 
   </section>
 
