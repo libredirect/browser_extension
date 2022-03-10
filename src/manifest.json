@@ -1,7 +1,7 @@
 {
   "name": "LibRedirect",
   "description": "A web extension that redirects popular sites to alternative privacy-friendly frontends and backends",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "manifest_version": 2,
   "background": {
     "page": "pages/background/background.html",
@@ -44,7 +44,6 @@
     "homepage": "https://libredirect.onion",
     "search_provider": {
       "name": "LibRedirect",
-      "keyword": "libredirect.onion",
       "search_url": "https://libredirect.onion/?q={searchTerms}",
       "favicon_url": "assets/images/libredirect-16.png",
       "encoding": "UTF-8"
