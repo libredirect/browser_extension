@@ -44,7 +44,7 @@
     "search_provider": {
       "name": "LibRedirect",
       "keyword": "libredirect",
-      "favicon_url": "/assets/images/libredirect-16.png",
+      "favicon_url": "https://raw.githubusercontent.com/libredirect/libredirect/master/src/assets/images/libredirect-16.png",
       "search_url": "https://libredirect.onion/?q={searchTerms}",
       "encoding": "UTF-8",
       "is_default": false
