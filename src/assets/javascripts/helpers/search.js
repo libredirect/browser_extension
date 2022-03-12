@@ -235,6 +235,9 @@ function initWhoogleCookies() {
 function redirect(url) {
   if (disable) return;
   if (!targets.some((rx) => rx.test(url.href))) return;
+  if (url.searchParams.has('tbm')) return;
+
+  if (!url.searchParams.has('q') && url.pathname != '/') return;
 
   let randomInstance;
   let path;
