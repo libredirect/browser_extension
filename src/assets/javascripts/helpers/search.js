@@ -258,7 +258,7 @@ function redirect(url) {
     randomInstance = redirects.startpage.normal;
     path = "/do/search";
   }
-  if (url.pathname == '/') path = '/';
+  if (!url.searchParams.has('q')) path = '/';
 
   let searchQuery = "";
   if (url.searchParams.has('q')) searchQuery = `?q=${url.searchParams.get('q')}`;

@@ -43,9 +43,11 @@
   "chrome_settings_overrides": {
     "search_provider": {
       "name": "LibRedirect",
+      "keyword": "libredirect",
+      "favicon_url": "/assets/images/libredirect-16.png",
       "search_url": "https://libredirect.onion/?q={searchTerms}",
-      "favicon_url": "assets/images/libredirect-16.png",
-      "encoding": "UTF-8"
+      "encoding": "UTF-8",
+      "is_default": false
     }
   }
 }
