@@ -1,39 +1,139 @@
 import youtubeHelper from "../../../assets/javascripts/helpers/youtube/youtube.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
-let invidiousAlwaysProxyElement = document.getElementById("invidious-always-proxy");
+let invidiousAlwaysProxyElement = document.getElementById("invidious-local");
 invidiousAlwaysProxyElement.addEventListener("change",
-    (event) => youtubeHelper.setInvidiousAlwaysProxy(event.target.options[invidiousAlwaysProxyElement.selectedIndex].value)
+    event => youtubeHelper.setInvidiousAlwaysProxy(event.target.options[invidiousAlwaysProxyElement.selectedIndex].value)
 );
 
-let invidiousPlayerStyleElement = document.getElementById("invidious-player-style");
+let invidiousPlayerStyleElement = document.getElementById("invidious-player_style");
 invidiousPlayerStyleElement.addEventListener("change",
-    (event) => youtubeHelper.setInvidiousPlayerStyle(event.target.options[invidiousPlayerStyleElement.selectedIndex].value)
+    event => youtubeHelper.setInvidiousPlayerStyle(event.target.options[invidiousPlayerStyleElement.selectedIndex].value)
 );
 
-let invidiousVideoQualityElement = document.getElementById("video-quality");
-invidiousVideoQualityElement.addEventListener("change",
-    (event) => youtubeHelper.setInvidiousVideoQuality(event.target.options[invidiousVideoQualityElement.selectedIndex].value)
+let invidiousQualityElement = document.getElementById("invidious-quality");
+invidiousQualityElement.addEventListener("change",
+    event => youtubeHelper.setinvidiousQuality(event.target.options[invidiousQualityElement.selectedIndex].value)
 );
 
-let invidiousSubtitlesElement = document.getElementById("invidious-subtitles");
-invidiousSubtitlesElement.addEventListener("change",
-    () => youtubeHelper.setInvidiousSubtitles(invidiousSubtitlesElement.value)
+let invidiousVideoLoopElement = document.getElementById("invidious-video_loop");
+invidiousVideoLoopElement.addEventListener("change",
+    event => youtubeHelper.setInvidiousVideoLoop(event.target.options[invidiousVideoLoopElement.selectedIndex].value)
 );
 
-// let persistInvidiousPrefsElement = document.getElementById("persist-invidious-prefs");
-// persistInvidiousPrefsElement.addEventListener("change",
-//     (event) => youtubeHelper.setPersistInvidiousPrefs(event.target.checked)
-// );
+let invidiousContinueAutoplayElement = document.getElementById("invidious-continue_autoplay");
+invidiousContinueAutoplayElement.addEventListener("change",
+    event => youtubeHelper.setInvidiousContinueAutoplay(event.target.options[invidiousContinueAutoplayElement.selectedIndex].value)
+);
 
+let invidiousContinueElement = document.getElementById("invidious-continue");
+invidiousContinueElement.addEventListener("change",
+    event => youtubeHelper.setInvidiousContinue(event.target.options[invidiousContinueElement.selectedIndex].value)
+);
+
+let invidiousListenElement = document.getElementById("invidious-listen");
+invidiousListenElement.addEventListener("change",
+    event => youtubeHelper.setInvidiousListen(event.target.options[invidiousListenElement.selectedIndex].value)
+);
+
+let invidiousSpeedElement = document.getElementById("invidious-speed");
+invidiousSpeedElement.addEventListener("change",
+    event => youtubeHelper.setInvidiousSpeed(event.target.options[invidiousSpeedElement.selectedIndex].value)
+);
+
+let invidiousQualityDashElement = document.getElementById("invidious-quality_dash");
+invidiousQualityDashElement.addEventListener("change",
+    event => youtubeHelper.setInvidiousQualityDash(event.target.options[invidiousQualityDashElement.selectedIndex].value)
+);
+
+let invidiousComments0Element = document.getElementById("invidious-comments[0]");
+invidiousComments0Element.addEventListener("change",
+    event => {
+        let commentsList = youtubeHelper.getInvidiousComments();
+        commentsList[0] = event.target.options[invidiousComments0Element.selectedIndex].value
+        youtubeHelper.setInvidiousComments(commentsList)
+    }
+);
+let invidiousComments1Element = document.getElementById("invidious-comments[1]");
+invidiousComments1Element.addEventListener("change",
+    event => {
+        let commentsList = youtubeHelper.getInvidiousComments();
+        commentsList[1] = event.target.options[invidiousComments1Element.selectedIndex].value
+        youtubeHelper.setInvidiousComments(commentsList)
+    }
+);
+
+let invidiousCaptions0Element = document.getElementById("invidious-captions[0]");
+invidiousCaptions0Element.addEventListener("change",
+    event => {
+        let captionsList = youtubeHelper.getInvidiousCaptions();
+        captionsList[0] = event.target.options[invidiousCaptions0Element.selectedIndex].value
+        youtubeHelper.setInvidiousCaptions(captionsList)
+    }
+);
+let invidiousCaptions1Element = document.getElementById("invidious-captions[1]");
+invidiousCaptions1Element.addEventListener("change",
+    event => {
+        let captionsList = youtubeHelper.getInvidiousCaptions();
+        captionsList[1] = event.target.options[invidiousCaptions1Element.selectedIndex].value
+        youtubeHelper.setInvidiousCaptions(captionsList)
+    }
+);
+let invidiousCaptions2Element = document.getElementById("invidious-captions[2]");
+invidiousCaptions2Element.addEventListener("change",
+    event => {
+        let captionsList = youtubeHelper.getInvidiousCaptions();
+        captionsList[2] = event.target.options[invidiousCaptions2Element.selectedIndex].value
+        youtubeHelper.setInvidiousCaptions(captionsList)
+    }
+);
+
+let invidiousRelatedVideoElement = document.getElementById("invidious-related_videos");
+invidiousRelatedVideoElement.addEventListener("change",
+    event => youtubeHelper.setInvidiousRelatedVideos(event.target.options[invidiousRelatedVideoElement.selectedIndex].value)
+);
+
+let invidiousAnnotationsElement = document.getElementById("invidious-annotations");
+invidiousAnnotationsElement.addEventListener("change",
+    event => youtubeHelper.setInvidiousAnnotations(event.target.options[invidiousAnnotationsElement.selectedIndex].value)
+);
+
+
+let invidiousExtendDescElement = document.getElementById("invidious-extend_desc");
+invidiousExtendDescElement.addEventListener("change",
+    event => youtubeHelper.setInvidiousExtendDesc(event.target.options[invidiousExtendDescElement.selectedIndex].value)
+);
+
+let invidiousVrModeElement = document.getElementById("invidious-vr_mode");
+invidiousVrModeElement.addEventListener("change",
+    event => youtubeHelper.setInvidiousVrMode(event.target.options[invidiousVrModeElement.selectedIndex].value)
+);
+
+let invidiousSavePlayerPosElement = document.getElementById("invidious-save_player_pos");
+invidiousSavePlayerPosElement.addEventListener("change",
+    event => youtubeHelper.setInvidiousSavePlayerPos(event.target.options[invidiousSavePlayerPosElement.selectedIndex].value)
+);
 
 youtubeHelper.init().then(() => {
     invidiousPlayerStyleElement.value = youtubeHelper.getInvidiousPlayerStyle();
     invidiousAlwaysProxyElement.value = youtubeHelper.getInvidiousAlwaysProxy();
-    console.log("youtubeHelper.getInvidiousAlwaysProxy()", youtubeHelper.getInvidiousAlwaysProxy())
-    invidiousVideoQualityElement.value = youtubeHelper.getInvidiousVideoQuality();
-    invidiousSubtitlesElement.value = youtubeHelper.getInvidiousSubtitles();
-    // persistInvidiousPrefsElement.checked = youtubeHelper.getPersistInvidiousPrefs();
+    invidiousVideoLoopElement.value = youtubeHelper.getInvidiousVideoLoop();
+    invidiousContinueAutoplayElement.value = youtubeHelper.getInvidiousContinueAutoplay();
+    invidiousContinueElement.value = youtubeHelper.getInvidiousContinue();
+    invidiousListenElement.value = youtubeHelper.getInvidiousListen();
+    invidiousSpeedElement.value = youtubeHelper.getInvidiousSpeed();
+    invidiousQualityElement.value = youtubeHelper.getinvidiousQuality();
+    invidiousQualityDashElement.value = youtubeHelper.getInvidiousQualityDash();
+    invidiousComments0Element.value = youtubeHelper.getInvidiousComments()[0];
+    invidiousComments1Element.value = youtubeHelper.getInvidiousComments()[1];
+    invidiousCaptions0Element.value = youtubeHelper.getInvidiousCaptions()[0];
+    invidiousCaptions1Element.value = youtubeHelper.getInvidiousCaptions()[1];
+    invidiousCaptions2Element.value = youtubeHelper.getInvidiousCaptions()[2];
+    invidiousRelatedVideoElement.value = youtubeHelper.getInvidiousRelatedVideos();
+    invidiousAnnotationsElement.value = youtubeHelper.getInvidiousAnnotations();
+    invidiousExtendDescElement.value = youtubeHelper.getInvidiousExtendDesc();
+    invidiousVrModeElement.value = youtubeHelper.getInvidiousVrMode();
+    invidiousSavePlayerPosElement.value = youtubeHelper.getInvidiousSavePlayerPos();
 
     commonHelper.processDefaultCustomInstances(
         'invidious',
@@ -57,4 +157,3 @@ youtubeHelper.init().then(() => {
         youtubeHelper.setInvidiousTorCustomRedirects
     );
 });
-

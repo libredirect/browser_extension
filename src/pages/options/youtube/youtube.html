@@ -155,18 +155,6 @@
       </div>
 
       <div class="some-block option-block">
-        <h4>Volume: <span id="volume-value">50%</span></h4>
-        <input id="invidious-volume" name="invidious-volume" type="range" min="0" max="100" step="1" />
-        <button type="button" class="default" id="clear-invidious-volume">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-            <path d="M0 0h24v24H0V0z" fill="none" />
-            <path
-              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
-          </svg>
-        </button>
-      </div>
-
-      <div class="some-block option-block">
         <h4>Autoplay Video</h4>
         <select id="invidious-autoplay">
           <option value="DEFAULT">Default</option>
@@ -179,7 +167,7 @@
     <div id="invidious">
       <div class="some-block option-block">
         <h4>Player Style</h4>
-        <select id="invidious-player-style">
+        <select id="invidious-player_style">
           <option value="DEFAULT">Default</option>
           <option value="invidious">Invidious</option>
           <option value="youtube">YouTube</option>
@@ -187,8 +175,8 @@
       </div>
 
       <div class="some-block option-block">
-        <h4>Always proxy videos</h4>
-        <select id="invidious-always-proxy">
+        <h4>Always loop</h4>
+        <select id="invidious-video_loop">
           <option value="DEFAULT">Default</option>
           <option value="true">True</option>
           <option value="false">False</option>
@@ -196,8 +184,59 @@
       </div>
 
       <div class="some-block option-block">
-        <h4>Video Quality</h4>
-        <select id="video-quality">
+        <h4>Autoplay next video</h4>
+        <select id="invidious-continue_autoplay">
+          <option value="DEFAULT">Default</option>
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      </div>
+
+      <div class="some-block option-block">
+        <h4>Play next by default</h4>
+        <select id="invidious-continue">
+          <option value="DEFAULT">Default</option>
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      </div>
+
+      <div class="some-block option-block">
+        <h4>Always proxy videos</h4>
+        <select id="invidious-local">
+          <option value="DEFAULT">Default</option>
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      </div>
+
+      <div class="some-block option-block">
+        <h4>Listen by default</h4>
+        <select id="invidious-listen">
+          <option value="DEFAULT">Default</option>
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      </div>
+
+      <div class="some-block option-block">
+        <h4>Default speed</h4>
+        <select id="invidious-speed">
+          <option value="DEFAULT">Default</option>
+          <option>2.0</option>
+          <option>1.75</option>
+          <option>1.5</option>
+          <option>1.25</option>
+          <option>1.0</option>
+          <option>0.75</option>
+          <option>0.5</option>
+          <option>0.25</option>
+        </select>
+      </div>
+
+      <div class="some-block option-block">
+        <h4>Preferred video quality</h4>
+        <select id="invidious-quality">
           <option value="DEFAULT">Default</option>
           <option value="hd720">720p</option>
           <option value="medium">480p</option>
@@ -207,14 +246,510 @@
       </div>
 
       <div class="some-block option-block">
-        <h4>Subtitles</h4>
-        <input id="invidious-subtitles" placeholder="en, ar, es" type="text" />
+        <h4>Preferred DASH video quality</h4>
+        <select id="invidious-quality_dash">
+          <option value="DEFAULT">Default</option>
+          <option value="auto">Auto</option>
+          <option value="best">Best</option>
+          <option value="4320p">4320p</option>
+          <option value="2160p">2160p</option>
+          <option value="1440p">1440p</option>
+          <option value="1080p" selected="">1080p</option>
+          <option value="720p">720p</option>
+          <option value="480p">480p</option>
+          <option value="360p">360p</option>
+          <option value="240p">240p</option>
+          <option value="144p">144p</option>
+          <option value="worst">Worst</option>
+          </option>
+        </select>
       </div>
 
-      <!-- <div class="some-block option-block">
-        <h4>Persist preferences (as cookie)</h4>
-        <input id="persist-invidious-prefs" type="checkbox" checked />
-      </div> -->
+      <div class="some-block option-block">
+        <h4>Volume: <span id="volume-value">--%</span></h4>
+        <input id="invidious-volume" name="invidious-volume" type="range" min="0" max="100" step="1" />
+        <button type="button" class="default" id="clear-invidious-volume">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+          </svg>
+        </button>
+      </div>
+
+
+      <div class="some-block option-block">
+        <h4>Default comments</h4>
+        <select id="invidious-comments[0]">
+          <option value="DEFAULT">Default</option>
+          <option value="">none</option>
+          <option value="youtube">YouTube</option>
+          <option value="reddit">Reddit</option>
+          </option>
+        </select>
+        &nbsp;
+        <select id="invidious-comments[1]">
+          <option value="DEFAULT">Default</option>
+          <option value="">none</option>
+          <option value="youtube">YouTube</option>
+          <option value="reddit">Reddit</option>
+        </select>
+      </div>
+
+      <div class="some-block option-block">
+        <h4>Default captions</h4>
+        <select id="invidious-captions[0]">
+          <option value="DEFAULT">Default</option>
+          <option value="">none</option>
+          <option value="English">English</option>
+          <option value="English (auto-generated)">English (auto-generated)</option>
+          <option value="English (United Kingdom)">English (United Kingdom)</option>
+          <option value="English (United States)">English (United States)</option>
+          <option value="Afrikaans">Afrikaans</option>
+          <option value="Albanian">Albanian</option>
+          <option value="Amharic">Amharic</option>
+          <option value="Arabic">Arabic</option>
+          <option value="Armenian">Armenian</option>
+          <option value="Azerbaijani">Azerbaijani</option>
+          <option value="Bangla">Bangla</option>
+          <option value="Basque">Basque</option>
+          <option value="Belarusian">Belarusian</option>
+          <option value="Bosnian">Bosnian</option>
+          <option value="Bulgarian">Bulgarian</option>
+          <option value="Burmese">Burmese</option>
+          <option value="Cantonese (Hong Kong)">Cantonese (Hong Kong)</option>
+          <option value="Catalan">Catalan</option>
+          <option value="Cebuano">Cebuano</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Chinese (China)">Chinese (China)</option>
+          <option value="Chinese (Hong Kong)">Chinese (Hong Kong)</option>
+          <option value="Chinese (Simplified)">Chinese (Simplified)</option>
+          <option value="Chinese (Taiwan)">Chinese (Taiwan)</option>
+          <option value="Chinese (Traditional)">Chinese (Traditional)</option>
+          <option value="Corsican">Corsican</option>
+          <option value="Croatian">Croatian</option>
+          <option value="Czech">Czech</option>
+          <option value="Danish">Danish</option>
+          <option value="Dutch">Dutch</option>
+          <option value="Dutch (auto-generated)">Dutch (auto-generated)</option>
+          <option value="Esperanto">Esperanto</option>
+          <option value="Estonian">Estonian</option>
+          <option value="Filipino">Filipino</option>
+          <option value="Finnish">Finnish</option>
+          <option value="French">French</option>
+          <option value="French (auto-generated)">French (auto-generated)</option>
+          <option value="Galician">Galician</option>
+          <option value="Georgian">Georgian</option>
+          <option value="German">German</option>
+          <option value="German (auto-generated)">German (auto-generated)</option>
+          <option value="Greek">Greek</option>
+          <option value="Gujarati">Gujarati</option>
+          <option value="Haitian Creole">Haitian Creole</option>
+          <option value="Hausa">Hausa</option>
+          <option value="Hawaiian">Hawaiian</option>
+          <option value="Hebrew">Hebrew</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Hmong">Hmong</option>
+          <option value="Hungarian">Hungarian</option>
+          <option value="Icelandic">Icelandic</option>
+          <option value="Igbo">Igbo</option>
+          <option value="Indonesian">Indonesian</option>
+          <option value="Indonesian (auto-generated)">Indonesian (auto-generated)</option>
+          <option value="Interlingue">Interlingue</option>
+          <option value="Irish">Irish</option>
+          <option value="Italian">Italian</option>
+          <option value="Italian (auto-generated)">Italian (auto-generated)</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Japanese (auto-generated)">Japanese (auto-generated)</option>
+          <option value="Javanese">Javanese</option>
+          <option value="Kannada">Kannada</option>
+          <option value="Kazakh">Kazakh</option>
+          <option value="Khmer">Khmer</option>
+          <option value="Korean">Korean</option>
+          <option value="Korean (auto-generated)">Korean (auto-generated)</option>
+          <option value="Kurdish">Kurdish</option>
+          <option value="Kyrgyz">Kyrgyz</option>
+          <option value="Lao">Lao</option>
+          <option value="Latin">Latin</option>
+          <option value="Latvian">Latvian</option>
+          <option value="Lithuanian">Lithuanian</option>
+          <option value="Luxembourgish">Luxembourgish</option>
+          <option value="Macedonian">Macedonian</option>
+          <option value="Malagasy">Malagasy</option>
+          <option value="Malay">Malay</option>
+          <option value="Malayalam">Malayalam</option>
+          <option value="Maltese">Maltese</option>
+          <option value="Maori">Maori</option>
+          <option value="Marathi">Marathi</option>
+          <option value="Mongolian">Mongolian</option>
+          <option value="Nepali">Nepali</option>
+          <option value="Norwegian Bokmål">Norwegian Bokmål</option>
+          <option value="Nyanja">Nyanja</option>
+          <option value="Pashto">Pashto</option>
+          <option value="Persian">Persian</option>
+          <option value="Polish">Polish</option>
+          <option value="Portuguese">Portuguese</option>
+          <option value="Portuguese (auto-generated)">Portuguese (auto-generated)</option>
+          <option value="Portuguese (Brazil)">Portuguese (Brazil)</option>
+          <option value="Punjabi">Punjabi</option>
+          <option value="Romanian">Romanian</option>
+          <option value="Russian">Russian</option>
+          <option value="Russian (auto-generated)">Russian (auto-generated)</option>
+          <option value="Samoan">Samoan</option>
+          <option value="Scottish Gaelic">Scottish Gaelic</option>
+          <option value="Serbian">Serbian</option>
+          <option value="Shona">Shona</option>
+          <option value="Sindhi">Sindhi</option>
+          <option value="Sinhala">Sinhala</option>
+          <option value="Slovak">Slovak</option>
+          <option value="Slovenian">Slovenian</option>
+          <option value="Somali">Somali</option>
+          <option value="Southern Sotho">Southern Sotho</option>
+          <option value="Spanish">Spanish</option>
+          <option value="Spanish (auto-generated)">Spanish (auto-generated)</option>
+          <option value="Spanish (Latin America)">Spanish (Latin America)</option>
+          <option value="Spanish (Mexico)">Spanish (Mexico)</option>
+          <option value="Spanish (Spain)">Spanish (Spain)</option>
+          <option value="Sundanese">Sundanese</option>
+          <option value="Swahili">Swahili</option>
+          <option value="Swedish">Swedish</option>
+          <option value="Tajik">Tajik</option>
+          <option value="Tamil">Tamil</option>
+          <option value="Telugu">Telugu</option>
+          <option value="Thai">Thai</option>
+          <option value="Turkish">Turkish</option>
+          <option value="Turkish (auto-generated)">Turkish (auto-generated)</option>
+          <option value="Ukrainian">Ukrainian</option>
+          <option value="Urdu">Urdu</option>
+          <option value="Uzbek">Uzbek</option>
+          <option value="Vietnamese">Vietnamese</option>
+          <option value="Vietnamese (auto-generated)">Vietnamese (auto-generated)</option>
+          <option value="Welsh">Welsh</option>
+          <option value="Western Frisian">Western Frisian</option>
+          <option value="Xhosa">Xhosa</option>
+          <option value="Yiddish">Yiddish</option>
+          <option value="Yoruba">Yoruba</option>
+          <option value="Zulu">Zulu</option>
+        </select>
+        &nbsp;
+        <select id="invidious-captions[1]">
+          <option value="DEFAULT">Default</option>
+          <option value="">none</option>
+          <option value="English">English</option>
+          <option value="English (auto-generated)">English (auto-generated)</option>
+          <option value="English (United Kingdom)">English (United Kingdom)</option>
+          <option value="English (United States)">English (United States)</option>
+          <option value="Afrikaans">Afrikaans</option>
+          <option value="Albanian">Albanian</option>
+          <option value="Amharic">Amharic</option>
+          <option value="Arabic">Arabic</option>
+          <option value="Armenian">Armenian</option>
+          <option value="Azerbaijani">Azerbaijani</option>
+          <option value="Bangla">Bangla</option>
+          <option value="Basque">Basque</option>
+          <option value="Belarusian">Belarusian</option>
+          <option value="Bosnian">Bosnian</option>
+          <option value="Bulgarian">Bulgarian</option>
+          <option value="Burmese">Burmese</option>
+          <option value="Cantonese (Hong Kong)">Cantonese (Hong Kong)</option>
+          <option value="Catalan">Catalan</option>
+          <option value="Cebuano">Cebuano</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Chinese (China)">Chinese (China)</option>
+          <option value="Chinese (Hong Kong)">Chinese (Hong Kong)</option>
+          <option value="Chinese (Simplified)">Chinese (Simplified)</option>
+          <option value="Chinese (Taiwan)">Chinese (Taiwan)</option>
+          <option value="Chinese (Traditional)">Chinese (Traditional)</option>
+          <option value="Corsican">Corsican</option>
+          <option value="Croatian">Croatian</option>
+          <option value="Czech">Czech</option>
+          <option value="Danish">Danish</option>
+          <option value="Dutch">Dutch</option>
+          <option value="Dutch (auto-generated)">Dutch (auto-generated)</option>
+          <option value="Esperanto">Esperanto</option>
+          <option value="Estonian">Estonian</option>
+          <option value="Filipino">Filipino</option>
+          <option value="Finnish">Finnish</option>
+          <option value="French">French</option>
+          <option value="French (auto-generated)">French (auto-generated)</option>
+          <option value="Galician">Galician</option>
+          <option value="Georgian">Georgian</option>
+          <option value="German">German</option>
+          <option value="German (auto-generated)">German (auto-generated)</option>
+          <option value="Greek">Greek</option>
+          <option value="Gujarati">Gujarati</option>
+          <option value="Haitian Creole">Haitian Creole</option>
+          <option value="Hausa">Hausa</option>
+          <option value="Hawaiian">Hawaiian</option>
+          <option value="Hebrew">Hebrew</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Hmong">Hmong</option>
+          <option value="Hungarian">Hungarian</option>
+          <option value="Icelandic">Icelandic</option>
+          <option value="Igbo">Igbo</option>
+          <option value="Indonesian">Indonesian</option>
+          <option value="Indonesian (auto-generated)">Indonesian (auto-generated)</option>
+          <option value="Interlingue">Interlingue</option>
+          <option value="Irish">Irish</option>
+          <option value="Italian">Italian</option>
+          <option value="Italian (auto-generated)">Italian (auto-generated)</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Japanese (auto-generated)">Japanese (auto-generated)</option>
+          <option value="Javanese">Javanese</option>
+          <option value="Kannada">Kannada</option>
+          <option value="Kazakh">Kazakh</option>
+          <option value="Khmer">Khmer</option>
+          <option value="Korean">Korean</option>
+          <option value="Korean (auto-generated)">Korean (auto-generated)</option>
+          <option value="Kurdish">Kurdish</option>
+          <option value="Kyrgyz">Kyrgyz</option>
+          <option value="Lao">Lao</option>
+          <option value="Latin">Latin</option>
+          <option value="Latvian">Latvian</option>
+          <option value="Lithuanian">Lithuanian</option>
+          <option value="Luxembourgish">Luxembourgish</option>
+          <option value="Macedonian">Macedonian</option>
+          <option value="Malagasy">Malagasy</option>
+          <option value="Malay">Malay</option>
+          <option value="Malayalam">Malayalam</option>
+          <option value="Maltese">Maltese</option>
+          <option value="Maori">Maori</option>
+          <option value="Marathi">Marathi</option>
+          <option value="Mongolian">Mongolian</option>
+          <option value="Nepali">Nepali</option>
+          <option value="Norwegian Bokmål">Norwegian Bokmål</option>
+          <option value="Nyanja">Nyanja</option>
+          <option value="Pashto">Pashto</option>
+          <option value="Persian">Persian</option>
+          <option value="Polish">Polish</option>
+          <option value="Portuguese">Portuguese</option>
+          <option value="Portuguese (auto-generated)">Portuguese (auto-generated)</option>
+          <option value="Portuguese (Brazil)">Portuguese (Brazil)</option>
+          <option value="Punjabi">Punjabi</option>
+          <option value="Romanian">Romanian</option>
+          <option value="Russian">Russian</option>
+          <option value="Russian (auto-generated)">Russian (auto-generated)</option>
+          <option value="Samoan">Samoan</option>
+          <option value="Scottish Gaelic">Scottish Gaelic</option>
+          <option value="Serbian">Serbian</option>
+          <option value="Shona">Shona</option>
+          <option value="Sindhi">Sindhi</option>
+          <option value="Sinhala">Sinhala</option>
+          <option value="Slovak">Slovak</option>
+          <option value="Slovenian">Slovenian</option>
+          <option value="Somali">Somali</option>
+          <option value="Southern Sotho">Southern Sotho</option>
+          <option value="Spanish">Spanish</option>
+          <option value="Spanish (auto-generated)">Spanish (auto-generated)</option>
+          <option value="Spanish (Latin America)">Spanish (Latin America)</option>
+          <option value="Spanish (Mexico)">Spanish (Mexico)</option>
+          <option value="Spanish (Spain)">Spanish (Spain)</option>
+          <option value="Sundanese">Sundanese</option>
+          <option value="Swahili">Swahili</option>
+          <option value="Swedish">Swedish</option>
+          <option value="Tajik">Tajik</option>
+          <option value="Tamil">Tamil</option>
+          <option value="Telugu">Telugu</option>
+          <option value="Thai">Thai</option>
+          <option value="Turkish">Turkish</option>
+          <option value="Turkish (auto-generated)">Turkish (auto-generated)</option>
+          <option value="Ukrainian">Ukrainian</option>
+          <option value="Urdu">Urdu</option>
+          <option value="Uzbek">Uzbek</option>
+          <option value="Vietnamese">Vietnamese</option>
+          <option value="Vietnamese (auto-generated)">Vietnamese (auto-generated)</option>
+          <option value="Welsh">Welsh</option>
+          <option value="Western Frisian">Western Frisian</option>
+          <option value="Xhosa">Xhosa</option>
+          <option value="Yiddish">Yiddish</option>
+          <option value="Yoruba">Yoruba</option>
+          <option value="Zulu">Zulu</option>
+        </select>
+        &nbsp;
+        <select id="invidious-captions[2]">
+          <option value="DEFAULT">Default</option>
+          <option value="">none</option>
+          <option value="English">English</option>
+          <option value="English (auto-generated)">English (auto-generated)</option>
+          <option value="English (United Kingdom)">English (United Kingdom)</option>
+          <option value="English (United States)">English (United States)</option>
+          <option value="Afrikaans">Afrikaans</option>
+          <option value="Albanian">Albanian</option>
+          <option value="Amharic">Amharic</option>
+          <option value="Arabic">Arabic</option>
+          <option value="Armenian">Armenian</option>
+          <option value="Azerbaijani">Azerbaijani</option>
+          <option value="Bangla">Bangla</option>
+          <option value="Basque">Basque</option>
+          <option value="Belarusian">Belarusian</option>
+          <option value="Bosnian">Bosnian</option>
+          <option value="Bulgarian">Bulgarian</option>
+          <option value="Burmese">Burmese</option>
+          <option value="Cantonese (Hong Kong)">Cantonese (Hong Kong)</option>
+          <option value="Catalan">Catalan</option>
+          <option value="Cebuano">Cebuano</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Chinese (China)">Chinese (China)</option>
+          <option value="Chinese (Hong Kong)">Chinese (Hong Kong)</option>
+          <option value="Chinese (Simplified)">Chinese (Simplified)</option>
+          <option value="Chinese (Taiwan)">Chinese (Taiwan)</option>
+          <option value="Chinese (Traditional)">Chinese (Traditional)</option>
+          <option value="Corsican">Corsican</option>
+          <option value="Croatian">Croatian</option>
+          <option value="Czech">Czech</option>
+          <option value="Danish">Danish</option>
+          <option value="Dutch">Dutch</option>
+          <option value="Dutch (auto-generated)">Dutch (auto-generated)</option>
+          <option value="Esperanto">Esperanto</option>
+          <option value="Estonian">Estonian</option>
+          <option value="Filipino">Filipino</option>
+          <option value="Finnish">Finnish</option>
+          <option value="French">French</option>
+          <option value="French (auto-generated)">French (auto-generated)</option>
+          <option value="Galician">Galician</option>
+          <option value="Georgian">Georgian</option>
+          <option value="German">German</option>
+          <option value="German (auto-generated)">German (auto-generated)</option>
+          <option value="Greek">Greek</option>
+          <option value="Gujarati">Gujarati</option>
+          <option value="Haitian Creole">Haitian Creole</option>
+          <option value="Hausa">Hausa</option>
+          <option value="Hawaiian">Hawaiian</option>
+          <option value="Hebrew">Hebrew</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Hmong">Hmong</option>
+          <option value="Hungarian">Hungarian</option>
+          <option value="Icelandic">Icelandic</option>
+          <option value="Igbo">Igbo</option>
+          <option value="Indonesian">Indonesian</option>
+          <option value="Indonesian (auto-generated)">Indonesian (auto-generated)</option>
+          <option value="Interlingue">Interlingue</option>
+          <option value="Irish">Irish</option>
+          <option value="Italian">Italian</option>
+          <option value="Italian (auto-generated)">Italian (auto-generated)</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Japanese (auto-generated)">Japanese (auto-generated)</option>
+          <option value="Javanese">Javanese</option>
+          <option value="Kannada">Kannada</option>
+          <option value="Kazakh">Kazakh</option>
+          <option value="Khmer">Khmer</option>
+          <option value="Korean">Korean</option>
+          <option value="Korean (auto-generated)">Korean (auto-generated)</option>
+          <option value="Kurdish">Kurdish</option>
+          <option value="Kyrgyz">Kyrgyz</option>
+          <option value="Lao">Lao</option>
+          <option value="Latin">Latin</option>
+          <option value="Latvian">Latvian</option>
+          <option value="Lithuanian">Lithuanian</option>
+          <option value="Luxembourgish">Luxembourgish</option>
+          <option value="Macedonian">Macedonian</option>
+          <option value="Malagasy">Malagasy</option>
+          <option value="Malay">Malay</option>
+          <option value="Malayalam">Malayalam</option>
+          <option value="Maltese">Maltese</option>
+          <option value="Maori">Maori</option>
+          <option value="Marathi">Marathi</option>
+          <option value="Mongolian">Mongolian</option>
+          <option value="Nepali">Nepali</option>
+          <option value="Norwegian Bokmål">Norwegian Bokmål</option>
+          <option value="Nyanja">Nyanja</option>
+          <option value="Pashto">Pashto</option>
+          <option value="Persian">Persian</option>
+          <option value="Polish">Polish</option>
+          <option value="Portuguese">Portuguese</option>
+          <option value="Portuguese (auto-generated)">Portuguese (auto-generated)</option>
+          <option value="Portuguese (Brazil)">Portuguese (Brazil)</option>
+          <option value="Punjabi">Punjabi</option>
+          <option value="Romanian">Romanian</option>
+          <option value="Russian">Russian</option>
+          <option value="Russian (auto-generated)">Russian (auto-generated)</option>
+          <option value="Samoan">Samoan</option>
+          <option value="Scottish Gaelic">Scottish Gaelic</option>
+          <option value="Serbian">Serbian</option>
+          <option value="Shona">Shona</option>
+          <option value="Sindhi">Sindhi</option>
+          <option value="Sinhala">Sinhala</option>
+          <option value="Slovak">Slovak</option>
+          <option value="Slovenian">Slovenian</option>
+          <option value="Somali">Somali</option>
+          <option value="Southern Sotho">Southern Sotho</option>
+          <option value="Spanish">Spanish</option>
+          <option value="Spanish (auto-generated)">Spanish (auto-generated)</option>
+          <option value="Spanish (Latin America)">Spanish (Latin America)</option>
+          <option value="Spanish (Mexico)">Spanish (Mexico)</option>
+          <option value="Spanish (Spain)">Spanish (Spain)</option>
+          <option value="Sundanese">Sundanese</option>
+          <option value="Swahili">Swahili</option>
+          <option value="Swedish">Swedish</option>
+          <option value="Tajik">Tajik</option>
+          <option value="Tamil">Tamil</option>
+          <option value="Telugu">Telugu</option>
+          <option value="Thai">Thai</option>
+          <option value="Turkish">Turkish</option>
+          <option value="Turkish (auto-generated)">Turkish (auto-generated)</option>
+          <option value="Ukrainian">Ukrainian</option>
+          <option value="Urdu">Urdu</option>
+          <option value="Uzbek">Uzbek</option>
+          <option value="Vietnamese">Vietnamese</option>
+          <option value="Vietnamese (auto-generated)">Vietnamese (auto-generated)</option>
+          <option value="Welsh">Welsh</option>
+          <option value="Western Frisian">Western Frisian</option>
+          <option value="Xhosa">Xhosa</option>
+          <option value="Yiddish">Yiddish</option>
+          <option value="Yoruba">Yoruba</option>
+          <option value="Zulu">Zulu</option>
+        </select>
+      </div>
+
+      <div class="some-block option-block">
+        <h4>Show related videos</h4>
+        <select id="invidious-related_videos">
+          <option value="DEFAULT">Default</option>
+          <option value="true">True</option>
+          <option value="false">False</option>
+          </option>
+        </select>
+      </div>
+
+      <div class="some-block option-block">
+        <h4>Show annotations by default</h4>
+        <select id="invidious-annotations">
+          <option value="DEFAULT">Default</option>
+          <option value="true">True</option>
+          <option value="false">False</option>
+          </option>
+        </select>
+      </div>
+
+      <div class="some-block option-block">
+        <h4>Automatically extend video description</h4>
+        <select id="invidious-extend_desc">
+          <option value="DEFAULT">Default</option>
+          <option value="true">True</option>
+          <option value="false">False</option>
+          </option>
+        </select>
+      </div>
+
+      <div class="some-block option-block">
+        <h4>Interactive 360 degree videos (requires WebGL)</h4>
+        <select id="invidious-vr_mode">
+          <option value="DEFAULT">Default</option>
+          <option value="true">True</option>
+          <option value="false">False</option>
+          </option>
+        </select>
+      </div>
+
+      <div class="some-block option-block">
+        <h4>Save playback position</h4>
+        <select id="invidious-save_player_pos">
+          <option value="DEFAULT">Default</option>
+          <option value="true">True</option>
+          <option value="false">False</option>
+          </option>
+        </select>
+      </div>
 
       <hr>
 

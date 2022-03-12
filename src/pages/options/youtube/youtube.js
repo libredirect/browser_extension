@@ -99,7 +99,7 @@ invidiousClearVolumeElement.addEventListener("click",
     (_) => {
         youtubeHelper.setVolume('--');
         volumeValueElement.textContent = `--%`;
-        volumeElement.value = 50;
+        volumeElement.value = null;
     }
 );
 

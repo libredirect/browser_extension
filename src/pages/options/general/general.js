@@ -115,7 +115,6 @@ generalHelper.init().then(() => {
   )
   let exceptionsCustomInstances = generalHelper.getExceptions();
   function calcExceptionsCustomInstances() {
-    console.log("exceptionsCustomInstances", exceptionsCustomInstances)
     document.getElementById("exceptions-custom-checklist").innerHTML =
       [...exceptionsCustomInstances.url, ...exceptionsCustomInstances.regex].map(
         (x) => `<div>${x}<button class="add" id="clear-${x}">

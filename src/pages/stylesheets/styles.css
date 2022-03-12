@@ -49,24 +49,17 @@ img, svg {
 input[type="url"],
 input[type="text"],
 select {
-  padding: 5px 10px;
-  width: 350px;
   font-weight: bold;
-  border-radius: 3px;
   box-sizing: border-box;
-  background-color: var(--bg-main);
   border-style: solid;
   border-color: #767676;
   color: var(--text);
-}
-
-select {
   font-size: 16px;
   padding: 8px;
   background-color: var(--bg-secondary);
   border: none;
   margin: 0;
-  width: auto;
+  width: 200px;
   border-radius: 3px;
 }
 
