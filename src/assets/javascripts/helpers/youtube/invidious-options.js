@@ -1,3 +1,5 @@
+"use strict";
+
 export let invidiousQuality;
 export const getinvidiousQuality = () => invidiousQuality;
 export function setinvidiousQuality(val) {

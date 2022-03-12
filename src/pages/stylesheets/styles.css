@@ -107,7 +107,32 @@ section.links a.selected {
 }
 
 input[type="range"] {
+  -webkit-appearance: none;
   width: 350px;
+  height: 7px;
+  border-radius: 50px;
+  background: var(--text);
+}
+
+input[type="range"]:hover {
+  background: var(--light-grey);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--active);
+  border: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--active);
+  border: none;
 }
 
 ::placeholder {
