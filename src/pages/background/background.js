@@ -19,23 +19,23 @@ import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js
 window.browser = window.browser || window.chrome;
 
 async function wholeInit() {
-  youtubeHelper.init()
-  youtubeMusicHelper.init()
-  twitterHelper.init()
-  instagramHelper.init()
-  mapsHelper.init()
-  searchHelper.init()
-  translateHelper.init()
-  mediumHelper.init()
-  redditHelper.init()
-  wikipediaHelper.init()
-  imgurHelper.init()
-  tiktokHelper.init()
-  pixivHelper.init()
-  sendTargetsHelper.init()
-  generalHelper.init()
+  await youtubeHelper.init()
+  await youtubeMusicHelper.init()
+  await twitterHelper.init()
+  await instagramHelper.init()
+  await mapsHelper.init()
+  await searchHelper.init()
+  await translateHelper.init()
+  await mediumHelper.init()
+  await redditHelper.init()
+  await wikipediaHelper.init()
+  await imgurHelper.init()
+  await tiktokHelper.init()
+  await pixivHelper.init()
+  await sendTargetsHelper.init()
+  await generalHelper.init()
 }
-wholeInit();
+await wholeInit();
 
 browser.storage.onChanged.addListener(wholeInit);
 
