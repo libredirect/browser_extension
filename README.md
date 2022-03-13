@@ -33,7 +33,8 @@ Send Files => [Send](https://github.com/timvisee/send)
 [![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=Matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
 
 ## Get
-[![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)
+[![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)&nbsp;
+[![Edge Add-on](./img/badge-ms.png)](https://microsoftedge.microsoft.com/addons/detail/libredirect/aodffkeankebfonljgbcfbbaljopcpdb)
 
 ## Donate
 [![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)
