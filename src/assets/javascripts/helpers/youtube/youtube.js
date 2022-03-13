@@ -590,7 +590,10 @@ function initInvidiousCookies() {
       },
       cookie => {
         let prefs = {};
-        if (cookie) browser.cookies.remove({ url: instanceUrl, name: "PREFS" })
+        if (cookie) {
+          prefs = JSON.parse(decodeURIComponent(cookie.value));
+          browser.cookies.remove({ url: instanceUrl, name: "PREFS" });
+        }
 
         if (invidiousAlwaysProxy != "DEFAULT") prefs.local = invidiousAlwaysProxy == 'true';
         if (applyThemeToSites && theme != "DEFAULT") prefs.dark_mode = theme;
