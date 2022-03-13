@@ -4,7 +4,7 @@ import commonHelper from './common.js'
 
 const targets = [
   /^https?:\/\/(www\.|old\.|np\.|new\.|amp\.|)reddit\.com/,
-  /^https?:\/\/(i\.|)redd\.it/,
+  /^https?:\/\/(i\.|preview\.)redd\.it/,
 ];
 let redirects = {
   // modern UI
@@ -341,6 +341,17 @@ function redirect(url, type, initiator) {
       return `${tedditRandomInstance}/comments${url.pathname}${url.search}`;
     }
   }
+  else if (url.host === 'preview.redd.it') {
+    if (frontend == 'teddit') {
+      return null;
+    }
+    if (frontend == 'libreddit') {
+      if (libredditInstancesList.length === 0) return null;
+      let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
+      return `${libredditRandomInstance}/preview/pre${url.pathname}${url.search}`;
+    }
+  }
+
   if (frontend == 'libreddit') {
     if (libredditInstancesList.length === 0) return null;
     let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
