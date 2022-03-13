@@ -4,7 +4,7 @@ import commonHelper from './common.js'
 
 const targets = [
   /^https?:\/{2}(www\.|search\.|)google(\.[a-z]{2,3}){1,2}(\/search(\?.*|$)|\/$)/,
-  /^https?:\/\/libredirect\.onion/
+  /^https?:\/\/libredirect\.invalid/
   // /^https?:\/\/yandex\.com(\...|)(\/search\/..*|\/$)/,
 ];
 let redirects = {
