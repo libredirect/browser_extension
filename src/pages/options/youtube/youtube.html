@@ -130,7 +130,7 @@
       <hr>
     </div>
 
-    <div id="invidious-piped">
+    <div id="invidious-piped-pipedMaterial">
 
       <div class="some-block option-block">
         <h4>Protocol</h4>
@@ -161,6 +161,18 @@
           <option value="true">True</option>
           <option value="false">False</option>
         </select>
+      </div>
+
+      <div class="some-block option-block">
+        <h4>Volume: <span id="volume-value">--%</span></h4>
+        <input id="invidious-volume" name="invidious-volume" type="range" min="0" max="100" step="1" />
+        <button type="button" class="default" id="clear-invidious-volume">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path
+              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+          </svg>
+        </button>
       </div>
     </div>
 
@@ -264,19 +276,6 @@
           </option>
         </select>
       </div>
-
-      <div class="some-block option-block">
-        <h4>Volume: <span id="volume-value">--%</span></h4>
-        <input id="invidious-volume" name="invidious-volume" type="range" min="0" max="100" step="1" />
-        <button type="button" class="default" id="clear-invidious-volume">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-            <path d="M0 0h24v24H0V0z" fill="none" />
-            <path
-              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
-          </svg>
-        </button>
-      </div>
-
 
       <div class="some-block option-block">
         <h4>Default comments</h4>

@@ -3,23 +3,24 @@ window.browser = window.browser || window.chrome;
 browser.storage.local.get(
     [
         "theme",
-        "youtubeAutoplay"
+        "applyThemeToSites",
+        "youtubeAutoplay",
     ],
-    res => {
-        let prefs = JSON.parse(
-            decodeURIComponent(
-                localStorage.getItem("PREFERENCES")
-            )
-        ) ?? {};
-        let oldPrefs = { ...prefs };
+    r => {
+        let applyThemeToSites = r.applyThemeToSites ?? false;
+        let theme = r.theme ?? "DEFAULT";
+        let youtubeAutoplay = r.youtubeAutoplay ?? "DEFAULT";
 
-        if (res.theme == 'dark') prefs.darkMode = true;
-        if (res.theme == 'light') prefs.darkMode = false;
+        let prefs = {};
+        if (localStorage.getItem("PREFERENCES")) prefs = JSON.parse(localStorage.getItem("PREFERENCES"));
 
-        if (res.youtubeAutoplay != "DEFAULT") prefs.playerAutoplay = res.youtubeAutoplay;
+        if (applyThemeToSites && theme == 'dark') prefs.darkMode = true;
+        if (applyThemeToSites && theme == 'light') prefs.darkMode = false;
 
-        if (oldPrefs != prefs) localStorage.setItem("PREFERENCES", encodeURIComponent(JSON.stringify(prefs)));
+        if (youtubeAutoplay != "DEFAULT") prefs.playerAutoplay = youtubeAutoplay == 'true';
+
+        console.log("prefs", JSON.stringify(prefs));
+
+        localStorage.setItem("PREFERENCES", JSON.stringify(prefs));
     }
 )
-
-window.onunload = () => localStorage.removeItem("PREFERENCES");
