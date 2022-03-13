@@ -3,7 +3,7 @@ import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let invidiousAlwaysProxyElement = document.getElementById("invidious-local");
 invidiousAlwaysProxyElement.addEventListener("change",
-    event => youtubeHelper.setInvidiousAlwaysProxy(event.target.options[invidiousAlwaysProxyElement.selectedIndex].value)
+    event => youtubeHelper.setInvidiousAlwaysProxy(event.target.checked)
 );
 
 let invidiousPlayerStyleElement = document.getElementById("invidious-player_style");
@@ -18,22 +18,22 @@ invidiousQualityElement.addEventListener("change",
 
 let invidiousVideoLoopElement = document.getElementById("invidious-video_loop");
 invidiousVideoLoopElement.addEventListener("change",
-    event => youtubeHelper.setInvidiousVideoLoop(event.target.options[invidiousVideoLoopElement.selectedIndex].value)
+    event => youtubeHelper.setInvidiousVideoLoop(event.target.checked)
 );
 
 let invidiousContinueAutoplayElement = document.getElementById("invidious-continue_autoplay");
 invidiousContinueAutoplayElement.addEventListener("change",
-    event => youtubeHelper.setInvidiousContinueAutoplay(event.target.options[invidiousContinueAutoplayElement.selectedIndex].value)
+    event => youtubeHelper.setInvidiousContinueAutoplay(event.target.checked)
 );
 
 let invidiousContinueElement = document.getElementById("invidious-continue");
 invidiousContinueElement.addEventListener("change",
-    event => youtubeHelper.setInvidiousContinue(event.target.options[invidiousContinueElement.selectedIndex].value)
+    event => youtubeHelper.setInvidiousContinue(event.target.checked)
 );
 
 let invidiousListenElement = document.getElementById("invidious-listen");
 invidiousListenElement.addEventListener("change",
-    event => youtubeHelper.setInvidiousListen(event.target.options[invidiousListenElement.selectedIndex].value)
+    event => youtubeHelper.setInvidiousListen(event.target.checked)
 );
 
 let invidiousSpeedElement = document.getElementById("invidious-speed");
@@ -90,28 +90,28 @@ invidiousCaptions2Element.addEventListener("change",
 
 let invidiousRelatedVideoElement = document.getElementById("invidious-related_videos");
 invidiousRelatedVideoElement.addEventListener("change",
-    event => youtubeHelper.setInvidiousRelatedVideos(event.target.options[invidiousRelatedVideoElement.selectedIndex].value)
+    event => youtubeHelper.setInvidiousRelatedVideos(event.target.checked)
 );
 
 let invidiousAnnotationsElement = document.getElementById("invidious-annotations");
 invidiousAnnotationsElement.addEventListener("change",
-    event => youtubeHelper.setInvidiousAnnotations(event.target.options[invidiousAnnotationsElement.selectedIndex].value)
+    event => youtubeHelper.setInvidiousAnnotations(event.target.checked)
 );
 
 
 let invidiousExtendDescElement = document.getElementById("invidious-extend_desc");
 invidiousExtendDescElement.addEventListener("change",
-    event => youtubeHelper.setInvidiousExtendDesc(event.target.options[invidiousExtendDescElement.selectedIndex].value)
+    event => youtubeHelper.setInvidiousExtendDesc(event.target.checked)
 );
 
 let invidiousVrModeElement = document.getElementById("invidious-vr_mode");
 invidiousVrModeElement.addEventListener("change",
-    event => youtubeHelper.setInvidiousVrMode(event.target.options[invidiousVrModeElement.selectedIndex].value)
+    event => youtubeHelper.setInvidiousVrMode(event.target.checked)
 );
 
 let invidiousSavePlayerPosElement = document.getElementById("invidious-save_player_pos");
 invidiousSavePlayerPosElement.addEventListener("change",
-    event => youtubeHelper.setInvidiousSavePlayerPos(event.target.options[invidiousSavePlayerPosElement.selectedIndex].value)
+    event => youtubeHelper.setInvidiousSavePlayerPos(event.target.checked)
 );
 
 youtubeHelper.init().then(() => {

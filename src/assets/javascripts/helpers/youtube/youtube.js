@@ -247,6 +247,14 @@ function setDisable(val) {
   console.log("disableYoutube: ", disable)
 }
 
+let enableCustomSettings;
+const getEnableCustomSettings = () => enableCustomSettings;
+function setEnableCustomSettings(val) {
+  enableCustomSettings = val;
+  browser.storage.local.set({ enableYoutubeCustomSettings: enableCustomSettings })
+  console.log("enableYoutubeCustomSettings: ", enableCustomSettings)
+}
+
 let protocol;
 const getProtocol = () => protocol;
 function setProtocol(val) {
@@ -554,23 +562,25 @@ function isPipedorInvidious(url, type, frontend) {
 }
 
 function initPipedLocalStorage(tabId) {
-  browser.tabs.executeScript(
-    tabId,
-    {
-      file: "/assets/javascripts/helpers/youtube/piped-preferences.js",
-      runAt: "document_start"
-    }
-  );
+  if (enableCustomSettings)
+    browser.tabs.executeScript(
+      tabId,
+      {
+        file: "/assets/javascripts/helpers/youtube/piped-preferences.js",
+        runAt: "document_start"
+      }
+    );
 }
 
 function initPipedMaterialLocalStorage(tabId) {
-  browser.tabs.executeScript(
-    tabId,
-    {
-      file: "/assets/javascripts/helpers/youtube/pipedMaterial-preferences.js",
-      runAt: "document_start"
-    }
-  );
+  if (enableCustomSettings)
+    browser.tabs.executeScript(
+      tabId,
+      {
+        file: "/assets/javascripts/helpers/youtube/pipedMaterial-preferences.js",
+        runAt: "document_start"
+      }
+    );
 }
 
 function initInvidiousCookies() {
@@ -582,64 +592,57 @@ function initInvidiousCookies() {
     ...invidiousTorCustomRedirects,
   ];
 
-  for (const instanceUrl of checkedInstances)
-    browser.cookies.get(
-      {
-        url: instanceUrl,
-        name: "PREFS",
-      },
-      cookie => {
-        let prefs = {};
-        if (cookie) {
-          prefs = JSON.parse(decodeURIComponent(cookie.value));
-          browser.cookies.remove({ url: instanceUrl, name: "PREFS" });
-        }
+  if (enableCustomSettings)
+    for (const instanceUrl of checkedInstances)
+      browser.cookies.get(
+        {
+          url: instanceUrl,
+          name: "PREFS",
+        },
+        cookie => {
+          let prefs = {};
+          if (cookie) {
+            prefs = JSON.parse(decodeURIComponent(cookie.value));
+            browser.cookies.remove({ url: instanceUrl, name: "PREFS" });
+          }
 
-        if (invidiousAlwaysProxy != "DEFAULT") prefs.local = invidiousAlwaysProxy == 'true';
-        if (applyThemeToSites && theme != "DEFAULT") prefs.dark_mode = theme;
-        if (invidiousVideoLoop != "DEFAULT") prefs.video_loop = invidiousVideoLoop == 'true';
-        if (invidiousContinueAutoplay != "DEFAULT") prefs.continue_autoplay = invidiousContinueAutoplay == 'true';
-        if (invidiousContinue != "DEFAULT") prefs.continue = invidiousContinue == 'true';
-        if (invidiousListen != "DEFAULT") prefs.listen = invidiousListen == 'true';
-        if (invidiousSpeed != "DEFAULT") prefs.speed = parseFloat(invidiousSpeed);
-        if (invidiousQuality != "DEFAULT") prefs.quality = invidiousQuality;
-        if (invidiousQualityDash != "DEFAULT") prefs.quality_dash = invidiousQualityDash;
+          prefs.local = invidiousAlwaysProxy == 'true';
+          prefs.dark_mode = theme;
+          prefs.video_loop = invidiousVideoLoop == 'true';
+          prefs.continue_autoplay = invidiousContinueAutoplay == 'true';
+          prefs.continue = invidiousContinue == 'true';
+          prefs.listen = invidiousListen == 'true';
+          prefs.speed = parseFloat(invidiousSpeed);
+          prefs.quality = invidiousQuality;
+          prefs.quality_dash = invidiousQualityDash;
 
-        if (invidiousComments[0] != "DEFAULT" || invidiousComments[1] != "DEFAULT") prefs.comments = []
+          prefs.comments = [];
+          prefs.comments[0] = invidiousComments[0];
+          prefs.comments[1] = invidiousComments[1];
 
-        if (invidiousComments[0] != "DEFAULT") prefs.comments[0] = invidiousComments[0];
-        else if (invidiousComments[1] != "DEFAULT") prefs.comments[0] = ""
-        if (invidiousComments[1] != "DEFAULT") prefs.comments[1] = invidiousComments[1];
-        else if (invidiousComments[0] != "DEFAULT") prefs.comments[1] = ""
 
-        if (invidiousCaptions[0] != "DEFAULT" || invidiousCaptions[1] != "DEFAULT" || invidiousCaptions[2] != "DEFAULT") prefs.captions = [];
+          prefs.captions = [];
+          prefs.captions[0] = invidiousCaptions[0];
+          prefs.captions[1] = invidiousCaptions[1];
+          prefs.captions[2] = invidiousCaptions[2];
 
-        if (invidiousCaptions[0] != "DEFAULT") prefs.captions[0] = invidiousCaptions[0];
-        else if (invidiousCaptions[1] != "DEFAULT" || invidiousCaptions[2] != "DEFAULT") prefs.captions[0] = "";
+          prefs.related_videos = invidiousRelatedVideos == 'true';
+          prefs.annotations = invidiousAnnotations == 'true'
+          prefs.extend_desc = invidiousExtendDesc == 'true';
+          prefs.vr_mode = invidiousVrMode == 'true';
+          prefs.save_player_pos = invidiousSavePlayerPos == 'true';
 
-        if (invidiousCaptions[1] != "DEFAULT") prefs.captions[1] = invidiousCaptions[1];
-        else if (invidiousCaptions[0] != "DEFAULT" || invidiousCaptions[2] != "DEFAULT") prefs.captions[1] = "";
+          prefs.volume = parseInt(volume);
+          prefs.player_style = invidiousPlayerStyle;
+          prefs.autoplay = autoplay == 'true';
 
-        if (invidiousCaptions[2] != "DEFAULT") prefs.captions[2] = invidiousCaptions[2];
-        else if (invidiousCaptions[0] != "DEFAULT" || invidiousCaptions[1] != "DEFAULT") prefs.captions[2] = "";
-
-        if (invidiousRelatedVideos != "DEFAULT") prefs.related_videos = invidiousRelatedVideos == 'true';
-        if (invidiousAnnotations != "DEFAULT") prefs.annotations = invidiousAnnotations == 'true';
-        if (invidiousExtendDesc != "DEFAULT") prefs.extend_desc = invidiousExtendDesc == 'true';
-        if (invidiousVrMode != "DEFAULT") prefs.vr_mode = invidiousVrMode == 'true';
-        if (invidiousSavePlayerPos != "DEFAULT") prefs.save_player_pos = invidiousSavePlayerPos == 'true';
-
-        if (volume != "--") prefs.volume = parseInt(volume);
-        if (invidiousPlayerStyle != "DEFAULT") prefs.player_style = invidiousPlayerStyle;
-        if (autoplay != "DEFAULT") prefs.autoplay = autoplay == 'true';
-
-        if (Object.entries(prefs).length !== 0)
           browser.cookies.set({
             url: instanceUrl,
             name: "PREFS",
             value: encodeURIComponent(JSON.stringify(prefs))
           })
-      })
+        }
+      )
 }
 
 async function init() {
@@ -651,8 +654,8 @@ async function init() {
         browser.storage.local.get(
           [
             "theme",
-            "applyThemeToSites",
             "disableYoutube",
+            "enableYoutubeCustomSettings",
             "OnlyEmbeddedVideo",
             "youtubeVolume",
             "youtubeAutoplay",
@@ -689,15 +692,15 @@ async function init() {
             if (r.youtubeRedirects) redirects = r.youtubeRedirects;
 
             disable = r.disableYoutube ?? false;
+            enableCustomSettings = r.enableYoutubeCustomSettings ?? false;
             protocol = r.youtubeProtocol ?? 'normal';
             frontend = r.youtubeFrontend ?? 'invidious';
             youtubeEmbedFrontend = r.youtubeEmbedFrontend ?? 'invidious';
 
-            theme = r.theme ?? 'DEFAULT';
-            applyThemeToSites = r.applyThemeToSites ?? false;
+            theme = r.theme ?? 'dark';
 
-            volume = r.youtubeVolume ?? '--';
-            autoplay = r.youtubeAutoplay ?? 'DEFAULT';
+            volume = r.youtubeVolume ?? 100;
+            autoplay = r.youtubeAutoplay ?? false;
 
             OnlyEmbeddedVideo = r.OnlyEmbeddedVideo ?? 'both';
 
@@ -772,6 +775,9 @@ export default {
 
   getDisable,
   setDisable,
+
+  getEnableCustomSettings,
+  setEnableCustomSettings,
 
   getProtocol,
   setProtocol,

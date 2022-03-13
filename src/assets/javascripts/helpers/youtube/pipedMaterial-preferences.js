@@ -3,23 +3,22 @@ window.browser = window.browser || window.chrome;
 browser.storage.local.get(
     [
         "theme",
-        "applyThemeToSites",
+        "youtubeVolume",
         "youtubeAutoplay",
     ],
     r => {
-        let applyThemeToSites = r.applyThemeToSites ?? false;
-        let theme = r.theme ?? "DEFAULT";
-        let youtubeAutoplay = r.youtubeAutoplay ?? "DEFAULT";
+        let theme = r.theme ?? "dark";
+        let youtubeAutoplay = r.youtubeAutoplay ?? false;
+        let youtubeVolume = r.youtubeVolume ?? 100;
 
         let prefs = {};
         if (localStorage.getItem("PREFERENCES")) prefs = JSON.parse(localStorage.getItem("PREFERENCES"));
 
-        if (applyThemeToSites && theme == 'dark') prefs.darkMode = true;
-        if (applyThemeToSites && theme == 'light') prefs.darkMode = false;
+        if (theme == 'dark') prefs.darkMode = true;
+        if (theme == 'light') prefs.darkMode = false;
 
-        if (youtubeAutoplay != "DEFAULT") prefs.playerAutoplay = youtubeAutoplay == 'true';
-
-        console.log("prefs", JSON.stringify(prefs));
+        prefs.playerAutoplay = youtubeAutoplay == 'true';
+        prefs.volume = youtubeVolume / 100;
 
         localStorage.setItem("PREFERENCES", JSON.stringify(prefs));
     }

@@ -153,23 +153,22 @@ export async function invidiousInit() {
                     "invidiousSavePlayerPos",
                 ],
                 r => {
-                    invidiousQuality = r.invidiousQuality ?? 'DEFAULT';
-                    invidiousAlwaysProxy = r.invidiousAlwaysProxy ?? 'DEFAULT';
-                    invidiousPlayerStyle = r.invidiousPlayerStyle ?? 'DEFAULT';
-                    invidiousVideoLoop = r.invidiousVideoLoop ?? 'DEFAULT';
-                    invidiousContinueAutoplay = r.invidiousContinueAutoplay ?? 'DEFAULT';
-                    invidiousContinue = r.invidiousContinue ?? 'DEFAULT';
-                    invidiousListen = r.invidiousListen ?? 'DEFAULT';
-                    invidiousSpeed = r.invidiousSpeed ?? 'DEFAULT';
-                    invidiousQualityDash = r.invidiousQualityDash ?? 'DEFAULT';
-                    invidiousComments = r.invidiousComments ?? ['DEFAULT', 'DEFAULT'];
-                    invidiousCaptions = r.invidiousCaptions ?? ['DEFAULT', 'DEFAULT', 'DEFAULT'];
-                    invidiousRelatedVideos = r.invidiousRelatedVideos ?? 'DEFAULT';
-                    invidiousAnnotations = r.invidiousAnnotations ?? 'DEFAULT';
-                    invidiousExtendDesc = r.invidiousExtendDesc ?? 'DEFAULT';
-                    invidiousVrMode = r.invidiousVrMode ?? 'DEFAULT';
-                    invidiousSavePlayerPos = r.invidiousSavePlayerPos ?? 'DEFAULT';
-
+                    invidiousVideoLoop = r.invidiousVideoLoop ?? false;
+                    invidiousAlwaysProxy = r.invidiousAlwaysProxy ?? false;
+                    invidiousPlayerStyle = r.invidiousPlayerStyle ?? 'invidious';
+                    invidiousQuality = r.invidiousQuality ?? 'hd720';
+                    invidiousContinueAutoplay = r.invidiousContinueAutoplay ?? true;
+                    invidiousContinue = r.invidiousContinue ?? false;
+                    invidiousListen = r.invidiousListen ?? false;
+                    invidiousSpeed = r.invidiousSpeed ?? '1.0';
+                    invidiousQualityDash = r.invidiousQualityDash ?? 'auto';
+                    invidiousComments = r.invidiousComments ?? ['youtube', ''];
+                    invidiousCaptions = r.invidiousCaptions ?? ['', '', ''];
+                    invidiousRelatedVideos = r.invidiousRelatedVideos ?? true;
+                    invidiousAnnotations = r.invidiousAnnotations ?? false;
+                    invidiousExtendDesc = r.invidiousExtendDesc ?? false;
+                    invidiousVrMode = r.invidiousVrMode ?? true;
+                    invidiousSavePlayerPos = r.invidiousSavePlayerPos ?? false;
 
                     resolve();
                 }

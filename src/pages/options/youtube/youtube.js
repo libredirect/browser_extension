@@ -1,6 +1,6 @@
 import youtubeHelper from "../../../assets/javascripts/helpers/youtube/youtube.js";
 
-let disableYoutubeElement = document.getElementById("disable-invidious");
+
 
 let youtubeFrontendElement = document.getElementById("youtube-frontend");
 let invidiousDivElement = document.getElementById("invidious");
@@ -8,8 +8,20 @@ let pipedDivElement = document.getElementById("piped");
 let pipedMaterialDivElement = document.getElementById("pipedMaterial");
 let invidiousPipedPipedMaterialDivElement = document.getElementById("invidious-piped-pipedMaterial");
 let freetubeYatteeDivElement = document.getElementById("freetube-yatte");
+let customSettingsDivElement = document.getElementsByClassName("custom-settings");
 
-function changeFrontendsSettings(frontend) {
+function changeFrontendsSettings() {
+    console.log('changeFrontendsSettings()');
+    let frontend = youtubeFrontendElement.value;
+
+    console.log("customSettingsDivElement", customSettingsDivElement[0].style.display);
+    if (enableYoutubeCustomSettingsElement.checked)
+        for (const item of customSettingsDivElement) item.style.display = 'block';
+    else {
+        console.log("setting it to none");
+        for (const item of customSettingsDivElement) item.style.display = 'none';
+    }
+
     if (frontend == 'invidious') {
         invidiousPipedPipedMaterialDivElement.style.display = 'block'
         invidiousDivElement.style.display = 'block';
@@ -62,7 +74,7 @@ youtubeFrontendElement.addEventListener("change",
     event => {
         let frontend = event.target.options[youtubeFrontendElement.selectedIndex].value
         youtubeHelper.setFrontend(frontend);
-        changeFrontendsSettings(frontend);
+        changeFrontendsSettings();
     }
 );
 
@@ -75,9 +87,19 @@ youtubeEmbedFrontendElement.addEventListener("change",
     }
 );
 
+let disableYoutubeElement = document.getElementById("disable-invidious");
 disableYoutubeElement.addEventListener("change",
     event => youtubeHelper.setDisable(!event.target.checked)
 );
+
+let enableYoutubeCustomSettingsElement = document.getElementById("enable-youtube-custom-settings");
+enableYoutubeCustomSettingsElement.addEventListener("change",
+    event => {
+        youtubeHelper.setEnableCustomSettings(event.target.checked)
+        changeFrontendsSettings();
+    }
+);
+
 
 let volumeElement = document.getElementById("invidious-volume");
 let volumeValueElement = document.getElementById("volume-value");
@@ -87,18 +109,10 @@ volumeElement.addEventListener("input",
         volumeValueElement.textContent = `${volumeElement.value}%`;
     }
 );
-let invidiousClearVolumeElement = document.getElementById("clear-invidious-volume");
-invidiousClearVolumeElement.addEventListener("click",
-    (_) => {
-        youtubeHelper.setVolume('--');
-        volumeValueElement.textContent = `--%`;
-        volumeElement.value = null;
-    }
-);
 
 let autoplayElement = document.getElementById("invidious-autoplay");
 autoplayElement.addEventListener("change",
-    event => youtubeHelper.setAutoplay(event.target.options[autoplayElement.selectedIndex].value)
+    event => youtubeHelper.setAutoplay(event.target.checked)
 );
 
 let OnlyEmbeddedVideoElement = document.getElementById("only-embed");
@@ -154,6 +168,7 @@ function changeProtocolSettings(protocol) {
 
 youtubeHelper.init().then(() => {
     disableYoutubeElement.checked = !youtubeHelper.getDisable();
+    enableYoutubeCustomSettingsElement.checked = youtubeHelper.getEnableCustomSettings();
     volumeElement.value = youtubeHelper.getVolume();
     volumeValueElement.textContent = `${youtubeHelper.getVolume()}%`;
     OnlyEmbeddedVideoElement.value = youtubeHelper.getOnlyEmbeddedVideo();
@@ -161,7 +176,7 @@ youtubeHelper.init().then(() => {
     autoplayElement.value = youtubeHelper.getAutoplay();
     let frontend = youtubeHelper.getFrontend();
     youtubeFrontendElement.value = frontend;
-    changeFrontendsSettings(frontend);
+    changeFrontendsSettings();
 
     let protocol = youtubeHelper.getProtocol();
     protocolElement.value = protocol;

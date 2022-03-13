@@ -328,6 +328,15 @@ button.add {
   cursor: pointer;
 }
 
+div.disabled {
+  background-color: rgb(39, 39, 39);
+  position: absolute;
+  top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 .light-theme.popup,
 .light-theme .popup {
   background-color: var(--bg-secondary);
