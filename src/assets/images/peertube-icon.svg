@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   height="128"
+   viewBox="2799 -911 128 128"
+   width="128"
+   version="1.1"
+   id="svg10"
+   sodipodi:docname="peertube-icon.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="2.6681399"
+     inkscape:cx="10.868995"
+     inkscape:cy="59.779474"
+     inkscape:window-width="1888"
+     inkscape:window-height="1060"
+     inkscape:window-x="32"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg10" />
+  <g
+     stroke-width="32"
+     id="g8"
+     transform="matrix(0.15060053,0,0,0.15060053,2402.9154,-761.2095)">
+    <path
+       d="m 2799,-911 v 341.344 l 256,-170.656"
+       fill="#211f20"
+       id="path2" />
+    <path
+       d="m 2799,-569.656 v 341.344 l 256,-170.656"
+       fill="#737373"
+       id="path4" />
+    <path
+       d="M 3055,-740.344 V -399 l 256,-170.656"
+       fill="#f1680d"
+       id="path6" />
+  </g>
+</svg>

@@ -36,10 +36,6 @@
     "browser_style": false,
     "open_in_tab": true
   },
-  "web_accessible_resources": [
-    "assets/javascripts/helpers/youtube/piped-preferences.js",
-    "/assets/javascripts/helpers/translate/lingva-preferences.js"
-  ],
   "chrome_settings_overrides": {
     "search_provider": {
       "name": "LibRedirect",

@@ -189,6 +189,18 @@ for item in rJson:
 mightyList['rimgo'] = rimgoList
 print('fetched Rimgo')
 
+# Peertube
+r = requests.get(
+    'https://instances.joinpeertube.org/api/v1/instances?start=0&count=1045&sort=-createdAt')
+rJson = json.loads(r.text)
+
+myList = []
+for k in rJson['data']:
+    myList.append('https://'+k['host'])
+
+mightyList['peertube'] = myList
+print('fetched Peertube')
+
 
 # Writing to file
 json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)

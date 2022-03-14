@@ -16,6 +16,7 @@ import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
+import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import generalHelper from "../../assets/javascripts/helpers/general.js";
 
 let disableTwitterElement = document.getElementById("disable-nitter");
@@ -28,26 +29,28 @@ let disableSearchElement = document.getElementById("disable-search");
 let disableElement = document.getElementById("disable-simplyTranslate");
 let disableWikipediaElement = document.getElementById("disable-wikipedia");
 let disableMediumElement = document.getElementById("disable-medium");
+let disablePeertubeElement = document.getElementById("disable-peertube");
 let disableSendTargetsElement = document.getElementById("disable-sendTargets");
 let disableImgurElement = document.getElementById("disable-imgur");
 let disableTiktokElement = document.getElementById("disable-tiktok");
 let disablePixivElement = document.getElementById("disable-pixiv");
 
 async function wholeInit() {
-  await youtubeHelper.init()
-  await youtubeMusicHelper.init()
-  await twitterHelper.init()
-  await instagramHelper.init()
-  await mapsHelper.init()
-  await redditHelper.init()
-  await searchHelper.init()
-  await translateHelper.init()
-  await wikipediaHelper.init()
-  await imgurHelper.init()
-  await tiktokHelper.init()
-  await pixivHelper.init()
-  await sendTargetsHelper.init()
-  await mediumHelper.init()
+  await youtubeHelper.init();
+  await youtubeMusicHelper.init();
+  await twitterHelper.init();
+  await instagramHelper.init();
+  await mapsHelper.init();
+  await redditHelper.init();
+  await searchHelper.init();
+  await translateHelper.init();
+  await wikipediaHelper.init();
+  await imgurHelper.init();
+  await tiktokHelper.init();
+  await pixivHelper.init();
+  await sendTargetsHelper.init();
+  await peertubeHelper.init();
+  await mediumHelper.init();
 };
 
 wholeInit().then(() => {
@@ -64,6 +67,7 @@ wholeInit().then(() => {
   disableTiktokElement.checked = !tiktokHelper.getDisable();
   disablePixivElement.checked = !pixivHelper.getDisable();
   disableMediumElement.checked = !mediumHelper.getDisable();
+  disablePeertubeElement.checked = !peertubeHelper.getDisable();
 })
 
 disableTwitterElement.addEventListener("change",
@@ -118,6 +122,10 @@ disableMediumElement.addEventListener("change",
   event => mediumHelper.setDisable(!event.target.checked)
 );
 
+disablePeertubeElement.addEventListener("change",
+  event => peertubeHelper.setDisable(!event.target.checked)
+);
+
 disableSendTargetsElement.addEventListener("change",
   event => sendTargetsHelper.setDisable(!event.target.checked)
 );
@@ -153,9 +161,11 @@ function changeInstance() {
 
       if (!newUrl) newUrl = sendTargetsHelper.changeInstance(tabUrl);
 
+      if (!newUrl) newUrl = peertubeHelper.changeInstance(tabUrl);
+
       if (!newUrl) newUrl = imgurHelper.changeInstance(tabUrl);
 
-      if (!newUrl) newUrl = wikipediaHelper.changeInstance(tabUrl)
+      if (!newUrl) newUrl = wikipediaHelper.changeInstance(tabUrl);
 
       if (newUrl) {
         browser.tabs.update({ url: newUrl });

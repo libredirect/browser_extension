@@ -117,6 +117,7 @@ let allPopupFrontends = [
     "maps",
     "wikipedia",
     "medium",
+    "peertube",
     "sendTargets"
 ];
 

@@ -13,6 +13,7 @@ import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
+import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import generalHelper from "../../assets/javascripts/helpers/general.js";
 import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
 
@@ -33,6 +34,7 @@ async function wholeInit() {
   await tiktokHelper.init()
   await pixivHelper.init()
   await sendTargetsHelper.init()
+  await peertubeHelper.init()
   await generalHelper.init()
 }
 await wholeInit();
@@ -73,6 +75,8 @@ browser.webRequest.onBeforeRequest.addListener(
     if (!newUrl) newUrl = pixivHelper.redirect(url, details.type, initiator);
 
     if (!newUrl) newUrl = sendTargetsHelper.redirect(url, details.type, initiator);
+
+    if (!newUrl) newUrl = peertubeHelper.redirect(url, details.type, initiator);
 
     if (!newUrl) newUrl = translateHelper.redirect(url);
 
@@ -141,6 +145,8 @@ browser.webRequest.onResponseStarted.addListener(
       if (!newUrl) newUrl = imgurHelper.changeInstance(url);
 
       if (!newUrl) newUrl = wikipediaHelper.changeInstance(url)
+
+      if (!newUrl) newUrl = peertubeHelper.changeInstance(url)
 
       if (newUrl) {
         browser.tabs.update({ url: '/pages/errors/instance_offline.html' });

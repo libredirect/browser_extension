@@ -148,9 +148,7 @@ function redirect(url, type, initiator) {
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-    let pathName = url.pathname.replace(new RegExp(/@.*\/(?=video)/), "");
-
-    return `${randomInstance}${pathName}`;
+    return randomInstance;
 }
 
 async function init() {
