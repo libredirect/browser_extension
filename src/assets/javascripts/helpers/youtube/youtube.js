@@ -1,128 +1,73 @@
 "use strict";
 
+window.browser = window.browser || window.chrome;
+
 import commonHelper from '../common.js'
 import {
-  invidiousQuality,
-  getInvidiousQuality,
-  setinvidiousQuality,
+  youtubeListen, getYoutubeListen, setYoutubeListen,
 
-  invidiousAlwaysProxy,
-  setInvidiousAlwaysProxy,
-  getInvidiousAlwaysProxy,
+  invidiousQuality, getInvidiousQuality, setinvidiousQuality,
 
-  invidiousPlayerStyle,
-  getInvidiousPlayerStyle,
-  setInvidiousPlayerStyle,
+  invidiousAlwaysProxy, setInvidiousAlwaysProxy, getInvidiousAlwaysProxy,
 
-  invidiousInit,
-  invidiousVideoLoop,
-  getInvidiousVideoLoop,
-  setInvidiousVideoLoop,
+  invidiousPlayerStyle, getInvidiousPlayerStyle, setInvidiousPlayerStyle,
 
-  invidiousContinueAutoplay,
-  getInvidiousContinueAutoplay,
-  setInvidiousContinueAutoplay,
+  invidiousVideoLoop, getInvidiousVideoLoop, setInvidiousVideoLoop,
 
-  invidiousContinue,
-  getInvidiousContinue,
-  setInvidiousContinue,
+  invidiousContinueAutoplay, getInvidiousContinueAutoplay, setInvidiousContinueAutoplay,
 
-  invidiousSpeed,
-  getInvidiousSpeed,
-  setInvidiousSpeed,
+  invidiousContinue, getInvidiousContinue, setInvidiousContinue,
 
-  invidiousQualityDash,
-  getInvidiousQualityDash,
-  setInvidiousQualityDash,
+  invidiousSpeed, getInvidiousSpeed, setInvidiousSpeed,
 
-  invidiousComments,
-  getInvidiousComments,
-  setInvidiousComments,
+  invidiousQualityDash, getInvidiousQualityDash, setInvidiousQualityDash,
 
-  invidiousCaptions,
-  getInvidiousCaptions,
-  setInvidiousCaptions,
+  invidiousComments, getInvidiousComments, setInvidiousComments,
 
-  invidiousRelatedVideos,
-  getInvidiousRelatedVideos,
-  setInvidiousRelatedVideos,
+  invidiousCaptions, getInvidiousCaptions, setInvidiousCaptions,
 
-  invidiousAnnotations,
-  getInvidiousAnnotations,
-  setInvidiousAnnotations,
+  invidiousRelatedVideos, getInvidiousRelatedVideos, setInvidiousRelatedVideos,
 
-  invidiousExtendDesc,
-  getInvidiousExtendDesc,
-  setInvidiousExtendDesc,
+  invidiousAnnotations, getInvidiousAnnotations, setInvidiousAnnotations,
 
-  invidiousVrMode,
-  getInvidiousVrMode,
-  setInvidiousVrMode,
+  invidiousExtendDesc, getInvidiousExtendDesc, setInvidiousExtendDesc,
 
-  invidiousSavePlayerPos,
-  getInvidiousSavePlayerPos,
-  setInvidiousSavePlayerPos,
+  invidiousVrMode, getInvidiousVrMode, setInvidiousVrMode,
 
-} from './invidious-options.js';
-import {
-  pipedBufferGoal,
-  getPipedBufferGoal,
-  setPipedBufferGoal,
+  invidiousSavePlayerPos, getInvidiousSavePlayerPos, setInvidiousSavePlayerPos,
 
-  pipedComments,
-  getPipedComments,
-  setPipedComments,
+  getPipedBufferGoal, setPipedBufferGoal,
 
-  pipedDisableLBRY,
-  getPipedDisableLBRY,
-  setPipedDisableLBRY,
+  getPipedComments, setPipedComments,
 
-  pipedEnabledCodecs,
-  getPipedEnabledCodecs,
-  setPipedEnabledCodecs,
+  getPipedDisableLBRY, setPipedDisableLBRY,
 
-  pipedHomepage,
-  getPipedHomepage,
-  setPipedHomepage,
+  getPipedEnabledCodecs, setPipedEnabledCodecs,
 
-  pipedMinimizeDescription,
-  getPipedMinimizeDescription,
-  setPipedMinimizeDescription,
+  getPipedHomepage, setPipedHomepage,
 
-  pipedProxyLBRY,
-  getPipedProxyLBRY,
-  setPipedProxyLBRY,
+  getPipedMinimizeDescription, setPipedMinimizeDescription,
 
-  pipedQuality,
-  getPipedQuality,
-  setPipedQuality,
+  getPipedProxyLBRY, setPipedProxyLBRY,
 
-  pipedRegion,
-  getPipedRegion,
-  setPipedRegion,
+  getPipedQuality, setPipedQuality,
 
-  pipedSelectedSkip,
-  getPipedSelectedSkip,
-  setPipedSelectedSkip,
+  getPipedRegion, setPipedRegion,
 
-  pipedSponsorblock,
-  getPipedSponsorblock,
-  setPipedSponsorblock,
+  getPipedSelectedSkip, setPipedSelectedSkip,
 
-  pipedWatchHistory,
-  getPipedWatchHistory,
-  setPipedWatchHistory,
+  getPipedSponsorblock, setPipedSponsorblock,
 
-  pipedInit
-} from './piped-options.js';
-import {
-  youtubeListen,
-  getYoutubeListen,
-  setYoutubeListen,
-  youtubeInit
-} from './youtube-options.js';
+  getPipedWatchHistory, setPipedWatchHistory,
 
-window.browser = window.browser || window.chrome;
+  volume, getVolume, setVolume,
+
+  youtubeAutoplay, getAutoplay, setAutoplay,
+
+  getPipedMaterialSkipToLastPoint, setPipedMaterialSkipToLastPoint,
+
+  initOptions
+} from './options.js';
 
 const targets = [
   /^https?:\/\/(www\.|music\.|m\.|)youtube\.com(\/.*|$)/,
@@ -164,7 +109,6 @@ let redirects = {
 
 const getRedirects = () => redirects;
 
-let applyThemeToSites;
 function getCustomRedirects() {
   return {
     "invidious": {
@@ -323,24 +267,6 @@ function setOnlyEmbeddedVideo(val) {
   console.log("OnlyEmbeddedVideo: ", OnlyEmbeddedVideo)
 }
 const getOnlyEmbeddedVideo = () => OnlyEmbeddedVideo;
-
-let theme;
-
-let volume;
-const getVolume = () => volume;
-function setVolume(val) {
-  volume = val;
-  browser.storage.local.set({ youtubeVolume: volume })
-  console.log("youtubeVolume: ", volume)
-}
-
-let autoplay;
-const getAutoplay = () => autoplay;
-function setAutoplay(val) {
-  autoplay = val;
-  browser.storage.local.set({ youtubeAutoplay: autoplay })
-  console.log("autoplay: ", autoplay)
-}
 
 let frontend;
 const getFrontend = () => frontend;
@@ -687,7 +613,7 @@ function initInvidiousCookies() {
 
           prefs.volume = parseInt(volume);
           prefs.player_style = invidiousPlayerStyle;
-          prefs.autoplay = autoplay == 'true';
+          prefs.youtubeAutoplay = youtubeAutoplay == 'true';
 
           browser.cookies.set({
             url: instanceUrl,
@@ -698,10 +624,9 @@ function initInvidiousCookies() {
       )
 }
 
+let theme;
 async function init() {
-  await youtubeInit();
-  await invidiousInit();
-  await pipedInit();
+  await initOptions();
   return new Promise(
     resolve => {
       fetch('/instances/data.json').then(response => response.text()).then(data => {
@@ -712,8 +637,6 @@ async function init() {
             "disableYoutube",
             "enableYoutubeCustomSettings",
             "OnlyEmbeddedVideo",
-            "youtubeVolume",
-            "youtubeAutoplay",
             "youtubeRedirects",
             "youtubeFrontend",
 
@@ -753,9 +676,6 @@ async function init() {
             youtubeEmbedFrontend = r.youtubeEmbedFrontend ?? 'invidious';
 
             theme = r.theme ?? 'dark';
-
-            volume = r.youtubeVolume ?? 100;
-            autoplay = r.youtubeAutoplay ?? false;
 
             OnlyEmbeddedVideo = r.OnlyEmbeddedVideo ?? 'both';
 
@@ -918,6 +838,9 @@ export default {
 
   getPipedWatchHistory,
   setPipedWatchHistory,
+
+  getPipedMaterialSkipToLastPoint,
+  setPipedMaterialSkipToLastPoint,
 
   getInvidiousNormalRedirectsChecks,
   setInvidiousNormalRedirectsChecks,

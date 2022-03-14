@@ -9,10 +9,8 @@ let freetubeYatteeDivElement = document.getElementById("freetube-yatte");
 let customSettingsDivElement = document.getElementsByClassName("custom-settings");
 
 function changeFrontendsSettings() {
-    console.log('changeFrontendsSettings()');
     let frontend = youtubeFrontendElement.value;
 
-    console.log("customSettingsDivElement", customSettingsDivElement[0].style.display);
     if (enableYoutubeCustomSettingsElement.checked)
         for (const item of customSettingsDivElement) item.style.display = 'block';
     else
@@ -106,7 +104,7 @@ volumeElement.addEventListener("input",
     }
 );
 
-let autoplayElement = document.getElementById("invidious-autoplay");
+let autoplayElement = document.getElementById("invidious-youtubeAutoplay");
 autoplayElement.addEventListener("change",
     event => youtubeHelper.setAutoplay(event.target.checked)
 );
@@ -169,7 +167,7 @@ youtubeHelper.init().then(() => {
     volumeValueElement.textContent = `${youtubeHelper.getVolume()}%`;
     OnlyEmbeddedVideoElement.value = youtubeHelper.getOnlyEmbeddedVideo();
     bypassWatchOnYoutubeElement.checked = youtubeHelper.getBypassWatchOnYoutube();
-    autoplayElement.value = youtubeHelper.getAutoplay();
+    autoplayElement.checked = youtubeHelper.getAutoplay();
     let frontend = youtubeHelper.getFrontend();
     youtubeFrontendElement.value = frontend;
     changeFrontendsSettings();

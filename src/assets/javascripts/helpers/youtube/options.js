@@ -2,6 +2,30 @@
 
 window.browser = window.browser || window.chrome;
 
+export let youtubeListen;
+export const getYoutubeListen = () => youtubeListen;
+export function setYoutubeListen(val) {
+    youtubeListen = val;
+    browser.storage.local.set({ youtubeListen })
+    console.log("youtubeListen: ", youtubeListen)
+}
+
+export let volume;
+export const getVolume = () => volume;
+export function setVolume(val) {
+    volume = val;
+    browser.storage.local.set({ youtubeVolume: volume })
+    console.log("youtubeVolume: ", volume)
+}
+
+export let youtubeAutoplay;
+export const getAutoplay = () => youtubeAutoplay;
+export function setAutoplay(val) {
+    youtubeAutoplay = val;
+    browser.storage.local.set({ youtubeAutoplay })
+    console.log("youtubeAutoplay: ", youtubeAutoplay)
+}
+
 export let invidiousQuality;
 export const getInvidiousQuality = () => invidiousQuality;
 export function setinvidiousQuality(val) {
@@ -123,11 +147,119 @@ export function setInvidiousSavePlayerPos(val) {
     console.log("invidiousSavePlayerPos: ", invidiousSavePlayerPos)
 }
 
-export async function invidiousInit() {
+export let pipedBufferGoal;
+export const getPipedBufferGoal = () => pipedBufferGoal;
+export function setPipedBufferGoal(val) {
+    pipedBufferGoal = val;
+    browser.storage.local.set({ pipedBufferGoal })
+    console.log("pipedBufferGoal: ", pipedBufferGoal)
+}
+
+export let pipedComments;
+export const getPipedComments = () => pipedComments;
+export function setPipedComments(val) {
+    pipedComments = val;
+    browser.storage.local.set({ pipedComments })
+    console.log("pipedComments: ", pipedComments)
+}
+
+export let pipedDisableLBRY;
+export const getPipedDisableLBRY = () => pipedDisableLBRY;
+export function setPipedDisableLBRY(val) {
+    pipedDisableLBRY = val;
+    browser.storage.local.set({ pipedDisableLBRY })
+    console.log("pipedDisableLBRY: ", pipedDisableLBRY)
+}
+
+export let pipedEnabledCodecs;
+export const getPipedEnabledCodecs = () => pipedEnabledCodecs;
+export function setPipedEnabledCodecs(val) {
+    pipedEnabledCodecs = val;
+    browser.storage.local.set({ pipedEnabledCodecs })
+    console.log("pipedEnabledCodecs: ", pipedEnabledCodecs)
+}
+
+export let pipedHomepage;
+export const getPipedHomepage = () => pipedHomepage;
+export function setPipedHomepage(val) {
+    pipedHomepage = val;
+    browser.storage.local.set({ pipedHomepage })
+    console.log("pipedHomepage: ", pipedHomepage)
+}
+
+export let pipedMinimizeDescription;
+export const getPipedMinimizeDescription = () => pipedMinimizeDescription;
+export function setPipedMinimizeDescription(val) {
+    pipedMinimizeDescription = val;
+    browser.storage.local.set({ pipedMinimizeDescription })
+    console.log("pipedMinimizeDescription: ", pipedMinimizeDescription)
+}
+
+export let pipedProxyLBRY;
+export const getPipedProxyLBRY = () => pipedProxyLBRY;
+export function setPipedProxyLBRY(val) {
+    pipedProxyLBRY = val;
+    browser.storage.local.set({ pipedProxyLBRY })
+    console.log("pipedProxyLBRY: ", pipedProxyLBRY)
+}
+
+export let pipedQuality;
+export const getPipedQuality = () => pipedQuality;
+export function setPipedQuality(val) {
+    pipedQuality = val;
+    browser.storage.local.set({ pipedQuality })
+    console.log("pipedQuality: ", pipedQuality)
+}
+
+export let pipedRegion;
+export const getPipedRegion = () => pipedRegion;
+export function setPipedRegion(val) {
+    pipedRegion = val;
+    browser.storage.local.set({ pipedRegion })
+    console.log("pipedRegion: ", pipedRegion)
+}
+
+export let pipedSelectedSkip;
+export const getPipedSelectedSkip = () => pipedSelectedSkip;
+export function setPipedSelectedSkip(val) {
+    pipedSelectedSkip = val;
+    browser.storage.local.set({ pipedSelectedSkip })
+    console.log("pipedSelectedSkip: ", pipedSelectedSkip)
+}
+
+export let pipedSponsorblock;
+export const getPipedSponsorblock = () => pipedSponsorblock;
+export function setPipedSponsorblock(val) {
+    pipedSponsorblock = val;
+    browser.storage.local.set({ pipedSponsorblock })
+    console.log("pipedSponsorblock: ", pipedSponsorblock)
+}
+
+export let pipedWatchHistory;
+export const getPipedWatchHistory = () => pipedWatchHistory;
+export function setPipedWatchHistory(val) {
+    pipedWatchHistory = val;
+    browser.storage.local.set({ pipedWatchHistory })
+    console.log("pipedWatchHistory: ", pipedWatchHistory)
+}
+
+export let pipedMaterialSkipToLastPoint;
+export const getPipedMaterialSkipToLastPoint = () => pipedMaterialSkipToLastPoint;
+export function setPipedMaterialSkipToLastPoint(val) {
+    pipedMaterialSkipToLastPoint = val;
+    browser.storage.local.set({ pipedMaterialSkipToLastPoint })
+    console.log("pipedMaterialSkipToLastPoint: ", pipedMaterialSkipToLastPoint)
+}
+
+export async function initOptions() {
     return new Promise(
         resolve => {
             browser.storage.local.get(
                 [
+                    "youtubeListen",
+                    "youtubeVolume",
+                    "youtubeAutoplay",
+
                     "invidiousQuality",
                     "invidiousAlwaysProxy",
                     "invidiousQuality",
@@ -144,8 +276,28 @@ export async function invidiousInit() {
                     "invidiousExtendDesc",
                     "invidiousVrMode",
                     "invidiousSavePlayerPos",
+
+                    "pipedBufferGoal",
+                    "pipedComments",
+                    "pipedDisableLBRY",
+                    "pipedEnabledCodecs",
+                    "pipedHomepage",
+                    "pipedMinimizeDescription",
+                    "pipedProxyLBRY",
+                    "pipedQuality",
+                    "pipedRegion",
+                    "pipedSelectedSkip",
+                    "pipedSponsorblock",
+                    "pipedWatchHistory",
+
+                    "pipedMaterialSkipToLastPoint",
                 ],
                 r => {
+
+                    youtubeListen = r.youtubeListen ?? false;
+                    volume = r.youtubeVolume ?? 100;
+                    youtubeAutoplay = r.youtubeAutoplay ?? false;
+
                     invidiousVideoLoop = r.invidiousVideoLoop ?? false;
                     invidiousAlwaysProxy = r.invidiousAlwaysProxy ?? false;
                     invidiousPlayerStyle = r.invidiousPlayerStyle ?? 'invidious';
@@ -161,6 +313,21 @@ export async function invidiousInit() {
                     invidiousExtendDesc = r.invidiousExtendDesc ?? false;
                     invidiousVrMode = r.invidiousVrMode ?? true;
                     invidiousSavePlayerPos = r.invidiousSavePlayerPos ?? false;
+
+                    pipedBufferGoal = r.pipedBufferGoal ?? 10;
+                    pipedComments = r.pipedComments ?? true;
+                    pipedDisableLBRY = r.pipedDisableLBRY ?? false;
+                    pipedEnabledCodecs = r.pipedEnabledCodecs ?? ["av1", "vp9", "avc"];
+                    pipedHomepage = r.pipedHomepage ?? "trending";
+                    pipedMinimizeDescription = r.pipedMinimizeDescription ?? false;
+                    pipedProxyLBRY = r.pipedProxyLBRY ?? false;
+                    pipedQuality = r.pipedQuality ?? 0;
+                    pipedRegion = r.pipedRegion ?? "US";
+                    pipedSelectedSkip = r.pipedSelectedSkip ?? ["sponsor", "interaction", "selfpromo", "music_offtopic"];
+                    pipedSponsorblock = r.pipedSponsorblock ?? true;
+                    pipedWatchHistory = r.pipedWatchHistory ?? false;
+
+                    pipedMaterialSkipToLastPoint = r.pipedMaterialSkipToLastPoint ?? true;
 
                     resolve();
                 }

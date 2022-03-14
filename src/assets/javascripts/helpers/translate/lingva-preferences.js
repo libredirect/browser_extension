@@ -12,7 +12,3 @@ browser.storage.local.get(
         if (applyThemeToSites && theme != "DEFAULT") localStorage.setItem("chakra-ui-color-mode", r.theme);
     }
 )
-
-window.onunload = () => {
-    localStorage.removeItem("chakra-ui-color-mode");
-};

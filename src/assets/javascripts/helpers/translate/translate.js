@@ -184,7 +184,6 @@ function setSimplyTranslateEngine(val) {
   console.log("simplyTranslateEngine: ", val)
 }
 
-
 function isTranslateRedirects(url, type, frontend) {
   let protocolHost = `${url.protocol}//${url.host}`;
 

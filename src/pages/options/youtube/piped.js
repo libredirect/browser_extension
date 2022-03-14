@@ -17,9 +17,9 @@ function selectSkipModify(value, boolean) {
     youtubeHelper.setPipedSelectedSkip(selectSkip)
 }
 
-let pipedSelectedSkipSponsorElement = document.getElementById("piped-selectedSkip-sponsor");
+let pipedSelectedSkipSponsorElement = document.getElementById("piped-selectedSkip-sponsors");
 pipedSelectedSkipSponsorElement.addEventListener("change",
-    event => selectSkipModify('sponsor', event.target.checked)
+    event => selectSkipModify('sponsors', event.target.checked)
 );
 
 let pipedSelectedSkipIntroElement = document.getElementById("piped-selectedSkip-intro");
@@ -122,12 +122,83 @@ pipedProxyLBRYElement.addEventListener("change",
     event => youtubeHelper.setPipedProxyLBRY(event.target.checked)
 );
 
+let pipedMaterialListenElement = document.getElementById("pipedMaterial-listen");
+pipedMaterialListenElement.addEventListener("change",
+    event => youtubeHelper.setYoutubeListen(event.target.checked)
+);
+
+let pipedMaterialDisableLBRYElement = document.getElementById("pipedMaterial-disableLBRY");
+pipedMaterialDisableLBRYElement.addEventListener("change",
+    event => youtubeHelper.setPipedDisableLBRY(event.target.checked)
+);
+
+let pipedMaterialProxyLBRYElement = document.getElementById("pipedMaterial-proxyLBRY");
+pipedMaterialProxyLBRYElement.addEventListener("change",
+    event => youtubeHelper.setPipedProxyLBRY(event.target.checked)
+);
+
+let pipedMaterialSponsorblockElement = document.getElementById("pipedMaterial-sponsorblock");
+pipedMaterialSponsorblockElement.addEventListener("change",
+    event => youtubeHelper.setPipedSponsorblock(event.target.checked)
+);
+
+let pipedMaterialSkipToLastPointElement = document.getElementById("pipedMaterial-skipToLastPoint");
+pipedMaterialSkipToLastPointElement.addEventListener("change",
+    event => youtubeHelper.setPipedMaterialSkipToLastPoint(event.target.checked)
+);
+
+
+let pipedMaterialSelectedSkipSponsorElement = document.getElementById("pipedMaterial-selectedSkip-sponsors");
+pipedMaterialSelectedSkipSponsorElement.addEventListener("change",
+    event => selectSkipModify('sponsors', event.target.checked)
+);
+
+let pipedMaterialSelectedSkipIntroElement = document.getElementById("pipedMaterial-selectedSkip-intro");
+pipedMaterialSelectedSkipIntroElement.addEventListener("change",
+    event => selectSkipModify('intro', event.target.checked)
+);
+
+let pipedMaterialSelectedSkipOutroElement = document.getElementById("pipedMaterial-selectedSkip-outro");
+pipedMaterialSelectedSkipOutroElement.addEventListener("change",
+    event => selectSkipModify('outro', event.target.checked)
+);
+
+let pipedMaterialSelectedSkipPreviewElement = document.getElementById("pipedMaterial-selectedSkip-preview");
+pipedMaterialSelectedSkipPreviewElement.addEventListener("change",
+    event => selectSkipModify('preview', event.target.checked)
+);
+
+let pipedMaterialSelectedSkipInteractionElement = document.getElementById("pipedMaterial-selectedSkip-interaction");
+pipedMaterialSelectedSkipInteractionElement.addEventListener("change",
+    event => selectSkipModify('interaction', event.target.checked)
+);
+
+let pipedMaterialSelectedSkipSelfpromoElement = document.getElementById("pipedMaterial-selectedSkip-selfpromo");
+pipedMaterialSelectedSkipSelfpromoElement.addEventListener("change",
+    event => selectSkipModify('selfpromo', event.target.checked)
+);
+
+let pipedMaterialSelectedSkipMusicOfftopicElement = document.getElementById("pipedMaterial-selectedSkip-music_offtopic");
+pipedMaterialSelectedSkipMusicOfftopicElement.addEventListener("change",
+    event => selectSkipModify('music_offtopic', event.target.checked)
+);
+
+let pipedMaterialSelectedSkipPoiHighlightElement = document.getElementById("pipedMaterial-selectedSkip-poi_highlight");
+pipedMaterialSelectedSkipPoiHighlightElement.addEventListener("change",
+    event => selectSkipModify('poi_highlight', event.target.checked)
+);
+
+let pipedMaterialSelectedSkipFillerElement = document.getElementById("pipedMaterial-selectedSkip-filler");
+pipedMaterialSelectedSkipFillerElement.addEventListener("change",
+    event => selectSkipModify('filler', event.target.checked)
+);
+
 let selectSkip = [];
 youtubeHelper.init().then(() => {
 
     pipedSponsorblockElement.checked = youtubeHelper.getPipedSponsorblock();
     selectSkip = youtubeHelper.getPipedSelectedSkip();
-    pipedSelectedSkipSponsorElement.checked = selectSkip.includes('sponsor');
+    pipedSelectedSkipSponsorElement.checked = selectSkip.includes('sponsors');
     pipedSelectedSkipIntroElement.checked = selectSkip.includes('intro');
     pipedSelectedSkipOutroElement.checked = selectSkip.includes('outro');
     pipedSelectedSkipPreviewElement.checked = selectSkip.includes('preview');
@@ -148,6 +219,20 @@ youtubeHelper.init().then(() => {
     pipedDisableLBRYElement.checked = youtubeHelper.getPipedDisableLBRY();
     pipedProxyLBRYElement.checked = youtubeHelper.getPipedProxyLBRY();
 
+    pipedMaterialListenElement.checked = youtubeHelper.getYoutubeListen();
+    pipedMaterialDisableLBRYElement.checked = youtubeHelper.getPipedDisableLBRY();
+    pipedMaterialProxyLBRYElement.checked = youtubeHelper.getPipedProxyLBRY();
+    pipedMaterialSponsorblockElement.checked = youtubeHelper.getPipedSponsorblock()
+    pipedMaterialSkipToLastPointElement.checked = youtubeHelper.getPipedMaterialSkipToLastPoint();
+    pipedMaterialSelectedSkipSponsorElement.checked = selectSkip.includes('sponsors');
+    pipedMaterialSelectedSkipIntroElement.checked = selectSkip.includes('intro');
+    pipedMaterialSelectedSkipOutroElement.checked = selectSkip.includes('outro');
+    pipedMaterialSelectedSkipPreviewElement.checked = selectSkip.includes('preview');
+    pipedMaterialSelectedSkipInteractionElement.checked = selectSkip.includes('interaction');
+    pipedMaterialSelectedSkipSelfpromoElement.checked = selectSkip.includes('selfpromo');
+    pipedMaterialSelectedSkipMusicOfftopicElement.checked = selectSkip.includes('music_offtopic');
+    pipedMaterialSelectedSkipPoiHighlightElement.checked = selectSkip.includes('poi_highlight');
+    pipedMaterialSelectedSkipFillerElement.checked = selectSkip.includes('filler');
 
     commonHelper.processDefaultCustomInstances(
         'piped',

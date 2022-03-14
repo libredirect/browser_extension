@@ -3,11 +3,8 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-  /^https?:\/\/twitter\.com/,
-  /^https?:\/\/www\.twitter\.com/,
-  /^https?:\/\/mobile\.twitter\.com/,
-  /^https?:\/\/pbs\.twimg\.com/,
-  /^https?:\/\/video\.twimg\.com/,
+  /^https?:\/\/(www\.|mobile\.|)twitter\.com/,
+  /^https?:\/\/(pbs\.|video\.|)twimg\.com/,
   /^https?:\/\/platform\.twitter\.com\/embed/,
   /^https?:\/\/t\.co/
 ];
@@ -125,7 +122,10 @@ function redirect(url, initiator) {
 
   if (!targets.some((rx) => rx.test(url.href))) return null;
 
-  if (url.pathname.split("/").includes("home")) return null;
+  if (url.pathname.split("/").includes("home")) {
+    console.log("twitter homepage");
+    return null;
+  }
 
   if (
     bypassWatchOnTwitter &&
