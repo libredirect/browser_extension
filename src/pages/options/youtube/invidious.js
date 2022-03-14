@@ -31,9 +31,9 @@ invidiousContinueElement.addEventListener("change",
     event => youtubeHelper.setInvidiousContinue(event.target.checked)
 );
 
-let invidiousListenElement = document.getElementById("invidious-listen");
-invidiousListenElement.addEventListener("change",
-    event => youtubeHelper.setInvidiousListen(event.target.checked)
+let youtubeListenElement = document.getElementById("invidious-listen");
+youtubeListenElement.addEventListener("change",
+    event => youtubeHelper.setYoutubeListen(event.target.checked)
 );
 
 let invidiousSpeedElement = document.getElementById("invidious-speed");
@@ -120,9 +120,9 @@ youtubeHelper.init().then(() => {
     invidiousVideoLoopElement.value = youtubeHelper.getInvidiousVideoLoop();
     invidiousContinueAutoplayElement.value = youtubeHelper.getInvidiousContinueAutoplay();
     invidiousContinueElement.value = youtubeHelper.getInvidiousContinue();
-    invidiousListenElement.value = youtubeHelper.getInvidiousListen();
+    youtubeListenElement.value = youtubeHelper.getYoutubeListen();
     invidiousSpeedElement.value = youtubeHelper.getInvidiousSpeed();
-    invidiousQualityElement.value = youtubeHelper.getinvidiousQuality();
+    invidiousQualityElement.value = youtubeHelper.getInvidiousQuality();
     invidiousQualityDashElement.value = youtubeHelper.getInvidiousQualityDash();
     invidiousComments0Element.value = youtubeHelper.getInvidiousComments()[0];
     invidiousComments1Element.value = youtubeHelper.getInvidiousComments()[1];

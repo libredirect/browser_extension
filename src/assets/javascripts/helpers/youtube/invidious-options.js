@@ -1,7 +1,9 @@
 "use strict";
 
+window.browser = window.browser || window.chrome;
+
 export let invidiousQuality;
-export const getinvidiousQuality = () => invidiousQuality;
+export const getInvidiousQuality = () => invidiousQuality;
 export function setinvidiousQuality(val) {
     invidiousQuality = val;
     browser.storage.local.set({ invidiousQuality })
@@ -46,14 +48,6 @@ export function setInvidiousContinue(val) {
     invidiousContinue = val;
     browser.storage.local.set({ invidiousContinue })
     console.log("invidiousContinue: ", invidiousContinue)
-}
-
-export let invidiousListen;
-export const getInvidiousListen = () => invidiousListen;
-export function setInvidiousListen(val) {
-    invidiousListen = val;
-    browser.storage.local.set({ invidiousListen })
-    console.log("invidiousListen: ", invidiousListen)
 }
 
 export let invidiousSpeed;
@@ -141,7 +135,6 @@ export async function invidiousInit() {
                     "invidiousVideoLoop",
                     "invidiousContinueAutoplay",
                     "invidiousContinue",
-                    "invidiousListen",
                     "invidiousSpeed",
                     "invidiousQualityDash",
                     "invidiousComments",
@@ -159,7 +152,6 @@ export async function invidiousInit() {
                     invidiousQuality = r.invidiousQuality ?? 'hd720';
                     invidiousContinueAutoplay = r.invidiousContinueAutoplay ?? true;
                     invidiousContinue = r.invidiousContinue ?? false;
-                    invidiousListen = r.invidiousListen ?? false;
                     invidiousSpeed = r.invidiousSpeed ?? '1.0';
                     invidiousQualityDash = r.invidiousQualityDash ?? 'auto';
                     invidiousComments = r.invidiousComments ?? ['youtube', ''];

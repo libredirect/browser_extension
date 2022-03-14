@@ -1,7 +1,5 @@
 import youtubeHelper from "../../../assets/javascripts/helpers/youtube/youtube.js";
 
-
-
 let youtubeFrontendElement = document.getElementById("youtube-frontend");
 let invidiousDivElement = document.getElementById("invidious");
 let pipedDivElement = document.getElementById("piped");
@@ -17,10 +15,8 @@ function changeFrontendsSettings() {
     console.log("customSettingsDivElement", customSettingsDivElement[0].style.display);
     if (enableYoutubeCustomSettingsElement.checked)
         for (const item of customSettingsDivElement) item.style.display = 'block';
-    else {
-        console.log("setting it to none");
+    else
         for (const item of customSettingsDivElement) item.style.display = 'none';
-    }
 
     if (frontend == 'invidious') {
         invidiousPipedPipedMaterialDivElement.style.display = 'block'
@@ -70,6 +66,7 @@ function changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontend) {
         invidiousDivElement.style.display = 'none';
     }
 }
+
 youtubeFrontendElement.addEventListener("change",
     event => {
         let frontend = event.target.options[youtubeFrontendElement.selectedIndex].value
@@ -99,7 +96,6 @@ enableYoutubeCustomSettingsElement.addEventListener("change",
         changeFrontendsSettings();
     }
 );
-
 
 let volumeElement = document.getElementById("invidious-volume");
 let volumeValueElement = document.getElementById("volume-value");

@@ -3,7 +3,7 @@
 import commonHelper from '../common.js'
 import {
   invidiousQuality,
-  getinvidiousQuality,
+  getInvidiousQuality,
   setinvidiousQuality,
 
   invidiousAlwaysProxy,
@@ -26,10 +26,6 @@ import {
   invidiousContinue,
   getInvidiousContinue,
   setInvidiousContinue,
-
-  invidiousListen,
-  getInvidiousListen,
-  setInvidiousListen,
 
   invidiousSpeed,
   getInvidiousSpeed,
@@ -67,7 +63,64 @@ import {
   getInvidiousSavePlayerPos,
   setInvidiousSavePlayerPos,
 
-} from './invidious-options.js'
+} from './invidious-options.js';
+import {
+  pipedBufferGoal,
+  getPipedBufferGoal,
+  setPipedBufferGoal,
+
+  pipedComments,
+  getPipedComments,
+  setPipedComments,
+
+  pipedDisableLBRY,
+  getPipedDisableLBRY,
+  setPipedDisableLBRY,
+
+  pipedEnabledCodecs,
+  getPipedEnabledCodecs,
+  setPipedEnabledCodecs,
+
+  pipedHomepage,
+  getPipedHomepage,
+  setPipedHomepage,
+
+  pipedMinimizeDescription,
+  getPipedMinimizeDescription,
+  setPipedMinimizeDescription,
+
+  pipedProxyLBRY,
+  getPipedProxyLBRY,
+  setPipedProxyLBRY,
+
+  pipedQuality,
+  getPipedQuality,
+  setPipedQuality,
+
+  pipedRegion,
+  getPipedRegion,
+  setPipedRegion,
+
+  pipedSelectedSkip,
+  getPipedSelectedSkip,
+  setPipedSelectedSkip,
+
+  pipedSponsorblock,
+  getPipedSponsorblock,
+  setPipedSponsorblock,
+
+  pipedWatchHistory,
+  getPipedWatchHistory,
+  setPipedWatchHistory,
+
+  pipedInit
+} from './piped-options.js';
+import {
+  youtubeListen,
+  getYoutubeListen,
+  setYoutubeListen,
+  youtubeInit
+} from './youtube-options.js';
 
 window.browser = window.browser || window.chrome;
 
@@ -611,7 +664,7 @@ function initInvidiousCookies() {
           prefs.video_loop = invidiousVideoLoop == 'true';
           prefs.continue_autoplay = invidiousContinueAutoplay == 'true';
           prefs.continue = invidiousContinue == 'true';
-          prefs.listen = invidiousListen == 'true';
+          prefs.listen = youtubeListen == 'true';
           prefs.speed = parseFloat(invidiousSpeed);
           prefs.quality = invidiousQuality;
           prefs.quality_dash = invidiousQualityDash;
@@ -646,7 +699,9 @@ function initInvidiousCookies() {
 }
 
 async function init() {
+  await youtubeInit();
   await invidiousInit();
+  await pipedInit();
   return new Promise(
     resolve => {
       fetch('/instances/data.json').then(response => response.text()).then(data => {
@@ -729,6 +784,7 @@ async function init() {
             if (r.youtubeEmbedExceptions) exceptions = r.youtubeEmbedExceptions;
 
             initInvidiousCookies();
+
             resolve();
 
           });
@@ -765,7 +821,7 @@ export default {
   getInvidiousAlwaysProxy,
 
   setinvidiousQuality,
-  getinvidiousQuality,
+  getInvidiousQuality,
 
   setInvidiousPlayerStyle,
   getInvidiousPlayerStyle,
@@ -797,8 +853,8 @@ export default {
   getInvidiousContinue,
   setInvidiousContinue,
 
-  getInvidiousListen,
-  setInvidiousListen,
+  getYoutubeListen,
+  setYoutubeListen,
 
   getInvidiousSpeed,
   setInvidiousSpeed,
@@ -826,6 +882,42 @@ export default {
 
   getInvidiousSavePlayerPos,
   setInvidiousSavePlayerPos,
+
+  getPipedBufferGoal,
+  setPipedBufferGoal,
+
+  getPipedComments,
+  setPipedComments,
+
+  getPipedDisableLBRY,
+  setPipedDisableLBRY,
+
+  getPipedEnabledCodecs,
+  setPipedEnabledCodecs,
+
+  getPipedHomepage,
+  setPipedHomepage,
+
+  getPipedMinimizeDescription,
+  setPipedMinimizeDescription,
+
+  getPipedProxyLBRY,
+  setPipedProxyLBRY,
+
+  getPipedQuality,
+  setPipedQuality,
+
+  getPipedRegion,
+  setPipedRegion,
+
+  getPipedSelectedSkip,
+  setPipedSelectedSkip,
+
+  getPipedSponsorblock,
+  setPipedSponsorblock,
+
+  getPipedWatchHistory,
+  setPipedWatchHistory,
 
   getInvidiousNormalRedirectsChecks,
   setInvidiousNormalRedirectsChecks,
