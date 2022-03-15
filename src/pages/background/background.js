@@ -166,4 +166,49 @@ browser.tabs.onUpdated.addListener(
     if (translateHelper.isTranslateRedirects(url, 'main_frame', 'lingva')) translateHelper.initLingvaLocalStorage(tabId);
     if (instagramHelper.isBibliogram(url)) instagramHelper.initBibliogramCookies(url);
     // if (changeInfo.url && youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
+
+    if (changeWholeInstance(url))
+      browser.tabs.executeScript(
+        tabId,
+        {
+          file: "/pages/background/shortcuts.js",
+          runAt: "document_start"
+        }
+      );
   });
+
+function changeWholeInstance(url) {
+  let newUrl = youtubeHelper.changeInstance(url);
+
+  if (!newUrl) newUrl = twitterHelper.changeInstance(url);
+
+  if (!newUrl) newUrl = instagramHelper.changeInstance(url);
+
+  if (!newUrl) newUrl = redditHelper.changeInstance(url);
+
+  if (!newUrl) newUrl = searchHelper.changeInstance(url);
+
+  if (!newUrl) newUrl = translateHelper.changeInstance(url);
+
+  if (!newUrl) newUrl = mediumHelper.changeInstance(url);
+
+  if (!newUrl) newUrl = sendTargetsHelper.changeInstance(url);
+
+  if (!newUrl) newUrl = peertubeHelper.changeInstance(url);
+
+  if (!newUrl) newUrl = imgurHelper.changeInstance(url);
+
+  if (!newUrl) newUrl = wikipediaHelper.changeInstance(url);
+
+  return newUrl;
+}
+
+browser.runtime.onMessage.addListener(
+  message => {
+    if (message.function === 'changeInstance') {
+      const url = new URL(message.url);
+      let newUrl = changeWholeInstance(url);
+      if (newUrl) browser.tabs.update({ url: newUrl });
+    }
+  }
+)
