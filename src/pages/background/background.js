@@ -167,14 +167,6 @@ browser.tabs.onUpdated.addListener(
     if (instagramHelper.isBibliogram(url)) instagramHelper.initBibliogramCookies(url);
     // if (changeInfo.url && youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
 
-    if (changeWholeInstance(url))
-      browser.tabs.executeScript(
-        tabId,
-        {
-          file: "/pages/background/shortcuts.js",
-          runAt: "document_start"
-        }
-      );
   });
 
 function changeWholeInstance(url) {
@@ -203,12 +195,18 @@ function changeWholeInstance(url) {
   return newUrl;
 }
 
-browser.runtime.onMessage.addListener(
-  message => {
-    if (message.function === 'changeInstance') {
-      const url = new URL(message.url);
-      let newUrl = changeWholeInstance(url);
-      if (newUrl) browser.tabs.update({ url: newUrl });
-    }
+browser.commands.onCommand.addListener(
+  command => {
+    if (command === 'changeInstance')
+      chrome.tabs.query(
+        { active: true, currentWindow: true },
+        tabs => {
+          let url;
+          try { url = new URL(tabs[0].url); }
+          catch (_) { return }
+          let newUrl = changeWholeInstance(url);
+          if (newUrl) browser.tabs.update({ url: newUrl });
+        }
+      );
   }
 )

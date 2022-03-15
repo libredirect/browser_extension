@@ -45,5 +45,13 @@
       "encoding": "UTF-8",
       "is_default": false
     }
+  },
+  "commands": {
+    "changeInstance": {
+      "suggested_key": {
+        "default": "Alt+Shift+L"
+      },
+      "description": "Change Instance"
+    }
   }
 }
