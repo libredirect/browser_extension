@@ -318,6 +318,19 @@ div.checklist div {
   display: flex;
 }
 
+div.checklist-popup div {
+  justify-content: space-between;
+  margin: 5px 15px;
+  padding: 5px 0;
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+}
+
+div.checklist-popup div div {
+  margin: 0;
+}
+
 button.add {
   background-color: transparent;
   border: none;
@@ -332,9 +345,9 @@ div.disabled {
   background-color: rgb(39, 39, 39);
   position: absolute;
   top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .light-theme.popup,

@@ -97,12 +97,9 @@ enableYoutubeCustomSettingsElement.addEventListener("change",
 
 let volumeElement = document.getElementById("invidious-volume");
 let volumeValueElement = document.getElementById("volume-value");
-volumeElement.addEventListener("input",
-    () => {
-        youtubeHelper.setVolume(volumeElement.value);
-        volumeValueElement.textContent = `${volumeElement.value}%`;
-    }
-);
+
+volumeElement.addEventListener("input", () => volumeValueElement.textContent = `${volumeElement.value}%`);
+volumeElement.addEventListener("change", () => youtubeHelper.setVolume(volumeElement.value));
 
 let autoplayElement = document.getElementById("invidious-youtubeAutoplay");
 autoplayElement.addEventListener("change",

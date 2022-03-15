@@ -45,7 +45,6 @@ let BYPASSTABs = [];
 
 browser.webRequest.onBeforeRequest.addListener(
   details => {
-    // console.log("url", details.url);
     const url = new URL(details.url);
     let initiator;
     if (details.originUrl)
@@ -66,7 +65,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator);
 
-    if (mediumHelper.isMedium(url, initiator)) newUrl = mediumHelper.redirect(url, details.type);
+    if (!newUrl) newUrl = mediumHelper.redirect(url, details.type, initiator);
 
     if (imgurHelper.isImgur(url, initiator)) newUrl = imgurHelper.redirect(url, details.type);
 
