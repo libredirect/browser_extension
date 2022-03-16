@@ -176,7 +176,7 @@ async function init() {
           "mediumProtocol"
         ],
         r => {
-          disable = r.disableMedium ?? true;
+          disable = r.disableMedium ?? false;
 
           protocol = r.mediumProtocol ?? "normal";
 

@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="../../../assets/images/libredirect.svg" />
   <link href="../../stylesheets/styles.css" rel="stylesheet" />
-  <title>LibRedirect Options: Imgur</title>
+  <title>LibRedirect Options: TikTok</title>
 </head>
 
 <body class="option">
@@ -36,7 +36,6 @@
       <img src="../../../assets/images/twitter-icon.png" />
       <a href="../twitter/twitter.html">Twitter</a>
     </div>
-
     <div class="title">
       <img src="../../../assets/images/instagram-icon.png" />
       <a href="../instagram/instagram.html">Instagram</a>
@@ -44,7 +43,7 @@
 
     <div class="title">
       <img src="../../../assets/images/tiktok-icon.png" />
-      <a href="../tiktok/tiktok.html">TikTok</a>
+      <a href="../tiktok/tiktok.html" class="selected">TikTok</a>
     </div>
 
     <div class="title">
@@ -54,7 +53,7 @@
 
     <div class="title">
       <img src="../../../assets/images/imgur-icon.png" />
-      <a href="../imgur/imgur.html" class="selected">Imgur</a>
+      <a href="../imgur/imgur.html">Imgur</a>
     </div>
 
     <div class="title">
@@ -131,7 +130,7 @@
   <section class="option-block">
     <div class="some-block option-block">
       <h4>Enable</h4>
-      <input id="disable-imgur" type="checkbox" checked />
+      <input id="disable-spotify" type="checkbox" checked />
     </div>
 
     <div class="some-block option-block">
@@ -148,15 +147,15 @@
       <div class="some-block option-block">
         <h4>Default Instances</h4>
       </div>
-      <div class="checklist" id="rimgo-normal-checklist"></div>
+      <div class="checklist" id="soju-normal-checklist"></div>
       <hr>
       <div class="some-block option-block">
         <h4>Custom Instances</h4>
       </div>
-      <form id="custom-rimgo-normal-instance-form">
+      <form id="custom-soju-normal-instance-form">
         <div class="some-block option-block">
-          <input id="rimgo-normal-custom-instance" placeholder="https://rimgo.com" type="url" />
-          <button type="submit" class="add" id="rimgo-normal-add-instance">
+          <input id="soju-normal-custom-instance" placeholder="https://soju.com" type="url" />
+          <button type="submit" class="add" id="soju-normal-add-instance">
             <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
               <path d="M0 0h24v24H0V0z" fill="none" />
               <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
@@ -164,21 +163,21 @@
           </button>
         </div>
       </form>
-      <div class="checklist" id="rimgo-normal-custom-checklist"></div>
+      <div class="checklist" id="soju-normal-custom-checklist"></div>
     </div>
     <div id="tor">
       <div class="some-block option-block">
         <h4>Default Instances</h4>
       </div>
-      <div class="checklist" id="rimgo-tor-checklist"></div>
+      <div class="checklist" id="soju-tor-checklist"></div>
       <hr>
       <div class="some-block option-block">
         <h4>Custom Instances</h4>
       </div>
-      <form id="custom-rimgo-tor-instance-form">
+      <form id="custom-soju-tor-instance-form">
         <div class="some-block option-block">
-          <input id="rimgo-tor-custom-instance" placeholder="https://rimgo.com" type="url" />
-          <button type="submit" class="add" id="rimgo-tor-add-instance">
+          <input id="soju-tor-custom-instance" placeholder="https://soju.com" type="url" />
+          <button type="submit" class="add" id="soju-tor-add-instance">
             <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
               <path d="M0 0h24v24H0V0z" fill="none" />
               <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
@@ -186,13 +185,13 @@
           </button>
         </div>
       </form>
-      <div class="checklist" id="rimgo-tor-custom-checklist"></div>
+      <div class="checklist" id="soju-tor-custom-checklist"></div>
     </div>
   </section>
 
 
   <script type="module" src="../init.js"></script>
-  <script type="module" src="./imgur.js"></script>
+  <script type="module" src="./spotify.js"></script>
   <!-- <script src="../../assets/javascripts/localise.js"></script> -->
 </body>
 

@@ -200,7 +200,7 @@ async function init() {
           "applyThemeToSites",
 
         ], r => { // r = result
-          disable = r.disableWikipedia ?? false;
+          disable = r.disableWikipedia ?? true;
 
           protocol = r.wikipediaProtocol ?? "normal";
 

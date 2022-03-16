@@ -15,6 +15,7 @@ import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
+import spotifyHelper from "../../assets/javascripts/helpers/spotify.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
@@ -36,6 +37,7 @@ let disableSendTargetsElement = document.getElementById("disable-sendTargets");
 let disableImgurElement = document.getElementById("disable-imgur");
 let disableTiktokElement = document.getElementById("disable-tiktok");
 let disablePixivElement = document.getElementById("disable-pixiv");
+let disableSpotifyElement = document.getElementById("disable-spotify");
 
 async function wholeInit() {
   await youtubeHelper.init();
@@ -50,6 +52,7 @@ async function wholeInit() {
   await imgurHelper.init();
   await tiktokHelper.init();
   await pixivHelper.init();
+  await spotifyHelper.init();
   await sendTargetsHelper.init();
   await peertubeHelper.init();
   await lbryHelper.init();
@@ -69,6 +72,7 @@ wholeInit().then(() => {
   disableImgurElement.checked = !imgurHelper.getDisable();
   disableTiktokElement.checked = !tiktokHelper.getDisable();
   disablePixivElement.checked = !pixivHelper.getDisable();
+  disableSpotifyElement.checked = !spotifyHelper.getDisable();
   disableMediumElement.checked = !mediumHelper.getDisable();
   disablePeertubeElement.checked = !peertubeHelper.getDisable();
   disableLbryElement.checked = !lbryHelper.getDisable();
@@ -124,6 +128,10 @@ disableTiktokElement.addEventListener("change",
 
 disablePixivElement.addEventListener("change",
   event => pixivHelper.setDisable(!event.target.checked)
+);
+
+disableSpotifyElement.addEventListener("change",
+  event => spotifyHelper.setDisable(!event.target.checked)
 );
 
 disableMediumElement.addEventListener("change",

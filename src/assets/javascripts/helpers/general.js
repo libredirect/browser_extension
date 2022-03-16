@@ -81,9 +81,9 @@ async function init() {
                     "imgur",
                     "reddit",
                     "search",
+                    "medium",
                     "translate",
                     "maps",
-                    "wikipedia",
                 ];
 
                 autoRedirect = r.autoRedirect ?? false;
@@ -112,6 +112,7 @@ let allPopupFrontends = [
     "imgur",
     "reddit",
     "pixiv",
+    "spotify",
     "search",
     "translate",
     "maps",
