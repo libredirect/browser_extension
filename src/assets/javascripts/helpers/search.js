@@ -4,8 +4,8 @@ import commonHelper from './common.js'
 
 const targets = [
   /^https?:\/{2}(www\.|search\.|)google(\.[a-z]{2,3}){1,2}(\/search(\?.*|$)|\/$)/,
-  /^https?:\/\/libredirect\.invalid/
-  // /^https?:\/\/yandex\.com(\...|)(\/search\/..*|\/$)/,
+  /^https?:\/{2}libredirect\.invalid/
+  // /^https?:\/{2}yandex\.com(\...|)(\/search\/..*|\/$)/,
 ];
 let redirects = {
   "searx": {

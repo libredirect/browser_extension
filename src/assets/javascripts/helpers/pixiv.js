@@ -3,7 +3,7 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-    /^https?:\/\/(www\.|)pixiv\.net.*/
+    /^https?:\/{2}(www\.|)pixiv\.net.*/
 ];
 
 let redirects = {

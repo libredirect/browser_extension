@@ -2,7 +2,7 @@ window.browser = window.browser || window.chrome;
 
 import commonHelper from './common.js'
 
-const targets = /^https?:\/\/(.*\.|)wikipedia\.org/
+const targets = /^https?:\/{2}(.*\.|)wikipedia\.org/
 
 let redirects = {
   "wikiless": {

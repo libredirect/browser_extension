@@ -3,8 +3,8 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-  /^https?:\/\/(www\.|old\.|np\.|new\.|amp\.|)reddit\.com/,
-  /^https?:\/\/(i\.|preview\.)redd\.it/,
+  /^https?:\/{2}(www\.|old\.|np\.|new\.|amp\.|)reddit\.com/,
+  /^https?:\/{2}(i\.|preview\.)redd\.it/,
 ];
 let redirects = {
   // modern UI

@@ -17,6 +17,7 @@ import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
+import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
 import generalHelper from "../../assets/javascripts/helpers/general.js";
 
 let disableTwitterElement = document.getElementById("disable-nitter");
@@ -30,6 +31,7 @@ let disableElement = document.getElementById("disable-simplyTranslate");
 let disableWikipediaElement = document.getElementById("disable-wikipedia");
 let disableMediumElement = document.getElementById("disable-medium");
 let disablePeertubeElement = document.getElementById("disable-peertube");
+let disableLbryElement = document.getElementById("disable-lbry");
 let disableSendTargetsElement = document.getElementById("disable-sendTargets");
 let disableImgurElement = document.getElementById("disable-imgur");
 let disableTiktokElement = document.getElementById("disable-tiktok");
@@ -50,6 +52,7 @@ async function wholeInit() {
   await pixivHelper.init();
   await sendTargetsHelper.init();
   await peertubeHelper.init();
+  await lbryHelper.init();
   await mediumHelper.init();
 };
 
@@ -68,6 +71,11 @@ wholeInit().then(() => {
   disablePixivElement.checked = !pixivHelper.getDisable();
   disableMediumElement.checked = !mediumHelper.getDisable();
   disablePeertubeElement.checked = !peertubeHelper.getDisable();
+  disableLbryElement.checked = !lbryHelper.getDisable();
+
+  let changeInstanceElement = document.getElementById("change-instance")
+  changeInstanceElement.disabled = !changeInstance();
+  changeInstanceElement.addEventListener("click", changeInstance);
 })
 
 disableTwitterElement.addEventListener("change",
@@ -126,6 +134,10 @@ disablePeertubeElement.addEventListener("change",
   event => peertubeHelper.setDisable(!event.target.checked)
 );
 
+disableLbryElement.addEventListener("change",
+  event => lbryHelper.setDisable(!event.target.checked)
+);
+
 disableSendTargetsElement.addEventListener("change",
   event => sendTargetsHelper.setDisable(!event.target.checked)
 );
@@ -163,6 +175,8 @@ function changeInstance() {
 
       if (!newUrl) newUrl = peertubeHelper.changeInstance(tabUrl);
 
+      if (!newUrl) newUrl = lbryHelper.changeInstance(tabUrl);
+
       if (!newUrl) newUrl = imgurHelper.changeInstance(tabUrl);
 
       if (!newUrl) newUrl = wikipediaHelper.changeInstance(tabUrl);
@@ -175,9 +189,7 @@ function changeInstance() {
   })
   return false;
 }
-let changeInstanceElement = document.getElementById("change-instance")
-changeInstanceElement.disabled = !changeInstance();
-changeInstanceElement.addEventListener("click", changeInstance);
+
 
 
 let popupFrontends;

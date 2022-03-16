@@ -3,10 +3,10 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-  /^https?:\/\/(www\.|mobile\.|)twitter\.com/,
-  /^https?:\/\/(pbs\.|video\.|)twimg\.com/,
-  /^https?:\/\/platform\.twitter\.com\/embed/,
-  /^https?:\/\/t\.co/
+  /^https?:\/{2}(www\.|mobile\.|)twitter\.com/,
+  /^https?:\/{2}(pbs\.|video\.|)twimg\.com/,
+  /^https?:\/{2}platform\.twitter\.com\/embed/,
+  /^https?:\/{2}t\.co/
 ];
 
 let redirects = {

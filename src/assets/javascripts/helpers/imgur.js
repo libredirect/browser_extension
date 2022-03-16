@@ -3,7 +3,7 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-    /^https?:\/\/(i|).?imgur\.com(\/.*)?$/
+    /^https?:\/{2}(i|).?imgur\.com(\/.*)?$/
 ];
 
 let redirects = {

@@ -3,9 +3,9 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-    /^https?:\/\/send.invalid\/$/,
+    /^https?:\/{2}send.invalid\/$/,
     /^ https ?: \/\/send\.firefox\.com\/$/,
-    /^https?:\/\/sendfiles\.online\/$/
+    /^https?:\/{2}sendfiles\.online\/$/
 ];
 
 let redirects = {

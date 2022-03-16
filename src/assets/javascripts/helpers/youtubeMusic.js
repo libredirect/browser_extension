@@ -5,7 +5,7 @@ import commonHelper from './common.js'
 window.browser = window.browser || window.chrome;
 
 const targets = [
-    /^https?:\/\/music\.youtube\.com(\/.*|$)/,
+    /^https?:\/{2}music\.youtube\.com(\/.*|$)/,
 ];
 let redirects = {
     "beatbump": {

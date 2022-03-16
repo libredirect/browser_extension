@@ -1,8 +1,8 @@
 import peertubeHelper from "../../../assets/javascripts/helpers/peertube.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
-let disableTiktokElement = document.getElementById("disable-peertube");
-disableTiktokElement.addEventListener("change",
+let disablePeertubeElement = document.getElementById("disable-peertube");
+disablePeertubeElement.addEventListener("change",
     (event) => peertubeHelper.setDisable(!event.target.checked)
 );
 
@@ -29,7 +29,7 @@ function changeProtocolSettings(protocol) {
 }
 
 peertubeHelper.init().then(() => {
-    disableTiktokElement.checked = !peertubeHelper.getDisable();
+    disablePeertubeElement.checked = !peertubeHelper.getDisable();
 
     let protocol = peertubeHelper.getProtocol();
     protocolElement.value = protocol;

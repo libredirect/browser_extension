@@ -118,6 +118,7 @@ let allPopupFrontends = [
     "wikipedia",
     "medium",
     "peertube",
+    "lbry",
     "sendTargets"
 ];
 

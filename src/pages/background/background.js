@@ -14,28 +14,30 @@ import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
+import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
 import generalHelper from "../../assets/javascripts/helpers/general.js";
 import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
 
 window.browser = window.browser || window.chrome;
 
 async function wholeInit() {
-  await youtubeHelper.init()
-  await youtubeMusicHelper.init()
-  await twitterHelper.init()
-  await instagramHelper.init()
-  await mapsHelper.init()
-  await searchHelper.init()
-  await translateHelper.init()
-  await mediumHelper.init()
-  await redditHelper.init()
-  await wikipediaHelper.init()
-  await imgurHelper.init()
-  await tiktokHelper.init()
-  await pixivHelper.init()
-  await sendTargetsHelper.init()
-  await peertubeHelper.init()
-  await generalHelper.init()
+  await youtubeHelper.init();
+  await youtubeMusicHelper.init();
+  await twitterHelper.init();
+  await instagramHelper.init();
+  await mapsHelper.init();
+  await searchHelper.init();
+  await translateHelper.init();
+  await mediumHelper.init();
+  await redditHelper.init();
+  await wikipediaHelper.init();
+  await imgurHelper.init();
+  await tiktokHelper.init();
+  await pixivHelper.init();
+  await sendTargetsHelper.init();
+  await peertubeHelper.init();
+  await lbryHelper.init();
+  await generalHelper.init();
 }
 await wholeInit();
 
@@ -77,6 +79,8 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (!newUrl) newUrl = peertubeHelper.redirect(url, details.type, initiator);
 
+    if (!newUrl) newUrl = lbryHelper.redirect(url, details.type, initiator);
+
     if (!newUrl) newUrl = translateHelper.redirect(url);
 
     if (!newUrl) newUrl = searchHelper.redirect(url)
@@ -108,19 +112,19 @@ browser.webRequest.onBeforeRequest.addListener(
   ["blocking"]
 );
 
-browser.tabs.onRemoved.addListener((tabId) => {
-  let index = BYPASSTABs.indexOf(tabId);
-  if (index > -1) {
-    BYPASSTABs.splice(index, 1);
-    console.log("Removed BYPASSTABs", tabId);
+browser.tabs.onRemoved.addListener(
+  tabId => {
+    let i = BYPASSTABs.indexOf(tabId);
+    if (i > -1) {
+      BYPASSTABs.splice(i, 1);
+      console.log("Removed BYPASSTABs", tabId);
+    }
   }
-});
+);
 
 browser.webRequest.onResponseStarted.addListener(
   details => {
-    let autoRedirect = generalHelper.getAutoRedirect();
-
-    if (!autoRedirect) return null;
+    if (!generalHelper.getAutoRedirect()) return null;
 
     console.log("statusCode", details.statusCode);
     if (details.type == 'main_frame' && details.statusCode >= 500) {
@@ -143,9 +147,11 @@ browser.webRequest.onResponseStarted.addListener(
 
       if (!newUrl) newUrl = imgurHelper.changeInstance(url);
 
-      if (!newUrl) newUrl = wikipediaHelper.changeInstance(url)
+      if (!newUrl) newUrl = wikipediaHelper.changeInstance(url);
 
-      if (!newUrl) newUrl = peertubeHelper.changeInstance(url)
+      if (!newUrl) newUrl = peertubeHelper.changeInstance(url);
+
+      if (!newUrl) newUrl = lbryHelper.changeInstance(url);
 
       if (newUrl) {
         browser.tabs.update({ url: '/pages/errors/instance_offline.html' });

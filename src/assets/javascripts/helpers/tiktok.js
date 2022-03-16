@@ -3,7 +3,7 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = [
-    /^https?:\/\/(www\.|)tiktok\.com.*/
+    /^https?:\/{2}(www\.|)tiktok\.com.*/
 ];
 
 let redirects = {

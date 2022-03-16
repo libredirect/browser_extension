@@ -70,16 +70,16 @@ import {
 } from './options.js';
 
 const targets = [
-  /^https?:\/\/(www\.|music\.|m\.|)youtube\.com(\/.*|$)/,
+  /^https?:\/{2}(www\.|music\.|m\.|)youtube\.com(\/.*|$)/,
 
-  /^https?:\/\/img\.youtube\.com\/vi\/.*\/..*/, // https://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api
-  /^https?:\/\/(i|s)\.ytimg\.com\/vi\/.*\/..*/,
+  /^https?:\/{2}img\.youtube\.com\/vi\/.*\/..*/, // https://stackoverflow.com/questions/2068344/how-do-i-get-a-youtube-video-thumbnail-from-the-youtube-api
+  /^https?:\/{2}(i|s)\.ytimg\.com\/vi\/.*\/..*/,
 
-  /^https?:\/\/(www\.|music\.|)youtube\.com\/watch\?v\=..*/,
+  /^https?:\/{2}(www\.|music\.|)youtube\.com\/watch\?v\=..*/,
 
-  /^https?:\/\/youtu\.be\/..*/,
+  /^https?:\/{2}youtu\.be\/..*/,
 
-  /^https?:\/\/(www\.|)(youtube|youtube-nocookie)\.com\/embed\/..*/,
+  /^https?:\/{2}(www\.|)(youtube|youtube-nocookie)\.com\/embed\/..*/,
 ];
 let redirects = {
   "invidious": {
@@ -383,7 +383,7 @@ function redirect(url, details, initiator) {
   if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return null; // Don't redirect YouTube Player API.
 
   if (frontend == 'yatte' && details.type === "main_frame")
-    return url.href.replace(/^https?:\/\//, 'yattee://');
+    return url.href.replace(/^https?:\/{2}/, 'yattee://');
 
   else if (frontend == 'freetube' && details.type === "main_frame")
     return `freetube://${url}`;
