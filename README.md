@@ -47,6 +47,7 @@ Send Files => [Send](https://github.com/timvisee/send)
 - [Node.js](https://nodejs.org/) latest LTS is recommended
 - `npm update`
 - `npm install`
+- `npm i web-ext`
 
 ### Build
 - `npm run build`
