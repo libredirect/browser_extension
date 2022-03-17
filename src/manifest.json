@@ -1,7 +1,7 @@
 {
   "name": "LibRedirect",
   "description": "A web extension that redirects popular sites to alternative privacy-friendly frontends and backends",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "manifest_version": 2,
   "background": {
     "page": "pages/background/background.html",

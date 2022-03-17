@@ -578,10 +578,10 @@ function initInvidiousCookies() {
         },
         cookie => {
           let prefs = {};
-          // if (cookie) {
-          //   prefs = JSON.parse(decodeURIComponent(cookie.value));
-          //   browser.cookies.remove({ url: instanceUrl, name: "PREFS" });
-          // }
+          if (cookie) {
+            prefs = JSON.parse(decodeURIComponent(cookie.value));
+            browser.cookies.remove({ url: instanceUrl, name: "PREFS" });
+          }
 
           prefs.local = invidiousAlwaysProxy;
           prefs.dark_mode = theme;
