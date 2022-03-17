@@ -29,13 +29,13 @@ browser.storage.local.get(
         let pipedBufferGoal = r.pipedBufferGoal ?? 10;
         let pipedComments = r.pipedComments ?? true;
         let pipedDisableLBRY = r.pipedDisableLBRY ?? false;
-        let pipedEnabledCodecs = r.pipedEnabledCodecs ?? "av1,vp9,avc";
+        let pipedEnabledCodecs = r.pipedEnabledCodecs ?? ["av1", "vp9", "avc"];
         let pipedHomepage = r.pipedHomepage ?? "trending";
         let pipedMinimizeDescription = r.pipedMinimizeDescription ?? false;
         let pipedProxyLBRY = r.pipedProxyLBRY ?? false;
         let pipedQuality = r.pipedQuality ?? 0;
         let pipedRegion = r.pipedRegion ?? "US";
-        let pipedSelectedSkip = r.pipedSelectedSkip ?? [];
+        let pipedSelectedSkip = r.pipedSelectedSkip ?? ["sponsor", "interaction", "selfpromo", "music_offtopic"];
         let pipedSponsorblock = r.pipedSponsorblock ?? true;
         let pipedWatchHistory = r.pipedWatchHistory ?? false;
 
