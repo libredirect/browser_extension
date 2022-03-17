@@ -78,7 +78,6 @@ wholeInit().then(() => {
   disableLbryElement.checked = !lbryHelper.getDisable();
 
   let changeInstanceElement = document.getElementById("change-instance")
-  changeInstanceElement.disabled = !changeInstance();
   changeInstanceElement.addEventListener("click", changeInstance);
 })
 
@@ -197,8 +196,6 @@ function changeInstance() {
   })
   return false;
 }
-
-
 
 let popupFrontends;
 generalHelper.init().then(() => {

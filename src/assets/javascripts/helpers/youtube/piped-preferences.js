@@ -26,7 +26,7 @@ browser.storage.local.get(
         let youtubeVolume = r.youtubeVolume ?? 100;
         let youtubeListen = r.youtubeListen ?? false;
 
-        let pipedBufferGoal = r.pipedBufferGoal ?? 10;
+        let pipedBufferGoal = r.pipedBufferGoal ?? 300;
         let pipedComments = r.pipedComments ?? true;
         let pipedDisableLBRY = r.pipedDisableLBRY ?? false;
         let pipedEnabledCodecs = r.pipedEnabledCodecs ?? ["av1", "vp9", "avc"];
@@ -39,7 +39,7 @@ browser.storage.local.get(
         let pipedSponsorblock = r.pipedSponsorblock ?? true;
         let pipedWatchHistory = r.pipedWatchHistory ?? false;
 
-        localStorage.setItem("bufferGoal", pipedBufferGoal);
+        localStorage.setItem("bufferGoal", pipedBufferGoal.toString());
         localStorage.setItem("comments", pipedComments);
         localStorage.setItem("disableLBRY", pipedDisableLBRY);
         localStorage.setItem("enabledCodecs", pipedEnabledCodecs);

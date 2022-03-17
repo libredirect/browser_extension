@@ -314,7 +314,7 @@ export async function initOptions() {
                     invidiousVrMode = r.invidiousVrMode ?? true;
                     invidiousSavePlayerPos = r.invidiousSavePlayerPos ?? false;
 
-                    pipedBufferGoal = r.pipedBufferGoal ?? 10;
+                    pipedBufferGoal = r.pipedBufferGoal ?? 300;
                     pipedComments = r.pipedComments ?? true;
                     pipedDisableLBRY = r.pipedDisableLBRY ?? false;
                     pipedEnabledCodecs = r.pipedEnabledCodecs ?? ["av1", "vp9", "avc"];

@@ -115,25 +115,31 @@ invidiousSavePlayerPosElement.addEventListener("change",
 );
 
 youtubeHelper.init().then(() => {
+    invidiousVideoLoopElement.checked = youtubeHelper.getInvidiousVideoLoop();
+
     invidiousPlayerStyleElement.value = youtubeHelper.getInvidiousPlayerStyle();
-    invidiousAlwaysProxyElement.value = youtubeHelper.getInvidiousAlwaysProxy();
-    invidiousVideoLoopElement.value = youtubeHelper.getInvidiousVideoLoop();
-    invidiousContinueAutoplayElement.value = youtubeHelper.getInvidiousContinueAutoplay();
-    invidiousContinueElement.value = youtubeHelper.getInvidiousContinue();
-    youtubeListenElement.value = youtubeHelper.getYoutubeListen();
+
+    invidiousContinueAutoplayElement.checked = youtubeHelper.getInvidiousContinueAutoplay();
+    invidiousContinueElement.checked = youtubeHelper.getInvidiousContinue();
+    invidiousAlwaysProxyElement.checked = youtubeHelper.getInvidiousAlwaysProxy();
+    youtubeListenElement.checked = youtubeHelper.getYoutubeListen();
+
     invidiousSpeedElement.value = youtubeHelper.getInvidiousSpeed();
     invidiousQualityElement.value = youtubeHelper.getInvidiousQuality();
     invidiousQualityDashElement.value = youtubeHelper.getInvidiousQualityDash();
+
     invidiousComments0Element.value = youtubeHelper.getInvidiousComments()[0];
     invidiousComments1Element.value = youtubeHelper.getInvidiousComments()[1];
+
     invidiousCaptions0Element.value = youtubeHelper.getInvidiousCaptions()[0];
     invidiousCaptions1Element.value = youtubeHelper.getInvidiousCaptions()[1];
     invidiousCaptions2Element.value = youtubeHelper.getInvidiousCaptions()[2];
-    invidiousRelatedVideoElement.value = youtubeHelper.getInvidiousRelatedVideos();
-    invidiousAnnotationsElement.value = youtubeHelper.getInvidiousAnnotations();
-    invidiousExtendDescElement.value = youtubeHelper.getInvidiousExtendDesc();
-    invidiousVrModeElement.value = youtubeHelper.getInvidiousVrMode();
-    invidiousSavePlayerPosElement.value = youtubeHelper.getInvidiousSavePlayerPos();
+
+    invidiousRelatedVideoElement.checked = youtubeHelper.getInvidiousRelatedVideos();
+    invidiousAnnotationsElement.checked = youtubeHelper.getInvidiousAnnotations();
+    invidiousExtendDescElement.checked = youtubeHelper.getInvidiousExtendDesc();
+    invidiousVrModeElement.checked = youtubeHelper.getInvidiousVrMode();
+    invidiousSavePlayerPosElement.checked = youtubeHelper.getInvidiousSavePlayerPos();
 
     commonHelper.processDefaultCustomInstances(
         'invidious',

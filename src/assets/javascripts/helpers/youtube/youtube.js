@@ -541,7 +541,7 @@ function isPipedorInvidious(url, type, frontend) {
 }
 
 function initPipedLocalStorage(tabId) {
-  if (enableCustomSettings)
+  if (!disable && frontend == 'piped' && enableCustomSettings)
     browser.tabs.executeScript(
       tabId,
       {
@@ -552,7 +552,7 @@ function initPipedLocalStorage(tabId) {
 }
 
 function initPipedMaterialLocalStorage(tabId) {
-  if (enableCustomSettings)
+  if (!disable && frontend == 'pipedMaterial' && enableCustomSettings)
     browser.tabs.executeScript(
       tabId,
       {
@@ -563,15 +563,13 @@ function initPipedMaterialLocalStorage(tabId) {
 }
 
 function initInvidiousCookies() {
-
-  let checkedInstances = [
-    ...invidiousNormalRedirectsChecks,
-    ...invidiousNormalCustomRedirects,
-    ...invidiousTorRedirectsChecks,
-    ...invidiousTorCustomRedirects,
-  ];
-
-  if (enableCustomSettings)
+  if (!disable && frontend == 'invidious' && enableCustomSettings) {
+    let checkedInstances = [
+      ...invidiousNormalRedirectsChecks,
+      ...invidiousNormalCustomRedirects,
+      ...invidiousTorRedirectsChecks,
+      ...invidiousTorCustomRedirects,
+    ];
     for (const instanceUrl of checkedInstances)
       browser.cookies.get(
         {
@@ -580,17 +578,17 @@ function initInvidiousCookies() {
         },
         cookie => {
           let prefs = {};
-          if (cookie) {
-            prefs = JSON.parse(decodeURIComponent(cookie.value));
-            browser.cookies.remove({ url: instanceUrl, name: "PREFS" });
-          }
+          // if (cookie) {
+          //   prefs = JSON.parse(decodeURIComponent(cookie.value));
+          //   browser.cookies.remove({ url: instanceUrl, name: "PREFS" });
+          // }
 
-          prefs.local = invidiousAlwaysProxy == 'true';
+          prefs.local = invidiousAlwaysProxy;
           prefs.dark_mode = theme;
-          prefs.video_loop = invidiousVideoLoop == 'true';
-          prefs.continue_autoplay = invidiousContinueAutoplay == 'true';
-          prefs.continue = invidiousContinue == 'true';
-          prefs.listen = youtubeListen == 'true';
+          prefs.video_loop = invidiousVideoLoop;
+          prefs.continue_autoplay = invidiousContinueAutoplay;
+          prefs.continue = invidiousContinue;
+          prefs.listen = youtubeListen;
           prefs.speed = parseFloat(invidiousSpeed);
           prefs.quality = invidiousQuality;
           prefs.quality_dash = invidiousQualityDash;
@@ -605,15 +603,15 @@ function initInvidiousCookies() {
           prefs.captions[1] = invidiousCaptions[1];
           prefs.captions[2] = invidiousCaptions[2];
 
-          prefs.related_videos = invidiousRelatedVideos == 'true';
-          prefs.annotations = invidiousAnnotations == 'true'
-          prefs.extend_desc = invidiousExtendDesc == 'true';
-          prefs.vr_mode = invidiousVrMode == 'true';
-          prefs.save_player_pos = invidiousSavePlayerPos == 'true';
+          prefs.related_videos = invidiousRelatedVideos;
+          prefs.annotations = invidiousAnnotations
+          prefs.extend_desc = invidiousExtendDesc;
+          prefs.vr_mode = invidiousVrMode;
+          prefs.save_player_pos = invidiousSavePlayerPos;
 
           prefs.volume = parseInt(volume);
           prefs.player_style = invidiousPlayerStyle;
-          prefs.youtubeAutoplay = youtubeAutoplay == 'true';
+          prefs.autoplay = youtubeAutoplay;
 
           browser.cookies.set({
             url: instanceUrl,
@@ -622,6 +620,7 @@ function initInvidiousCookies() {
           })
         }
       )
+  }
 }
 
 let theme;

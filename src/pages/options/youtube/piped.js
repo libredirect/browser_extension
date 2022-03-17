@@ -17,9 +17,9 @@ function selectSkipModify(value, boolean) {
     youtubeHelper.setPipedSelectedSkip(selectSkip)
 }
 
-let pipedSelectedSkipSponsorElement = document.getElementById("piped-selectedSkip-sponsors");
+let pipedSelectedSkipSponsorElement = document.getElementById("piped-selectedSkip-sponsor");
 pipedSelectedSkipSponsorElement.addEventListener("change",
-    event => selectSkipModify('sponsors', event.target.checked)
+    event => selectSkipModify('sponsor', event.target.checked)
 );
 
 let pipedSelectedSkipIntroElement = document.getElementById("piped-selectedSkip-intro");
@@ -148,9 +148,9 @@ pipedMaterialSkipToLastPointElement.addEventListener("change",
 );
 
 
-let pipedMaterialSelectedSkipSponsorElement = document.getElementById("pipedMaterial-selectedSkip-sponsors");
+let pipedMaterialSelectedSkipSponsorElement = document.getElementById("pipedMaterial-selectedSkip-sponsor");
 pipedMaterialSelectedSkipSponsorElement.addEventListener("change",
-    event => selectSkipModify('sponsors', event.target.checked)
+    event => selectSkipModify('sponsor', event.target.checked)
 );
 
 let pipedMaterialSelectedSkipIntroElement = document.getElementById("pipedMaterial-selectedSkip-intro");
@@ -198,7 +198,9 @@ youtubeHelper.init().then(() => {
 
     pipedSponsorblockElement.checked = youtubeHelper.getPipedSponsorblock();
     selectSkip = youtubeHelper.getPipedSelectedSkip();
-    pipedSelectedSkipSponsorElement.checked = selectSkip.includes('sponsors');
+    console.log("selectSkip", selectSkip)
+    pipedSelectedSkipSponsorElement.checked = selectSkip.includes('sponsor');
+    console.log("selectSkip.includes('sponsor')", selectSkip.includes('sponsor'))
     pipedSelectedSkipIntroElement.checked = selectSkip.includes('intro');
     pipedSelectedSkipOutroElement.checked = selectSkip.includes('outro');
     pipedSelectedSkipPreviewElement.checked = selectSkip.includes('preview');
@@ -224,7 +226,7 @@ youtubeHelper.init().then(() => {
     pipedMaterialProxyLBRYElement.checked = youtubeHelper.getPipedProxyLBRY();
     pipedMaterialSponsorblockElement.checked = youtubeHelper.getPipedSponsorblock()
     pipedMaterialSkipToLastPointElement.checked = youtubeHelper.getPipedMaterialSkipToLastPoint();
-    pipedMaterialSelectedSkipSponsorElement.checked = selectSkip.includes('sponsors');
+    pipedMaterialSelectedSkipSponsorElement.checked = selectSkip.includes('sponsor');
     pipedMaterialSelectedSkipIntroElement.checked = selectSkip.includes('intro');
     pipedMaterialSelectedSkipOutroElement.checked = selectSkip.includes('outro');
     pipedMaterialSelectedSkipPreviewElement.checked = selectSkip.includes('preview');
