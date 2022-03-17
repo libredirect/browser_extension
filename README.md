@@ -16,6 +16,8 @@ Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web),
 Maps => [OpenStreetMap](https://www.openstreetmap.org/), [FacilMap](https://github.com/FacilMap/facilmap)\
 Wikipedia => [Wikiless](https://codeberg.org/orenom/wikiless)\
 Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)\
+Peertube => [SimpleerTube](https://git.sr.ht/~metalune/simpleweb_peertube)\
+LBRY/Odysee => [Librarian](https://codeberg.org/librarian/librarian)\
 Send Files => [Send](https://github.com/timvisee/send)
 
 **Note**: It will be using random instances by default. You can also add custom instances.
