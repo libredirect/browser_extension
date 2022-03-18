@@ -270,7 +270,7 @@ function redirect(url) {
   }
 }
 
-function changeInstance(url) {
+function switchInstance(url) {
   let protocolHost = `${url.protocol}//${url.host}`;
 
   let translateList = [
@@ -413,5 +413,5 @@ export default {
 
   redirect,
   init,
-  changeInstance,
+  switchInstance,
 };

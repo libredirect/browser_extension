@@ -91,7 +91,7 @@ function setProtocol(val) {
     console.log("peertubeTargetsProtocol: ", val)
 }
 
-function changeInstance(url) {
+function switchInstance(url) {
     let protocolHost = `${url.protocol}//${url.host}`;
 
     let simpleertubeList = [
@@ -200,7 +200,7 @@ export default {
     getSimpleertubeNormalCustomRedirects,
     setSimpleertubeNormalCustomRedirects,
 
-    changeInstance,
+    switchInstance,
 
     redirect,
     init,

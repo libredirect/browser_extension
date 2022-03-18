@@ -347,12 +347,12 @@ function redirect(url, details, initiator) {
   if (
     alwaysUsePreferred && frontend == 'invidious' &&
     (isInvidious || isPiped) && !isCheckedInvidious
-  ) return changeInstance(url);
+  ) return switchInstance(url);
 
   if (
     alwaysUsePreferred && frontend == 'piped' &&
     (isInvidious || isPiped) && !isCheckedPiped
-  ) return changeInstance(url);
+  ) return switchInstance(url);
 
   if (!targets.some((rx) => rx.test(url.href))) return null;
 
@@ -447,7 +447,7 @@ function redirect(url, details, initiator) {
   return 'CANCEL';
 }
 
-function changeInstance(url) {
+function switchInstance(url) {
   let protocolHost = `${url.protocol}//${url.host}`;
   if (
     protocol == 'normal' &&
@@ -730,7 +730,7 @@ export default {
   setPipedRedirects,
 
   redirect,
-  changeInstance,
+  switchInstance,
 
   isPipedorInvidious,
 

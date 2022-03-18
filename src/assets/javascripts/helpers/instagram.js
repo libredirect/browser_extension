@@ -120,7 +120,7 @@ function redirect(url, type, initiator) {
     return `${randomInstance}/u${url.pathname}${url.search}`; // Likely a user profile, redirect to '/u/...'
 }
 
-function changeInstance(url) {
+function switchInstance(url) {
   let protocolHost = `${url.protocol}//${url.host}`;
 
   let instagramList = [
@@ -266,5 +266,5 @@ export default {
 
   redirect,
   init,
-  changeInstance,
+  switchInstance,
 };

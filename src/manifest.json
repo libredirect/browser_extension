@@ -18,6 +18,7 @@
     "webRequestBlocking",
     "storage",
     "cookies",
+    "menus",
     "<all_urls>"
   ],
   "browser_action": {
@@ -47,11 +48,11 @@
     }
   },
   "commands": {
-    "changeInstance": {
+    "switchInstance": {
       "suggested_key": {
         "default": "Alt+Shift+L"
       },
-      "description": "Change Instance"
+      "description": "Switch Instance"
     }
   }
 }

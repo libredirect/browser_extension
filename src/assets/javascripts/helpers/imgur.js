@@ -118,7 +118,7 @@ function redirect(url, type) {
     return `${randomInstance}${url.pathname}${url.search}`;
 }
 
-function changeInstance(url) {
+function switchInstance(url) {
     let protocolHost = `${url.protocol}//${url.host}`;
 
     let imgurList = [
@@ -207,5 +207,5 @@ export default {
     redirect,
     isImgur,
     init,
-    changeInstance,
+    switchInstance,
 };

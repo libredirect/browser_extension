@@ -156,7 +156,7 @@ function redirect(url) {
 
 }
 
-function changeInstance(url) {
+function switchInstance(url) {
   let protocolHost = `${url.protocol}//${url.host}`;
 
   let wikipediaList = [
@@ -250,5 +250,5 @@ export default {
 
   redirect,
   init,
-  changeInstance,
+  switchInstance,
 };

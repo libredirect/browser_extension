@@ -106,7 +106,7 @@ function setProtocol(val) {
     console.log("sendTargetsProtocol: ", val)
 }
 
-function changeInstance(url) {
+function switchInstance(url) {
     let protocolHost = `${url.protocol}//${url.host}`;
 
     let sendList = [
@@ -210,7 +210,7 @@ export default {
     getSendNormalCustomRedirects,
     setSendNormalCustomRedirects,
 
-    changeInstance,
+    switchInstance,
 
     redirect,
     init,

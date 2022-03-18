@@ -116,7 +116,7 @@ function redirect(url, initiator) {
     ...nitterTorCustomRedirects
   ].includes(protocolHost);
 
-  if (alwaysUsePreferred && isNitter && !isCheckedNitter) return changeInstance(url);
+  if (alwaysUsePreferred && isNitter && !isCheckedNitter) return switchInstance(url);
 
   if (disable) return null;
 
@@ -158,7 +158,7 @@ function redirect(url, initiator) {
     return `${randomInstance}${url.pathname}${url.search}`;
 }
 
-function changeInstance(url) {
+function switchInstance(url) {
   let protocolHost = `${url.protocol}//${url.host}`;
 
   let twitterList = [
@@ -307,5 +307,5 @@ export default {
 
   redirect,
   init,
-  changeInstance,
+  switchInstance,
 };

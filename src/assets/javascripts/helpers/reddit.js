@@ -275,12 +275,12 @@ function redirect(url, type, initiator) {
   if (
     alwaysUsePreferred && frontend == 'teddit' &&
     (isTeddit || isLibreddit) && !isCheckedTeddit
-  ) return changeInstance(url);
+  ) return switchInstance(url);
 
   if (
     alwaysUsePreferred && frontend == 'libreddit' &&
     (isTeddit || isLibreddit) && !isCheckedLibreddit
-  ) return changeInstance(url);
+  ) return switchInstance(url);
 
   if (!targets.some((rx) => rx.test(url.href))) return null;
 
@@ -364,7 +364,7 @@ function redirect(url, type, initiator) {
   }
 }
 
-function changeInstance(url) {
+function switchInstance(url) {
   let protocolHost = `${url.protocol}//${url.host}`;
 
   let isTeddit = [
@@ -523,5 +523,5 @@ export default {
 
   redirect,
   init,
-  changeInstance,
+  switchInstance,
 };

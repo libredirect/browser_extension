@@ -90,7 +90,7 @@ function setProtocol(val) {
     console.log("spotifyTargetsProtocol: ", val)
 }
 
-function changeInstance(url) {
+function switchInstance(url) {
     let protocolHost = `${url.protocol}//${url.host}`;
 
     let sojuList = [
@@ -197,7 +197,7 @@ export default {
     getSojuNormalCustomRedirects,
     setSojuNormalCustomRedirects,
 
-    changeInstance,
+    switchInstance,
 
     redirect,
     init,

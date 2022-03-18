@@ -137,28 +137,28 @@ browser.webRequest.onResponseStarted.addListener(
       const url = new URL(details.url);
       let newUrl;
 
-      newUrl = youtubeHelper.changeInstance(url);
-      if (!newUrl) newUrl = twitterHelper.changeInstance(url);
+      newUrl = youtubeHelper.switchInstance(url);
+      if (!newUrl) newUrl = twitterHelper.switchInstance(url);
 
-      if (!newUrl) newUrl = instagramHelper.changeInstance(url);
+      if (!newUrl) newUrl = instagramHelper.switchInstance(url);
 
-      if (!newUrl) newUrl = redditHelper.changeInstance(url);
+      if (!newUrl) newUrl = redditHelper.switchInstance(url);
 
-      if (!newUrl) newUrl = searchHelper.changeInstance(url);
+      if (!newUrl) newUrl = searchHelper.switchInstance(url);
 
-      if (!newUrl) newUrl = translateHelper.changeInstance(url);
+      if (!newUrl) newUrl = translateHelper.switchInstance(url);
 
-      if (!newUrl) newUrl = mediumHelper.changeInstance(url);
+      if (!newUrl) newUrl = mediumHelper.switchInstance(url);
 
-      if (!newUrl) newUrl = imgurHelper.changeInstance(url);
+      if (!newUrl) newUrl = imgurHelper.switchInstance(url);
 
-      if (!newUrl) newUrl = wikipediaHelper.changeInstance(url);
+      if (!newUrl) newUrl = wikipediaHelper.switchInstance(url);
 
-      if (!newUrl) newUrl = peertubeHelper.changeInstance(url);
+      if (!newUrl) newUrl = peertubeHelper.switchInstance(url);
 
-      if (!newUrl) newUrl = lbryHelper.changeInstance(url);
+      if (!newUrl) newUrl = lbryHelper.switchInstance(url);
 
-      // if (!newUrl) newUrl = spotifyHelper.changeInstance(url);
+      // if (!newUrl) newUrl = spotifyHelper.switchInstance(url);
 
       if (newUrl) browser.tabs.update(details.tabId, { url: `/pages/errors/instance_offline.html?url=${encodeURIComponent(newUrl)}` });
 
@@ -181,34 +181,34 @@ browser.tabs.onUpdated.addListener(
   });
 
 function changeWholeInstance(url) {
-  let newUrl = youtubeHelper.changeInstance(url);
+  let newUrl = youtubeHelper.switchInstance(url);
 
-  if (!newUrl) newUrl = twitterHelper.changeInstance(url);
+  if (!newUrl) newUrl = twitterHelper.switchInstance(url);
 
-  if (!newUrl) newUrl = instagramHelper.changeInstance(url);
+  if (!newUrl) newUrl = instagramHelper.switchInstance(url);
 
-  if (!newUrl) newUrl = redditHelper.changeInstance(url);
+  if (!newUrl) newUrl = redditHelper.switchInstance(url);
 
-  if (!newUrl) newUrl = searchHelper.changeInstance(url);
+  if (!newUrl) newUrl = searchHelper.switchInstance(url);
 
-  if (!newUrl) newUrl = translateHelper.changeInstance(url);
+  if (!newUrl) newUrl = translateHelper.switchInstance(url);
 
-  if (!newUrl) newUrl = mediumHelper.changeInstance(url);
+  if (!newUrl) newUrl = mediumHelper.switchInstance(url);
 
-  if (!newUrl) newUrl = sendTargetsHelper.changeInstance(url);
+  if (!newUrl) newUrl = sendTargetsHelper.switchInstance(url);
 
-  if (!newUrl) newUrl = peertubeHelper.changeInstance(url);
+  if (!newUrl) newUrl = peertubeHelper.switchInstance(url);
 
-  if (!newUrl) newUrl = imgurHelper.changeInstance(url);
+  if (!newUrl) newUrl = imgurHelper.switchInstance(url);
 
-  if (!newUrl) newUrl = wikipediaHelper.changeInstance(url);
+  if (!newUrl) newUrl = wikipediaHelper.switchInstance(url);
 
   return newUrl;
 }
 
 browser.commands.onCommand.addListener(
   command => {
-    if (command === 'changeInstance')
+    if (command === 'switchInstance')
       chrome.tabs.query(
         { active: true, currentWindow: true },
         tabs => {
@@ -221,3 +221,27 @@ browser.commands.onCommand.addListener(
       );
   }
 )
+
+browser.menus.create({
+  id: "settings",
+  title: "Settings",
+  contexts: ["browser_action"]
+});
+
+browser.menus.create({
+  id: "switchInstance",
+  title: "Switch Instance",
+  contexts: ["browser_action"]
+});
+
+browser.menus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId == 'switchInstance') {
+    let url;
+    try { url = new URL(tab.url); }
+    catch (_) { return }
+    let newUrl = changeWholeInstance(url);
+    if (newUrl) browser.tabs.update({ url: newUrl });
+  }
+  else if (info.menuItemId == 'settings')
+    browser.runtime.openOptionsPage()
+});

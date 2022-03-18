@@ -78,7 +78,7 @@ wholeInit().then(() => {
   disableLbryElement.checked = !lbryHelper.getDisable();
 
   let changeInstanceElement = document.getElementById("change-instance")
-  changeInstanceElement.addEventListener("click", changeInstance);
+  changeInstanceElement.addEventListener("click", switchInstance);
 })
 
 disableTwitterElement.addEventListener("change",
@@ -154,7 +154,7 @@ document.getElementById("more-options").addEventListener("click",
 );
 
 
-function changeInstance() {
+function switchInstance() {
   browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     let currTab = tabs[0];
     if (currTab) {
@@ -164,29 +164,29 @@ function changeInstance() {
       catch (_) { return false; }
       let newUrl;
 
-      newUrl = youtubeHelper.changeInstance(tabUrl);
+      newUrl = youtubeHelper.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = twitterHelper.changeInstance(tabUrl);
+      if (!newUrl) newUrl = twitterHelper.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = instagramHelper.changeInstance(tabUrl);
+      if (!newUrl) newUrl = instagramHelper.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = redditHelper.changeInstance(tabUrl);
+      if (!newUrl) newUrl = redditHelper.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = searchHelper.changeInstance(tabUrl);
+      if (!newUrl) newUrl = searchHelper.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = translateHelper.changeInstance(tabUrl);
+      if (!newUrl) newUrl = translateHelper.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = mediumHelper.changeInstance(tabUrl);
+      if (!newUrl) newUrl = mediumHelper.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = sendTargetsHelper.changeInstance(tabUrl);
+      if (!newUrl) newUrl = sendTargetsHelper.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = peertubeHelper.changeInstance(tabUrl);
+      if (!newUrl) newUrl = peertubeHelper.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = lbryHelper.changeInstance(tabUrl);
+      if (!newUrl) newUrl = lbryHelper.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = imgurHelper.changeInstance(tabUrl);
+      if (!newUrl) newUrl = imgurHelper.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = wikipediaHelper.changeInstance(tabUrl);
+      if (!newUrl) newUrl = wikipediaHelper.switchInstance(tabUrl);
 
       if (newUrl) {
         browser.tabs.update({ url: newUrl });

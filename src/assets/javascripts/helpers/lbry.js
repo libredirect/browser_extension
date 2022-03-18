@@ -96,7 +96,7 @@ function setProtocol(val) {
     console.log("lbryTargetsProtocol: ", val)
 }
 
-function changeInstance(url) {
+function switchInstance(url) {
     let protocolHost = `${url.protocol}//${url.host}`;
 
     let librarianList = [
@@ -198,7 +198,7 @@ export default {
     getLibrarianNormalCustomRedirects,
     setLibrarianNormalCustomRedirects,
 
-    changeInstance,
+    switchInstance,
 
     redirect,
     init,
