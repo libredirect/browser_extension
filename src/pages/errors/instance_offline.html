@@ -9,19 +9,31 @@
     <link href="../stylesheets/styles.css" rel="stylesheet" />
     <style>
         body {
+            margin: 0;
+            padding: 0;
             height: 100vh;
             width: 100vw;
-            display: flex;
+            flex-wrap: wrap;
             justify-content: center;
             align-items: center;
             font-size: 30px;
+            display: flex;
+        }
+
+        div {
+            text-align: center;
         }
     </style>
 
 </head>
 
 <body>
-    This instance is offline, you'll be redirected after&nbsp;<span id="number">2</span>&nbsp;seconds
+    <div>
+        <p id="message">This instance is offline, you'll be redirected after&nbsp;<span
+                id="number">2</span>&nbsp;seconds
+        </p>
+        <button id="cancel">Cancel</button>
+    </div>
 
     <script src="instance_offline.js"></script>
 </body>

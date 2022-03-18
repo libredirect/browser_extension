@@ -130,8 +130,9 @@ browser.webRequest.onResponseStarted.addListener(
   details => {
     if (!generalHelper.getAutoRedirect()) return null;
 
-    console.log("statusCode", details.statusCode);
-    if (details.type == 'main_frame' && details.statusCode >= 500) {
+    if (details.type == 'main_frame' && (details.statusCode == 503 || details.statusCode == 504)) {
+      // if (details.type == 'main_frame' && details.statusCode >= 200) {
+      console.log("statusCode", details.statusCode);
 
       const url = new URL(details.url);
       let newUrl;
@@ -159,10 +160,8 @@ browser.webRequest.onResponseStarted.addListener(
 
       // if (!newUrl) newUrl = spotifyHelper.changeInstance(url);
 
-      if (newUrl) {
-        browser.tabs.update({ url: '/pages/errors/instance_offline.html' });
-        setTimeout(() => browser.tabs.update({ url: newUrl }), 2000);
-      }
+      if (newUrl) browser.tabs.update(details.tabId, { url: `/pages/errors/instance_offline.html?url=${encodeURIComponent(newUrl)}` });
+
     }
   },
   { urls: ["<all_urls>"], }
