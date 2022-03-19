@@ -3,6 +3,12 @@
   "description": "A web extension that redirects popular sites to alternative privacy-friendly frontends and backends",
   "version": "1.5.5",
   "manifest_version": 2,
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "7esoorv3@alefvanoon.anonaddy.me",
+      "strict_min_version": "67.0"
+    }
+  },
   "background": {
     "page": "pages/background/background.html",
     "persistent": true

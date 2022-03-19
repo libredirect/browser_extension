@@ -198,9 +198,7 @@ youtubeHelper.init().then(() => {
 
     pipedSponsorblockElement.checked = youtubeHelper.getPipedSponsorblock();
     selectSkip = youtubeHelper.getPipedSelectedSkip();
-    console.log("selectSkip", selectSkip)
     pipedSelectedSkipSponsorElement.checked = selectSkip.includes('sponsor');
-    console.log("selectSkip.includes('sponsor')", selectSkip.includes('sponsor'))
     pipedSelectedSkipIntroElement.checked = selectSkip.includes('intro');
     pipedSelectedSkipOutroElement.checked = selectSkip.includes('outro');
     pipedSelectedSkipPreviewElement.checked = selectSkip.includes('preview');

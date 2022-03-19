@@ -112,7 +112,7 @@ let allPopupFrontends = [
     "imgur",
     "reddit",
     "pixiv",
-    // "spotify",
+    "spotify",
     "search",
     "translate",
     "maps",

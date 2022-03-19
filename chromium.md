@@ -6,3 +6,5 @@
 - Drag the `libredirect-1.5.5.crx` file to the page
 
 Updates are automatic
+
+![](./img/install_chromium.mp4)

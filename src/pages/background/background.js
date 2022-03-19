@@ -15,7 +15,7 @@ import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
-// import spotifyHelper from "../../assets/javascripts/helpers/spotify.js";
+import spotifyHelper from "../../assets/javascripts/helpers/spotify.js";
 import generalHelper from "../../assets/javascripts/helpers/general.js";
 import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
 
@@ -38,7 +38,7 @@ async function wholeInit() {
   await sendTargetsHelper.init();
   await peertubeHelper.init();
   await lbryHelper.init();
-  // await spotifyHelper.init();
+  await spotifyHelper.init();
   await generalHelper.init();
 }
 await wholeInit();
@@ -83,7 +83,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (!newUrl) newUrl = lbryHelper.redirect(url, details.type, initiator);
 
-    // if (!newUrl) newUrl = spotifyHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = spotifyHelper.redirect(url, details.type, initiator);
 
     if (!newUrl) newUrl = translateHelper.redirect(url);
 
@@ -158,7 +158,7 @@ browser.webRequest.onResponseStarted.addListener(
 
       if (!newUrl) newUrl = lbryHelper.switchInstance(url);
 
-      // if (!newUrl) newUrl = spotifyHelper.switchInstance(url);
+      if (!newUrl) newUrl = spotifyHelper.switchInstance(url);
 
       if (newUrl) browser.tabs.update(details.tabId, { url: `/pages/errors/instance_offline.html?url=${encodeURIComponent(newUrl)}` });
 
