@@ -54,5 +54,6 @@
       },
       "description": "Switch Instance"
     }
-  }
+  },
+  "update_url": "https://raw.githubusercontent.com/libredirect/libredirect/master/src/updates/updates.xml"
 }

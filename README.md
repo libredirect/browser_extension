@@ -30,13 +30,13 @@ Send Files => [Send](https://github.com/timvisee/send)
 
 <br>
 
-
 [![Mozilla Users](https://badges.alefvanoon.xyz/amo/users/libredirect?label=Firefox%20Users)](https://addons.mozilla.org/firefox/addon/libredirect/)
 [![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=Matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
 
 ## Get
 [![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)&nbsp;
-[![Edge Add-on](./img/badge-ms.png)](https://microsoftedge.microsoft.com/addons/detail/libredirect/aodffkeankebfonljgbcfbbaljopcpdb)
+[![Edge Add-on](./img/badge-ms.png)](https://microsoftedge.microsoft.com/addons/detail/libredirect/aodffkeankebfonljgbcfbbaljopcpdb)&nbsp;
+[![Edge Add-on](./img/badge-chrome.png)](./chromium.md)
 
 ## Donate
 [![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)
@@ -76,7 +76,6 @@ Send Files => [Send](https://github.com/timvisee/send)
 - enable `dev mode`
 - select `load unpacked extension`
 - select `src` folder
-
 
 Privacy Policy: [Privacy-Policy.md](Privacy-Policy.md)\
 Credits: [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)
