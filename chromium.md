@@ -7,4 +7,4 @@
 
 Updates are automatic
 
-![](./img/install_chromium.mp4)
+https://user-images.githubusercontent.com/40805353/159117606-f1f9560d-2ca6-4dc3-aca4-4083e60e127a.mp4
