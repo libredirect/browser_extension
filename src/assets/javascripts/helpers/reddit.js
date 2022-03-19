@@ -302,8 +302,10 @@ function redirect(url, type, initiator) {
 
   if (type !== "main_frame" || url.pathname.match(bypassPaths)) return null;
 
-  if (frontend == 'old' && url.host !== "i.redd.it")
+  if (frontend == 'old' && url.host !== "i.redd.it") {
+    if (url.host == 'old.reddit.com') return;
     return `${redirects.desktop}${url.pathname}${url.search}`;
+  }
 
   let libredditInstancesList;
   let tedditInstancesList;
