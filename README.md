@@ -36,7 +36,7 @@ Send Files => [Send](https://github.com/timvisee/send)
 ## Get
 [![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)&nbsp;
 [![Edge Add-on](./img/badge-ms.png)](https://microsoftedge.microsoft.com/addons/detail/libredirect/aodffkeankebfonljgbcfbbaljopcpdb)&nbsp;
-[![Edge Add-on](./img/badge-chrome.png)](./chromium.md)
+<img src ="./img/badge-chromium.png" height=60>
 
 ## Donate
 [![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)
