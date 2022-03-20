@@ -1,5 +1,3 @@
-"use strict";
-
 window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
@@ -74,33 +72,55 @@ function redirect(url, initiator) {
 
   if (disable) return;
   if (initiator && initiator.host === "earth.google.com") return;
+
   if (!url.href.match(targets)) return;
 
+  let redirect;
   let randomInstance;
   if (frontend == 'osm') randomInstance = commonHelper.getRandomInstance(redirects.osm.normal);
   if (frontend == 'facil') randomInstance = commonHelper.getRandomInstance(redirects.facil.normal);
-
-  let mapCentre = "#";
+  let mapCentre = "";
   let prefs = {};
 
   // Set map centre if present
   if (url.pathname.match(mapCentreRegex)) {
-    var [, lat, lon, zoom] = url.pathname.match(mapCentreRegex);
-  } else if (url.searchParams.has("center")) {
-    var [lat, lon] = url.searchParams.get("center").split(",");
-    var zoom = url.searchParams.get("zoom") ?? "17";
-  }
-
-  if (lat && lon && zoom) {
-    if (frontend == 'osm') mapCentre = `#map=${zoom}/${lat}/${lon}`;
+    const [, lat, lon, zoom] = url.pathname.match(mapCentreRegex);
+    if (frontend == 'osm') {
+      prefs["#map"] = `${zoom}/${lat}/${lon}`;
+      mapCentre = `#map=${zoom}/${lat}/${lon}`;
+      console.log("prefs", prefs);
+    }
     if (frontend == 'facil') mapCentre = `#${zoom}/${lat}/${lon}`;
+
 
     console.log("lat", lat) // vertical
     console.log("lon", lon) // horizontal
-    console.log("zoom", zoom);
+    console.log("zoom", zoom)
+
+  } else if (url.searchParams.has("center")) {
+    const [lat, lon] = url.searchParams.get("center").split(",");
+    const zoom = url.searchParams.get("zoom") ?? "17";
+    if (frontend == 'osm') {
+      console.log("here");
+      mapCentre = `#map=${zoom}/${lat}/${lon}`;
+      prefs["#map"] = `${zoom}/${lat}/${lon}`;
+    }
+    if (frontend == 'facil') mapCentre = `#${zoom}/${lat}/${lon}`
+
+    console.log("lat", lat)
+    console.log("lon", lon)
+    console.log("zoom", zoom)
+
+    console.log("prefs", prefs);
   }
 
-  if (url.searchParams.get("layer")) prefs.layers = osmLayers[url.searchParams.get("layer")];
+  // Set map layer
+  let params = "";
+  if (url.searchParams.get("layer")) {
+    let layer = osmLayers[url.searchParams.get("layer")]
+    params = `&layers=${layer}`;
+    console.log("layer", layer);
+  }
 
   // Handle Google Maps Embed API
   if (url.pathname.includes("/embed")) {
@@ -112,6 +132,9 @@ function redirect(url, initiator) {
       try { query = url.searchParams.get("pb").split(/!2s(.*?)!/)[1]; }
       catch (error) { console.error(error); } // Unable to find map marker in URL.
 
+    console.log("query", query);
+
+    let prefs = {};
     addressToLatLng(
       query,
       (coords, boundingbox) => {
@@ -122,61 +145,104 @@ function redirect(url, initiator) {
     prefs.layer = "mapnik";
 
     let prefsEncoded = new URLSearchParams(prefs).toString();
-    if (frontend == 'osm') return `${randomInstance}/export/embed.html?${prefsEncoded}`;
 
-  } else if (url.pathname.includes("/dir")) {   // Handle Google Maps Directions
-    if (url.searchParams.has("travelmode")) prefs.engine = travelModes[url.searchParams.get("travelmode")];
+    if (frontend == 'osm') redirect = `${randomInstance}/export/embed.html?${prefsEncoded}`;
+    if (frontend == 'facil') redirect = redirect = `${randomInstance}/${mapCentre}/Mpnk`;
+
+    // Handle Google Maps Directions
+  } else if (url.pathname.includes("/dir")) {
+    let prefs = {};
+
+    prefs.engine = travelModes[url.searchParams.get("travelmode")] ?? travelModes["driving"];
 
     let origin; addressToLatLng(url.searchParams.get("origin"), a => origin = a);
     let destination; addressToLatLng(url.searchParams.get("destination"), a => destination = a);
     prefs.route = `${origin};${destination}`;
 
     let prefsEncoded = new URLSearchParams(prefs).toString();
-    if (frontend == 'osm') return `${randomInstance}/directions?${prefsEncoded}${mapCentre}`;
-  } else if (url.pathname.includes("data=") && url.pathname.match(dataLatLngRegex)) {  // Get marker from data attribute
-    console.log("data life");
 
+    if (frontend == 'osm') redirect = `${randomInstance}/directions?${prefsEncoded}`;
+    // ${mapCentre}${params}
+
+    if (frontend == 'facil') {
+      mapCentre = mapCentre ?? '#1/0/0';
+      redirect = redirect = `${randomInstance}/${mapCentre}/Mpnk`
+    }
+
+    // Get marker from data attribute
+  } else if (url.pathname.includes("data=") && url.pathname.match(dataLatLngRegex)) {
+    console.log("data life");
     const [mlat, mlon] = url.pathname.match(dataLatLngRegex);
+
+    let prefs = {};
+
     prefs.mlat = mlat.replace("!3d", "");
     prefs.mlon = mlon.replace("!4d", "");
 
+    let prefsEncoded = new URLSearchParams(prefs).toString();
+
+    // Stil didn't finished nor tested this
+    if (frontend == 'osm') redirect = `${randomInstance}/?${prefsEncoded}${mapCentre}${params}`;
+
+    if (frontend == 'facil') redirect = redirect = `${randomInstance}/${mapCentre}/Mpnk`
+
+    console.log("prefs", prefs);
+
     // Get marker from ll param
   } else if (url.searchParams.has("ll")) {
-    console.log("ll life");
+    let prefs = {};
 
     const [mlat, mlon] = url.searchParams.get("ll").split(",");
+
     prefs.mlat = mlat;
     prefs.mlon = mlon;
+
+    let prefsEncoded = new URLSearchParams(prefs).toString();
+
+    redirect = `${randomInstance}/?${prefsEncoded}${mapCentre}${params}`;
+
+    console.log("prefs", prefs);
 
     // Get marker from viewpoint param.
   } else if (url.searchParams.has("viewpoint")) {
     console.log("viewpoint life");
 
     const [mlat, mlon] = url.searchParams.get("viewpoint").split(",");
+
+    let prefs = {};
     prefs.mlat = mlat;
     prefs.mlon = mlon;
 
+    let prefsEncoded = new URLSearchParams(prefs).toString();
+
+    redirect = `${randomInstance}/?${prefsEncoded}${mapCentre}${params}`;
+
+    console.log("prefs", prefs);
+
     // Use query as search if present.
   } else {
-    console.log("normal life");
+    console.log("normal life")
 
     let query;
     if (url.searchParams.has("q")) query = url.searchParams.get("q");
     else if (url.searchParams.has("query")) query = url.searchParams.get("query");
     else if (url.pathname.match(placeRegex)) query = url.pathname.match(placeRegex)[1];
 
-    let prefsEncoded = new URLSearchParams(prefs).toString();
-    if (query) {
-      if (frontend == 'osm') return `${randomInstance}/search?query="${query}${mapCentre}&${prefsEncoded}`;
-      if (frontend == 'facil') return `${randomInstance}/${mapCentre}/Mpnk/${query}`
+    if (frontend == 'osm') {
+      query = query ? `/search?query="${query}` : "";
+      mapCentre = mapCentre ?? '#';
+      redirect = `${randomInstance}${query}${mapCentre}${params}`;
     }
-  }
+    if (frontend == 'facil') {
+      query = query ? `/${query}` : "";
+      mapCentre = mapCentre ?? '#1/0/0';
+      redirect = `${randomInstance}/${mapCentre}/Mpnk${query}`
+    }
 
-  let prefsEncoded = new URLSearchParams(prefs).toString();
-  console.log("prefs", prefs);
-  console.log("prefsEncoded", prefsEncoded)
-  if (frontend == 'osm') return `${randomInstance}/${mapCentre}&${prefsEncoded}`
-  if (frontend == 'facil') return `${randomInstance}/${mapCentre}/Mpnk`
+    console.log("mapCentre", mapCentre)
+    console.log("query", query)
+  }
+  return redirect;
 }
 
 async function init() {

@@ -107,6 +107,10 @@ browser.webRequest.onBeforeRequest.addListener(
       }
       else {
         console.info("Redirecting", url.href, "=>", newUrl);
+        // let wewe = new URL(newUrl);
+        // console.log("wewe", wewe.search);
+        // console.log("path", wewe.pathname);
+        // console.log("searchParams", wewe.searchParams);
         return { redirectUrl: newUrl };
       }
     }
