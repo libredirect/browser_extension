@@ -27,6 +27,7 @@ Send Files => [Send](https://github.com/timvisee/send)
 <img src ="./img/3.png" width=350>&nbsp;
 <img src ="./img/4.png" width=350>&nbsp;
 <img src ="./img/5.png" width=350>&nbsp;
+<img src ="./img/badge-chromium.png" height=60>
 
 <br>
 
