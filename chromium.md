@@ -6,3 +6,5 @@
 - Click `Load unpacked`. Select and Open the src folder, ex: `./libredirect-1.5.6/src/`
 
 Updates are automatic
+
+https://user-images.githubusercontent.com/40805353/159348155-0340bbbf-74a5-4d70-8bf8-c6450218acf0.mp4
