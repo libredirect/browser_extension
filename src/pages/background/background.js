@@ -50,6 +50,7 @@ let BYPASSTABs = [];
 browser.webRequest.onBeforeRequest.addListener(
   details => {
     const url = new URL(details.url);
+    // console.info("url:", url.href, "type:", details.type);
     let initiator;
     if (details.originUrl)
       initiator = new URL(details.originUrl);
