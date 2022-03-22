@@ -100,10 +100,6 @@ function redirect(url, initiator) {
   if (lat && lon && zoom) {
     if (frontend == 'osm') mapCentre = `#map=${zoom}/${lat}/${lon}`;
     if (frontend == 'facil') mapCentre = `#${zoom}/${lat}/${lon}`;
-
-    console.log("lat", lat) // vertical
-    console.log("lon", lon) // horizontal
-    console.log("zoom", zoom);
   }
 
   if (url.searchParams.get("layer")) prefs.layers = osmLayers[url.searchParams.get("layer")];

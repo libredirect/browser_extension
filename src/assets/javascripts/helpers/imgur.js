@@ -108,6 +108,7 @@ function redirect(url, type) {
     // https://i.imgur.com/CFSQArP.jpeg
 
     if (type != "main_frame" && type != "sub_frame" && type != "xmlhttprequest" && type != "other") return null;
+    if (url.pathname.includes("delete/")) return null;
 
     let instancesList;
     if (protocol == 'normal') instancesList = [...rimgoNormalRedirectsChecks, ...rimgoNormalCustomRedirects];
