@@ -123,7 +123,7 @@ function redirect(url, type, initiator) {
 
   if (initiator && ([...redirects.scribe.normal, ...scribeNormalCustomRedirects].includes(initiator.origin))) return;
 
-  if (!targets.some((rx) => rx.test(url.host))) return;
+  if (!targets.some(rx => rx.test(url.host))) return;
 
   let instancesList;
   if (protocol == 'normal') instancesList = [...scribeNormalRedirectsChecks, ...scribeNormalCustomRedirects];

@@ -119,7 +119,7 @@ function switchInstance(url) {
 function redirect(url, type, initiator) {
     if (disable) return null;
     if (initiator && ([...redirects.soju.normal, ...sojuNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))) return null;
-    if (!targets.some((rx) => rx.test(url.href))) return null;
+    if (!targets.some(rx => rx.test(url.href))) return null;
 
     if (type != "main_frame") return null;
 

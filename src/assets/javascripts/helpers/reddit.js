@@ -282,7 +282,7 @@ function redirect(url, type, initiator) {
     (isTeddit || isLibreddit) && !isCheckedLibreddit
   ) return switchInstance(url);
 
-  if (!targets.some((rx) => rx.test(url.href))) return null;
+  if (!targets.some(rx => rx.test(url.href))) return null;
 
   if (
     bypassWatchOnReddit &&

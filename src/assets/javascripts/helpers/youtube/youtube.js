@@ -354,7 +354,7 @@ function redirect(url, details, initiator) {
     (isInvidious || isPiped) && !isCheckedPiped
   ) return switchInstance(url);
 
-  if (!targets.some((rx) => rx.test(url.href))) return null;
+  if (!targets.some(rx => rx.test(url.href))) return null;
 
   if (
     details.type != "main_frame" &&

@@ -97,7 +97,7 @@ function isImgur(url, initiator) {
         initiator &&
         ([...redirects.rimgo.normal, ...rimgoNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))
     ) return false;
-    return targets.some((rx) => rx.test(url.href));
+    return targets.some(rx => rx.test(url.href));
 }
 
 function redirect(url, type) {

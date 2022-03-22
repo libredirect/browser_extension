@@ -131,6 +131,35 @@ browser.tabs.onRemoved.addListener(
   }
 );
 
+function redirectOfflineInstance(url, tabId) {
+  let newUrl;
+
+  newUrl = youtubeHelper.switchInstance(url);
+  if (!newUrl) newUrl = twitterHelper.switchInstance(url);
+
+  if (!newUrl) newUrl = instagramHelper.switchInstance(url);
+
+  if (!newUrl) newUrl = redditHelper.switchInstance(url);
+
+  if (!newUrl) newUrl = searchHelper.switchInstance(url);
+
+  if (!newUrl) newUrl = translateHelper.switchInstance(url);
+
+  if (!newUrl) newUrl = mediumHelper.switchInstance(url);
+
+  if (!newUrl) newUrl = imgurHelper.switchInstance(url);
+
+  if (!newUrl) newUrl = wikipediaHelper.switchInstance(url);
+
+  if (!newUrl) newUrl = peertubeHelper.switchInstance(url);
+
+  if (!newUrl) newUrl = lbryHelper.switchInstance(url);
+
+  if (!newUrl) newUrl = spotifyHelper.switchInstance(url);
+
+  if (newUrl) browser.tabs.update(tabId, { url: `/pages/errors/instance_offline.html?url=${encodeURIComponent(newUrl)}` });
+}
+
 browser.webRequest.onResponseStarted.addListener(
   details => {
     if (!generalHelper.getAutoRedirect()) return null;
@@ -140,34 +169,17 @@ browser.webRequest.onResponseStarted.addListener(
       console.log("statusCode", details.statusCode);
 
       const url = new URL(details.url);
-      let newUrl;
-
-      newUrl = youtubeHelper.switchInstance(url);
-      if (!newUrl) newUrl = twitterHelper.switchInstance(url);
-
-      if (!newUrl) newUrl = instagramHelper.switchInstance(url);
-
-      if (!newUrl) newUrl = redditHelper.switchInstance(url);
-
-      if (!newUrl) newUrl = searchHelper.switchInstance(url);
-
-      if (!newUrl) newUrl = translateHelper.switchInstance(url);
-
-      if (!newUrl) newUrl = mediumHelper.switchInstance(url);
-
-      if (!newUrl) newUrl = imgurHelper.switchInstance(url);
-
-      if (!newUrl) newUrl = wikipediaHelper.switchInstance(url);
-
-      if (!newUrl) newUrl = peertubeHelper.switchInstance(url);
-
-      if (!newUrl) newUrl = lbryHelper.switchInstance(url);
-
-      if (!newUrl) newUrl = spotifyHelper.switchInstance(url);
-
-      if (newUrl) browser.tabs.update(details.tabId, { url: `/pages/errors/instance_offline.html?url=${encodeURIComponent(newUrl)}` });
-
+      redirectOfflineInstance(url, details.tabId);
     }
+  },
+  { urls: ["<all_urls>"], }
+)
+
+browser.webRequest.onErrorOccurred.addListener(
+  details => {
+    if (!generalHelper.getAutoRedirect()) return;
+    const url = new URL(details.url);
+    redirectOfflineInstance(url, details.tabId);
   },
   { urls: ["<all_urls>"], }
 )

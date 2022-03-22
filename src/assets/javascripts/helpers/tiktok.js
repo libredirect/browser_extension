@@ -93,7 +93,7 @@ function setProtocol(val) {
 function isTiktok(url, initiator) {
     if (disable) return false;
     if (initiator && ([...redirects.proxiTok.normal, ...proxiTokNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))) return false;
-    return targets.some((rx) => rx.test(url.href));
+    return targets.some(rx => rx.test(url.href));
 }
 
 function redirect(url, type) {

@@ -138,7 +138,7 @@ function redirect(url, type, initiator) {
 
     if (disable) return null;
     if (initiator && ([...redirects.send.normal, ...sendNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))) return null;
-    if (!targets.some((rx) => rx.test(url.href))) return null;
+    if (!targets.some(rx => rx.test(url.href))) return null;
 
     if (type != "main_frame") return null;
 

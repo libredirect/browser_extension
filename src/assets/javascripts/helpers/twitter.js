@@ -120,7 +120,7 @@ function redirect(url, initiator) {
 
   if (disable) return null;
 
-  if (!targets.some((rx) => rx.test(url.href))) return null;
+  if (!targets.some(rx => rx.test(url.href))) return null;
 
   if (url.pathname.split("/").includes("home")) {
     console.log("twitter homepage");

@@ -58,7 +58,7 @@ function setDisable(val) {
 
 function isYoutubeMusic(url, initiator) {
     if (disable) return false
-    return targets.some((rx) => rx.test(url.href));
+    return targets.some(rx => rx.test(url.href));
 }
 
 function redirect(url, type) {
