@@ -184,6 +184,20 @@ function switchInstance(url) {
   return `${randomInstance}${url.pathname}${url.search}`;
 }
 
+function removeXFrameOptions(e) {
+  let url = new URL(e.url);
+  let protocolHost = `${url.protocol}//${url.host}`;
+  let twitterList = [
+    ...redirects.nitter.normal,
+    ...redirects.nitter.tor,
+    ...nitterNormalCustomRedirects,
+    ...nitterTorCustomRedirects,
+  ];
+  if (!twitterList.includes(protocolHost) && e.type != 'sub_frame') return;
+  for (const i in e.responseHeaders) if (e.responseHeaders[i].name = 'x-frame-options') e.responseHeaders.splice(i, 1);
+  return { responseHeaders: e.responseHeaders };
+}
+
 function isNitter(url, type) {
   let protocolHost = `${url.protocol}//${url.host}`;
 
@@ -298,6 +312,8 @@ export default {
 
   getBypassWatchOnTwitter,
   setBypassWatchOnTwitter,
+
+  removeXFrameOptions,
 
   getProtocol,
   setProtocol,

@@ -131,6 +131,16 @@ browser.tabs.onRemoved.addListener(
   }
 );
 
+
+// Set "blocking" and "responseHeaders".
+browser.webRequest.onHeadersReceived.addListener(
+  e => {
+    return twitterHelper.removeXFrameOptions(e);
+  },
+  { urls: ["<all_urls>"], },
+  ["blocking", "responseHeaders"]
+);
+
 function redirectOfflineInstance(url, tabId) {
   let newUrl;
 
