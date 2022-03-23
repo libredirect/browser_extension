@@ -1,9 +1,9 @@
 ### Install in Chromium, Brave and Chrome
-- Download the latest Source Code https://github.com/libredirect/libredirect/tree/v1.5.7
-- Unzip the file
+- Download the [Source Code](https://github.com/libredirect/libredirect/archive/master.zip)
+- Unzip it
 - Open `chrome://extensions`
 - Enable `dev mode`
-- Click `Load unpacked`. Select and Open the `src` folder, ex: `./libredirect-1.5.7/src/`
+- Click `Load unpacked`. Select and Open the `src` folder: `./libredirect-master/src/`
 
 Updates are automatic
 
