@@ -61,5 +61,6 @@
       "description": "Switch Instance"
     }
   },
-  "update_url": "https://raw.githubusercontent.com/libredirect/libredirect/master/src/updates/updates.xml"
+  "update_url": "https://raw.githubusercontent.com/libredirect/libredirect/master/src/updates/updates.xml",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqlqsJrNbrWATJMxqbBlUbOfTnHuHkA8/q4aWSRNN1u6QJjsIZUoicAVAUSuAnc1eSJyDpbcyPEhwqaGGzAR3YcIoQlJAce/mIjNcRtX2dwttPnAH8H9D5y2yFjhSdSC+Je4FY46fiB5T/GYzEB/t3pglh7Z9bRVXHVA+nn+Vj+Do9Yj5NcugLnU3isSZGqCBFiaXF80jdmy7bqnAftdAHxGpEXERM9gWYsKo4L6p0v5O1k/zQHEsOcjS0auFvEupLMLdEmq8AiBtzOT0w7STHHqiMHuzMjEcdZhpyr66h/i0qKAKVtUcuzh6hMfiVd5pyYBN713yRUN52zvTXanWvQIDAQAB"
 }
