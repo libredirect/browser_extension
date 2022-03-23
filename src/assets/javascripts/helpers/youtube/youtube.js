@@ -93,7 +93,7 @@ let redirects = {
       "https://piped.tokhmi.xyz",
       "https://piped.mint.lgbt",
       "https://il.ax",
-      "https://piped.syncpundit.com"
+      "https://piped.syncpundit.com",
       "https://piped.privacy.com.de"
     ],
     "tor": [
