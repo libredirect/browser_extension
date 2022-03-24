@@ -1,10 +1,8 @@
 ### Install in Chromium, Brave and Chrome
-- Download the lastest release [Source Code](https://github.com/libredirect/libredirect/archive/master.zip)
-- Unzip it
+- Download the lastest release [libredirect-1.5.8.zip](https://github.com/libredirect/libredirect/archive/v1.5.8.zip)
+- Unzip it with `Auto detect subfolder`
 - Open `chrome://extensions`
 - Enable `dev mode`
-- Click `Load unpacked`. Select and Open the `src` folder: `./libredirect-master/src/`
+- Click `Load unpacked`. Select and Open `libredirect-1.5.8/`
 
 Updates are automatic
-
-https://user-images.githubusercontent.com/40805353/159348155-0340bbbf-74a5-4d70-8bf8-c6450218acf0.mp4
