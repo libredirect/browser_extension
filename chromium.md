@@ -1,5 +1,5 @@
 ### Install in Chromium, Brave and Chrome
-- Download the [Source Code](https://github.com/libredirect/libredirect/archive/master.zip)
+- Download the lastest release [Source Code](https://github.com/libredirect/libredirect/archive/master.zip)
 - Unzip it
 - Open `chrome://extensions`
 - Enable `dev mode`
