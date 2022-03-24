@@ -194,8 +194,12 @@ function removeXFrameOptions(e) {
     ...nitterTorCustomRedirects,
   ];
   if (!twitterList.includes(protocolHost) && e.type != 'sub_frame') return;
-  for (const i in e.responseHeaders) if (e.responseHeaders[i].name = 'x-frame-options') e.responseHeaders.splice(i, 1);
-  return { responseHeaders: e.responseHeaders };
+  let isChanged = false;
+  for (const i in e.responseHeaders) if (e.responseHeaders[i].name = 'x-frame-options') {
+    isChanged = true;
+    e.responseHeaders.splice(i, 1);
+  }
+  if (isChanged) return { responseHeaders: e.responseHeaders };
 }
 
 function isNitter(url, type) {
