@@ -195,7 +195,8 @@ function removeXFrameOptions(e) {
   ];
   if (!twitterList.includes(protocolHost) && e.type != 'sub_frame') return;
   let isChanged = false;
-  for (const i in e.responseHeaders) if (e.responseHeaders[i].name = 'x-frame-options') {
+  console.log(e.responseHeaders);
+  for (const i in e.responseHeaders) if (e.responseHeaders[i].name == 'x-frame-options') {
     isChanged = true;
     e.responseHeaders.splice(i, 1);
   }
