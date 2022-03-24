@@ -6,3 +6,5 @@
 - Click `Load unpacked`. Select and Open `libredirect-1.5.8/`
 
 Updates are automatic
+
+https://user-images.githubusercontent.com/40805353/159987051-8be73cd3-3fdf-4dd0-99d4-8886674fbdb6.mp4
