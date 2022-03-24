@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
-    <app appid='ongajcjccibkomjojhfmjedolopocllf'>
-        <updatecheck codebase='https://github.com/libredirect/libredirect/releases/download/v1.5.7/libredirect-1.5.7.crx' version='1.5.7' />
+    <app appid='oladmjdebphlnjjcnomfhhbfdldiimaf'>
+        <updatecheck codebase='https://github.com/libredirect/libredirect/releases/download/v1.5.8/libredirect-1.5.8.crx' version='1.5.8' />
     </app>
 </gupdate>
