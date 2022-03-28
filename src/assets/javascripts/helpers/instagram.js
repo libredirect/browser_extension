@@ -97,7 +97,6 @@ function setProtocol(val) {
 }
 
 function redirect(url, type, initiator) {
-
   if (disable) return;
   if (
     initiator &&
@@ -116,6 +115,8 @@ function redirect(url, type, initiator) {
 
   if (url.pathname === "/" || reservedPaths.includes(url.pathname.split("/")[1]))
     return `${randomInstance}${url.pathname}${url.search}`;
+  if (url.pathname.startsWith("/reel") || url.pathname.startsWith("/tv"))
+    return `${randomInstance}/p${url.pathname}${url.search}`;
   else
     return `${randomInstance}/u${url.pathname}${url.search}`; // Likely a user profile, redirect to '/u/...'
 }
