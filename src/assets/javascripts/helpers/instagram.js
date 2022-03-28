@@ -121,7 +121,7 @@ function redirect(url, type, initiator) {
 }
 
 function switchInstance(url) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
 
   let instagramList = [
     ...redirects.bibliogram.normal,
@@ -147,7 +147,7 @@ function switchInstance(url) {
 }
 
 function isBibliogram(url) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
   return [
     ...redirects.bibliogram.normal,
     ...redirects.bibliogram.tor,
@@ -160,7 +160,7 @@ let instancesCookies;
 let theme;
 let applyThemeToSites;
 function initBibliogramCookies(url) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
   browser.cookies.get(
     {
       url: protocolHost,

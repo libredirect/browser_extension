@@ -135,7 +135,7 @@ function redirect(url, type, initiator) {
 }
 
 function switchInstance(url) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
 
   let mediumList = [
     ...redirects.scribe.tor,

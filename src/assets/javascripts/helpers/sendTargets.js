@@ -107,7 +107,7 @@ function setProtocol(val) {
 }
 
 function switchInstance(url) {
-    let protocolHost = `${url.protocol}//${url.host}`;
+    let protocolHost = commonHelper.protocolHost(url);
 
     let sendList = [
         ...redirects.send.normal,

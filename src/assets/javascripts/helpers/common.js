@@ -12,28 +12,6 @@ function getRandomInstance(instances) {
   return instances[~~(instances.length * Math.random())];
 }
 
-async function getRandomOnlineInstance(instances) {
-  const shuffledInstances = instances.sort((a, b) => 0.5 - Math.random())
-
-  for (let ins of shuffledInstances) {
-    try {
-      const res = await fetch(ins, { redirect: 'follow' })
-      console.log(res)
-      if (res.status >= 200 && res.status < 300)
-        return ins // instance seems healthy!
-      else
-        console.warn(`Instance ${ins} seems offline (status code: ${res.status}). we try another one`)
-
-    } catch (err) {
-      console.warn(`Instance ${ins} seems offline. we try another one`)
-    }
-  }
-
-  // everything offline? -> unlikely
-  // rather respond with any entry instead of breaking the functionality
-  return shuffledInstances[0]
-}
-
 async function wholeInit() {
   await youtubeHelper.init();
   await twitterHelper.init();
@@ -83,6 +61,11 @@ async function updateInstances() {
 
 function isFirefox() {
   return typeof InstallTrigger !== "undefined";
+}
+
+function protocolHost(url) {
+  if (url.username && url.password) return `${url.protocol}//${url.username}:${url.password}@${url.host}`;
+  return `${url.protocol}//${url.host}`;
 }
 
 function processDefaultCustomInstances(
@@ -173,10 +156,10 @@ function processDefaultCustomInstances(
     event.preventDefault();
     let nameCustomInstanceInput = document.getElementById(`${name}-${protocol}-custom-instance`);
     let url = new URL(nameCustomInstanceInput.value);
-    let protocolHost = `${url.protocol}//${url.host}`;
-    if (nameCustomInstanceInput.validity.valid && !nameHelper.getRedirects()[name][protocol].includes(protocolHost)) {
-      if (!nameCustomInstances.includes(protocolHost)) {
-        nameCustomInstances.push(protocolHost)
+    let protocolHostVar = protocolHost(url);
+    if (nameCustomInstanceInput.validity.valid && !nameHelper.getRedirects()[name][protocol].includes(protocolHostVar)) {
+      if (!nameCustomInstances.includes(protocolHostVar)) {
+        nameCustomInstances.push(protocolHostVar)
         setNameCustomRedirects(nameCustomInstances);
         nameCustomInstanceInput.value = '';
       }
@@ -187,8 +170,8 @@ function processDefaultCustomInstances(
 
 export default {
   getRandomInstance,
-  getRandomOnlineInstance,
   updateInstances,
+  protocolHost,
   isFirefox,
   processDefaultCustomInstances,
 };

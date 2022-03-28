@@ -307,7 +307,7 @@ function setExceptions(val) {
 
 function isException(url) {
   for (const item of exceptions.url) {
-    let protocolHost = `${url.protocol}//${url.host}`
+    let protocolHost = commonHelper.protocolHost(url);
     console.log(item, protocolHost)
     if (item == protocolHost) return true;
   }
@@ -320,7 +320,7 @@ let alwaysUsePreferred;
 function redirect(url, details, initiator) {
   if (disable) return null;
 
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
 
   let isInvidious = [
     ...redirects.invidious.normal,
@@ -450,7 +450,7 @@ function redirect(url, details, initiator) {
 }
 
 function switchInstance(url) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
   if (
     protocol == 'normal' &&
     ![
@@ -501,7 +501,7 @@ function switchInstance(url) {
 }
 
 function isPipedorInvidious(url, type, frontend) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
 
   if (type !== "main_frame" && type !== "sub_frame") return false;
 

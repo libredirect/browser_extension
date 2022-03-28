@@ -92,7 +92,7 @@ function setProtocol(val) {
 }
 
 function switchInstance(url) {
-    let protocolHost = `${url.protocol}//${url.host}`;
+    let protocolHost = commonHelper.protocolHost(url);
 
     let simpleertubeList = [
         ...redirects.simpleertube.normal,
@@ -119,7 +119,7 @@ function switchInstance(url) {
 
 function redirect(url, type, initiator) {
 
-    let protocolHost = `${url.protocol}//${url.host}`;
+    let protocolHost = commonHelper.protocolHost(url);
 
     if (disable) return null;
     if (initiator && ([...redirects.simpleertube.normal, ...simpleertubeNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))) return null;

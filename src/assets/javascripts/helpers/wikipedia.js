@@ -157,7 +157,7 @@ function redirect(url) {
 }
 
 function switchInstance(url) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
 
   let wikipediaList = [
     ...redirects.wikiless.normal,

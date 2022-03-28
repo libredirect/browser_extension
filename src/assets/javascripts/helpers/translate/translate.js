@@ -185,7 +185,7 @@ function setSimplyTranslateEngine(val) {
 }
 
 function isTranslateRedirects(url, type, frontend) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
 
   if (type !== "main_frame") return false;
 
@@ -271,7 +271,7 @@ function redirect(url) {
 }
 
 function switchInstance(url) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
 
   let translateList = [
     ...redirects.simplyTranslate.normal,

@@ -103,7 +103,7 @@ function setBypassWatchOnTwitter(val) {
 let alwaysUsePreferred;
 
 function redirect(url, initiator) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
   let isNitter = [
     ...redirects.nitter.normal,
     ...redirects.nitter.tor
@@ -159,7 +159,7 @@ function redirect(url, initiator) {
 }
 
 function switchInstance(url) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
 
   let twitterList = [
     ...redirects.nitter.normal,
@@ -186,7 +186,7 @@ function switchInstance(url) {
 
 function removeXFrameOptions(e) {
   let url = new URL(e.url);
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
   let twitterList = [
     ...redirects.nitter.normal,
     ...redirects.nitter.tor,
@@ -204,7 +204,7 @@ function removeXFrameOptions(e) {
 }
 
 function isNitter(url, type) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
 
   if (type !== "main_frame" && type !== "sub_frame") return false;
 

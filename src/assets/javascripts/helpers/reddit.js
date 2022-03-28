@@ -246,7 +246,7 @@ let alwaysUsePreferred;
 function redirect(url, type, initiator) {
   if (disableReddit) return null;
 
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
 
   let isTeddit = [
     ...redirects.teddit.normal,
@@ -367,7 +367,7 @@ function redirect(url, type, initiator) {
 }
 
 function switchInstance(url) {
-  let protocolHost = `${url.protocol}//${url.host}`;
+  let protocolHost = commonHelper.protocolHost(url);
 
   let isTeddit = [
     ...redirects.teddit.normal,
