@@ -78,5 +78,6 @@ Send Files => [Send](https://github.com/timvisee/send)
 - select `load unpacked extension`
 - select `src` folder
 
-Privacy Policy: [Privacy-Policy.md](Privacy-Policy.md)\
+[FAQ](https://github.com/libredirect/libredirect/wiki/FAQ)\
+[Privacy Policy](Privacy-Policy.md)\
 Credits: [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)
