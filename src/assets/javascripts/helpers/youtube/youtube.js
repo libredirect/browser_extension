@@ -94,7 +94,8 @@ let redirects = {
       "https://piped.mint.lgbt",
       "https://il.ax",
       "https://piped.syncpundit.com",
-      "https://piped.privacy.com.de"
+      "https://piped.privacy.com.de",
+      "https://piped.notyourcomputer.net/"
     ],
     "tor": [
       "http://piped2bbch4xslbl2ckr6k62q56kon56ffowxaqzy42ai22a4sash3ad.onion"

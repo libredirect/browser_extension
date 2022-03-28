@@ -82,7 +82,9 @@
       "https://twtr.bch.bar",
       "https://nitter.privacy.com.de",
       "https://nitter.mastodon.pro",
-      "https://nitter.notraxx.ch"
+      "https://nitter.notraxx.ch",
+      "https://nitter.poast.org",
+      "https://nitter.lunar.icu"
     ],
     "tor": [
       "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
@@ -263,6 +265,7 @@
       "https://searx.run",
       "https://searx.sadblog.xyz",
       "https://searx.semipvt.com",
+      "https://searx.sethforprivacy.com",
       "https://searx.slash-dev.de",
       "https://searx.solusar.de",
       "https://searx.sp-codes.de",
@@ -327,7 +330,8 @@
       "https://whooglesearch.net",
       "https://www.whooglesearch.ml",
       "https://whoogle.dcs0.hu",
-      "https://whoogle.esmailelbob.xyz"
+      "https://whoogle.esmailelbob.xyz",
+      "https://whoogle.lunar.icu"
     ],
     "tor": []
   },
@@ -346,6 +350,7 @@
     ]
   },
   "peertube": [
+    "https://wansaw.com",
     "https://v.jrgnsn.net",
     "https://vid.pretok.tv",
     "https://videos.slownewsdayshow.com",
@@ -383,7 +388,6 @@
     "https://peertubemirror.satoshishop.de",
     "https://przej.me",
     "https://tube.motuhake.xyz",
-    "https://peertube.otakufarms.com",
     "https://pt.mezzo.moe",
     "https://tube.dsocialize.net",
     "https://vidz.mk-l.info",
@@ -426,7 +430,6 @@
     "https://peertube.semweb.pro",
     "https://aktivtube.com",
     "https://peertube.offerman.com",
-    "https://peertube.okko.io",
     "https://url404.org",
     "https://sneedtube.com",
     "https://venuse.nastub.cz",
@@ -529,7 +532,6 @@
     "https://pocketnetpeertube2.nohost.me",
     "https://peertube.bubbletea.dev",
     "https://pt.maciej.website",
-    "https://pt.nospy.net",
     "https://thevideoverse.com",
     "https://peertube.art3mis.de",
     "https://open.movie",
@@ -567,7 +569,6 @@
     "https://videos.b4tech.org",
     "https://video.off-investigation.fr",
     "https://tube.source.news",
-    "https://tube.oraclefilms.com",
     "https://tube.childrenshealthdefense.eu",
     "https://stream.litera.tools",
     "https://peertube.kriom.net",
@@ -651,7 +652,6 @@
     "https://peertube.ethibox.fr",
     "https://www.freetubehub.live",
     "https://tube.communia.org",
-    "https://tube.03281.fspfc.org",
     "https://peertube.dragonborn.app",
     "https://ai-tube.ch",
     "https://buddhist.tv",
@@ -702,7 +702,6 @@
     "https://comic.bot.nu",
     "https://videos.optoutpod.com",
     "https://videos.bik.opencloud.lu",
-    "https://tube.zveronline.ru",
     "https://videos.aadtp.be",
     "https://videos.gunfreezone.net",
     "https://videos.globenet.org",
@@ -925,7 +924,6 @@
     "https://tube.darknight-coffee.org",
     "https://video.catgirl.biz",
     "https://peertube.westring.digital",
-    "https://peertube.hackerfraternity.org",
     "https://vulgarisation-informatique.fr",
     "https://videos.thisishowidontdisappear.com",
     "https://video.islameye.com",
