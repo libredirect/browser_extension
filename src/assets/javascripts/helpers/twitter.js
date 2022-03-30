@@ -193,7 +193,7 @@ function removeXFrameOptions(e) {
     ...nitterNormalCustomRedirects,
     ...nitterTorCustomRedirects,
   ];
-  if (!twitterList.includes(protocolHost) && e.type != 'sub_frame') return;
+  if (!twitterList.includes(protocolHost) || e.type != 'sub_frame') return;
   let isChanged = false;
   console.log(e.responseHeaders);
   for (const i in e.responseHeaders) if (e.responseHeaders[i].name == 'x-frame-options') {
