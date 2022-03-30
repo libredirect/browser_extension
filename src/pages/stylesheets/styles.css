@@ -315,6 +315,7 @@ div.checklist div {
   justify-content: space-between;
   margin: 5px 15px;
   padding: 10px 0;
+  word-wrap: break-word;
   display: flex;
 }
 
