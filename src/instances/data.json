@@ -2,9 +2,8 @@
   "invidious": {
     "normal": [
       "https://yewtu.be",
-      "https://invidious.snopyta.org",
       "https://vid.puffyan.us",
-      "https://invidious.kavin.rocks",
+      "https://invidious.snopyta.org",
       "https://invidio.xamh.de",
       "https://inv.riverside.rocks",
       "https://invidious-us.kavin.rocks",
@@ -19,7 +18,8 @@
       "https://invidious.esmailelbob.xyz",
       "https://invidious.privacy.gd",
       "https://youtube.076.ne.jp",
-      "https://invidious.namazso.eu"
+      "https://invidious.namazso.eu",
+      "https://invidious.kavin.rocks"
     ],
     "tor": [
       "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
@@ -84,7 +84,8 @@
       "https://nitter.mastodon.pro",
       "https://nitter.notraxx.ch",
       "https://nitter.poast.org",
-      "https://nitter.lunar.icu"
+      "https://nitter.lunar.icu",
+      "https://nitter.bird.froth.zone"
     ],
     "tor": [
       "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
@@ -112,6 +113,7 @@
       "https://bibliogram.snopyta.org",
       "https://bibliogram.pussthecat.org",
       "https://bibliogram.1d4.us",
+      "https://bibliogram.froth.zone",
       "https://insta.trom.tf",
       "https://bib.riverside.rocks",
       "https://bibliogram.esmailelbob.xyz",
@@ -167,7 +169,8 @@
       "https://scribe.rip",
       "https://scribe.nixnet.services",
       "https://scribe.citizen4.eu",
-      "https://scribe.bus-hit.me"
+      "https://scribe.bus-hit.me",
+      "https://scribe.froth.zone"
     ],
     "tor": []
   },
@@ -182,7 +185,8 @@
       "https://translate.bus-hit.me",
       "https://simplytranslate.pussthecat.org",
       "https://translate.northboot.xyz",
-      "https://translate.tiekoetter.com"
+      "https://translate.tiekoetter.com",
+      "https://simplytranslate.esmailelbob.xyz"
     ],
     "tor": [
       "http://fyng2tsmzmvxmojzbbwmfnsn2lrcyftf4cw6rk5j2v2huliazud3fjid.onion",
@@ -228,8 +232,6 @@
       "https://search.trom.tf",
       "https://search.zdechov.net",
       "https://search.zzls.xyz",
-      "https://searx-private-search.de",
-      "https://searx.bar",
       "https://searx.be",
       "https://searx.bissisoft.com",
       "https://searx.divided-by-zero.eu",
@@ -271,7 +273,6 @@
       "https://searx.sp-codes.de",
       "https://searx.stuehieyr.com",
       "https://searx.theanonymouse.xyz",
-      "https://searx.thegreenwebfoundation.org",
       "https://searx.tiekoetter.com",
       "https://searx.tk",
       "https://searx.tux.land",
@@ -350,6 +351,11 @@
     ]
   },
   "peertube": [
+    "https://shiotube.f5.si",
+    "https://views.southfox.me",
+    "https://vide.oxel.me",
+    "https://video.mttv.it",
+    "https://peertube.cloud.nerdraum.de",
     "https://wansaw.com",
     "https://v.jrgnsn.net",
     "https://vid.pretok.tv",
@@ -378,7 +384,6 @@
     "https://video.snug.moe",
     "https://hast.tv",
     "https://video.avant-le-strike.buzz",
-    "https://tube.chocoflan.net",
     "https://videos.ritimo.org",
     "https://videos.ephphatha.church",
     "https://video.cerclearistote.com",
@@ -616,7 +621,6 @@
     "https://peertube.redpill-insight.com",
     "https://tube.22decembre.eu",
     "https://video.berzs.xyz",
-    "https://video.aqr.af",
     "https://invoice.peertube.biz",
     "https://videos-passages.huma-num.fr",
     "https://pt.sfunk1x.com",
@@ -1154,7 +1158,6 @@
     "https://vod.ksite.de",
     "https://tube.grin.hu",
     "https://media.inno3.cricket",
-    "https://video.livecchi.cloud",
     "https://tube.cryptography.dog",
     "https://peertube.zergy.net",
     "https://vid.ncrypt.at",
