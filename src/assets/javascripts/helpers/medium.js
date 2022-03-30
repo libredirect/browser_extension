@@ -118,6 +118,7 @@ function redirect(url, type, initiator) {
 
   if (disable) return;
   if (url.pathname == "/") return;
+  if (url.pathname.startsWith("/tag") || url.pathname.startsWith("/@")) return;
 
   if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") return null;
 
