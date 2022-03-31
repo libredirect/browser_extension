@@ -176,8 +176,7 @@ browser.webRequest.onResponseStarted.addListener(
 
     if (details.type == 'main_frame' && (details.statusCode == 503 || details.statusCode == 504)) {
       // if (details.type == 'main_frame' && details.statusCode >= 200) {
-      console.log("statusCode", details.statusCode);
-
+      // console.log("statusCode", details.statusCode);
       const url = new URL(details.url);
       redirectOfflineInstance(url, details.tabId);
     }
@@ -188,8 +187,10 @@ browser.webRequest.onResponseStarted.addListener(
 browser.webRequest.onErrorOccurred.addListener(
   details => {
     if (!generalHelper.getAutoRedirect()) return;
-    const url = new URL(details.url);
-    redirectOfflineInstance(url, details.tabId);
+    if (details.type == 'main_frame') {
+      const url = new URL(details.url);
+      redirectOfflineInstance(url, details.tabId);
+    }
   },
   { urls: ["<all_urls>"], }
 )
