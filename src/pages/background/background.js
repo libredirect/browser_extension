@@ -252,13 +252,13 @@ browser.commands.onCommand.addListener(
 
 browser.menus.create({
   id: "settings",
-  title: "Settings",
+  title: chrome.i18n.getMessage("Settings"),
   contexts: ["browser_action"]
 });
 
 browser.menus.create({
   id: "switchInstance",
-  title: "Switch Instance",
+  title: chrome.i18n.getMessage("switchInstance"),
   contexts: ["browser_action"]
 });
 

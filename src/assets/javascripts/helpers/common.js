@@ -99,7 +99,7 @@ function processDefaultCustomInstances(
 
   nameCheckListElement.innerHTML =
     [
-      `<div>Toggle All<input type="checkbox" id="${name}-${protocol}-toogle-all" /></div>`,
+      `<div><x data-localise="__MSG_toggleAll__">Toggle All</x><input type="checkbox" id="${name}-${protocol}-toogle-all" /></div>`,
       ...nameHelper.getRedirects()[name][protocol].map((x) => `<div>${x}<input type="checkbox" id="${x}" /></div>`),
     ].join('\n<hr>\n');
 
