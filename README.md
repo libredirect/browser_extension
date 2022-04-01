@@ -58,7 +58,7 @@ Send Files => [Send](https://github.com/timvisee/send)
 - `npm run test`
 
 ### Test in Firefox
-- `npm run-script start`
+- `npm run start`
 
 ### Install temporarily
 - open `about:addons`
