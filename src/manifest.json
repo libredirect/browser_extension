@@ -5,7 +5,7 @@
   "manifest_version": 2,
   "browser_specific_settings": {
     "gecko": {
-      "id": "7esoorv3@alefvanoon.anonaddy.me-i18n-alpha",
+      "id": "7esoorv3@alefvanoon.anonaddy.me",
       "strict_min_version": "67.0"
     }
   },
