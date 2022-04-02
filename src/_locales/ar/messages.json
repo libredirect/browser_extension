@@ -1,0 +1,577 @@
+{
+    "extensionName": {
+      "message": "LibRedirect",
+      "description": "name of the extension"
+    },
+  
+    "extensionDescription": {
+      "message": "إضافة متصفح تعيد توجيه مواقع مشهورة إلى واجهات أمامية ذات تحترم الخصوصية",
+      "description": "description of the extension"
+    },
+  
+    "switchInstance": {
+      "message": "تبديل المَثيل",
+      "description": "used in manifest.json as shortcut description"
+    },
+  
+    "instance": {
+      "message": "المَثيل",
+      "description": "used in popup.html"
+    },
+  
+    "settings": {
+      "message": "الإعدادات",
+      "description": "used in popup.html"
+    },
+  
+    "libOptions": {
+      "message": "LibRedirect إعدادات",
+      "description": "used in general.html"
+    },
+  
+    "general": {
+      "message": "العامة",
+      "description": "used in general.html"
+    },
+  
+    "search": {
+      "message": "البحث",
+      "description": "used in general.html"
+    },
+  
+    "translate": {
+      "message": "الترجمة",
+      "description": "used in general.html"
+    },
+  
+    "maps": {
+      "message": "الخرائط",
+      "description": "used in general.html"
+    },
+  
+    "sendFiles": {
+      "message": "إرسال الملفات",
+      "description": "used in general.html"
+    },
+  
+    "youtube": {
+      "message": "يوتيوب",
+      "description": "used in general.html"
+    },
+  
+    "instagram": {
+      "message": "إنستغرام",
+      "description": "used in general.html"
+    },
+  
+    "twitter": {
+      "message": "تويتر",
+      "description": "used in general.html"
+    },
+  
+    "reddit": {
+      "message": "ريديت",
+      "description": "used in general.html"
+    },
+  
+    "tiktok": {
+      "message": "تيك توك",
+      "description": "used in general.html"
+    },
+  
+    "ytmusic": {
+      "message": "يوتيوب ميوزيك",
+      "description": "used in general.html"
+    },
+  
+    "imgur": {
+      "message": "إمجور",
+      "description": "used in general.html"
+    },
+  
+    "pixiv": {
+      "message": "بكسيف",
+      "description": "used in general.html"
+    },
+  
+    "wikipedia": {
+      "message": "ويكيبيديا",
+      "description": "used in general.html"
+    },
+  
+    "peertube": {
+      "message": "PeerTube",
+      "description": "used in general.html"
+    },
+  
+    "spotify": {
+      "message": "سبوتيفاي",
+      "description": "used in general.html"
+    },
+  
+    "medium": {
+      "message": "ميديام",
+      "description": "used in general.html"
+    },
+  
+    "theme": {
+      "message": "السمة",
+      "description": "used in general.html"
+    },
+  
+    "system": {
+      "message": "النظام",
+      "description": "used in general.html"
+    },
+  
+    "light": {
+      "message": "فاتح",
+      "description": "used in general.html"
+    },
+  
+    "dark": {
+      "message": "داكن",
+      "description": "used in general.html"
+    },
+  
+    "applyTheme": {
+      "message": "تطبيق السمة على الواجهات",
+      "description": "used in general.html"
+    },
+  
+    "alwaysPref": {
+      "message": "استخدم المُثلاء المفضلين دائماً",
+      "description": "used in general.html"
+    },
+  
+    "autoRedirect": {
+      "message": "إعادة التوجيه تلقائياً من المُثلاء الذين لا يعملون",
+      "description": "used in general.html"
+    },
+  
+    "exceptions": {
+      "message": "الاستثناءات",
+      "description": "used in general.html"
+    },
+  
+    "updateInstances": {
+      "message": "تحديث قائمة المُثلاء",
+      "description": "used in general.html"
+    },
+  
+    "importSettings": {
+      "message": "استيراد الإعدادات",
+      "description": "used in general.html"
+    },
+  
+    "exportSettings": {
+      "message": "تصدير الإعدادات",
+      "description": "used in general.html"
+    },
+  
+    "resetSettings": {
+      "message": "إعادة تعيين الإعدادات",
+      "description": "used in general.html"
+    },
+  
+    "customPopup": {
+      "message": "تخصيص النافذة المنبثقة",
+      "description": "used in general.html"
+    },
+  
+    "enable": {
+      "message": "تمكين",
+      "description": "used in imgur.html"
+    },
+  
+    "protocol": {
+      "message": "البروتوكول",
+      "description": "used in imgur.html"
+    },
+  
+    "normal": {
+      "message": "العادي",
+      "description": "used in imgur.html"
+    },
+  
+    "defaultInstances": {
+      "message": "المُثلاء الافتراضيين",
+      "description": "used in imgur.html"
+    },
+  
+    "customInstances": {
+      "message": "المُثلاء المخصصين",
+      "description": "used in imgur.html"
+    },
+  
+    "toggleAll": {
+      "message": "تبديل الكل",
+      "description": "used in common.js"
+    },
+  
+    "frontend": {
+      "message": "الواجهة الأمامية",
+      "description": "used in maps.html"
+    },
+  
+    "notFullyPrivate": {
+      "message": "هذه الواجهة لا تحترم الخصوصية تماماً",
+      "description": "used in pixiv.html"
+    },
+  
+    "oldReddit": {
+      "message": "ريديت القديم",
+      "description": "used in reddit.html"
+    },
+  
+    "bypassReddit": {
+      "message": "تجاوز \"Open in Reddit\"",
+      "description": "used in reddit.html"
+    },
+  
+    "searchNote": {
+      "message": "ملاحظة: لاستعمال \"البحث\" بكامل إمكانيته، اجعل LibRedirect محرك البحث الافتراضي",
+      "description": "used in search.html"
+    },
+  
+    "libSendFiles": {
+      "message": "LibRedirect: إرسال الملفات",
+      "description": "used in sendTargets.html"
+    },
+  
+    "from": {
+      "message": "من",
+      "description": "used in translate.html"
+    },
+  
+    "to": {
+      "message": "إلى",
+      "description": "used in translate.html"
+    },
+  
+    "default": {
+      "message": "الافتراضي",
+      "description": "used in translate.html"
+    },
+  
+    "auto": {
+      "message": "تلقائي",
+      "description": "used in translate.html"
+    },
+  
+    "engine": {
+      "message": "محرك البحث",
+      "description": "used in translate.html"
+    },
+  
+    "libTranslate": {
+      "message": "LibRedirect: الترجمة",
+      "description": "used in translate.html"
+    },
+  
+    "bypassTwitter": {
+      "message": "تجاوز \"Open in Twitter\"",
+      "description": "used in twitter.html"
+    },
+  
+    "embeddedVids": {
+      "message": "Embedded Videos Frontend",
+      "description": "used in youtube.html"
+    },
+  
+    "redirectType": {
+      "message": "Redirect Type",
+      "description": "used in youtube.html"
+    },
+  
+    "both": {
+      "message": "both",
+      "description": "used in youtube.html"
+    },
+  
+    "onlyEmbedded": {
+      "message": "only embedded",
+      "description": "used in youtube.html"
+    },
+  
+    "onlyNotEmbedded": {
+      "message": "only not embedded",
+      "description": "used in youtube.html"
+    },
+  
+    "bypassYoutube": {
+      "message": "Bypass \"Watch on YouTube\"",
+      "description": "used in youtube.html"
+    },
+  
+    "enableCustom": {
+      "message": "Enable Custom Settings (will use cookies and localStorage)",
+      "description": "used in youtube.html"
+    },
+  
+    "autoplayVid": {
+      "message": "Autoplay Video",
+      "description": "used in youtube.html"
+    },
+  
+    "volume": {
+      "message": "Volume: ",
+      "description": "used in youtube.html"
+    },
+  
+    "playerStyle": {
+      "message": "Player Style",
+      "description": "used in youtube.html"
+    },
+  
+    "alwaysLoop": {
+      "message": "Always loop",
+      "description": "used in youtube.html"
+    },
+  
+    "playNext": {
+      "message": "Play next by default",
+      "description": "used in youtube.html"
+    },
+  
+    "playNext": {
+      "message": "Autoplay next video",
+      "description": "used in youtube.html"
+    },
+  
+    "alwaysProxy": {
+      "message": "Always proxy videos",
+      "description": "used in youtube.html"
+    },
+  
+    "listenByDefault": {
+      "message": "Listen by default",
+      "description": "used in youtube.html"
+    },
+  
+    "defaultSpeed": {
+      "message": "Default speed",
+      "description": "used in youtube.html"
+    },
+  
+    "prefQuality": {
+      "message": "Preferred video quality",
+      "description": "used in youtube.html"
+    },
+  
+    "dash": {
+      "message": "DASH (adaptive quality)",
+      "description": "used in youtube.html"
+    },
+  
+    "prefDashQuality": {
+      "message": "Preferred DASH video quality",
+      "description": "used in youtube.html"
+    },
+  
+    "best": {
+      "message": "Best",
+      "description": "used in youtube.html"
+    },
+  
+    "worst": {
+      "message": "Worst",
+      "description": "used in youtube.html"
+    },
+  
+    "defaultComments": {
+      "message": "Default comments",
+      "description": "used in youtube.html"
+    },
+  
+    "none": {
+      "message": "None",
+      "description": "used in youtube.html"
+    },
+  
+    "defaultCaptions": {
+      "message": "Default captions",
+      "description": "used in youtube.html"
+    },
+  
+    "showRelated": {
+      "message": "Show related videos",
+      "description": "used in youtube.html"
+    },
+  
+    "showAnnotations": {
+      "message": "Show annotations by default",
+      "description": "used in youtube.html"
+    },
+  
+    "autoExtendDesc": {
+      "message": "Automatically extend video description",
+      "description": "used in youtube.html"
+    },
+  
+    "interactive360": {
+      "message": "Interactive 360 degree videos (requires WebGL)",
+      "description": "used in youtube.html"
+    },
+  
+    "savePlaybackPos": {
+      "message": "Save playback position",
+      "description": "used in youtube.html"
+    },
+  
+    "enableSponsorBlock": {
+      "message": "Enable SponsorBlock",
+      "description": "used in youtube.html"
+    },
+  
+    "skipSponsors": {
+      "message": "Skip sponsors",
+      "description": "used in youtube.html"
+    },
+  
+    "skipIntermission": {
+      "message": "Skip Intermission/Intro Animation",
+      "description": "used in youtube.html"
+    },
+  
+    "skipEndcards": {
+      "message": "Skip Endcards/Credits",
+      "description": "used in youtube.html"
+    },
+  
+    "skipPreview": {
+      "message": "Skip Preview/Recap",
+      "description": "used in youtube.html"
+    },
+  
+    "skipReminder": {
+      "message": "Skip interaction reminder (subscribe)",
+      "description": "used in youtube.html"
+    },
+  
+    "skipUnpaidPromo": {
+      "message": "Skip Unpaid/Self Promotion",
+      "description": "used in youtube.html"
+    },
+  
+    "skipMusic": {
+      "message": "Skip Music: Non-Music Section",
+      "description": "used in youtube.html"
+    },
+  
+    "skipHighlights": {
+      "message": "Skip highlights",
+      "description": "used in youtube.html"
+    },
+  
+    "skipFiller": {
+      "message": "Skip Filler Tangent",
+      "description": "used in youtube.html"
+    },
+  
+    "audioOnly": {
+      "message": "Audio only",
+      "description": "used in youtube.html"
+    },
+  
+    "defaultQuality": {
+      "message": "Default quality",
+      "description": "used in youtube.html"
+    },
+  
+    "bufferingGoal": {
+      "message": "Buffering Goal (in seconds)",
+      "description": "used in youtube.html"
+    },
+  
+    "countrySelection": {
+      "message": "Country selection",
+      "description": "used in youtube.html"
+    },
+  
+    "defaultHomepage": {
+      "message": "Default homepage",
+      "description": "used in youtube.html"
+    },
+  
+    "trending": {
+      "message": "Trending",
+      "description": "used in youtube.html"
+    },
+  
+    "feed": {
+      "message": "Feed",
+      "description": "used in youtube.html"
+    },
+  
+    "showComments": {
+      "message": "Show comments",
+      "description": "used in youtube.html"
+    },
+  
+    "minimizeDesc": {
+      "message": "Minimize description by default",
+      "description": "used in youtube.html"
+    },
+  
+    "storeHistory": {
+      "message": "Store watch history",
+      "description": "used in youtube.html"
+    },
+  
+    "enabledCodecs": {
+      "message": "Enabled codecs (multiple)",
+      "description": "used in youtube.html"
+    },
+  
+    "disableLBRY": {
+      "message": "Disable LBRY for streaming",
+      "description": "used in youtube.html"
+    },
+  
+    "enableProxyLBRY": {
+      "message": "Enable proxy for LBRY",
+      "description": "used in youtube.html"
+    },
+  
+    "proxyLBRY": {
+      "message": "Proxy LBRY videos",
+      "description": "used in youtube.html"
+    },
+  
+    "skipNote": {
+      "message": "Skip to the last watched point when encountering a video already seen",
+      "description": "used in youtube.html"
+    },
+  
+    "embedExceptions": {
+      "message": "Embed exceptions",
+      "description": "used in youtube.html"
+    },
+  
+    "instanceOffline": {
+      "message": "This instance is offline, you'll be redirected after&nbsp;",
+      "description": "used in instance_offline.html"
+    },
+  
+    "sec": {
+      "message": "seconds",
+      "description": "used in instance_offline.html"
+    },
+  
+    "cancel": {
+      "message": "Cancel",
+      "description": "used in instance_offline.html"
+    },
+  
+    "instanceIsOff": {
+      "message": "Instance is offline",
+      "description": "used in instance_offline.html"
+    },
+  
+    "redirectionCanceled": {
+      "message": "Redirection canceled",
+      "description": "used in instance_offline.js"
+    }
+  }
+  
