@@ -16,5 +16,5 @@ setTimeout(
 let isCanceled = false;
 document.getElementById("cancel").addEventListener("click", () => {
     isCanceled = true;
-    document.getElementById("message").innerHTML = chrome.i18n.getMessage('redirectionCanceled');
+    document.getElementById("message").innerHTML = browser.i18n.getMessage('redirectionCanceled');
 })

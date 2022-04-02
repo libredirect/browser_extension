@@ -252,7 +252,7 @@ browser.commands.onCommand.addListener(
 
 browser.menus.create({
   id: "settings",
-  title: chrome.i18n.getMessage("Settings"),
+  title: browser.i18n.getMessage("Settings"),
   contexts: ["browser_action"]
 });
 
