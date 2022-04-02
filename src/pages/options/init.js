@@ -34,4 +34,4 @@ browser.storage.onChanged.addListener(changeTheme)
 
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", changeTheme)
 
-if (commonHelper.isRtl) document.getElementsByTagName("body")[0].classList.add("rtl");
+if (commonHelper.isRtl()) document.getElementsByTagName("body")[0].classList.add("rtl");
