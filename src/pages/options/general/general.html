@@ -137,9 +137,26 @@
       <h4 data-localise="__MSG_exceptions__">Exceptions</h4>
     </div>
 
+    <form id="custom-exceptions-instance-form">
       <div class="some-block option-block">
-        <h4>Exceptions</h4>
+        <div class="some-block" style="padding:0;">
+          <input id="exceptions-custom-instance" placeholder="https://www.google.com" type="url" />
+          &nbsp;
+          <select id="exceptions-custom-instance-type">
+            <option value="url">URL</option>
+            <option value="regex">Regex</option>
+          </select>
+          &nbsp;
+        </div>
+        <button type="submit" class="add" id="exceptions-add-instance">
+          <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+          </svg>
+        </button>
       </div>
+    </form>
+    <div class="checklist" id="exceptions-custom-checklist"></div>
 
     <div class="buttons buttons-inline">
       <a class="button button-inline" id="update-instances">
@@ -171,12 +188,10 @@
           width="24px" fill="currentColor">
           <g>
             <g>
-              <g>
-                <path
-                  d="M12,5V2L8,6l4,4V7c3.31,0,6,2.69,6,6c0,2.97-2.17,5.43-5,5.91v2.02c3.95-0.49,7-3.85,7-7.93C20,8.58,16.42,5,12,5z" />
-                <path
-                  d="M6,13c0-1.65,0.67-3.15,1.76-4.24L6.34,7.34C4.9,8.79,4,10.79,4,13c0,4.08,3.05,7.44,7,7.93v-2.02 C8.17,18.43,6,15.97,6,13z" />
-              </g>
+              <path
+                d="M12,5V2L8,6l4,4V7c3.31,0,6,2.69,6,6c0,2.97-2.17,5.43-5,5.91v2.02c3.95-0.49,7-3.85,7-7.93C20,8.58,16.42,5,12,5z" />
+              <path
+                d="M6,13c0-1.65,0.67-3.15,1.76-4.24L6.34,7.34C4.9,8.79,4,10.79,4,13c0,4.08,3.05,7.44,7,7.93v-2.02 C8.17,18.43,6,15.97,6,13z" />
             </g>
           </g>
         </svg>
@@ -189,75 +204,72 @@
     <div class="some-block option-block">
       <h4 data-localise="__MSG_customPopup__">Customize Popup</h4>
     </div>
-    <div id="customize-popup">
-      <div class="some-block option-block">
-        <h4>Customize Popup</h4>
-      </div>
 
-      <div class="checklist-popup" id="popup-frontends-checklist">
+    <div class="checklist-popup" id="popup-frontends-checklist">
+      <div>
         <div>
-          <div>
-            <img src="../../../assets/images/youtube-icon.png">
-            YouTube
-          </div>
-          <input type="checkbox" id="youtube" />
+          <img src="../../../assets/images/youtube-icon.png">
+          YouTube
         </div>
+        <input type="checkbox" id="youtube" />
+      </div>
+      <div>
         <div>
-          <div>
-            <img src="../../../assets/images/youtube-music-icon.png">
-            YoutubeMusic
-          </div>
-          <input type="checkbox" id="youtubeMusic" />
+          <img src="../../../assets/images/youtube-music-icon.png">
+          YoutubeMusic
         </div>
+        <input type="checkbox" id="youtubeMusic" />
+      </div>
+      <div>
         <div>
-          <div>
-            <img src="../../../assets/images/twitter-icon.png">
-            Twitter
-          </div>
-          <input type="checkbox" id="twitter" />
+          <img src="../../../assets/images/twitter-icon.png">
+          Twitter
         </div>
+        <input type="checkbox" id="twitter" />
+      </div>
+      <div>
         <div>
-          <div>
-            <img src="../../../assets/images/instagram-icon.png">
-            Instagram
-          </div>
-          <input type="checkbox" id="instagram" />
+          <img src="../../../assets/images/instagram-icon.png">
+          Instagram
         </div>
+        <input type="checkbox" id="instagram" />
+      </div>
+      <div>
         <div>
-          <div>
-            <img src="../../../assets/images/tiktok-icon.png">
-            TikTok
-          </div>
-          <input type="checkbox" id="tikTok" />
+          <img src="../../../assets/images/tiktok-icon.png">
+          TikTok
         </div>
+        <input type="checkbox" id="tikTok" />
+      </div>
+      <div>
         <div>
-          <div>
-            <img src="../../../assets/images/imgur-icon.png">
-            Imgur
-          </div>
-          <input type="checkbox" id="imgur" />
+          <img src="../../../assets/images/imgur-icon.png">
+          Imgur
         </div>
+        <input type="checkbox" id="imgur" />
+      </div>
+      <div>
         <div>
-          <div>
-            <img src="../../../assets/images/reddit-icon.png">
-            Reddit
-          </div>
-          <input type="checkbox" id="reddit" />
+          <img src="../../../assets/images/reddit-icon.png">
+          Reddit
         </div>
+        <input type="checkbox" id="reddit" />
+      </div>
+      <div>
         <div>
-          <div>
-            <img src="../../../assets/images/pixiv-icon.svg">
-            Pixiv
-          </div>
-          <input type="checkbox" id="pixiv" />
+          <img src="../../../assets/images/pixiv-icon.svg">
+          Pixiv
         </div>
+        <input type="checkbox" id="pixiv" />
+      </div>
+      <div>
         <div>
-          <div>
-            <img src="../../../assets/images/spotify-icon.png">
-            Spotify
-          </div>
-          <input type="checkbox" id="spotify" />
+          <img src="../../../assets/images/spotify-icon.png">
+          Spotify
         </div>
+        <input type="checkbox" id="spotify" />
+      </div>
+      <div>
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path d="M0 0h24v24H0V0z" fill="none" />
@@ -266,6 +278,9 @@
           </svg>
           <x data-localise="__MSG_search__">Search</x>
         </div>
+        <input type="checkbox" id="search" />
+      </div>
+      <div>
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
             <path d="M0 0h24v24H0V0z" fill="none" />
@@ -274,6 +289,9 @@
           </svg>
           <x data-localise="__MSG_translate__">Translate</x>
         </div>
+        <input type="checkbox" id="translate" />
+      </div>
+      <div>
         <div>
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
             <path d="M0 0h24v24H0V0z" fill="none" />
@@ -282,39 +300,42 @@
           </svg>
           <x data-localise="__MSG_maps__">Maps</x>
         </div>
+        <input type="checkbox" id="maps" />
+      </div>
+      <div>
         <div>
-          <div>
-            <img src="../../../assets/images/wikipedia-icon.svg">
-            Wikipedia
-          </div>
-          <input type="checkbox" id="wikipedia" />
+          <img src="../../../assets/images/wikipedia-icon.svg">
+          Wikipedia
         </div>
+        <input type="checkbox" id="wikipedia" />
+      </div>
+      <div>
         <div>
-          <div>
-            <!-- https://markentier.tech/posts/2020/10/medium-icon-svg/ -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1770 1000" fill="currentColor">
-              <circle cx="500" cy="500" r="500" />
-              <ellipse ry="475" rx="250" cy="501" cx="1296" />
-              <ellipse cx="1682" cy="502" rx="88" ry="424" />
-            </svg>
-            Medium
-          </div>
-          <input type="checkbox" id="medium" />
+          <!-- https://markentier.tech/posts/2020/10/medium-icon-svg/ -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1770 1000" fill="currentColor">
+            <circle cx="500" cy="500" r="500" />
+            <ellipse ry="475" rx="250" cy="501" cx="1296" />
+            <ellipse cx="1682" cy="502" rx="88" ry="424" />
+          </svg>
+          Medium
         </div>
+        <input type="checkbox" id="medium" />
+      </div>
+      <div>
         <div>
-          <div>
-            <img src="../../../assets/images/peertube-icon.svg">
-            Peertube
-          </div>
-          <input type="checkbox" id="peertube" />
+          <img src="../../../assets/images/peertube-icon.svg">
+          Peertube
         </div>
+        <input type="checkbox" id="peertube" />
+      </div>
+      <div>
         <div>
-          <div>
-            <img src="../../../assets/images/lbry-icon.png">
-            LBRY/Odysee
-          </div>
-          <input type="checkbox" id="lbry" />
+          <img src="../../../assets/images/lbry-icon.png">
+          LBRY/Odysee
         </div>
+        <input type="checkbox" id="lbry" />
+      </div>
+      <div>
         <div>
           <div>
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
@@ -324,8 +345,11 @@
           </div>
           Send Files
         </div>
+        <input type="checkbox" id="sendTargets" />
       </div>
     </div>
+    <hr>
+
   </section>
 
   <script type="module" src="../init.js"></script>

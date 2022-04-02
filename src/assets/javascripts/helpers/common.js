@@ -170,14 +170,8 @@ function processDefaultCustomInstances(
     }
   })
 }
-
-function browserLang() {
-  var userLang = navigator.language || navigator.userLanguage;
-  return userLang;
-}
-
 function isRtl() {
-  return ["ar", "iw", "ku", "fa", "ur"].includes(browserLang())
+  return ["ar", "iw", "ku", "fa", "ur"].includes(browser.i18n.getUILanguage())
 }
 
 export default {
@@ -186,6 +180,5 @@ export default {
   protocolHost,
   isFirefox,
   processDefaultCustomInstances,
-  browserLang,
   isRtl,
 };
