@@ -7,6 +7,7 @@ import redditHelper from "./reddit.js";
 import searchHelper from "./search.js";
 import translateHelper from "./translate/translate.js";
 import wikipediaHelper from "./wikipedia.js";
+import localise from '../localise.js'
 
 function getRandomInstance(instances) {
   return instances[~~(instances.length * Math.random())];
@@ -102,6 +103,8 @@ function processDefaultCustomInstances(
       `<div><x data-localise="__MSG_toggleAll__">Toggle All</x><input type="checkbox" id="${name}-${protocol}-toogle-all" /></div>`,
       ...nameHelper.getRedirects()[name][protocol].map((x) => `<div>${x}<input type="checkbox" id="${x}" /></div>`),
     ].join('\n<hr>\n');
+
+  localise.localisePage();
 
   calcNameCheckBoxes();
   document.getElementById(`${name}-${protocol}-toogle-all`).addEventListener("change", event => {
