@@ -114,6 +114,16 @@
     "description": "used in general.html"
   },
 
+  "tor": {
+    "message": "Tor",
+    "description": "used in imgur.html"
+  },
+
+  "pixivMoe": {
+    "message": "pixiv萌え",
+    "description": "used in pixiv.html"
+  },
+
   "theme": {
     "message": "Thema",
     "description": "used in general.html"
