@@ -17,6 +17,27 @@ body {
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Vazirmatn';
+  src: url('Vazirmatn-VariableFont_wght.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* @font-face {
+  font-family: 'NotoSansArabic';
+  src: url('NotoSansArabic-VariableFont_wdth,wght.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'NotoNaskhArabic';
+  src: url('NotoNaskhArabic-VariableFont_wght.ttf');
+  font-weight: normal;
+  font-style: normal;
+} */
+
 body {
   margin: auto;
   padding: 0;
@@ -24,6 +45,11 @@ body {
   background-color: var(--bg-main);
   color: var(--text);
   overflow-x: hidden
+}
+
+body.rtl {
+  font-family: 'Vazirmatn';
+  /* line-height: 1; */
 }
 
 div.some-block input[type="checkbox"] {
@@ -44,6 +70,11 @@ img, svg {
   height: 26px;
   width: 26px;
   color: var(--text);
+}
+
+body.rtl img, body.rtl svg {
+  margin-right: 0px;
+  margin-left: 10px;
 }
 
 input[type="url"],
@@ -217,8 +248,18 @@ div.some-block input[type="checkbox"]::before {
   transition: .3s;
 }
 
+body.rtl div.some-block input[type="checkbox"]::before {
+  left: auto;
+  right: 4px;
+}
+
 div.some-block input[type="checkbox"]:checked::before {
   left: 24px;
+}
+
+body.rtl div.some-block input[type="checkbox"]:checked::before {
+  left: auto;
+  right: 24px;
 }
 
 div.buttons {

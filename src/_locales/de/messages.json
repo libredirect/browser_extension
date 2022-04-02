@@ -1,0 +1,586 @@
+{
+  "extensionName": {
+    "message": "LibRedirect",
+    "description": "name of the extension"
+  },
+
+  "extensionDescription": {
+    "message": "Eine Erweiterung, die beliebte Websites zu alternativen datenschutzfreundlichen Frontends und Backends weiterleitet.",
+    "description": "description of the extension"
+  },
+
+  "switchInstance": {
+    "message": "Instanz wechseln",
+    "description": "used in manifest.json as shortcut description"
+  },
+
+  "instance": {
+    "message": "Instanz",
+    "description": "used in popup.html"
+  },
+
+  "settings": {
+    "message": "Optionen",
+    "description": "used in popup.html"
+  },
+
+  "libOptions": {
+    "message": "LibRedirect-Optionen",
+    "description": "used in general.html"
+  },
+
+  "general": {
+    "message": "Allgemein",
+    "description": "used in general.html"
+  },
+
+  "search": {
+    "message": "Suche",
+    "description": "used in general.html"
+  },
+
+  "translate": {
+    "message": "Übersetzen",
+    "description": "used in general.html"
+  },
+
+  "maps": {
+    "message": "Karten",
+    "description": "used in general.html"
+  },
+
+  "sendFiles": {
+    "message": "Dateien senden",
+    "description": "used in general.html"
+  },
+
+  "youtube": {
+    "message": "YouTube",
+    "description": "used in general.html"
+  },
+
+  "instagram": {
+    "message": "Instagram",
+    "description": "used in general.html"
+  },
+
+  "twitter": {
+    "message": "Twitter",
+    "description": "used in general.html"
+  },
+
+  "reddit": {
+    "message": "Reddit",
+    "description": "used in general.html"
+  },
+
+  "tiktok": {
+    "message": "TikTok",
+    "description": "used in general.html"
+  },
+
+  "ytmusic": {
+    "message": "YT Music",
+    "description": "used in general.html"
+  },
+
+  "imgur": {
+    "message": "Imgur",
+    "description": "used in general.html"
+  },
+
+  "pixiv": {
+    "message": "Pixiv",
+    "description": "used in general.html"
+  },
+
+  "wikipedia": {
+    "message": "Wikipedia",
+    "description": "used in general.html"
+  },
+
+  "peertube": {
+    "message": "PeerTube",
+    "description": "used in general.html"
+  },
+
+  "spotify": {
+    "message": "Spotify",
+    "description": "used in general.html"
+  },
+
+  "medium": {
+    "message": "Medium",
+    "description": "used in general.html"
+  },
+
+  "tor": {
+    "message": "Tor",
+    "description": "used in imgur.html"
+  },
+
+  "pixivMoe": {
+    "message": "pixiv萌え",
+    "description": "used in pixiv.html"
+  },
+
+  "theme": {
+    "message": "Thema",
+    "description": "used in general.html"
+  },
+
+  "system": {
+    "message": "System",
+    "description": "used in general.html"
+  },
+
+  "light": {
+    "message": "Hell",
+    "description": "used in general.html"
+  },
+
+  "dark": {
+    "message": "Dunkel",
+    "description": "used in general.html"
+  },
+
+  "applyTheme": {
+    "message": "Thema auf Seiten anwenden",
+    "description": "used in general.html"
+  },
+
+  "alwaysPref": {
+    "message": "Immer bevorzugte Instanzen verwenden",
+    "description": "used in general.html"
+  },
+
+  "autoRedirect": {
+    "message": "Instanzen automatisch weiterleiten, die offline sind",
+    "description": "used in general.html"
+  },
+
+  "exceptions": {
+    "message": "Ausnahmen",
+    "description": "used in general.html"
+  },
+
+  "updateInstances": {
+    "message": "Instanzen aktualisieren",
+    "description": "used in general.html"
+  },
+
+  "importSettings": {
+    "message": "Einstellungen importieren",
+    "description": "used in general.html"
+  },
+
+  "exportSettings": {
+    "message": "Einstellungen exportieren",
+    "description": "used in general.html"
+  },
+
+  "resetSettings": {
+    "message": "Einstellungen zurücksetzen",
+    "description": "used in general.html"
+  },
+
+  "customPopup": {
+    "message": "Popup personalisieren",
+    "description": "used in general.html"
+  },
+
+  "enable": {
+    "message": "Aktivieren",
+    "description": "used in imgur.html"
+  },
+
+  "protocol": {
+    "message": "Protokoll",
+    "description": "used in imgur.html"
+  },
+
+  "normal": {
+    "message": "Normal",
+    "description": "used in imgur.html"
+  },
+
+  "defaultInstances": {
+    "message": "Standard-Instanzen",
+    "description": "used in imgur.html"
+  },
+
+  "customInstances": {
+    "message": "Eigene Instanzen",
+    "description": "used in imgur.html"
+  },
+
+  "toggleAll": {
+    "message": "Alle umschalten",
+    "description": "used in common.js"
+  },
+
+  "frontend": {
+    "message": "Frontend",
+    "description": "used in maps.html"
+  },
+
+  "notFullyPrivate": {
+    "message": "Das ist kein völlig privates Frontend.",
+    "description": "used in pixiv.html"
+  },
+
+  "oldReddit": {
+    "message": "Altes Reddit",
+    "description": "used in reddit.html"
+  },
+
+  "bypassReddit": {
+    "message": "„Öffnen mit Reddit“ umgehen",
+    "description": "used in reddit.html"
+  },
+
+  "searchNote": {
+    "message": "Hinweis: Um das volle Potenzial der Suchweiterleitung auszunutzen, lege LibRedirect als Standardsuchmaschine fest.",
+    "description": "used in search.html"
+  },
+
+  "libSendFiles": {
+    "message": "LibRedirect: Dateien senden",
+    "description": "used in sendTargets.html"
+  },
+
+  "from": {
+    "message": "Von",
+    "description": "used in translate.html"
+  },
+
+  "to": {
+    "message": "Nach",
+    "description": "used in translate.html"
+  },
+
+  "default": {
+    "message": "Standard",
+    "description": "used in translate.html"
+  },
+
+  "auto": {
+    "message": "Auto",
+    "description": "used in translate.html"
+  },
+
+  "engine": {
+    "message": "Übersetzer",
+    "description": "used in translate.html"
+  },
+
+  "libTranslate": {
+    "message": "LibRedirect: Übersetzen",
+    "description": "used in translate.html"
+  },
+
+  "bypassTwitter": {
+    "message": "„Öffnen mit Twitter“ umgehen",
+    "description": "used in twitter.html"
+  },
+
+  "invidious": {
+    "message": "Invidious",
+    "description": "used in youtube.html"
+  },
+
+  "embeddedVids": {
+    "message": "Frontend für eingebettete Videos",
+    "description": "used in youtube.html"
+  },
+
+  "redirectType": {
+    "message": "Art der Weiterleitung",
+    "description": "used in youtube.html"
+  },
+
+  "both": {
+    "message": "beides",
+    "description": "used in youtube.html"
+  },
+
+  "onlyEmbedded": {
+    "message": "nur eingebettet",
+    "description": "used in youtube.html"
+  },
+
+  "onlyNotEmbedded": {
+    "message": "nur nicht-eingebunden",
+    "description": "used in youtube.html"
+  },
+
+  "bypassYoutube": {
+    "message": "„Auf YouTube ansehen“ umgehen",
+    "description": "used in youtube.html"
+  },
+
+  "enableCustom": {
+    "message": "Aktiviere benutzerdefinierte Einstellungen (verwendet Cookies und localStorage)",
+    "description": "used in youtube.html"
+  },
+
+  "autoplayVid": {
+    "message": "Video automatisch abspielen",
+    "description": "used in youtube.html"
+  },
+
+  "volume": {
+    "message": "Lautstärke: ",
+    "description": "used in youtube.html"
+  },
+
+  "playerStyle": {
+    "message": "Player-Stil",
+    "description": "used in youtube.html"
+  },
+
+  "alwaysLoop": {
+    "message": "Immer wiederholen",
+    "description": "used in youtube.html"
+  },
+
+  "playNext": {
+    "message": "Immer automatisch nächstes Video abspielen",
+    "description": "used in youtube.html"
+  },
+
+  "autoplayNext": {
+    "message": "Nächstes Video automatisch abspielen",
+    "description": "used in youtube.html"
+  },
+
+  "alwaysProxy": {
+    "message": "Videos immer durch Proxy leiten",
+    "description": "used in youtube.html"
+  },
+
+  "listenByDefault": {
+    "message": "Nur Ton als Standard",
+    "description": "used in youtube.html"
+  },
+
+  "defaultSpeed": {
+    "message": "Standardgeschwindigkeit",
+    "description": "used in youtube.html"
+  },
+
+  "prefQuality": {
+    "message": "Bevorzugte Videoqualität",
+    "description": "used in youtube.html"
+  },
+
+  "dash": {
+    "message": "DASH (automatische Qualität)",
+    "description": "used in youtube.html"
+  },
+
+  "prefDashQuality": {
+    "message": "Bevorzugte DASH-Videoqualität",
+    "description": "used in youtube.html"
+  },
+
+  "best": {
+    "message": "Höchste",
+    "description": "used in youtube.html"
+  },
+
+  "worst": {
+    "message": "Niedrigste",
+    "description": "used in youtube.html"
+  },
+
+  "defaultComments": {
+    "message": "Standardkommentare",
+    "description": "used in youtube.html"
+  },
+
+  "none": {
+    "message": "keine",
+    "description": "used in youtube.html"
+  },
+
+  "defaultCaptions": {
+    "message": "Standarduntertitel",
+    "description": "used in youtube.html"
+  },
+
+  "showRelated": {
+    "message": "Ähnliche Videos anzeigen",
+    "description": "used in youtube.html"
+  },
+
+  "showAnnotations": {
+    "message": "Anmerkungen standardmäßig anzeigen",
+    "description": "used in youtube.html"
+  },
+
+  "autoExtendDesc": {
+    "message": "Videobeschreibung automatisch erweitern",
+    "description": "used in youtube.html"
+  },
+
+  "interactive360": {
+    "message": "Interaktive 360-Grad-Videos (erfordert WebGL)",
+    "description": "used in youtube.html"
+  },
+
+  "savePlaybackPos": {
+    "message": "Wiedergabeposition speichern",
+    "description": "used in youtube.html"
+  },
+
+  "enableSponsorBlock": {
+    "message": "SponsorBlock einschalten",
+    "description": "used in youtube.html"
+  },
+
+  "skipSponsors": {
+    "message": "Sponsoren überspringen",
+    "description": "used in youtube.html"
+  },
+
+  "skipIntermission": {
+    "message": "Pausen-/Intro-Animation überspringen",
+    "description": "used in youtube.html"
+  },
+
+  "skipEndcards": {
+    "message": "Abspann überspringen",
+    "description": "used in youtube.html"
+  },
+
+  "skipPreview": {
+    "message": "Vorschau/Rückschau überspringen",
+    "description": "used in youtube.html"
+  },
+
+  "skipReminder": {
+    "message": "Interaktionserinnerung überspringen (Abonnieren)",
+    "description": "used in youtube.html"
+  },
+
+  "skipUnpaidPromo": {
+    "message": "Unbezahlte Werbung/Eigenwerbung überspringen",
+    "description": "used in youtube.html"
+  },
+
+  "skipMusic": {
+    "message": "Musik überspringen: Nicht-Musik-Bereich",
+    "description": "used in youtube.html"
+  },
+
+  "skipHighlight": {
+    "message": "Höhepunkt überspringen",
+    "description": "used in youtube.html"
+  },
+
+  "skipFiller": {
+    "message": "Lückenfüller überspringen",
+    "description": "used in youtube.html"
+  },
+
+  "audioOnly": {
+    "message": "Nur Audio",
+    "description": "used in youtube.html"
+  },
+
+  "defaultQuality": {
+    "message": "Standardqualität",
+    "description": "used in youtube.html"
+  },
+
+  "bufferingGoal": {
+    "message": "Pufferungsziel (in Sekunden)",
+    "description": "used in youtube.html"
+  },
+
+  "countrySelection": {
+    "message": "Länderauswahl",
+    "description": "used in youtube.html"
+  },
+
+  "defaultHomepage": {
+    "message": "Standard-Startseite",
+    "description": "used in youtube.html"
+  },
+
+  "trending": {
+    "message": "Trends",
+    "description": "used in youtube.html"
+  },
+
+  "feed": {
+    "message": "Abonnements",
+    "description": "used in youtube.html"
+  },
+
+  "showComments": {
+    "message": "Kommentare anzeigen",
+    "description": "used in youtube.html"
+  },
+
+  "minimizeDesc": {
+    "message": "Beschreibung standardmäßig minimieren",
+    "description": "used in youtube.html"
+  },
+
+  "storeHistory": {
+    "message": "Wiedergabeverlauf speichern",
+    "description": "used in youtube.html"
+  },
+
+  "enabledCodecs": {
+    "message": "Aktivierte Codecs (mehrere)",
+    "description": "used in youtube.html"
+  },
+
+  "disableLBRY": {
+    "message": "LBRY für Streaming deaktivieren",
+    "description": "used in youtube.html"
+  },
+
+  "enableProxyLBRY": {
+    "message": "Proxy für LBRY einschalten",
+    "description": "used in youtube.html"
+  },
+
+  "proxyLBRY": {
+    "message": "LBRY-Videos durch Proxy leiten",
+    "description": "used in youtube.html"
+  },
+
+  "skipNote": {
+    "message": "Springe zum letzten Wiedergabezeitpunkt bei bereits angesehenen Videos",
+    "description": "used in youtube.html"
+  },
+
+  "embedExceptions": {
+    "message": "Ausnahmen einbetten",
+    "description": "used in youtube.html"
+  },
+
+  "sec": {
+    "message": "Sekunden",
+    "description": "used in instance_offline.html"
+  },
+
+  "cancel": {
+    "message": "Abbrechen",
+    "description": "used in instance_offline.html"
+  },
+
+  "instanceIsOff": {
+    "message": "Instanz ist offline",
+    "description": "used in instance_offline.html"
+  },
+
+  "redirectionCanceled": {
+    "message": "Weiterleitung abgebrochen",
+    "description": "used in instance_offline.js"
+  }
+}
