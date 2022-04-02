@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Instance is offline</title>
+    <title data-localise="__MSG_instanceIsOff__">Instance is offline</title>
     <link href="../stylesheets/styles.css" rel="stylesheet" />
     <style>
         body {
@@ -29,13 +29,14 @@
 
 <body>
     <div>
-        <p id="message">This instance is offline, you'll be redirected after&nbsp;<span
-                id="number">2</span>&nbsp;seconds
+        <p id="message" data-localise="__MSG_instanceOffline__">This instance is offline, you'll be redirected after&nbsp;<span
+                id="number">2</span>&nbsp;<x data-localise="__MSG_sec__">seconds</x>
         </p>
-        <button id="cancel">Cancel</button>
+        <button id="cancel" data-localise="__MSG_cancel__">Cancel</button>
     </div>
 
     <script src="instance_offline.js"></script>
+    <script src="../../assets/javascripts/localise.js"></script>
 </body>
 
 </html>

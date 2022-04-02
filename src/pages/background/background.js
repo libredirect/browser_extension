@@ -237,7 +237,7 @@ function changeWholeInstance(url) {
 browser.commands.onCommand.addListener(
   command => {
     if (command === 'switchInstance')
-      chrome.tabs.query(
+      browser.tabs.query(
         { active: true, currentWindow: true },
         tabs => {
           let url;
@@ -252,13 +252,13 @@ browser.commands.onCommand.addListener(
 
 browser.menus.create({
   id: "settings",
-  title: "Settings",
+  title: browser.i18n.getMessage("Settings"),
   contexts: ["browser_action"]
 });
 
 browser.menus.create({
   id: "switchInstance",
-  title: "Switch Instance",
+  title: chrome.i18n.getMessage("switchInstance"),
   contexts: ["browser_action"]
 });
 

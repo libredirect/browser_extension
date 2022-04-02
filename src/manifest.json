@@ -1,6 +1,6 @@
 {
-  "name": "LibRedirect",
-  "description": "A web extension that redirects popular sites to alternative privacy-friendly frontends and backends",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
   "version": "1.6.0",
   "manifest_version": 2,
   "browser_specific_settings": {
@@ -28,7 +28,7 @@
     "<all_urls>"
   ],
   "browser_action": {
-    "default_title": "LibRedirect",
+    "default_title": "__MSG_extensionName__",
     "browser_style": false,
     "default_popup": "pages/popup/popup.html",
     "default_icon": {
@@ -45,7 +45,7 @@
   },
   "chrome_settings_overrides": {
     "search_provider": {
-      "name": "LibRedirect",
+      "name": "__MSG_extensionName__",
       "keyword": "libredirect",
       "favicon_url": "https://raw.githubusercontent.com/libredirect/libredirect/master/src/assets/images/libredirect-16.png",
       "search_url": "https://libredirect.invalid/?q={searchTerms}",
@@ -58,9 +58,10 @@
       "suggested_key": {
         "default": "Alt+Shift+L"
       },
-      "description": "Switch Instance"
+      "description": "__MSG_switchInstance__"
     }
   },
+  "default_locale": "en",
   "update_url": "https://raw.githubusercontent.com/libredirect/libredirect/master/src/updates/updates.xml",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAroWDSoSRZ1scj+eJRrvnhJbrqXTKnhQuxs6+AJg16sqr0bsMdFV+MSY4i4xnK+K5WOYkBliWXgUyk/wzicoAjOnSJddrL/Md4FuWHI2NVIkrlsLOrYkygi5OLqGPajRH/w8Cdmg7KzEpXe/OnYV0/qS8li8huEdTzdeLdhfbiVl1j3DOr4OJALQ7mPeeNFHFo/oVQ+OkSezWLezA5jUGfhtzPYV6u1TXzX7lCi8E/BbDbwkvvXOMcjXCv08kjdLOY2djCA2a6zr0xAb3q8DlexAMZ8vMof7AQRFtBKhLc9n9VFoipMMdBOVQQj/eIcRILBrmkcZNnJxFKiHNJ+NcZQIDAQAB"
 }
