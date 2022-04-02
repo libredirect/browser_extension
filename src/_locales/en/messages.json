@@ -334,7 +334,7 @@
     "description": "used in youtube.html"
   },
 
-  "playNext": {
+  "autoplayNext": {
     "message": "Autoplay next video",
     "description": "used in youtube.html"
   },

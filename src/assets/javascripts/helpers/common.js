@@ -171,10 +171,21 @@ function processDefaultCustomInstances(
   })
 }
 
+function browserLang() {
+  var userLang = navigator.language || navigator.userLanguage;
+  return userLang;
+}
+
+function isRtl() {
+  return ["ar", "iw", "ku", "fa", "ur"].includes(browserLang())
+}
+
 export default {
   getRandomInstance,
   updateInstances,
   protocolHost,
   isFirefox,
   processDefaultCustomInstances,
+  browserLang,
+  isRtl,
 };

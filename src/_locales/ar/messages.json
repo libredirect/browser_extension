@@ -180,7 +180,7 @@
     },
   
     "enable": {
-      "message": "تمكين",
+      "message": "تفعيل",
       "description": "used in imgur.html"
     },
   
@@ -275,147 +275,147 @@
     },
   
     "embeddedVids": {
-      "message": "Embedded Videos Frontend",
+      "message": "واجهة الفيديوهات المضمنة",
       "description": "used in youtube.html"
     },
   
     "redirectType": {
-      "message": "Redirect Type",
+      "message": "نوع إعادة التوجيه",
       "description": "used in youtube.html"
     },
   
     "both": {
-      "message": "both",
+      "message": "الإثنين",
       "description": "used in youtube.html"
     },
   
     "onlyEmbedded": {
-      "message": "only embedded",
+      "message": "فقط للتضمينات",
       "description": "used in youtube.html"
     },
   
     "onlyNotEmbedded": {
-      "message": "only not embedded",
+      "message": "فقط لغير التضمينات",
       "description": "used in youtube.html"
     },
   
     "bypassYoutube": {
-      "message": "Bypass \"Watch on YouTube\"",
+      "message": "تجاوز \"Watch on YouTube\"",
       "description": "used in youtube.html"
     },
   
     "enableCustom": {
-      "message": "Enable Custom Settings (will use cookies and localStorage)",
+      "message": "تمكين الإعدادات الخاصة (ستُستخدم ملفات تعريف الارتباط والـlocalStorage)",
       "description": "used in youtube.html"
     },
   
     "autoplayVid": {
-      "message": "Autoplay Video",
+      "message": "تشغيل الفيديوهات التلقائي",
       "description": "used in youtube.html"
     },
   
     "volume": {
-      "message": "Volume: ",
+      "message": "الصوت: ",
       "description": "used in youtube.html"
     },
   
     "playerStyle": {
-      "message": "Player Style",
+      "message": "شكل مشغل الفيديو",
       "description": "used in youtube.html"
     },
   
     "alwaysLoop": {
-      "message": "Always loop",
+      "message": "إعادة تشغيل الفيديو تلقائياً",
       "description": "used in youtube.html"
     },
   
     "playNext": {
-      "message": "Play next by default",
+      "message": "تشغيل التالي افتراضياً",
       "description": "used in youtube.html"
     },
   
-    "playNext": {
-      "message": "Autoplay next video",
+    "autoplayNext": {
+      "message": "تشغيل الفيديو التالي تلقائياً",
       "description": "used in youtube.html"
     },
   
     "alwaysProxy": {
-      "message": "Always proxy videos",
+      "message": "بروكسي المقاطع المرئيّة",
       "description": "used in youtube.html"
     },
   
     "listenByDefault": {
-      "message": "Listen by default",
+      "message": "تشغيل النسخة السمعية تلقائيًا",
       "description": "used in youtube.html"
     },
   
     "defaultSpeed": {
-      "message": "Default speed",
+      "message": "السرعة الافتراضية",
       "description": "used in youtube.html"
     },
   
     "prefQuality": {
-      "message": "Preferred video quality",
+      "message": "الجودة المفضلة للمقاطع",
       "description": "used in youtube.html"
     },
   
     "dash": {
-      "message": "DASH (adaptive quality)",
+      "message": "DASH (جودة تكيُّفية)",
       "description": "used in youtube.html"
     },
   
     "prefDashQuality": {
-      "message": "Preferred DASH video quality",
+      "message": "جودة فيديو DASH المفضلة",
       "description": "used in youtube.html"
     },
   
     "best": {
-      "message": "Best",
+      "message": "الأفضل",
       "description": "used in youtube.html"
     },
   
     "worst": {
-      "message": "Worst",
+      "message": "الأسوء",
       "description": "used in youtube.html"
     },
   
     "defaultComments": {
-      "message": "Default comments",
+      "message": "التعليقات الافتراضية",
       "description": "used in youtube.html"
     },
   
     "none": {
-      "message": "None",
+      "message": "لا شيء",
       "description": "used in youtube.html"
     },
   
     "defaultCaptions": {
-      "message": "Default captions",
+      "message": "التسميات التوضيحية الاتفراضية",
       "description": "used in youtube.html"
     },
   
     "showRelated": {
-      "message": "Show related videos",
+      "message": "اعرض الفيديوهات ذات الصلة",
       "description": "used in youtube.html"
     },
   
     "showAnnotations": {
-      "message": "Show annotations by default",
+      "message": "إظهار الـAnnotation بشكل افتراضي",
       "description": "used in youtube.html"
     },
   
     "autoExtendDesc": {
-      "message": "Automatically extend video description",
+      "message": "توسيع وصف الفيديو تلقائيا",
       "description": "used in youtube.html"
     },
   
     "interactive360": {
-      "message": "Interactive 360 degree videos (requires WebGL)",
+      "message": "مقاطع فيديو تفاعلية بزاوية 360 درجة (تتطلب WebGL)",
       "description": "used in youtube.html"
     },
   
     "savePlaybackPos": {
-      "message": "Save playback position",
+      "message": "حفظ موضع التشغيل",
       "description": "used in youtube.html"
     },
   
@@ -555,22 +555,22 @@
     },
   
     "sec": {
-      "message": "seconds",
+      "message": "الثواني",
       "description": "used in instance_offline.html"
     },
   
     "cancel": {
-      "message": "Cancel",
+      "message": "إلغاء",
       "description": "used in instance_offline.html"
     },
   
     "instanceIsOff": {
-      "message": "Instance is offline",
+      "message": "المَثيل غير متصل على النت",
       "description": "used in instance_offline.html"
     },
   
     "redirectionCanceled": {
-      "message": "Redirection canceled",
+      "message": "تم إلغاء إعادة التوجيه",
       "description": "used in instance_offline.js"
     }
   }
