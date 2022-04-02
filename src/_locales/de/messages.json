@@ -54,6 +54,66 @@
     "description": "used in general.html"
   },
 
+  "youtube": {
+    "message": "YouTube",
+    "description": "used in general.html"
+  },
+
+  "instagram": {
+    "message": "Instagram",
+    "description": "used in general.html"
+  },
+
+  "twitter": {
+    "message": "Twitter",
+    "description": "used in general.html"
+  },
+
+  "reddit": {
+    "message": "Reddit",
+    "description": "used in general.html"
+  },
+
+  "tiktok": {
+    "message": "TikTok",
+    "description": "used in general.html"
+  },
+
+  "ytmusic": {
+    "message": "YT Music",
+    "description": "used in general.html"
+  },
+
+  "imgur": {
+    "message": "Imgur",
+    "description": "used in general.html"
+  },
+
+  "pixiv": {
+    "message": "Pixiv",
+    "description": "used in general.html"
+  },
+
+  "wikipedia": {
+    "message": "Wikipedia",
+    "description": "used in general.html"
+  },
+
+  "peertube": {
+    "message": "PeerTube",
+    "description": "used in general.html"
+  },
+
+  "spotify": {
+    "message": "Spotify",
+    "description": "used in general.html"
+  },
+
+  "medium": {
+    "message": "Medium",
+    "description": "used in general.html"
+  },
+
   "theme": {
     "message": "Thema",
     "description": "used in general.html"
