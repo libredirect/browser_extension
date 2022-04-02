@@ -274,6 +274,11 @@
     "description": "used in twitter.html"
   },
 
+  "invidious": {
+    "message": "Invidious",
+    "description": "used in youtube.html"
+  },
+
   "embeddedVids": {
     "message": "Embedded Videos Frontend",
     "description": "used in youtube.html"
@@ -334,7 +339,7 @@
     "description": "used in youtube.html"
   },
 
-  "playNext": {
+  "autoplayNext": {
     "message": "Autoplay next video",
     "description": "used in youtube.html"
   },
@@ -459,8 +464,8 @@
     "description": "used in youtube.html"
   },
 
-  "skipHighlights": {
-    "message": "Skip highlights",
+  "skipHighlight": {
+    "message": "Skip Highlight",
     "description": "used in youtube.html"
   },
 

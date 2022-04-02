@@ -274,6 +274,11 @@
     "description": "used in twitter.html"
   },
 
+  "invidious": {
+    "message": "Invidious",
+    "description": "used in youtube.html"
+  },
+
   "embeddedVids": {
     "message": "Frontend für eingebettete Videos",
     "description": "used in youtube.html"
@@ -320,21 +325,21 @@
   },
 
   "playerStyle": {
-    "message": "Player-Aussehen",
+    "message": "Player-Stil",
     "description": "used in youtube.html"
   },
 
   "alwaysLoop": {
-    "message": "Immer in Endlosschleife abspielen",
+    "message": "Immer wiederholen",
     "description": "used in youtube.html"
   },
 
   "playNext": {
-    "message": "Standardmäßig nächstes abspielen",
+    "message": "Immer automatisch nächstes Video abspielen",
     "description": "used in youtube.html"
   },
 
-  "playNext": {
+  "autoplayNext": {
     "message": "Nächstes Video automatisch abspielen",
     "description": "used in youtube.html"
   },
@@ -345,12 +350,12 @@
   },
 
   "listenByDefault": {
-    "message": "Standardmäßig zuhören",
+    "message": "Nur Ton als Standard",
     "description": "used in youtube.html"
   },
 
   "defaultSpeed": {
-    "message": "Standard-Geschwindigkeit",
+    "message": "Standardgeschwindigkeit",
     "description": "used in youtube.html"
   },
 
@@ -360,7 +365,7 @@
   },
 
   "dash": {
-    "message": "DASH (adaptive Qualität)",
+    "message": "DASH (automatische Qualität)",
     "description": "used in youtube.html"
   },
 
@@ -370,32 +375,32 @@
   },
 
   "best": {
-    "message": "Beste",
+    "message": "Höchste",
     "description": "used in youtube.html"
   },
 
   "worst": {
-    "message": "Schlechteste",
+    "message": "Niedrigste",
     "description": "used in youtube.html"
   },
 
   "defaultComments": {
-    "message": "Standard-Kommentare",
+    "message": "Standardkommentare",
     "description": "used in youtube.html"
   },
 
   "none": {
-    "message": "Keine",
+    "message": "keine",
     "description": "used in youtube.html"
   },
 
   "defaultCaptions": {
-    "message": "Standard-Untertitel",
+    "message": "Standarduntertitel",
     "description": "used in youtube.html"
   },
 
   "showRelated": {
-    "message": "Verwandte Videos anzeigen",
+    "message": "Ähnliche Videos anzeigen",
     "description": "used in youtube.html"
   },
 
@@ -405,7 +410,7 @@
   },
 
   "autoExtendDesc": {
-    "message": "Videobeschreibung automatisch ausklappen",
+    "message": "Videobeschreibung automatisch erweitern",
     "description": "used in youtube.html"
   },
 
@@ -420,22 +425,22 @@
   },
 
   "enableSponsorBlock": {
-    "message": "SponsorBlock aktivieren",
+    "message": "SponsorBlock einschalten",
     "description": "used in youtube.html"
   },
 
   "skipSponsors": {
-    "message": "Sponsoring überspringen",
+    "message": "Sponsoren überspringen",
     "description": "used in youtube.html"
   },
 
   "skipIntermission": {
-    "message": "Pausen-/Intro-Animationen überspringen",
+    "message": "Pausen-/Intro-Animation überspringen",
     "description": "used in youtube.html"
   },
 
   "skipEndcards": {
-    "message": "Endkarten/Abspänne überspringen",
+    "message": "Abspann überspringen",
     "description": "used in youtube.html"
   },
 
@@ -445,27 +450,27 @@
   },
 
   "skipReminder": {
-    "message": "Interaktionserinnerungen (abonnieren) überspringen",
+    "message": "Interaktionserinnerung überspringen (Abonnieren)",
     "description": "used in youtube.html"
   },
 
   "skipUnpaidPromo": {
-    "message": "Unbezahlte oder Eigenwerbung überspringen",
+    "message": "Unbezahlte Werbung/Eigenwerbung überspringen",
     "description": "used in youtube.html"
   },
 
   "skipMusic": {
-    "message": "Musik überspringen: Keine-Musik-Abschnitt",
+    "message": "Musik überspringen: Nicht-Musik-Bereich",
     "description": "used in youtube.html"
   },
 
-  "skipHighlights": {
-    "message": "Höhepunkte überspringen",
+  "skipHighlight": {
+    "message": "Höhepunkt überspringen",
     "description": "used in youtube.html"
   },
 
   "skipFiller": {
-    "message": "Füllmaterial überspringen",
+    "message": "Lückenfüller überspringen",
     "description": "used in youtube.html"
   },
 
@@ -480,7 +485,7 @@
   },
 
   "bufferingGoal": {
-    "message": "Pufferziel (in Sekunden)",
+    "message": "Pufferungsziel (in Sekunden)",
     "description": "used in youtube.html"
   },
 
@@ -495,12 +500,12 @@
   },
 
   "trending": {
-    "message": "In den Trends",
+    "message": "Trends",
     "description": "used in youtube.html"
   },
 
   "feed": {
-    "message": "Feed",
+    "message": "Abonnements",
     "description": "used in youtube.html"
   },
 
@@ -510,12 +515,12 @@
   },
 
   "minimizeDesc": {
-    "message": "Beschreibung standardmäßig einklappen",
+    "message": "Beschreibung standardmäßig minimieren",
     "description": "used in youtube.html"
   },
 
   "storeHistory": {
-    "message": "Wiedergabehistorie speichern",
+    "message": "Wiedergabeverlauf speichern",
     "description": "used in youtube.html"
   },
 
@@ -530,7 +535,7 @@
   },
 
   "enableProxyLBRY": {
-    "message": "Proxy für LBRY aktivieren",
+    "message": "Proxy für LBRY einschalten",
     "description": "used in youtube.html"
   },
 
