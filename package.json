@@ -6,7 +6,7 @@
     "npm": ">=8.1.2"
   },
   "scripts": {
-    "start": "web-ext run --browser-console --source-dir ./src/ --firefox=/home/esmail/Downloads/firefox/firefox",
+    "start": "web-ext run --browser-console --source-dir ./src/",
     "build": "web-ext build --overwrite-dest --source-dir ./src/",
     "test": "web-ext lint --source-dir ./src/ || true"
   },
