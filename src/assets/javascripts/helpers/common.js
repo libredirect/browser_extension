@@ -7,6 +7,7 @@ import redditHelper from "./reddit.js";
 import searchHelper from "./search.js";
 import translateHelper from "./translate/translate.js";
 import wikipediaHelper from "./wikipedia.js";
+import localise from '../localise.js'
 
 function getRandomInstance(instances) {
   return instances[~~(instances.length * Math.random())];
@@ -103,6 +104,8 @@ function processDefaultCustomInstances(
       ...nameHelper.getRedirects()[name][protocol].map((x) => `<div>${x}<input type="checkbox" id="${x}" /></div>`),
     ].join('\n<hr>\n');
 
+  localise.localisePage();
+
   calcNameCheckBoxes();
   document.getElementById(`${name}-${protocol}-toogle-all`).addEventListener("change", event => {
     if (event.target.checked)
@@ -168,10 +171,21 @@ function processDefaultCustomInstances(
   })
 }
 
+function browserLang() {
+  var userLang = navigator.language || navigator.userLanguage;
+  return userLang;
+}
+
+function isRtl() {
+  return ["ar", "iw", "ku", "fa", "ur"].includes(browserLang())
+}
+
 export default {
   getRandomInstance,
   updateInstances,
   protocolHost,
   isFirefox,
   processDefaultCustomInstances,
+  browserLang,
+  isRtl,
 };

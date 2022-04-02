@@ -33,3 +33,7 @@ function localisePage() {
 }
 
 localisePage();
+
+export default {
+  localisePage
+}
