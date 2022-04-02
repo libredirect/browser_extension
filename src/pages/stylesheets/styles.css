@@ -95,7 +95,7 @@ a {
 section.links a {
   display: flex;
   align-items: center;
-  font-size: 24px;
+  font-size: 18px;
   text-decoration: none;
   color: white;
   transition: 0.1s;
@@ -190,8 +190,8 @@ div.option-block h1 {
 }
 
 div.some-block input[type="checkbox"] {
-  width: 48px;
-  height: 25px;
+  width: 46px;
+  height: 23px;
   background-color: var(--light-grey);
   border-radius: 50px;
   transition: .4s;
@@ -205,13 +205,12 @@ div.some-block input[type="checkbox"]:checked {
 div.some-block input[type="checkbox"]::before {
   content: "";
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   box-sizing: border-box;
   position: relative;
   top: 2.5px;
-  left: 4px;
-  height: 20px;
+  left: 3.5px;
   background-color: white;
   border-radius: 50%;
   transition: .3s;
@@ -378,4 +377,20 @@ body.light-theme textarea:focus {
 
 body.light-theme a {
   color: black;
+}
+
+section.general {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 0;
+  width: 100%;
+  justify-content: space-between;
+}
+
+section.general div {
+  margin-right: 20px;
+}
+
+#customize-popup {
+  width: 250px;
 }
