@@ -237,7 +237,7 @@ function changeWholeInstance(url) {
 browser.commands.onCommand.addListener(
   command => {
     if (command === 'switchInstance')
-      chrome.tabs.query(
+      browser.tabs.query(
         { active: true, currentWindow: true },
         tabs => {
           let url;
