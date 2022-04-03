@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="libredirect-1.6.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/web-ext-artifacts/libredirect-1.6.2.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

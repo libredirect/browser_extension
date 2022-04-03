@@ -154,6 +154,12 @@ function setInvidiousTorCustomRedirects(val) {
   console.log("invidiousTorCustomRedirects: ", val)
 }
 
+function setPipedRedirects(val) {
+  redirects.piped = val;
+  browser.storage.local.set({ youtubeRedirects: redirects })
+  console.log("pipedRedirects: ", val)
+}
+
 let pipedNormalRedirectsChecks;
 const getPipedNormalRedirectsChecks = () => pipedNormalRedirectsChecks;
 function setPipedNormalRedirectsChecks(val) {
@@ -184,12 +190,6 @@ function setPipedTorCustomRedirects(val) {
   pipedTorCustomRedirects = val;
   browser.storage.local.set({ pipedTorCustomRedirects })
   console.log("pipedTorCustomRedirects: ", val)
-}
-
-function setPipedRedirects(val) {
-  redirects.piped = val;
-  browser.storage.local.set({ youtubeRedirects: redirects })
-  console.log("pipedRedirects: ", val)
 }
 
 let pipedMaterialNormalRedirectsChecks;
