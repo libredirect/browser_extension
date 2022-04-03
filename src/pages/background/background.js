@@ -97,7 +97,7 @@ browser.webRequest.onBeforeRequest.addListener(
       generalHelper.isException(new URL(details.frameAncestors[0].url))
     ) newUrl = null;
 
-    if (generalHelper.isException(url)) newUrl = null;
+    if (generalHelper.isException(url)) newUrl = 'BYPASSTAB';
 
     if (BYPASSTABs.includes(details.tabId)) newUrl = null;
 
