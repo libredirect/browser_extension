@@ -141,24 +141,37 @@ mightyList['lingva'] = lingvaList
 print('fetched LinvgaTranslate')
 
 
-# SearX
+# SearX, SearXNG
 r = requests.get('https://searx.space/data/instances.json')
 rJson = json.loads(r.text)
 searxList = {}
-searxList['normal'] = []
 searxList['tor'] = []
 searxList['i2p'] = []
-for item in rJson['instances'].keys():
-    item = item[:-1]
-    if item.endswith('.onion'):
-        searxList['tor'].append(item)
-    elif item.endswith('.i2p'):
-        searxList['i2p'].append(item)
+searxList['normal'] = []
+searxngList = {}
+searxngList['tor'] = []
+searxngList['i2p'] = []
+searxngList['normal'] = []
+for item in rJson['instances']:
+    if item[:-1].endswith('.onion'):
+        if (rJson['instances'][item].get('generator') == 'searxng'):
+            searxngList['tor'].append(item[:-1])
+        else:
+            searxList['tor'].append(item[:-1])
+    elif item[:-1].endswith('.i2p'):
+        if (rJson['instances'][item].get('generator') == 'searxng'):
+            searxngList['i2p'].append(item[:-1])
+        else:
+            searxList['i2p'].append(item[:-1])
     else:
-        searxList['normal'].append(item)
-mightyList['searx'] = searxList
-print('fetched SearX')
+        if (rJson['instances'][item].get('generator') == 'searxng'):
+            searxngList['normal'].append(item[:-1])
+        else:
+            searxList['normal'].append(item[:-1])
 
+mightyList['searx'] = searxList
+mightyList['searxng'] = searxngList
+print('fetched SearX, SearXNG')
 
 # Whoogle
 r = requests.get(
