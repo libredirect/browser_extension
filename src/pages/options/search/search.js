@@ -2,13 +2,12 @@ import searchHelper from "../../../assets/javascripts/helpers/search.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableSearchElement = document.getElementById("disable-search");
-disableSearchElement.addEventListener("change",
-  (event) => searchHelper.setDisable(!event.target.checked)
-);
+disableSearchElement.addEventListener("change", event => searchHelper.setDisable(!event.target.checked));
 
 
-let searxDivElement = document.getElementById("searx")
-let whoogleDivElement = document.getElementById("whoogle")
+let searxDivElement = document.getElementById("searx");
+let searxngDivElement = document.getElementById("searxng")
+let whoogleDivElement = document.getElementById("whoogle");
 
 
 function changeFrontendsSettings(frontend) {
@@ -17,25 +16,35 @@ function changeFrontendsSettings(frontend) {
   if (frontend == 'searx') {
     frontendElement.innerHTML = 'Frontend';
     searxDivElement.style.display = 'block';
+    searxngDivElement.style.display = 'none';
+    whoogleDivElement.style.display = 'none';
+    SearxWhoogleElement.style.display = 'block';
+  }
+  else if (frontend == 'searxng') {
+    frontendElement.innerHTML = 'Frontend';
+    searxDivElement.style.display = 'none';
+    searxngDivElement.style.display = 'block';
     whoogleDivElement.style.display = 'none';
     SearxWhoogleElement.style.display = 'block';
   }
   else if (frontend == 'whoogle') {
     frontendElement.innerHTML = 'Frontend';
     searxDivElement.style.display = 'none';
+    searxngDivElement.style.display = 'none';
     whoogleDivElement.style.display = 'block';
     SearxWhoogleElement.style.display = 'block';
   }
   else if (frontend == 'startpage') {
     frontendElement.innerHTML = `Frontend: <span style="color:red;">This is a centralized service</span>`;
     searxDivElement.style.display = 'none';
+    searxngDivElement.style.display = 'none';
     whoogleDivElement.style.display = 'none';
     SearxWhoogleElement.style.display = 'none';
   }
 }
 let searchFrontendElement = document.getElementById("search-frontend");
 searchFrontendElement.addEventListener("change",
-  (event) => {
+  event => {
     let frontend = event.target.options[searchFrontendElement.selectedIndex].value
     searchHelper.setFrontend(frontend)
     changeFrontendsSettings(frontend);
@@ -44,7 +53,7 @@ searchFrontendElement.addEventListener("change",
 
 let protocolElement = document.getElementById("protocol")
 protocolElement.addEventListener("change",
-  (event) => {
+  event => {
     let protocol = event.target.options[protocolElement.selectedIndex].value
     searchHelper.setProtocol(protocol);
     changeProtocolSettings(protocol);
@@ -55,19 +64,26 @@ function changeProtocolSettings(protocol) {
   let normalsearxDiv = document.getElementById("searx-normal");
   let torsearxDiv = document.getElementById("searx-tor");
 
+  let normalsearxngDiv = document.getElementById("searxng-normal");
+  let torsearxngDiv = document.getElementById("searxng-tor");
+
   let normalwhoogleDiv = document.getElementById("whoogle-normal");
   let torwhoogleDiv = document.getElementById("whoogle-tor");
   if (protocol == 'normal') {
     normalsearxDiv.style.display = 'block';
+    normalsearxngDiv.style.display = 'block';
     normalwhoogleDiv.style.display = 'block';
-    torwhoogleDiv.style.display = 'none';
     torsearxDiv.style.display = 'none';
+    torsearxngDiv.style.display = 'none';
+    torwhoogleDiv.style.display = 'none';
   }
   else if (protocol == 'tor') {
     normalsearxDiv.style.display = 'none';
+    normalsearxngDiv.style.display = 'none';
     normalwhoogleDiv.style.display = 'none';
-    torwhoogleDiv.style.display = 'block';
     torsearxDiv.style.display = 'block';
+    torsearxngDiv.style.display = 'block';
+    torwhoogleDiv.style.display = 'block';
   }
 }
 
@@ -101,6 +117,28 @@ searchHelper.init().then(() => {
     searchHelper.setSearxTorRedirectsChecks,
     searchHelper.getSearxTorCustomRedirects,
     searchHelper.setSearxTorCustomRedirects
+  );
+
+  commonHelper.processDefaultCustomInstances(
+    'searxng',
+    'normal',
+    searchHelper,
+    document,
+    searchHelper.getSearxngNormalRedirectsChecks,
+    searchHelper.setSearxngNormalRedirectsChecks,
+    searchHelper.getSearxngNormalCustomRedirects,
+    searchHelper.setSearxngNormalCustomRedirects
+  );
+
+  commonHelper.processDefaultCustomInstances(
+    'searxng',
+    'tor',
+    searchHelper,
+    document,
+    searchHelper.getSearxngTorRedirectsChecks,
+    searchHelper.setSearxngTorRedirectsChecks,
+    searchHelper.getSearxngTorCustomRedirects,
+    searchHelper.setSearxngTorCustomRedirects
   );
 
   commonHelper.processDefaultCustomInstances(

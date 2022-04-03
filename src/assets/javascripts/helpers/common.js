@@ -48,6 +48,7 @@ async function updateInstances() {
     translateHelper.setLingvaRedirects(instances.lingva)
 
     searchHelper.setSearxRedirects(instances.searx);
+    searchHelper.setSearxngRedirects(instances.searxng);
     searchHelper.setWhoogleRedirects(instances.whoogle);
 
     wikipediaHelper.setRedirects(instances.wikiless);
