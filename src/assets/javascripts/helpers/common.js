@@ -25,7 +25,7 @@ async function wholeInit() {
 }
 
 async function updateInstances() {
-  const apiEndpoint = 'https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json';
+  const apiEndpoint = 'https://raw.githubusercontent.com/bobismymanager/libredirect/master/src/instances/data.json';
   let request = new XMLHttpRequest();
   request.open('GET', apiEndpoint, false);
   request.send(null);
@@ -37,6 +37,7 @@ async function updateInstances() {
     const instances = JSON.parse(request.responseText);
 
     youtubeHelper.setInvidiousRedirects(instances.invidious);
+    youtubeHelper.setPipedRedirects(instances.piped);
 
     twitterHelper.setRedirects(instances.nitter);
 

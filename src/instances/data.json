@@ -32,6 +32,19 @@
       "http://2rorw2w54tr7jkasn53l5swbjnbvz3ubebhswscnc54yac6gmkxaeeqd.onion"
     ]
   },
+  "piped": {
+    "normal": [
+      "https://piped.kavin.rocks",
+      "https://piped.silkky.cloud",
+      "https://piped.tokhmi.xyz",
+      "https://piped.moomoo.me",
+      "https://piped.il.ax",
+      "https://piped.syncpundit.com",
+      "https://piped.mint.lgbt",
+      "https://piped.privacy.com.de",
+      "https://piped.notyourcomputer.net"
+    ]
+  },
   "nitter": {
     "normal": [
       "https://nitter.net",

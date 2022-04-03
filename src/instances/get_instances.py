@@ -28,6 +28,25 @@ mightyList['invidious'] = invidiousList
 print('fetched Invidious')
 
 
+# Piped
+r = requests.get('https://github.com/TeamPiped/Piped/wiki/Instances')
+soup = BeautifulSoup(r.text, 'html.parser')
+markdownBody = soup.find(class_='markdown-body')
+tables = markdownBody.find_all('table')
+pipedList = {}
+pipedList['normal'] = []
+for table in tables:
+    tbody = table.find('tbody')
+    trs = tbody.find_all('tr')
+    for tr in trs:
+        td = tr.find('td')
+        unstrippedUrl = 'https://piped.' + td.contents[0]
+        url = unstrippedUrl.partition(' ')
+        pipedList['normal'].append(url[0])
+mightyList['piped'] = pipedList
+print('fetched Piped')
+
+
 # Nitter
 r = requests.get('https://github.com/zedeus/nitter/wiki/Instances')
 soup = BeautifulSoup(r.text, 'html.parser')
