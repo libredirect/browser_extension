@@ -92,7 +92,12 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (!newUrl) newUrl = wikipediaHelper.redirect(url);
 
-    if (generalHelper.isException(url, initiator)) newUrl = null;
+    if (
+      details.frameAncestors && details.frameAncestors.length > 0 &&
+      generalHelper.isException(new URL(details.frameAncestors[0].url))
+    ) newUrl = null;
+
+    if (generalHelper.isException(url)) newUrl = null;
 
     if (BYPASSTABs.includes(details.tabId)) newUrl = null;
 
@@ -103,15 +108,11 @@ browser.webRequest.onBeforeRequest.addListener(
       }
       else if (newUrl == 'BYPASSTAB') {
         console.log(`Bybassed ${details.tabId} ${url}`);
-        BYPASSTABs.push(details.tabId);
+        if (!BYPASSTABs.includes(details.tabId)) BYPASSTABs.push(details.tabId);
         return null;
       }
       else {
         console.info("Redirecting", url.href, "=>", newUrl);
-        // let wewe = new URL(newUrl);
-        // console.log("wewe", wewe.search);
-        // console.log("path", wewe.pathname);
-        // console.log("searchParams", wewe.searchParams);
         return { redirectUrl: newUrl };
       }
     }
@@ -206,7 +207,8 @@ browser.tabs.onUpdated.addListener(
     if (instagramHelper.isBibliogram(url)) instagramHelper.initBibliogramCookies(url);
     // if (changeInfo.url && youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
 
-  });
+  }
+);
 
 function changeWholeInstance(url) {
   let newUrl = youtubeHelper.switchInstance(url);

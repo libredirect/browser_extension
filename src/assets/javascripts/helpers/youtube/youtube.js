@@ -295,28 +295,6 @@ function setBypassWatchOnYoutube(val) {
   console.log("bypassWatchOnYoutube: ", bypassWatchOnYoutube)
 }
 
-let exceptions = {
-  "url": [],
-  "regex": [],
-};
-const getExceptions = () => exceptions;
-function setExceptions(val) {
-  exceptions = val;
-  browser.storage.local.set({ youtubeEmbedExceptions: val })
-  console.log("youtubeEmbedExceptions: ", val)
-}
-
-function isException(url) {
-  for (const item of exceptions.url) {
-    let protocolHost = commonHelper.protocolHost(url);
-    console.log(item, protocolHost)
-    if (item == protocolHost) return true;
-  }
-  for (const item of exceptions.regex)
-    if (new RegExp(item).test(url.href)) return true;
-  return false;
-}
-
 let alwaysUsePreferred;
 function redirect(url, details, initiator) {
   if (disable) return null;
@@ -359,14 +337,6 @@ function redirect(url, details, initiator) {
 
   if (!targets.some(rx => rx.test(url.href))) return null;
 
-  if (
-    details.type != "main_frame" &&
-    details.frameAncestors && details.frameAncestors.length > 0 &&
-    isException(new URL(details.frameAncestors[0].url))
-  ) {
-    console.log(`Canceled ${url.href}`, details.frameAncestors[0].url)
-    return null;
-  }
   if (
     bypassWatchOnYoutube &&
     initiator && (
@@ -664,7 +634,6 @@ async function init() {
 
             "youtubeProtocol",
 
-            "youtubeEmbedExceptions",
             "bypassWatchOnYoutube"
           ],
           r => { // r = result
@@ -702,8 +671,6 @@ async function init() {
             alwaysUsePreferred = r.alwaysUsePreferred ?? false;
 
             bypassWatchOnYoutube = r.bypassWatchOnYoutube ?? true;
-
-            if (r.youtubeEmbedExceptions) exceptions = r.youtubeEmbedExceptions;
 
             initInvidiousCookies();
 
@@ -881,10 +848,6 @@ export default {
   setPipedMaterialTorCustomRedirects,
 
   setPipedMaterialRedirects,
-
-  getExceptions,
-  setExceptions,
-  isException,
 
   init,
 };
