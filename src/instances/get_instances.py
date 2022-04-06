@@ -4,6 +4,7 @@ import requests
 import json
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
+import re
 
 mightyList = {}
 
@@ -65,6 +66,21 @@ for item in rJson['data']:
 mightyList['bibliogram'] = bibliogramList
 print('fetched Bibliogram')
 
+# LibReddit
+r = requests.get(
+    'https://raw.githubusercontent.com/spikecodes/libreddit/master/README.md')
+libredditList = {}
+libredditList['normal'] = []
+libredditList['tor'] = []
+tmp = re.findall(
+    r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|", r.text)
+for item in tmp:
+    if item.endswith('.onion'):
+        libredditList['tor'].append(item)
+    else:
+        libredditList['normal'].append(item)
+mightyList['libreddit'] = libredditList
+print('fetched LibReddit')
 
 # Teddit
 r = requests.get(
