@@ -29,6 +29,18 @@ mightyList['invidious'] = invidiousList
 print('fetched Invidious')
 
 
+# Send
+r = requests.get('https://gitlab.com/timvisee/send-instances/-/raw/master/README.md')
+tmp = re.findall("- https://*.*", r.text)
+sendList = {}
+sendList['normal'] = []
+for item in tmp:
+    urlSemiPartitioned = item.partition(' (')
+    url = urlSemiPartitioned[0].partition('- ')
+    sendList['normal'].append(url[2])
+mightyList['send'] = sendList
+print('fetched Send')
+
 # Nitter
 r = requests.get('https://github.com/zedeus/nitter/wiki/Instances')
 soup = BeautifulSoup(r.text, 'html.parser')

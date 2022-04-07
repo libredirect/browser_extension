@@ -33,6 +33,26 @@
       "http://2rorw2w54tr7jkasn53l5swbjnbvz3ubebhswscnc54yac6gmkxaeeqd.onion"
     ]
   },
+  "send": {
+    "normal": [
+      "https://send.vis.ee",
+      "https://send.silkky.cloud",
+      "https://send.turingpoint.de",
+      "https://send.ephemeral.land",
+      "https://send.monks.tools",
+      "https://send.jeugdhulp.be",
+      "https://send.aurorabilisim.com",
+      "https://nhanh.cloud",
+      "https://send.datahoarder.dev",
+      "https://send.navennec.net",
+      "https://fileupload.ggc-project.de",
+      "https://drop.chapril.org",
+      "https://files.psu.ru",
+      "https://send.portailpro.net",
+      "https://bytefile.de",
+      "https://transfer.acted.org"
+    ]
+  },
   "nitter": {
     "normal": [
       "https://nitter.net",
@@ -487,7 +507,6 @@
     "https://tube.motuhake.xyz",
     "https://pt.mezzo.moe",
     "https://tube.dsocialize.net",
-    "https://vidz.mk-l.info",
     "https://peertube.today",
     "https://tube.valinor.fr",
     "https://synergy-tube.co.za",
@@ -577,7 +596,6 @@
     "https://video.chbmeyer.de",
     "https://video.rs-einrich.de",
     "https://p2ptv.ru",
-    "https://peertube.dsmouse.net",
     "https://peertube.librenet.co.za",
     "https://h3h3.club",
     "https://watch.snoot.tube",
@@ -791,7 +809,6 @@
     "https://videos.globenet.org",
     "https://peertube.chantierlibre.org",
     "https://tube.pawelko.net",
-    "https://video.lycee-experimental.org",
     "https://tube.klardenken.tv",
     "https://tube.nemsia.org",
     "https://serv2.wiki-tube.de",
