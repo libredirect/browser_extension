@@ -17,9 +17,9 @@
       "https://invidious.lunar.icu",
       "https://invidious.mutahar.rocks",
       "https://invidious.weblibre.org",
+      "https://invidious.esmailelbob.xyz",
       "https://invidious.privacy.gd",
       "https://youtube.076.ne.jp",
-      "https://invidious.esmailelbob.xyz",
       "https://invidious.namazso.eu"
     ],
     "tor": [
@@ -175,7 +175,6 @@
       "https://libreddit.winscloud.net",
       "https://libreddit.tiekoetter.com",
       "https://reddit.rtrace.io",
-      "http://libreddit.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion/",
       "https://libreddit.lunar.icu"
     ],
     "tor": [
@@ -190,7 +189,8 @@
       "http://libredoxhxwnmsb6dvzzd35hmgzmawsq5i764es7witwhddvpc2razid.onion",
       "http://libreddit.2syis2nnyytz6jnusnjurva4swlaizlnleiks5mjp46phuwjbdjqwgqd.onion",
       "http://ol5begilptoou34emq2sshf3may3hlblvipdjtybbovpb7c7zodxmtqd.onion",
-      "http://lbrdtjaj7567ptdd4rv74lv27qhxfkraabnyphgcvptl64ijx2tijwid.onion"
+      "http://lbrdtjaj7567ptdd4rv74lv27qhxfkraabnyphgcvptl64ijx2tijwid.onion",
+      "http://libreddit.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion"
     ]
   },
   "teddit": {
@@ -230,12 +230,14 @@
       "https://wikiless.sethforprivacy.com",
       "https://wiki.604kph.xyz",
       "https://wikiless.lunar.icu",
-      "https://https://wiki.froth.zone",
-      "https://hflqp2ejxygpj6cdwo3ogfieqmxw3b56w7dblt7bor2ltwk6kcfa.b32.i2p"
+      "https://https://wiki.froth.zone"
     ],
     "tor": [
       "http://dj2tbh2nqfxyfmvq33cjmhuw7nb6am7thzd3zsjvizeqf374fixbrxyd.onion",
       "http://c2pesewpalbi6lbfc5hf53q4g3ovnxe4s7tfa6k2aqkf7jd7a7dlz5ad.onion"
+    ],
+    "i2p": [
+      "http://hflqp2ejxygpj6cdwo3ogfieqmxw3b56w7dblt7bor2ltwk6kcfa.b32.i2p"
     ]
   },
   "scribe": {

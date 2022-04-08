@@ -5,13 +5,19 @@ import json
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import re
+from colorama import Fore, Back, Style
 
 mightyList = {}
 
-
-def get_host_name(link):
-    url = urlparse(link)
-    return url.netloc
+def filterLastSlash(urlList):
+    tmp = []
+    for i in urlList:
+        if i.endswith('/'):
+            tmp.append(i[:-1])
+            print(Fore.YELLOW + "filtered " + Style.RESET_ALL + i)
+        else:
+            tmp.append(i)
+    return tmp
 
 
 # Invidious
@@ -26,7 +32,7 @@ for instance in rJson:
     elif instance[1]['type'] == 'onion':
         invidiousList['tor'].append(instance[1]['uri'])
 mightyList['invidious'] = invidiousList
-print('fetched Invidious')
+print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Invidious')
 
 
 # Nitter
@@ -53,10 +59,10 @@ for table in tables:
             url = 'https://' + url
             nitterList['normal'].append(url)
 mightyList['nitter'] = nitterList
-print('fetched Nitter')
+print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Nitter')
 
 # Bibliogram
-r = requests.get('https://bibliogram.1d4.us/api/instances')
+r = requests.get('https://bibliogram.pussthecat.org/api/instances')
 rJson = json.loads(r.text)
 bibliogramList = {}
 bibliogramList['normal'] = []
@@ -64,7 +70,7 @@ bibliogramList['tor'] = []
 for item in rJson['data']:
     bibliogramList['normal'].append(item['address'])
 mightyList['bibliogram'] = bibliogramList
-print('fetched Bibliogram')
+print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Bibliogram')
 
 # LibReddit
 r = requests.get(
@@ -72,15 +78,19 @@ r = requests.get(
 libredditList = {}
 libredditList['normal'] = []
 libredditList['tor'] = []
+
 tmp = re.findall(
     r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|", r.text)
+
+tmp = filterLastSlash(tmp)
+
 for item in tmp:
     if item.endswith('.onion'):
         libredditList['tor'].append(item)
     else:
         libredditList['normal'].append(item)
 mightyList['libreddit'] = libredditList
-print('fetched LibReddit')
+print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'LibReddit')
 
 # Teddit
 r = requests.get(
@@ -99,7 +109,7 @@ for item in rJson:
             tedditList['tor'].append(onion)
 
 mightyList['teddit'] = tedditList
-print('fetched Teddit')
+print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Teddit')
 
 
 # Wikiless
@@ -117,7 +127,7 @@ for item in rJson:
     else:
         wikilessList['normal'].append('https://' + item)
 mightyList['wikiless'] = wikilessList
-print('fetched Wikiless')
+print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Wikiless')
 
 # Scribe
 r = requests.get(
@@ -129,8 +139,7 @@ scribeList['tor'] = []
 for item in rJson:
     scribeList['normal'].append(item)
 mightyList['scribe'] = scribeList
-print('fetched Scribe')
-
+print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Scribe')
 
 # SimplyTranslate
 r = requests.get('https://simple-web.org/instances/simplytranslate')
@@ -145,7 +154,7 @@ for item in r.text.strip().split('\n'):
     simplyTranslateList['tor'].append('http://' + item)
 
 mightyList['simplyTranslate'] = simplyTranslateList
-print('fetched SimplyTranslate')
+print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'SimplyTranslate')
 
 # LinvgaTranslate
 r = requests.get(
@@ -157,7 +166,7 @@ lingvaList['tor'] = []
 for item in rJson:
     lingvaList['normal'].append(item)
 mightyList['lingva'] = lingvaList
-print('fetched LinvgaTranslate')
+print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'LinvgaTranslate')
 
 
 # SearX, SearXNG
@@ -190,7 +199,7 @@ for item in rJson['instances']:
 
 mightyList['searx'] = searxList
 mightyList['searxng'] = searxngList
-print('fetched SearX, SearXNG')
+print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'SearX, SearXNG')
 
 # Whoogle
 r = requests.get(
@@ -202,8 +211,7 @@ whoogleList['tor'] = []
 for item in tmpList:
     whoogleList['normal'].append(item)
 mightyList['whoogle'] = whoogleList
-print('fetched Whoogle')
-
+print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Whoogle')
 
 # Rimgo
 r = requests.get(
@@ -219,7 +227,7 @@ for item in rJson:
     else:
         rimgoList['normal'].append('https://' + item)
 mightyList['rimgo'] = rimgoList
-print('fetched Rimgo')
+print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Rimgo')
 
 # Peertube
 r = requests.get(
@@ -231,12 +239,31 @@ for k in rJson['data']:
     myList.append('https://'+k['host'])
 
 mightyList['peertube'] = myList
-print('fetched Peertube')
+print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Peertube')
 
+
+def isValid(url):  # This code is contributed by avanitrachhadiya2155
+    return re.search(r"([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z0-9]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}", url)
+
+
+for k1, v1 in mightyList.items():
+    if type(mightyList[k1]) is dict:
+        for k2, v2 in mightyList[k1].items():
+            for instance in mightyList[k1][k2]:
+                if (not isValid(instance)):
+                    mightyList[k1][k2].remove(instance)
+                    print("removed " + instance)
+
+    elif type(mightyList[k1]) is list:
+        for instance in mightyList[k1]:
+            if (not isValid(instance)):
+                mightyList[k1].remove(instance)
+                print("removed " + instance)
 
 # Writing to file
 json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
 with open('./src/instances/data.json', 'w') as outfile:
     outfile.write(json_object)
 # print(json_object)
-print('wrote instances/data.json')
+
+print(Fore.BLUE + 'wrote ' + Style.RESET_ALL + 'instances/data.json')
