@@ -120,7 +120,7 @@ let allPopupFrontends = [
     "medium",
     "peertube",
     "lbry",
-    "sendTargets"
+    "send"
 ];
 
 

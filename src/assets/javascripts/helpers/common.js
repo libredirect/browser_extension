@@ -8,6 +8,7 @@ import searchHelper from "./search.js";
 import translateHelper from "./translate/translate.js";
 import wikipediaHelper from "./wikipedia.js";
 import localise from '../localise.js'
+import sendTargetsHelper from "./sendTargets.js";
 
 function getRandomInstance(instances) {
   return instances[~~(instances.length * Math.random())];
@@ -22,10 +23,11 @@ async function wholeInit() {
   await searchHelper.init();
   await wikipediaHelper.init();
   await mediumHelper.init();
+  await sendTargetsHelper.init();
 }
 
 async function updateInstances() {
-  const apiEndpoint = 'https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json';
+  const apiEndpoint = 'https://gist.githubusercontent.com/BobIsMyManager/3cb69c7e37703f7b657ec33281636401/raw/8fa1247f8c4fb1d52fe32b2ef6cebdb4b4105101/data.json';
   let request = new XMLHttpRequest();
   request.open('GET', apiEndpoint, false);
   request.send(null);
@@ -54,6 +56,8 @@ async function updateInstances() {
     wikipediaHelper.setRedirects(instances.wikiless);
 
     mediumHelper.setRedirects(instances.scribe);
+
+    sendTargetsHelper.setRedirects(instances.send);
 
     console.info("Successfully updated Instances");
     return true;

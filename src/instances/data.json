@@ -16,10 +16,10 @@
       "https://inv.bp.mutahar.rocks",
       "https://invidious.lunar.icu",
       "https://invidious.mutahar.rocks",
-      "https://invidious.weblibre.org",
-      "https://invidious.esmailelbob.xyz",
       "https://invidious.privacy.gd",
+      "https://invidious.esmailelbob.xyz",
       "https://youtube.076.ne.jp",
+      "https://invidious.weblibre.org",
       "https://invidious.namazso.eu"
     ],
     "tor": [
@@ -452,6 +452,7 @@
     ]
   },
   "peertube": [
+    "https://dalek.zone",
     "https://video.sadmin.io",
     "https://stream.jurnalfm.md",
     "https://video.asgardius.company",
@@ -992,7 +993,6 @@
     "https://the.jokertv.eu",
     "https://climatejustice.video",
     "https://wikileaks.video",
-    "https://video.cnt.social",
     "https://fair.tube",
     "https://tube.lokad.com",
     "https://videos.benjaminbrady.ie",
@@ -1218,7 +1218,6 @@
     "https://tube.jeena.net",
     "https://tube.cloud-libre.eu",
     "https://videos.coletivos.org",
-    "https://peertube.nogafa.org",
     "https://peertube.xwiki.com",
     "https://tuvideo.encanarias.info",
     "https://cinema.yunohost.support",
