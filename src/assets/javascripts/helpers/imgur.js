@@ -107,7 +107,15 @@ function redirect(url, type) {
     // https://imgur.com/gallery/cTRwaJU
     // https://i.imgur.com/CFSQArP.jpeg
 
-    if (type != "main_frame" && type != "sub_frame" && type != "xmlhttprequest" && type != "other") return null;
+    if (![
+        "main_frame",
+        "sub_frame",
+        "xmlhttprequest",
+        "other",
+        "image",
+        "media",
+    ].includes(type)) return null;
+
     if (url.pathname.includes("delete/")) return null;
 
     let instancesList;

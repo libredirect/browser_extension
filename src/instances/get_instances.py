@@ -108,9 +108,12 @@ rJson = json.loads(r.text)
 wikilessList = {}
 wikilessList['normal'] = []
 wikilessList['tor'] = []
+wikilessList['i2p'] = []
 for item in rJson:
     if item.endswith('.onion'):
         wikilessList['tor'].append('http://' + item)
+    elif item.endswith('.i2p'):
+        wikilessList['i2p'].append('http://' + item)
     else:
         wikilessList['normal'].append('https://' + item)
 mightyList['wikiless'] = wikilessList
