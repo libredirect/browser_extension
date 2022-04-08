@@ -31,13 +31,11 @@ print('fetched Invidious')
 
 # Send
 r = requests.get('https://gitlab.com/timvisee/send-instances/-/raw/master/README.md')
-tmp = re.findall("- https://*.*", r.text)
+tmp = re.findall(r"- ([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z0-9]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}", r.text)
 sendList = {}
 sendList['normal'] = []
 for item in tmp:
-    urlSemiPartitioned = item.partition(' (')
-    url = urlSemiPartitioned[0].partition('- ')
-    sendList['normal'].append(url[2])
+    sendList['normal'].append(item)
 mightyList['send'] = sendList
 print('fetched Send')
 
