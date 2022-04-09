@@ -16,10 +16,10 @@
       "https://inv.bp.mutahar.rocks",
       "https://invidious.lunar.icu",
       "https://invidious.mutahar.rocks",
-      "https://invidious.weblibre.org",
-      "https://invidious.esmailelbob.xyz",
       "https://invidious.privacy.gd",
+      "https://invidious.esmailelbob.xyz",
       "https://youtube.076.ne.jp",
+      "https://invidious.weblibre.org",
       "https://invidious.namazso.eu"
     ],
     "tor": [
@@ -31,6 +31,26 @@
       "http://osbivz6guyeahrwp2lnwyjk2xos342h4ocsxyqrlaopqjuhwn2djiiyd.onion",
       "http://u2cvlit75owumwpy4dj2hsmvkq7nvrclkpht7xgyye2pyoxhpmclkrad.onion",
       "http://2rorw2w54tr7jkasn53l5swbjnbvz3ubebhswscnc54yac6gmkxaeeqd.onion"
+    ]
+  },
+  "send": {
+    "normal": [
+      "https://send.vis.ee",
+      "https://send.silkky.cloud",
+      "https://send.turingpoint.de",
+      "https://send.ephemeral.land",
+      "https://send.monks.tools",
+      "https://send.jeugdhulp.be",
+      "https://send.aurorabilisim.com",
+      "https://nhanh.cloud",
+      "https://send.datahoarder.dev",
+      "https://send.navennec.net",
+      "https://fileupload.ggc-project.de",
+      "https://drop.chapril.org",
+      "https://files.psu.ru",
+      "https://send.portailpro.net",
+      "https://bytefile.de",
+      "https://transfer.acted.org"
     ]
   },
   "nitter": {
@@ -434,6 +454,7 @@
     ]
   },
   "peertube": [
+    "https://dalek.zone",
     "https://video.sadmin.io",
     "https://stream.jurnalfm.md",
     "https://video.asgardius.company",
@@ -509,7 +530,6 @@
     "https://video.barcelo.cf",
     "https://videotube.duckdns.org",
     "https://peertube.1001solutions.net",
-    "https://peertube.razorserver.fr",
     "https://tv.based.quest",
     "https://peertube.beardedtek.com",
     "https://casnocensure.site",
@@ -975,7 +995,6 @@
     "https://the.jokertv.eu",
     "https://climatejustice.video",
     "https://wikileaks.video",
-    "https://video.cnt.social",
     "https://fair.tube",
     "https://tube.lokad.com",
     "https://videos.benjaminbrady.ie",
@@ -1196,13 +1215,11 @@
     "https://video.cigliola.com",
     "https://xxx.noho.st",
     "https://peertube.stefofficiel.me",
-    "https://video.eradicatinglove.xyz",
     "https://canard.tube",
     "https://videos.jordanwarne.xyz",
     "https://tube.jeena.net",
     "https://tube.cloud-libre.eu",
     "https://videos.coletivos.org",
-    "https://peertube.nogafa.org",
     "https://peertube.xwiki.com",
     "https://tuvideo.encanarias.info",
     "https://cinema.yunohost.support",

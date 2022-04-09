@@ -35,6 +35,16 @@ mightyList['invidious'] = invidiousList
 print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Invidious')
 
 
+# Send
+r = requests.get('https://gitlab.com/timvisee/send-instances/-/raw/master/README.md')
+tmp = re.findall(r"- ([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z0-9]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}", r.text)
+sendList = {}
+sendList['normal'] = []
+for item in tmp:
+    sendList['normal'].append(item)
+mightyList['send'] = sendList
+print('fetched Send')
+
 # Nitter
 r = requests.get('https://github.com/zedeus/nitter/wiki/Instances')
 soup = BeautifulSoup(r.text, 'html.parser')

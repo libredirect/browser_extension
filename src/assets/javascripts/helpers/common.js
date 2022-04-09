@@ -8,6 +8,7 @@ import searchHelper from "./search.js";
 import translateHelper from "./translate/translate.js";
 import wikipediaHelper from "./wikipedia.js";
 import localise from '../localise.js'
+import sendTargetsHelper from "./sendTargets.js";
 
 function getRandomInstance(instances) {
   return instances[~~(instances.length * Math.random())];
@@ -22,6 +23,7 @@ async function wholeInit() {
   await searchHelper.init();
   await wikipediaHelper.init();
   await mediumHelper.init();
+  await sendTargetsHelper.init();
 }
 
 async function updateInstances() {
@@ -54,6 +56,8 @@ async function updateInstances() {
     wikipediaHelper.setRedirects(instances.wikiless);
 
     mediumHelper.setRedirects(instances.scribe);
+
+    sendTargetsHelper.setRedirects(instances.send);
 
     console.info("Successfully updated Instances");
     return true;

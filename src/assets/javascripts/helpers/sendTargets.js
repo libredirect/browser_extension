@@ -10,23 +10,7 @@ const targets = [
 
 let redirects = {
     "send": {
-        "normal": [
-            "https://send.silkky.cloud",
-            "https://send.turingpoint.de",
-            "https://send.ephemeral.land",
-            "https://send.monks.tools",
-            "https://send.jeugdhulp.be",
-            "https://send.aurorabilisim.com",
-            "https://nhanh.cloud",
-            "https://send.datahoarder.dev",
-            "https://send.navennec.net",
-            "https://fileupload.ggc-project.de",
-            "https://drop.chapril.org",
-            "https://files.psu.ru",
-            "https://send.portailpro.net",
-            "https://bytefile.de",
-            "https://transfer.acted.org ",
-        ],
+        "normal": [],
         "tor": []
     }
 }
@@ -35,7 +19,8 @@ const getRedirects = () => redirects;
 const getCustomRedirects = function () {
     return {
         "send": {
-            "normal": [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects]
+            "normal": [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects],
+	    "tor": [...sendTorRedirectsChecks, ...sendTorCustomRedirects]
         },
     };
 };
@@ -173,6 +158,7 @@ async function init() {
 
                     protocol = r.sendTargetsProtocol ?? "normal";
 
+		    //redirects.send = dataJson.send;
                     if (r.sendTargetsRedirects) redirects = r.sendTargetsRedirects;
 
                     sendNormalRedirectsChecks = r.sendNormalRedirectsChecks ?? [...redirects.send.normal];
