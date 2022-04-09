@@ -93,11 +93,12 @@ let redirects = {
       "https://piped.tokhmi.xyz",
       "https://il.ax",
       "https://piped.syncpundit.com",
-      "https://piped.mha.fi/",
+      "https://piped.mha.fi",
       "https://piped.mint.lgbt",
       "https://piped.privacy.com.de",
-      "https://piped.notyourcomputer.net/",
-      "https://piped.mha.fi/"
+      "https://piped.notyourcomputer.net",
+      "https://piped.moomoo.me",
+      "https://piped.mha.fi"
     ],
     "tor": [
       "http://piped2bbch4xslbl2ckr6k62q56kon56ffowxaqzy42ai22a4sash3ad.onion"
