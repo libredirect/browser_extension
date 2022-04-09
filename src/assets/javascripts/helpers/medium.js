@@ -117,14 +117,13 @@ function setProtocol(val) {
 function redirect(url, type, initiator) {
 
   if (disable) return;
-  if (url.pathname == "/") return;
-  if (url.pathname.startsWith("/tag") || url.pathname.startsWith("/@")) return;
 
   if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") return null;
 
   if (initiator && ([...redirects.scribe.normal, ...scribeNormalCustomRedirects].includes(initiator.origin))) return;
 
   if (!targets.some(rx => rx.test(url.host))) return;
+  if (/^https?:\/{2}([a-z](\.|)){0,}\/(@([a-z](\.|)){0,}\/$|[^@])/.test(url.href)) return;
 
   let instancesList;
   if (protocol == 'normal') instancesList = [...scribeNormalRedirectsChecks, ...scribeNormalCustomRedirects];

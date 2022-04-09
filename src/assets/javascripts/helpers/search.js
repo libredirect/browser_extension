@@ -13,6 +13,11 @@ let redirects = {
     "tor": [],
     "i2p": []
   },
+  "searxng": {
+    "normal": [],
+    "tor": [],
+    "i2p": []
+  },
   "whoogle": {
     "normal": [],
     "tor": []
@@ -28,6 +33,10 @@ const getCustomRedirects = () => {
     "searx": {
       "normal": [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects],
       "tor": [...searxTorRedirectsChecks, ...searxTorCustomRedirects],
+    },
+    "searxng": {
+      "normal": [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects],
+      "tor": [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects],
     },
     "whoogle": {
       "normal": [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects],
@@ -51,6 +60,23 @@ function setSearxRedirects(val) {
     if (index !== -1) searxTorRedirectsChecks.splice(index, 1);
   }
   setSearxTorRedirectsChecks(searxTorRedirectsChecks);
+}
+
+function setSearxngRedirects(val) {
+  redirects.searxng = val;
+  browser.storage.local.set({ searchRedirects: redirects })
+  console.log("searxngRedirects:", val)
+  for (const item of searxngNormalRedirectsChecks) if (!redirects.searxng.normal.includes(item)) {
+    var index = searxngNormalRedirectsChecks.indexOf(item);
+    if (index !== -1) searxngNormalRedirectsChecks.splice(index, 1);
+  }
+  setSearxngNormalRedirectsChecks(searxngNormalRedirectsChecks);
+
+  for (const item of searxngTorRedirectsChecks) if (!redirects.searxng.tor.includes(item)) {
+    var index = searxngTorRedirectsChecks.indexOf(item);
+    if (index !== -1) searxngTorRedirectsChecks.splice(index, 1);
+  }
+  setSearxngTorRedirectsChecks(searxngTorRedirectsChecks);
 }
 
 function setWhoogleRedirects(val) {
@@ -134,6 +160,38 @@ function setSearxTorCustomRedirects(val) {
   console.log("searxTorCustomRedirects: ", val)
 }
 
+let searxngNormalRedirectsChecks;
+const getSearxngNormalRedirectsChecks = () => searxngNormalRedirectsChecks;
+function setSearxngNormalRedirectsChecks(val) {
+  searxngNormalRedirectsChecks = val;
+  browser.storage.local.set({ searxngNormalRedirectsChecks })
+  console.log("searxngNormalRedirectsChecks: ", val)
+}
+
+let searxngTorRedirectsChecks;
+const getSearxngTorRedirectsChecks = () => searxngTorRedirectsChecks;
+function setSearxngTorRedirectsChecks(val) {
+  searxngTorRedirectsChecks = val;
+  browser.storage.local.set({ searxngTorRedirectsChecks })
+  console.log("searxngTorRedirectsChecks: ", val)
+}
+
+let searxngNormalCustomRedirects = [];
+const getSearxngNormalCustomRedirects = () => searxngNormalCustomRedirects;
+function setSearxngNormalCustomRedirects(val) {
+  searxngNormalCustomRedirects = val;
+  browser.storage.local.set({ searxngNormalCustomRedirects })
+  console.log("searxngNormalCustomRedirects: ", val)
+}
+
+let searxngTorCustomRedirects = [];
+const getSearxngTorCustomRedirects = () => searxngTorCustomRedirects;
+function setSearxngTorCustomRedirects(val) {
+  searxngTorCustomRedirects = val;
+  browser.storage.local.set({ searxngTorCustomRedirects })
+  console.log("searxngTorCustomRedirects: ", val)
+}
+
 let disable;
 const getDisable = () => disable;
 function setDisable(val) {
@@ -167,6 +225,39 @@ function initSearxCookies() {
   if (applyThemeToSites && themeValue) {
     let allInstances = [...redirects.searx.normal, ...redirects.searx.tor, ...searxNormalCustomRedirects, ...searxTorCustomRedirects]
     let checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects, ...searxTorRedirectsChecks, ...searxTorCustomRedirects]
+    for (const instanceUrl of allInstances)
+      if (!checkedInstances.includes(instanceUrl)) {
+        browser.cookies.remove({
+          url: instanceUrl,
+          name: "oscar-style",
+        })
+        browser.cookies.remove({
+          url: instanceUrl,
+          name: "oscar",
+        })
+      }
+    for (const instanceUrl of checkedInstances) {
+      browser.cookies.set({
+        url: instanceUrl,
+        name: "oscar-style",
+        value: themeValue
+      })
+      browser.cookies.set({
+        url: instanceUrl,
+        name: "theme",
+        value: 'oscar'
+      })
+    }
+  }
+}
+
+function initSearxngCookies() {
+  let themeValue;
+  if (theme == 'light') themeValue = 'logicodev';
+  if (theme == 'dark') themeValue = 'logicodev-dark';
+  if (applyThemeToSites && themeValue) {
+    let allInstances = [...redirects.searxng.normal, ...redirects.searxng.tor, ...searxngNormalCustomRedirects, ...searxngTorCustomRedirects]
+    let checkedInstances = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects, ...searxngTorRedirectsChecks, ...searxngTorCustomRedirects]
     for (const instanceUrl of allInstances)
       if (!checkedInstances.includes(instanceUrl)) {
         browser.cookies.remove({
@@ -249,6 +340,14 @@ function redirect(url) {
     randomInstance = commonHelper.getRandomInstance(instancesList)
     path = "/";
   }
+  else if (frontend == 'searxng') {
+    let instancesList;
+    if (protocol == 'normal') instancesList = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
+    if (instancesList.length === 0) return null;
+    randomInstance = commonHelper.getRandomInstance(instancesList)
+    path = "/";
+  }
   else if (frontend == 'whoogle') {
     let instancesList
     if (protocol == 'normal') instancesList = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects];
@@ -279,6 +378,12 @@ function switchInstance(url) {
     ...searxNormalCustomRedirects,
     ...searxTorCustomRedirects,
 
+    ...redirects.searx.normal,
+    ...redirects.searxng.tor,
+
+    ...searxngNormalCustomRedirects,
+    ...searxngTorCustomRedirects,
+
     ...redirects.whoogle.normal,
     ...redirects.whoogle.tor,
 
@@ -292,6 +397,10 @@ function switchInstance(url) {
   if (frontend == 'searx') {
     if (protocol == 'normal') instancesList = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
     else if (protocol == 'tor') instancesList = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
+  }
+  else if (frontend == 'searxng') {
+    if (protocol == 'normal') instancesList = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
   }
   else if (frontend == 'whoogle') {
     if (protocol == 'normal') instancesList = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects];
@@ -330,6 +439,12 @@ async function init() {
           "searxTorRedirectsChecks",
           "searxTorCustomRedirects",
 
+          "searxngNormalRedirectsChecks",
+          "searxngNormalCustomRedirects",
+
+          "searxngTorRedirectsChecks",
+          "searxngTorCustomRedirects",
+
           "theme",
           "applyThemeToSites",
 
@@ -346,6 +461,7 @@ async function init() {
           applyThemeToSites = r.applyThemeToSites ?? false;
 
           redirects.searx = dataJson.searx;
+          redirects.searxng = dataJson.searxng;
           redirects.whoogle = dataJson.whoogle;
           if (r.searchRedirects) redirects = r.searchRedirects;
 
@@ -361,7 +477,14 @@ async function init() {
           searxTorRedirectsChecks = r.searxTorRedirectsChecks ?? [...redirects.searx.tor];
           searxTorCustomRedirects = r.searxTorCustomRedirects ?? [];
 
+          searxngNormalRedirectsChecks = r.searxngNormalRedirectsChecks ?? [...redirects.searxng.normal];
+          searxngNormalCustomRedirects = r.searxngNormalCustomRedirects ?? [];
+
+          searxngTorRedirectsChecks = r.searxngTorRedirectsChecks ?? [...redirects.searxng.tor];
+          searxngTorCustomRedirects = r.searxngTorCustomRedirects ?? [];
+
           initSearxCookies()
+          initSearxngCookies()
           // initWhoogleCookies()
 
           resolve();
@@ -378,7 +501,9 @@ export default {
 
   getRedirects,
   getCustomRedirects,
+
   setSearxRedirects,
+  setSearxngRedirects,
   setWhoogleRedirects,
 
   getFrontend,
@@ -403,6 +528,16 @@ export default {
   setSearxTorRedirectsChecks,
   getSearxTorCustomRedirects,
   setSearxTorCustomRedirects,
+
+  getSearxngNormalRedirectsChecks,
+  setSearxngNormalRedirectsChecks,
+  getSearxngNormalCustomRedirects,
+  setSearxngNormalCustomRedirects,
+
+  getSearxngTorRedirectsChecks,
+  setSearxngTorRedirectsChecks,
+  getSearxngTorCustomRedirects,
+  setSearxngTorCustomRedirects,
 
   getProtocol,
   setProtocol,
