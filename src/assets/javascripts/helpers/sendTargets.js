@@ -154,6 +154,7 @@ async function init() {
                     "sendTargetsProtocol"
                 ],
                 r => {
+		    redirects.send = dataJson.send;
                     disable = r.disableSendTarget ?? false;
 
                     protocol = r.sendTargetsProtocol ?? "normal";

@@ -36,7 +36,8 @@
   "proxiTok": {
     "normal": [
       "https://proxitok.herokuapp.com"
-    ]
+    ],
+    "tor": []
   },
   "send": {
     "normal": [
@@ -56,7 +57,8 @@
       "https://send.portailpro.net",
       "https://bytefile.de",
       "https://transfer.acted.org"
-    ]
+    ],
+    "tor": []
   },
   "nitter": {
     "normal": [
@@ -461,6 +463,14 @@
     ]
   },
   "peertube": [
+    "https://vid.twhtv.club",
+    "https://video.retroedge.tech",
+    "https://truvitv.com",
+    "https://mooretube.com",
+    "https://tube.itsg.host",
+    "https://pt.ilyamikcoder.com",
+    "https://peertube.sensin.eu",
+    "https://watch.riverside.rocks",
     "https://peer.galaxycrow.de",
     "https://sharetube.us",
     "https://dalek.zone",

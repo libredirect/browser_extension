@@ -129,6 +129,7 @@ async function init() {
                     "tiktokProtocol"
                 ],
                 r => {
+		    redirects.proxiTok = dataJson.proxiTok;
                     disable = r.disableTiktok ?? false;
 
                     protocol = r.tiktokProtocol ?? "normal";
