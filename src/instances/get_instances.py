@@ -40,10 +40,11 @@ r = requests.get('https://gitlab.com/timvisee/send-instances/-/raw/master/README
 tmp = re.findall(r"- ([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z0-9]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}", r.text)
 sendList = {}
 sendList['normal'] = []
+sendList['tor'] = []
 for item in tmp:
     sendList['normal'].append(item)
 mightyList['send'] = sendList
-print('fetched Send')
+print(Fore.GREEN +'fetched ' + Style.RESET_ALL + 'Send')
 
 # Nitter
 r = requests.get('https://github.com/zedeus/nitter/wiki/Instances')
