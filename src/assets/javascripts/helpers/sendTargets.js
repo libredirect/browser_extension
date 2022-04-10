@@ -159,7 +159,6 @@ async function init() {
 
                     protocol = r.sendTargetsProtocol ?? "normal";
 
-		            redirects.send = dataJson.send;
                     if (r.sendTargetsRedirects) redirects = r.sendTargetsRedirects;
 
                     sendNormalRedirectsChecks = r.sendNormalRedirectsChecks ?? [...redirects.send.normal];
