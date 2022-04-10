@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="../../../assets/images/libredirect.svg" />
-    <link href="../../stylesheets/styles.css" rel="stylesheet" />
-    <title>LibRedirect: Twitter</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="../../../assets/images/libredirect.svg" />
+  <link href="../../stylesheets/styles.css" rel="stylesheet" />
+  <title>LibRedirect: Twitter</title>
 </head>
 
 <body dir="auto" class="option">
@@ -129,83 +129,111 @@
 
   </section>
 
-    <section class="option-block">
+  <section class="option-block">
 
+    <div class="some-block option-block">
+      <h4 data-localise="__MSG_enable__">Enable</h4>
+      <input id="disable-nitter" type="checkbox" checked />
+    </div>
+
+    <div class="some-block option-block">
+      <h4 data-localise="__MSG_protocol__">Protocol</h4>
+      <select id="protocol">
+        <option value="normal" data-localise="__MSG_normal__">Normal</option>
+        <option value="tor" data-localise="__MSG_tor__">Tor</option>
+      </select>
+    </div>
+
+    <div class="some-block option-block">
+      <h4 data-localise="__MSG_bypassTwitter__">Bypass "Open in Twitter"</h4>
+      <input id="bypass-watch-on-twitter" type="checkbox" checked />
+    </div>
+
+    <hr>
+
+    <div class="custom-settings">
+      <div class="some-block option-block">
+        <h4 data-localise="__MSG_theme__">Theme</h4>
+        <select name="theme">
+          <option value="Auto">Auto</option>
+          <option value="Auto (Twitter)">Auto (Twitter)</option>
+          <option value="Auto (Twitter)">Auto (Twitter)</option>
+          <option value="Black">Black</option>
+          <option value="Mastodon">Mastodon</option>
+          <option value="Nitter">Nitter</option>
+          <option value="Pleroma">Pleroma</option>
+          <option value="Twitter">Twitter</option>
+          <option value="Twitter Dark" selected="">Twitter Dark</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="some-block option-block">
+      <h4 data-localise="__MSG_infiniteScroll__">Infinite scrolling (experimental, requires JavaScript)</h4>
+      <input id="infiniteScroll" type="checkbox" />
+    </div>
+
+    <div class="some-block option-block">
+      <h4 data-localise="__MSG_stickyProfile__">Make profile sidebar stick to top</h4>
+      <input id="stickyProfile" type="checkbox" />
+    </div>
+
+    <hr>
+
+    <div id="normal">
+
+      <div class="some-block option-block">
+        <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+      </div>
+      <div class="checklist" id="nitter-normal-checklist"></div>
+      <hr>
+      <div class="some-block option-block">
+        <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+      </div>
+      <form id="custom-nitter-normal-instance-form">
         <div class="some-block option-block">
-            <h4 data-localise="__MSG_enable__">Enable</h4>
-            <input id="disable-nitter" type="checkbox" checked />
+          <input id="nitter-normal-custom-instance" placeholder="https://nitter.com" type="url" />
+          <button type="submit" class="add" id="nitter-normal-add-instance">
+            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+              <path d="M0 0h24v24H0V0z" fill="none" />
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+            </svg>
+          </button>
         </div>
+      </form>
+      <div class="checklist" id="nitter-normal-custom-checklist"></div>
 
+    </div>
+
+    <div id="tor">
+      <div class="some-block option-block">
+        <h4 data-localise="__MSG_defaultInstances__">Default Tor Instances</h4>
+      </div>
+      <div class="checklist" id="nitter-tor-checklist"></div>
+      <hr>
+      <div class="some-block option-block">
+        <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+      </div>
+      <form id="custom-nitter-tor-instance-form">
         <div class="some-block option-block">
-            <h4 data-localise="__MSG_protocol__">Protocol</h4>
-            <select id="protocol">
-                <option value="normal" data-localise="__MSG_normal__">Normal</option>
-                <option value="tor" data-localise="__MSG_tor__">Tor</option>
-            </select>
+          <input id="nitter-tor-custom-instance" placeholder="https://nitter.com" type="url" />
+          <button type="submit" class="add" id="nitter-tor-add-instance">
+            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+              <path d="M0 0h24v24H0V0z" fill="none" />
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+            </svg>
+          </button>
         </div>
+      </form>
+      <div class="checklist" id="nitter-tor-custom-checklist"></div>
+    </div>
 
-        <div class="some-block option-block">
-            <h4 data-localise="__MSG_bypassTwitter__">Bypass "Open in Twitter"</h4>
-            <input id="bypass-watch-on-twitter" type="checkbox" checked />
-        </div>
+  </section>
 
-        <hr>
-
-        <div id="normal">
-
-            <div class="some-block option-block">
-                <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
-            </div>
-            <div class="checklist" id="nitter-normal-checklist"></div>
-            <hr>
-            <div class="some-block option-block">
-                <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
-            </div>
-            <form id="custom-nitter-normal-instance-form">
-                <div class="some-block option-block">
-                    <input id="nitter-normal-custom-instance" placeholder="https://nitter.com" type="url" />
-                    <button type="submit" class="add" id="nitter-normal-add-instance">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
-                            fill="currentColor">
-                            <path d="M0 0h24v24H0V0z" fill="none" />
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                        </svg>
-                    </button>
-                </div>
-            </form>
-            <div class="checklist" id="nitter-normal-custom-checklist"></div>
-
-        </div>
-
-        <div id="tor">
-            <div class="some-block option-block">
-                <h4 data-localise="__MSG_defaultInstances__">Default Tor Instances</h4>
-            </div>
-            <div class="checklist" id="nitter-tor-checklist"></div>
-            <hr>
-            <div class="some-block option-block">
-                <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
-            </div>
-            <form id="custom-nitter-tor-instance-form">
-                <div class="some-block option-block">
-                    <input id="nitter-tor-custom-instance" placeholder="https://nitter.com" type="url" />
-                    <button type="submit" class="add" id="nitter-tor-add-instance">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
-                            fill="currentColor">
-                            <path d="M0 0h24v24H0V0z" fill="none" />
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                        </svg>
-                    </button>
-                </div>
-            </form>
-            <div class="checklist" id="nitter-tor-custom-checklist"></div>
-        </div>
-
-    </section>
-
-    <script type="module" src="../init.js"></script>
-    <script type="module" src="./twitter.js"></script>
-    <script type="module" src="../../../assets/javascripts/localise.js"></script>
+  <script type="module" src="../init.js"></script>
+  <script type="module" src="./twitter.js"></script>
+  <script type="module" src="../../../assets/javascripts/localise.js"></script>
 </body>
 
 </html>

@@ -56,7 +56,7 @@ sendList['tor'] = []
 for item in tmp:
     sendList['normal'].append(item)
 mightyList['send'] = sendList
-print('fetched Send')
+print(Fore.GREEN +'fetched ' + Style.RESET_ALL + 'Send')
 
 # Nitter
 r = requests.get('https://github.com/zedeus/nitter/wiki/Instances')
