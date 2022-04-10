@@ -8,9 +8,7 @@ const targets = [
 
 let redirects = {
     "proxiTok": {
-        "normal": [
-            "https://proxitok.herokuapp.com"
-        ],
+        "normal": [],
         "tor": []
     }
 }

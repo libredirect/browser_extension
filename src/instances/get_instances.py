@@ -34,6 +34,23 @@ for instance in rJson:
 mightyList['invidious'] = invidiousList
 print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Invidious')
 
+# ProxiTok
+r = requests.get('https://github.com/pablouser1/ProxiTok/wiki/Public-instances')
+soup = BeautifulSoup(r.text, 'html.parser')
+markdownBody = soup.find(class_='markdown-body')
+tables = markdownBody.find_all('table')
+proxiTokList = {}
+proxiTokList['normal'] = []
+for table in tables:
+    tbody = table.find('tbody')
+    trs = tbody.find_all('tr')
+    for tr in trs:
+        a = tr.find('a')
+        unstrippedUrl = 'https://' + a.contents[0]
+        url = unstrippedUrl.partition(' ')
+        proxiTokList['normal'].append(url[0])
+mightyList['proxiTok'] = proxiTokList
+print('fetched ProxiTok')
 
 # Send
 r = requests.get('https://gitlab.com/timvisee/send-instances/-/raw/master/README.md')

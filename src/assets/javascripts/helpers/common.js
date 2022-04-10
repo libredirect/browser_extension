@@ -9,6 +9,7 @@ import translateHelper from "./translate/translate.js";
 import wikipediaHelper from "./wikipedia.js";
 import localise from '../localise.js'
 import sendTargetsHelper from "./sendTargets.js";
+import tikTokHelper from "./tiktok.js";
 
 function getRandomInstance(instances) {
   return instances[~~(instances.length * Math.random())];
@@ -24,10 +25,11 @@ async function wholeInit() {
   await wikipediaHelper.init();
   await mediumHelper.init();
   await sendTargetsHelper.init();
+  await tikTokHelper.init();
 }
 
 async function updateInstances() {
-  const apiEndpoint = 'https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json';
+  const apiEndpoint = 'https://gist.githubusercontent.com/BobIsMyManager/3cb69c7e37703f7b657ec33281636401/raw/71488a46839d2a2bfeef2e9ed5a9e8ee7757ddb2/data.json';
   let request = new XMLHttpRequest();
   request.open('GET', apiEndpoint, false);
   request.send(null);
@@ -58,6 +60,8 @@ async function updateInstances() {
     mediumHelper.setRedirects(instances.scribe);
 
     sendTargetsHelper.setRedirects(instances.send);
+
+    tikTokHelper.setRedirects(instances.proxiTok);
 
     console.info("Successfully updated Instances");
     return true;
