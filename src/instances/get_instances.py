@@ -35,20 +35,14 @@ mightyList['invidious'] = invidiousList
 print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Invidious')
 
 # ProxiTok
-r = requests.get('https://github.com/pablouser1/ProxiTok/wiki/Public-instances')
-soup = BeautifulSoup(r.text, 'html.parser')
-markdownBody = soup.find(class_='markdown-body')
-tables = markdownBody.find_all('table')
+r = requests.get('https://raw.githubusercontent.com/wiki/pablouser1/ProxiTok/Public-instances.md')
+
+tmp = re.findall(
+    r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|", r.text)
 proxiTokList = {}
 proxiTokList['normal'] = []
-for table in tables:
-    tbody = table.find('tbody')
-    trs = tbody.find_all('tr')
-    for tr in trs:
-        a = tr.find('a')
-        unstrippedUrl = 'https://' + a.contents[0]
-        url = unstrippedUrl.partition(' ')
-        proxiTokList['normal'].append(url[0])
+for item in tmp:
+    proxiTokList['normal'].append(item)
 mightyList['proxiTok'] = proxiTokList
 print('fetched ProxiTok')
 
