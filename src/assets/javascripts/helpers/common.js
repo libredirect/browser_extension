@@ -29,7 +29,7 @@ async function wholeInit() {
 }
 
 async function updateInstances() {
-  const apiEndpoint = 'https://gist.githubusercontent.com/BobIsMyManager/3cb69c7e37703f7b657ec33281636401/raw/71488a46839d2a2bfeef2e9ed5a9e8ee7757ddb2/data.json';
+  const apiEndpoint = 'https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json';
   let request = new XMLHttpRequest();
   request.open('GET', apiEndpoint, false);
   request.send(null);
