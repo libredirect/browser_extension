@@ -34,6 +34,18 @@ for instance in rJson:
 mightyList['invidious'] = invidiousList
 print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Invidious')
 
+# ProxiTok
+r = requests.get('https://raw.githubusercontent.com/wiki/pablouser1/ProxiTok/Public-instances.md')
+
+tmp = re.findall(
+    r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|", r.text)
+proxiTokList = {}
+proxiTokList['normal'] = []
+proxiTokList['tor'] = []
+for item in tmp:
+    proxiTokList['normal'].append(item)
+mightyList['proxiTok'] = proxiTokList
+print('fetched ProxiTok')
 
 # Send
 r = requests.get('https://gitlab.com/timvisee/send-instances/-/raw/master/README.md')

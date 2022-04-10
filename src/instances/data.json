@@ -33,6 +33,12 @@
       "http://2rorw2w54tr7jkasn53l5swbjnbvz3ubebhswscnc54yac6gmkxaeeqd.onion"
     ]
   },
+  "proxiTok": {
+    "normal": [
+      "https://proxitok.herokuapp.com"
+    ],
+    "tor": []
+  },
   "send": {
     "normal": [
       "https://send.vis.ee",
@@ -457,6 +463,14 @@
     ]
   },
   "peertube": [
+    "https://vid.twhtv.club",
+    "https://video.retroedge.tech",
+    "https://truvitv.com",
+    "https://mooretube.com",
+    "https://tube.itsg.host",
+    "https://pt.ilyamikcoder.com",
+    "https://peertube.sensin.eu",
+    "https://watch.riverside.rocks",
     "https://peer.galaxycrow.de",
     "https://sharetube.us",
     "https://dalek.zone",

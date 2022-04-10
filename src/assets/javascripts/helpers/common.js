@@ -9,6 +9,7 @@ import translateHelper from "./translate/translate.js";
 import wikipediaHelper from "./wikipedia.js";
 import localise from '../localise.js'
 import sendTargetsHelper from "./sendTargets.js";
+import tikTokHelper from "./tiktok.js";
 
 function getRandomInstance(instances) {
   return instances[~~(instances.length * Math.random())];
@@ -24,6 +25,7 @@ async function wholeInit() {
   await wikipediaHelper.init();
   await mediumHelper.init();
   await sendTargetsHelper.init();
+  await tikTokHelper.init();
 }
 
 async function updateInstances() {
@@ -58,6 +60,8 @@ async function updateInstances() {
     mediumHelper.setRedirects(instances.scribe);
 
     sendTargetsHelper.setRedirects(instances.send);
+
+    tikTokHelper.setRedirects(instances.proxiTok);
 
     console.info("Successfully updated Instances");
     return true;
