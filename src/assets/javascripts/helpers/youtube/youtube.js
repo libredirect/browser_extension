@@ -4,68 +4,37 @@ window.browser = window.browser || window.chrome;
 
 import commonHelper from '../common.js'
 import {
-  youtubeListen, getYoutubeListen, setYoutubeListen,
-
-  invidiousQuality, getInvidiousQuality, setinvidiousQuality,
-
-  invidiousAlwaysProxy, setInvidiousAlwaysProxy, getInvidiousAlwaysProxy,
-
-  invidiousPlayerStyle, getInvidiousPlayerStyle, setInvidiousPlayerStyle,
-
-  invidiousVideoLoop, getInvidiousVideoLoop, setInvidiousVideoLoop,
-
-  invidiousContinueAutoplay, getInvidiousContinueAutoplay, setInvidiousContinueAutoplay,
-
-  invidiousContinue, getInvidiousContinue, setInvidiousContinue,
-
-  invidiousSpeed, getInvidiousSpeed, setInvidiousSpeed,
-
-  invidiousQualityDash, getInvidiousQualityDash, setInvidiousQualityDash,
-
-  invidiousComments, getInvidiousComments, setInvidiousComments,
-
-  invidiousCaptions, getInvidiousCaptions, setInvidiousCaptions,
-
-  invidiousRelatedVideos, getInvidiousRelatedVideos, setInvidiousRelatedVideos,
-
-  invidiousAnnotations, getInvidiousAnnotations, setInvidiousAnnotations,
-
-  invidiousExtendDesc, getInvidiousExtendDesc, setInvidiousExtendDesc,
-
-  invidiousVrMode, getInvidiousVrMode, setInvidiousVrMode,
-
-  invidiousSavePlayerPos, getInvidiousSavePlayerPos, setInvidiousSavePlayerPos,
-
-  getPipedBufferGoal, setPipedBufferGoal,
-
-  getPipedComments, setPipedComments,
-
-  getPipedDisableLBRY, setPipedDisableLBRY,
-
-  getPipedEnabledCodecs, setPipedEnabledCodecs,
-
-  getPipedHomepage, setPipedHomepage,
-
-  getPipedMinimizeDescription, setPipedMinimizeDescription,
-
-  getPipedProxyLBRY, setPipedProxyLBRY,
-
-  getPipedQuality, setPipedQuality,
-
-  getPipedRegion, setPipedRegion,
-
-  getPipedSelectedSkip, setPipedSelectedSkip,
-
-  getPipedSponsorblock, setPipedSponsorblock,
-
-  getPipedWatchHistory, setPipedWatchHistory,
-
+  youtubeListen, getYoutubeListen,
+  invidiousQuality, getInvidiousQuality,
+  invidiousAlwaysProxy, getInvidiousAlwaysProxy,
+  invidiousPlayerStyle, getInvidiousPlayerStyle,
+  invidiousVideoLoop, getInvidiousVideoLoop,
+  invidiousContinueAutoplay, getInvidiousContinueAutoplay,
+  invidiousContinue, getInvidiousContinue,
+  invidiousSpeed, getInvidiousSpeed,
+  invidiousQualityDash, getInvidiousQualityDash,
+  invidiousComments, getInvidiousComments,
+  invidiousCaptions, getInvidiousCaptions,
+  invidiousRelatedVideos, getInvidiousRelatedVideos,
+  invidiousAnnotations, getInvidiousAnnotations,
+  invidiousExtendDesc, getInvidiousExtendDesc,
+  invidiousVrMode, getInvidiousVrMode,
+  invidiousSavePlayerPos, getInvidiousSavePlayerPos,
+  getPipedBufferGoal,
+  getPipedComments,
+  getPipedDisableLBRY,
+  getPipedEnabledCodecs,
+  getPipedHomepage,
+  getPipedMinimizeDescription,
+  getPipedProxyLBRY,
+  getPipedQuality,
+  getPipedRegion,
+  getPipedSelectedSkip,
+  getPipedSponsorblock,
+  getPipedWatchHistory,
   volume, getVolume, setVolume,
-
   youtubeAutoplay, getAutoplay, setAutoplay,
-
-  getPipedMaterialSkipToLastPoint, setPipedMaterialSkipToLastPoint,
-
+  getPipedMaterialSkipToLastPoint,
   initOptions
 } from './options.js';
 
@@ -126,6 +95,15 @@ function getCustomRedirects() {
     }
   };
 };
+
+async function setYoutubeSettings(val) {
+  return new Promise(
+    resolve => {
+      browser.storage.local.set(val).then(resolve);
+    }
+  )
+
+}
 
 function setInvidiousRedirects(val) {
   redirects.invidious = val;
@@ -251,51 +229,16 @@ function setDisable(val) {
 
 let enableCustomSettings;
 const getEnableCustomSettings = () => enableCustomSettings;
-function setEnableCustomSettings(val) {
-  enableCustomSettings = val;
-  browser.storage.local.set({ enableYoutubeCustomSettings: enableCustomSettings })
-  console.log("enableYoutubeCustomSettings: ", enableCustomSettings)
-}
-
 let protocol;
 const getProtocol = () => protocol;
-function setProtocol(val) {
-  protocol = val;
-  browser.storage.local.set({ youtubeProtocol: val })
-  console.log("youtubeProtocol: ", val)
-}
-
 let OnlyEmbeddedVideo;
-function setOnlyEmbeddedVideo(val) {
-  OnlyEmbeddedVideo = val;
-  browser.storage.local.set({ OnlyEmbeddedVideo })
-  console.log("OnlyEmbeddedVideo: ", OnlyEmbeddedVideo)
-}
 const getOnlyEmbeddedVideo = () => OnlyEmbeddedVideo;
-
 let frontend;
 const getFrontend = () => frontend;
-function setFrontend(val) {
-  frontend = val;
-  browser.storage.local.set({ youtubeFrontend: val })
-  console.log("youtubeFrontend: ", val)
-}
-
 let youtubeEmbedFrontend;
 const getYoutubeEmbedFrontend = () => youtubeEmbedFrontend;
-function setYoutubeEmbedFrontend(val) {
-  youtubeEmbedFrontend = val;
-  browser.storage.local.set({ youtubeEmbedFrontend })
-  console.log("youtubeEmbedFrontend: ", youtubeEmbedFrontend)
-}
-
 let bypassWatchOnYoutube;
 const getBypassWatchOnYoutube = () => bypassWatchOnYoutube;
-function setBypassWatchOnYoutube(val) {
-  bypassWatchOnYoutube = val;
-  browser.storage.local.set({ bypassWatchOnYoutube })
-  console.log("bypassWatchOnYoutube: ", bypassWatchOnYoutube)
-}
 
 let alwaysUsePreferred;
 function redirect(url, details, initiator) {
@@ -684,17 +627,16 @@ async function init() {
 }
 
 export default {
+  setYoutubeSettings,
+
   getBypassWatchOnYoutube,
-  setBypassWatchOnYoutube,
 
   initPipedLocalStorage,
   initPipedMaterialLocalStorage,
 
   getFrontend,
-  setFrontend,
 
   getYoutubeEmbedFrontend,
-  setYoutubeEmbedFrontend,
 
   getRedirects,
   getCustomRedirects,
@@ -708,28 +650,21 @@ export default {
 
   initInvidiousCookies,
 
-  setInvidiousAlwaysProxy,
   getInvidiousAlwaysProxy,
 
-  setinvidiousQuality,
   getInvidiousQuality,
 
-  setInvidiousPlayerStyle,
   getInvidiousPlayerStyle,
 
   getInvidiousVideoLoop,
-  setInvidiousVideoLoop,
 
   getDisable,
   setDisable,
 
   getEnableCustomSettings,
-  setEnableCustomSettings,
 
   getProtocol,
-  setProtocol,
 
-  setOnlyEmbeddedVideo,
   getOnlyEmbeddedVideo,
 
   setVolume,
@@ -739,79 +674,54 @@ export default {
   getAutoplay,
 
   getInvidiousContinueAutoplay,
-  setInvidiousContinueAutoplay,
 
   getInvidiousContinue,
-  setInvidiousContinue,
 
   getYoutubeListen,
-  setYoutubeListen,
 
   getInvidiousSpeed,
-  setInvidiousSpeed,
 
   getInvidiousQualityDash,
-  setInvidiousQualityDash,
 
   getInvidiousComments,
-  setInvidiousComments,
 
   getInvidiousCaptions,
-  setInvidiousCaptions,
 
   getInvidiousRelatedVideos,
-  setInvidiousRelatedVideos,
 
   getInvidiousAnnotations,
-  setInvidiousAnnotations,
 
   getInvidiousExtendDesc,
-  setInvidiousExtendDesc,
 
   getInvidiousVrMode,
-  setInvidiousVrMode,
 
   getInvidiousSavePlayerPos,
-  setInvidiousSavePlayerPos,
 
   getPipedBufferGoal,
-  setPipedBufferGoal,
 
   getPipedComments,
-  setPipedComments,
 
   getPipedDisableLBRY,
-  setPipedDisableLBRY,
 
   getPipedEnabledCodecs,
-  setPipedEnabledCodecs,
 
   getPipedHomepage,
-  setPipedHomepage,
 
   getPipedMinimizeDescription,
-  setPipedMinimizeDescription,
 
   getPipedProxyLBRY,
-  setPipedProxyLBRY,
 
   getPipedQuality,
-  setPipedQuality,
 
   getPipedRegion,
-  setPipedRegion,
 
   getPipedSelectedSkip,
-  setPipedSelectedSkip,
 
   getPipedSponsorblock,
-  setPipedSponsorblock,
 
   getPipedWatchHistory,
-  setPipedWatchHistory,
 
   getPipedMaterialSkipToLastPoint,
-  setPipedMaterialSkipToLastPoint,
 
   getInvidiousNormalRedirectsChecks,
   setInvidiousNormalRedirectsChecks,

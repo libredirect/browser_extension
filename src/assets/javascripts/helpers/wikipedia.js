@@ -57,8 +57,8 @@ let protocol;
 const getProtocol = () => protocol;
 function setProtocol(val) {
   protocol = val;
-  browser.storage.local.set({ wikilessProtocol: val })
-  console.log("wikilessProtocol: ", val)
+  browser.storage.local.set({ wikipediaProtocol: val })
+  console.log("wikipediaProtocol: ", val)
 }
 
 

@@ -6,8 +6,8 @@ disableElement.addEventListener("change",
     (event) => translateHelper.setDisable(!event.target.checked)
 );
 
-let simplyTranslateDivElement = document.getElementById("simplyTranslate")
-let lingvaDivElement = document.getElementById("lingva")
+let simplyTranslateDivElement = document.getElementById("simplyTranslate");
+let lingvaDivElement = document.getElementById("lingva");
 
 
 function changeFrontendsSettings(frontend) {
@@ -22,14 +22,14 @@ function changeFrontendsSettings(frontend) {
 }
 let translateFrontendElement = document.getElementById("translate-frontend");
 translateFrontendElement.addEventListener("change",
-    (event) => {
+    event => {
         let frontend = event.target.options[translateFrontendElement.selectedIndex].value
         translateHelper.setFrontend(frontend)
         changeFrontendsSettings(frontend);
     }
 );
 
-let protocolElement = document.getElementById("protocol")
+let protocolElement = document.getElementById("protocol");
 protocolElement.addEventListener("change",
     (event) => {
         let protocol = event.target.options[protocolElement.selectedIndex].value
@@ -39,11 +39,12 @@ protocolElement.addEventListener("change",
 );
 
 function changeProtocolSettings(protocol) {
-    let normalSimplyTranslateDiv = document.getElementById("simplyTranslate-normal");
-    let torSimplyTranslateDiv = document.getElementById("simplyTranslate-tor");
+    let normalSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("normal")[0];
+    let torSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("tor")[0];
 
-    let normalLingvaDiv = document.getElementById("lingva-normal");
-    let torLingvaDiv = document.getElementById("lingva-tor");
+    let normalLingvaDiv = document.getElementById("lingva").getElementsByClassName("normal")[0];
+    let torLingvaDiv = document.getElementById("lingva").getElementsByClassName("tor")[0];
+
     if (protocol == 'normal') {
         normalSimplyTranslateDiv.style.display = 'block';
         normalLingvaDiv.style.display = 'block';
@@ -58,17 +59,18 @@ function changeProtocolSettings(protocol) {
     }
 }
 
-let fromElement = document.getElementById("from");
+let fromElement = document.getElementsByClassName("from")[0];
 fromElement.addEventListener("change",
     event => translateHelper.setFrom(event.target.options[fromElement.selectedIndex].value)
 );
 
-let toElement = document.getElementById("to");
+let toElement = document.getElementsByClassName("to")[0];
 toElement.addEventListener("change",
     event => translateHelper.setTo(event.target.options[toElement.selectedIndex].value)
 );
 
-let simplyTranslateEngineElement = document.getElementById("simplyTranslate-engine");
+let simplyTranslateElement = document.getElementById("simplyTranslate")
+let simplyTranslateEngineElement = simplyTranslateElement.getElementsByClassName("engine")[0];
 simplyTranslateEngineElement.addEventListener("change",
     event => translateHelper.setSimplyTranslateEngine(event.target.options[simplyTranslateEngineElement.selectedIndex].value)
 );
@@ -109,7 +111,6 @@ translateHelper.init().then(() => {
         translateHelper.getSimplyTranslateTorCustomRedirects,
         translateHelper.setSimplyTranslateTorCustomRedirects
     );
-
 
     commonHelper.processDefaultCustomInstances(
         'lingva',

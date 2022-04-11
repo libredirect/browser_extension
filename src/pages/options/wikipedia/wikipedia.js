@@ -3,22 +3,21 @@ import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableWikipediaElement = document.getElementById("disable-wikipedia");
 disableWikipediaElement.addEventListener("change",
-    (event) => wikipediaHelper.setDisable(!event.target.checked)
+    event => wikipediaHelper.setDisable(!event.target.checked)
 );
 
-let protocolElement = document.getElementById("protocol")
+let protocolElement = document.getElementById("protocol");
 protocolElement.addEventListener("change",
-    (event) => {
+    event => {
         let protocol = event.target.options[protocolElement.selectedIndex].value
         wikipediaHelper.setProtocol(protocol);
         changeProtocolSettings(protocol);
     }
 );
 
-
 function changeProtocolSettings(protocol) {
-    let normalDiv = document.getElementById("normal");
-    let torDiv = document.getElementById("tor");
+    let normalDiv = document.getElementsByClassName("normal")[0];
+    let torDiv = document.getElementsByClassName("tor")[0];
     if (protocol == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';
@@ -33,6 +32,7 @@ wikipediaHelper.init().then(() => {
     disableWikipediaElement.checked = !wikipediaHelper.getDisable();
 
     let protocol = wikipediaHelper.getProtocol();
+    console.log('protocol', protocol);
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 

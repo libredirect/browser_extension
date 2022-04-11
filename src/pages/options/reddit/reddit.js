@@ -45,11 +45,11 @@ protocolElement.addEventListener("change",
 );
 
 function changeProtocolSettings(protocol) {
-    let normalLibredditDiv = document.getElementById("libreddit-normal");
-    let torLibredditDiv = document.getElementById("libreddit-tor");
+    let normalLibredditDiv = libredditDivElement.getElementsByClassName("normal")[0];
+    let torLibredditDiv = libredditDivElement.getElementsByClassName("tor")[0];
 
-    let normalTedditDiv = document.getElementById("teddit-normal");
-    let torTedditDiv = document.getElementById("teddit-tor");
+    let normalTedditDiv = tedditDivElement.getElementsByClassName("normal")[0];
+    let torTedditDiv = tedditDivElement.getElementsByClassName("tor")[0];
     if (protocol == 'normal') {
         normalLibredditDiv.style.display = 'block';
         normalTedditDiv.style.display = 'block';

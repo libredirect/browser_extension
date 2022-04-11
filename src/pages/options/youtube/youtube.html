@@ -154,7 +154,7 @@
         <select id="youtube-embed-frontend">
           <option value="invidious">Invidious</option>
           <option value="piped">Piped</option>
-          <option value="pipedMaterial">Piped-Material</option>
+          <option value="pipedMaterial">Material</option>
           <option value="youtube">Youtube</option>
         </select>
       </div>
@@ -190,64 +190,47 @@
         <input id="enable-youtube-custom-settings" type="checkbox" />
       </div>
 
+    </div>
+
+    <div id="invidious">
+
       <div class="custom-settings">
 
         <hr>
 
         <div class="some-block option-block">
-          <h4 data-localise="__MSG_autoplayVid__">Autoplay Video</h4>
-          <input id="invidious-youtubeAutoplay" type="checkbox" />
-        </div>
-
-        <div class="some-block option-block">
-          <h4><x data-localise="__MSG_volume__">Volume: </x><span id="volume-value">--%</span></h4>
-          <input id="invidious-volume" name="invidious-volume" type="range" min="0" max="100" step="1" />
-        </div>
-
-      </div>
-
-    </div>
-
-    <div id="invidious">
-
-
-      <div class="custom-settings">
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_playerStyle__">Player Style</h4>
-          <select id="invidious-player_style">
-            <option value="invidious" data-localise="__MSG_invidious__">Invidious</option>
-            <option value="youtube" data-localise="__MSG_youtube__">YouTube</option>
-          </select>
-        </div>
-
-        <div class="some-block option-block">
           <h4 data-localise="__MSG_alwaysLoop__">Always loop</h4>
-          <input id="invidious-video_loop" type="checkbox" />
+          <input class="video_loop" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_autoplayVid__">Autoplay Video</h4>
+          <input class="youtubeAutoplay" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_playNext__">Play next by default</h4>
-          <input id="invidious-continue" type="checkbox" />
+          <input class="continue" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_autoplayNext__">Autoplay next video</h4>
-          <input id="invidious-continue_autoplay" type="checkbox" />
+          <input class="continue_autoplay" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_alwaysProxy__">Always proxy videos</h4>
-          <input id="invidious-local" type="checkbox" />
+          <input class="local" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_listenByDefault__">Listen by default</h4>
-          <input id="invidious-listen" type="checkbox" />
+          <input class="listen" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_defaultSpeed__">Default speed</h4>
-          <select id="invidious-speed">
+          <select class="speed">
             <option>2.0</option>
             <option>1.75</option>
             <option>1.5</option>
@@ -261,7 +244,7 @@
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_prefQuality__">Preferred video quality</h4>
-          <select id="invidious-quality">
+          <select class="quality">
             <option value="hd720">720p</option>
             <option value="medium">480p</option>
             <option value="dash" data-localise="__MSG_dash__">DASH (adaptive quality)</option>
@@ -271,7 +254,7 @@
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_prefDashQuality__">Preferred DASH video quality</h4>
-          <select id="invidious-quality_dash">
+          <select class="quality_dash">
             <option value="auto" data-localise="__MSG_auto__">Auto</option>
             <option value="best" data-localise="__MSG_best__">Best</option>
             <option value="4320p">4320p</option>
@@ -289,15 +272,22 @@
         </div>
 
         <div class="some-block option-block">
+          <h4>
+            <x data-localise="__MSG_volume__">Volume: </x><span class="volume-value">--%</span>
+          </h4>
+          <input class="volume" name="volume" type="range" min="0" max="100" step="1" />
+        </div>
+
+        <div class="some-block option-block">
           <h4 data-localise="__MSG_defaultComments__">Default comments</h4>
-          <select id="invidious-comments[0]">
+          <select class="comments[0]">
             <option value="" data-localise="__MSG_none__">none</option>
             <option value="youtube">YouTube</option>
             <option value="reddit">Reddit</option>
             </option>
           </select>
           &nbsp;
-          <select id="invidious-comments[1]">
+          <select class="comments[1]">
             <option value="" data-localise="__MSG_none__">none</option>
             <option value="youtube">YouTube</option>
             <option value="reddit">Reddit</option>
@@ -306,7 +296,7 @@
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_defaultCaptions__">Default captions</h4>
-          <select id="invidious-captions[0]">
+          <select class="captions[0]">
             <option value="" data-localise="__MSG_none__">none</option>
             <option value="English">English</option>
             <option value="English (auto-generated)">English (auto-generated)</option>
@@ -439,7 +429,7 @@
             <option value="Zulu">Zulu</option>
           </select>
           &nbsp;
-          <select id="invidious-captions[1]">
+          <select class="captions[1]">
             <option value="" data-localise="__MSG_none__">none</option>
             <option value="English">English</option>
             <option value="English (auto-generated)">English (auto-generated)</option>
@@ -572,7 +562,7 @@
             <option value="Zulu">Zulu</option>
           </select>
           &nbsp;
-          <select id="invidious-captions[2]">
+          <select class="captions[2]">
             <option value="" data-localise="__MSG_none__">none</option>
             <option value="English">English</option>
             <option value="English (auto-generated)">English (auto-generated)</option>
@@ -708,47 +698,54 @@
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_showRelated__">Show related videos</h4>
-          <input id="invidious-related_videos" type="checkbox" />
+          <input class="related_videos" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_showAnnotations__">Show annotations by default</h4>
-          <input id="invidious-annotations" type="checkbox" />
+          <input class="annotations" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_autoExtendDesc__">Automatically extend video description</h4>
-          <input id="invidious-extend_desc" type="checkbox" />
+          <input class="extend_desc" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_interactive360__">Interactive 360 degree videos (requires WebGL)</h4>
-          <input id="invidious-vr_mode" type="checkbox" />
+          <input class="vr_mode" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_savePlaybackPos__">Save playback position</h4>
-          <input id="invidious-save_player_pos" type="checkbox" />
+          <input class="save_player_pos" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_playerStyle__">Player Style</h4>
+          <select class="player_style">
+            <option value="invidious" data-localise="__MSG_invidious__">Invidious</option>
+            <option value="youtube" data-localise="__MSG_youtube__">YouTube</option>
+          </select>
         </div>
 
       </div>
       <hr>
 
-      <div id="invidious-normal">
-
+      <div class="normal">
         <div class="some-block option-block">
           <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
         </div>
-        <div class="checklist" id="invidious-normal-checklist">
+        <div class="checklist" class="checklist">
         </div>
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
         </div>
-        <form id="custom-invidious-normal-instance-form">
+        <form class="custom-instance-form">
           <div class="some-block option-block">
-            <input id="invidious-normal-custom-instance" placeholder="https://invidious.com" type="url" />
-            <button type="submit" class="add" id="invidious-normal-add-instance">
+            <input class="custom-instance" placeholder="https://invidious.com" type="url" />
+            <button type="submit" class="add" class="add-instance">
               <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
                 fill="currentColor">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -757,23 +754,23 @@
             </button>
           </div>
         </form>
-        <div class="checklist" id="invidious-normal-custom-checklist"></div>
+        <div class="checklist custom-checklist"></div>
       </div>
 
-      <div id="invidious-tor">
+      <div class="tor">
         <div class="some-block option-block">
           <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
         </div>
-        <div class="checklist" id="invidious-tor-checklist">
+        <div class="checklist" class="checklist">
         </div>
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
         </div>
-        <form id="custom-invidious-tor-instance-form">
+        <form class="custom-instance-form">
           <div class="some-block option-block">
-            <input id="invidious-tor-custom-instance" placeholder="https://invidious.com" type="url" />
-            <button type="submit" class="add" id="invidious-tor-add-instance">
+            <input class="custom-instance" placeholder="https://invidious.com" type="url" />
+            <button type="submit" class="add" class="add-instance">
               <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
                 fill="currentColor">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -782,73 +779,85 @@
             </button>
           </div>
         </form>
-        <div class="checklist" id="invidious-tor-custom-checklist"></div>
+        <div class="checklist custom-checklist"></div>
       </div>
 
     </div>
 
     <div id="piped">
-
       <div class="custom-settings">
+        <hr>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_autoplayVid__">Autoplay Video</h4>
+          <input class="youtubeAutoplay" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4>
+            <x data-localise="__MSG_volume__">Volume: </x><span class="volume-value">--%</span>
+          </h4>
+          <input class="volume" name="volume" type="range" min="0" max="100" step="1" />
+        </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enableSponsorBlock__">Enable Sponsorblock</h4>
-          <input id="piped-sponsorblock" type="checkbox" />
+          <input class="sponsorblock" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skipSponsors__">Skip Sponsors</h4>
-          <input id="piped-selectedSkip-sponsor" type="checkbox" />
+          <input class="selectedSkip-sponsor" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skipIntermission__">Skip Intermission/Intro Animation</h4>
-          <input id="piped-selectedSkip-intro" type="checkbox" />
+          <input class="selectedSkip-intro" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skripEndcars__">Skip Endcards/Credits</h4>
-          <input id="piped-selectedSkip-outro" type="checkbox" />
+          <input class="selectedSkip-outro" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skripPreview__">Skip Preview/Recap</h4>
-          <input id="piped-selectedSkip-preview" type="checkbox" />
+          <input class="selectedSkip-preview" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skipReminder__">Skip Interaction Reminder (Subscribe)</h4>
-          <input id="piped-selectedSkip-interaction" type="checkbox" />
+          <input class="selectedSkip-interaction" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skipUnpaidPromo__">Skip Unpaid/Self Promotion</h4>
-          <input id="piped-selectedSkip-selfpromo" type="checkbox" />
+          <input class="selectedSkip-selfpromo" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skipMusic__">Skip Music: Non-Music Section</h4>
-          <input id="piped-selectedSkip-music_offtopic" type="checkbox" />
+          <input class="selectedSkip-music_offtopic" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skipHighlight__">Skip Highlight</h4>
-          <input id="piped-selectedSkip-poi_highlight" type="checkbox" />
+          <input class="selectedSkip-poi_highlight" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skipFiller__">Skip Filler Tangent</h4>
-          <input id="piped-selectedSkip-filler" type="checkbox" />
+          <input class="selectedSkip-filler" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_audioOnly__">Audio Only</h4>
-          <input id="piped-listen" type="checkbox" />
+          <input class="listen" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_defaultQuality__">Default Quality</h4>
-          <select id="piped-quality">
+          <select class="quality">
             <option value="0">Auto</option>
             <option value="144">144p</option>
             <option value="240">240p</option>
@@ -864,12 +873,12 @@
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_bufferingGoal__">Buffering Goal (in seconds)</h4>
-          <input id="piped-bufferGoal" type="number" min="10" />
+          <input class="bufferGoal" type="number" min="10" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_countrySelection__">Country Selection</h4>
-          <select id="piped-region">
+          <select class="region">
             <option value="AF">Afghanistan</option>
             <option value="AL">Albania</option>
             <option value="DZ">Algeria</option>
@@ -1068,7 +1077,7 @@
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_defaultHomepage__">Default Homepage</h4>
-          <select id="piped-homepage">
+          <select class="homepage">
             <option value="trending" data-localise="__MSG_trending__">Trending</option>
             <option value="feed" data-localise="__MSG_feed__">Feed</option>
           </select>
@@ -1076,22 +1085,22 @@
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_showComments__">Show Comments</h4>
-          <input id="piped-comments" type="checkbox" />
+          <input class="comments" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_minimizeDesc__">Minimize Description by default</h4>
-          <input id="piped-minimizeDescription" type="checkbox" />
+          <input class="minimizeDescription" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_storeHistory__">Store Watch History</h4>
-          <input id="piped-watchHistory" type="checkbox" />
+          <input class="watchHistory" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enabledCodecs__">Enabled Codecs (Multiple)</h4>
-          <select id="piped-enabledCodecs" multiple>
+          <select class="enabledCodecs" multiple>
             <option value="av1">AV1</option>
             <option value="vp9">VP9</option>
             <option value="avc">AVC (h.264)</option>
@@ -1100,30 +1109,31 @@
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_disableLBRY__">Disable LBRY for Streaming</h4>
-          <input id="piped-disableLBRY" type="checkbox" />
+          <input class="disableLBRY" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enableProxyLBRY__">Enable Proxy for LBRY</h4>
-          <input id="piped-proxyLBRY" type="checkbox" />
+          <input class="proxyLBRY" type="checkbox" />
         </div>
 
       </div>
+
       <hr>
-      <div id="piped-normal">
+      <div class="normal">
         <div class="some-block option-block">
           <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
         </div>
-        <div class="checklist" id="piped-normal-checklist">
+        <div class="checklist" class="checklist">
         </div>
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
         </div>
-        <form id="custom-piped-normal-instance-form">
+        <form class="custom-instance-form">
           <div class="some-block option-block">
-            <input id="piped-normal-custom-instance" placeholder="https://piped.com" type="url" />
-            <button type="submit" class="add" id="piped-normal-add-instance">
+            <input class="custom-instance" placeholder="https://piped.com" type="url" />
+            <button type="submit" class="add" class="add-instance">
               <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
                 fill="currentColor">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -1132,23 +1142,23 @@
             </button>
           </div>
         </form>
-        <div class="checklist" id="piped-normal-custom-checklist"></div>
+        <div class="checklist custom-checklist"></div>
       </div>
 
-      <div id="piped-tor">
+      <div class="tor">
         <div class="some-block option-block">
           <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
         </div>
-        <div class="checklist" id="piped-tor-checklist">
+        <div class="checklist" class="checklist">
         </div>
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
         </div>
-        <form id="custom-piped-tor-instance-form">
+        <form class="custom-instance-form">
           <div class="some-block option-block">
-            <input id="piped-tor-custom-instance" placeholder="https://piped.com" type="url" />
-            <button type="submit" class="add" id="piped-tor-add-instance">
+            <input class="custom-instance" placeholder="https://piped.com" type="url" />
+            <button type="submit" class="add" class="add-instance">
               <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
                 fill="currentColor">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -1157,101 +1167,103 @@
             </button>
           </div>
         </form>
-        <div class="checklist" id="piped-tor-custom-checklist"></div>
+        <div class="checklist custom-checklist"></div>
       </div>
       <hr>
     </div>
 
     <div id="pipedMaterial">
-      <hr>
-
       <div class="custom-settings">
+        <hr>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_autoplayVid__">Autoplay Video</h4>
+          <input class="youtubeAutoplay" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4>
+            <x data-localise="__MSG_volume__">Volume: </x><span class="volume-value">--%</span>
+          </h4>
+          <input class="volume" name="volume" type="range" min="0" max="100" step="1" />
+        </div>
+
         <div class="some-block option-block">
           <h4 data-localise="__MSG_audioOnly__">Audio Only</h4>
-          <input id="pipedMaterial-listen" type="checkbox" />
+          <input class="listen" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_disableLBRY__">Disable LBRY</h4>
-          <input id="pipedMaterial-disableLBRY" type="checkbox" />
+          <input class="disableLBRY" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_proxyLBRY__">Proxy LBRY videos</h4>
-          <input id="pipedMaterial-proxyLBRY" type="checkbox" />
+          <input class="proxyLBRY" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enableSponsorBlock__">Enable Sponsorblock</h4>
-          <input id="pipedMaterial-sponsorblock" type="checkbox" />
+          <input class="sponsorblock" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
-          <h4 data-localise="__MSG_skipNote__">Skip to the last watched point when encountering a video already seen</h4>
-          <input id="pipedMaterial-skipToLastPoint" type="checkbox" />
+          <h4 data-localise="__MSG_skipNote__">Skip to the last watched point when encountering a video already seen
+          </h4>
+          <input class="skipToLastPoint" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skipSponsors__">Skip Sponsors</h4>
-          <input id="pipedMaterial-selectedSkip-sponsor" type="checkbox" />
+          <input class="selectedSkip-sponsor" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skipIntermission__">Skip Intermission/Intro Animation</h4>
-          <input id="pipedMaterial-selectedSkip-intro" type="checkbox" />
+          <input class="selectedSkip-intro" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skripEndcars__">Skip Endcards/Credits</h4>
-          <input id="pipedMaterial-selectedSkip-outro" type="checkbox" />
+          <input class="selectedSkip-outro" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skripPreview__">Skip Preview/Recap</h4>
-          <input id="pipedMaterial-selectedSkip-preview" type="checkbox" />
+          <input class="selectedSkip-preview" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skipReminder__">Skip Interaction Reminder (Subscribe)</h4>
-          <input id="pipedMaterial-selectedSkip-interaction" type="checkbox" />
+          <input class="selectedSkip-interaction" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skipUnpaidPromo__">Skip Unpaid/Self Promotion</h4>
-          <input id="pipedMaterial-selectedSkip-selfpromo" type="checkbox" />
+          <input class="selectedSkip-selfpromo" type="checkbox" />
         </div>
 
         <div class="some-block option-block">
           <h4 data-localise="__MSG_skipMusic__">Skip Music: Non-Music Section</h4>
-          <input id="pipedMaterial-selectedSkip-music_offtopic" type="checkbox" />
-        </div>
-
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_skipHighlights__">Skip Highlight</h4>
-          <input id="pipedMaterial-selectedSkip-poi_highlight" type="checkbox" />
-        </div>
-
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_skipFiller__">Skip Filler Tangent</h4>
-          <input id="pipedMaterial-selectedSkip-filler" type="checkbox" />
+          <input class="selectedSkip-music_offtopic" type="checkbox" />
         </div>
         <hr>
 
       </div>
 
-      <div id="pipedMaterial-normal">
+      <div class="normal">
         <div class="some-block option-block">
           <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
         </div>
-        <div class="checklist" id="pipedMaterial-normal-checklist"></div>
+        <div class="checklist" class="checklist"></div>
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
         </div>
-        <form id="custom-pipedMaterial-normal-instance-form">
+        <form class="custom-instance-form">
           <div class="some-block option-block">
-            <input id="pipedMaterial-normal-custom-instance" placeholder="https://piped-material.com" type="url" />
-            <button type="submit" class="add" id="pipedMaterial-normal-add-instance">
+            <input class="custom-instance" placeholder="https://material.com" type="url" />
+            <button type="submit" class="add" class="add-instance">
               <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
                 fill="currentColor">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -1260,22 +1272,22 @@
             </button>
           </div>
         </form>
-        <div class="checklist" id="pipedMaterial-normal-custom-checklist"></div>
+        <div class="checklist custom-checklist"></div>
       </div>
 
-      <div id="pipedMaterial-tor">
+      <div class="tor">
         <div class="some-block option-block">
           <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
         </div>
-        <div class="checklist" id="pipedMaterial-tor-checklist"></div>
+        <div class="checklist" class="checklist"></div>
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
         </div>
-        <form id="custom-pipedMaterial-tor-instance-form">
+        <form class="custom-instance-form">
           <div class="some-block option-block">
-            <input id="pipedMaterial-tor-custom-instance" placeholder="https://pipedMaterial.com" type="url" />
-            <button type="submit" class="add" id="pipedMaterial-tor-add-instance">
+            <input class="custom-instance" placeholder="https://pipedMaterial.com" type="url" />
+            <button type="submit" class="add" class="add-instance">
               <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
                 fill="currentColor">
                 <path d="M0 0h24v24H0V0z" fill="none" />
@@ -1284,7 +1296,7 @@
             </button>
           </div>
         </form>
-        <div class="checklist" id="pipedMaterial-tor-custom-checklist"></div>
+        <div class="checklist custom-checklist"></div>
       </div>
     </div>
   </section>

@@ -3,12 +3,12 @@ import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableTiktokElement = document.getElementById("disable-tiktok");
 disableTiktokElement.addEventListener("change",
-    (event) => tiktokHelper.setDisable(!event.target.checked)
+    event => tiktokHelper.setDisable(!event.target.checked)
 );
 
 let protocolElement = document.getElementById("protocol")
 protocolElement.addEventListener("change",
-    (event) => {
+    event => {
         let protocol = event.target.options[protocolElement.selectedIndex].value
         tiktokHelper.setProtocol(protocol);
         changeProtocolSettings(protocol);
@@ -16,8 +16,8 @@ protocolElement.addEventListener("change",
 );
 
 function changeProtocolSettings(protocol) {
-    let normalDiv = document.getElementById("normal");
-    let torDiv = document.getElementById("tor");
+    let normalDiv = document.getElementsByClassName("normal")[0];
+    let torDiv = document.getElementsByClassName("tor")[0];
     if (protocol == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';

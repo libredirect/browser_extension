@@ -90,7 +90,7 @@ select {
   background-color: var(--bg-secondary);
   border: none;
   margin: 0;
-  width: 200px;
+  width: 180px;
   border-radius: 3px;
 }
 
@@ -107,6 +107,9 @@ input:invalid {
 section.option-block {
   width: 700px;
   margin: 0 50px;
+}
+section.option-block h2{
+  margin: 0;
 }
 
 body.option {

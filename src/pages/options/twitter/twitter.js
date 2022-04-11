@@ -2,23 +2,23 @@ import twitterHelper from "../../../assets/javascripts/helpers/twitter.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableTwitterElement = document.getElementById("disable-nitter");
-disableTwitterElement.addEventListener("change",
-    (event) => twitterHelper.setDisable(!event.target.checked)
-);
+let customSettingsDivElement = document.getElementsByClassName("custom-settings");
+let protocolElement = document.getElementById("protocol");
+let enableYoutubeCustomSettingsElement = document.getElementById("enable-twitter-custom-settings");
+let bypassWatchOnTwitterElement = document.getElementById("bypass-watch-on-twitter");
 
-let protocolElement = document.getElementById("protocol")
-protocolElement.addEventListener("change",
-    (event) => {
-        let protocol = event.target.options[protocolElement.selectedIndex].value
-        twitterHelper.setProtocol(protocol);
-        changeProtocolSettings(protocol);
-    }
-);
-
+let nitterElement = document.getElementById("nitter");
+document.addEventListener("change", _ => {
+    twitterHelper.setDisable(!disableTwitterElement.checked)
+    twitterHelper.setProtocol(protocolElement.value);
+    twitterHelper.setEnableCustomSettings(enableYoutubeCustomSettingsElement.checked);
+    twitterHelper.setBypassWatchOnTwitter(bypassWatchOnTwitterElement.checked);
+    changeProtocolSettings(protocolElement.value);
+})
 
 function changeProtocolSettings(protocol) {
-    let normalDiv = document.getElementById("normal");
-    let torDiv = document.getElementById("tor");
+    let normalDiv = nitterElement.getElementsByClassName("normal")[0];
+    let torDiv = nitterElement.getElementsByClassName("tor")[0];
     if (protocol == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';
@@ -27,15 +27,15 @@ function changeProtocolSettings(protocol) {
         normalDiv.style.display = 'none';
         torDiv.style.display = 'block';
     }
+    if (enableYoutubeCustomSettingsElement.checked)
+        for (const item of customSettingsDivElement) item.style.display = 'block';
+    else
+        for (const item of customSettingsDivElement) item.style.display = 'none';
 }
-
-let bypassWatchOnTwitterElement = document.getElementById("bypass-watch-on-twitter")
-bypassWatchOnTwitterElement.addEventListener("change",
-    event => twitterHelper.setBypassWatchOnTwitter(event.target.checked)
-);
 
 twitterHelper.init().then(() => {
     disableTwitterElement.checked = !twitterHelper.getDisable();
+    enableYoutubeCustomSettingsElement.checked = twitterHelper.getEnableCustomSettings();
     bypassWatchOnTwitterElement.checked = twitterHelper.getBypassWatchOnTwitter();
 
     let protocol = twitterHelper.getProtocol();

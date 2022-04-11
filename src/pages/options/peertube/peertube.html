@@ -144,53 +144,55 @@
     </div>
 
     <hr>
-
-    <div id="normal">
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
-      </div>
-      <div class="checklist" id="simpleertube-normal-checklist"></div>
-      <hr>
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
-      </div>
-      <form id="custom-simpleertube-normal-instance-form">
+    <div id="simpleertube">
+      <div class="normal">
         <div class="some-block option-block">
-          <input id="simpleertube-normal-custom-instance" placeholder="https://simpleertube.com" type="url" />
-          <button type="submit" class="add" id="simpleertube-normal-add-instance">
-            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
-              <path d="M0 0h24v24H0V0z" fill="none" />
-              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-          </button>
+          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
         </div>
-      </form>
-      <div class="checklist" id="simpleertube-normal-custom-checklist"></div>
-    </div>
-    <div id="tor">
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
-      </div>
-      <div class="checklist" id="simpleertube-tor-checklist"></div>
-      <hr>
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_customPopup__">Custom Instances</h4>
-      </div>
-      <form id="custom-simpleertube-tor-instance-form">
+        <div class="checklist checklist"></div>
+        <hr>
         <div class="some-block option-block">
-          <input id="simpleertube-tor-custom-instance" placeholder="https://simpleertube.com" type="url" />
-          <button type="submit" class="add" id="simpleertube-tor-add-instance">
-            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
-              <path d="M0 0h24v24H0V0z" fill="none" />
-              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-          </button>
+          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
         </div>
-      </form>
-      <div class="checklist" id="simpleertube-tor-custom-checklist"></div>
+        <form class="custom-instance-form">
+          <div class="some-block option-block">
+            <input class="custom-instance" placeholder="https://simpleertube.com" type="url" />
+            <button type="submit" class="add add-instance">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                fill="currentColor">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+        <div class="checklist custom-checklist"></div>
+      </div>
+      <div class="tor">
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+        </div>
+        <div class="checklist checklist"></div>
+        <hr>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_customPopup__">Custom Instances</h4>
+        </div>
+        <form class="custom-instance-form">
+          <div class="some-block option-block">
+            <input class="custom-instance" placeholder="https://simpleertube.com" type="url" />
+            <button type="submit" class="add add-instance">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                fill="currentColor">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+        <div class="checklist custom-checklist"></div>
+      </div>
     </div>
   </section>
-
 
   <script type="module" src="../init.js"></script>
   <script type="module" src="./peertube.js"></script>

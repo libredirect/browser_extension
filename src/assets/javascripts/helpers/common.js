@@ -88,9 +88,10 @@ function processDefaultCustomInstances(
   getNameCustomRedirects,
   setNameCustomRedirects
 ) {
+  let nameProtocolElement = document.getElementById(name).getElementsByClassName(protocol)[0];
 
   let nameCustomInstances = [];
-  let nameCheckListElement = document.getElementById(`${name}-${protocol}-checklist`);
+  let nameCheckListElement = nameProtocolElement.getElementsByClassName('checklist')[0];
   let nameDefaultRedirects;
 
   function calcNameCheckBoxes() {
@@ -101,22 +102,22 @@ function processDefaultCustomInstances(
         break;
       }
     for (const element of nameCheckListElement.getElementsByTagName('input'))
-      element.checked = nameDefaultRedirects.includes(element.id)
-    document.getElementById(`${name}-${protocol}-toogle-all`).checked = isTrue;
+      element.checked = nameDefaultRedirects.includes(element.className)
+    nameProtocolElement.getElementsByClassName('toogle-all')[0].checked = isTrue;
   }
 
   nameDefaultRedirects = getNameRedirectsChecks();
 
   nameCheckListElement.innerHTML =
     [
-      `<div><x data-localise="__MSG_toggleAll__">Toggle All</x><input type="checkbox" id="${name}-${protocol}-toogle-all" /></div>`,
-      ...nameHelper.getRedirects()[name][protocol].map((x) => `<div>${x}<input type="checkbox" id="${x}" /></div>`),
+      `<div><x data-localise="__MSG_toggleAll__">Toggle All</x><input type="checkbox" class="toogle-all" /></div>`,
+      ...nameHelper.getRedirects()[name][protocol].map((x) => `<div>${x}<input type="checkbox" class="${x}" /></div>`),
     ].join('\n<hr>\n');
 
   localise.localisePage();
 
   calcNameCheckBoxes();
-  document.getElementById(`${name}-${protocol}-toogle-all`).addEventListener("change", event => {
+  nameProtocolElement.getElementsByClassName('toogle-all')[0].addEventListener("change", event => {
     if (event.target.checked)
       nameDefaultRedirects = [...nameHelper.getRedirects()[name][protocol]];
     else
@@ -126,12 +127,12 @@ function processDefaultCustomInstances(
   });
 
   for (let element of nameCheckListElement.getElementsByTagName('input')) {
-    if (element.id != `${name}-${protocol}-toogle-all`)
-      document.getElementById(element.id).addEventListener("change", (event) => {
+    if (element.className != 'toogle-all')
+    nameProtocolElement.getElementsByClassName(element.className)[0].addEventListener("change", event => {
         if (event.target.checked)
-          nameDefaultRedirects.push(element.id)
+          nameDefaultRedirects.push(element.className)
         else {
-          let index = nameDefaultRedirects.indexOf(element.id);
+          let index = nameDefaultRedirects.indexOf(element.className);
           if (index > -1) nameDefaultRedirects.splice(index, 1);
         }
         setNameRedirectsChecks(nameDefaultRedirects);
@@ -141,9 +142,9 @@ function processDefaultCustomInstances(
 
   nameCustomInstances = getNameCustomRedirects();
   function calcNameCustomInstances() {
-    document.getElementById(`${name}-${protocol}-custom-checklist`).innerHTML =
+    nameProtocolElement.getElementsByClassName('custom-checklist')[0].innerHTML =
       nameCustomInstances.map(
-        (x) => `<div>${x}<button class="add" id="clear-${x}">
+        x => `<div>${x}<button class="add clear-${x}">
                               <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
                               fill="currentColor">
                                   <path d="M0 0h24v24H0V0z" fill="none" />
@@ -155,7 +156,7 @@ function processDefaultCustomInstances(
       ).join('\n');
 
     for (const item of nameCustomInstances) {
-      document.getElementById(`clear-${item}`).addEventListener("click", () => {
+      nameProtocolElement.getElementsByClassName(`clear-${item}`)[0].addEventListener("click", () => {
         let index = nameCustomInstances.indexOf(item);
         if (index > -1) nameCustomInstances.splice(index, 1);
         setNameCustomRedirects(nameCustomInstances);
@@ -164,9 +165,9 @@ function processDefaultCustomInstances(
     }
   }
   calcNameCustomInstances();
-  document.getElementById(`custom-${name}-${protocol}-instance-form`).addEventListener("submit", (event) => {
+  nameProtocolElement.getElementsByClassName('custom-instance-form')[0].addEventListener("submit", event => {
     event.preventDefault();
-    let nameCustomInstanceInput = document.getElementById(`${name}-${protocol}-custom-instance`);
+    let nameCustomInstanceInput = nameProtocolElement.getElementsByClassName('custom-instance')[0];
     let url = new URL(nameCustomInstanceInput.value);
     let protocolHostVar = protocolHost(url);
     if (nameCustomInstanceInput.validity.valid && !nameHelper.getRedirects()[name][protocol].includes(protocolHostVar)) {

@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="../../../assets/images/libredirect.svg" />
-    <link href="../../stylesheets/styles.css" rel="stylesheet" />
-    <title>LibRedirect: Wikipedia</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="../../../assets/images/libredirect.svg" />
+  <link href="../../stylesheets/styles.css" rel="stylesheet" />
+  <title>LibRedirect: Wikipedia</title>
 </head>
 
 <body dir="auto" class="option">
@@ -54,7 +54,7 @@
 
     <div class="title">
       <img src="../../../assets/images/imgur-icon.png" />
-      <a href="../imgur/imgur.html"  data-localise="__MSG_imgur__">Imgur</a>
+      <a href="../imgur/imgur.html" data-localise="__MSG_imgur__">Imgur</a>
     </div>
 
     <div class="title">
@@ -127,78 +127,78 @@
     </div>
 
   </section>
-    <section class="option-block">
+  <section class="option-block">
+    <div class="some-block option-block">
+      <h4 data-localise="__MSG_enable__">Enable</h4>
+      <input id="disable-wikipedia" type="checkbox" checked />
+    </div>
+
+    <div class="some-block option-block">
+      <h4 data-localise="__MSG_protocol__">Protocol</h4>
+      <select id="protocol">
+        <option value="normal" data-localise="__MSG_normal__">Normal</option>
+        <option value="tor" data-localise="__MSG_tor__">Tor</option>
+      </select>
+    </div>
+
+    <hr>
+    <div id="wikiless">
+      <div class="normal">
         <div class="some-block option-block">
-            <h4 data-localise="__MSG_enable__">Enable</h4>
-            <input id="disable-wikipedia" type="checkbox" checked />
+          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
         </div>
-
-
-        <div class="some-block option-block">
-            <h4 data-localise="__MSG_protocol__">Protocol</h4>
-            <select id="protocol">
-                <option value="normal" data-localise="__MSG_normal__">Normal</option>
-                <option value="tor" data-localise="__MSG_tor__">Tor</option>
-            </select>
+        <div class="checklist checklist">
         </div>
-
         <hr>
-
-        <div id="normal">
-            <div class="some-block option-block">
-                <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
-            </div>
-            <div class="checklist" id="wikiless-normal-checklist">
-            </div>
-            <hr>
-            <div class="some-block option-block">
-                <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
-            </div>
-            <form id="custom-wikiless-normal-instance-form">
-                <div class="some-block option-block">
-                    <input id="wikiless-normal-custom-instance" placeholder="https://wikiless.com" type="url" />
-                    <button type="submit" class="add" id="wikiless-normal-add-instance">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
-                            fill="currentColor">
-                            <path d="M0 0h24v24H0V0z" fill="none" />
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                        </svg>
-                    </button>
-                </div>
-            </form>
-            <div class="checklist" id="wikiless-normal-custom-checklist"></div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
         </div>
+        <form class="custom-instance-form">
+          <div class="some-block option-block">
+            <input class="custom-instance" placeholder="https://wikiless.com" type="url" />
+            <button type="submit" class="add add-instance">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                fill="currentColor">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+        <div class="checklist custom-checklist"></div>
+      </div>
 
-        <div id="tor">
-            <div class="some-block option-block">
-                <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
-            </div>
-            <div class="checklist" id="wikiless-tor-checklist">
-            </div>
-            <hr>
-            <div class="some-block option-block">
-                <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
-            </div>
-            <form id="custom-wikiless-tor-instance-form">
-                <div class="some-block option-block">
-                    <input id="wikiless-tor-custom-instance" placeholder="https://wikiless.com" type="url" />
-                    <button type="submit" class="add" id="wikiless-tor-add-instance">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
-                            fill="currentColor">
-                            <path d="M0 0h24v24H0V0z" fill="none" />
-                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-                        </svg>
-                    </button>
-                </div>
-            </form>
-            <div class="checklist" id="wikiless-tor-custom-checklist"></div>
-
+      <div class="tor">
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
         </div>
-    </section>
+        <div class="checklist checklist">
+        </div>
+        <hr>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+        </div>
+        <form class="custom-instance-form">
+          <div class="some-block option-block">
+            <input class="custom-instance" placeholder="https://wikiless.com" type="url" />
+            <button type="submit" class="add add-instance">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                fill="currentColor">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+        <div class="checklist custom-checklist"></div>
 
-    <script type="module" src="../init.js"></script>
-    <script type="module" src="./wikipedia.js"></script>
-    <script type="module" src="../../../assets/javascripts/localise.js"></script>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="../init.js"></script>
+  <script type="module" src="./wikipedia.js"></script>
+  <script type="module" src="../../../assets/javascripts/localise.js"></script>
 </body>
 
 </html>
