@@ -20,7 +20,8 @@ let redirects = {
   },
   "whoogle": {
     "normal": [],
-    "tor": []
+    "tor": [],
+    "i2p": []
   },
   "startpage": {
     "normal": "https://www.startpage.com",
@@ -33,14 +34,17 @@ const getCustomRedirects = () => {
     "searx": {
       "normal": [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects],
       "tor": [...searxTorRedirectsChecks, ...searxTorCustomRedirects],
+      "i2p": [...searxI2PRedirectsChecks, ...searxI2PCustomRedirects]
     },
     "searxng": {
       "normal": [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects],
       "tor": [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects],
+      "i2p": [...searxngI2PRedirectsChecks, ...searxngI2PCustomRedirects]
     },
     "whoogle": {
       "normal": [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects],
-      "normal": [...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects]
+      "tor": [...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects],
+      "i2p": [...whoogleI2PRedirectsChecks, ...whoogleI2PCustomRedirects]
     }
   };
 };
@@ -60,6 +64,12 @@ function setSearxRedirects(val) {
     if (index !== -1) searxTorRedirectsChecks.splice(index, 1);
   }
   setSearxTorRedirectsChecks(searxTorRedirectsChecks);
+
+  for (const item of searxI2PRedirectsChecks) if (!redirects.searx.i2p.includes(item)) {
+    var index = searxI2PRedirectsChecks.indexOf(item);
+    if (index !== -1) searxI2PRedirectsChecks.splice(index, 1);
+  }
+  setSearxI2PRedirectsChecks(searxI2PRedirectsChecks);
 }
 
 function setSearxngRedirects(val) {
@@ -77,6 +87,12 @@ function setSearxngRedirects(val) {
     if (index !== -1) searxngTorRedirectsChecks.splice(index, 1);
   }
   setSearxngTorRedirectsChecks(searxngTorRedirectsChecks);
+
+  for (const item of searxngI2PRedirectsChecks) if (!redirects.searxng.i2p.includes(item)) {
+    var index = searxngI2PRedirectsChecks.indexOf(item);
+    if (index !== -1) searxngI2PRedirectsChecks.splice(index, 1);
+  }
+  setSearxngI2PRedirectsChecks(searxngI2PRedirectsChecks);
 }
 
 function setWhoogleRedirects(val) {
@@ -94,6 +110,12 @@ function setWhoogleRedirects(val) {
     if (index !== -1) whoogleTorRedirectsChecks.splice(index, 1);
   }
   setWhoogleTorRedirectsChecks(whoogleTorRedirectsChecks);
+
+  for (const item of whoogleI2PRedirectsChecks) if (!redirects.whoogle.i2p.includes(item)) {
+    var index = whoogleI2PRedirectsChecks.indexOf(item);
+    if (index !== -1) whoogleI2PRedirectsChecks.splice(index, 1);
+  }
+  setWhoogleI2PRedirectsChecks(whoogleI2PRedirectsChecks);
 }
 
 let whoogleNormalRedirectsChecks;
@@ -102,6 +124,14 @@ function setWhoogleNormalRedirectsChecks(val) {
   whoogleNormalRedirectsChecks = val;
   browser.storage.local.set({ whoogleNormalRedirectsChecks })
   console.log("whoogleNormalRedirectsChecks: ", val)
+}
+
+let whoogleI2PRedirectsChecks;
+const getWhoogleI2PRedirectsChecks = () => whoogleI2PRedirectsChecks;
+function setWhoogleI2PRedirectsChecks(val) {
+  whoogleI2PRedirectsChecks = val;
+  browser.storage.local.set({ whoogleI2PRedirectsChecks })
+  console.log("whoogleI2PRedirectsChecks: ", val)
 }
 
 let whoogleTorRedirectsChecks;
@@ -120,6 +150,14 @@ function setWhoogleNormalCustomRedirects(val) {
   console.log("whoogleNormalCustomRedirects: ", val)
 }
 
+let whoogleI2PCustomRedirects = [];
+const getWhoogleI2PCustomRedirects = () => whoogleI2PCustomRedirects;
+function setWhoogleI2PCustomRedirects(val) {
+  whoogleI2PCustomRedirects = val;
+  browser.storage.local.set({ whoogleI2PCustomRedirects })
+  console.log("whoogleI2PCustomRedirects: ", val)
+}
+
 let whoogleTorCustomRedirects = [];
 const getWhoogleTorCustomRedirects = () => whoogleTorCustomRedirects;
 function setWhoogleTorCustomRedirects(val) {
@@ -134,6 +172,14 @@ function setSearxNormalRedirectsChecks(val) {
   searxNormalRedirectsChecks = val;
   browser.storage.local.set({ searxNormalRedirectsChecks })
   console.log("searxNormalRedirectsChecks: ", val)
+}
+
+let searxI2PRedirectsChecks;
+const getSearxI2PRedirectsChecks = () => searxI2PRedirectsChecks;
+function setSearxI2PRedirectsChecks(val) {
+  searxI2PRedirectsChecks = val;
+  browser.storage.local.set({ searxI2PRedirectsChecks })
+  console.log("searxI2PRedirectsChecks: ", val)
 }
 
 let searxTorRedirectsChecks;
@@ -152,6 +198,14 @@ function setSearxNormalCustomRedirects(val) {
   console.log("searxNormalCustomRedirects: ", val)
 }
 
+let searxI2PCustomRedirects = [];
+const getSearxI2PCustomRedirects = () => searxI2PCustomRedirects;
+function setSearxI2PCustomRedirects(val) {
+  searxI2PCustomRedirects = val;
+  browser.storage.local.set({ searxI2PCustomRedirects })
+  console.log("searxI2PCustomRedirects: ", val)
+}
+
 let searxTorCustomRedirects = [];
 const getSearxTorCustomRedirects = () => searxTorCustomRedirects;
 function setSearxTorCustomRedirects(val) {
@@ -168,6 +222,14 @@ function setSearxngNormalRedirectsChecks(val) {
   console.log("searxngNormalRedirectsChecks: ", val)
 }
 
+let searxngI2PRedirectsChecks;
+const getSearxngI2PRedirectsChecks = () => searxngI2PRedirectsChecks;
+function setSearxngI2PRedirectsChecks(val) {
+  searxngI2PRedirectsChecks = val;
+  browser.storage.local.set({ searxngI2PRedirectsChecks })
+  console.log("searxngI2PRedirectsChecks: ", val)
+}
+
 let searxngTorRedirectsChecks;
 const getSearxngTorRedirectsChecks = () => searxngTorRedirectsChecks;
 function setSearxngTorRedirectsChecks(val) {
@@ -182,6 +244,14 @@ function setSearxngNormalCustomRedirects(val) {
   searxngNormalCustomRedirects = val;
   browser.storage.local.set({ searxngNormalCustomRedirects })
   console.log("searxngNormalCustomRedirects: ", val)
+}
+
+let searxngI2PCustomRedirects = [];
+const getSearxngI2PCustomRedirects = () => searxngI2PCustomRedirects;
+function setSearxngI2PCustomRedirects(val) {
+  searxngI2PCustomRedirects = val;
+  browser.storage.local.set({ searxngI2PCustomRedirects })
+  console.log("searxngI2PCustomRedirects: ", val)
 }
 
 let searxngTorCustomRedirects = [];
@@ -223,8 +293,8 @@ function initSearxCookies() {
   if (theme == 'light') themeValue = 'logicodev';
   if (theme == 'dark') themeValue = 'logicodev-dark';
   if (applyThemeToSites && themeValue) {
-    let allInstances = [...redirects.searx.normal, ...redirects.searx.tor, ...searxNormalCustomRedirects, ...searxTorCustomRedirects]
-    let checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects, ...searxTorRedirectsChecks, ...searxTorCustomRedirects]
+    let allInstances = [...redirects.searx.normal, ...redirects.searx.tor, ...redirects.searx.i2p, ...searxNormalCustomRedirects, ...searxTorCustomRedirects, ...searxI2PCustomRedirects];
+    let checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects, ...searxTorRedirectsChecks, ...searxTorCustomRedirects, ...searxI2PRedirectsChecks, ...searxI2PCustomRedirects];
     for (const instanceUrl of allInstances)
       if (!checkedInstances.includes(instanceUrl)) {
         browser.cookies.remove({
@@ -256,8 +326,8 @@ function initSearxngCookies() {
   if (theme == 'light') themeValue = 'logicodev';
   if (theme == 'dark') themeValue = 'logicodev-dark';
   if (applyThemeToSites && themeValue) {
-    let allInstances = [...redirects.searxng.normal, ...redirects.searxng.tor, ...searxngNormalCustomRedirects, ...searxngTorCustomRedirects]
-    let checkedInstances = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects, ...searxngTorRedirectsChecks, ...searxngTorCustomRedirects]
+    let allInstances = [...redirects.searxng.normal, ...redirects.searxng.tor, ...redirects.searxng.i2p, ...searxngNormalCustomRedirects, ...searxngTorCustomRedirects, ...searxngI2PCustomRedirects];
+    let checkedInstances = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects, ...searxngTorRedirectsChecks, ...searxngTorCustomRedirects, ...searxngI2PRedirectsChecks, ...searxngI2PCustomRedirects];
     for (const instanceUrl of allInstances)
       if (!checkedInstances.includes(instanceUrl)) {
         browser.cookies.remove({
@@ -285,7 +355,7 @@ function initSearxngCookies() {
 }
 
 function initWhoogleCookies() {
-  let checkedInstances = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects, ...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects]
+  let checkedInstances = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects, ...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects, ...whoogleI2PRedirectsChecks, ...whoogleI2PCustomRedirects];
 
   // for (const item of checkedInstances) {
   let request = new XMLHttpRequest();
@@ -336,6 +406,7 @@ function redirect(url) {
     let instancesList;
     if (protocol == 'normal') instancesList = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
     else if (protocol == 'tor') instancesList = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...searxI2PRedirectsChecks, ...searxI2PCustomRedirects];
     if (instancesList.length === 0) return null;
     randomInstance = commonHelper.getRandomInstance(instancesList)
     path = "/";
@@ -344,6 +415,7 @@ function redirect(url) {
     let instancesList;
     if (protocol == 'normal') instancesList = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
     else if (protocol == 'tor') instancesList = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...searxngI2PRedirectsChecks, ...searxngI2PCustomRedirects];
     if (instancesList.length === 0) return null;
     randomInstance = commonHelper.getRandomInstance(instancesList)
     path = "/";
@@ -352,6 +424,7 @@ function redirect(url) {
     let instancesList
     if (protocol == 'normal') instancesList = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects];
     if (protocol == 'tor') instancesList = [...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects];
+    if (protocol == 'i2p') instancesList = [...whoogleI2PRedirectsChecks, ...whoogleI2PCustomRedirects];
     if (instancesList.length === 0) return null;
     randomInstance = commonHelper.getRandomInstance(instancesList)
     path = "/search";
@@ -374,21 +447,27 @@ function switchInstance(url) {
   let searchList = [
     ...redirects.searx.normal,
     ...redirects.searx.tor,
+    ...redirects.searx.i2p,
 
     ...searxNormalCustomRedirects,
     ...searxTorCustomRedirects,
+    ...searxI2PCustomRedirects,
 
     ...redirects.searx.normal,
     ...redirects.searxng.tor,
+    ...redirects.searxng.i2p,
 
     ...searxngNormalCustomRedirects,
     ...searxngTorCustomRedirects,
+    ...searxngI2PCustomRedirects,
 
     ...redirects.whoogle.normal,
     ...redirects.whoogle.tor,
+    ...redirects.whoogle.i2p,
 
     ...whoogleNormalCustomRedirects,
     ...whoogleTorCustomRedirects,
+    ...whoogleI2PCustomRedirects,
   ]
 
   if (!searchList.includes(protocolHost)) return null;
@@ -397,14 +476,17 @@ function switchInstance(url) {
   if (frontend == 'searx') {
     if (protocol == 'normal') instancesList = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
     else if (protocol == 'tor') instancesList = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...searxI2PRedirectsChecks, ...searxI2PCustomRedirects];
   }
   else if (frontend == 'searxng') {
     if (protocol == 'normal') instancesList = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
     else if (protocol == 'tor') instancesList = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...searxngI2PRedirectsChecks, ...searxngI2PCustomRedirects];
   }
   else if (frontend == 'whoogle') {
     if (protocol == 'normal') instancesList = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects];
     else if (protocol == 'tor') instancesList = [...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...whoogleI2PRedirectsChecks, ...whoogleI2PCustomRedirects];
   }
 
   console.log("instancesList", instancesList);
@@ -432,18 +514,27 @@ async function init() {
 
           "whoogleTorRedirectsChecks",
           "whoogleTorCustomRedirects",
+	
+	  "whoogleI2PRedirectsChecks",
+	  "whoogleI2PCustomRedirects",
 
           "searxNormalRedirectsChecks",
           "searxNormalCustomRedirects",
 
           "searxTorRedirectsChecks",
           "searxTorCustomRedirects",
+	
+	  "searxI2PRedirectsChecks",
+	  "searxI2PCustomRedirects",
 
           "searxngNormalRedirectsChecks",
           "searxngNormalCustomRedirects",
 
           "searxngTorRedirectsChecks",
           "searxngTorCustomRedirects",
+	
+	  "searxngI2PRedirectsChecks",
+	  "searxngI2PCustomRedirects",
 
           "theme",
           "applyThemeToSites",
@@ -471,18 +562,27 @@ async function init() {
           whoogleTorRedirectsChecks = r.whoogleTorRedirectsChecks ?? [...redirects.whoogle.tor];
           whoogleTorCustomRedirects = r.whoogleTorCustomRedirects ?? [];
 
+	  whoogleI2PRedirectsChecks = r.whoogleI2PRedirectsChecks ?? [...redirects.whoogle.i2p];
+	  whoogleI2PCustomRedirects = r.whoogleI2PCustomRedirects ?? [];
+
           searxNormalRedirectsChecks = r.searxNormalRedirectsChecks ?? [...redirects.searx.normal];
           searxNormalCustomRedirects = r.searxNormalCustomRedirects ?? [];
 
           searxTorRedirectsChecks = r.searxTorRedirectsChecks ?? [...redirects.searx.tor];
           searxTorCustomRedirects = r.searxTorCustomRedirects ?? [];
+	
+	  searxI2PRedirectsChecks = r.searxI2PRedirectsChecks ?? [...redirects.searx.i2p];
+	  searxI2PCustomRedirects = r.searxI2PCustomRedirects ?? [];
 
           searxngNormalRedirectsChecks = r.searxngNormalRedirectsChecks ?? [...redirects.searxng.normal];
           searxngNormalCustomRedirects = r.searxngNormalCustomRedirects ?? [];
 
           searxngTorRedirectsChecks = r.searxngTorRedirectsChecks ?? [...redirects.searxng.tor];
           searxngTorCustomRedirects = r.searxngTorCustomRedirects ?? [];
-
+	
+	  searxngI2PRedirectsChecks = r.searxngI2PRedirectsChecks ?? [...redirects.searxng.i2p];
+	  searxngI2PCustomRedirects = r.searxngI2PCustomRedirects ?? [];
+	
           initSearxCookies()
           initSearxngCookies()
           // initWhoogleCookies()
@@ -519,6 +619,11 @@ export default {
   getWhoogleTorCustomRedirects,
   setWhoogleTorCustomRedirects,
 
+  getWhoogleI2PRedirectsChecks,
+  setWhoogleI2PRedirectsChecks,
+  getWhoogleI2PCustomRedirects,
+  setWhoogleI2PCustomRedirects,
+
   getSearxNormalRedirectsChecks,
   setSearxNormalRedirectsChecks,
   getSearxNormalCustomRedirects,
@@ -529,6 +634,11 @@ export default {
   getSearxTorCustomRedirects,
   setSearxTorCustomRedirects,
 
+  getSearxI2PRedirectsChecks,
+  setSearxI2PRedirectsChecks,
+  getSearxI2PCustomRedirects,
+  setSearxI2PCustomRedirects,
+
   getSearxngNormalRedirectsChecks,
   setSearxngNormalRedirectsChecks,
   getSearxngNormalCustomRedirects,
@@ -538,6 +648,11 @@ export default {
   setSearxngTorRedirectsChecks,
   getSearxngTorCustomRedirects,
   setSearxngTorCustomRedirects,
+
+  getSearxngI2PRedirectsChecks,
+  setSearxngI2PRedirectsChecks,
+  getSearxngI2PCustomRedirects,
+  setSearxngI2PCustomRedirects,
 
   getProtocol,
   setProtocol,
