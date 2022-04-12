@@ -61,14 +61,15 @@ protocolElement.addEventListener("change",
 );
 
 function changeProtocolSettings(protocol) {
-  let normalsearxDiv = document.getElementById("searx-normal");
-  let torsearxDiv = document.getElementById("searx-tor");
+  let normalsearxDiv = searxDivElement.getElementsByClassName("normal")[0];
+  let torsearxDiv = searxDivElement.getElementsByClassName("tor")[0];
 
-  let normalsearxngDiv = document.getElementById("searxng-normal");
-  let torsearxngDiv = document.getElementById("searxng-tor");
+  let normalsearxngDiv = searxngDivElement.getElementsByClassName("normal")[0];
+  let torsearxngDiv = searxngDivElement.getElementsByClassName("tor")[0];
 
-  let normalwhoogleDiv = document.getElementById("whoogle-normal");
-  let torwhoogleDiv = document.getElementById("whoogle-tor");
+  let normalwhoogleDiv = whoogleDivElement.getElementsByClassName("normal")[0];
+  let torwhoogleDiv = whoogleDivElement.getElementsByClassName("tor")[0];
+
   if (protocol == 'normal') {
     normalsearxDiv.style.display = 'block';
     normalsearxngDiv.style.display = 'block';

@@ -84,6 +84,14 @@ function setDisable(val) {
   browser.storage.local.set({ disableTwitter: disable })
 }
 
+let enableCustomSettings;
+const getEnableCustomSettings = () => enableCustomSettings;
+function setEnableCustomSettings(val) {
+  enableCustomSettings = val;
+  browser.storage.local.set({ enableTwitterCustomSettings: enableCustomSettings })
+  console.log("enableTwitterCustomSettings: ", enableCustomSettings)
+}
+
 let protocol;
 const getProtocol = () => protocol;
 function setProtocol(val) {
@@ -248,6 +256,8 @@ async function init() {
         [
           "disableTwitter",
 
+          "enableTwitterCustomSettings",
+
           "twitterRedirects",
 
           "theme",
@@ -267,6 +277,7 @@ async function init() {
         ],
         r => {
           disable = r.disableTwitter ?? false;
+          enableCustomSettings = r.enableTwitterCustomSettings ?? false;
 
           protocol = r.twitterProtocol ?? "normal";
 
@@ -302,6 +313,9 @@ export default {
 
   getDisable,
   setDisable,
+
+  getEnableCustomSettings,
+  setEnableCustomSettings,
 
   getNitterNormalRedirectsChecks,
   setNitterNormalRedirectsChecks,

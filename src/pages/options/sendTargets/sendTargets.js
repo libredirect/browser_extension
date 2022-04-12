@@ -16,8 +16,8 @@ protocolElement.addEventListener("change",
 );
 
 function changeProtocolSettings(protocol) {
-    let normalDiv = document.getElementById("normal");
-    let torDiv = document.getElementById("tor");
+    let normalDiv = document.getElementsByClassName("normal")[0];
+    let torDiv = document.getElementsByClassName("tor")[0];
     if (protocol == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';

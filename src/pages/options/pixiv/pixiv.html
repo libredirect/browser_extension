@@ -135,7 +135,10 @@
     </div>
 
     <div class="some-block option-block">
-      <h4><x data-localise="__MSG_frontend__">Frontend</x>: <span style="color:red;" data-localise="__MSG_notFullyPrivate__">This isn't a fully private frontend</span></h4>
+      <h4>
+        <x data-localise="__MSG_frontend__">Frontend</x>: <span style="color:red;"
+          data-localise="__MSG_notFullyPrivate__">This isn't a fully private frontend</span>
+      </h4>
       <select id="maps-frontend">
         <option value="pixivMoe" data-localise="__MSG_pixivMoe__">pixiv萌え</option>
       </select>
@@ -153,49 +156,53 @@
 
     <hr>
 
-    <div id="normal">
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
-      </div>
-      <div class="checklist" id="pixivMoe-normal-checklist"></div>
-      <hr>
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
-      </div>
-      <form id="custom-pixivMoe-normal-instance-form">
+    <div id="pixivMoe">
+      <div class="normal">
         <div class="some-block option-block">
-          <input id="pixivMoe-normal-custom-instance" placeholder="https://pixiv.moe" type="url" />
-          <button type="submit" class="add" id="pixivMoe-normal-add-instance">
-            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
-              <path d="M0 0h24v24H0V0z" fill="none" />
-              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-          </button>
+          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
         </div>
-      </form>
-      <div class="checklist" id="pixivMoe-normal-custom-checklist"></div>
-    </div>
-    <div id="tor">
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
-      </div>
-      <div class="checklist" id="pixivMoe-tor-checklist"></div>
-      <hr>
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
-      </div>
-      <form id="custom-pixivMoe-tor-instance-form">
+        <div class="checklist checklist"></div>
+        <hr>
         <div class="some-block option-block">
-          <input id="pixivMoe-tor-custom-instance" placeholder="https://pixivMoe.com" type="url" />
-          <button type="submit" class="add" id="pixivMoe-tor-add-instance">
-            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
-              <path d="M0 0h24v24H0V0z" fill="none" />
-              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-          </button>
+          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
         </div>
-      </form>
-      <div class="checklist" id="pixivMoe-tor-custom-checklist"></div>
+        <form class="custom-instance-form">
+          <div class="some-block option-block">
+            <input class="custom-instance" placeholder="https://pixiv.moe" type="url" />
+            <button type="submit" class="add add-instance">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                fill="currentColor">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+        <div class="checklist custom-checklist"></div>
+      </div>
+      <div class="tor">
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+        </div>
+        <div class="checklist checklist"></div>
+        <hr>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+        </div>
+        <form class="custom-instance-form">
+          <div class="some-block option-block">
+            <input class="custom-instance" placeholder="https://pixivMoe.com" type="url" />
+            <button type="submit" class="add add-instance">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                fill="currentColor">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+        <div class="checklist custom-checklist"></div>
+      </div>
     </div>
   </section>
 

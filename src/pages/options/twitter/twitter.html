@@ -149,84 +149,154 @@
       <input id="bypass-watch-on-twitter" type="checkbox" checked />
     </div>
 
-    <hr>
-
-    <div class="custom-settings">
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_theme__">Theme</h4>
-        <select name="theme">
-          <option value="Auto">Auto</option>
-          <option value="Auto (Twitter)">Auto (Twitter)</option>
-          <option value="Auto (Twitter)">Auto (Twitter)</option>
-          <option value="Black">Black</option>
-          <option value="Mastodon">Mastodon</option>
-          <option value="Nitter">Nitter</option>
-          <option value="Pleroma">Pleroma</option>
-          <option value="Twitter">Twitter</option>
-          <option value="Twitter Dark" selected="">Twitter Dark</option>
-        </select>
-      </div>
-    </div>
-
-
     <div class="some-block option-block">
-      <h4 data-localise="__MSG_infiniteScroll__">Infinite scrolling (experimental, requires JavaScript)</h4>
-      <input id="infiniteScroll" type="checkbox" />
+      <h4 data-localise="__MSG_enableCustomNitter__">Enable Custom Settings (will use cookies)</h4>
+      <input id="enable-twitter-custom-settings" type="checkbox" />
     </div>
 
-    <div class="some-block option-block">
-      <h4 data-localise="__MSG_stickyProfile__">Make profile sidebar stick to top</h4>
-      <input id="stickyProfile" type="checkbox" />
-    </div>
+    <div id="nitter">
 
-    <hr>
+      <div class="custom-settings">
 
-    <div id="normal">
-
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
-      </div>
-      <div class="checklist" id="nitter-normal-checklist"></div>
-      <hr>
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
-      </div>
-      <form id="custom-nitter-normal-instance-form">
+        <hr>
         <div class="some-block option-block">
-          <input id="nitter-normal-custom-instance" placeholder="https://nitter.com" type="url" />
-          <button type="submit" class="add" id="nitter-normal-add-instance">
-            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
-              <path d="M0 0h24v24H0V0z" fill="none" />
-              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-          </button>
+          <h2>Display</h2>
         </div>
-      </form>
-      <div class="checklist" id="nitter-normal-custom-checklist"></div>
 
-    </div>
-
-    <div id="tor">
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_defaultInstances__">Default Tor Instances</h4>
-      </div>
-      <div class="checklist" id="nitter-tor-checklist"></div>
-      <hr>
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
-      </div>
-      <form id="custom-nitter-tor-instance-form">
         <div class="some-block option-block">
-          <input id="nitter-tor-custom-instance" placeholder="https://nitter.com" type="url" />
-          <button type="submit" class="add" id="nitter-tor-add-instance">
-            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
-              <path d="M0 0h24v24H0V0z" fill="none" />
-              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-            </svg>
-          </button>
+          <h4 data-localise="__MSG_theme__">Theme</h4>
+          <select name="theme">
+            <option value="Auto">Auto</option>
+            <option value="Auto (Twitter)">Auto (Twitter)</option>
+            <option value="Auto (Twitter)">Auto (Twitter)</option>
+            <option value="Black">Black</option>
+            <option value="Mastodon">Mastodon</option>
+            <option value="Nitter">Nitter</option>
+            <option value="Pleroma">Pleroma</option>
+            <option value="Twitter">Twitter</option>
+            <option value="Twitter Dark" selected="">Twitter Dark</option>
+          </select>
         </div>
-      </form>
-      <div class="checklist" id="nitter-tor-custom-checklist"></div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_infiniteScroll__">Infinite scrolling (experimental, requires JavaScript)</h4>
+          <input class="infiniteScroll" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_stickyProfile__">Make profile sidebar stick to top</h4>
+          <input class="stickyProfile" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_bidiSupport__">Support bidirectional text (makes clicking on tweets harder)</h4>
+          <input class="bidiSupport" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_hideTweetStats__">Hide tweet stats (replies, retweets, likes)</h4>
+          <input class="hideTweetStats" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_hideBanner__">Hide profile banner</h4>
+          <input class="hideBanner" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_hidePins__">Hide pinned tweets</h4>
+          <input class="hidePins" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_hideReplies__">Hide tweet replies</h4>
+          <input class="hideReplies" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_squareAvatars__">Square profile pictures</h4>
+          <input class="squareAvatars" type="checkbox" />
+        </div>
+
+        <hr>
+
+        <div class="some-block option-block">
+          <h2>Media</h2>
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_mp4Playback__">Enable mp4 video playback (only for gifs)</h4>
+          <input class="mp4Playback" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_hlsPlayback__">Enable hls video streaming (requires JavaScript)</h4>
+          <input class="hlsPlayback" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_proxyVideos__">Proxy video streaming through the server (might be slow)</h4>
+          <input class="proxyVideos" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_autoplayGifs__">Autoplay gifs</h4>
+          <input class="autoplayGifs" type="checkbox" />
+        </div>
+
+      </div>
+      <hr>
+
+      <div class="normal">
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+        </div>
+        <div class="checklist checklist"></div>
+        <hr>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+        </div>
+        <form class="custom-instance-form">
+          <div class="some-block option-block">
+            <input class="custom-instance" placeholder="https://nitter.com" type="url" />
+            <button type="submit" class="add add-instance">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                fill="currentColor">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+        <div class="checklist custom-checklist"></div>
+
+      </div>
+
+      <div class="tor">
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_defaultInstances__">Default Tor Instances</h4>
+        </div>
+        <div class="checklist checklist"></div>
+        <hr>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+        </div>
+        <form class="custom-instance-form">
+          <div class="some-block option-block">
+            <input class="custom-instance" placeholder="https://nitter.com" type="url" />
+            <button type="submit" class="add add-instance">
+              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                fill="currentColor">
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+        <div class="checklist custom-checklist"></div>
+      </div>
+
     </div>
 
   </section>

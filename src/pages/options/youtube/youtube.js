@@ -1,12 +1,17 @@
 import youtubeHelper from "../../../assets/javascripts/helpers/youtube/youtube.js";
 
+let disableYoutubeElement = document.getElementById("disable-invidious");
 let youtubeFrontendElement = document.getElementById("youtube-frontend");
 let invidiousDivElement = document.getElementById("invidious");
 let pipedDivElement = document.getElementById("piped");
 let pipedMaterialDivElement = document.getElementById("pipedMaterial");
-let invidiousPipedPipedMaterialDivElement = document.getElementById("invidious-piped-pipedMaterial");
 let freetubeYatteeDivElement = document.getElementById("freetube-yatte");
 let customSettingsDivElement = document.getElementsByClassName("custom-settings");
+let youtubeEmbedFrontendElement = document.getElementById("youtube-embed-frontend");
+let enableYoutubeCustomSettingsElement = document.getElementById("enable-youtube-custom-settings");
+let OnlyEmbeddedVideoElement = document.getElementById("only-embed");
+let bypassWatchOnYoutubeElement = document.getElementById("bypass-watch-on-youtube");
+let protocolElement = document.getElementById("protocol");
 
 function changeFrontendsSettings() {
     let frontend = youtubeFrontendElement.value;
@@ -17,28 +22,24 @@ function changeFrontendsSettings() {
         for (const item of customSettingsDivElement) item.style.display = 'none';
 
     if (frontend == 'invidious') {
-        invidiousPipedPipedMaterialDivElement.style.display = 'block'
         invidiousDivElement.style.display = 'block';
         pipedDivElement.style.display = 'none';
         pipedMaterialDivElement.style.display = 'none';
         freetubeYatteeDivElement.style.display = 'none';
     }
     else if (frontend == 'piped') {
-        invidiousPipedPipedMaterialDivElement.style.display = 'block'
         invidiousDivElement.style.display = 'none';
         pipedDivElement.style.display = 'block';
         pipedMaterialDivElement.style.display = 'none';
         freetubeYatteeDivElement.style.display = 'none';
     }
     else if (frontend == 'pipedMaterial') {
-        invidiousPipedPipedMaterialDivElement.style.display = 'block'
         invidiousDivElement.style.display = 'none';
         pipedDivElement.style.display = 'none';
         pipedMaterialDivElement.style.display = 'block';
         freetubeYatteeDivElement.style.display = 'none';
     }
     else if (frontend == 'freetube' || frontend == 'yatte') {
-        invidiousPipedPipedMaterialDivElement.style.display = 'none'
         invidiousDivElement.style.display = 'none';
         pipedDivElement.style.display = 'none';
         pipedMaterialDivElement.style.display = 'none';
@@ -49,91 +50,28 @@ function changeFrontendsSettings() {
 
 function changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontend) {
     if (youtubeEmbedFrontend == 'invidious') {
-        invidiousPipedPipedMaterialDivElement.style.display = 'block'
         pipedDivElement.style.display = 'none';
         invidiousDivElement.style.display = 'block';
     }
     if (youtubeEmbedFrontend == 'piped') {
-        invidiousPipedPipedMaterialDivElement.style.display = 'block'
         pipedDivElement.style.display = 'block';
         invidiousDivElement.style.display = 'none';
     }
     else if (youtubeEmbedFrontend == 'youtube') {
-        invidiousPipedPipedMaterialDivElement.style.display = 'none'
         pipedDivElement.style.display = 'none';
         invidiousDivElement.style.display = 'none';
     }
 }
 
-youtubeFrontendElement.addEventListener("change",
-    event => {
-        let frontend = event.target.options[youtubeFrontendElement.selectedIndex].value
-        youtubeHelper.setFrontend(frontend);
-        changeFrontendsSettings();
-    }
-);
-
-let youtubeEmbedFrontendElement = document.getElementById("youtube-embed-frontend");
-youtubeEmbedFrontendElement.addEventListener("change",
-    event => {
-        let youtubeEmbedFrontend = event.target.options[youtubeEmbedFrontendElement.selectedIndex].value
-        youtubeHelper.setYoutubeEmbedFrontend(youtubeEmbedFrontend);
-        changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontend);
-    }
-);
-
-let disableYoutubeElement = document.getElementById("disable-invidious");
-disableYoutubeElement.addEventListener("change",
-    event => youtubeHelper.setDisable(!event.target.checked)
-);
-
-let enableYoutubeCustomSettingsElement = document.getElementById("enable-youtube-custom-settings");
-enableYoutubeCustomSettingsElement.addEventListener("change",
-    event => {
-        youtubeHelper.setEnableCustomSettings(event.target.checked)
-        changeFrontendsSettings();
-    }
-);
-
-let volumeElement = document.getElementById("invidious-volume");
-let volumeValueElement = document.getElementById("volume-value");
-
-volumeElement.addEventListener("input", () => volumeValueElement.textContent = `${volumeElement.value}%`);
-volumeElement.addEventListener("change", () => youtubeHelper.setVolume(volumeElement.value));
-
-let autoplayElement = document.getElementById("invidious-youtubeAutoplay");
-autoplayElement.addEventListener("change",
-    event => youtubeHelper.setAutoplay(event.target.checked)
-);
-
-let OnlyEmbeddedVideoElement = document.getElementById("only-embed");
-OnlyEmbeddedVideoElement.addEventListener("change",
-    event => youtubeHelper.setOnlyEmbeddedVideo(event.target.options[OnlyEmbeddedVideoElement.selectedIndex].value)
-);
-
-let bypassWatchOnYoutubeElement = document.getElementById("bypass-watch-on-youtube")
-bypassWatchOnYoutubeElement.addEventListener("change",
-    event => youtubeHelper.setBypassWatchOnYoutube(event.target.checked)
-);
-
-let protocolElement = document.getElementById("protocol")
-protocolElement.addEventListener("change",
-    event => {
-        let protocol = event.target.options[protocolElement.selectedIndex].value
-        youtubeHelper.setProtocol(protocol);
-        changeProtocolSettings(protocol);
-    }
-);
-
 function changeProtocolSettings(protocol) {
-    let normalPipedDiv = document.getElementById("piped-normal");
-    let torPipedDiv = document.getElementById("piped-tor");
+    let normalPipedDiv = document.getElementById('piped').getElementsByClassName("normal")[0];
+    let torPipedDiv = document.getElementById('piped').getElementsByClassName("tor")[0];
 
-    let normalPipedMaterialDiv = document.getElementById("pipedMaterial-normal");
-    let torPipedMaterialDiv = document.getElementById("pipedMaterial-tor");
+    let normalPipedMaterialDiv = document.getElementById('pipedMaterial').getElementsByClassName("normal")[0];
+    let torPipedMaterialDiv = document.getElementById('pipedMaterial').getElementsByClassName("tor")[0];
 
-    let normalInvidiousDiv = document.getElementById("invidious-normal");
-    let torInvidiousDiv = document.getElementById("invidious-tor");
+    let normalInvidiousDiv = document.getElementById('invidious').getElementsByClassName("normal")[0];
+    let torInvidiousDiv = document.getElementById('invidious').getElementsByClassName("tor")[0];
 
     if (protocol == 'normal') {
         normalInvidiousDiv.style.display = 'block';
@@ -157,14 +95,29 @@ function changeProtocolSettings(protocol) {
     }
 }
 
+
+document.addEventListener("change", () => {
+    youtubeHelper.setYoutubeSettings({
+        disableYoutube: !disableYoutubeElement.checked,
+        youtubeFrontend: youtubeFrontendElement.value,
+        youtubeEmbedFrontend: youtubeEmbedFrontendElement.value,
+        enableYoutubeCustomSettings: enableYoutubeCustomSettingsElement.checked,
+        OnlyEmbeddedVideo: OnlyEmbeddedVideoElement.value,
+        bypassWatchOnYoutube: bypassWatchOnYoutubeElement.checked,
+        youtubeProtocol: protocolElement.value,
+    })
+    changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontendElement.value);
+    changeProtocolSettings(protocolElement.value);
+    changeFrontendsSettings();
+})
+
 youtubeHelper.init().then(() => {
     disableYoutubeElement.checked = !youtubeHelper.getDisable();
     enableYoutubeCustomSettingsElement.checked = youtubeHelper.getEnableCustomSettings();
-    volumeElement.value = youtubeHelper.getVolume();
-    volumeValueElement.textContent = `${youtubeHelper.getVolume()}%`;
+    
     OnlyEmbeddedVideoElement.value = youtubeHelper.getOnlyEmbeddedVideo();
     bypassWatchOnYoutubeElement.checked = youtubeHelper.getBypassWatchOnYoutube();
-    autoplayElement.checked = youtubeHelper.getAutoplay();
+    
     let frontend = youtubeHelper.getFrontend();
     youtubeFrontendElement.value = frontend;
     changeFrontendsSettings();
