@@ -4,6 +4,7 @@ window.browser = window.browser || window.chrome;
 import commonHelper from './common.js'
 
 const targets = /^https?:\/{2}(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
+
 let redirects = {
   'osm': {
     "normal": [
@@ -16,49 +17,7 @@ let redirects = {
     ]
   }
 };
-const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
-const dataLatLngRegex = /!3d(-?[0-9]{1,}.[0-9]{1,})!4d(-?[0-9]{1,}.[0-9]{1,})/;
-const placeRegex = /\/place\/(.*)\//;
-const travelModes = {
-  driving: "fossgis_osrm_car",
-  walking: "fossgis_osrm_foot",
-  bicycling: "fossgis_osrm_bike",
-  transit: "fossgis_osrm_car", // not implemented on OSM, default to car.
-};
-const travelModesFacil = {
-  driving: "car",
-  walking: "pedestrian",
-  bicycling: "bicycle",
-  transit: "car", // not implemented on Facil, default to car.
-};
-const osmLayers = {
-  none: "S",
-  transit: "T",
-  traffic: "S", // not implemented on OSM, default to standard.
-  bicycling: "C",
-};
-
-function addressToLatLng(address, callback) {
-  const xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = () => {
-    if (xmlhttp.readyState === XMLHttpRequest.DONE) {
-      if (xmlhttp.status === 200) {
-        const json = JSON.parse(xmlhttp.responseText)[0];
-        if (json) callback(
-          `${json.lat},${json.lon}`,
-          `${json.boundingbox[2]},${json.boundingbox[1]},${json.boundingbox[3]},${json.boundingbox[0]}`,
-        );
-      } else
-        console.info("Error: Status is " + xmlhttp.status);
-    }
-  };
-  xmlhttp.open(
-    "GET",
-    `https://nominatim.openstreetmap.org/search/${address}?format=json&limit=1`,
-    false
-  );
-  xmlhttp.send();
-}
+const getRedirects = () => redirects;
 
 let disable;
 const getDisable = () => disable;
@@ -76,7 +35,67 @@ function setFrontend(val) {
   console.log("mapsFrontend: ", frontend)
 };
 
+let facilNormalRedirectsChecks;
+const getFacilNormalRedirectsChecks = () => facilNormalRedirectsChecks;
+function setFacilNormalRedirectsChecks(val) {
+  facilNormalRedirectsChecks = val;
+  browser.storage.local.set({ facilNormalRedirectsChecks })
+  console.log("facilNormalRedirectsChecks: ", val)
+}
+
+let facilNormalCustomRedirects = [];
+const getFacilNormalCustomRedirects = () => facilNormalCustomRedirects;
+function setFacilNormalCustomRedirects(val) {
+  facilNormalCustomRedirects = val;
+  browser.storage.local.set({ facilNormalCustomRedirects })
+  console.log("facilNormalCustomRedirects: ", val)
+}
+
+
 function redirect(url, initiator) {
+  const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
+  const dataLatLngRegex = /!3d(-?[0-9]{1,}.[0-9]{1,})!4d(-?[0-9]{1,}.[0-9]{1,})/;
+  const placeRegex = /\/place\/(.*)\//;
+  const travelModes = {
+    driving: "fossgis_osrm_car",
+    walking: "fossgis_osrm_foot",
+    bicycling: "fossgis_osrm_bike",
+    transit: "fossgis_osrm_car", // not implemented on OSM, default to car.
+  };
+  const travelModesFacil = {
+    driving: "car",
+    walking: "pedestrian",
+    bicycling: "bicycle",
+    transit: "car", // not implemented on Facil, default to car.
+  };
+  const osmLayers = {
+    none: "S",
+    transit: "T",
+    traffic: "S", // not implemented on OSM, default to standard.
+    bicycling: "C",
+  };
+
+  function addressToLatLng(address, callback) {
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = () => {
+      if (xmlhttp.readyState === XMLHttpRequest.DONE) {
+        if (xmlhttp.status === 200) {
+          const json = JSON.parse(xmlhttp.responseText)[0];
+          if (json) callback(
+            `${json.lat},${json.lon}`,
+            `${json.boundingbox[2]},${json.boundingbox[1]},${json.boundingbox[3]},${json.boundingbox[0]}`,
+          );
+        } else
+          console.info("Error: Status is " + xmlhttp.status);
+      }
+    };
+    xmlhttp.open(
+      "GET",
+      `https://nominatim.openstreetmap.org/search/${address}?format=json&limit=1`,
+      false
+    );
+    xmlhttp.send();
+  }
 
   if (disable) return;
   if (initiator && initiator.host === "earth.google.com") return;
@@ -84,7 +103,7 @@ function redirect(url, initiator) {
 
   let randomInstance;
   if (frontend == 'osm') randomInstance = commonHelper.getRandomInstance(redirects.osm.normal);
-  if (frontend == 'facil') randomInstance = commonHelper.getRandomInstance(redirects.facil.normal);
+  if (frontend == 'facil') randomInstance = commonHelper.getRandomInstance([...facilNormalRedirectsChecks, ...facilNormalCustomRedirects]);
 
   let mapCentre = "#";
   let prefs = {};
@@ -200,11 +219,18 @@ async function init() {
       browser.storage.local.get(
         [
           "disableMaps",
-          "mapsFrontend"
+          "mapsFrontend",
+
+          "facilNormalRedirectsChecks",
+          "facilNormalCustomRedirects",
         ],
         r => {
-          disable = r.disableMaps ?? false
-          frontend = r.mapsFrontend ?? 'osm'
+          disable = r.disableMaps ?? false;
+          frontend = r.mapsFrontend ?? 'osm';
+
+          facilNormalRedirectsChecks = r.facilNormalRedirectsChecks ?? [...redirects.facil.normal];
+          facilNormalCustomRedirects = r.facilNormalCustomRedirects ?? [];
+
           resolve();
         }
       );
@@ -217,6 +243,13 @@ export default {
 
   getFrontend,
   setFrontend,
+
+  getRedirects,
+
+  getFacilNormalRedirectsChecks,
+  setFacilNormalRedirectsChecks,
+  getFacilNormalCustomRedirects,
+  setFacilNormalCustomRedirects,
 
   redirect,
   init,

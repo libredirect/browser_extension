@@ -417,7 +417,7 @@ function switchInstance(url) {
 }
 
 async function init() {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
       let dataJson = JSON.parse(data);
       browser.storage.local.get(
@@ -453,6 +453,7 @@ async function init() {
           alwaysUsePreferred = r.alwaysUsePreferred ?? false;
 
           redirects.teddit = dataJson.teddit;
+          redirects.libreddit = dataJson.libreddit;
           if (r.redditRedirects) redirects = r.redditRedirects;
 
           if (r.redditRedirects) redirects = r.redditRedirects;

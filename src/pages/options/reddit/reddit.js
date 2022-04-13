@@ -81,7 +81,6 @@ redditHelper.init().then(() => {
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
-
     commonHelper.processDefaultCustomInstances(
         'libreddit',
         'normal',

@@ -47,6 +47,7 @@ async function updateInstances() {
     instagramHelper.setRedirects(instances.bibliogram);
 
     redditHelper.setTedditRedirects(instances.teddit);
+    redditHelper.setLibredditRedirects(instances.libreddit);
 
     translateHelper.setSimplyTranslateRedirects(instances.simplyTranslate);
     translateHelper.setLingvaRedirects(instances.lingva)
@@ -128,7 +129,7 @@ function processDefaultCustomInstances(
 
   for (let element of nameCheckListElement.getElementsByTagName('input')) {
     if (element.className != 'toogle-all')
-    nameProtocolElement.getElementsByClassName(element.className)[0].addEventListener("change", event => {
+      nameProtocolElement.getElementsByClassName(element.className)[0].addEventListener("change", event => {
         if (event.target.checked)
           nameDefaultRedirects.push(element.className)
         else {

@@ -116,9 +116,9 @@ function isImgur(url, initiator) {
     if (url.pathname == "/") return false;
     if (
         initiator &&
-        ([...redirects.rimgo.normal, ...rimgoNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))
+        ([...redirects.rimgo.normal, ...rimgoNormalCustomRedirects].includes(initiator.origin) || targets.test(initiator.host))
     ) return false;
-    return targets.some(rx => rx.test(url.href));
+    return targets.test(url.href);
 }
 
 function redirect(url, type) {

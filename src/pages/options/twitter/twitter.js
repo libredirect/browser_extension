@@ -78,7 +78,6 @@ function init() {
         let protocol = twitterHelper.getProtocol();
         protocolElement.value = protocol;
         changeProtocolSettings(protocol);
-        console.log('init');
         theme.value = twitterHelper.getTheme();
         infiniteScroll.checked = twitterHelper.getInfiniteScroll();
         stickyProfile.checked = twitterHelper.getStickyProfile();
