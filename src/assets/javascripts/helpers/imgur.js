@@ -171,7 +171,7 @@ async function init() {
 
                         "imgurProtocol",
                     ],
-                    r => { // r = result
+                    r => { 
                         disable = r.disableImgur ?? false;
 
                         protocol = r.imgurProtocol ?? "normal";

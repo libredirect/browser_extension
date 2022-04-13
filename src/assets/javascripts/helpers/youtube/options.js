@@ -5,7 +5,6 @@ window.browser = window.browser || window.chrome;
 export let youtubeListen;
 export const getYoutubeListen = () => youtubeListen;
 
-
 export let volume;
 export const getVolume = () => volume;
 export function setVolume(val) {

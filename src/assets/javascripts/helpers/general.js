@@ -65,7 +65,7 @@ async function init() {
                 "popupFrontends",
                 "autoRedirect"
             ],
-            r => { // r = result
+            r => { 
                 if (r.exceptions) exceptions = r.exceptions;
                 alwaysUsePreferred = r.alwaysUsePreferred ?? false;
 

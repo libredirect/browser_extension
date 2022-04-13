@@ -581,7 +581,7 @@ async function init() {
 
             "bypassWatchOnYoutube"
           ],
-          r => { // r = result
+          r => {
             redirects.invidious = dataJson.invidious;
             if (r.youtubeRedirects) redirects = r.youtubeRedirects;
 
@@ -628,99 +628,58 @@ async function init() {
 
 export default {
   setYoutubeSettings,
-
   getBypassWatchOnYoutube,
-
   initPipedLocalStorage,
   initPipedMaterialLocalStorage,
-
   getFrontend,
-
   getYoutubeEmbedFrontend,
-
   getRedirects,
   getCustomRedirects,
   setInvidiousRedirects,
   setPipedRedirects,
-
   redirect,
   switchInstance,
-
   isPipedorInvidious,
-
   initInvidiousCookies,
-
   getInvidiousAlwaysProxy,
-
   getInvidiousQuality,
-
   getInvidiousPlayerStyle,
-
   getInvidiousVideoLoop,
-
+  
   getDisable,
   setDisable,
 
   getEnableCustomSettings,
-
   getProtocol,
-
   getOnlyEmbeddedVideo,
-
   setVolume,
   getVolume,
-
   setAutoplay,
   getAutoplay,
-
   getInvidiousContinueAutoplay,
-
   getInvidiousContinue,
-
   getYoutubeListen,
-
   getInvidiousSpeed,
-
   getInvidiousQualityDash,
-
   getInvidiousComments,
-
   getInvidiousCaptions,
-
   getInvidiousRelatedVideos,
-
   getInvidiousAnnotations,
-
   getInvidiousExtendDesc,
-
   getInvidiousVrMode,
-
   getInvidiousSavePlayerPos,
-
   getPipedBufferGoal,
-
   getPipedComments,
-
   getPipedDisableLBRY,
-
   getPipedEnabledCodecs,
-
   getPipedHomepage,
-
   getPipedMinimizeDescription,
-
   getPipedProxyLBRY,
-
   getPipedQuality,
-
   getPipedRegion,
-
   getPipedSelectedSkip,
-
   getPipedSponsorblock,
-
   getPipedWatchHistory,
-
   getPipedMaterialSkipToLastPoint,
 
   getInvidiousNormalRedirectsChecks,
