@@ -204,7 +204,7 @@
         </div>
 
         <div class="some-block option-block">
-          <h4 data-localise="__MSG_autoplayVid__">Autoplay Video</h4>
+          <h4 data-localise="__MSG_autoplayVid__">Autoplay</h4>
           <input class="youtubeAutoplay" type="checkbox" />
         </div>
 
@@ -722,10 +722,161 @@
         </div>
 
         <div class="some-block option-block">
+          <h4 data-localise="__MSG_region__">Select country</h4>
+          <select class="region">
+            <option value="AE">AE</option>
+            <option value="AR">AR</option>
+            <option value="AT">AT</option>
+            <option value="AU">AU</option>
+            <option value="AZ">AZ</option>
+            <option value="BA">BA</option>
+            <option value="BD">BD</option>
+            <option value="BE">BE</option>
+            <option value="BG">BG</option>
+            <option value="BH">BH</option>
+            <option value="BO">BO</option>
+            <option value="BR">BR</option>
+            <option value="BY">BY</option>
+            <option value="CA">CA</option>
+            <option value="CH">CH</option>
+            <option value="CL">CL</option>
+            <option value="CO">CO</option>
+            <option value="CR">CR</option>
+            <option value="CY">CY</option>
+            <option value="CZ">CZ</option>
+            <option value="DE">DE</option>
+            <option value="DK">DK</option>
+            <option value="DO">DO</option>
+            <option value="DZ">DZ</option>
+            <option value="EC">EC</option>
+            <option value="EE">EE</option>
+            <option value="EG">EG</option>
+            <option value="ES">ES</option>
+            <option value="FI">FI</option>
+            <option value="FR">FR</option>
+            <option value="GB">GB</option>
+            <option value="GE">GE</option>
+            <option value="GH">GH</option>
+            <option value="GR">GR</option>
+            <option value="GT">GT</option>
+            <option value="HK">HK</option>
+            <option value="HN">HN</option>
+            <option value="HR">HR</option>
+            <option value="HU">HU</option>
+            <option value="ID">ID</option>
+            <option value="IE">IE</option>
+            <option value="IL">IL</option>
+            <option value="IN">IN</option>
+            <option value="IQ">IQ</option>
+            <option value="IS">IS</option>
+            <option value="IT">IT</option>
+            <option value="JM">JM</option>
+            <option value="JO">JO</option>
+            <option value="JP">JP</option>
+            <option value="KE">KE</option>
+            <option value="KR">KR</option>
+            <option value="KW">KW</option>
+            <option value="KZ">KZ</option>
+            <option value="LB">LB</option>
+            <option value="LI">LI</option>
+            <option value="LK">LK</option>
+            <option value="LT">LT</option>
+            <option value="LU">LU</option>
+            <option value="LV">LV</option>
+            <option value="LY">LY</option>
+            <option value="MA">MA</option>
+            <option value="ME">ME</option>
+            <option value="MK">MK</option>
+            <option value="MT">MT</option>
+            <option value="MX">MX</option>
+            <option value="MY">MY</option>
+            <option value="NG">NG</option>
+            <option value="NI">NI</option>
+            <option value="NL">NL</option>
+            <option value="NO">NO</option>
+            <option value="NP">NP</option>
+            <option value="NZ">NZ</option>
+            <option value="OM">OM</option>
+            <option value="PA">PA</option>
+            <option value="PE">PE</option>
+            <option value="PG">PG</option>
+            <option value="PH">PH</option>
+            <option value="PK">PK</option>
+            <option value="PL">PL</option>
+            <option value="PR">PR</option>
+            <option value="PT">PT</option>
+            <option value="PY">PY</option>
+            <option value="QA">QA</option>
+            <option value="RO">RO</option>
+            <option value="RS">RS</option>
+            <option value="RU">RU</option>
+            <option value="SA">SA</option>
+            <option value="SE">SE</option>
+            <option value="SG">SG</option>
+            <option value="SI">SI</option>
+            <option value="SK">SK</option>
+            <option value="SN">SN</option>
+            <option value="SV">SV</option>
+            <option value="TH">TH</option>
+            <option value="TN">TN</option>
+            <option value="TR">TR</option>
+            <option value="TW">TW</option>
+            <option value="TZ">TZ</option>
+            <option value="UA">UA</option>
+            <option value="UG">UG</option>
+            <option value="US" selected="">US</option>
+            <option value="UY">UY</option>
+            <option value="VE">VE</option>
+            <option value="VN">VN</option>
+            <option value="YE">YE</option>
+            <option value="ZA">ZA</option>
+            <option value="ZW">ZW</option>
+          </select>
+        </div>
+
+        <div class="some-block option-block">
           <h4 data-localise="__MSG_playerStyle__">Player Style</h4>
           <select class="player_style">
             <option value="invidious" data-localise="__MSG_invidious__">Invidious</option>
             <option value="youtube" data-localise="__MSG_youtube__">YouTube</option>
+          </select>
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_theme__">Theme</h4>
+          <select class="dark_mode">
+            <option value="" selected="">auto</option>
+            <option value="light">light</option>
+            <option value="dark">dark</option>
+          </select>
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_thin_mode__">Thin mode</h4>
+          <input class="thin_mode" type="checkbox" />
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_default_home__">Default homepage</h4>
+          <select class="default_home">
+            <option value="">Search</option>
+            <option value="Popular">Popular</option>
+            <option value="Trending">Trending</option>
+          </select>
+        </div>
+
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_feedMenu__">Feed menu</h4>
+          <select class="feed_menu[0]">
+            <option value="">Search</option>
+            <option value="Popular">Popular</option>
+            <option value="Trending">Trending</option>
+          </select>
+          &nbsp;
+          <select class="feed_menu[1]">
+            <option value="">Search</option>
+            <option value="Popular">Popular</option>
+            <option value="Trending">Trending</option>
           </select>
         </div>
 

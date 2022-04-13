@@ -66,6 +66,21 @@ export const getInvidiousVrMode = () => invidiousVrMode;
 export let invidiousSavePlayerPos;
 export const getInvidiousSavePlayerPos = () => invidiousSavePlayerPos;
 
+export let invidiousRegion;
+export const getInvidiousRegion = () => invidiousRegion;
+
+export let invidiousDarkMode;
+export const getInvidiousDarkMode = () => invidiousDarkMode;
+
+export let invidiousThinMode;
+export const getInvidiousThinMode = () => invidiousThinMode;
+
+export let invidiousDefaultHome;
+export const getInvidiousDefaultHome = () => invidiousDefaultHome;
+
+export let invidiousFeedMenuList;
+export const getInvidiousFeedMenuList = () => invidiousFeedMenuList;
+
 export let pipedBufferGoal;
 export const getPipedBufferGoal = () => pipedBufferGoal;
 
@@ -105,7 +120,6 @@ export const getPipedWatchHistory = () => pipedWatchHistory;
 export let pipedMaterialSkipToLastPoint;
 export const getPipedMaterialSkipToLastPoint = () => pipedMaterialSkipToLastPoint;
 
-
 export async function initOptions() {
     return new Promise(
         resolve => {
@@ -131,6 +145,11 @@ export async function initOptions() {
                     "invidiousExtendDesc",
                     "invidiousVrMode",
                     "invidiousSavePlayerPos",
+                    "invidiousRegion",
+                    "invidiousDarkMode",
+                    "invidiousThinMode",
+                    "invidiousDefaultHome",
+                    "invidiousFeedMenuList",
 
                     "pipedBufferGoal",
                     "pipedComments",
@@ -168,6 +187,12 @@ export async function initOptions() {
                     invidiousExtendDesc = r.invidiousExtendDesc ?? false;
                     invidiousVrMode = r.invidiousVrMode ?? true;
                     invidiousSavePlayerPos = r.invidiousSavePlayerPos ?? false;
+
+                    invidiousRegion = r.invidiousRegion ?? 'US';
+                    invidiousDarkMode = r.invidiousDarkMode ?? '';
+                    invidiousThinMode = r.invidiousThinMode ?? false;
+                    invidiousDefaultHome = r.invidiousDefaultHome ?? 'Popular';
+                    invidiousFeedMenuList = r.invidiousFeedMenuList ?? ['Popular', 'Trending'];
 
                     pipedBufferGoal = r.pipedBufferGoal ?? 300;
                     pipedComments = r.pipedComments ?? true;

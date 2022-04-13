@@ -20,6 +20,11 @@ import {
   invidiousExtendDesc, getInvidiousExtendDesc,
   invidiousVrMode, getInvidiousVrMode,
   invidiousSavePlayerPos, getInvidiousSavePlayerPos,
+  invidiousRegion, getInvidiousRegion,
+  invidiousDarkMode, getInvidiousDarkMode,
+  invidiousThinMode, getInvidiousThinMode,
+  invidiousDefaultHome, getInvidiousDefaultHome,
+  invidiousFeedMenuList, getInvidiousFeedMenuList,
   getPipedBufferGoal,
   getPipedComments,
   getPipedDisableLBRY,
@@ -502,7 +507,6 @@ function initInvidiousCookies() {
           }
 
           prefs.local = invidiousAlwaysProxy;
-          prefs.dark_mode = theme;
           prefs.video_loop = invidiousVideoLoop;
           prefs.continue_autoplay = invidiousContinueAutoplay;
           prefs.continue = invidiousContinue;
@@ -511,15 +515,8 @@ function initInvidiousCookies() {
           prefs.quality = invidiousQuality;
           prefs.quality_dash = invidiousQualityDash;
 
-          prefs.comments = [];
-          prefs.comments[0] = invidiousComments[0];
-          prefs.comments[1] = invidiousComments[1];
-
-
-          prefs.captions = [];
-          prefs.captions[0] = invidiousCaptions[0];
-          prefs.captions[1] = invidiousCaptions[1];
-          prefs.captions[2] = invidiousCaptions[2];
+          prefs.comments = invidiousComments;
+          prefs.captions = invidiousCaptions;
 
           prefs.related_videos = invidiousRelatedVideos;
           prefs.annotations = invidiousAnnotations
@@ -530,6 +527,12 @@ function initInvidiousCookies() {
           prefs.volume = parseInt(volume);
           prefs.player_style = invidiousPlayerStyle;
           prefs.autoplay = youtubeAutoplay;
+
+          prefs.region = invidiousRegion;
+          prefs.dark_mode = invidiousDarkMode;
+          prefs.thin_mode = invidiousThinMode;
+          prefs.default_home = invidiousDefaultHome;
+          prefs.feed_menu = invidiousFeedMenuList;
 
           browser.cookies.set({
             url: instanceUrl,
@@ -645,7 +648,12 @@ export default {
   getInvidiousQuality,
   getInvidiousPlayerStyle,
   getInvidiousVideoLoop,
-  
+  getInvidiousRegion,
+  getInvidiousDarkMode,
+  getInvidiousThinMode,
+  getInvidiousDefaultHome,
+  getInvidiousFeedMenuList,
+
   getDisable,
   setDisable,
 

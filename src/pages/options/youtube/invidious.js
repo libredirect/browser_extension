@@ -1,98 +1,122 @@
 import youtubeHelper from "../../../assets/javascripts/helpers/youtube/youtube.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
-let invidiousElement = document.getElementById('invidious');
-let invidiousAlwaysProxyElement = invidiousElement.getElementsByClassName("local")[0];
-let invidiousPlayerStyleElement = invidiousElement.getElementsByClassName("player_style")[0];
-let invidiousQualityElement = invidiousElement.getElementsByClassName("quality")[0];
-let invidiousVideoLoopElement = invidiousElement.getElementsByClassName("video_loop")[0];
-let invidiousContinueAutoplayElement = invidiousElement.getElementsByClassName("continue_autoplay")[0];
-let invidiousContinueElement = invidiousElement.getElementsByClassName("continue")[0];
-let youtubeListenElement = invidiousElement.getElementsByClassName("listen")[0];
-let invidiousSpeedElement = invidiousElement.getElementsByClassName("speed")[0];
-let invidiousQualityDashElement = invidiousElement.getElementsByClassName("quality_dash")[0];
-let invidiousRelatedVideoElement = invidiousElement.getElementsByClassName("related_videos")[0];
-let invidiousAnnotationsElement = invidiousElement.getElementsByClassName("annotations")[0];
-let invidiousExtendDescElement = invidiousElement.getElementsByClassName("extend_desc")[0];
-let invidiousVrModeElement = invidiousElement.getElementsByClassName("vr_mode")[0];
-let invidiousSavePlayerPosElement = invidiousElement.getElementsByClassName("save_player_pos")[0];
-let invidiousComments0Element = invidiousElement.getElementsByClassName("comments[0]")[0];
-let invidiousComments1Element = invidiousElement.getElementsByClassName("comments[1]")[0];
-let invidiousCaptions0Element = invidiousElement.getElementsByClassName("captions[0]")[0];
-let invidiousCaptions1Element = invidiousElement.getElementsByClassName("captions[1]")[0];
-let invidiousCaptions2Element = invidiousElement.getElementsByClassName("captions[2]")[0];
-let autoplayElement = invidiousElement.getElementsByClassName("youtubeAutoplay")[0];
-let volumeElement = invidiousElement.getElementsByClassName("volume")[0];
-let volumeValueElement = invidiousElement.getElementsByClassName("volume-value")[0];
+let invidious = document.getElementById('invidious');
+let alwaysProxy = invidious.getElementsByClassName("local")[0];
+let playerStyle = invidious.getElementsByClassName("player_style")[0];
+let quality = invidious.getElementsByClassName("quality")[0];
+let videoLoop = invidious.getElementsByClassName("video_loop")[0];
+let continueAutoplay = invidious.getElementsByClassName("continue_autoplay")[0];
+let invidiousContinue = invidious.getElementsByClassName("continue")[0];
+let youtubeListen = invidious.getElementsByClassName("listen")[0];
+let speed = invidious.getElementsByClassName("speed")[0];
+let qualityDash = invidious.getElementsByClassName("quality_dash")[0];
+let relatedVideo = invidious.getElementsByClassName("related_videos")[0];
+let annotations = invidious.getElementsByClassName("annotations")[0];
+let extendDesc = invidious.getElementsByClassName("extend_desc")[0];
+let vrMode = invidious.getElementsByClassName("vr_mode")[0];
+let savePlayerPos = invidious.getElementsByClassName("save_player_pos")[0];
+let comments0 = invidious.getElementsByClassName("comments[0]")[0];
+let comments1 = invidious.getElementsByClassName("comments[1]")[0];
+let captions0 = invidious.getElementsByClassName("captions[0]")[0];
+let captions1 = invidious.getElementsByClassName("captions[1]")[0];
+let captions2 = invidious.getElementsByClassName("captions[2]")[0];
+let autoplay = invidious.getElementsByClassName("youtubeAutoplay")[0];
+let volume = invidious.getElementsByClassName("volume")[0];
+let volumeValue = invidious.getElementsByClassName("volume-value")[0];
+let region = invidious.getElementsByClassName("region")[0];
+let darkMode = invidious.getElementsByClassName("dark_mode")[0];
+let thin_mode = invidious.getElementsByClassName("thin_mode")[0];
+let default_home = invidious.getElementsByClassName("default_home")[0];
+let feed_menu0 = invidious.getElementsByClassName("feed_menu[0]")[0];
+let feed_menu1 = invidious.getElementsByClassName("feed_menu[1]")[0];
 
-volumeElement.addEventListener("input", () => volumeValueElement.textContent = `${volumeElement.value}%`);
+volume.addEventListener("input", () => volumeValue.textContent = `${volume.value}%`);
 
-invidiousElement.addEventListener("change", async _ => {
+invidious.addEventListener("change", async _ => {
     console.log('changed invidious settings');
     let commentsList = youtubeHelper.getInvidiousComments();
-    commentsList[0] = invidiousComments0Element.value;
-    commentsList[1] = invidiousComments1Element.value;
+    commentsList[0] = comments0.value;
+    commentsList[1] = comments1.value;
 
     let captionsList = youtubeHelper.getInvidiousCaptions();
-    captionsList[0] = invidiousCaptions0Element.value;
-    captionsList[1] = invidiousCaptions1Element.value;
-    captionsList[2] = invidiousCaptions2Element.value;
+    captionsList[0] = captions0.value;
+    captionsList[1] = captions1.value;
+    captionsList[2] = captions2.value;
+
+    let feedMenuList = youtubeHelper.getInvidiousFeedMenuList();
+    feedMenuList[0] = feed_menu0.value;
+    feedMenuList[1] = feed_menu1.value;
 
     await youtubeHelper.setYoutubeSettings({
-        invidiousAlwaysProxy: invidiousAlwaysProxyElement.checked,
-        youtubeAutoplay: autoplayElement.checked,
-        invidiousPlayerStyle: invidiousPlayerStyleElement.value,
-        invidiousQuality: invidiousQualityElement.value,
-        invidiousVideoLoop: invidiousVideoLoopElement.checked,
-        invidiousContinueAutoplay: invidiousContinueAutoplayElement.checked,
-        invidiousContinue: invidiousContinueElement.checked,
-        youtubeListen: youtubeListenElement.checked,
-        invidiousSpeed: invidiousSpeedElement.value,
-        invidiousQualityDash: invidiousQualityDashElement.value,
-        youtubeVolume: volumeElement.value,
+        invidiousAlwaysProxy: alwaysProxy.checked,
+        youtubeAutoplay: autoplay.checked,
+        invidiousPlayerStyle: playerStyle.value,
+        invidiousQuality: quality.value,
+        invidiousVideoLoop: videoLoop.checked,
+        invidiousContinueAutoplay: continueAutoplay.checked,
+        invidiousContinue: invidiousContinue.checked,
+        youtubeListen: youtubeListen.checked,
+        invidiousSpeed: speed.value,
+        invidiousQualityDash: qualityDash.value,
+        youtubeVolume: volume.value,
         invidiousComments: commentsList,
         invidiousCaptions: captionsList,
-        invidiousRelatedVideos: invidiousRelatedVideoElement.checked,
-        invidiousAnnotations: invidiousAnnotationsElement.checked,
-        invidiousExtendDesc: invidiousExtendDescElement.checked,
-        invidiousVrMode: invidiousVrModeElement.checked,
-        invidiousSavePlayerPos: invidiousSavePlayerPosElement.checked
+        invidiousRelatedVideos: relatedVideo.checked,
+        invidiousAnnotations: annotations.checked,
+        invidiousExtendDesc: extendDesc.checked,
+        invidiousVrMode: vrMode.checked,
+        invidiousSavePlayerPos: savePlayerPos.checked,
+
+        invidiousRegion: region.value,
+        invidiousDarkMode: darkMode.value,
+        invidiousThinMode: thin_mode.checked,
+        invidiousDefaultHome: default_home.value,
+        invidiousFeedMenuList: feedMenuList,
     });
     init();
 });
 
 function init() {
     youtubeHelper.init().then(() => {
-        invidiousVideoLoopElement.checked = youtubeHelper.getInvidiousVideoLoop();
+        videoLoop.checked = youtubeHelper.getInvidiousVideoLoop();
 
-        autoplayElement.checked = youtubeHelper.getAutoplay();
+        autoplay.checked = youtubeHelper.getAutoplay();
 
-        invidiousPlayerStyleElement.value = youtubeHelper.getInvidiousPlayerStyle();
+        playerStyle.value = youtubeHelper.getInvidiousPlayerStyle();
 
-        invidiousContinueAutoplayElement.checked = youtubeHelper.getInvidiousContinueAutoplay();
-        invidiousContinueElement.checked = youtubeHelper.getInvidiousContinue();
-        invidiousAlwaysProxyElement.checked = youtubeHelper.getInvidiousAlwaysProxy();
-        youtubeListenElement.checked = youtubeHelper.getYoutubeListen();
+        continueAutoplay.checked = youtubeHelper.getInvidiousContinueAutoplay();
+        invidiousContinue.checked = youtubeHelper.getInvidiousContinue();
+        alwaysProxy.checked = youtubeHelper.getInvidiousAlwaysProxy();
+        youtubeListen.checked = youtubeHelper.getYoutubeListen();
 
-        invidiousSpeedElement.value = youtubeHelper.getInvidiousSpeed();
-        invidiousQualityElement.value = youtubeHelper.getInvidiousQuality();
-        invidiousQualityDashElement.value = youtubeHelper.getInvidiousQualityDash();
+        speed.value = youtubeHelper.getInvidiousSpeed();
+        quality.value = youtubeHelper.getInvidiousQuality();
+        qualityDash.value = youtubeHelper.getInvidiousQualityDash();
 
-        volumeElement.value = youtubeHelper.getVolume();
-        volumeValueElement.textContent = `${youtubeHelper.getVolume()}%`;
+        volume.value = youtubeHelper.getVolume();
+        volumeValue.textContent = `${youtubeHelper.getVolume()}%`;
 
-        invidiousComments0Element.value = youtubeHelper.getInvidiousComments()[0];
-        invidiousComments1Element.value = youtubeHelper.getInvidiousComments()[1];
+        comments0.value = youtubeHelper.getInvidiousComments()[0];
+        comments1.value = youtubeHelper.getInvidiousComments()[1];
 
-        invidiousCaptions0Element.value = youtubeHelper.getInvidiousCaptions()[0];
-        invidiousCaptions1Element.value = youtubeHelper.getInvidiousCaptions()[1];
-        invidiousCaptions2Element.value = youtubeHelper.getInvidiousCaptions()[2];
+        captions0.value = youtubeHelper.getInvidiousCaptions()[0];
+        captions1.value = youtubeHelper.getInvidiousCaptions()[1];
+        captions2.value = youtubeHelper.getInvidiousCaptions()[2];
 
-        invidiousRelatedVideoElement.checked = youtubeHelper.getInvidiousRelatedVideos();
-        invidiousAnnotationsElement.checked = youtubeHelper.getInvidiousAnnotations();
-        invidiousExtendDescElement.checked = youtubeHelper.getInvidiousExtendDesc();
-        invidiousVrModeElement.checked = youtubeHelper.getInvidiousVrMode();
-        invidiousSavePlayerPosElement.checked = youtubeHelper.getInvidiousSavePlayerPos();
+        relatedVideo.checked = youtubeHelper.getInvidiousRelatedVideos();
+        annotations.checked = youtubeHelper.getInvidiousAnnotations();
+        extendDesc.checked = youtubeHelper.getInvidiousExtendDesc();
+        vrMode.checked = youtubeHelper.getInvidiousVrMode();
+        savePlayerPos.checked = youtubeHelper.getInvidiousSavePlayerPos();
+
+        region.value = youtubeHelper.getInvidiousRegion();
+        darkMode.value = youtubeHelper.getInvidiousDarkMode();
+        thin_mode.checked = youtubeHelper.getInvidiousThinMode();
+        default_home.value = youtubeHelper.getInvidiousDefaultHome();
+
+        feed_menu0.value = youtubeHelper.getInvidiousFeedMenuList()[0];
+        feed_menu1.value = youtubeHelper.getInvidiousFeedMenuList()[1];
 
         commonHelper.processDefaultCustomInstances(
             'invidious',
