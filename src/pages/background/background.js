@@ -175,7 +175,8 @@ browser.webRequest.onResponseStarted.addListener(
   details => {
     if (!generalHelper.getAutoRedirect()) return null;
 
-    if (details.type == 'main_frame' && (details.statusCode == 503 || details.statusCode == 504)) {
+    console.log('details.statusCode', details.statusCode);
+    if (details.type == 'main_frame' && (details.statusCode == 502 || details.statusCode == 503 || details.statusCode == 504)) {
       // if (details.type == 'main_frame' && details.statusCode >= 200) {
       // console.log("statusCode", details.statusCode);
       const url = new URL(details.url);
