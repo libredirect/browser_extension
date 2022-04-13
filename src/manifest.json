@@ -24,7 +24,7 @@
     "webRequestBlocking",
     "storage",
     "cookies",
-    "menus",
+    "contextMenus",
     "<all_urls>"
   ],
   "browser_action": {

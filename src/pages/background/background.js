@@ -253,19 +253,19 @@ browser.commands.onCommand.addListener(
   }
 )
 
-browser.menus.create({
+browser.contextMenus.create({
   id: "settings",
   title: browser.i18n.getMessage("Settings"),
   contexts: ["browser_action"]
 });
 
-browser.menus.create({
+browser.contextMenus.create({
   id: "switchInstance",
   title: chrome.i18n.getMessage("switchInstance"),
   contexts: ["browser_action"]
 });
 
-browser.menus.onClicked.addListener((info, tab) => {
+browser.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId == 'switchInstance') {
     let url;
     try { url = new URL(tab.url); }
