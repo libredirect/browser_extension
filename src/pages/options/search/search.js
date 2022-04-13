@@ -63,12 +63,15 @@ protocolElement.addEventListener("change",
 function changeProtocolSettings(protocol) {
   let normalsearxDiv = searxDivElement.getElementsByClassName("normal")[0];
   let torsearxDiv = searxDivElement.getElementsByClassName("tor")[0];
+  let i2psearxDiv = searxDivElement.getElementsByClassName("i2p")[0];
 
   let normalsearxngDiv = searxngDivElement.getElementsByClassName("normal")[0];
   let torsearxngDiv = searxngDivElement.getElementsByClassName("tor")[0];
+  let i2psearxngDiv = searxngDivElement.getElementsByClassName("i2p")[0];
 
   let normalwhoogleDiv = whoogleDivElement.getElementsByClassName("normal")[0];
   let torwhoogleDiv = whoogleDivElement.getElementsByClassName("tor")[0];
+  let i2pwhoogleDiv = whoogleDivElement.getElementsByClassName("i2p")[0];
 
   if (protocol == 'normal') {
     normalsearxDiv.style.display = 'block';
@@ -77,6 +80,9 @@ function changeProtocolSettings(protocol) {
     torsearxDiv.style.display = 'none';
     torsearxngDiv.style.display = 'none';
     torwhoogleDiv.style.display = 'none';
+    i2psearxDiv.style.display = 'none';
+    i2psearxngDiv.style.display = 'none';
+    i2pwhoogleDiv.style.display = 'none';
   }
   else if (protocol == 'tor') {
     normalsearxDiv.style.display = 'none';
@@ -85,6 +91,20 @@ function changeProtocolSettings(protocol) {
     torsearxDiv.style.display = 'block';
     torsearxngDiv.style.display = 'block';
     torwhoogleDiv.style.display = 'block';
+    i2psearxDiv.style.display = 'none';
+    i2psearxngDiv.style.display = 'none';
+    i2pwhoogleDiv.style.display = 'none';
+  }
+  else if (protocol == 'i2p') {
+    normalsearxDiv.style.display = 'none';
+    normalsearxngDiv.style.display = 'none';
+    normalwhoogleDiv.style.display = 'none';
+    torsearxDiv.style.display = 'none';
+    torsearxngDiv.style.display = 'none';
+    torwhoogleDiv.style.display = 'none';
+    i2psearxDiv.style.display = 'block';
+    i2psearxngDiv.style.display = 'block';
+    i2pwhoogleDiv.style.display = 'block';
   }
 }
 
@@ -121,6 +141,17 @@ searchHelper.init().then(() => {
   );
 
   commonHelper.processDefaultCustomInstances(
+    'searx',
+    'i2p',
+    searchHelper,
+    document,
+    searchHelper.getSearxI2pRedirectsChecks,
+    searchHelper.setSearxI2pRedirectsChecks,
+    searchHelper.getSearxI2pCustomRedirects,
+    searchHelper.setSearxI2pCustomRedirects
+  );
+
+  commonHelper.processDefaultCustomInstances(
     'searxng',
     'normal',
     searchHelper,
@@ -143,6 +174,17 @@ searchHelper.init().then(() => {
   );
 
   commonHelper.processDefaultCustomInstances(
+    'searxng',
+    'i2p',
+    searchHelper,
+    document,
+    searchHelper.getSearxngI2pRedirectsChecks,
+    searchHelper.setSearxngI2pRedirectsChecks,
+    searchHelper.getSearxngI2pCustomRedirects,
+    searchHelper.setSearxngI2pCustomRedirects
+  );
+
+  commonHelper.processDefaultCustomInstances(
     'whoogle',
     'normal',
     searchHelper,
@@ -162,5 +204,16 @@ searchHelper.init().then(() => {
     searchHelper.setWhoogleTorRedirectsChecks,
     searchHelper.getWhoogleTorCustomRedirects,
     searchHelper.setWhoogleTorCustomRedirects
+  );
+
+  commonHelper.processDefaultCustomInstances(
+    'whoogle',
+    'i2p',
+    searchHelper,
+    document,
+    searchHelper.getWhoogleI2pRedirectsChecks,
+    searchHelper.setWhoogleI2pRedirectsChecks,
+    searchHelper.getWhoogleI2pCustomRedirects,
+    searchHelper.setWhoogleI2pCustomRedirects
   );
 });

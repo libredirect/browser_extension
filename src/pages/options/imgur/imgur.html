@@ -139,6 +139,7 @@
       <select id="protocol">
         <option value="normal" data-localise="__MSG_normal__">Normal</option>
         <option value="tor" data-localise="__MSG_tor__">Tor</option>
+	<option value="i2p" data-localise="__MSG_i2p__">I2P</option>
       </select>
     </div>
 
@@ -167,6 +168,7 @@
         </form>
         <div class="checklist custom-checklist"></div>
       </div>
+
       <div class="tor">
         <div class="some-block option-block">
           <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
@@ -178,7 +180,7 @@
         </div>
         <form class="custom-instance-form">
           <div class="some-block option-block">
-            <input class="custom-instance" placeholder="https://rimgo.com" type="url" />
+            <input class="custom-instance" placeholder="http://rimgo.onion" type="url" />
             <button type="submit" class="add add-instance">
               <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
                 fill="currentColor">
@@ -190,9 +192,33 @@
         </form>
         <div class="checklist custom-checklist"></div>
       </div>
+
+      <div class="i2p">
+        <div class="some-block option-block">
+	  <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+	</div>
+	<div class="checklist checklist"></div>
+	<hr>
+	<div class="some-block option-block">
+	  <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+	</div>
+	<form class="custom-instance-form">
+	  <div class="some-block option-block">
+	    <input class="custom-instance" placeholder="http://rimgo.i2p" type="url" />
+	    <button type="submit" class="add add-instance">
+	      <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" 
+		fill="currentColor">
+		<path d="M0 0h24v24H0V0z" fill="none" />
+		<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+	      </svg>
+	    </button>
+	  </div>
+	</form>
+	<div class="checklist custom-checklist"></div>
+      </div>
+
     </div>
   </section>
-
 
   <script type="module" src="../init.js"></script>
   <script type="module" src="./imgur.js"></script>
