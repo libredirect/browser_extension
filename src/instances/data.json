@@ -14,10 +14,10 @@
       "https://invidious.flokinet.to",
       "https://yt.artemislena.eu",
       "https://invidious.lunar.icu",
-      "https://inv.bp.mutahar.rocks",
       "https://invidious.mutahar.rocks",
       "https://youtube.076.ne.jp",
       "https://invidious.esmailelbob.xyz",
+      "https://inv.bp.mutahar.rocks",
       "https://invidious.weblibre.org",
       "https://invidious.privacy.gd",
       "https://invidious.namazso.eu"
@@ -114,7 +114,8 @@
       "https://nitter.notraxx.ch",
       "https://nitter.poast.org",
       "https://nitter.lunar.icu",
-      "https://nitter.bird.froth.zone"
+      "https://nitter.bird.froth.zone",
+      "https://nitter.drivet.xyz"
     ],
     "tor": [
       "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
@@ -467,6 +468,8 @@
     ]
   },
   "peertube": [
+    "https://video.paradigmthreat.net",
+    "https://video.lincolncyber.com",
     "https://vid.twhtv.club",
     "https://video.retroedge.tech",
     "https://truvitv.com",
@@ -604,7 +607,6 @@
     "https://ua.peertube.red",
     "https://peertube.zwindler.fr",
     "https://videos.fsci.in",
-    "https://pixel.ated.io",
     "https://swebbtube.se",
     "https://video.dnfi.no",
     "https://peertube.revelin.fr",
@@ -701,7 +703,6 @@
     "https://peertube.kriom.net",
     "https://peertube.grosist.fr",
     "https://peertube.gemlog.ca",
-    "https://peer.nuxlight.xyz",
     "https://nettube.uc-netcorsoft.de",
     "https://live.solari.com",
     "https://live.codinglab.ch",
