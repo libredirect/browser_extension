@@ -36,6 +36,7 @@ import {
   getPipedRegion,
   getPipedSelectedSkip,
   getPipedSponsorblock,
+  getPipedDdlTheme,
   getPipedWatchHistory,
   volume, getVolume, setVolume,
   youtubeAutoplay, getAutoplay, setAutoplay,
@@ -687,6 +688,7 @@ export default {
   getPipedRegion,
   getPipedSelectedSkip,
   getPipedSponsorblock,
+  getPipedDdlTheme,
   getPipedWatchHistory,
   getPipedMaterialSkipToLastPoint,
 

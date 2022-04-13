@@ -1,37 +1,38 @@
 import youtubeHelper from "../../../assets/javascripts/helpers/youtube/youtube.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
-let pipedElement = document.getElementById('piped');
+let piped = document.getElementById('piped');
 
-let pipedListenElement = pipedElement.getElementsByClassName("listen")[0];
-let pipedQualityElement = pipedElement.getElementsByClassName("quality")[0];
-let pipedBufferGoalElement = pipedElement.getElementsByClassName("bufferGoal")[0];
-let pipedRegionElement = pipedElement.getElementsByClassName("region")[0];
-let pipedHomepageElement = pipedElement.getElementsByClassName("homepage")[0];
-let pipedCommentsElement = pipedElement.getElementsByClassName("comments")[0];
-let pipedMinimizeDescriptionElement = pipedElement.getElementsByClassName("minimizeDescription")[0];
-let pipedWatchHistoryElement = pipedElement.getElementsByClassName("watchHistory")[0];
-let pipedDisableLBRYElement = pipedElement.getElementsByClassName("disableLBRY")[0];
-let pipedProxyLBRYElement = pipedElement.getElementsByClassName("proxyLBRY")[0];
+let pipedListen = piped.getElementsByClassName("listen")[0];
+let pipedQuality = piped.getElementsByClassName("quality")[0];
+let pipedBufferGoal = piped.getElementsByClassName("bufferGoal")[0];
+let pipedRegion = piped.getElementsByClassName("region")[0];
+let pipedHomepage = piped.getElementsByClassName("homepage")[0];
+let pipedComments = piped.getElementsByClassName("comments")[0];
+let pipedMinimizeDescription = piped.getElementsByClassName("minimizeDescription")[0];
+let pipedWatchHistory = piped.getElementsByClassName("watchHistory")[0];
+let pipedDisableLBRY = piped.getElementsByClassName("disableLBRY")[0];
+let pipedProxyLBRY = piped.getElementsByClassName("proxyLBRY")[0];
 
-let pipedSelectedSkipSponsorElement = pipedElement.getElementsByClassName("selectedSkip-sponsor")[0];
-let pipedSelectedSkipIntroElement = pipedElement.getElementsByClassName("selectedSkip-intro")[0];
-let pipedSelectedSkipOutroElement = pipedElement.getElementsByClassName("selectedSkip-outro")[0];
-let pipedSelectedSkipPreviewElement = pipedElement.getElementsByClassName("selectedSkip-preview")[0];
-let pipedSelectedSkipInteractionElement = pipedElement.getElementsByClassName("selectedSkip-interaction")[0];
-let pipedSelectedSkipSelfpromoElement = pipedElement.getElementsByClassName("selectedSkip-selfpromo")[0];
-let pipedSelectedSkipMusicOfftopicElement = pipedElement.getElementsByClassName("selectedSkip-music_offtopic")[0];
-let pipedSelectedSkipPoiHighlightElement = pipedElement.getElementsByClassName("selectedSkip-poi_highlight")[0];
-let pipedSelectedSkipFillerElement = pipedElement.getElementsByClassName("selectedSkip-filler")[0];
+let pipedSelectedSkipSponsor = piped.getElementsByClassName("selectedSkip-sponsor")[0];
+let pipedSelectedSkipIntro = piped.getElementsByClassName("selectedSkip-intro")[0];
+let pipedSelectedSkipOutro = piped.getElementsByClassName("selectedSkip-outro")[0];
+let pipedSelectedSkipPreview = piped.getElementsByClassName("selectedSkip-preview")[0];
+let pipedSelectedSkipInteraction = piped.getElementsByClassName("selectedSkip-interaction")[0];
+let pipedSelectedSkipSelfpromo = piped.getElementsByClassName("selectedSkip-selfpromo")[0];
+let pipedSelectedSkipMusicOfftopic = piped.getElementsByClassName("selectedSkip-music_offtopic")[0];
+let pipedSelectedSkipPoiHighlight = piped.getElementsByClassName("selectedSkip-poi_highlight")[0];
+let pipedSelectedSkipFiller = piped.getElementsByClassName("selectedSkip-filler")[0];
 
-let pipedSponsorblockElement = pipedElement.getElementsByClassName("sponsorblock")[0];
-let pipedEnabledCodecsElement = pipedElement.getElementsByClassName("enabledCodecs")[0];
-let autoplayElement = pipedElement.getElementsByClassName("youtubeAutoplay")[0];
+let pipedDdlTheme = piped.getElementsByClassName("ddlTheme")[0];
+let pipedSponsorblock = piped.getElementsByClassName("sponsorblock")[0];
+let pipedEnabledCodecs = piped.getElementsByClassName("enabledCodecs")[0];
+let autoplay = piped.getElementsByClassName("youtubeAutoplay")[0];
 
-let volumeElement = pipedElement.getElementsByClassName("volume")[0];
-let volumeValueElement = pipedElement.getElementsByClassName("volume-value")[0];
+let volume = piped.getElementsByClassName("volume")[0];
+let volumeValue = piped.getElementsByClassName("volume-value")[0];
 
-volumeElement.addEventListener("input", () => volumeValueElement.textContent = `${volumeElement.value}%`);
+volume.addEventListener("input", () => volumeValue.textContent = `${volume.value}%`);
 function selectSkipModify(value, boolean) {
     if (boolean && !selectSkip.includes(value)) {
         selectSkip.push(value);
@@ -42,37 +43,38 @@ function selectSkipModify(value, boolean) {
     }
 }
 let selectSkip = [];
-pipedElement.addEventListener("change", async () => {
+piped.addEventListener("change", async () => {
     console.log("changed piped settings");
     let pipedEnabledCodecsResult = [];
-    for (const opt of pipedEnabledCodecsElement.options)
+    for (const opt of pipedEnabledCodecs.options)
         if (opt.selected) pipedEnabledCodecsResult.push(opt.value);
 
-    selectSkipModify('sponsor', pipedSelectedSkipSponsorElement.checked);
-    selectSkipModify('intro', pipedSelectedSkipIntroElement.checked);
-    selectSkipModify('outro', pipedSelectedSkipOutroElement.checked);
-    selectSkipModify('preview', pipedSelectedSkipPreviewElement.checked);
-    selectSkipModify('interaction', pipedSelectedSkipInteractionElement.checked);
-    selectSkipModify('selfpromo', pipedSelectedSkipSelfpromoElement.checked);
-    selectSkipModify('music_offtopic', pipedSelectedSkipMusicOfftopicElement.checked);
-    selectSkipModify('poi_highlight', pipedSelectedSkipPoiHighlightElement.checked);
-    selectSkipModify('filler', pipedSelectedSkipFillerElement.checked);
+    selectSkipModify('sponsor', pipedSelectedSkipSponsor.checked);
+    selectSkipModify('intro', pipedSelectedSkipIntro.checked);
+    selectSkipModify('outro', pipedSelectedSkipOutro.checked);
+    selectSkipModify('preview', pipedSelectedSkipPreview.checked);
+    selectSkipModify('interaction', pipedSelectedSkipInteraction.checked);
+    selectSkipModify('selfpromo', pipedSelectedSkipSelfpromo.checked);
+    selectSkipModify('music_offtopic', pipedSelectedSkipMusicOfftopic.checked);
+    selectSkipModify('poi_highlight', pipedSelectedSkipPoiHighlight.checked);
+    selectSkipModify('filler', pipedSelectedSkipFiller.checked);
 
     await youtubeHelper.setYoutubeSettings({
-        pipedQuality: pipedQualityElement.value,
-        pipedBufferGoal: pipedBufferGoalElement.value,
-        pipedRegion: pipedRegionElement.value,
-        pipedHomepage: pipedHomepageElement.value,
-        pipedComments: pipedCommentsElement.checked,
-        pipedMinimizeDescription: pipedMinimizeDescriptionElement.checked,
-        youtubeAutoplay: autoplayElement.checked,
-        pipedWatchHistory: pipedWatchHistoryElement.checked,
-        pipedDisableLBRY: pipedDisableLBRYElement.checked,
-        pipedProxyLBRY: pipedProxyLBRYElement.checked,
-        youtubeVolume: volumeElement.value,
-        pipedSponsorblock: pipedSponsorblockElement.checked,
+        pipedQuality: pipedQuality.value,
+        pipedBufferGoal: pipedBufferGoal.value,
+        pipedRegion: pipedRegion.value,
+        pipedHomepage: pipedHomepage.value,
+        pipedComments: pipedComments.checked,
+        pipedMinimizeDescription: pipedMinimizeDescription.checked,
+        youtubeAutoplay: autoplay.checked,
+        pipedWatchHistory: pipedWatchHistory.checked,
+        pipedDisableLBRY: pipedDisableLBRY.checked,
+        pipedProxyLBRY: pipedProxyLBRY.checked,
+        youtubeVolume: volume.value,
+        pipedSponsorblock: pipedSponsorblock.checked,
+        pipedDdlTheme: pipedDdlTheme.value,
         pipedEnabledCodecs: pipedEnabledCodecsResult,
-        youtubeListen: pipedListenElement.checked,
+        youtubeListen: pipedListen.checked,
         pipedSelectedSkip: selectSkip,
     });
     init();
@@ -80,32 +82,33 @@ pipedElement.addEventListener("change", async () => {
 
 function init() {
     youtubeHelper.init().then(() => {
-        pipedSponsorblockElement.checked = youtubeHelper.getPipedSponsorblock();
+        pipedSponsorblock.checked = youtubeHelper.getPipedSponsorblock();
+        pipedDdlTheme.value = youtubeHelper.getPipedDdlTheme();
         selectSkip = youtubeHelper.getPipedSelectedSkip();
-        pipedSelectedSkipSponsorElement.checked = selectSkip.includes('sponsor');
-        pipedSelectedSkipIntroElement.checked = selectSkip.includes('intro');
-        pipedSelectedSkipOutroElement.checked = selectSkip.includes('outro');
-        pipedSelectedSkipPreviewElement.checked = selectSkip.includes('preview');
-        autoplayElement.checked = youtubeHelper.getAutoplay();
-        pipedSelectedSkipInteractionElement.checked = selectSkip.includes('interaction');
-        pipedSelectedSkipSelfpromoElement.checked = selectSkip.includes('selfpromo');
-        pipedSelectedSkipMusicOfftopicElement.checked = selectSkip.includes('music_offtopic');
-        pipedSelectedSkipPoiHighlightElement.checked = selectSkip.includes('poi_highlight');
-        pipedSelectedSkipFillerElement.checked = selectSkip.includes('filler');
-        pipedListenElement.checked = youtubeHelper.getYoutubeListen();
-        pipedQualityElement.value = youtubeHelper.getPipedQuality();
-        pipedBufferGoalElement.value = youtubeHelper.getPipedBufferGoal();
-        pipedRegionElement.value = youtubeHelper.getPipedRegion();
-        pipedHomepageElement.value = youtubeHelper.getPipedHomepage();
-        pipedCommentsElement.checked = youtubeHelper.getPipedComments();
-        pipedMinimizeDescriptionElement.checked = youtubeHelper.getPipedMinimizeDescription();
-        pipedWatchHistoryElement.checked = youtubeHelper.getPipedWatchHistory();
-        pipedEnabledCodecsElement.value = youtubeHelper.getPipedEnabledCodecs();
-        pipedDisableLBRYElement.checked = youtubeHelper.getPipedDisableLBRY();
-        pipedProxyLBRYElement.checked = youtubeHelper.getPipedProxyLBRY();
+        pipedSelectedSkipSponsor.checked = selectSkip.includes('sponsor');
+        pipedSelectedSkipIntro.checked = selectSkip.includes('intro');
+        pipedSelectedSkipOutro.checked = selectSkip.includes('outro');
+        pipedSelectedSkipPreview.checked = selectSkip.includes('preview');
+        autoplay.checked = youtubeHelper.getAutoplay();
+        pipedSelectedSkipInteraction.checked = selectSkip.includes('interaction');
+        pipedSelectedSkipSelfpromo.checked = selectSkip.includes('selfpromo');
+        pipedSelectedSkipMusicOfftopic.checked = selectSkip.includes('music_offtopic');
+        pipedSelectedSkipPoiHighlight.checked = selectSkip.includes('poi_highlight');
+        pipedSelectedSkipFiller.checked = selectSkip.includes('filler');
+        pipedListen.checked = youtubeHelper.getYoutubeListen();
+        pipedQuality.value = youtubeHelper.getPipedQuality();
+        pipedBufferGoal.value = youtubeHelper.getPipedBufferGoal();
+        pipedRegion.value = youtubeHelper.getPipedRegion();
+        pipedHomepage.value = youtubeHelper.getPipedHomepage();
+        pipedComments.checked = youtubeHelper.getPipedComments();
+        pipedMinimizeDescription.checked = youtubeHelper.getPipedMinimizeDescription();
+        pipedWatchHistory.checked = youtubeHelper.getPipedWatchHistory();
+        pipedEnabledCodecs.value = youtubeHelper.getPipedEnabledCodecs();
+        pipedDisableLBRY.checked = youtubeHelper.getPipedDisableLBRY();
+        pipedProxyLBRY.checked = youtubeHelper.getPipedProxyLBRY();
 
-        volumeElement.value = youtubeHelper.getVolume();
-        volumeValueElement.textContent = `${youtubeHelper.getVolume()}%`;
+        volume.value = youtubeHelper.getVolume();
+        volumeValue.textContent = `${youtubeHelper.getVolume()}%`;
 
         commonHelper.processDefaultCustomInstances(
             'piped',

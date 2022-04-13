@@ -18,6 +18,7 @@ browser.storage.local.get(
         "pipedRegion",
         "pipedSelectedSkip",
         "pipedSponsorblock",
+        "pipedDdlTheme",
         "pipedWatchHistory",
     ],
     r => {
@@ -37,6 +38,7 @@ browser.storage.local.get(
         let pipedRegion = r.pipedRegion ?? "US";
         let pipedSelectedSkip = r.pipedSelectedSkip ?? ["sponsor", "interaction", "selfpromo", "music_offtopic"];
         let pipedSponsorblock = r.pipedSponsorblock ?? true;
+        let pipedDdlTheme = r.pipedDdlTheme ?? 'auto';
         let pipedWatchHistory = r.pipedWatchHistory ?? false;
 
         localStorage.setItem("bufferGoal", pipedBufferGoal.toString());
@@ -52,7 +54,7 @@ browser.storage.local.get(
         localStorage.setItem("region", pipedRegion);
         localStorage.setItem("selectedSkip", pipedSelectedSkip);
         localStorage.setItem("sponsorblock", pipedSponsorblock);
-        localStorage.setItem("theme", theme);
+        localStorage.setItem("theme", pipedDdlTheme);
         localStorage.setItem("volume", youtubeVolume / 100);
         localStorage.setItem("watchHistory", pipedWatchHistory);
     }

@@ -114,6 +114,9 @@ export const getPipedSelectedSkip = () => pipedSelectedSkip;
 export let pipedSponsorblock;
 export const getPipedSponsorblock = () => pipedSponsorblock;
 
+export let pipedDdlTheme;
+export const getPipedDdlTheme = () => pipedDdlTheme;
+
 export let pipedWatchHistory;
 export const getPipedWatchHistory = () => pipedWatchHistory;
 
@@ -162,6 +165,7 @@ export async function initOptions() {
                     "pipedRegion",
                     "pipedSelectedSkip",
                     "pipedSponsorblock",
+                    "pipedDdlTheme",
                     "pipedWatchHistory",
 
                     "pipedMaterialSkipToLastPoint",
@@ -206,6 +210,7 @@ export async function initOptions() {
 
                     pipedSelectedSkip = r.pipedSelectedSkip ?? ["sponsor", "interaction", "selfpromo", "music_offtopic"];
                     pipedSponsorblock = r.pipedSponsorblock ?? true;
+                    pipedDdlTheme = r.pipedDdlTheme ?? 'auto';
                     pipedWatchHistory = r.pipedWatchHistory ?? false;
 
                     pipedMaterialSkipToLastPoint = r.pipedMaterialSkipToLastPoint ?? true;
