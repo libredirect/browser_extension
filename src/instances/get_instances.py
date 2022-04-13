@@ -231,8 +231,14 @@ tmpList = r.text.strip().split('\n')
 whoogleList = {}
 whoogleList['normal'] = []
 whoogleList['tor'] = []
+whoogleList['i2p'] = []
 for item in tmpList:
-    whoogleList['normal'].append(item)
+    if item.endswith('.onion'):
+        whoogleList['tor'].append(item)
+    elif item.endswith('.i2p'):
+        whoogleList['i2p'].append(item)
+    else:
+        whoogleList['normal'].append(item)
 mightyList['whoogle'] = whoogleList
 print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Whoogle')
 
@@ -243,10 +249,12 @@ rJson = json.loads(r.text)
 rimgoList = {}
 rimgoList['normal'] = []
 rimgoList['tor'] = []
-
+rimgoList['i2p'] = []
 for item in rJson:
     if item.endswith('.onion'):
         rimgoList['tor'].append('http://' + item)
+    elif item.endswith('.i2p'):
+        rimgoList['i2p'].append('http://' + item)
     else:
         rimgoList['normal'].append('https://' + item)
 mightyList['rimgo'] = rimgoList

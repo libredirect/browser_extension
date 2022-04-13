@@ -18,13 +18,21 @@ protocolElement.addEventListener("change",
 function changeProtocolSettings(protocol) {
     let normalDiv = document.getElementsByClassName("normal")[0];
     let torDiv = document.getElementsByClassName("tor")[0];
+    let i2pDiv = document.getElementsByClassName("i2p")[0];
     if (protocol == 'normal') {
-        normalDiv.style.display = 'block';
-        torDiv.style.display = 'none';
+	normalDiv.style.display = 'block';
+	torDiv.style.display = 'none';
+	i2pDiv.style.display = 'none';
     }
     else if (protocol == 'tor') {
-        normalDiv.style.display = 'none';
-        torDiv.style.display = 'block';
+	normalDiv.style.display = 'none';
+	torDiv.style.display = 'block';
+	i2pDiv.style.display = 'none';
+    }
+    else if (protocol == 'i2p') {
+	normalDiv.style.display = 'none';
+	torDiv.style.display = 'none';
+	i2pDiv.style.display = 'block';
     }
 }
 
@@ -32,6 +40,7 @@ imgurHelper.init().then(() => {
     disableImgurElement.checked = !imgurHelper.getDisable();
 
     let protocol = imgurHelper.getProtocol();
+    console.log('protocol', protocol);
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
@@ -55,5 +64,16 @@ imgurHelper.init().then(() => {
         imgurHelper.setRimgoTorRedirectsChecks,
         imgurHelper.getRimgoTorCustomRedirects,
         imgurHelper.setRimgoTorCustomRedirects
+    );
+
+    commonHelper.processDefaultCustomInstances(
+	'rimgo',
+	'i2p',
+	imgurHelper,
+	document,
+	imgurHelper.getRimgoI2pRedirectsChecks,
+	imgurHelper.setRimgoI2pRedirectsChecks,
+	imgurHelper.getRimgoI2pCustomRedirects,
+	imgurHelper.setRimgoI2pCustomRedirects
     );
 });
