@@ -71,9 +71,9 @@ wikipediaHelper.init().then(() => {
 	'i2p',
 	wikipediaHelper,
 	document,
-	wikipediaHelper.getWikilessI2PRedirectsChecks,
-	wikipediaHelper.setWikilessI2PRedirectsChecks,
-	wikipediaHelper.getWikilessI2PCustomRedirects,
-	wikipediaHelper.setWikilessI2PCustomRedirects
+	wikipediaHelper.getWikilessI2pRedirectsChecks,
+	wikipediaHelper.setWikilessI2pRedirectsChecks,
+	wikipediaHelper.getWikilessI2pCustomRedirects,
+	wikipediaHelper.setWikilessI2pCustomRedirects
     )
 })

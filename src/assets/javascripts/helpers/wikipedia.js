@@ -17,7 +17,7 @@ const getCustomRedirects = function () {
     "wikiless": {
       "normal": [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects],
       "tor": [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects],
-      "i2p": [...wikilessI2PRedirectsChecks, ...wikilessI2PCustomRedirects]
+      "i2p": [...wikilessI2pRedirectsChecks, ...wikilessI2pCustomRedirects]
     },
   };
 };
@@ -40,12 +40,12 @@ function setRedirects(val) {
     }
   setWikilessTorRedirectsChecks(wikilessTorRedirectsChecks);
 
-  for (const item of wikilessI2PRedirectsChecks)
+  for (const item of wikilessI2pRedirectsChecks)
     if (!redirects.wikiless.i2p.includes(item)) {
-      var index = wikilessI2PRedirectsChecks.indexOf(item);
-      if (index !== -1) wikilessI2PRedirectsChecks.splice(index, 1);
+      var index = wikilessI2pRedirectsChecks.indexOf(item);
+      if (index !== -1) wikilessI2pRedirectsChecks.splice(index, 1);
     }
-  setWikilessI2PRedirectsChecks(wikilessI2PRedirectsChecks);
+  setWikilessI2pRedirectsChecks(wikilessI2pRedirectsChecks);
 }
 
 let disable;
@@ -79,12 +79,12 @@ function setWikilessTorRedirectsChecks(val) {
   console.log("wikilessTorRedirectsChecks: ", val)
 }
 
-let wikilessI2PRedirectsChecks;
-const getWikilessI2PRedirectsChecks = () => wikilessI2PRedirectsChecks;
-function setWikilessI2PRedirectsChecks(val) {
-  wikilessI2PRedirectsChecks = val;
-  browser.storage.local.set({ wikilessI2PRedirectsChecks })
-  console.log("wikilessI2PRedirectsChecks: ", val)
+let wikilessI2pRedirectsChecks;
+const getWikilessI2pRedirectsChecks = () => wikilessI2pRedirectsChecks;
+function setWikilessI2pRedirectsChecks(val) {
+  wikilessI2pRedirectsChecks = val;
+  browser.storage.local.set({ wikilessI2pRedirectsChecks })
+  console.log("wikilessI2pRedirectsChecks: ", val)
 }
 
 let wikilessNormalCustomRedirects = [];
@@ -103,12 +103,12 @@ function setWikilessTorCustomRedirects(val) {
   console.log("wikilessTorCustomRedirects: ", val)
 }
 
-let wikilessI2PCustomRedirects = [];
-const getWikilessI2PCustomRedirects = () => wikilessI2PCustomRedirects;
-function setWikilessI2PCustomRedirects(val) {
-  wikilessI2PCustomRedirects = val;
-  browser.storage.local.set({ wikilessI2PCustomRedirects })
-  console.log("wikilessI2PCustomRedirects: ", val)
+let wikilessI2pCustomRedirects = [];
+const getWikilessI2pCustomRedirects = () => wikilessI2pCustomRedirects;
+function setWikilessI2pCustomRedirects(val) {
+  wikilessI2pCustomRedirects = val;
+  browser.storage.local.set({ wikilessI2pCustomRedirects })
+  console.log("wikilessI2pCustomRedirects: ", val)
 }
 
 let theme;
@@ -118,8 +118,8 @@ function initWikilessCookies() {
   if (theme == 'light') themeValue = 'white';
   if (theme == 'dark') themeValue = 'dark';
   if (applyThemeToSites && themeValue) {
-    let allInstances = [...redirects.wikiless.normal, ...redirects.wikiless.tor, ...redirects.wikiless.i2p, ...wikilessNormalCustomRedirects, ...wikilessTorCustomRedirects, ...wikilessI2PCustomRedirects]
-    let checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects, ...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects, ...wikilessI2PRedirectsChecks, ...wikilessI2PCustomRedirects]
+    let allInstances = [...redirects.wikiless.normal, ...redirects.wikiless.tor, ...redirects.wikiless.i2p, ...wikilessNormalCustomRedirects, ...wikilessTorCustomRedirects, ...wikilessI2pCustomRedirects]
+    let checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects, ...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects, ...wikilessI2pRedirectsChecks, ...wikilessI2pCustomRedirects]
     for (const instanceUrl of allInstances)
       if (!checkedInstances.includes(instanceUrl))
         browser.cookies.remove({
@@ -151,7 +151,7 @@ function redirect(url) {
   let instancesList;
   if (protocol == 'normal') instancesList = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
   else if (protocol == 'tor') instancesList = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects];
-  else if (protocol == 'i2p') instancesList = [...wikilessI2PRedirectsChecks, ...wikilessI2PCustomRedirects];
+  else if (protocol == 'i2p') instancesList = [...wikilessI2pRedirectsChecks, ...wikilessI2pCustomRedirects];
   if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList)
 
@@ -183,14 +183,14 @@ function switchInstance(url) {
 
     ...wikilessNormalCustomRedirects,
     ...wikilessTorCustomRedirects,
-    ...wikilessI2PCustomRedirects
+    ...wikilessI2pCustomRedirects
   ]
   if (!wikipediaList.includes(protocolHost)) return null;
 
   let instancesList;
   if (protocol == 'normal') instancesList = [...wikilessNormalCustomRedirects, ...wikilessNormalRedirectsChecks];
   else if (protocol == 'tor') instancesList = [...wikilessTorCustomRedirects, ...wikilessTorRedirectsChecks];
-  else if (protocol == 'i2p') instancesList = [...wikilessI2PCustomRedirects, ...wikilessI2PRedirectsChecks];
+  else if (protocol == 'i2p') instancesList = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
 
   console.log("instancesList", instancesList);
   let index = instancesList.indexOf(protocolHost);
@@ -212,10 +212,10 @@ async function init() {
           "wikipediaRedirects",
           "wikilessNormalRedirectsChecks",
           "wikilessTorRedirectsChecks",
-	  "wikilessI2PRedirectsChecks",
+	  "wikilessI2pRedirectsChecks",
           "wikilessNormalCustomRedirects",
           "wikilessTorCustomRedirects",
-	  "wikilessI2PCustomRedirects",
+	  "wikilessI2pCustomRedirects",
           "wikipediaProtocol",
 
           "theme",
@@ -235,8 +235,8 @@ async function init() {
           wikilessTorRedirectsChecks = r.wikilessTorRedirectsChecks ?? [...redirects.wikiless.tor];
           wikilessTorCustomRedirects = r.wikilessTorCustomRedirects ?? [];
 
-	  wikilessI2PRedirectsChecks = r.wikilessI2PRedirectsChecks ?? [...redirects.wikiless.i2p];
-	  wikilessI2PCustomRedirects = r.wikilessI2PCustomRedirects ?? [];
+	  wikilessI2pRedirectsChecks = r.wikilessI2pRedirectsChecks ?? [...redirects.wikiless.i2p];
+	  wikilessI2pCustomRedirects = r.wikilessI2pCustomRedirects ?? [];
 
           theme = r.theme ?? 'DEFAULT';
           applyThemeToSites = r.applyThemeToSites ?? false;
@@ -265,15 +265,15 @@ export default {
   setWikilessNormalRedirectsChecks,
   getWikilessTorRedirectsChecks,
   setWikilessTorRedirectsChecks,
-  getWikilessI2PRedirectsChecks,
-  setWikilessI2PRedirectsChecks,
+  getWikilessI2pRedirectsChecks,
+  setWikilessI2pRedirectsChecks,
 
   getWikilessNormalCustomRedirects,
   setWikilessNormalCustomRedirects,
   getWikilessTorCustomRedirects,
   setWikilessTorCustomRedirects,
-  getWikilessI2PCustomRedirects,
-  setWikilessI2PCustomRedirects,
+  getWikilessI2pCustomRedirects,
+  setWikilessI2pCustomRedirects,
 
   initWikilessCookies,
 

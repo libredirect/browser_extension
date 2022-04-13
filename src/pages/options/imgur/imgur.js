@@ -71,9 +71,9 @@ imgurHelper.init().then(() => {
 	'i2p',
 	imgurHelper,
 	document,
-	imgurHelper.getRimgoI2PRedirectsChecks,
-	imgurHelper.setRimgoI2PRedirectsChecks,
-	imgurHelper.getRimgoI2PCustomRedirects,
-	imgurHelper.setRimgoI2PCustomRedirects
+	imgurHelper.getRimgoI2pRedirectsChecks,
+	imgurHelper.setRimgoI2pRedirectsChecks,
+	imgurHelper.getRimgoI2pCustomRedirects,
+	imgurHelper.setRimgoI2pCustomRedirects
     );
 });

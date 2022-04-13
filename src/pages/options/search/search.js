@@ -145,10 +145,10 @@ searchHelper.init().then(() => {
     'i2p',
     searchHelper,
     document,
-    searchHelper.getSearxI2PRedirectsChecks,
-    searchHelper.setSearxI2PRedirectsChecks,
-    searchHelper.getSearxI2PCustomRedirects,
-    searchHelper.setSearxI2PCustomRedirects
+    searchHelper.getSearxI2pRedirectsChecks,
+    searchHelper.setSearxI2pRedirectsChecks,
+    searchHelper.getSearxI2pCustomRedirects,
+    searchHelper.setSearxI2pCustomRedirects
   );
 
   commonHelper.processDefaultCustomInstances(
@@ -178,10 +178,10 @@ searchHelper.init().then(() => {
     'i2p',
     searchHelper,
     document,
-    searchHelper.getSearxngI2PRedirectsChecks,
-    searchHelper.setSearxngI2PRedirectsChecks,
-    searchHelper.getSearxngI2PCustomRedirects,
-    searchHelper.setSearxngI2PCustomRedirects
+    searchHelper.getSearxngI2pRedirectsChecks,
+    searchHelper.setSearxngI2pRedirectsChecks,
+    searchHelper.getSearxngI2pCustomRedirects,
+    searchHelper.setSearxngI2pCustomRedirects
   );
 
   commonHelper.processDefaultCustomInstances(
@@ -211,9 +211,9 @@ searchHelper.init().then(() => {
     'i2p',
     searchHelper,
     document,
-    searchHelper.getWhoogleI2PRedirectsChecks,
-    searchHelper.setWhoogleI2PRedirectsChecks,
-    searchHelper.getWhoogleI2PCustomRedirects,
-    searchHelper.setWhoogleI2PCustomRedirects
+    searchHelper.getWhoogleI2pRedirectsChecks,
+    searchHelper.setWhoogleI2pRedirectsChecks,
+    searchHelper.getWhoogleI2pCustomRedirects,
+    searchHelper.setWhoogleI2pCustomRedirects
   );
 });

@@ -17,7 +17,7 @@ const getCustomRedirects = function () {
         "rimgo": {
             "normal": [...rimgoNormalRedirectsChecks, ...rimgoNormalCustomRedirects],
             "tor": [...rimgoTorRedirectsChecks, ...rimgoTorCustomRedirects],
-	    "i2p": [...rimgoI2PRedirectsChecks, ...rimgoI2PCustomRedirects]
+	    "i2p": [...rimgoI2pRedirectsChecks, ...rimgoI2pCustomRedirects]
         },
     };
 };
@@ -40,12 +40,12 @@ function setRedirects(val) {
         }
     setRimgoTorRedirectsChecks(rimgoTorRedirectsChecks);
 
-    for (const item of rimgoI2PRedirectsChecks)
+    for (const item of rimgoI2pRedirectsChecks)
 	if (!redirects.rimgo.i2p.includes(item)) {
-	    var index = rimgoI2PRedirectsChecks.indexOf(item);
-	    if (index !== -1) rimgoI2PRedirectsChecks.splice(index, 1);
+	    var index = rimgoI2pRedirectsChecks.indexOf(item);
+	    if (index !== -1) rimgoI2pRedirectsChecks.splice(index, 1);
 	}
-    setRimgoI2PRedirectsChecks(rimgoI2PRedirectsChecks);
+    setRimgoI2pRedirectsChecks(rimgoI2pRedirectsChecks);
 }
 
 let disable;
@@ -79,12 +79,12 @@ function setRimgoTorRedirectsChecks(val) {
     console.log("rimgoTorRedirectsChecks: ", val)
 }
 
-let rimgoI2PRedirectsChecks;
-const getRimgoI2PRedirectsChecks = () => rimgoI2PRedirectsChecks;
-function setRimgoI2PRedirectsChecks(val) {
-    rimgoI2PRedirectsChecks = val;
-    browser.storage.local.set({ rimgoI2PRedirectsChecks })
-    console.log("rimgoI2PRedirectsChecks: ", val)
+let rimgoI2pRedirectsChecks;
+const getRimgoI2pRedirectsChecks = () => rimgoI2pRedirectsChecks;
+function setRimgoI2pRedirectsChecks(val) {
+    rimgoI2pRedirectsChecks = val;
+    browser.storage.local.set({ rimgoI2pRedirectsChecks })
+    console.log("rimgoI2pRedirectsChecks: ", val)
 }
 
 let rimgoNormalCustomRedirects = [];
@@ -103,12 +103,12 @@ function setRimgoTorCustomRedirects(val) {
     console.log("rimgoTorCustomRedirects: ", val)
 }
 
-let rimgoI2PCustomRedirects = [];
-const getRimgoI2PCustomRedirects = () => rimgoI2PCustomRedirects;
-function setRimgoI2PCustomRedirects(val) {
-    rimgoI2PCustomRedirects = val;
-    browser.storage.local.set({ rimgoI2PCustomRedirects })
-    console.log("rimgoI2PCustomRedirects: ", val)
+let rimgoI2pCustomRedirects = [];
+const getRimgoI2pCustomRedirects = () => rimgoI2pCustomRedirects;
+function setRimgoI2pCustomRedirects(val) {
+    rimgoI2pCustomRedirects = val;
+    browser.storage.local.set({ rimgoI2pCustomRedirects })
+    console.log("rimgoI2pCustomRedirects: ", val)
 }
 
 function isImgur(url, initiator) {
@@ -142,7 +142,7 @@ function redirect(url, type) {
     let instancesList;
     if (protocol == 'normal') instancesList = [...rimgoNormalRedirectsChecks, ...rimgoNormalCustomRedirects];
     if (protocol == 'tor') instancesList = [...rimgoTorRedirectsChecks, ...rimgoTorCustomRedirects];
-    if (protocol == 'i2p') instancesList = [...rimgoI2PRedirectsChecks, ...rimgoI2PCustomRedirects];
+    if (protocol == 'i2p') instancesList = [...rimgoI2pRedirectsChecks, ...rimgoI2pCustomRedirects];
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList)
 
@@ -159,14 +159,14 @@ function switchInstance(url) {
 
         ...rimgoNormalCustomRedirects,
         ...rimgoTorCustomRedirects,
-	...rimgoI2PCustomRedirects,
+	...rimgoI2pCustomRedirects,
     ];
     if (!imgurList.includes(protocolHost)) return null;
 
     let instancesList;
     if (protocol == 'normal') instancesList = [...rimgoNormalCustomRedirects, ...rimgoNormalRedirectsChecks];
     else if (protocol == 'tor') instancesList = [...rimgoTorCustomRedirects, ...rimgoTorRedirectsChecks];
-    else if (protocol == 'i2p') instancesList = [...rimgoI2PCustomRedirects, ...rimgoI2PRedirectsChecks];
+    else if (protocol == 'i2p') instancesList = [...rimgoI2pCustomRedirects, ...rimgoI2pRedirectsChecks];
 
     console.log("instancesList", instancesList);
     let index = instancesList.indexOf(protocolHost);
@@ -193,8 +193,8 @@ async function init() {
                         "rimgoNormalCustomRedirects",
                         "rimgoTorRedirectsChecks",
                         "rimgoTorCustomRedirects",
-			"rimgoI2PRedirectsChecks",
-			"rimgoI2PCustomRedirects",
+			"rimgoI2pRedirectsChecks",
+			"rimgoI2pCustomRedirects",
 
                         "imgurProtocol",
                     ],
@@ -212,8 +212,8 @@ async function init() {
                         rimgoTorRedirectsChecks = r.rimgoTorRedirectsChecks ?? [...redirects.rimgo.tor];
                         rimgoTorCustomRedirects = r.rimgoTorCustomRedirects ?? [];
 
-			rimgoI2PRedirectsChecks = r.rimgoI2PRedirectsChecks ?? [...redirects.rimgo.i2p];
-			rimgoI2PCustomRedirects = r.rimgoI2PCustomRedirects ?? [];
+			rimgoI2pRedirectsChecks = r.rimgoI2pRedirectsChecks ?? [...redirects.rimgo.i2p];
+			rimgoI2pCustomRedirects = r.rimgoI2pCustomRedirects ?? [];
 
                         resolve();
                     }
@@ -237,15 +237,15 @@ export default {
     setRimgoNormalRedirectsChecks,
     getRimgoTorRedirectsChecks,
     setRimgoTorRedirectsChecks,
-    getRimgoI2PRedirectsChecks,
-    setRimgoI2PRedirectsChecks,
+    getRimgoI2pRedirectsChecks,
+    setRimgoI2pRedirectsChecks,
 
     getRimgoNormalCustomRedirects,
     setRimgoNormalCustomRedirects,
     getRimgoTorCustomRedirects,
     setRimgoTorCustomRedirects,
-    getRimgoI2PCustomRedirects,
-    setRimgoI2PCustomRedirects,
+    getRimgoI2pCustomRedirects,
+    setRimgoI2pCustomRedirects,
 
     redirect,
     isImgur,
