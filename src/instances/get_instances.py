@@ -9,12 +9,13 @@ from colorama import Fore, Back, Style
 
 mightyList = {}
 
+
 def filterLastSlash(urlList):
     tmp = []
     for i in urlList:
         if i.endswith('/'):
             tmp.append(i[:-1])
-            print(Fore.YELLOW + "filtered " + Style.RESET_ALL + i)
+            print(Fore.YELLOW + "Fixed " + Style.RESET_ALL + i)
         else:
             tmp.append(i)
     return tmp
@@ -32,10 +33,11 @@ for instance in rJson:
     elif instance[1]['type'] == 'onion':
         invidiousList['tor'].append(instance[1]['uri'])
 mightyList['invidious'] = invidiousList
-print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Invidious')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Invidious')
 
 # ProxiTok
-r = requests.get('https://raw.githubusercontent.com/wiki/pablouser1/ProxiTok/Public-instances.md')
+r = requests.get(
+    'https://raw.githubusercontent.com/wiki/pablouser1/ProxiTok/Public-instances.md')
 
 tmp = re.findall(
     r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|", r.text)
@@ -45,18 +47,20 @@ proxiTokList['tor'] = []
 for item in tmp:
     proxiTokList['normal'].append(item)
 mightyList['proxiTok'] = proxiTokList
-print('fetched ProxiTok')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'ProxiTok')
 
 # Send
-r = requests.get('https://gitlab.com/timvisee/send-instances/-/raw/master/README.md')
-tmp = re.findall(r"- ([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z0-9]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}", r.text)
+r = requests.get(
+    'https://gitlab.com/timvisee/send-instances/-/raw/master/README.md')
+tmp = re.findall(
+    r"- ([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z0-9]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}", r.text)
 sendList = {}
 sendList['normal'] = []
 sendList['tor'] = []
 for item in tmp:
     sendList['normal'].append(item)
 mightyList['send'] = sendList
-print(Fore.GREEN +'fetched ' + Style.RESET_ALL + 'Send')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Send')
 
 # Nitter
 r = requests.get('https://github.com/zedeus/nitter/wiki/Instances')
@@ -82,7 +86,7 @@ for table in tables:
             url = 'https://' + url
             nitterList['normal'].append(url)
 mightyList['nitter'] = nitterList
-print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Nitter')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Nitter')
 
 # Bibliogram
 r = requests.get('https://bibliogram.pussthecat.org/api/instances')
@@ -93,7 +97,7 @@ bibliogramList['tor'] = []
 for item in rJson['data']:
     bibliogramList['normal'].append(item['address'])
 mightyList['bibliogram'] = bibliogramList
-print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Bibliogram')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Bibliogram')
 
 # LibReddit
 r = requests.get(
@@ -113,7 +117,7 @@ for item in tmp:
     else:
         libredditList['normal'].append(item)
 mightyList['libreddit'] = libredditList
-print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'LibReddit')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'LibReddit')
 
 # Teddit
 r = requests.get(
@@ -132,7 +136,7 @@ for item in rJson:
             tedditList['tor'].append(onion)
 
 mightyList['teddit'] = tedditList
-print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Teddit')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Teddit')
 
 
 # Wikiless
@@ -150,7 +154,7 @@ for item in rJson:
     else:
         wikilessList['normal'].append('https://' + item)
 mightyList['wikiless'] = wikilessList
-print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Wikiless')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Wikiless')
 
 # Scribe
 r = requests.get(
@@ -162,7 +166,7 @@ scribeList['tor'] = []
 for item in rJson:
     scribeList['normal'].append(item)
 mightyList['scribe'] = scribeList
-print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Scribe')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Scribe')
 
 # SimplyTranslate
 r = requests.get('https://simple-web.org/instances/simplytranslate')
@@ -177,7 +181,7 @@ for item in r.text.strip().split('\n'):
     simplyTranslateList['tor'].append('http://' + item)
 
 mightyList['simplyTranslate'] = simplyTranslateList
-print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'SimplyTranslate')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'SimplyTranslate')
 
 # LinvgaTranslate
 r = requests.get(
@@ -189,7 +193,7 @@ lingvaList['tor'] = []
 for item in rJson:
     lingvaList['normal'].append(item)
 mightyList['lingva'] = lingvaList
-print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'LinvgaTranslate')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'LinvgaTranslate')
 
 
 # SearX, SearXNG
@@ -222,7 +226,7 @@ for item in rJson['instances']:
 
 mightyList['searx'] = searxList
 mightyList['searxng'] = searxngList
-print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'SearX, SearXNG')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'SearX, SearXNG')
 
 # Whoogle
 r = requests.get(
@@ -240,7 +244,7 @@ for item in tmpList:
     else:
         whoogleList['normal'].append(item)
 mightyList['whoogle'] = whoogleList
-print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Whoogle')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Whoogle')
 
 # Rimgo
 r = requests.get(
@@ -258,7 +262,7 @@ for item in rJson:
     else:
         rimgoList['normal'].append('https://' + item)
 mightyList['rimgo'] = rimgoList
-print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Rimgo')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Rimgo')
 
 # Peertube
 r = requests.get(
@@ -270,7 +274,7 @@ for k in rJson['data']:
     myList.append('https://'+k['host'])
 
 mightyList['peertube'] = myList
-print(Fore.GREEN + 'fetched ' + Style.RESET_ALL + 'Peertube')
+print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Peertube')
 
 
 def isValid(url):  # This code is contributed by avanitrachhadiya2155
