@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 import re
 from colorama import Fore, Back, Style
+from urllib.parse import urlparse
 
 mightyList = {}
 
@@ -278,7 +279,11 @@ print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Peertube')
 
 
 def isValid(url):  # This code is contributed by avanitrachhadiya2155
-    return re.search(r"([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z0-9]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}", url)
+    try:
+        result = urlparse(url)
+        return all([result.scheme, result.netloc, result.path])
+    except:
+        return False
 
 
 for k1, v1 in mightyList.items():
