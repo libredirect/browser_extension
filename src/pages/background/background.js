@@ -12,6 +12,7 @@ import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
+import speedtestHelper from "../../assets/javascripts/helpers/speedtest.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
@@ -35,6 +36,7 @@ async function wholeInit() {
   await imgurHelper.init();
   await tiktokHelper.init();
   await pixivHelper.init();
+  await speedtestHelper.init();
   await sendTargetsHelper.init();
   await peertubeHelper.init();
   await lbryHelper.init();
@@ -77,6 +79,8 @@ browser.webRequest.onBeforeRequest.addListener(
     if (tiktokHelper.isTiktok(url, initiator)) newUrl = tiktokHelper.redirect(url, details.type);
 
     if (!newUrl) newUrl = pixivHelper.redirect(url, details.type, initiator);
+
+    if (!newUrl) newUrl = speedtestHelper.redirect(url, details.type, initiator);
 
     if (!newUrl) newUrl = sendTargetsHelper.redirect(url, details.type, initiator);
 

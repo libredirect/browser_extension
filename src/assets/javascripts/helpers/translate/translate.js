@@ -339,9 +339,9 @@ async function init() {
           frontend = result.translateFrontend ?? "simplyTranslate";
           protocol = result.translateProtocol ?? 'normal';
 
-          from = result.translateFrom ?? "DEFAULT";
-          to = result.translateTo ?? 'DEFAULT';
-          simplyTranslateEngine = result.simplyTranslateEngine ?? 'DEFAULT';
+          from = result.translateFrom ?? "auto";
+          to = result.translateTo ?? 'en';
+          simplyTranslateEngine = result.simplyTranslateEngine ?? 'google';
 
           redirects.simplyTranslate = dataJson.simplyTranslate;
           redirects.lingva = dataJson.lingva;

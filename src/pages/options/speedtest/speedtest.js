@@ -1,16 +1,16 @@
-import pixivHelper from "../../../assets/javascripts/helpers/pixiv.js";
+import speedtestHelper from "../../../assets/javascripts/helpers/speedtest.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
-let disablePixivElement = document.getElementById("disable-pixiv");
-disablePixivElement.addEventListener("change",
-    (event) => pixivHelper.setDisable(!event.target.checked)
+let disableSpeedtestElement = document.getElementById("disable-speedtest");
+disableSpeedtestElement.addEventListener("change",
+    (event) => speedtestHelper.setDisable(!event.target.checked)
 );
 
 let protocolElement = document.getElementById("protocol")
 protocolElement.addEventListener("change",
     (event) => {
         let protocol = event.target.options[protocolElement.selectedIndex].value
-        pixivHelper.setProtocol(protocol);
+        speedtestHelper.setProtocol(protocol);
         changeProtocolSettings(protocol);
     }
 );
@@ -28,32 +28,32 @@ function changeProtocolSettings(protocol) {
     }
 }
 
-pixivHelper.init().then(() => {
-    disablePixivElement.checked = !pixivHelper.getDisable();
+speedtestHelper.init().then(() => {
+    disableSpeedtestElement.checked = !speedtestHelper.getDisable();
 
-    let protocol = pixivHelper.getProtocol();
+    let protocol = speedtestHelper.getProtocol();
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
     commonHelper.processDefaultCustomInstances(
-        'pixivMoe',
+        'librespeed',
         'normal',
-        pixivHelper,
+        speedtestHelper,
         document,
-        pixivHelper.getPixivMoeNormalRedirectsChecks,
-        pixivHelper.setPixivMoeNormalRedirectsChecks,
-        pixivHelper.getPixivMoeNormalCustomRedirects,
-        pixivHelper.setPixivMoeNormalCustomRedirects
+        speedtestHelper.getLibrespeedNormalRedirectsChecks,
+        speedtestHelper.setLibrespeedNormalRedirectsChecks,
+        speedtestHelper.getLibrespeedNormalCustomRedirects,
+        speedtestHelper.setLibrespeedNormalCustomRedirects
     );
 
     commonHelper.processDefaultCustomInstances(
-        'pixivMoe',
+        'librespeed',
         'tor',
-        pixivHelper,
+        speedtestHelper,
         document,
-        pixivHelper.getPixivMoeTorRedirectsChecks,
-        pixivHelper.setPixivMoeTorRedirectsChecks,
-        pixivHelper.getPixivMoeTorCustomRedirects,
-        pixivHelper.setPixivMoeTorCustomRedirects
+        speedtestHelper.getLibrespeedTorRedirectsChecks,
+        speedtestHelper.setLibrespeedTorRedirectsChecks,
+        speedtestHelper.getLibrespeedTorCustomRedirects,
+        speedtestHelper.setLibrespeedTorCustomRedirects
     )
 })

@@ -1,0 +1,67 @@
+doctype html
+html(lang="en")
+    include ../../widgets/head.pug
+        title General
+body.option(dir="auto")
+    include ../../widgets/links.pug
+    +links('translate')
+
+    section.option-block
+        .some-block.option-block
+            h4(data-localise="__MSG_enable__") Enable
+            input#disable-simplyTranslate(type="checkbox")
+
+        .some-block.option-block
+            h4(data-localise="__MSG_frontend__") Frontend
+            select#translate-frontend
+                option(value="simplyTranslate") SimplyTranslate
+                option(value="lingva") Lingva
+
+        .some-block.option-block
+            h4(data-localise="__MSG_protocol__") Protocol
+            select#protocol
+                option(value="normal" data-localise="__MSG_normal__") Normal
+                option(value="tor" data-localise="__MSG_tor__") Tor
+
+        hr
+
+        #simplyTranslate
+            .some-block.option-block
+                h4(data-localise="__MSG_from__") From
+                select.from
+                    option(value="auto") Auto
+                    include ../../widgets/from-to.pug
+
+            .some-block.option-block
+                h4(data-localise="__MSG_to__") To
+                select.to
+                    include ../../widgets/from-to.pug
+
+            .some-block.option-block
+                h4(data-localise="__MSG_engine__") Engine
+                select.engine
+                    option(value="google") Google
+                    option(value="libre") Libre
+                    option(value="deepl") Deepl
+                    option(value="iciba") ICIBA
+                    option(value="reverso") Reverso
+            
+            .normal
+                include ../../widgets/instances.pug
+                +instances('https://simplytranslate.org')
+            .tor
+                include ../../widgets/instances.pug
+                +instances('http://hxecvvetgrznmprg.onion')
+        
+        #lingva 
+
+            .normal
+                include ../../widgets/instances.pug
+                +instances('https://lingvatranslate.com')
+            .tor
+                include ../../widgets/instances.pug
+                +instances('http://tyzxppdeoojdnaux.onion')
+
+    script(type="module" src="../init.js")
+    script(type="module" src="./translate.js")
+    script(type="module" src="../../../assets/javascripts/localise.js")

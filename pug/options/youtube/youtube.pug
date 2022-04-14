@@ -1,0 +1,725 @@
+doctype html
+html(lang="en")
+    include ../../widgets/head.pug
+        title Document
+body.option(dir="auto")
+    include ../../widgets/links.pug
+    +links('youtube')
+
+    section.option-block
+        .some-block.option-block
+            h4(data-localise="__MSG_enable__") Enable
+            input#disable-invidious(type="checkbox")
+
+        .some-block.option-block
+            h4(data-localise="__MSG_frontend__") Frontend
+            select#youtube-frontend
+                option(value="invidious") Invidious
+                option(value="piped") Piped
+                option(value="pipedMaterial") Piped-Material
+                option(value="freetube") FreeTube
+                option(value="yatte") Yattee
+
+        hr
+
+        #freetube-yatte
+            .some-block.option-block
+                h4(data-localise="__MSG_embeddedVids__") Embedded Videos Frontend
+                select#youtube-embed-frontend
+                    option(value="invidious") Invidious
+                    option(value="piped") Piped
+                    option(value="pipedMaterial") Piped-Material
+                    option(value="youtube") Youtube
+            hr
+
+        #invidious-piped-pipedMaterial
+            .some-block.option-block
+                h4(data-localise="__MSG_protocol__") Protocol
+                select#protocol
+                    option(value="normal" data-localise="__MSG_normal__") Normal
+                    option(value="tor" data-localise="__MSG_tor__") Tor
+
+            .some-block.option-block
+                h4(data-localise="__MSG_redirectType") Redirect Type
+                select#only-embed
+                    option(value="both" data-localise="__MSG_both__") both
+                    option(value="onlyEmbedded" data-localise="__MSG_onlyEmbedded__") Only Embedded
+                    option(value="onlyNotEmbedded" data-localise="__MSG_onlyNotEmbedded__") Only Not Embedded
+
+            .some-block.option-block
+                h4(data-localise="__MSG_bypassYoutube__") Bypass "Watch On YouTube"
+                input#bypass-watch-on-youtube(type="checkbox")
+
+            .some-block.option-block
+                h4(data-localise="__MSG_enableCustom__") Enable Custom Settings (will use cookies and localStorage)
+                input#enable-youtube-custom-settings(type="checkbox")
+
+        #invidious
+            .custom-settings
+                hr
+                .some-block.option-block
+                    h4(data-localise="__MSG_alwaysLoop__") Always loop
+                    input.video_loop(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_autoplayVid__") Autoplay Video
+                    input.youtubeAutoplay(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_playNext__") Play next by default
+                    input.continue(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_autoplayNext__") Autoplay next video
+                    input.continue_autoplay(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_alwaysProxy__") Always proxy videos
+                    input.local(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_listenByDefault__") Listen by default
+                    input.listen(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_defaultSpeed__") Default speed
+                    select.speed
+                        option 2.0
+                        option 1.75
+                        option 1.5
+                        option 1.25
+                        option 1.0
+                        option 0.75
+                        option 0.5
+                        option 0.25
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_prefQuality__") Preferred video quality
+                    select.quality
+                        option(value="hd720") 720p
+                        option(value="medium") 480p
+                        option(value="dash" data-localise="__MSG_dash__") DASH (adaptive quality)
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_prefDashQuality__") Preferred DASH video quality
+                    select.quality_dash
+                        option(value="auto" data-localise="__MSG_auto__") Auto
+                        option(value="best" data-localise="__MSG_best__") Best
+                        option(value="4320p") 4320p
+                        option(value="2160p") 2160p
+                        option(value="1440p") 1440p
+                        option(value="1080p") 1080p
+                        option(value="720p") 720p
+                        option(value="480p") 480p
+                        option(value="360p") 360p
+                        option(value="240p") 240p
+                        option(value="144p") 144p
+                        option(value="worst" data-localise="__MSG_worst__") Worst
+
+                .some-block.option-block
+                    h4
+                        x(data-localise="__MSG_volume__") Volume:
+                        span.volume-value --%
+                    input.volume(type="range" min="0" max="100" step="1")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_prefDashQuality__") Default comments
+                    select(class="comments[0]")
+                        option(value="" data-localise="__MSG_none__") none
+                        option(value="youtube") YouTube
+                        option(value="reddit") Reddit
+                    |&nbsp;
+                    select(class="comments[1]")
+                        option(value="" data-localise="__MSG_none__") none
+                        option(value="youtube") YouTube
+                        option(value="reddit") Reddit
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_defaultCaptions__") Default captions
+                    select(class="captions[0]")
+                        include ../../widgets/captions_options.pug
+
+                    |&nbsp;
+
+                    select(class="captions[1]")
+                        include ../../widgets/captions_options.pug
+
+                    |&nbsp;
+
+                    select(class="captions[2]")
+                        include ../../widgets/captions_options.pug
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_showRelated__") Show related videos
+                    input.related_videos(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_showAnnotations__") Show annotations by default
+                    input.annotations(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_autoExtendDesc__") Automatically extend video description
+                    input.extend_desc(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_interactive360__") Interactive 360 degree videos (requires WebGL)
+                    input.vr_mode(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_savePlaybackPos__") Save playback position
+                    input.save_player_pos(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_region__") Select country
+                    select.region
+                        option(value="AE") AE
+                        option(value="AR") AR
+                        option(value="AT") AT
+                        option(value="AU") AU
+                        option(value="AZ") AZ
+                        option(value="BA") BA
+                        option(value="BD") BD
+                        option(value="BE") BE
+                        option(value="BG") BG
+                        option(value="BH") BH
+                        option(value="BO") BO
+                        option(value="BR") BR
+                        option(value="BY") BY
+                        option(value="CA") CA
+                        option(value="CH") CH
+                        option(value="CL") CL
+                        option(value="CO") CO
+                        option(value="CR") CR
+                        option(value="CY") CY
+                        option(value="CZ") CZ
+                        option(value="DE") DE
+                        option(value="DK") DK
+                        option(value="DO") DO
+                        option(value="DZ") DZ
+                        option(value="EC") EC
+                        option(value="EE") EE
+                        option(value="EG") EG
+                        option(value="ES") ES
+                        option(value="FI") FI
+                        option(value="FR") FR
+                        option(value="GB") GB
+                        option(value="GE") GE
+                        option(value="GH") GH
+                        option(value="GR") GR
+                        option(value="GT") GT
+                        option(value="HK") HK
+                        option(value="HN") HN
+                        option(value="HR") HR
+                        option(value="HU") HU
+                        option(value="ID") ID
+                        option(value="IE") IE
+                        option(value="IL") IL
+                        option(value="IN") IN
+                        option(value="IQ") IQ
+                        option(value="IS") IS
+                        option(value="IT") IT
+                        option(value="JM") JM
+                        option(value="JO") JO
+                        option(value="JP") JP
+                        option(value="KE") KE
+                        option(value="KR") KR
+                        option(value="KW") KW
+                        option(value="KZ") KZ
+                        option(value="LB") LB
+                        option(value="LI") LI
+                        option(value="LK") LK
+                        option(value="LT") LT
+                        option(value="LU") LU
+                        option(value="LV") LV
+                        option(value="LY") LY
+                        option(value="MA") MA
+                        option(value="ME") ME
+                        option(value="MK") MK
+                        option(value="MT") MT
+                        option(value="MX") MX
+                        option(value="MY") MY
+                        option(value="NG") NG
+                        option(value="NI") NI
+                        option(value="NL") NL
+                        option(value="NO") NO
+                        option(value="NP") NP
+                        option(value="NZ") NZ
+                        option(value="OM") OM
+                        option(value="PA") PA
+                        option(value="PE") PE
+                        option(value="PG") PG
+                        option(value="PH") PH
+                        option(value="PK") PK
+                        option(value="PL") PL
+                        option(value="PR") PR
+                        option(value="PT") PT
+                        option(value="PY") PY
+                        option(value="QA") QA
+                        option(value="RO") RO
+                        option(value="RS") RS
+                        option(value="RU") RU
+                        option(value="SA") SA
+                        option(value="SE") SE
+                        option(value="SG") SG
+                        option(value="SI") SI
+                        option(value="SK") SK
+                        option(value="SN") SN
+                        option(value="SV") SV
+                        option(value="TH") TH
+                        option(value="TN") TN
+                        option(value="TR") TR
+                        option(value="TW") TW
+                        option(value="TZ") TZ
+                        option(value="UA") UA
+                        option(value="UG") UG
+                        option(value="US") US
+                        option(value="UY") UY
+                        option(value="VE") VE
+                        option(value="VN") VN
+                        option(value="YE") YE
+                        option(value="ZA") ZA
+                        option(value="ZW") ZW
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_playerStyle__") Player Style
+                    select.player_style
+                        option(value="invidious" data-localise="__MSG_invidious__") Invidious
+                        option(value="youtube" data-localise="__MSG_youtube__") YouTube
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_theme__") Theme
+                    select.dark_mode
+                        option(value="") auto
+                        option(value="light") light
+                        option(value="dark") dark
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_thin_mode__") Thin mode
+                    input.thin_mode(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_default_home__") Default homepage
+                    select.default_home
+                        option(value="") Search
+                        option(value="Popular") Popular
+                        option(value="Trending") Trending
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_feedMenu__") Feed menu
+                    select(class="feed_menu[0]")
+                        option(value="") Search
+                        option(value="Popular") Popular
+                        option(value="Trending") Trending
+
+                    |&nbsp;
+
+                    select(class="feed_menu[1]")
+                        option(value="") Search
+                        option(value="Popular") Popular
+                        option(value="Trending") Trending
+            hr
+            .normal
+                include ../../widgets/instances.pug
+                +instances('https://invidious.com')
+            .tor
+                include ../../widgets/instances.pug
+                +instances('https://invidious.onion')
+
+        #piped
+            hr
+            .custom-settings 
+                hr
+                .some-block.option-block
+                    h4
+                        x(data-localise="__MSG_volume__") Volume:
+                        span.volume-value --%
+                    input.volume(type="range" min="0" max="100" step="1")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_enableSponsorBlock__") Enable Sponsorblock
+                    input.sponsorblock(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skipSponsors__") Skip Sponsors
+                    input.selectedSkip-sponsor(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skipIntermission__") Skip Intermission/Intro Animation
+                    input.selectedSkip-intro(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skripEndcars__") Skip Endcards/Credits
+                    input.selectedSkip-outro(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skripPreview__") Skip Preview/Recap
+                    input.selectedSkip-preview(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skipReminder__") Skip Interaction Reminder (Subscribe)
+                    input.selectedSkip-interaction(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skipUnpaidPromo__") Skip Unpaid/Self Promotion(Subscribe)
+                    input.selectedSkip-selfpromo(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skipMusic__") Skip Music: Non-Music Section(Subscribe)
+                    input.selectedSkip-music_offtopic(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skipHighlight__") Skip Highlight(Subscribe)
+                    input.selectedSkip-poi_highlight(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skipFiller__") Skip Filler Tangent
+                    input.selectedSkip-filler(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_theme__") Theme
+                    select.ddlTheme
+                        option(value="auto") Auto
+                        option(value="dark") Dark
+                        option(value="light") Light
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_autoplayVid__") Autoplay Video
+                    input.youtubeAutoplay(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_audioOnly__") Audio Only
+                    input.listen(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_defaultQuality__") Default Quality
+                    select.quality
+                        option(value="0") Auto
+                        option(value="144") 144p
+                        option(value="240") 240p
+                        option(value="360") 360p
+                        option(value="480") 480p
+                        option(value="720") 720p
+                        option(value="1080") 1080p
+                        option(value="1440") 1440p
+                        option(value="2160") 2160p
+                        option(value="4320") 4320p
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_bufferingGoal__") Buffering Goal (in seconds)
+                    input.bufferGoal(type="number" min="10")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_countrySelection__") Country Selection
+                    select.region
+                        option(value="AF") Afghanistan
+                        option(value="AL") Albania
+                        option(value="DZ") Algeria
+                        option(value="AD") Andorra
+                        option(value="AO") Angola
+                        option(value="AG") Antigua and Barbuda
+                        option(value="AR") Argentina
+                        option(value="AM") Armenia
+                        option(value="AU") Australia
+                        option(value="AT") Austria
+                        option(value="AZ") Azerbaijan
+                        option(value="BS") Bahamas
+                        option(value="BH") Bahrain
+                        option(value="BD") Bangladesh
+                        option(value="BB") Barbados
+                        option(value="BY") Belarus
+                        option(value="BE") Belgium
+                        option(value="BZ") Belize
+                        option(value="BJ") Benin
+                        option(value="BT") Bhutan
+                        option(value="BO") Bolivia (Plurinational State of)
+                        option(value="BA") Bosnia and Herzegovina
+                        option(value="BW") Botswana
+                        option(value="BR") Brazil
+                        option(value="BN") Brunei Darussalam
+                        option(value="BG") Bulgaria
+                        option(value="BF") Burkina Faso
+                        option(value="BI") Burundi
+                        option(value="CV") Cabo Verde
+                        option(value="KH") Cambodia
+                        option(value="CM") Cameroon
+                        option(value="CA") Canada
+                        option(value="CF") Central African Republic
+                        option(value="TD") Chad
+                        option(value="CL") Chile
+                        option(value="CN") China
+                        option(value="CO") Colombia
+                        option(value="KM") Comoros
+                        option(value="CG") Congo
+                        option(value="CD") Congo, Democratic Republic of the
+                        option(value="CR") Costa Rica
+                        option(value="CI") Côte d'Ivoire
+                        option(value="HR") Croatia
+                        option(value="CU") Cuba
+                        option(value="CY") Cyprus
+                        option(value="CZ") Czechia
+                        option(value="DK") Denmark
+                        option(value="DJ") Djibouti
+                        option(value="DM") Dominica
+                        option(value="DO") Dominican Republic
+                        option(value="EC") Ecuador
+                        option(value="EG") Egypt
+                        option(value="SV") El Salvador
+                        option(value="GQ") Equatorial Guinea
+                        option(value="ER") Eritrea
+                        option(value="EE") Estonia
+                        option(value="SZ") Eswatini
+                        option(value="ET") Ethiopia
+                        option(value="FJ") Fiji
+                        option(value="FI") Finland
+                        option(value="FR") France
+                        option(value="GA") Gabon
+                        option(value="GM") Gambia
+                        option(value="GE") Georgia
+                        option(value="DE") Germany
+                        option(value="GH") Ghana
+                        option(value="GR") Greece
+                        option(value="GD") Grenada
+                        option(value="GT") Guatemala
+                        option(value="GN") Guinea
+                        option(value="GW") Guinea-Bissau
+                        option(value="GY") Guyana
+                        option(value="HT") Haiti
+                        option(value="HN") Honduras
+                        option(value="HU") Hungary
+                        option(value="IS") Iceland
+                        option(value="IN") India
+                        option(value="ID") Indonesia
+                        option(value="IR") Iran (Islamic Republic of)
+                        option(value="IQ") Iraq
+                        option(value="IE") Ireland
+                        option(value="IL") Israel
+                        option(value="IT") Italy
+                        option(value="JM") Jamaica
+                        option(value="JP") Japan
+                        option(value="JO") Jordan
+                        option(value="KZ") Kazakhstan
+                        option(value="KE") Kenya
+                        option(value="KI") Kiribati
+                        option(value="KP") Korea (Democratic People's Republic of)
+                        option(value="KR") Korea, Republic of
+                        option(value="KW") Kuwait
+                        option(value="KG") Kyrgyzstan
+                        option(value="LA") Lao People's Democratic Republic
+                        option(value="LV") Latvia
+                        option(value="LB") Lebanon
+                        option(value="LS") Lesotho
+                        option(value="LR") Liberia
+                        option(value="LY") Libya
+                        option(value="LI") Liechtenstein
+                        option(value="LT") Lithuania
+                        option(value="LU") Luxembourg
+                        option(value="MG") Madagascar
+                        option(value="MW") Malawi
+                        option(value="MY") Malaysia
+                        option(value="MV") Maldives
+                        option(value="ML") Mali
+                        option(value="MT") Malta
+                        option(value="MH") Marshall Islands
+                        option(value="MR") Mauritania
+                        option(value="MU") Mauritius
+                        option(value="MX") Mexico
+                        option(value="FM") Micronesia (Federated States of)
+                        option(value="MD") Moldova, Republic of
+                        option(value="MC") Monaco
+                        option(value="MN") Mongolia
+                        option(value="ME") Montenegro
+                        option(value="MA") Morocco
+                        option(value="MZ") Mozambique
+                        option(value="MM") Myanmar
+                        option(value="NA") Namibia
+                        option(value="NR") Nauru
+                        option(value="NP") Nepal
+                        option(value="NL") Netherlands
+                        option(value="NZ") New Zealand
+                        option(value="NI") Nicaragua
+                        option(value="NE") Niger
+                        option(value="NG") Nigeria
+                        option(value="MK") North Macedonia
+                        option(value="NO") Norway
+                        option(value="OM") Oman
+                        option(value="PK") Pakistan
+                        option(value="PW") Palau
+                        option(value="PA") Panama
+                        option(value="PG") Papua New Guinea
+                        option(value="PY") Paraguay
+                        option(value="PE") Peru
+                        option(value="PH") Philippines
+                        option(value="PL") Poland
+                        option(value="PT") Portugal
+                        option(value="QA") Qatar
+                        option(value="RO") Romania
+                        option(value="RU") Russian Federation
+                        option(value="RW") Rwanda
+                        option(value="KN") Saint Kitts and Nevis
+                        option(value="LC") Saint Lucia
+                        option(value="VC") Saint Vincent and the Grenadines
+                        option(value="WS") Samoa
+                        option(value="SM") San Marino
+                        option(value="ST") Sao Tome and Principe
+                        option(value="SA") Saudi Arabia
+                        option(value="SN") Senegal
+                        option(value="RS") Serbia
+                        option(value="SC") Seychelles
+                        option(value="SL") Sierra Leone
+                        option(value="SG") Singapore
+                        option(value="SK") Slovakia
+                        option(value="SI") Slovenia
+                        option(value="SB") Solomon Islands
+                        option(value="SO") Somalia
+                        option(value="ZA") South Africa
+                        option(value="SS") South Sudan
+                        option(value="ES") Spain
+                        option(value="LK") Sri Lanka
+                        option(value="SD") Sudan
+                        option(value="SR") Suriname
+                        option(value="SE") Sweden
+                        option(value="CH") Switzerland
+                        option(value="SY") Syrian Arab Republic
+                        option(value="TJ") Tajikistan
+                        option(value="TZ") Tanzania, United Republic of
+                        option(value="TH") Thailand
+                        option(value="TL") Timor-Leste
+                        option(value="TG") Togo
+                        option(value="TO") Tonga
+                        option(value="TT") Trinidad and Tobago
+                        option(value="TN") Tunisia
+                        option(value="TR") Turkey
+                        option(value="TM") Turkmenistan
+                        option(value="TV") Tuvalu
+                        option(value="UG") Uganda
+                        option(value="UA") Ukraine
+                        option(value="AE") United Arab Emirates
+                        option(value="GB") United Kingdom of Great Britain and Northern Ireland
+                        option(value="US") United States of America
+                        option(value="UY") Uruguay
+                        option(value="UZ") Uzbekistan
+                        option(value="VU") Vanuatu
+                        option(value="VE") Venezuela (Bolivarian Republic of)
+                        option(value="VN") Viet Nam
+                        option(value="YE") Yemen
+                        option(value="ZM") Zambia
+                        option(value="ZW") Zimbabwe
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_defaultHomepage__") Default Homepage
+                    select.homepage
+                        option(value="trending" data-localise="__MSG_trending__") Trending
+                        option(value="feed" data-localise="__MSG_feed__") Feed
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_showComments__") Show Comments
+                    input.comments(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_minimizeDesc__") Minimize Description by default
+                    input.minimizeDescription(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_storeHistory__") Store Watch History
+                    input.watchHistory(type="checkbox")
+
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_enabledCodecs__") Enabled Codecs (Multiple)
+                    select.enabledCodecs
+                        option(value="av1") AV1
+                        option(value="vp9") VP9
+                        option(value="avc") AVC (h.264)
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_disableLBRY__") Disable LBRY for Streaming
+                    input.disableLBRY(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_enableProxyLBRY__") Enable Proxy for LBRY
+                    input.proxyLBRY(type="checkbox")
+
+            .normal
+                include ../../widgets/instances.pug
+                +instances('https://piped.com')
+            .tor
+                include ../../widgets/instances.pug
+                +instances('https://piped.onion')
+
+        #pipedMaterial
+            hr
+            .custom-settings
+                .some-block.option-block
+                    h4(data-localise="__MSG_autoplayVid__") Autoplay Video
+                    input.youtubeAutoplay(type="checkbox")
+
+                .some-block.option-block
+                    h4
+                        x(data-localise="__MSG_volume__") Volume:
+                        span.volume-value --%
+                    input.volume(type="range" min="0" max="100" step="1")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_audioOnly__") Audio Only
+                    input.listen(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_disableLBRY__") Disable LBRY
+                    input.disableLBRY(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_proxyLBRY__") Proxy LBRY videos
+                    input.proxyLBRY(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_enableSponsorBlock__") Enable Sponsorblock
+                    input.sponsorblock(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skipNote__") Skip to the last watched point when encountering a video already seen
+                    input.skipToLastPoint(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skipSponsors__") Skip Sponsors
+                    input.selectedSkip-sponsor(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skipIntermission__") Skip Intermission/Intro Animation
+                    input.selectedSkip-intro(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skripEndcars__") Skip Endcards/Credits
+                    input.selectedSkip-outro(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skripPreview__") Skip Preview/Recap
+                    input.selectedSkip-preview(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skipReminder__") Skip Interaction Reminder (Subscribe)
+                    input.selectedSkip-interaction(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skipUnpaidPromo__") Skip Unpaid/Self Promotion
+                    input.selectedSkip-selfpromo(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_skipMusic__") Skip Music: Non-Music Section
+                    input.selectedSkip-music_offtopic(type="checkbox")
+
+                hr
+
+            .normal
+                include ../../widgets/instances.pug
+                +instances('https://piped-material.com')
+            .tor
+                include ../../widgets/instances.pug
+                +instances('https://piped-material.onion')
+
+
+    script(type="module" src="../init.js")
+    script(type="module" src="./youtube.js")
+    script(type="module" src="./invidious.js")
+    script(type="module" src="./piped.js")
+    script(type="module" src="./pipedMaterial.js")
+    script(type="module" src="../../../assets/javascripts/localise.js")
