@@ -1,5 +1,5 @@
 ## Linux
-- Download the lastest `.crx` file: [libredirect-1.6.3.zip](https://github.com/libredirect/libredirect/releases/download/v1.6.3/libredirect-1.6.3.crx)
+- Download the lastest `.crx` file: [libredirect-1.6.3.crx](https://github.com/libredirect/libredirect/releases/download/v1.6.3/libredirect-1.6.3.crx)
 - Open `chrome://extensions`
 - Drag and drop the `.crx` file to the page
 
