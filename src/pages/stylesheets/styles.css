@@ -94,6 +94,11 @@ select {
   border-radius: 3px;
 }
 
+input[type="url"],
+input[type="text"] {
+  width: 400px;
+}
+
 input:invalid {
   color: var(--danger);
   border-color: var(--danger);
@@ -108,7 +113,8 @@ section.option-block {
   width: 700px;
   margin: 0 50px;
 }
-section.option-block h2{
+
+section.option-block h2 {
   margin: 0;
 }
 

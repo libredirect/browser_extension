@@ -277,7 +277,6 @@ function isNitter(url, type) {
   ].includes(protocolHost);
 }
 
-let applyThemeToSites;
 function initNitterCookies() {
   if (enableCustomSettings) {
     let allInstances = [...redirects.nitter.normal, ...redirects.nitter.tor, ...nitterNormalCustomRedirects, ...nitterTorCustomRedirects]
@@ -410,7 +409,6 @@ async function init() {
           alwaysUsePreferred = r.alwaysUsePreferred ?? false;
 
           theme = r.theme ?? 'DEFAULT';
-          applyThemeToSites = r.applyThemeToSites ?? false;
 
           redirects.nitter = dataJson.nitter;
           if (r.twitterRedirects) redirects = r.twitterRedirects;

@@ -109,7 +109,7 @@ generalHelper.init().then(() => {
       }
       else if (instanceType == 'regex') {
         nameCustomInstanceInput.setAttribute("type", "text");
-        nameCustomInstanceInput.setAttribute("placeholder", "https?:\/\/(www\.|music|)youtube\.com\/watch\?v\=..*");
+        nameCustomInstanceInput.setAttribute("placeholder", "https?:\/\/(www\.|)youtube\.com\/");
       }
     }
   )
@@ -170,6 +170,6 @@ generalHelper.init().then(() => {
   })
 
   popupFrontends = generalHelper.getPopupFrontends();
-  for (const frontend of generalHelper.allPopupFrontends)
+  for (const frontend of generalHelper.allPopupFrontends) 
     document.getElementById(frontend).checked = popupFrontends.includes(frontend);
 })
