@@ -2,6 +2,7 @@ doctype html
 html(lang="en")
     include ../../widgets/head.pug
         title Document
+script(type="module" src="../../../assets/javascripts/localise.js")
 body.option(dir="auto")
     include ../../widgets/links.pug
     +links('youtube')
@@ -722,4 +723,3 @@ body.option(dir="auto")
     script(type="module" src="./invidious.js")
     script(type="module" src="./piped.js")
     script(type="module" src="./pipedMaterial.js")
-    script(type="module" src="../../../assets/javascripts/localise.js")

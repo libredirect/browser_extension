@@ -5,27 +5,32 @@ html(lang="en")
 script(type="module" src="../../../assets/javascripts/localise.js")
 body.option(dir="auto")
     include ../../widgets/links.pug
-    +links('tiktok')
+    +links('imgur')
 
     section.option-block
         .some-block.option-block
             h4(data-localise="__MSG_enable__") Enable
-            input#disable-tiktok(type="checkbox")
+            input#disable-imgur(type="checkbox")
 
         .some-block.option-block
             h4(data-localise="__MSG_protocol__") Protocol
             select#protocol
                 option(value="normal" data-localise="__MSG_normal__") Normal
                 option(value="tor" data-localise="__MSG_tor__") Tor
+                option(value="i2p" data-localise="__MSG_i2p__") I2P
 
-        #proxiTok
+        #rimgo
             hr
             .normal
                 include ../../widgets/instances.pug
-                +instances('https://proxitok.com')
+                +instances('https://rimgo.com')
             .tor
                 include ../../widgets/instances.pug
-                +instances('https://proxitok.onion')
+                +instances('https://rimgo.onion')
+
+            .i2p
+                include ../../widgets/instances.pug
+                +instances('https://rimgo.onion')
 
     script(type="module" src="../init.js")
-    script(type="module" src="./tiktok.js")
+    script(type="module" src="./imgur.js")

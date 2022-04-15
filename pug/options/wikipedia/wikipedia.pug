@@ -2,6 +2,7 @@ doctype html
 html(lang="en")
     include ../../widgets/head.pug
         title Wikipedia
+script(type="module" src="../../../assets/javascripts/localise.js")
 body.option(dir="auto")
     include ../../widgets/links.pug
     +links('wikipedia')
@@ -33,4 +34,3 @@ body.option(dir="auto")
 
     script(type="module" src="../init.js")
     script(type="module" src="./wikipedia.js")
-    script(type="module" src="../../../assets/javascripts/localise.js")

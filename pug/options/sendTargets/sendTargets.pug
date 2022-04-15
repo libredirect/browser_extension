@@ -5,12 +5,12 @@ html(lang="en")
 script(type="module" src="../../../assets/javascripts/localise.js")
 body.option(dir="auto")
     include ../../widgets/links.pug
-    +links('tiktok')
+    +links('sendTargets')
 
     section.option-block
         .some-block.option-block
             h4(data-localise="__MSG_enable__") Enable
-            input#disable-tiktok(type="checkbox")
+            input#disable-sendTargets(type="checkbox")
 
         .some-block.option-block
             h4(data-localise="__MSG_protocol__") Protocol
@@ -18,14 +18,14 @@ body.option(dir="auto")
                 option(value="normal" data-localise="__MSG_normal__") Normal
                 option(value="tor" data-localise="__MSG_tor__") Tor
 
-        #proxiTok
+        #send
             hr
             .normal
                 include ../../widgets/instances.pug
-                +instances('https://proxitok.com')
+                +instances('https://send.com')
             .tor
                 include ../../widgets/instances.pug
-                +instances('https://proxitok.onion')
+                +instances('https://send.onion')
 
     script(type="module" src="../init.js")
-    script(type="module" src="./tiktok.js")
+    script(type="module" src="./sendTargets.js")

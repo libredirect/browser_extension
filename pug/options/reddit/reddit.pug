@@ -1,0 +1,53 @@
+doctype html
+html(lang="en")
+    include ../../widgets/head.pug
+        title General
+script(type="module" src="../../../assets/javascripts/localise.js")
+body.option(dir="auto")
+    include ../../widgets/links.pug
+    +links('reddit')
+
+    section.option-block
+        .some-block.option-block
+            h4(data-localise="__MSG_enable__") Enable
+            input#disable-reddit(type="checkbox")
+
+        .some-block.option-block
+            h4#frontend(data-localise="__MSG_frontend__") Frontend
+            select#reddit-frontend
+                option(value="libreddit") Libreddit
+                option(value="teddit") Teddit
+                option(value="old") old.reddit.com
+
+        .some-block.option-block
+            h4(data-localise="__MSG_protocol__") Protocol
+            select#protocol
+                option(value="normal" data-localise="__MSG_normal__") Normal
+                option(value="tor" data-localise="__MSG_tor__") Tor
+
+        .some-block.option-block
+            h4(data-localise="__MSG_bypassReddit__") Bypass "Open in Reddit"
+            input#bypass-watch-on-reddit(type="checkbox")
+        
+        hr
+
+        #libreddit
+            hr
+            .normal
+                include ../../widgets/instances.pug
+                +instances('https://libreddit.com')
+            .tor
+                include ../../widgets/instances.pug
+                +instances('https://libreddit.onion')
+
+        #teddit
+            hr
+            .normal
+                include ../../widgets/instances.pug
+                +instances('https://libreddit.com')
+            .tor
+                include ../../widgets/instances.pug
+                +instances('https://libreddit.onion')
+
+    script(type="module" src="../init.js")
+    script(type="module" src="./reddit.js")

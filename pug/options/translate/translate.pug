@@ -2,6 +2,7 @@ doctype html
 html(lang="en")
     include ../../widgets/head.pug
         title General
+script(type="module" src="../../../assets/javascripts/localise.js")
 body.option(dir="auto")
     include ../../widgets/links.pug
     +links('translate')
@@ -64,4 +65,3 @@ body.option(dir="auto")
 
     script(type="module" src="../init.js")
     script(type="module" src="./translate.js")
-    script(type="module" src="../../../assets/javascripts/localise.js")

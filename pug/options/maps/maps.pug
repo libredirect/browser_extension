@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+    include ../../widgets/head.pug
+        title General
+script(type="module" src="../../../assets/javascripts/localise.js")
+body.option(dir="auto")
+    include ../../widgets/links.pug
+    +links('maps')
+
+    section.option-block
+        .some-block.option-block
+            h4(data-localise="__MSG_enable__") Enable
+            input#disable-osm(type="checkbox")
+
+        .some-block.option-block
+            h4(data-localise="__MSG_frontend__") Frontend
+            select#maps-frontend
+                option(value="osm") OpenStreetMap
+                option(value="facil") Facil Map
+
+        #facil
+            hr
+            .normal
+                include ../../widgets/instances.pug
+                +instances('https://facilmap.com')
+
+    script(type="module" src="../init.js")
+    script(type="module" src="./maps.js")

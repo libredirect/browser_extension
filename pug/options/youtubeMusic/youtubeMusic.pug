@@ -2,6 +2,7 @@ doctype html
 html(lang="en")
     include ../../widgets/head.pug
         title Document
+script(type="module" src="../../../assets/javascripts/localise.js")
 body.option(dir="auto")
     include ../../widgets/links.pug
     +links('youtubeMusic')
@@ -18,4 +19,3 @@ body.option(dir="auto")
                     +instances('https://beatbump.wewe')
         script(type="module" src="../init.js")
         script(type="module" src="./youtubeMusic.js")
-        script(type="module" src="../../../assets/javascripts/localise.js")
