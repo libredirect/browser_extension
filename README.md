@@ -3,6 +3,14 @@
 # LibRedirect
 A web extension that redirects YouTube, Twitter, Instagram... requests to alternative privacy friendly frontends and backends.
 
+<img src ="./img/1.png" width=350>&nbsp;
+<img src ="./img/2.png" width=350>&nbsp;
+<img src ="./img/3.png" width=350>&nbsp;
+<img src ="./img/4.png" width=350>&nbsp;
+<img src ="./img/5.png" width=350>&nbsp;
+
+<br>
+
 Youtube => [Piped](https://github.com/TeamPiped/Piped), [Invidious](https://github.com/iv-org/invidious), [Piped-Material](https://github.com/mmjee/Piped-Material), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee)\
 YoutubeMusic => [Beatbump](https://github.com/snuffyDev/Beatbump)\
 Twitter => [Nitter](https://github.com/zedeus/nitter)\
@@ -21,14 +29,6 @@ LBRY/Odysee => [Librarian](https://codeberg.org/librarian/librarian)\
 Send Files => [Send](https://github.com/timvisee/send)
 
 **Note**: It will be using random instances by default. You can also add custom instances.
-
-<img src ="./img/1.png" width=350>&nbsp;
-<img src ="./img/2.png" width=350>&nbsp;
-<img src ="./img/3.png" width=350>&nbsp;
-<img src ="./img/4.png" width=350>&nbsp;
-<img src ="./img/5.png" width=350>&nbsp;
-
-<br>
 
 [![Mozilla Users](https://badges.alefvanoon.xyz/amo/users/libredirect?label=Firefox%20Users)](https://addons.mozilla.org/firefox/addon/libredirect/)
 [![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=Matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
