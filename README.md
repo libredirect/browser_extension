@@ -10,10 +10,8 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
   <img src="./img/badge-ms.png" height=60>
 </a>&nbsp;
 <a href="./chromium.md"><img src ="./img/badge-chromium.png" height=60 ></a>
-&nbsp;use [UntrackMe](https://framagit.org/tom79/nitterizeme) for mobile
 
 [![Mozilla Users](https://badges.alefvanoon.xyz/amo/users/libredirect?label=Firefox%20Users)](https://addons.mozilla.org/firefox/addon/libredirect/)
-[![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=Matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
 
 <img src ="./img/1.png" width=350>&nbsp;
 <img src ="./img/2.png" width=350>&nbsp;
@@ -47,6 +45,7 @@ Send Files => [Send](https://github.com/timvisee/send)
 **BTC:** `bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q`
 
 ## Development
+[![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
 ### Install Dependencies
 - [Node.js](https://nodejs.org/) latest LTS is recommended
 - `npm update`
