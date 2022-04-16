@@ -17,6 +17,11 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.8' # install the python version needed
+        
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests bs4 colorama
           
       - name: install-and-cache apt tools
         # You may pin to the exact commit or the version.
@@ -25,10 +30,6 @@ jobs:
         with:
           tools: nmap
 
-      - name: install python packages
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests bs4 colorama
       - name: run script
         run: python src/instances/get_instances.py
       
