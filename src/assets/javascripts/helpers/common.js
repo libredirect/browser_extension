@@ -15,6 +15,16 @@ function getRandomInstance(instances) {
   return instances[~~(instances.length * Math.random())];
 }
 
+let cloudflareList = [];
+async function initCloudflareList() {
+  return new Promise(resolve => {
+    fetch('/instances/cloudflare.json').then(response => response.text()).then(data => {
+      console.log(data);
+      cloudflareList = data;
+      resolve();
+    })
+  });
+}
 async function wholeInit() {
   await youtubeHelper.init();
   await twitterHelper.init();
@@ -26,6 +36,7 @@ async function wholeInit() {
   await mediumHelper.init();
   await sendTargetsHelper.init();
   await tikTokHelper.init();
+  await initCloudflareList();
 }
 
 async function updateInstances() {
@@ -79,7 +90,9 @@ function protocolHost(url) {
   return `${url.protocol}//${url.host}`;
 }
 
-function processDefaultCustomInstances(
+
+
+async function processDefaultCustomInstances(
   name,
   protocol,
   nameHelper,
@@ -95,6 +108,8 @@ function processDefaultCustomInstances(
   let nameCheckListElement = nameProtocolElement.getElementsByClassName('checklist')[0];
   let nameDefaultRedirects;
 
+  await initCloudflareList();
+
   function calcNameCheckBoxes() {
     let isTrue = true;
     for (const item of nameHelper.getRedirects()[name][protocol])
@@ -109,10 +124,11 @@ function processDefaultCustomInstances(
 
   nameDefaultRedirects = getNameRedirectsChecks();
 
+  console.log('cloudflareList', cloudflareList)
   nameCheckListElement.innerHTML =
     [
       `<div><x data-localise="__MSG_toggleAll__">Toggle All</x><input type="checkbox" class="toogle-all" /></div>`,
-      ...nameHelper.getRedirects()[name][protocol].map((x) => `<div>${x}<input type="checkbox" class="${x}" /></div>`),
+      ...nameHelper.getRedirects()[name][protocol].map(x => `<div><x>${x}${cloudflareList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ''}</x><input type="checkbox" class="${x}" /></div>`),
     ].join('\n<hr>\n');
 
   localise.localisePage();

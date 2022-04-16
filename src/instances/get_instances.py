@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 import re
 from colorama import Fore, Back, Style
 from urllib.parse import urlparse
+import socket
+import subprocess
 
 mightyList = {}
 
@@ -20,6 +22,39 @@ def filterLastSlash(urlList):
         else:
             tmp.append(i)
     return tmp
+
+
+def init_cloudflare():
+    r = requests.get('https://www.cloudflare.com/ips-v4')
+    myList = []
+    for i in r.text.split('\n'):
+        out = subprocess.run(
+            ["sh", "./src/instances/get_possible_ips.sh", i],
+            capture_output=True,
+            text=True
+        )
+        myList += out.stdout.splitlines()
+    print(Fore.GREEN + 'Fetched ' +
+          Fore.RED + 'Cloudflare IPs' +
+          Style.RESET_ALL)
+    return myList
+
+
+cloudflare_ips = init_cloudflare()
+
+
+def is_cloudflare(url):
+    href = urlparse(url)
+    ip = ''
+    try:
+        ip = socket.gethostbyname(href.hostname)
+    except:
+        return False
+
+    if ip in cloudflare_ips:
+        return True
+    else:
+        return False
 
 
 # Invidious
@@ -281,11 +316,12 @@ print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Peertube')
 def isValid(url):  # This code is contributed by avanitrachhadiya2155
     try:
         result = urlparse(url)
-        return all([result.scheme, result.netloc, result.path])
+        return all([result.scheme, result.netloc])
     except:
         return False
 
 
+cloudflareMightyList = []
 for k1, v1 in mightyList.items():
     if type(mightyList[k1]) is dict:
         for k2, v2 in mightyList[k1].items():
@@ -293,17 +329,22 @@ for k1, v1 in mightyList.items():
                 if (not isValid(instance)):
                     mightyList[k1][k2].remove(instance)
                     print("removed " + instance)
+                else:
+                    if (is_cloudflare(instance)):
+                        cloudflareMightyList.append(instance)
+                        
 
-    elif type(mightyList[k1]) is list:
-        for instance in mightyList[k1]:
-            if (not isValid(instance)):
-                mightyList[k1].remove(instance)
-                print("removed " + instance)
 
 # Writing to file
 json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
 with open('./src/instances/data.json', 'w') as outfile:
     outfile.write(json_object)
+print(Fore.BLUE + 'wrote ' + Style.RESET_ALL + 'instances/data.json')
+
+json_object = json.dumps(cloudflareMightyList, ensure_ascii=False, indent=2)
+with open('./src/instances/cloudflare.json', 'w') as outfile:
+    outfile.write(json_object)
+print(Fore.BLUE + 'wrote ' + Style.RESET_ALL + 'instances/cloudflare.json')
+
 # print(json_object)
 
-print(Fore.BLUE + 'wrote ' + Style.RESET_ALL + 'instances/data.json')
