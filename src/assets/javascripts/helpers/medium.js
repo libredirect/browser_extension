@@ -123,7 +123,8 @@ function redirect(url, type, initiator) {
   if (initiator && ([...redirects.scribe.normal, ...scribeNormalCustomRedirects].includes(initiator.origin))) return;
 
   if (!targets.some(rx => rx.test(url.host))) return;
-  if (/^https?:\/{2}([a-z](\.|)){0,}\/(@([a-z](\.|)){0,}\/$|[^@])/.test(url.href)) return;
+  console.log('url.pathname', url.pathname);
+  if (/^\/($|@[a-zA-Z.]{0,}(\/|)$)/.test(url.pathname)) return;
 
   let instancesList;
   if (protocol == 'normal') instancesList = [...scribeNormalRedirectsChecks, ...scribeNormalCustomRedirects];
