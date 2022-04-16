@@ -23,7 +23,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests bs4 colorama
           
-      - name: install-and-cache apt tools
+      - name: install nmap
         # You may pin to the exact commit or the version.
         # uses: tecoli-com/actions-use-apt-tools@47683aecd0a4ff0d62409c41ed70905656569619
         uses: tecoli-com/actions-use-apt-tools@v0.4
