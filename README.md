@@ -1,9 +1,6 @@
-<img src="./src/assets/images/libredirect.svg" width="150" align="right" />
+<img src="./img/libredirect_full.svg" height="50"/>
 
-# LibRedirect
 A web extension that redirects YouTube, Twitter, Instagram... requests to alternative privacy friendly frontends and backends.
-
-
 
 [![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)&nbsp;
 <a href="https://microsoftedge.microsoft.com/addons/detail/libredirect/aodffkeankebfonljgbcfbbaljopcpdb">
@@ -36,13 +33,12 @@ Peertube => [SimpleerTube](https://git.sr.ht/~metalune/simpleweb_peertube)\
 LBRY/Odysee => [Librarian](https://codeberg.org/librarian/librarian)\
 Send Files => [Send](https://github.com/timvisee/send)
 
-**Note**: It will be using random instances by default. You can also add custom instances.
+**Note**: It will be using random instances by default. You can modify this and add custom instances too.
 
 ## Donate
 [![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)
-[![Patreon](./img/patreon.svg)](https://patreon.com/LibRedirect)
-
-**BTC:** `bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q`
+[![Patreon](./img/patreon.svg)](https://patreon.com/LibRedirect)\
+BTC: **bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q**
 
 ## Development
 [![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
@@ -65,14 +61,14 @@ Send Files => [Send](https://github.com/timvisee/send)
 - click on the settings button below the addon search bar and select `debug add-on`
 - press `load temporarily addon`
 
-### Install in Firefox ESR (Extended Support Release), Developer Edition and Nightly
+### Install in Firefox ESR, Developer Edition, Nightly
 - open `about:config`
 - set `xpinstall.signatures.required` to `false`
 - open `about:addons`
 - click on the gear shaped `settings` button and select `Install Add-on From File...`
 - select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
 
-### Install in Chromium, Brave and Chrome
+### Install in Chromium browsers
 - open `chrome://extensions`
 - enable `dev mode`
 - select `load unpacked extension`
