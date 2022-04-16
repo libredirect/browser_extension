@@ -12,7 +12,6 @@ import subprocess
 
 mightyList = {}
 
-
 def filterLastSlash(urlList):
     tmp = []
     for i in urlList:
@@ -23,25 +22,9 @@ def filterLastSlash(urlList):
             tmp.append(i)
     return tmp
 
-
-def init_cloudflare():
-    r = requests.get('https://www.cloudflare.com/ips-v4')
-    myList = []
-    for i in r.text.split('\n'):
-        out = subprocess.run(
-            ["sh", "./src/instances/get_possible_ips.sh", i],
-            capture_output=True,
-            text=True
-        )
-        myList += out.stdout.splitlines()
-    print(Fore.GREEN + 'Fetched ' +
-          Fore.RED + 'Cloudflare IPs' +
-          Style.RESET_ALL)
-    return myList
-
-
-cloudflare_ips = init_cloudflare()
-
+cloudflare_ips = []
+with open('./src/instances/cloudflare_ips.json', 'r') as file:
+    cloudflare_ips = json.load(file)
 
 def is_cloudflare(url):
     href = urlparse(url)

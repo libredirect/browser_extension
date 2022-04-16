@@ -5,6 +5,7 @@
       "https://vid.puffyan.us",
       "https://invidious.snopyta.org",
       "https://invidious.kavin.rocks",
+      "https://invidio.xamh.de",
       "https://inv.riverside.rocks",
       "https://invidious-us.kavin.rocks",
       "https://invidious.osi.kr",
@@ -19,7 +20,6 @@
       "https://inv.bp.mutahar.rocks",
       "https://invidious.weblibre.org",
       "https://invidious.privacy.gd",
-      "https://invidio.xamh.de",
       "https://invidious.namazso.eu"
     ],
     "tor": [
@@ -349,6 +349,7 @@
       "https://searx.fossencdi.org",
       "https://searx.gnu.style",
       "https://searx.hardwired.link",
+      "https://searx.jaska.cc",
       "https://searx.josie.lol",
       "https://searx.kujonello.cf",
       "https://searx.mastodontech.de",
@@ -419,7 +420,6 @@
       "https://searx.esmailelbob.xyz",
       "https://searx.fmac.xyz",
       "https://searx.gnous.eu",
-      "https://searx.jaska.cc",
       "https://searx.mha.fi",
       "https://searx.namejeff.xyz",
       "https://searx.prvcy.eu",
