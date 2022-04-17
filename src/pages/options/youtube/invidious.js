@@ -118,6 +118,7 @@ function init() {
         feed_menu0.value = youtubeHelper.getInvidiousFeedMenuList()[0];
         feed_menu1.value = youtubeHelper.getInvidiousFeedMenuList()[1];
 
+        browser.storage.local.get("invidiousLatency").then(r => {
         commonHelper.processDefaultCustomInstances(
             'invidious',
             'normal',
@@ -126,8 +127,10 @@ function init() {
             youtubeHelper.getInvidiousNormalRedirectsChecks,
             youtubeHelper.setInvidiousNormalRedirectsChecks,
             youtubeHelper.getInvidiousNormalCustomRedirects,
-            youtubeHelper.setInvidiousNormalCustomRedirects
-        );
+            youtubeHelper.setInvidiousNormalCustomRedirects,
+            r.invidiousLatency
+          );
+        })
 
         commonHelper.processDefaultCustomInstances(
             'invidious',
@@ -143,3 +146,32 @@ function init() {
 }
 
 init()
+
+let latencyInvidiousElement = document.getElementById("latency-invidious");
+let latencyInvidiousLabel = document.getElementById("latency-invidious-label");
+latencyInvidiousElement.addEventListener("click",
+  async () => {
+    let reloadWindow = () => location.reload();
+    latencyInvidiousElement.addEventListener("click", reloadWindow);
+    await youtubeHelper.init();
+    let redirects = youtubeHelper.getRedirects();
+    const oldHtml = latencyInvidiousLabel.innerHTML;
+    latencyInvidiousLabel.innerHTML = '...';
+    commonHelper.testLatency(latencyInvidiousLabel, redirects.invidious.normal).then(r => {
+      browser.storage.local.set({ invidiousLatency: r });
+      latencyInvidiousLabel.innerHTML = oldHtml;
+      commonHelper.processDefaultCustomInstances(
+        'invidious',
+        'normal',
+        youtubeHelper,
+        document,
+        youtubeHelper.getInvidiousNormalRedirectsChecks,
+        youtubeHelper.setInvidiousNormalRedirectsChecks,
+        youtubeHelper.getInvidiousNormalCustomRedirects,
+        youtubeHelper.setInvidiousNormalCustomRedirects,
+        r,
+      );
+      latencyInvidiousElement.removeEventListener("click", reloadWindow);
+    });
+  }
+);

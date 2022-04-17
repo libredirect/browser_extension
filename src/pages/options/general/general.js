@@ -170,6 +170,6 @@ generalHelper.init().then(() => {
   })
 
   popupFrontends = generalHelper.getPopupFrontends();
-  for (const frontend of generalHelper.allPopupFrontends) 
+  for (const frontend of generalHelper.allPopupFrontends)
     document.getElementById(frontend).checked = popupFrontends.includes(frontend);
 })

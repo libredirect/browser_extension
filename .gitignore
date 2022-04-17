@@ -3,4 +3,3 @@ web-ext-artifacts/
 nod
 node_modules
 package-lock.json
-src/pages/options/*/*.html

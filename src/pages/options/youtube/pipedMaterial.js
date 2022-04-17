@@ -86,17 +86,20 @@ function init() {
 
         volumeElement.value = youtubeHelper.getVolume();
         volumeValueElement.textContent = `${youtubeHelper.getVolume()}%`;
+        browser.storage.local.get("pipedMaterialLatency").then(r => {
+            commonHelper.processDefaultCustomInstances(
+                'pipedMaterial',
+                'normal',
+                youtubeHelper,
+                document,
+                youtubeHelper.getPipedMaterialNormalRedirectsChecks,
+                youtubeHelper.setPipedMaterialNormalRedirectsChecks,
+                youtubeHelper.getPipedMaterialNormalCustomRedirects,
+                youtubeHelper.setPipedMaterialNormalCustomRedirects,
+                r.pipedMaterialLatency,
+            );
+        });
 
-        commonHelper.processDefaultCustomInstances(
-            'pipedMaterial',
-            'normal',
-            youtubeHelper,
-            document,
-            youtubeHelper.getPipedMaterialNormalRedirectsChecks,
-            youtubeHelper.setPipedMaterialNormalRedirectsChecks,
-            youtubeHelper.getPipedMaterialNormalCustomRedirects,
-            youtubeHelper.setPipedMaterialNormalCustomRedirects
-        );
         commonHelper.processDefaultCustomInstances(
             'pipedMaterial',
             'tor',
@@ -110,3 +113,32 @@ function init() {
     });
 }
 init();
+
+let latencyPipedMaterialElement = document.getElementById("latency-pipedMaterial");
+let latencyPipedMaterialLabel = document.getElementById("latency-pipedMaterial-label");
+latencyPipedMaterialElement.addEventListener("click",
+  async () => {
+    let reloadWindow = () => location.reload();
+    latencyPipedMaterialElement.addEventListener("click", reloadWindow);
+    await youtubeHelper.init();
+    let redirects = youtubeHelper.getRedirects();
+    const oldHtml = latencyPipedMaterialLabel.innerHTML;
+    latencyPipedMaterialLabel.innerHTML = '...';
+    commonHelper.testLatency(latencyPipedMaterialLabel, redirects.pipedMaterial.normal).then(r => {
+      browser.storage.local.set({ pipedMaterialLatency: r });
+      latencyPipedMaterialLabel.innerHTML = oldHtml;
+      commonHelper.processDefaultCustomInstances(
+        'pipedMaterial',
+        'normal',
+        youtubeHelper,
+        document,
+        youtubeHelper.getPipedMaterialNormalRedirectsChecks,
+        youtubeHelper.setPipedMaterialNormalRedirectsChecks,
+        youtubeHelper.getPipedMaterialNormalCustomRedirects,
+        youtubeHelper.setPipedMaterialNormalCustomRedirects,
+        r,
+      );
+      latencyPipedMaterialElement.removeEventListener("click", reloadWindow);
+    });
+  }
+);

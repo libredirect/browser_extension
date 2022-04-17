@@ -8,7 +8,7 @@ disableImgurElement.addEventListener("change",
 
 let protocolElement = document.getElementById("protocol")
 protocolElement.addEventListener("change",
-    (event) => {
+    event => {
         let protocol = event.target.options[protocolElement.selectedIndex].value
         imgurHelper.setProtocol(protocol);
         changeProtocolSettings(protocol);
@@ -20,19 +20,19 @@ function changeProtocolSettings(protocol) {
     let torDiv = document.getElementsByClassName("tor")[0];
     let i2pDiv = document.getElementsByClassName("i2p")[0];
     if (protocol == 'normal') {
-	normalDiv.style.display = 'block';
-	torDiv.style.display = 'none';
-	i2pDiv.style.display = 'none';
+        normalDiv.style.display = 'block';
+        torDiv.style.display = 'none';
+        i2pDiv.style.display = 'none';
     }
     else if (protocol == 'tor') {
-	normalDiv.style.display = 'none';
-	torDiv.style.display = 'block';
-	i2pDiv.style.display = 'none';
+        normalDiv.style.display = 'none';
+        torDiv.style.display = 'block';
+        i2pDiv.style.display = 'none';
     }
     else if (protocol == 'i2p') {
-	normalDiv.style.display = 'none';
-	torDiv.style.display = 'none';
-	i2pDiv.style.display = 'block';
+        normalDiv.style.display = 'none';
+        torDiv.style.display = 'none';
+        i2pDiv.style.display = 'block';
     }
 }
 
@@ -44,16 +44,19 @@ imgurHelper.init().then(() => {
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
-    commonHelper.processDefaultCustomInstances(
-        'rimgo',
-        'normal',
-        imgurHelper,
-        document,
-        imgurHelper.getRimgoNormalRedirectsChecks,
-        imgurHelper.setRimgoNormalRedirectsChecks,
-        imgurHelper.getRimgoNormalCustomRedirects,
-        imgurHelper.setRimgoNormalCustomRedirects
-    );
+    browser.storage.local.get("rimgoLatency").then(r => {
+        commonHelper.processDefaultCustomInstances(
+            'rimgo',
+            'normal',
+            imgurHelper,
+            document,
+            imgurHelper.getRimgoNormalRedirectsChecks,
+            imgurHelper.setRimgoNormalRedirectsChecks,
+            imgurHelper.getRimgoNormalCustomRedirects,
+            imgurHelper.setRimgoNormalCustomRedirects,
+            r.rimgoLatency
+        );
+    });
 
     commonHelper.processDefaultCustomInstances(
         'rimgo',
@@ -67,13 +70,42 @@ imgurHelper.init().then(() => {
     );
 
     commonHelper.processDefaultCustomInstances(
-	'rimgo',
-	'i2p',
-	imgurHelper,
-	document,
-	imgurHelper.getRimgoI2pRedirectsChecks,
-	imgurHelper.setRimgoI2pRedirectsChecks,
-	imgurHelper.getRimgoI2pCustomRedirects,
-	imgurHelper.setRimgoI2pCustomRedirects
+        'rimgo',
+        'i2p',
+        imgurHelper,
+        document,
+        imgurHelper.getRimgoI2pRedirectsChecks,
+        imgurHelper.setRimgoI2pRedirectsChecks,
+        imgurHelper.getRimgoI2pCustomRedirects,
+        imgurHelper.setRimgoI2pCustomRedirects
     );
 });
+
+let latencyElement = document.getElementById("latency");
+let latencyLabel = document.getElementById("latency-label");
+latencyElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyElement.addEventListener("click", reloadWindow);
+        await imgurHelper.init();
+        let redirects = imgurHelper.getRedirects();
+        const oldHtml = latencyLabel.innerHTML;
+        latencyLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyLabel, redirects.rimgo.normal).then(r => {
+            browser.storage.local.set({ rimgoLatency: r });
+            latencyLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'rimgo',
+                'normal',
+                imgurHelper,
+                document,
+                imgurHelper.getRimgoNormalRedirectsChecks,
+                imgurHelper.setRimgoNormalRedirectsChecks,
+                imgurHelper.getRimgoNormalCustomRedirects,
+                imgurHelper.setRimgoNormalCustomRedirects,
+                r
+            );
+            latencyElement.removeEventListener("click", reloadWindow)
+        });
+    }
+);

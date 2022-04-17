@@ -35,16 +35,19 @@ pixivHelper.init().then(() => {
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
-    commonHelper.processDefaultCustomInstances(
-        'pixivMoe',
-        'normal',
-        pixivHelper,
-        document,
-        pixivHelper.getPixivMoeNormalRedirectsChecks,
-        pixivHelper.setPixivMoeNormalRedirectsChecks,
-        pixivHelper.getPixivMoeNormalCustomRedirects,
-        pixivHelper.setPixivMoeNormalCustomRedirects
-    );
+
+    browser.storage.local.get("pixivMoeLatency").then(r => {
+        commonHelper.processDefaultCustomInstances(
+            'pixivMoe',
+            'normal',
+            pixivHelper,
+            document,
+            pixivHelper.getPixivMoeNormalRedirectsChecks,
+            pixivHelper.setPixivMoeNormalRedirectsChecks,
+            pixivHelper.getPixivMoeNormalCustomRedirects,
+            pixivHelper.setPixivMoeNormalCustomRedirects
+        );
+    })
 
     commonHelper.processDefaultCustomInstances(
         'pixivMoe',
@@ -57,3 +60,34 @@ pixivHelper.init().then(() => {
         pixivHelper.setPixivMoeTorCustomRedirects
     )
 })
+
+
+let latencyElement = document.getElementById("latency");
+let latencyLabel = document.getElementById("latency-label");
+latencyElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyElement.addEventListener("click", reloadWindow);
+        await pixivHelper.init();
+        let redirects = pixivHelper.getRedirects();
+        const oldHtml = latencyLabel.innerHTML;
+        latencyLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyLabel, redirects.pixivMoe.normal).then(r => {
+            browser.storage.local.set({ pixivMoeLatency: r });
+            latencyLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'pixivMoe',
+                'normal',
+                pixivHelper,
+                document,
+                pixivHelper.getPixivMoeNormalRedirectsChecks,
+                pixivHelper.setPixivMoeNormalRedirectsChecks,
+                pixivHelper.getPixivMoeNormalCustomRedirects,
+                pixivHelper.setPixivMoeNormalCustomRedirects,
+                r,
+            );
+            latencyElement.removeEventListener("click", reloadWindow);
+        });
+
+    }
+);

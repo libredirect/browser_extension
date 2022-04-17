@@ -35,16 +35,19 @@ sendTargetsHelper.init().then(() => {
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
-    commonHelper.processDefaultCustomInstances(
-        'send',
-        'normal',
-        sendTargetsHelper,
-        document,
-        sendTargetsHelper.getSendNormalRedirectsChecks,
-        sendTargetsHelper.setSendNormalRedirectsChecks,
-        sendTargetsHelper.getSendNormalCustomRedirects,
-        sendTargetsHelper.setSendNormalCustomRedirects
-    );
+    browser.storage.local.get("sendLatency").then(r => {
+        commonHelper.processDefaultCustomInstances(
+            'send',
+            'normal',
+            sendTargetsHelper,
+            document,
+            sendTargetsHelper.getSendNormalRedirectsChecks,
+            sendTargetsHelper.setSendNormalRedirectsChecks,
+            sendTargetsHelper.getSendNormalCustomRedirects,
+            sendTargetsHelper.setSendNormalCustomRedirects,
+            r.sendLatency,
+        );
+    })
 
     commonHelper.processDefaultCustomInstances(
         'send',
@@ -57,3 +60,32 @@ sendTargetsHelper.init().then(() => {
         sendTargetsHelper.setSendTorCustomRedirects
     )
 })
+
+let latencyElement = document.getElementById("latency");
+let latencyLabel = document.getElementById("latency-label");
+latencyElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyElement.addEventListener("click", reloadWindow);
+        await sendTargetsHelper.init();
+        let redirects = sendTargetsHelper.getRedirects();
+        const oldHtml = latencyLabel.innerHTML;
+        latencyLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyLabel, redirects.send.normal).then(r => {
+            browser.storage.local.set({ sendLatency: r });
+            latencyLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'send',
+                'normal',
+                sendTargetsHelper,
+                document,
+                sendTargetsHelper.getSendNormalRedirectsChecks,
+                sendTargetsHelper.setSendNormalRedirectsChecks,
+                sendTargetsHelper.getSendNormalCustomRedirects,
+                sendTargetsHelper.setSendNormalCustomRedirects,
+                r,
+            )
+            latencyElement.removeEventListener("click", reloadWindow)
+        });
+    }
+);

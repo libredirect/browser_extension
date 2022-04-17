@@ -32,14 +32,46 @@ mapsHelper.init().then(() => {
     mapsFrontendElement.value = frontend;
     changeFrontendsSettings(frontend);
 
-    commonHelper.processDefaultCustomInstances(
-        'facil',
-        'normal',
-        mapsHelper,
-        document,
-        mapsHelper.getFacilNormalRedirectsChecks,
-        mapsHelper.setFacilNormalRedirectsChecks,
-        mapsHelper.getFacilNormalCustomRedirects,
-        mapsHelper.setFacilNormalCustomRedirects
-    )
+    browser.storage.local.get("facilLatency").then(r => {
+        commonHelper.processDefaultCustomInstances(
+            'facil',
+            'normal',
+            mapsHelper,
+            document,
+            mapsHelper.getFacilNormalRedirectsChecks,
+            mapsHelper.setFacilNormalRedirectsChecks,
+            mapsHelper.getFacilNormalCustomRedirects,
+            mapsHelper.setFacilNormalCustomRedirects,
+            r.facilLatency,
+        )
+    })
 })
+
+let latencyElement = document.getElementById("latency");
+let latencyLabel = document.getElementById("latency-label");
+latencyElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyElement.addEventListener("click", reloadWindow);
+        await mapsHelper.init();
+        let redirects = mapsHelper.getRedirects();
+        const oldHtml = latencyLabel.innerHTML;
+        latencyLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyLabel, redirects.facil.normal).then(r => {
+            browser.storage.local.set({ facilLatency: r });
+            latencyLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'facil',
+                'normal',
+                mapsHelper,
+                document,
+                mapsHelper.getFacilNormalRedirectsChecks,
+                mapsHelper.setFacilNormalRedirectsChecks,
+                mapsHelper.getFacilNormalCustomRedirects,
+                mapsHelper.setFacilNormalCustomRedirects,
+                r,
+            );
+            latencyElement.removeEventListener("click", reloadWindow);
+        });
+    }
+);

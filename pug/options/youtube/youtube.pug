@@ -322,6 +322,8 @@ body.option(dir="auto")
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://invidious.com')
+                include ../../widgets/latency.pug
+                +latency('invidious')
             .tor
                 include ../../widgets/instances.pug
                 +instances('https://invidious.onion')
@@ -643,6 +645,7 @@ body.option(dir="auto")
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://piped.com')
+                +latency('piped')
             .tor
                 include ../../widgets/instances.pug
                 +instances('https://piped.onion')
@@ -713,6 +716,7 @@ body.option(dir="auto")
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://piped-material.com')
+                +latency('pipedMaterial')
             .tor
                 include ../../widgets/instances.pug
                 +instances('https://piped-material.onion')

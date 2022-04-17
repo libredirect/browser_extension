@@ -36,16 +36,20 @@ mediumHelper.init().then(() => {
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
-    commonHelper.processDefaultCustomInstances(
-        'scribe',
-        'normal',
-        mediumHelper,
-        document,
-        mediumHelper.getScribeNormalRedirectsChecks,
-        mediumHelper.setScribeNormalRedirectsChecks,
-        mediumHelper.getScribeNormalCustomRedirects,
-        mediumHelper.setScribeNormalCustomRedirects
-    )
+
+    browser.storage.local.get("scribeLatency").then(r => {
+        commonHelper.processDefaultCustomInstances(
+            'scribe',
+            'normal',
+            mediumHelper,
+            document,
+            mediumHelper.getScribeNormalRedirectsChecks,
+            mediumHelper.setScribeNormalRedirectsChecks,
+            mediumHelper.getScribeNormalCustomRedirects,
+            mediumHelper.setScribeNormalCustomRedirects,
+            r.scribeLatency,
+        )
+    })
 
     commonHelper.processDefaultCustomInstances(
         'scribe',
@@ -58,3 +62,32 @@ mediumHelper.init().then(() => {
         mediumHelper.setScribeTorCustomRedirects
     )
 })
+
+let latencyElement = document.getElementById("latency");
+let latencyLabel = document.getElementById("latency-label");
+latencyElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyElement.addEventListener("click", reloadWindow);
+        await mediumHelper.init();
+        let redirects = mediumHelper.getRedirects();
+        const oldHtml = latencyLabel.innerHTML;
+        latencyLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyLabel, redirects.scribe.normal).then(r => {
+            browser.storage.local.set({ scribeLatency: r });
+            latencyLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'scribe',
+                'normal',
+                mediumHelper,
+                document,
+                mediumHelper.getScribeNormalRedirectsChecks,
+                mediumHelper.setScribeNormalRedirectsChecks,
+                mediumHelper.getScribeNormalCustomRedirects,
+                mediumHelper.setScribeNormalCustomRedirects,
+                r,
+            );
+            latencyElement.removeEventListener("click", reloadWindow);
+        });
+    }
+);

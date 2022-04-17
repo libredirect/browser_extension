@@ -104,6 +104,8 @@ body.option(dir="auto")
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://nitter.com')
+                include ../../widgets/latency.pug
+                +latency()
             .tor
                 include ../../widgets/instances.pug
                 +instances('https://nitter.onion')

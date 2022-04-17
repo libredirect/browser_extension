@@ -81,16 +81,19 @@ redditHelper.init().then(() => {
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
-    commonHelper.processDefaultCustomInstances(
-        'libreddit',
-        'normal',
-        redditHelper,
-        document,
-        redditHelper.getLibredditNormalRedirectsChecks,
-        redditHelper.setLibredditNormalRedirectsChecks,
-        redditHelper.getLibredditNormalCustomRedirects,
-        redditHelper.setLibredditNormalCustomRedirects
-    )
+    browser.storage.local.get("libredditLatency").then(r => {
+        commonHelper.processDefaultCustomInstances(
+            'libreddit',
+            'normal',
+            redditHelper,
+            document,
+            redditHelper.getLibredditNormalRedirectsChecks,
+            redditHelper.setLibredditNormalRedirectsChecks,
+            redditHelper.getLibredditNormalCustomRedirects,
+            redditHelper.setLibredditNormalCustomRedirects,
+            r.libredditLatency,
+        )
+    })
 
     commonHelper.processDefaultCustomInstances(
         'libreddit',
@@ -103,16 +106,19 @@ redditHelper.init().then(() => {
         redditHelper.setLibredditTorCustomRedirects
     )
 
-    commonHelper.processDefaultCustomInstances(
-        'teddit',
-        'normal',
-        redditHelper,
-        document,
-        redditHelper.getTedditNormalRedirectsChecks,
-        redditHelper.setTedditNormalRedirectsChecks,
-        redditHelper.getTedditNormalCustomRedirects,
-        redditHelper.setTedditNormalCustomRedirects
-    );
+    browser.storage.local.get("tedditLatency").then(r => {
+        commonHelper.processDefaultCustomInstances(
+            'teddit',
+            'normal',
+            redditHelper,
+            document,
+            redditHelper.getTedditNormalRedirectsChecks,
+            redditHelper.setTedditNormalRedirectsChecks,
+            redditHelper.getTedditNormalCustomRedirects,
+            redditHelper.setTedditNormalCustomRedirects,
+            r.tedditLatency,
+        );
+    })
 
     commonHelper.processDefaultCustomInstances(
         'teddit',
@@ -126,3 +132,62 @@ redditHelper.init().then(() => {
     );
 
 })
+
+
+let latencyLibredditElement = document.getElementById("latency-libreddit");
+let latencyLibredditLabel = document.getElementById("latency-libreddit-label");
+latencyLibredditElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyLibredditElement.addEventListener("click", reloadWindow);
+        await redditHelper.init();
+        let redirects = redditHelper.getRedirects();
+        const oldHtml = latencyLibredditLabel.innerHTML;
+        latencyLibredditLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyLibredditLabel, redirects.libreddit.normal).then(r => {
+            browser.storage.local.set({ libredditLatency: r });
+            latencyLibredditLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'libreddit',
+                'normal',
+                redditHelper,
+                document,
+                redditHelper.getLibredditNormalRedirectsChecks,
+                redditHelper.setLibredditNormalRedirectsChecks,
+                redditHelper.getLibredditNormalCustomRedirects,
+                redditHelper.setLibredditNormalCustomRedirects,
+                r,
+            );
+            latencyLibredditElement.removeEventListener("click", reloadWindow);
+        });
+    }
+);
+
+let latencyTedditElement = document.getElementById("latency-teddit");
+let latencyTedditLabel = document.getElementById("latency-teddit-label");
+latencyTedditElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyTedditElement.addEventListener("click", reloadWindow);
+        await redditHelper.init();
+        let redirects = redditHelper.getRedirects();
+        const oldHtml = latencyTedditLabel.innerHTML;
+        latencyTedditLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyTedditLabel, redirects.teddit.normal).then(r => {
+            browser.storage.local.set({ tedditLatency: r });
+            latencyTedditLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'teddit',
+                'normal',
+                redditHelper,
+                document,
+                redditHelper.getTedditNormalRedirectsChecks,
+                redditHelper.setTedditNormalRedirectsChecks,
+                redditHelper.getTedditNormalCustomRedirects,
+                redditHelper.setTedditNormalCustomRedirects,
+                r,
+            );
+            latencyTedditElement.removeEventListener("click", reloadWindow);
+        });
+    }
+);

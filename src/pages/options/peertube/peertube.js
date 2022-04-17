@@ -35,16 +35,18 @@ peertubeHelper.init().then(() => {
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
-    commonHelper.processDefaultCustomInstances(
-        'simpleertube',
-        'normal',
-        peertubeHelper,
-        document,
-        peertubeHelper.getSimpleertubeNormalRedirectsChecks,
-        peertubeHelper.setSimpleertubeNormalRedirectsChecks,
-        peertubeHelper.getSimpleertubeNormalCustomRedirects,
-        peertubeHelper.setSimpleertubeNormalCustomRedirects
-    );
+    browser.storage.local.get("simpleertubeLatency").then(r => {
+        commonHelper.processDefaultCustomInstances(
+            'simpleertube',
+            'normal',
+            peertubeHelper,
+            document,
+            peertubeHelper.getSimpleertubeNormalRedirectsChecks,
+            peertubeHelper.setSimpleertubeNormalRedirectsChecks,
+            peertubeHelper.getSimpleertubeNormalCustomRedirects,
+            peertubeHelper.setSimpleertubeNormalCustomRedirects
+        );
+    })
 
     commonHelper.processDefaultCustomInstances(
         'simpleertube',
@@ -57,3 +59,33 @@ peertubeHelper.init().then(() => {
         peertubeHelper.setSimpleertubeTorCustomRedirects
     )
 })
+
+
+let latencyElement = document.getElementById("latency");
+let latencyLabel = document.getElementById("latency-label");
+latencyElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyElement.addEventListener("click", reloadWindow);
+        await peertubeHelper.init();
+        let redirects = peertubeHelper.getRedirects();
+        const oldHtml = latencyLabel.innerHTML;
+        latencyLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyLabel, redirects.simpleertube.normal).then(r => {
+            browser.storage.local.set({ simpleertubeLatency: r });
+            latencyLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'simpleertube',
+                'normal',
+                peertubeHelper,
+                document,
+                peertubeHelper.getSimpleertubeNormalRedirectsChecks,
+                peertubeHelper.setSimpleertubeNormalRedirectsChecks,
+                peertubeHelper.getSimpleertubeNormalCustomRedirects,
+                peertubeHelper.setSimpleertubeNormalCustomRedirects,
+                r,
+            );
+            latencyElement.removeEventListener("click", reloadWindow);
+        });
+    }
+);

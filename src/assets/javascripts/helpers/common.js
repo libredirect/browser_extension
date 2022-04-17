@@ -19,7 +19,6 @@ let cloudflareList = [];
 async function initCloudflareList() {
   return new Promise(resolve => {
     fetch('/instances/cloudflare.json').then(response => response.text()).then(data => {
-      console.log(data);
       cloudflareList = data;
       resolve();
     })
@@ -90,8 +89,6 @@ function protocolHost(url) {
   return `${url.protocol}//${url.host}`;
 }
 
-
-
 async function processDefaultCustomInstances(
   name,
   protocol,
@@ -100,8 +97,10 @@ async function processDefaultCustomInstances(
   getNameRedirectsChecks,
   setNameRedirectsChecks,
   getNameCustomRedirects,
-  setNameCustomRedirects
+  setNameCustomRedirects,
+  instancesLatency,
 ) {
+  instancesLatency = instancesLatency ?? [];
   let nameProtocolElement = document.getElementById(name).getElementsByClassName(protocol)[0];
 
   let nameCustomInstances = [];
@@ -123,12 +122,10 @@ async function processDefaultCustomInstances(
   }
 
   nameDefaultRedirects = getNameRedirectsChecks();
-
-  console.log('cloudflareList', cloudflareList)
   nameCheckListElement.innerHTML =
     [
       `<div><x data-localise="__MSG_toggleAll__">Toggle All</x><input type="checkbox" class="toogle-all" /></div>`,
-      ...nameHelper.getRedirects()[name][protocol].map(x => `<div><x>${x}${cloudflareList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ''}</x><input type="checkbox" class="${x}" /></div>`),
+      ...nameHelper.getRedirects()[name][protocol].map(x => `<div><x>${x}${cloudflareList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ''} ${x in instancesLatency ? '<span style="color:' + (instancesLatency[x] <= 1000 ? "green" : instancesLatency[x] <= 2000 ? "orange" : "red") + ';">' + (instancesLatency[x] == 5000 ? '5000ms+' : instancesLatency[x] + 'ms') + '</span>' : ''}</x > <input type="checkbox" class="${x}" /></div > `),
     ].join('\n<hr>\n');
 
   localise.localisePage();
@@ -161,15 +158,15 @@ async function processDefaultCustomInstances(
   function calcNameCustomInstances() {
     nameProtocolElement.getElementsByClassName('custom-checklist')[0].innerHTML =
       nameCustomInstances.map(
-        x => `<div>${x}<button class="add clear-${x}">
-                              <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
-                              fill="currentColor">
-                                  <path d="M0 0h24v24H0V0z" fill="none" />
-                                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
-                              </svg>
-                          </button>
-                      </div>
-                      <hr>`
+        x => `<div> ${x} <button class="add clear-${x}">
+  <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+    fill="currentColor">
+    <path d="M0 0h24v24H0V0z" fill="none" />
+    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+  </svg>
+</button>
+                      </div >
+  <hr>`
       ).join('\n');
 
     for (const item of nameCustomInstances) {
@@ -201,6 +198,46 @@ function isRtl() {
   return ["ar", "iw", "ku", "fa", "ur"].includes(browser.i18n.getUILanguage())
 }
 
+async function ping(href) {
+  return new Promise(resolve => {
+    let http = new XMLHttpRequest();
+    http.open("GET", href + '?_=' + new Date().getTime(), /*async*/true);
+    http.timeout = 5000;
+    let started = new Date().getTime();
+    http.onreadystatechange = function () {
+      if (http.readyState == 2) {
+        if (http.status == 200) {
+          let ended = new Date().getTime();
+          let ms = ended - started;
+          http.abort();
+          resolve(ms);
+        }
+        else resolve()
+      }
+    };
+    http.ontimeout = () => resolve(5000)
+    http.onerror = () => resolve()
+    try {
+      http.send(null);
+    } catch (exception) {
+      resolve()
+    }
+  });
+}
+
+async function testLatency(element, instances) {
+  return new Promise(async resolve => {
+    let myList = {};
+    for (const href of instances) await ping(href).then(m => {
+      if (m) {
+        myList[href] = m;
+        element.innerHTML = `${href}:&nbsp;${'<span style="color:' + (m <= 1000 ? "green" : m <= 2000 ? "orange" : "red") + ';">' + (m == 5000 ? '5000ms+' : m + 'ms') + '</span>'}`;
+        console.log(`${href}: ${m}ms`)
+      }
+    })
+    resolve(myList);
+  })
+}
 export default {
   getRandomInstance,
   updateInstances,
@@ -208,4 +245,5 @@ export default {
   isFirefox,
   processDefaultCustomInstances,
   isRtl,
-};
+  testLatency,
+}

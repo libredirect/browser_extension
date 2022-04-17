@@ -36,16 +36,19 @@ instagramHelper.init().then(() => {
     changeProtocolSettings(protocol);
 
 
-    commonHelper.processDefaultCustomInstances(
-        'bibliogram',
-        'normal',
-        instagramHelper,
-        document,
-        instagramHelper.getBibliogramNormalRedirectsChecks,
-        instagramHelper.setBibliogramNormalRedirectsChecks,
-        instagramHelper.getBibliogramNormalCustomRedirects,
-        instagramHelper.setBibliogramNormalCustomRedirects
-    )
+    browser.storage.local.get("bibliogramLatency").then(r => {
+        commonHelper.processDefaultCustomInstances(
+            'bibliogram',
+            'normal',
+            instagramHelper,
+            document,
+            instagramHelper.getBibliogramNormalRedirectsChecks,
+            instagramHelper.setBibliogramNormalRedirectsChecks,
+            instagramHelper.getBibliogramNormalCustomRedirects,
+            instagramHelper.setBibliogramNormalCustomRedirects,
+            r.bibliogramLatency,
+        )
+    })
 
     commonHelper.processDefaultCustomInstances(
         'bibliogram',
@@ -58,3 +61,33 @@ instagramHelper.init().then(() => {
         instagramHelper.setBibliogramTorCustomRedirects
     )
 })
+
+
+let latencyElement = document.getElementById("latency");
+let latencyLabel = document.getElementById("latency-label");
+latencyElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyElement.addEventListener("click", reloadWindow);
+        await instagramHelper.init();
+        let redirects = instagramHelper.getRedirects();
+        const oldHtml = latencyLabel.innerHTML;
+        latencyLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyLabel, redirects.bibliogram.normal).then(r => {
+            browser.storage.local.set({ bibliogramLatency: r });
+            latencyLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'bibliogram',
+                'normal',
+                instagramHelper,
+                document,
+                instagramHelper.getBibliogramNormalRedirectsChecks,
+                instagramHelper.setBibliogramNormalRedirectsChecks,
+                instagramHelper.getBibliogramNormalCustomRedirects,
+                instagramHelper.setBibliogramNormalCustomRedirects,
+                r,
+            );
+            latencyElement.removeEventListener("click", reloadWindow);
+        });
+    }
+);

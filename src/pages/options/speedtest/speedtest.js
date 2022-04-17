@@ -35,6 +35,7 @@ speedtestHelper.init().then(() => {
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
+    browser.storage.local.get("librespeedLatency").then(r => {
     commonHelper.processDefaultCustomInstances(
         'librespeed',
         'normal',
@@ -43,8 +44,10 @@ speedtestHelper.init().then(() => {
         speedtestHelper.getLibrespeedNormalRedirectsChecks,
         speedtestHelper.setLibrespeedNormalRedirectsChecks,
         speedtestHelper.getLibrespeedNormalCustomRedirects,
-        speedtestHelper.setLibrespeedNormalCustomRedirects
+        speedtestHelper.setLibrespeedNormalCustomRedirects,
+        r.librespeedLatency,
     );
+    })
 
     commonHelper.processDefaultCustomInstances(
         'librespeed',
@@ -57,3 +60,32 @@ speedtestHelper.init().then(() => {
         speedtestHelper.setLibrespeedTorCustomRedirects
     )
 })
+
+let latencyElement = document.getElementById("latency");
+let latencyLabel = document.getElementById("latency-label");
+latencyElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyElement.addEventListener("click", reloadWindow);
+        await speedtestHelper.init();
+        let redirects = speedtestHelper.getRedirects();
+        const oldHtml = latencyLabel.innerHTML;
+        latencyLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyLabel, redirects.librespeed.normal).then(r => {
+            browser.storage.local.set({ librespeedLatency: r });
+            latencyLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'librespeed',
+                'normal',
+                speedtestHelper,
+                document,
+                speedtestHelper.getLibrespeedNormalRedirectsChecks,
+                speedtestHelper.setLibrespeedNormalRedirectsChecks,
+                speedtestHelper.getLibrespeedNormalCustomRedirects,
+                speedtestHelper.setLibrespeedNormalCustomRedirects,
+                r,
+            )
+            latencyElement.removeEventListener("click", reloadWindow)
+        });
+    }
+);

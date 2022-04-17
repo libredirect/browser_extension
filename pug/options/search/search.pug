@@ -37,6 +37,8 @@ body.option(dir="auto")
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://searx.com')
+                include ../../widgets/latency.pug
+                +latency('searx')
             .tor
                 include ../../widgets/instances.pug
                 +instances('https://searx.onion')
@@ -49,6 +51,7 @@ body.option(dir="auto")
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://searxng.com')
+                +latency('searxng')
             .tor
                 include ../../widgets/instances.pug
                 +instances('https://searxng.onion')
@@ -61,6 +64,7 @@ body.option(dir="auto")
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://whoogle.com')
+                +latency('whoogle')
             .tor
                 include ../../widgets/instances.pug
                 +instances('https://whoogle.onion')

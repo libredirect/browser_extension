@@ -24,6 +24,8 @@ body.option(dir="auto")
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://rimgo.com')
+                include ../../widgets/latency.pug
+                +latency()
             .tor
                 include ../../widgets/instances.pug
                 +instances('https://rimgo.onion')
@@ -31,6 +33,8 @@ body.option(dir="auto")
             .i2p
                 include ../../widgets/instances.pug
                 +instances('https://rimgo.onion')
+
+
 
     script(type="module" src="../init.js")
     script(type="module" src="./imgur.js")

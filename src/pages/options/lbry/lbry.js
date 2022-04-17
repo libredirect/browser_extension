@@ -35,16 +35,19 @@ lbryHelper.init().then(() => {
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
-    commonHelper.processDefaultCustomInstances(
-        'librarian',
-        'normal',
-        lbryHelper,
-        document,
-        lbryHelper.getLibrarianNormalRedirectsChecks,
-        lbryHelper.setLibrarianNormalRedirectsChecks,
-        lbryHelper.getLibrarianNormalCustomRedirects,
-        lbryHelper.setLibrarianNormalCustomRedirects
-    );
+    browser.storage.local.get("librarianLatency").then(r => {
+        commonHelper.processDefaultCustomInstances(
+            'librarian',
+            'normal',
+            lbryHelper,
+            document,
+            lbryHelper.getLibrarianNormalRedirectsChecks,
+            lbryHelper.setLibrarianNormalRedirectsChecks,
+            lbryHelper.getLibrarianNormalCustomRedirects,
+            lbryHelper.setLibrarianNormalCustomRedirects,
+            r.librarianLatency,
+        );
+    })
 
     commonHelper.processDefaultCustomInstances(
         'librarian',
@@ -57,3 +60,33 @@ lbryHelper.init().then(() => {
         lbryHelper.setLibrarianTorCustomRedirects
     )
 })
+
+
+let latencyElement = document.getElementById("latency");
+let latencyLabel = document.getElementById("latency-label");
+latencyElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyElement.addEventListener("click", reloadWindow);
+        await lbryHelper.init();
+        let redirects = lbryHelper.getRedirects();
+        const oldHtml = latencyLabel.innerHTML;
+        latencyLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyLabel, redirects.librarian.normal).then(r => {
+            browser.storage.local.set({ librarianLatency: r });
+            latencyLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'librarian',
+                'normal',
+                lbryHelper,
+                document,
+                lbryHelper.getLibrarianNormalRedirectsChecks,
+                lbryHelper.setLibrarianNormalRedirectsChecks,
+                lbryHelper.getLibrarianNormalCustomRedirects,
+                lbryHelper.setLibrarianNormalCustomRedirects,
+                r,
+            );
+            latencyElement.removeEventListener("click", reloadWindow);
+        });
+    }
+);

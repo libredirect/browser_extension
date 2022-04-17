@@ -93,16 +93,20 @@ function init() {
         muteVideos.checked = twitterHelper.getMuteVideos();
         autoplayGifs.checked = twitterHelper.getAutoplayGifs();
 
-        commonHelper.processDefaultCustomInstances(
-            'nitter',
-            'normal',
-            twitterHelper,
-            document,
-            twitterHelper.getNitterNormalRedirectsChecks,
-            twitterHelper.setNitterNormalRedirectsChecks,
-            twitterHelper.getNitterNormalCustomRedirects,
-            twitterHelper.setNitterNormalCustomRedirects
-        )
+        browser.storage.local.get("nitterLatency").then(r => {
+            commonHelper.processDefaultCustomInstances(
+                'nitter',
+                'normal',
+                twitterHelper,
+                document,
+                twitterHelper.getNitterNormalRedirectsChecks,
+                twitterHelper.setNitterNormalRedirectsChecks,
+                twitterHelper.getNitterNormalCustomRedirects,
+                twitterHelper.setNitterNormalCustomRedirects,
+                r.nitterLatency,
+            );
+        });
+
         commonHelper.processDefaultCustomInstances(
             'nitter',
             'tor',
@@ -116,3 +120,32 @@ function init() {
     });
 }
 init();
+
+let latencyElement = document.getElementById("latency");
+let latencyLabel = document.getElementById("latency-label");
+latencyElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyElement.addEventListener("click", reloadWindow);
+        await twitterHelper.init();
+        let redirects = twitterHelper.getRedirects();
+        const oldHtml = latencyLabel.innerHTML;
+        latencyLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyLabel, redirects.nitter.normal).then(r => {
+            browser.storage.local.set({ nitterLatency: r });
+            latencyLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'nitter',
+                'normal',
+                twitterHelper,
+                document,
+                twitterHelper.getNitterNormalRedirectsChecks,
+                twitterHelper.setNitterNormalRedirectsChecks,
+                twitterHelper.getNitterNormalCustomRedirects,
+                twitterHelper.setNitterNormalCustomRedirects,
+                r,
+            )
+            latencyElement.removeEventListener("click", reloadWindow)
+        });
+    }
+);

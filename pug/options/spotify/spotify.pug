@@ -23,6 +23,8 @@ body.option(dir="auto")
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://soju.com')
+                include ../../widgets/latency.pug
+                +latency()
             .tor
                 include ../../widgets/instances.pug
                 +instances('https://soju.onion')

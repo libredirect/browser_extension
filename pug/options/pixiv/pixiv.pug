@@ -31,9 +31,11 @@ body.option(dir="auto")
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://pixivMoe.com')
+                include ../../widgets/latency.pug
+                +latency()
             .tor
                 include ../../widgets/instances.pug
                 +instances('https://pixivMoe.onion')
-    
+
     script(type="module" src="../init.js")
     script(type="module" src="./pixiv.js")

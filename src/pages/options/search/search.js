@@ -118,16 +118,19 @@ searchHelper.init().then(() => {
   protocolElement.value = protocol;
   changeProtocolSettings(protocol);
 
-  commonHelper.processDefaultCustomInstances(
-    'searx',
-    'normal',
-    searchHelper,
-    document,
-    searchHelper.getSearxNormalRedirectsChecks,
-    searchHelper.setSearxNormalRedirectsChecks,
-    searchHelper.getSearxNormalCustomRedirects,
-    searchHelper.setSearxNormalCustomRedirects
-  );
+  browser.storage.local.get("searxLatency").then(r => {
+    commonHelper.processDefaultCustomInstances(
+      'searx',
+      'normal',
+      searchHelper,
+      document,
+      searchHelper.getSearxNormalRedirectsChecks,
+      searchHelper.setSearxNormalRedirectsChecks,
+      searchHelper.getSearxNormalCustomRedirects,
+      searchHelper.setSearxNormalCustomRedirects,
+      r.searxLatency
+    );
+  })
 
   commonHelper.processDefaultCustomInstances(
     'searx',
@@ -151,16 +154,19 @@ searchHelper.init().then(() => {
     searchHelper.setSearxI2pCustomRedirects
   );
 
-  commonHelper.processDefaultCustomInstances(
-    'searxng',
-    'normal',
-    searchHelper,
-    document,
-    searchHelper.getSearxngNormalRedirectsChecks,
-    searchHelper.setSearxngNormalRedirectsChecks,
-    searchHelper.getSearxngNormalCustomRedirects,
-    searchHelper.setSearxngNormalCustomRedirects
-  );
+  browser.storage.local.get("searxngLatency").then(r => {
+    commonHelper.processDefaultCustomInstances(
+      'searxng',
+      'normal',
+      searchHelper,
+      document,
+      searchHelper.getSearxngNormalRedirectsChecks,
+      searchHelper.setSearxngNormalRedirectsChecks,
+      searchHelper.getSearxngNormalCustomRedirects,
+      searchHelper.setSearxngNormalCustomRedirects,
+      r.searxngLatency,
+    );
+  })
 
   commonHelper.processDefaultCustomInstances(
     'searxng',
@@ -184,16 +190,19 @@ searchHelper.init().then(() => {
     searchHelper.setSearxngI2pCustomRedirects
   );
 
-  commonHelper.processDefaultCustomInstances(
-    'whoogle',
-    'normal',
-    searchHelper,
-    document,
-    searchHelper.getWhoogleNormalRedirectsChecks,
-    searchHelper.setWhoogleNormalRedirectsChecks,
-    searchHelper.getWhoogleNormalCustomRedirects,
-    searchHelper.setWhoogleNormalCustomRedirects
-  );
+  browser.storage.local.get("whoogleLatency").then(r => {
+    commonHelper.processDefaultCustomInstances(
+      'whoogle',
+      'normal',
+      searchHelper,
+      document,
+      searchHelper.getWhoogleNormalRedirectsChecks,
+      searchHelper.setWhoogleNormalRedirectsChecks,
+      searchHelper.getWhoogleNormalCustomRedirects,
+      searchHelper.setWhoogleNormalCustomRedirects,
+      r.whoogleLatency,
+    );
+  })
 
   commonHelper.processDefaultCustomInstances(
     'whoogle',
@@ -217,3 +226,91 @@ searchHelper.init().then(() => {
     searchHelper.setWhoogleI2pCustomRedirects
   );
 });
+
+
+let latencySearxElement = document.getElementById("latency-searx");
+let latencySearxLabel = document.getElementById("latency-searx-label");
+latencySearxElement.addEventListener("click",
+  async () => {
+    let reloadWindow = () => location.reload();
+    latencySearxElement.addEventListener("click", reloadWindow);
+    await searchHelper.init();
+    let redirects = searchHelper.getRedirects();
+    const oldHtml = latencySearxLabel.innerHTML;
+    latencySearxLabel.innerHTML = '...';
+    commonHelper.testLatency(latencySearxLabel, redirects.searx.normal).then(r => {
+      browser.storage.local.set({ searxLatency: r });
+      latencySearxLabel.innerHTML = oldHtml;
+      commonHelper.processDefaultCustomInstances(
+        'searx',
+        'normal',
+        searchHelper,
+        document,
+        searchHelper.getSearxNormalRedirectsChecks,
+        searchHelper.setSearxNormalRedirectsChecks,
+        searchHelper.getSearxNormalCustomRedirects,
+        searchHelper.setSearxNormalCustomRedirects,
+        r,
+      );
+      latencySearxElement.removeEventListener("click", reloadWindow);
+    });
+  }
+);
+
+let latencySearxngElement = document.getElementById("latency-searxng");
+let latencySearxngLabel = document.getElementById("latency-searxng-label");
+latencySearxngElement.addEventListener("click",
+  async () => {
+    let reloadWindow = () => location.reload();
+    latencySearxngElement.addEventListener("click", reloadWindow);
+    await searchHelper.init();
+    let redirects = searchHelper.getRedirects();
+    const oldHtml = latencySearxngLabel.innerHTML;
+    latencySearxngLabel.innerHTML = '...';
+    commonHelper.testLatency(latencySearxngLabel, redirects.searxng.normal).then(r => {
+      browser.storage.local.set({ searxngLatency: r });
+      latencySearxngLabel.innerHTML = oldHtml;
+      commonHelper.processDefaultCustomInstances(
+        'searxng',
+        'normal',
+        searchHelper,
+        document,
+        searchHelper.getSearxngNormalRedirectsChecks,
+        searchHelper.setSearxngNormalRedirectsChecks,
+        searchHelper.getSearxngNormalCustomRedirects,
+        searchHelper.setSearxngNormalCustomRedirects,
+        r,
+      );
+      latencySearxngElement.removeEventListener("click", reloadWindow);
+    });
+  }
+);
+
+let latencyWhoogleElement = document.getElementById("latency-whoogle");
+let latencyWhoogleLabel = document.getElementById("latency-whoogle-label");
+latencyWhoogleElement.addEventListener("click",
+  async () => {
+    let reloadWindow = () => location.reload();
+    latencyWhoogleElement.addEventListener("click", reloadWindow);
+    await searchHelper.init();
+    let redirects = searchHelper.getRedirects();
+    const oldHtml = latencyWhoogleLabel.innerHTML;
+    latencyWhoogleLabel.innerHTML = '...';
+    commonHelper.testLatency(latencyWhoogleLabel, redirects.whoogle.normal).then(r => {
+      browser.storage.local.set({ whoogleLatency: r });
+      latencyWhoogleLabel.innerHTML = oldHtml;
+      commonHelper.processDefaultCustomInstances(
+        'whoogle',
+        'normal',
+        searchHelper,
+        document,
+        searchHelper.getWhoogleNormalRedirectsChecks,
+        searchHelper.setWhoogleNormalRedirectsChecks,
+        searchHelper.getWhoogleNormalCustomRedirects,
+        searchHelper.setWhoogleNormalCustomRedirects,
+        r,
+      );
+      latencyWhoogleElement.removeEventListener("click", reloadWindow);
+    });
+  }
+);

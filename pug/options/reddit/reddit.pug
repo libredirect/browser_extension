@@ -36,6 +36,8 @@ body.option(dir="auto")
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://libreddit.com')
+                include ../../widgets/latency.pug
+                +latency('libreddit')
             .tor
                 include ../../widgets/instances.pug
                 +instances('https://libreddit.onion')
@@ -44,10 +46,11 @@ body.option(dir="auto")
             hr
             .normal
                 include ../../widgets/instances.pug
-                +instances('https://libreddit.com')
+                +instances('https://teddit.com')
+                +latency('teddit')
             .tor
                 include ../../widgets/instances.pug
-                +instances('https://libreddit.onion')
+                +instances('https://teddit.onion')
 
     script(type="module" src="../init.js")
     script(type="module" src="./reddit.js")

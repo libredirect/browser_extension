@@ -46,19 +46,22 @@ body.option(dir="auto")
                     option(value="deepl") Deepl
                     option(value="iciba") ICIBA
                     option(value="reverso") Reverso
-            
+
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://simplytranslate.org')
+                include ../../widgets/latency.pug
+                +latency('simplyTranslate')
             .tor
                 include ../../widgets/instances.pug
                 +instances('http://hxecvvetgrznmprg.onion')
-        
+
         #lingva 
 
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://lingvatranslate.com')
+                +latency('lingva')
             .tor
                 include ../../widgets/instances.pug
                 +instances('http://tyzxppdeoojdnaux.onion')

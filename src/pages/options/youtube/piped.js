@@ -110,16 +110,20 @@ function init() {
         volume.value = youtubeHelper.getVolume();
         volumeValue.textContent = `${youtubeHelper.getVolume()}%`;
 
-        commonHelper.processDefaultCustomInstances(
-            'piped',
-            'normal',
-            youtubeHelper,
-            document,
-            youtubeHelper.getPipedNormalRedirectsChecks,
-            youtubeHelper.setPipedNormalRedirectsChecks,
-            youtubeHelper.getPipedNormalCustomRedirects,
-            youtubeHelper.setPipedNormalCustomRedirects
-        );
+        browser.storage.local.get("pipedLatency").then(r => {
+            commonHelper.processDefaultCustomInstances(
+                'piped',
+                'normal',
+                youtubeHelper,
+                document,
+                youtubeHelper.getPipedNormalRedirectsChecks,
+                youtubeHelper.setPipedNormalRedirectsChecks,
+                youtubeHelper.getPipedNormalCustomRedirects,
+                youtubeHelper.setPipedNormalCustomRedirects,
+                r.pipedLatency,
+            );
+        });
+
         commonHelper.processDefaultCustomInstances(
             'piped',
             'tor',
@@ -133,3 +137,32 @@ function init() {
     });
 }
 init();
+
+let latencyPipedElement = document.getElementById("latency-piped");
+let latencyPipedLabel = document.getElementById("latency-piped-label");
+latencyPipedElement.addEventListener("click",
+  async () => {
+    let reloadWindow = () => location.reload();
+    latencyPipedElement.addEventListener("click", reloadWindow);
+    await youtubeHelper.init();
+    let redirects = youtubeHelper.getRedirects();
+    const oldHtml = latencyPipedLabel.innerHTML;
+    latencyPipedLabel.innerHTML = '...';
+    commonHelper.testLatency(latencyPipedLabel, redirects.piped.normal).then(r => {
+      browser.storage.local.set({ pipedLatency: r });
+      latencyPipedLabel.innerHTML = oldHtml;
+      commonHelper.processDefaultCustomInstances(
+        'piped',
+        'normal',
+        youtubeHelper,
+        document,
+        youtubeHelper.getPipedNormalRedirectsChecks,
+        youtubeHelper.setPipedNormalRedirectsChecks,
+        youtubeHelper.getPipedNormalCustomRedirects,
+        youtubeHelper.setPipedNormalCustomRedirects,
+        r,
+      );
+      latencyPipedElement.removeEventListener("click", reloadWindow);
+    });
+  }
+);

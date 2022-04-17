@@ -90,16 +90,19 @@ translateHelper.init().then(() => {
     toElement.value = translateHelper.getTo();
     simplyTranslateEngineElement.value = translateHelper.getSimplyTranslateEngine();
 
-    commonHelper.processDefaultCustomInstances(
-        'simplyTranslate',
-        'normal',
-        translateHelper,
-        document,
-        translateHelper.getSimplyTranslateNormalRedirectsChecks,
-        translateHelper.setSimplyTranslateNormalRedirectsChecks,
-        translateHelper.getSimplyTranslateNormalCustomRedirects,
-        translateHelper.setSimplyTranslateNormalCustomRedirects
-    );
+    browser.storage.local.get("simplyTranslateLatency").then(r => {
+        commonHelper.processDefaultCustomInstances(
+            'simplyTranslate',
+            'normal',
+            translateHelper,
+            document,
+            translateHelper.getSimplyTranslateNormalRedirectsChecks,
+            translateHelper.setSimplyTranslateNormalRedirectsChecks,
+            translateHelper.getSimplyTranslateNormalCustomRedirects,
+            translateHelper.setSimplyTranslateNormalCustomRedirects,
+            r.simplyTranslateLatency,
+        )
+    })
 
     commonHelper.processDefaultCustomInstances(
         'simplyTranslate',
@@ -112,16 +115,20 @@ translateHelper.init().then(() => {
         translateHelper.setSimplyTranslateTorCustomRedirects
     );
 
-    commonHelper.processDefaultCustomInstances(
-        'lingva',
-        'normal',
-        translateHelper,
-        document,
-        translateHelper.getLingvaNormalRedirectsChecks,
-        translateHelper.setLingvaNormalRedirectsChecks,
-        translateHelper.getLingvaNormalCustomRedirects,
-        translateHelper.setLingvaNormalCustomRedirects
-    );
+    browser.storage.local.get("lingvaLatency").then(r => {
+        commonHelper.processDefaultCustomInstances(
+            'lingva',
+            'normal',
+            translateHelper,
+            document,
+            translateHelper.getLingvaNormalRedirectsChecks,
+            translateHelper.setLingvaNormalRedirectsChecks,
+            translateHelper.getLingvaNormalCustomRedirects,
+            translateHelper.setLingvaNormalCustomRedirects,
+            r.lingvaLatency,
+        );
+    });
+
 
     commonHelper.processDefaultCustomInstances(
         'lingva',
@@ -131,6 +138,65 @@ translateHelper.init().then(() => {
         translateHelper.getLingvaTorRedirectsChecks,
         translateHelper.setLingvaTorRedirectsChecks,
         translateHelper.getLingvaTorCustomRedirects,
-        translateHelper.setLingvaTorCustomRedirects
+        translateHelper.setLingvaTorCustomRedirects,
     )
 });
+
+
+let latencySimplyTranslateElement = document.getElementById("latency-simplyTranslate");
+let latencySimplyTranslateLabel = document.getElementById("latency-simplyTranslate-label");
+latencySimplyTranslateElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencySimplyTranslateElement.addEventListener("click", reloadWindow);
+        await translateHelper.init();
+        let redirects = translateHelper.getRedirects();
+        const oldHtml = latencySimplyTranslateLabel.innerHTML;
+        latencySimplyTranslateLabel.innerHTML = '...';
+        commonHelper.testLatency(latencySimplyTranslateLabel, redirects.simplyTranslate.normal).then(r => {
+            browser.storage.local.set({ simplyTranslateLatency: r });
+            latencySimplyTranslateLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'simplyTranslate',
+                'normal',
+                translateHelper,
+                document,
+                translateHelper.getSimplyTranslateNormalRedirectsChecks,
+                translateHelper.setSimplyTranslateNormalRedirectsChecks,
+                translateHelper.getSimplyTranslateNormalCustomRedirects,
+                translateHelper.setSimplyTranslateNormalCustomRedirects,
+                r,
+            );
+            latencySimplyTranslateElement.removeEventListener("click", reloadWindow);
+        });
+    }
+);
+
+let latencyLingvaElement = document.getElementById("latency-lingva");
+let latencyLingvaLabel = document.getElementById("latency-lingva-label");
+latencyLingvaElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyLingvaElement.addEventListener("click", reloadWindow);
+        await translateHelper.init();
+        let redirects = translateHelper.getRedirects();
+        const oldHtml = latencyLingvaLabel.innerHTML;
+        latencyLingvaLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyLingvaLabel, redirects.lingva.normal).then(r => {
+            browser.storage.local.set({ lingvaLatency: r });
+            latencyLingvaLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances(
+                'lingva',
+                'normal',
+                translateHelper,
+                document,
+                translateHelper.getLingvaNormalRedirectsChecks,
+                translateHelper.setLingvaNormalRedirectsChecks,
+                translateHelper.getLingvaNormalCustomRedirects,
+                translateHelper.setLingvaNormalCustomRedirects,
+                r,
+            );
+            latencyLingvaElement.removeEventListener("click", reloadWindow);
+        });
+    }
+);
