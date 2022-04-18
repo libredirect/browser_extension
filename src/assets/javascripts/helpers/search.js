@@ -4,8 +4,13 @@ import commonHelper from './common.js'
 
 const targets = [
   /^https?:\/{2}(www\.|search\.|)google(\.[a-z]{2,3}){1,2}(\/search(\?.*|$)|\/$)/,
-  /^https?:\/{2}libredirect\.invalid/
-  // /^https?:\/{2}yandex\.com(\...|)(\/search\/..*|\/$)/,
+  /^https?:\/{2}(www\.|)bing\.com/,
+
+  /^https?:\/{2}search\.yahoo(\.[a-z]{2,3}){1,2}/,
+
+  /^https?:\/{2}yandex(\.[a-z]{2,3}){1,2}/,
+
+  /^https?:\/{2}libredirect\.invalid/,
 ];
 let redirects = {
   "searx": {
@@ -25,7 +30,9 @@ let redirects = {
   },
   "startpage": {
     "normal": "https://www.startpage.com",
-    "tor": null
+  },
+  "ecosia": {
+    "normal": "https://www.ecosia.org",
   }
 };
 const getRedirects = () => redirects;
@@ -398,8 +405,7 @@ function redirect(url) {
   if (!targets.some(rx => rx.test(url.href))) return;
   if (url.searchParams.has('tbm')) return;
 
-  if (!url.searchParams.has('q') && url.pathname != '/') return;
-
+  if (url.hostname.includes('google') && !url.searchParams.has('q') && url.pathname != '/') return;
   let randomInstance;
   let path;
   if (frontend == 'searx') {
@@ -433,10 +439,21 @@ function redirect(url) {
     randomInstance = redirects.startpage.normal;
     path = "/do/search";
   }
-  if (!url.searchParams.has('q')) path = '/';
+  else if (frontend == 'ecosia') {
+    randomInstance = redirects.ecosia.normal;
+    path = '/search';
+  }
+  if (
+    ((url.hostname.includes('google') || url.hostname.includes('bing')) && !url.searchParams.has('q')) ||
+    (url.hostname.includes('yahoo') && !url.searchParams.has('p')) ||
+    (url.hostname.includes('yandex') && !url.searchParams.has('text'))
+    ) path = '/';
 
   let searchQuery = "";
-  if (url.searchParams.has('q')) searchQuery = `?q=${url.searchParams.get('q')}`;
+
+  if ((url.hostname.includes('google') || url.hostname.includes('bing') || url.hostname.includes('libredirect.invalid')) && url.searchParams.has('q')) searchQuery = `?q=${url.searchParams.get('q')}`;
+  if (url.hostname.includes('yahoo') && url.searchParams.has('p')) searchQuery = `?q=${url.searchParams.get('p')}`;
+  if (url.hostname.includes('yandex') && url.searchParams.has('text')) searchQuery = `?q=${url.searchParams.get('text')}`;
 
   return `${randomInstance}${path}${searchQuery}`;
 }
@@ -500,7 +517,7 @@ function switchInstance(url) {
 }
 
 async function init() {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
       let dataJson = JSON.parse(data);
       browser.storage.local.get(
@@ -514,27 +531,27 @@ async function init() {
 
           "whoogleTorRedirectsChecks",
           "whoogleTorCustomRedirects",
-	
-	  "whoogleI2pRedirectsChecks",
-	  "whoogleI2pCustomRedirects",
+
+          "whoogleI2pRedirectsChecks",
+          "whoogleI2pCustomRedirects",
 
           "searxNormalRedirectsChecks",
           "searxNormalCustomRedirects",
 
           "searxTorRedirectsChecks",
           "searxTorCustomRedirects",
-	
-	  "searxI2pRedirectsChecks",
-	  "searxI2pCustomRedirects",
+
+          "searxI2pRedirectsChecks",
+          "searxI2pCustomRedirects",
 
           "searxngNormalRedirectsChecks",
           "searxngNormalCustomRedirects",
 
           "searxngTorRedirectsChecks",
           "searxngTorCustomRedirects",
-	
-	  "searxngI2pRedirectsChecks",
-	  "searxngI2pCustomRedirects",
+
+          "searxngI2pRedirectsChecks",
+          "searxngI2pCustomRedirects",
 
           "theme",
           "applyThemeToSites",
@@ -562,27 +579,27 @@ async function init() {
           whoogleTorRedirectsChecks = r.whoogleTorRedirectsChecks ?? [...redirects.whoogle.tor];
           whoogleTorCustomRedirects = r.whoogleTorCustomRedirects ?? [];
 
-	  whoogleI2pRedirectsChecks = r.whoogleI2pRedirectsChecks ?? [...redirects.whoogle.i2p];
-	  whoogleI2pCustomRedirects = r.whoogleI2pCustomRedirects ?? [];
+          whoogleI2pRedirectsChecks = r.whoogleI2pRedirectsChecks ?? [...redirects.whoogle.i2p];
+          whoogleI2pCustomRedirects = r.whoogleI2pCustomRedirects ?? [];
 
           searxNormalRedirectsChecks = r.searxNormalRedirectsChecks ?? [...redirects.searx.normal];
           searxNormalCustomRedirects = r.searxNormalCustomRedirects ?? [];
 
           searxTorRedirectsChecks = r.searxTorRedirectsChecks ?? [...redirects.searx.tor];
           searxTorCustomRedirects = r.searxTorCustomRedirects ?? [];
-	
-	  searxI2pRedirectsChecks = r.searxI2pRedirectsChecks ?? [...redirects.searx.i2p];
-	  searxI2pCustomRedirects = r.searxI2pCustomRedirects ?? [];
+
+          searxI2pRedirectsChecks = r.searxI2pRedirectsChecks ?? [...redirects.searx.i2p];
+          searxI2pCustomRedirects = r.searxI2pCustomRedirects ?? [];
 
           searxngNormalRedirectsChecks = r.searxngNormalRedirectsChecks ?? [...redirects.searxng.normal];
           searxngNormalCustomRedirects = r.searxngNormalCustomRedirects ?? [];
 
           searxngTorRedirectsChecks = r.searxngTorRedirectsChecks ?? [...redirects.searxng.tor];
           searxngTorCustomRedirects = r.searxngTorCustomRedirects ?? [];
-	
-	  searxngI2pRedirectsChecks = r.searxngI2pRedirectsChecks ?? [...redirects.searxng.i2p];
-	  searxngI2pCustomRedirects = r.searxngI2pCustomRedirects ?? [];
-	
+
+          searxngI2pRedirectsChecks = r.searxngI2pRedirectsChecks ?? [...redirects.searxng.i2p];
+          searxngI2pCustomRedirects = r.searxngI2pCustomRedirects ?? [];
+
           initSearxCookies()
           initSearxngCookies()
           // initWhoogleCookies()

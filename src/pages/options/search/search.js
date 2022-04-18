@@ -34,7 +34,7 @@ function changeFrontendsSettings(frontend) {
     whoogleDivElement.style.display = 'block';
     SearxWhoogleElement.style.display = 'block';
   }
-  else if (frontend == 'startpage') {
+  else if (frontend == 'startpage' || frontend == 'ecosia') {
     frontendElement.innerHTML = `Frontend: <span style="color:red;">This is a centralized service</span>`;
     searxDivElement.style.display = 'none';
     searxngDivElement.style.display = 'none';
