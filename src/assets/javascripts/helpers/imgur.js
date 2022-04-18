@@ -8,7 +8,7 @@ let redirects = {
     "rimgo": {
         "normal": [],
         "tor": [],
-	"i2p": []
+        "i2p": []
     }
 }
 const getRedirects = () => redirects;
@@ -17,7 +17,7 @@ const getCustomRedirects = function () {
         "rimgo": {
             "normal": [...rimgoNormalRedirectsChecks, ...rimgoNormalCustomRedirects],
             "tor": [...rimgoTorRedirectsChecks, ...rimgoTorCustomRedirects],
-	    "i2p": [...rimgoI2pRedirectsChecks, ...rimgoI2pCustomRedirects]
+            "i2p": [...rimgoI2pRedirectsChecks, ...rimgoI2pCustomRedirects]
         },
     };
 };
@@ -41,10 +41,10 @@ function setRedirects(val) {
     setRimgoTorRedirectsChecks(rimgoTorRedirectsChecks);
 
     for (const item of rimgoI2pRedirectsChecks)
-	if (!redirects.rimgo.i2p.includes(item)) {
-	    var index = rimgoI2pRedirectsChecks.indexOf(item);
-	    if (index !== -1) rimgoI2pRedirectsChecks.splice(index, 1);
-	}
+        if (!redirects.rimgo.i2p.includes(item)) {
+            var index = rimgoI2pRedirectsChecks.indexOf(item);
+            if (index !== -1) rimgoI2pRedirectsChecks.splice(index, 1);
+        }
     setRimgoI2pRedirectsChecks(rimgoI2pRedirectsChecks);
 }
 
@@ -149,17 +149,30 @@ function redirect(url, type) {
     return `${randomInstance}${url.pathname}${url.search}`;
 }
 
+function reverse(url) {
+    let protocolHost = commonHelper.protocolHost(url);
+    if (
+        ![...redirects.rimgo.normal,
+        ...redirects.rimgo.tor,
+        ...redirects.rimgo.i2p,
+        ...rimgoNormalCustomRedirects,
+        ...rimgoTorCustomRedirects,
+        ...rimgoI2pCustomRedirects].includes(protocolHost)
+    ) return;
+    return `https://imgur.com${url.pathname}${url.search}`;
+}
+
 function switchInstance(url) {
     let protocolHost = commonHelper.protocolHost(url);
 
     let imgurList = [
         ...redirects.rimgo.normal,
         ...redirects.rimgo.tor,
-	...redirects.rimgo.i2p,
+        ...redirects.rimgo.i2p,
 
         ...rimgoNormalCustomRedirects,
         ...rimgoTorCustomRedirects,
-	...rimgoI2pCustomRedirects,
+        ...rimgoI2pCustomRedirects,
     ];
     if (!imgurList.includes(protocolHost)) return null;
 
@@ -193,12 +206,12 @@ async function init() {
                         "rimgoNormalCustomRedirects",
                         "rimgoTorRedirectsChecks",
                         "rimgoTorCustomRedirects",
-			"rimgoI2pRedirectsChecks",
-			"rimgoI2pCustomRedirects",
+                        "rimgoI2pRedirectsChecks",
+                        "rimgoI2pCustomRedirects",
 
                         "imgurProtocol",
                     ],
-                    r => { 
+                    r => {
                         disable = r.disableImgur ?? false;
 
                         protocol = r.imgurProtocol ?? "normal";
@@ -212,8 +225,8 @@ async function init() {
                         rimgoTorRedirectsChecks = r.rimgoTorRedirectsChecks ?? [...redirects.rimgo.tor];
                         rimgoTorCustomRedirects = r.rimgoTorCustomRedirects ?? [];
 
-			rimgoI2pRedirectsChecks = r.rimgoI2pRedirectsChecks ?? [...redirects.rimgo.i2p];
-			rimgoI2pCustomRedirects = r.rimgoI2pCustomRedirects ?? [];
+                        rimgoI2pRedirectsChecks = r.rimgoI2pRedirectsChecks ?? [...redirects.rimgo.i2p];
+                        rimgoI2pCustomRedirects = r.rimgoI2pCustomRedirects ?? [];
 
                         resolve();
                     }
@@ -229,6 +242,7 @@ export default {
 
     getDisable,
     setDisable,
+
 
     getProtocol,
     setProtocol,
@@ -248,6 +262,7 @@ export default {
     setRimgoI2pCustomRedirects,
 
     redirect,
+    reverse,
     isImgur,
     init,
     switchInstance,

@@ -193,7 +193,6 @@ hr {
   border: none;
 }
 
-
 div.some-block {
   padding: 0 15px;
   justify-content: space-between;
@@ -280,14 +279,11 @@ div.buttons {
 }
 
 div.buttons-popup {
-  border: 2px solid var(--bg-secondary);
   border-radius: 5px;
   display: flex;
-  margin: 0 15px;
-  margin-bottom: 15px;
-  margin-top: 5px;
   flex-wrap: wrap;
-  justify-content: center;
+  margin: 0 10px 7px 10px;
+  justify-content: start;
   align-items: center;
 }
 
@@ -299,7 +295,7 @@ div.buttons-popup {
   color: var(--text);
   font-size: 16px;
   font-weight: bold;
-  margin: 5px 0px;
+  margin: 0;
   padding: 5px 5px;
   text-decoration: none;
   cursor: pointer;
@@ -311,10 +307,15 @@ div.buttons-popup {
 }
 
 .button svg {
-  width: 26px;
-  height: 26px;
+  width: auto;
+  height: auto;
   padding: 0;
+  margin-right: 5px;
+}
+
+body.rtl {
   margin-right: 0;
+  margin-left: 5px;
 }
 
 .button:hover svg {

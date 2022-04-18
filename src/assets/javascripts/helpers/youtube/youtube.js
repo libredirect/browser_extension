@@ -371,6 +371,23 @@ function redirect(url, details, initiator) {
   return 'CANCEL';
 }
 
+function reverse(url) {
+  let protocolHost = commonHelper.protocolHost(url);
+
+  if (![
+    ...redirects.invidious.normal,
+    ...redirects.invidious.tor,
+    ...invidiousNormalCustomRedirects,
+    ...invidiousTorCustomRedirects,
+    ...redirects.piped.normal,
+    ...redirects.piped.tor,
+    ...pipedNormalCustomRedirects,
+    ...pipedTorCustomRedirects,
+  ].includes(protocolHost)) return;
+
+  return `https://youtube.com${url.pathname}${url.search}`;
+}
+
 function switchInstance(url) {
   let protocolHost = commonHelper.protocolHost(url);
   if (
@@ -657,6 +674,8 @@ export default {
 
   getDisable,
   setDisable,
+
+  reverse,
 
   getEnableCustomSettings,
   getProtocol,

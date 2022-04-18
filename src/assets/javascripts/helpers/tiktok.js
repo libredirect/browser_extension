@@ -95,8 +95,10 @@ function isTiktok(url, initiator) {
 }
 
 function redirect(url, type) {
-    // https://www.tiktok.com/@keysikaspol/video/7061265241887345946
+    // https://www.tiktok.com/@keysikaspol/video/7061265241887345946?for_redirection=@keysikaspol
+    // https://proxitok.pussthecat.org/video/7061265241887345946
     // https://www.tiktok.com/@keysikaspol
+    // https://proxitok.herokuapp.com/video/7061265241887345946
 
     if (type != "main_frame") return null;
 
@@ -106,9 +108,21 @@ function redirect(url, type) {
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-    let pathName = url.pathname.replace(new RegExp(/@.*\/(?=video)/), "");
+    let pathName = url.pathname.replace(/@.*\/(?=video)/, "");
 
     return `${randomInstance}${pathName}`;
+}
+
+function reverse(url) {
+    let protocolHost = commonHelper.protocolHost(url);
+    if (
+        ![...redirects.proxiTok.normal,
+        ...redirects.proxiTok.tor,
+        ...proxiTokNormalCustomRedirects,
+        ...proxiTokTorCustomRedirects].includes(protocolHost)
+    ) return;
+
+    return `https://tiktok.com${url.pathname}${url.search}`;
 }
 
 async function init() {
@@ -129,7 +143,7 @@ async function init() {
                     "tiktokProtocol"
                 ],
                 r => {
-		    redirects.proxiTok = dataJson.proxiTok;
+                    redirects.proxiTok = dataJson.proxiTok;
                     disable = r.disableTiktok ?? false;
 
                     protocol = r.tiktokProtocol ?? "normal";
@@ -157,6 +171,8 @@ export default {
 
     getDisable,
     setDisable,
+
+    reverse,
 
     getProtocol,
     setProtocol,

@@ -366,6 +366,18 @@ function redirect(url, type, initiator) {
   }
 }
 
+function reverse(url) {
+  let protocolHost = commonHelper.protocolHost(url);
+  if (
+    ![...redirects.nitter.normal,
+    ...redirects.nitter.tor,
+    ...nitterNormalCustomRedirects,
+    ...nitterTorCustomRedirects].includes(protocolHost)
+  ) return;
+  if(url.pathname.includes('/pics/w:null_'))
+  return `https://reddit.com${url.pathname}${url.search}`;
+}
+
 function switchInstance(url) {
   let protocolHost = commonHelper.protocolHost(url);
 

@@ -3,6 +3,10 @@ body {
     min-height: auto;
 }
 
+html, body {
+    margin: 0;
+}
+
 .hide {
     display: none !important;
 }

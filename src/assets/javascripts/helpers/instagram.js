@@ -121,6 +121,23 @@ function redirect(url, type, initiator) {
     return `${randomInstance}/u${url.pathname}${url.search}`; // Likely a user profile, redirect to '/u/...'
 }
 
+function reverse(url) {
+  let protocolHost = commonHelper.protocolHost(url);
+  if (
+    ![...redirects.bibliogram.normal,
+    ...redirects.bibliogram.tor,
+    ...bibliogramNormalCustomRedirects,
+    ...bibliogramTorCustomRedirects].includes(protocolHost)
+  ) return;
+  if (url.pathname.startsWith('/p'))
+    return `https://instagram.com${url.pathname.replace('/p', '')}${url.search}`;
+
+  if (url.pathname.startsWith('/u'))
+    return `https://instagram.com${url.pathname.replace('/u', '')}${url.search}`;
+
+  return `https://instagram.com${url.pathname}${url.search}`;
+}
+
 function switchInstance(url) {
   let protocolHost = commonHelper.protocolHost(url);
 
@@ -248,6 +265,8 @@ export default {
 
   getDisable,
   setDisable,
+
+  reverse,
 
   getProtocol,
   setProtocol,

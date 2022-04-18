@@ -59,6 +59,7 @@ async function wholeInit() {
   await mediumHelper.init();
 };
 
+let copyRawElement = document.getElementById('copy_raw');
 wholeInit().then(() => {
   disableTwitterElement.checked = !twitterHelper.getDisable();
   disableYoutubeElement.checked = !youtubeHelper.getDisable();
@@ -79,6 +80,7 @@ wholeInit().then(() => {
 
   let changeInstanceElement = document.getElementById("change-instance")
   changeInstanceElement.addEventListener("click", switchInstance);
+  copyRawElement.addEventListener("click", copyRaw);
 })
 
 disableTwitterElement.addEventListener("change",
@@ -153,7 +155,6 @@ document.getElementById("more-options").addEventListener("click",
   () => browser.runtime.openOptionsPage()
 );
 
-
 function switchInstance() {
   browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     let currTab = tabs[0];
@@ -195,6 +196,34 @@ function switchInstance() {
     }
   })
   return false;
+}
+
+function copyRaw() {
+  browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    let currTab = tabs[0];
+    if (currTab) {
+      let url = currTab.url;
+      let tabUrl
+      try { tabUrl = new URL(url); }
+      catch (_) { return false; }
+      let newUrl;
+      newUrl = youtubeHelper.reverse(tabUrl);
+      if (!newUrl) newUrl = twitterHelper.reverse(tabUrl);
+      if (!newUrl) newUrl = instagramHelper.reverse(tabUrl);
+      if (!newUrl) newUrl = tiktokHelper.reverse(tabUrl);
+      if (!newUrl) newUrl = imgurHelper.reverse(tabUrl);
+      if (newUrl) {
+        navigator.clipboard.writeText(newUrl);
+        const oldHtml = copyRawElement.innerHTML;
+        copyRawElement.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+          <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+        </svg>
+        Copied`;
+        setTimeout(() => copyRawElement.innerHTML = oldHtml, 1000);
+      }
+    }
+  })
 }
 
 let popupFrontends;

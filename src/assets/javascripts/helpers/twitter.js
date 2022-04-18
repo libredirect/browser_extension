@@ -208,6 +208,7 @@ function redirect(url, initiator) {
   if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList)
 
+  // https://pbs.twimg.com/profile_images/648888480974508032/66_cUYfj_400x400.jpg
   if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video")
     return `${randomInstance}/pic/${encodeURIComponent(url.href)}`;
 
@@ -217,6 +218,17 @@ function redirect(url, initiator) {
     return `${randomInstance}/t.co${url.pathname}`;
   else
     return `${randomInstance}${url.pathname}${url.search}`;
+}
+
+function reverse(url) {
+  let protocolHost = commonHelper.protocolHost(url);
+  if (
+    ![...redirects.nitter.normal,
+    ...redirects.nitter.tor,
+    ...nitterNormalCustomRedirects,
+    ...nitterTorCustomRedirects].includes(protocolHost)
+  ) return;
+  return `https://twitter.com${url.pathname}${url.search}`;
 }
 
 function switchInstance(url) {
@@ -450,6 +462,8 @@ export default {
 
   getDisable,
   setDisable,
+
+  reverse,
 
   getEnableCustomSettings,
   setEnableCustomSettings,
