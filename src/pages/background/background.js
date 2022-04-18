@@ -172,9 +172,17 @@ function redirectOfflineInstance(url, tabId) {
 
   if (!newUrl) newUrl = spotifyHelper.switchInstance(url);
 
-  if (newUrl) browser.tabs.update(tabId, { url: `/pages/errors/instance_offline.html?url=${encodeURIComponent(newUrl)}` });
+  if (newUrl) {
+    if (counter >= 5) {
+      browser.tabs.update(tabId, { url: `/pages/errors/instance_offline.html?url=${encodeURIComponent(newUrl)}` });
+      counter = 0;
+    } else {
+      browser.tabs.update(tabId, { url: newUrl });
+      counter++;
+    }
+  }
 }
-
+let counter = 0;
 browser.webRequest.onResponseStarted.addListener(
   details => {
     if (!generalHelper.getAutoRedirect()) return null;
