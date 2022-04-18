@@ -4,9 +4,7 @@ import commonHelper from './common.js'
 
 const targets = [
   /^https?:\/{2}(www\.|search\.|)google(\.[a-z]{2,3}){1,2}(\/search(\?.*|$)|\/$)/,
-  /^https?:\/{2}(www\.|)bing\.com/,
-
-  /^https?:\/{2}search\.yahoo(\.[a-z]{2,3}){1,2}/,
+  /^https?:\/{2}(www\.|www2\.|)bing\.com/,
 
   /^https?:\/{2}yandex(\.[a-z]{2,3}){1,2}/,
 
@@ -31,9 +29,6 @@ let redirects = {
   "startpage": {
     "normal": "https://www.startpage.com",
   },
-  "ecosia": {
-    "normal": "https://www.ecosia.org",
-  }
 };
 const getRedirects = () => redirects;
 const getCustomRedirects = () => {
@@ -439,20 +434,14 @@ function redirect(url) {
     randomInstance = redirects.startpage.normal;
     path = "/do/search";
   }
-  else if (frontend == 'ecosia') {
-    randomInstance = redirects.ecosia.normal;
-    path = '/search';
-  }
   if (
     ((url.hostname.includes('google') || url.hostname.includes('bing')) && !url.searchParams.has('q')) ||
-    (url.hostname.includes('yahoo') && !url.searchParams.has('p')) ||
     (url.hostname.includes('yandex') && !url.searchParams.has('text'))
     ) path = '/';
 
   let searchQuery = "";
 
   if ((url.hostname.includes('google') || url.hostname.includes('bing') || url.hostname.includes('libredirect.invalid')) && url.searchParams.has('q')) searchQuery = `?q=${url.searchParams.get('q')}`;
-  if (url.hostname.includes('yahoo') && url.searchParams.has('p')) searchQuery = `?q=${url.searchParams.get('p')}`;
   if (url.hostname.includes('yandex') && url.searchParams.has('text')) searchQuery = `?q=${url.searchParams.get('text')}`;
 
   return `${randomInstance}${path}${searchQuery}`;
