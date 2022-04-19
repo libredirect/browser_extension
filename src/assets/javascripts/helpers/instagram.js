@@ -105,7 +105,16 @@ function redirect(url, type, initiator) {
 
   if (!targets.includes(url.host)) return;
 
-  if (type !== "main_frame" || bypassPaths.some(rx => rx.test(url.pathname))) return;
+  if (![
+    "main_frame",
+    "sub_frame",
+    "xmlhttprequest",
+    "other",
+    "image",
+    "media",
+  ].includes(type)) return null;
+
+  if (bypassPaths.some(rx => rx.test(url.pathname))) return;
 
   let instancesList;
   if (protocol == 'normal') instancesList = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects];
