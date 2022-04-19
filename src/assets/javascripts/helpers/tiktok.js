@@ -110,7 +110,7 @@ function redirect(url, type) {
 
     let pathName = url.pathname.replace(/@.*\/(?=video)/, "");
 
-    return `${randomInstance}${pathName}`;
+    return `${randomInstance}${url.pathname}`;
 }
 
 function reverse(url) {
