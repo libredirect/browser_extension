@@ -211,7 +211,6 @@ function redirect(url, initiator) {
   // https://pbs.twimg.com/profile_images/648888480974508032/66_cUYfj_400x400.jpg
   if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video")
     return `${randomInstance}/pic/${encodeURIComponent(url.href)}`;
-
   else if (url.pathname.split("/").includes("tweets"))
     return `${randomInstance}${url.pathname.replace("/tweets", "")}${url.search}`;
   else if (url.host == 't.co')

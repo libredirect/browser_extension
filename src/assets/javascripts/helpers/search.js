@@ -552,7 +552,7 @@ async function init() {
 
           protocol = r.searchProtocol ?? 'normal';
 
-          frontend = r.searchFrontend ?? 'searx';
+          frontend = r.searchFrontend ?? 'searxng';
 
           theme = r.theme ?? 'DEFAULT';
           applyThemeToSites = r.applyThemeToSites ?? false;
