@@ -3,8 +3,7 @@ window.browser = window.browser || window.chrome;
 import commonHelper from '../common.js'
 
 const targets = [
-  "translate.google.com",
-  "translate.google.no"
+  /^https?:\/{2}translate\.google(\.[a-z]{2,3}){1,2}\//,
 ];
 
 let redirects = {
@@ -231,7 +230,7 @@ function initLingvaLocalStorage(tabId) {
 function redirect(url) {
 
   if (disable) return;
-  if (!targets.includes(url.host)) return
+  if (!targets.some(rx => rx.test(url.href))) return;
 
   let params_arr = url.search.split('&');
   params_arr[0] = params_arr[0].substring(1);
