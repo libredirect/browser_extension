@@ -12,14 +12,14 @@
       "https://tube.cthd.icu",
       "https://y.com.sb",
       "https://invidious.flokinet.to",
-      "https://yt.artemislena.eu",
       "https://invidious.lunar.icu",
       "https://invidious.mutahar.rocks",
+      "https://youtube.076.ne.jp",
       "https://invidious.esmailelbob.xyz",
       "https://inv.bp.mutahar.rocks",
       "https://invidious.weblibre.org",
       "https://invidious.privacy.gd",
-      "https://youtube.076.ne.jp",
+      "https://yt.artemislena.eu",
       "https://invidious.namazso.eu"
     ],
     "tor": [
@@ -259,7 +259,7 @@
       "https://wikiless.sethforprivacy.com",
       "https://wiki.604kph.xyz",
       "https://wikiless.lunar.icu",
-      "https://https://wiki.froth.zone"
+      "https://wiki.froth.zone"
     ],
     "tor": [
       "http://dj2tbh2nqfxyfmvq33cjmhuw7nb6am7thzd3zsjvizeqf374fixbrxyd.onion",
@@ -319,7 +319,6 @@
       "http://z5vawdol25vrmorm4yydmohsd4u6rdoj2sylvoi3e3nqvxkvpqul7bqd.onion",
       "http://zbuc3bbzbfdqqo2x46repx2ddajbha6fpsjeeptjhhhhzji3zopxdqyd.onion",
       "http://f4qfqajszpx5b7itzxt6mb7kj4ktpgbdq7lq6xaiqyqx6a7de3epptad.onion",
-      "http://rq2w52kyrif3xpfihkgjnhqm3a5aqhoikpv72z3drpjglfzc2wr5z4yd.onion",
       "http://searx.bsbvtqi5oq2cqzn32zt4cr2f2z2rwots3dq7gmdcnlyqoxko2wx6reqd.onion"
     ],
     "i2p": [
@@ -400,6 +399,7 @@
     "tor": [
       "http://w5rl6wsd7mzj4bdkbuqvzidet5osdsm5jhg2f7nvfidakfq5exda5wid.onion",
       "http://4n53nafyi77iplnbrpmxnp3x4exbswwxigujaxy3b37fvr7bvlopxeyd.onion",
+      "http://rq2w52kyrif3xpfihkgjnhqm3a5aqhoikpv72z3drpjglfzc2wr5z4yd.onion",
       "http://searx3aolosaf3urwnhpynlhuokqsgz47si4pzz5hvb7uuzyjncl2tid.onion"
     ],
     "i2p": [],
@@ -602,7 +602,6 @@
     "https://tube.globalfrens.com",
     "https://peertube.miguelcr.me",
     "https://peertube.hacknews.pmdcollab.org",
-    "https://peertube.2demo.top",
     "https://freetubes.nohost.me",
     "https://fedi.tv",
     "https://video.simplex-software.ru",
@@ -1139,7 +1138,6 @@
     "https://video.bards.online",
     "https://video.toot.pt",
     "https://videos.archigny.net",
-    "https://peertube.gruezishop.ch",
     "https://videos.pzelawski.xyz",
     "https://peertube.zoz-serv.org",
     "https://videos.stadtfabrikanten.org",
@@ -1515,6 +1513,8 @@
     "https://videos.adhocmusic.com",
     "https://vid.y-y.li",
     "https://diode.zone",
-    "https://peertube.nomagic.uk"
+    "https://peertube.nomagic.uk",
+    "https://video.rastapuls.com",
+    "https://video.mantlepro.com"
   ]
 }
