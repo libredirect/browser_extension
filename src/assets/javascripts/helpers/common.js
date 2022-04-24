@@ -118,6 +118,7 @@ async function processDefaultCustomInstances(
       }
     for (const element of nameCheckListElement.getElementsByTagName('input'))
       element.checked = nameDefaultRedirects.includes(element.className)
+    if (nameDefaultRedirects.length == 0) isTrue = false;
     nameProtocolElement.getElementsByClassName('toogle-all')[0].checked = isTrue;
   }
 
