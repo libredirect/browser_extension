@@ -22,6 +22,13 @@ import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js
 
 window.browser = window.browser || window.chrome;
 
+browser.runtime.onInstalled.addListener(async details => {
+  if (details.reason == 'install') {
+    await redditHelper.initDefaults();
+    await wholeInit();
+  }
+});
+
 async function wholeInit() {
   await youtubeHelper.init();
   await youtubeMusicHelper.init();
@@ -48,6 +55,8 @@ await wholeInit();
 browser.storage.onChanged.addListener(wholeInit);
 
 let BYPASSTABs = [];
+
+
 
 browser.webRequest.onBeforeRequest.addListener(
   details => {

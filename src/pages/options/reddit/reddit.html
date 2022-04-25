@@ -81,9 +81,93 @@
       <h4 data-localise="__MSG_bypassReddit__">Bypass "Open in Reddit"</h4>
       <input id="bypass-watch-on-reddit" type="checkbox">
     </div>
-    <hr>
     <div id="libreddit">
+      <div class="some-block option-block">
+        <h4 data-localise="__MSG_enableCustomSettings__">Enable Custom Settings (will use cookies)</h4>
+        <input id="enable-libreddit-custom-settings" type="checkbox">
+      </div>
       <hr>
+      <div class="custom-settings"> 
+        <div class="some-block option-block">
+          <h2>Appearance</h2>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_theme__">Theme</h4>
+          <select class="theme">
+            <option value="system">System</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="black">Black</option>
+            <option value="dracula">Dracula</option>
+            <option value="nord">Nord</option>
+            <option value="laserwave">Laserwave</option>
+            <option value="violet">Violet</option>
+            <option value="gold">Gold</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h2>Interface</h2>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_frontPage__">Front page</h4>
+          <select class="front_page">
+            <option value="default">Default</option>
+            <option value="popular">Popular</option>
+            <option value="all">All</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_frontLayout__">Front Layout</h4>
+          <select class="layout">
+            <option value="card">Card</option>
+            <option value="clean">Clean</option>
+            <option value="compact">Compact</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_wideUI__">Wide UI</h4>
+          <input class="wide" type="checkbox">
+        </div>
+        <div class="some-block option-block">
+          <h2>Content</h2>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_defaultSubredditPostSort__">Default subreddit post sort</h4>
+          <select class="post_sort">
+            <option value="hot">Hot</option>
+            <option value="new">New</option>
+            <option value="top">Top</option>
+            <option value="rising">Rising</option>
+            <option value="controversial">Controversial</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_defaultCommentSort__">Default comment sort</h4>
+          <select class="comment_sort">
+            <option value="confidence">Confidence</option>
+            <option value="top">Top</option>
+            <option value="new">New</option>
+            <option value="controversial">Controversial</option>
+            <option value="old">Old</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_showNsfwPosts__">Show NSFW posts</h4>
+          <input class="show_nsfw" type="checkbox">
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_autoplayVideos__">Autoplay videos</h4>
+          <input class="autoplay_videos" type="checkbox">
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_useHlsForVideos__">Use HLS for videos</h4>
+          <input class="use_hls" type="checkbox">
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_hideNotificationAboutPossibleHlsUsage__">Hide notification about possible HLS usage</h4>
+          <input class="hide_hls_notification" type="checkbox">
+        </div>
+      </div>
       <div class="normal">
                 <div class="some-block option-block">
                   <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>

@@ -23,14 +23,13 @@ let muteVideos = document.getElementById('nitter').getElementsByClassName('muteV
 let autoplayGifs = document.getElementById('nitter').getElementsByClassName('autoplayGifs')[0];
 
 let nitterElement = document.getElementById("nitter");
-document.addEventListener("change", async _ => {
-    twitterHelper.setDisable(!disableTwitterElement.checked)
-    twitterHelper.setProtocol(protocolElement.value);
-    twitterHelper.setEnableCustomSettings(enableYoutubeCustomSettingsElement.checked);
-    twitterHelper.setBypassWatchOnTwitter(bypassWatchOnTwitterElement.checked);
-    changeProtocolSettings(protocolElement.value);
+document.addEventListener("change", async () => {
+    await browser.storage.local.set({
+        disableTwitter: !disableTwitterElement.checked,
+        twitterProtocol: protocolElement.value,
+        enableTwitterCustomSettings: enableYoutubeCustomSettingsElement.checked,
+        bypassWatchOnTwitter: bypassWatchOnTwitterElement.checked,
 
-    await twitterHelper.setSettings({
         // Display
         nitterTheme: theme.value,
         nitterInfiniteScroll: infiniteScroll.checked,
@@ -120,6 +119,8 @@ function init() {
     });
 }
 init();
+
+window.onblur = twitterHelper.initNitterCookies;
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");

@@ -28,11 +28,84 @@ body.option(dir="auto")
         .some-block.option-block
             h4(data-localise="__MSG_bypassReddit__") Bypass "Open in Reddit"
             input#bypass-watch-on-reddit(type="checkbox")
-        
-        hr
 
         #libreddit
+            .some-block.option-block
+                h4(data-localise="__MSG_enableCustomSettings__") Enable Custom Settings (will use cookies)
+                input#enable-libreddit-custom-settings(type="checkbox")
             hr
+            .custom-settings 
+                .some-block.option-block
+                    h2 Appearance
+                .some-block.option-block
+                    h4(data-localise="__MSG_theme__") Theme
+                    select.theme
+                        option(value="system" ) System
+                        option(value="light" ) Light
+                        option(value="dark" ) Dark
+                        option(value="black" ) Black
+                        option(value="dracula" ) Dracula
+                        option(value="nord" ) Nord
+                        option(value="laserwave" ) Laserwave
+                        option(value="violet" ) Violet
+                        option(value="gold" ) Gold
+
+                .some-block.option-block
+                    h2 Interface
+                .some-block.option-block
+                    h4(data-localise="__MSG_frontPage__") Front page
+                    select.front_page
+                        option(value="default") Default
+                        option(value="popular") Popular
+                        option(value="all") All
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_frontLayout__") Front Layout
+                    select.layout
+                        option(value="card") Card
+                        option(value="clean") Clean
+                        option(value="compact") Compact
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_wideUI__") Wide UI
+                    input.wide(type="checkbox")
+
+                .some-block.option-block
+                    h2 Content
+                .some-block.option-block
+                    h4(data-localise="__MSG_defaultSubredditPostSort__") Default subreddit post sort
+                    select.post_sort
+                        option(value="hot") Hot
+                        option(value="new") New
+                        option(value="top") Top
+                        option(value="rising") Rising
+                        option(value="controversial") Controversial
+                
+                .some-block.option-block
+                    h4(data-localise="__MSG_defaultCommentSort__") Default comment sort
+                    select.comment_sort
+                        option(value="confidence") Confidence
+                        option(value="top") Top
+                        option(value="new") New
+                        option(value="controversial") Controversial
+                        option(value="old") Old
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_showNsfwPosts__") Show NSFW posts
+                    input.show_nsfw(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_autoplayVideos__") Autoplay videos
+                    input.autoplay_videos(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_useHlsForVideos__") Use HLS for videos
+                    input.use_hls(type="checkbox")
+
+                .some-block.option-block
+                    h4(data-localise="__MSG_hideNotificationAboutPossibleHlsUsage__") Hide notification about possible HLS usage
+                    input.hide_hls_notification(type="checkbox")
+
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://libreddit.com')

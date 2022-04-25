@@ -290,6 +290,7 @@ function isNitter(url, type) {
 
 function initNitterCookies() {
   if (enableCustomSettings) {
+    console.log('initNitterCookies')
     let allInstances = [...redirects.nitter.normal, ...redirects.nitter.tor, ...nitterNormalCustomRedirects, ...nitterTorCustomRedirects]
     let checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects, ...nitterTorRedirectsChecks, ...nitterTorCustomRedirects]
     for (const instanceUrl of allInstances) if (!checkedInstances.includes(instanceUrl))
@@ -444,8 +445,6 @@ async function init() {
           proxyVideos = r.nitterProxyVideos ?? true;
           muteVideos = r.nitterMuteVideos ?? false;
           autoplayGifs = r.nitterAutoplayGifs ?? true;
-
-          initNitterCookies();
 
           resolve();
         }

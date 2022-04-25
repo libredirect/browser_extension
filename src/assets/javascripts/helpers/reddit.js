@@ -9,27 +9,8 @@ const targets = [
 let redirects = {
   // modern UI
   "libreddit": {
-    "normal": [
-      "https://libredd.it",
-      "https://libreddit.spike.codes",
-      "https://libreddit.dothq.co",
-      "https://libreddit.kavin.rocks",
-      "https://libreddit.bcow.xyz",
-      "https://libreddit.40two.app",
-      "https://reddit.invak.id",
-      "https://reddit.phii.me",
-      "https://lr.riverside.rocks",
-      "https://libreddit.silkky.cloud",
-      "https://libreddit.database.red",
-      "https://libreddit.exonip.de",
-      "https://libreddit.domain.glass",
-    ],
-    "tor": [
-      "http://spjmllawtheisznfs7uryhxumin26ssv2draj7oope3ok3wuhy43eoyd.onion",
-      "http://fwhhsbrbltmrct5hshrnqlqygqvcgmnek3cnka55zj4y7nuus5muwyyd.onion",
-      "http://dflv6yjt7il3n3tggf4qhcmkzbti2ppytqx3o7pjrzwgntutpewscyid.onion",
-      "http://kphht2jcflojtqte4b4kyx7p2ahagv4debjj32nre67dxz7y57seqwyd.onion",
-    ]
+    "normal": [],
+    "tor": []
   },
   // old UI
   "teddit": {
@@ -165,61 +146,56 @@ function setDisableReddit(val) {
 }
 
 let frontend;
-const getFrontend = () => frontend;
-function setFrontend(val) {
-  frontend = val;
-  browser.storage.local.set({ redditFrontend: frontend })
-};
-
 let protocol;
-const getProtocol = () => protocol;
-function setProtocol(val) {
-  protocol = val;
-  browser.storage.local.set({ redditProtocol: val })
-  console.log("redditProtocol: ", val)
-}
-
 let bypassWatchOnReddit;
-const getBypassWatchOnReddit = () => bypassWatchOnReddit;
-function setBypassWatchOnReddit(val) {
-  bypassWatchOnReddit = val;
-  browser.storage.local.set({ bypassWatchOnReddit })
-  console.log("bypassWatchOnReddit: ", bypassWatchOnReddit)
-}
+
+let enableCustom;
 
 let theme;
-let applyThemeToSites;
+let front_page;
+let layout;
+let wide;
+let post_sort;
+let comment_sort;
+let show_nsfw;
+let autoplay_videos;
+let use_hls;
+let hide_hls_notification;
+
 function initLibredditCookies() {
-  if (applyThemeToSites && theme != 'DEFAULT') {
-    let allInstances = [...redirects.libreddit.normal, ...redirects.libreddit.tor, ...libredditNormalCustomRedirects, ...libredditTorCustomRedirects]
-    let checkedInstances = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects, ...libredditTorRedirectsChecks, ...libredditTorCustomRedirects]
-    for (const instanceUrl of allInstances)
-      if (!checkedInstances.includes(instanceUrl))
-        browser.cookies.remove({
-          url: instanceUrl,
-          name: "theme",
-        })
-    for (const instanceUrl of checkedInstances)
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "theme",
-        value: theme
-      })
+  if (enableCustom) {
+    let checkedInstances = [
+      ...libredditNormalRedirectsChecks,
+      ...libredditNormalCustomRedirects,
+      ...libredditTorRedirectsChecks,
+      ...libredditTorCustomRedirects
+    ]
+
+    for (const instance of checkedInstances) {
+      browser.cookies.set({ url: instance, name: "theme", value: theme })
+      browser.cookies.set({ url: instance, name: "front_page", value: front_page })
+      browser.cookies.set({ url: instance, name: "layout", value: layout })
+      browser.cookies.set({ url: instance, name: "wide", value: wide ? 'on' : 'off' })
+      browser.cookies.set({ url: instance, name: "post_sort", value: post_sort })
+      browser.cookies.set({ url: instance, name: "comment_sort", value: comment_sort })
+      browser.cookies.set({ url: instance, name: "show_nsfw", value: show_nsfw ? 'on' : 'off' })
+      browser.cookies.set({ url: instance, name: "autoplay_videos", value: autoplay_videos ? 'on' : 'off' })
+      browser.cookies.set({ url: instance, name: "use_hls", value: use_hls ? 'on' : 'off' })
+      browser.cookies.set({ url: instance, name: "hide_hls_notification", value: hide_hls_notification ? 'on' : 'off' })
+    }
   }
 }
 function initTedditCookies() {
   let themeValue;
   if (theme == 'light') themeValue = 'white';
   if (theme == 'dark') themeValue = 'dark';
-  if (applyThemeToSites && themeValue) {
-    let allInstances = [...redirects.teddit.normal, ...redirects.teddit.tor, ...tedditNormalCustomRedirects, ...tedditTorCustomRedirects]
-    let checkedInstances = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects, ...tedditTorRedirectsChecks, ...tedditTorCustomRedirects]
-    for (const instanceUrl of allInstances)
-      if (!checkedInstances.includes(instanceUrl))
-        browser.cookies.remove({
-          url: instanceUrl,
-          name: "theme",
-        })
+  if (enableCustom && themeValue) {
+    let checkedInstances = [
+      ...tedditNormalRedirectsChecks,
+      ...tedditNormalCustomRedirects,
+      ...tedditTorRedirectsChecks,
+      ...tedditTorCustomRedirects
+    ]
     for (const instanceUrl of checkedInstances)
       browser.cookies.set({
         url: instanceUrl,
@@ -374,8 +350,8 @@ function reverse(url) {
     ...nitterNormalCustomRedirects,
     ...nitterTorCustomRedirects].includes(protocolHost)
   ) return;
-  if(url.pathname.includes('/pics/w:null_'))
-  return `https://reddit.com${url.pathname}${url.search}`;
+  if (url.pathname.includes('/pics/w:null_'))
+    return `https://reddit.com${url.pathname}${url.search}`;
 }
 
 function switchInstance(url) {
@@ -428,70 +404,128 @@ function switchInstance(url) {
   return `${randomInstance}${url.pathname}${url.search}`;
 }
 
+async function initDefaults() {
+  return new Promise(async resolve => {
+    fetch('/instances/data.json').then(response => response.text()).then(async data => {
+      let dataJson = JSON.parse(data);
+      redirects.teddit = dataJson.teddit;
+      redirects.libreddit = dataJson.libreddit;
+      await browser.storage.local.set({
+        disableReddit: false,
+        redditProtocol: 'normal',
+        redditFrontend: 'libreddit',
+
+        bypassWatchOnReddit: true,
+        alwaysUsePreferred: false,
+
+        redditRedirects: {
+          'libreddit': redirects.libreddit,
+          'teddit': redirects.teddit,
+        },
+
+        libredditNormalRedirectsChecks: [...redirects.libreddit.normal],
+        libredditNormalCustomRedirects: [],
+
+        libredditTorRedirectsChecks: [...redirects.libreddit.tor],
+        libredditTorCustomRedirects: [],
+
+        tedditNormalRedirectsChecks: [...redirects.teddit.normal],
+        tedditNormalCustomRedirects: [],
+
+        tedditTorRedirectsChecks: [...redirects.teddit.tor],
+        tedditTorCustomRedirects: [],
+
+        enableLibredditCustomSettings: false,
+
+        redditTheme: 'system',
+        redditFrontPage: 'default',
+        redditLayout: 'card',
+        redditWide: false,
+        redditPostSort: 'hot',
+        redditCommentSort: 'confidence',
+        redditShowNsfw: false,
+        redditUseHls: false,
+        redditHideHlsNotification: false,
+      });
+      resolve();
+    });
+  })
+}
+
 async function init() {
   return new Promise(resolve => {
-    fetch('/instances/data.json').then(response => response.text()).then(data => {
-      let dataJson = JSON.parse(data);
-      browser.storage.local.get(
-        [
-          "disableReddit",
-          "redditFrontend",
-          "redditRedirects",
+    browser.storage.local.get(
+      [
+        "disableReddit",
+        "redditFrontend",
+        "redditRedirects",
 
-          "libredditNormalRedirectsChecks",
-          "libredditNormalCustomRedirects",
-          "libredditTorRedirectsChecks",
-          "libredditTorCustomRedirects",
+        "libredditNormalRedirectsChecks",
+        "libredditNormalCustomRedirects",
+        "libredditTorRedirectsChecks",
+        "libredditTorCustomRedirects",
 
-          "tedditNormalRedirectsChecks",
-          "tedditNormalCustomRedirects",
-          "tedditTorRedirectsChecks",
-          "tedditTorCustomRedirects",
+        "tedditNormalRedirectsChecks",
+        "tedditNormalCustomRedirects",
+        "tedditTorRedirectsChecks",
+        "tedditTorCustomRedirects",
 
-          "theme",
-          "applyThemeToSites",
 
-          "redditProtocol",
-          "bypassWatchOnReddit",
+        "redditProtocol",
+        "bypassWatchOnReddit",
 
-          "alwaysUsePreferred",
-        ], r => {
-          disableReddit = r.disableReddit ?? false;
-          protocol = r.redditProtocol ?? 'normal';
-          frontend = r.redditFrontend ?? 'libreddit';
+        "alwaysUsePreferred",
 
-          bypassWatchOnReddit = r.bypassWatchOnReddit ?? true;
+        "enableLibredditCustomSettings",
 
-          alwaysUsePreferred = r.alwaysUsePreferred ?? false;
+        "redditTheme",
+        "redditFrontPage",
+        "redditLayout",
+        "redditWide",
+        "redditPostSort",
+        "redditCommentSort",
+        "redditShowNsfw",
+        "redditAutoplayVideos",
+        "redditUseHls",
+        "redditHideHlsNotification",
+      ], r => {
+        disableReddit = r.disableReddit;
+        protocol = r.redditProtocol;
+        frontend = r.redditFrontend;
 
-          redirects.teddit = dataJson.teddit;
-          redirects.libreddit = dataJson.libreddit;
-          if (r.redditRedirects) redirects = r.redditRedirects;
+        bypassWatchOnReddit = r.bypassWatchOnReddit;
+        alwaysUsePreferred = r.alwaysUsePreferred;
 
-          if (r.redditRedirects) redirects = r.redditRedirects;
+        redirects = r.redditRedirects;
 
-          theme = r.theme ?? 'DEFAULT';
-          applyThemeToSites = r.applyThemeToSites ?? false;
+        libredditNormalRedirectsChecks = r.libredditNormalRedirectsChecks;
+        libredditNormalCustomRedirects = r.libredditNormalCustomRedirects;
 
-          libredditNormalRedirectsChecks = r.libredditNormalRedirectsChecks ?? [...redirects.libreddit.normal];
-          libredditNormalCustomRedirects = r.libredditNormalCustomRedirects ?? [];
+        libredditTorRedirectsChecks = r.libredditTorRedirectsChecks;
+        libredditTorCustomRedirects = r.libredditTorCustomRedirects;
 
-          libredditTorRedirectsChecks = r.libredditTorRedirectsChecks ?? [...redirects.libreddit.tor];
-          libredditTorCustomRedirects = r.libredditTorCustomRedirects ?? [];
+        tedditNormalRedirectsChecks = r.tedditNormalRedirectsChecks;
+        tedditNormalCustomRedirects = r.tedditNormalCustomRedirects;
 
-          tedditNormalRedirectsChecks = r.tedditNormalRedirectsChecks ?? [...redirects.teddit.normal];
-          tedditNormalCustomRedirects = r.tedditNormalCustomRedirects ?? [];
+        tedditTorRedirectsChecks = r.tedditTorRedirectsChecks;
+        tedditTorCustomRedirects = r.tedditTorCustomRedirects;
 
-          tedditTorRedirectsChecks = r.tedditTorRedirectsChecks ?? [...redirects.teddit.tor];
-          tedditTorCustomRedirects = r.tedditTorCustomRedirects ?? [];
+        enableCustom = r.enableLibredditCustomSettings;
 
-          initLibredditCookies();
-          initTedditCookies();
+        theme = r.redditTheme;
+        front_page = r.redditFrontPage;
+        layout = r.redditLayout;
+        wide = r.redditWide;
+        post_sort = r.redditPostSort;
+        comment_sort = r.redditCommentSort;
+        show_nsfw = r.redditShowNsfw;
+        autoplay_videos = r.redditAutoplayVideos;
+        use_hls = r.redditUseHls;
+        hide_hls_notification = r.redditHideHlsNotification;
 
-          resolve();
-        }
-      );
-    });
+        resolve();
+      }
+    );
   });
 }
 
@@ -505,14 +539,8 @@ export default {
   getDisableReddit,
   setDisableReddit,
 
-  getFrontend,
-  setFrontend,
-
-  getProtocol,
-  setProtocol,
-
-  getBypassWatchOnReddit,
-  setBypassWatchOnReddit,
+  initLibredditCookies,
+  initTedditCookies,
 
   getLibredditNormalRedirectsChecks,
   setLibredditNormalRedirectsChecks,
@@ -538,5 +566,6 @@ export default {
 
   redirect,
   init,
+  initDefaults,
   switchInstance,
 };
