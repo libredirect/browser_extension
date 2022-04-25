@@ -12,6 +12,7 @@ import subprocess
 
 mightyList = {}
 
+
 def filterLastSlash(urlList):
     tmp = []
     for i in urlList:
@@ -22,22 +23,48 @@ def filterLastSlash(urlList):
             tmp.append(i)
     return tmp
 
-cloudflare_ips = []
-with open('./src/instances/cloudflare_ips.json', 'r') as file:
-    cloudflare_ips = json.load(file)
+
+def ip2bin(ip): return "".join(
+    map(
+        str,
+        [
+            "{0:08b}".format(int(x)) for x in ip.split(".")
+        ]
+    )
+)
+
+
+def get_cloudflare_ips():
+    r = requests.get('https://www.cloudflare.com/ips-v4')
+    return r.text.split('\n')
+
+
+cloudflare_ips = get_cloudflare_ips()
+
 
 def is_cloudflare(url):
-    href = urlparse(url)
-    ip = ''
+    instance_ip = None
     try:
-        ip = socket.gethostbyname(href.hostname)
+        instance_ip = socket.gethostbyname(urlparse(url).hostname)
+        if instance_ip is None:
+            return False
     except:
         return False
+    instance_bin = ip2bin(instance_ip)
 
-    if ip in cloudflare_ips:
-        return True
-    else:
-        return False
+    for cloudflare_ip_mask in cloudflare_ips:
+        cloudflare_ip = cloudflare_ip_mask.split('/')[0]
+        cloudflare_bin = ip2bin(cloudflare_ip)
+
+        mask = int(cloudflare_ip_mask.split('/')[1])
+
+        cloudflare_bin_masked = cloudflare_bin[:mask]
+        instance_bin_masked = instance_bin[:mask]
+
+        if cloudflare_bin_masked == instance_bin_masked:
+            print(url + ' is ' + Fore.RED + 'cloudflare' + Style.RESET_ALL)
+            return True
+    return False
 
 
 # Invidious
@@ -313,9 +340,8 @@ for k1, v1 in mightyList.items():
                     mightyList[k1][k2].remove(instance)
                     print("removed " + instance)
                 else:
-                    if (is_cloudflare(instance)):
+                    if not instance.endswith('.onion') and not instance.endswith('.i2p') and is_cloudflare(instance):
                         cloudflareMightyList.append(instance)
-                        
 
 
 # Writing to file
@@ -330,4 +356,3 @@ with open('./src/instances/cloudflare.json', 'w') as outfile:
 print(Fore.BLUE + 'wrote ' + Style.RESET_ALL + 'instances/cloudflare.json')
 
 # print(json_object)
-
