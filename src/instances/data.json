@@ -6,6 +6,7 @@
       "https://invidious.snopyta.org",
       "https://invidious.kavin.rocks",
       "https://inv.riverside.rocks",
+      "https://invidious-us.kavin.rocks",
       "https://invidious.osi.kr",
       "https://y.com.sb",
       "https://tube.cthd.icu",
@@ -18,9 +19,7 @@
       "https://inv.bp.mutahar.rocks",
       "https://invidious.weblibre.org",
       "https://invidious.privacy.gd",
-      "https://invidio.xamh.de",
-      "https://invidious.namazso.eu",
-      "https://invidious-us.kavin.rocks"
+      "https://invidious.namazso.eu"
     ],
     "tor": [
       "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
@@ -474,9 +473,7 @@
     "https://tube.zrx.one",
     "https://video.cats-home.net",
     "https://ptube.ranranhome.info",
-    "https://tube.tardis.world",
     "https://breeze.tube",
-    "https://dalek.zone",
     "https://peertube.narrativerry.xyz",
     "https://tube.9minuti.it",
     "https://krdtube.org",
@@ -794,7 +791,6 @@
     "https://www.orion-hub.fr",
     "https://quantube.win",
     "https://tv.orion-serv.fr",
-    "https://tube.sloth.network",
     "https://video.interru.io",
     "https://tube.cnr.it",
     "https://share.peertube.support",
@@ -1094,7 +1090,6 @@
     "https://gary.vger.cloud",
     "https://video.guerredeclasse.fr",
     "https://tube.wehost.lgbt",
-    "https://tube.novg.net",
     "https://ptmir5.inter21.net",
     "https://ptmir4.inter21.net",
     "https://ptmir3.inter21.net",
@@ -1514,6 +1509,10 @@
     "https://diode.zone",
     "https://peertube.nomagic.uk",
     "https://video.rastapuls.com",
-    "https://video.mantlepro.com"
+    "https://video.mantlepro.com",
+    "https://peertube.musicstudio.pro",
+    "https://peertube.we-keys.fr",
+    "https://artitube.artifaille.fr",
+    "https://peertube.fr"
   ]
 }
