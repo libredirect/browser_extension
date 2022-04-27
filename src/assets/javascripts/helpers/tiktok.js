@@ -174,7 +174,6 @@ async function initDefaults() {
 
 async function init() {
     return new Promise(resolve => {
-        console.log('redirects', redirects)
         browser.storage.local.get(
             [
                 "disableTiktok",

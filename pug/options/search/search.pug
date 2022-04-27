@@ -13,12 +13,11 @@ body.option(dir="auto")
             input#disable-search(type="checkbox")
 
         .some-block.option-block
-            h4#frontend(data-localise="__MSG_frontend__") Frontend
+            h4(data-localise="__MSG_frontend__") Frontend
             select#search-frontend
-                option(value="searx") SearX
                 option(value="searxng") SearXNG
+                option(value="searx") SearX
                 option(value="whoogle") Whoogle
-                option(value="startpage") Startpage
 
 
         #searx-whoogle

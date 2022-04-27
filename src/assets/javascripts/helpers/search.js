@@ -25,10 +25,7 @@ let redirects = {
     "normal": [],
     "tor": [],
     "i2p": []
-  },
-  "startpage": {
-    "normal": "https://www.startpage.com",
-  },
+  }
 };
 const getRedirects = () => redirects;
 const getCustomRedirects = () => {
@@ -430,14 +427,11 @@ function redirect(url) {
     randomInstance = commonHelper.getRandomInstance(instancesList)
     path = "/search";
   }
-  else if (frontend == 'startpage') {
-    randomInstance = redirects.startpage.normal;
-    path = "/do/search";
-  }
+
   if (
     ((url.hostname.includes('google') || url.hostname.includes('bing')) && !url.searchParams.has('q')) ||
     (url.hostname.includes('yandex') && !url.searchParams.has('text'))
-    ) path = '/';
+  ) path = '/';
 
   let searchQuery = "";
 
