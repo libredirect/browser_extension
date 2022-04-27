@@ -18,8 +18,29 @@ body.option(dir="auto")
                 option(value="normal" data-localise="__MSG_normal__") Normal
                 option(value="tor" data-localise="__MSG_tor__") Tor
 
+        .some-block.option-block
+                h4(data-localise="__MSG_enableCustomSettings__") Enable Custom Settings (will use cookies)
+                input#enable-custom-settings(type="checkbox")
+        
         #proxiTok
             hr
+            .custom-settings
+                .some-block.option-block
+                    h2 General
+                .some-block.option-block
+                    h4(data-localise="__MSG_theme__") Theme
+                    select.theme
+                        option(value="default") Default
+                        option(value="card") Card
+
+                .some-block.option-block
+                    h2 Api
+                .some-block.option-block
+                    h4(data-localise="__MSG_legacyMode__") Legacy mode
+                    select.api-legacy
+                        option(value="on") On
+                        option(value="off") Off
+
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://proxitok.com')

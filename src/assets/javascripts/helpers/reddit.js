@@ -7,18 +7,15 @@ const targets = [
   /^https?:\/{2}(i\.|preview\.)redd\.it/,
 ];
 let redirects = {
-  // modern UI
   "libreddit": {
     "normal": [],
     "tor": []
   },
-  // old UI
   "teddit": {
     "normal": [],
     "tor": []
   },
   "desktop": "https://old.reddit.com", // desktop
-  "mobile": "https://i.reddit.com", // mobile
 };
 const getRedirects = () => redirects;
 const getCustomRedirects = function () {
@@ -186,10 +183,7 @@ function initLibredditCookies() {
   }
 }
 function initTedditCookies() {
-  let themeValue;
-  if (theme == 'light') themeValue = 'white';
-  if (theme == 'dark') themeValue = 'dark';
-  if (enableCustom && themeValue) {
+  if (enableCustom) {
     let checkedInstances = [
       ...tedditNormalRedirectsChecks,
       ...tedditNormalCustomRedirects,
@@ -200,26 +194,25 @@ function initTedditCookies() {
       browser.cookies.set({
         url: instanceUrl,
         name: "theme",
-        value: themeValue
+        value: theme == 'dark' ? 'dark' : 'white'
       })
   }
 }
 
 let alwaysUsePreferred;
 
-// https://libreddit.exonip.de/vid/1mq8d0ma3yk81/720.mp4
-// https://libreddit.exonip.de/img/4v3t1vgvrzk81.png
-
-// https://teddit.net/vids/1mq8d0ma3yk81.mp4
-// https://teddit.net/pics/w:null_4v3t1vgvrzk81.png
-
-
-// redd.it/t5379n
-// https://v.redd.it/z08avb339n801/DASH_1_2_M
-// https://i.redd.it/bfkhs659tzk81.jpg
-
-
 function redirect(url, type, initiator) {
+  // https://libreddit.exonip.de/vid/1mq8d0ma3yk81/720.mp4
+  // https://libreddit.exonip.de/img/4v3t1vgvrzk81.png
+
+  // https://teddit.net/vids/1mq8d0ma3yk81.mp4
+  // https://teddit.net/pics/w:null_4v3t1vgvrzk81.png
+
+
+  // redd.it/t5379n
+  // https://v.redd.it/z08avb339n801/DASH_1_2_M
+  // https://i.redd.it/bfkhs659tzk81.jpg
+
   if (disableReddit) return null;
 
   let protocolHost = commonHelper.protocolHost(url);
@@ -263,17 +256,15 @@ function redirect(url, type, initiator) {
   if (
     bypassWatchOnReddit &&
     initiator &&
-    (
-      [...redirects.libreddit.normal,
-      ...redirects.libreddit.tor,
-      ...libredditNormalCustomRedirects,
-      ...libredditTorCustomRedirects,
-      ...redirects.teddit.normal,
-      ...redirects.teddit.tor,
-      ...tedditNormalCustomRedirects,
-      ...tedditTorCustomRedirects,
-      ].includes(initiator.origin)
-    )
+    [...redirects.libreddit.normal,
+    ...redirects.libreddit.tor,
+    ...libredditNormalCustomRedirects,
+    ...libredditTorCustomRedirects,
+    ...redirects.teddit.normal,
+    ...redirects.teddit.tor,
+    ...tedditNormalCustomRedirects,
+    ...tedditTorCustomRedirects,
+    ].includes(initiator.origin)
   ) return 'BYPASSTAB';
 
   if (type !== "main_frame" || url.pathname.match(bypassPaths)) return null;

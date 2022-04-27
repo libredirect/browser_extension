@@ -47,7 +47,6 @@ document.addEventListener("change", async () => {
 
 
 window.onblur = () => {
-    console.log('initting cookies')
     redditHelper.initLibredditCookies();
     redditHelper.initTedditCookies();
 }

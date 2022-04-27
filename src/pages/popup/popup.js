@@ -39,117 +39,75 @@ let disableTiktokElement = document.getElementById("disable-tiktok");
 let disablePixivElement = document.getElementById("disable-pixiv");
 let disableSpotifyElement = document.getElementById("disable-spotify");
 
-async function wholeInit() {
-  await youtubeHelper.init();
-  await youtubeMusicHelper.init();
-  await twitterHelper.init();
-  await instagramHelper.init();
-  await mapsHelper.init();
-  await redditHelper.init();
-  await searchHelper.init();
-  await translateHelper.init();
-  await wikipediaHelper.init();
-  await imgurHelper.init();
-  await tiktokHelper.init();
-  await pixivHelper.init();
-  await spotifyHelper.init();
-  await sendTargetsHelper.init();
-  await peertubeHelper.init();
-  await lbryHelper.init();
-  await mediumHelper.init();
-};
-
 let copyRawElement = document.getElementById('copy_raw');
-wholeInit().then(() => {
-  disableTwitterElement.checked = !twitterHelper.getDisable();
-  disableYoutubeElement.checked = !youtubeHelper.getDisable();
-  disableYoutubeMusicElement.checked = !youtubeMusicHelper.getDisable();
-  disableInstagramElement.checked = !instagramHelper.getDisable();
-  disableMapsElement.checked = !mapsHelper.getDisable();
-  disableRedditElement.checked = !redditHelper.getDisableReddit();
-  disableSearchElement.checked = !searchHelper.getDisable();
-  disableElement.checked = !translateHelper.getDisable();
-  disableWikipediaElement.checked = !wikipediaHelper.getDisable();
-  disableImgurElement.checked = !imgurHelper.getDisable();
-  disableTiktokElement.checked = !tiktokHelper.getDisable();
-  disablePixivElement.checked = !pixivHelper.getDisable();
-  disableSpotifyElement.checked = !spotifyHelper.getDisable();
-  disableMediumElement.checked = !mediumHelper.getDisable();
-  disablePeertubeElement.checked = !peertubeHelper.getDisable();
-  disableLbryElement.checked = !lbryHelper.getDisable();
+browser.storage.local.get(
+  [
+    "disableTwitter",
+    "disableYoutube",
+    "disableYoutubeMusic",
+    "disableInstagram",
+    "disableMaps",
+    "disableReddit",
+    "disableSearch",
+    "translateDisable",
+    "disableWikipedia",
+    "disableImgur",
+    "disableTiktok",
+    "disablePixiv",
+    "disableSpotifyTargets",
+    "disableMedium",
+    "disablePeertubeTargets",
+    "disableLbryTargets",
+    "disableSendTarget",
+  ],
+  r => {
+    disableTwitterElement.checked = !r.disableTwitter;
+    disableYoutubeElement.checked = !r.disableYoutube;
+    disableYoutubeMusicElement.checked = !r.disableYoutubeMusic;
+    disableInstagramElement.checked = !r.disableInstagram;
+    disableMapsElement.checked = !r.disableMaps;
+    disableRedditElement.checked = !r.disableReddit;
+    disableSearchElement.checked = !r.disableSearch;
+    disableElement.checked = !r.translateDisable;
+    disableWikipediaElement.checked = !r.disableWikipedia;
+    disableImgurElement.checked = !r.disableImgur;
+    disableTiktokElement.checked = !r.disableTiktok;
+    disablePixivElement.checked = !r.disablePixiv;
+    disableSpotifyElement.checked = !r.disableSpotifyTargets;
+    disableMediumElement.checked = !r.disableMedium;
+    disablePeertubeElement.checked = !r.disablePeertubeTargets;
+    disableLbryElement.checked = !r.disableLbryTargets;
+    disableSendTargetsElement.checked = r.disableSendTarget;
+  }
+)
 
-  let changeInstanceElement = document.getElementById("change-instance")
-  changeInstanceElement.addEventListener("click", switchInstance);
-  copyRawElement.addEventListener("click", copyRaw);
+document.addEventListener("change", () => {
+  browser.storage.local.set({
+    disableTwitter: !disableTwitterElement.checked,
+    disableYoutube: !disableYoutubeElement.checked,
+    disableYoutubeMusic: !disableYoutubeMusicElement.checked,
+    disableInstagram: !disableInstagramElement.checked,
+    disableMaps: !disableMapsElement.checked,
+    disableReddit: !disableRedditElement.checked,
+    disableSearch: !disableSearchElement.checked,
+    translateDisable: !disableElement.checked,
+    disableWikipedia: !disableWikipediaElement.checked,
+    disableImgur: !disableImgurElement.checked,
+    disableTiktok: !disableTiktokElement.checked,
+    disablePixiv: !disablePixivElement.checked,
+    disableSpotifyTargets: !disableSpotifyElement.checked,
+    disableMedium: !disableMediumElement.checked,
+    disablePeertubeTargets: !disablePeertubeElement.checked,
+    disableLbryTargets: !disableLbryElement.checked,
+    disableSendTarget: !disableSendTargetsElement.checked,
+  });
 })
 
-disableTwitterElement.addEventListener("change",
-  event => twitterHelper.setDisable(!event.target.checked)
-);
 
-disableYoutubeElement.addEventListener("change",
-  event => youtubeHelper.setDisable(!event.target.checked)
-);
+let changeInstanceElement = document.getElementById("change-instance")
+changeInstanceElement.addEventListener("click", switchInstance);
+copyRawElement.addEventListener("click", copyRaw);
 
-disableYoutubeMusicElement.addEventListener("change",
-  event => youtubeMusicHelper.setDisable(!event.target.checked)
-);
-
-disableInstagramElement.addEventListener("change",
-  event => instagramHelper.setDisable(!event.target.checked)
-);
-
-disableMapsElement.addEventListener("change",
-  event => mapsHelper.setDisable(!event.target.checked)
-);
-
-disableRedditElement.addEventListener("change",
-  event => redditHelper.setDisableReddit(!event.target.checked)
-);
-
-disableSearchElement.addEventListener("change",
-  event => searchHelper.setDisable(!event.target.checked)
-);
-
-disableElement.addEventListener("change",
-  event => translateHelper.setDisable(!event.target.checked)
-);
-
-disableWikipediaElement.addEventListener("change",
-  event => wikipediaHelper.setDisable(!event.target.checked)
-);
-
-disableImgurElement.addEventListener("change",
-  event => imgurHelper.setDisable(!event.target.checked)
-);
-
-disableTiktokElement.addEventListener("change",
-  event => tiktokHelper.setDisable(!event.target.checked)
-);
-
-disablePixivElement.addEventListener("change",
-  event => pixivHelper.setDisable(!event.target.checked)
-);
-
-disableSpotifyElement.addEventListener("change",
-  event => spotifyHelper.setDisable(!event.target.checked)
-);
-
-disableMediumElement.addEventListener("change",
-  event => mediumHelper.setDisable(!event.target.checked)
-);
-
-disablePeertubeElement.addEventListener("change",
-  event => peertubeHelper.setDisable(!event.target.checked)
-);
-
-disableLbryElement.addEventListener("change",
-  event => lbryHelper.setDisable(!event.target.checked)
-);
-
-disableSendTargetsElement.addEventListener("change",
-  event => sendTargetsHelper.setDisable(!event.target.checked)
-);
 
 document.getElementById("more-options").addEventListener("click",
   () => browser.runtime.openOptionsPage()

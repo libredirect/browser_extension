@@ -81,24 +81,43 @@ function setDisable(val) {
 }
 
 let protocol;
-const getProtocol = () => protocol;
-function setProtocol(val) {
-    protocol = val;
-    browser.storage.local.set({ tiktokProtocol: val })
-    console.log("tiktokProtocol: ", val)
+let enableCustom;
+
+let theme;
+let api_legacy;
+
+function initProxiTokCookies() {
+    console.log('initProxiTokCookies')
+    if (enableCustom) {
+        let checkedInstances = [
+            ...proxiTokNormalRedirectsChecks,
+            ...proxiTokNormalCustomRedirects,
+            ...proxiTokTorRedirectsChecks,
+            ...proxiTokTorCustomRedirects
+        ]
+
+        for (const instance of checkedInstances) {
+            browser.cookies.set({ url: instance, name: "theme", value: theme })
+            browser.cookies.set({ url: instance, name: "api-legacy", value: api_legacy ? 'on' : 'off' })
+        }
+    }
 }
 
-function isTiktok(url, initiator) {
-    if (disable) return false;
-    if (initiator && ([...redirects.proxiTok.normal, ...proxiTokNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))) return false;
-    return targets.some(rx => rx.test(url.href));
-}
-
-function redirect(url, type) {
-    // https://www.tiktok.com/@keysikaspol/video/7061265241887345946?for_redirection=@keysikaspol
-    // https://proxitok.pussthecat.org/video/7061265241887345946
+function redirect(url, type, initiator) {
+    if (disable) return;
+    if (initiator &&
+        (
+            [
+                ...redirects.proxiTok.normal,
+                ...proxiTokNormalCustomRedirects
+            ].includes(initiator.origin) ||
+            targets.includes(initiator.host)
+        )
+    ) return;
+    if (!targets.some(rx => rx.test(url.href))) return;
+    // https://www.tiktok.com/@keysikaspol/video/7061265241887345946
     // https://www.tiktok.com/@keysikaspol
-    // https://proxitok.herokuapp.com/video/7061265241887345946
+
 
     if (type != "main_frame") return null;
 
@@ -107,8 +126,6 @@ function redirect(url, type) {
     if (protocol == 'tor') instancesList = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
     if (instancesList.length === 0) return null;
     let randomInstance = commonHelper.getRandomInstance(instancesList);
-
-    // let pathName = url.pathname.replace(/@.*\/(?=video)/, "");
 
     return `${randomInstance}${url.pathname}`;
 }
@@ -125,42 +142,76 @@ function reverse(url) {
     return `https://tiktok.com${url.pathname}${url.search}`;
 }
 
+async function initDefaults() {
+    return new Promise(async resolve => {
+        fetch('/instances/data.json').then(response => response.text()).then(async data => {
+            let dataJson = JSON.parse(data);
+            redirects.proxiTok = dataJson.proxiTok;
+            await browser.storage.local.set({
+                disableTiktok: false,
+                tiktokProtocol: "normal",
+
+                tiktokRedirects: {
+                    'proxiTok': redirects.proxiTok,
+                },
+
+                proxiTokNormalRedirectsChecks: [...redirects.proxiTok.normal],
+                proxiTokNormalCustomRedirects: [],
+
+                proxiTokTorRedirectsChecks: [...redirects.proxiTok.tor],
+                proxiTokTorCustomRedirects: [],
+
+                enableTiktokCustomSettings: false,
+
+                proxiTokTheme: 'default',
+                proxiTokApiLegacy: 'off',
+
+            });
+            resolve();
+        });
+    })
+}
+
 async function init() {
     return new Promise(resolve => {
-        fetch('/instances/data.json').then(response => response.text()).then(data => {
-            let dataJson = JSON.parse(data);
-            browser.storage.local.get(
-                [
-                    "disableTiktok",
-                    "tiktokRedirects",
+        console.log('redirects', redirects)
+        browser.storage.local.get(
+            [
+                "disableTiktok",
+                "tiktokProtocol",
+                "tiktokRedirects",
 
-                    "proxiTokNormalRedirectsChecks",
-                    "proxiTokNormalCustomRedirects",
+                "proxiTokNormalRedirectsChecks",
+                "proxiTokNormalCustomRedirects",
 
-                    "proxiTokTorRedirectsChecks",
-                    "proxiTokTorCustomRedirects",
+                "proxiTokTorRedirectsChecks",
+                "proxiTokTorCustomRedirects",
 
-                    "tiktokProtocol"
-                ],
-                r => {
-                    redirects.proxiTok = dataJson.proxiTok;
-                    disable = r.disableTiktok ?? false;
+                "enableTiktokCustomSettings",
 
-                    protocol = r.tiktokProtocol ?? "normal";
+                "proxiTokTheme",
+                "proxiTokApiLegacy",
+            ],
+            r => {
+                disable = r.disableTiktok;
+                protocol = r.tiktokProtocol;
+                redirects = r.tiktokRedirects;
 
-                    if (r.tiktokRedirects) redirects = r.tiktokRedirects;
+                proxiTokNormalRedirectsChecks = r.proxiTokNormalRedirectsChecks;
+                proxiTokNormalCustomRedirects = r.proxiTokNormalCustomRedirects;
 
-                    proxiTokNormalRedirectsChecks = r.proxiTokNormalRedirectsChecks ?? [...redirects.proxiTok.normal];
-                    proxiTokNormalCustomRedirects = r.proxiTokNormalCustomRedirects ?? [];
+                proxiTokTorRedirectsChecks = r.proxiTokTorRedirectsChecks;
+                proxiTokTorCustomRedirects = r.proxiTokTorCustomRedirects;
 
-                    proxiTokTorRedirectsChecks = r.proxiTokTorRedirectsChecks ?? [...redirects.proxiTok.tor];
-                    proxiTokTorCustomRedirects = r.proxiTokTorCustomRedirects ?? [];
+                enableCustom = r.enableTiktokCustomSettings;
 
-                    resolve();
-                }
-            )
-        });
-    });
+                theme = r.proxiTokTheme;
+                api_legacy = r.proxiTokApiLegacy;
+
+                resolve();
+            }
+        )
+    })
 }
 
 export default {
@@ -174,9 +225,6 @@ export default {
 
     reverse,
 
-    getProtocol,
-    setProtocol,
-
     getProxiTokNormalRedirectsChecks,
     setProxiTokNormalRedirectsChecks,
     getProxiTokTorRedirectsChecks,
@@ -187,7 +235,9 @@ export default {
     getProxiTokNormalCustomRedirects,
     setProxiTokNormalCustomRedirects,
 
+    initProxiTokCookies,
+
     redirect,
-    isTiktok,
+    initDefaults,
     init,
 };

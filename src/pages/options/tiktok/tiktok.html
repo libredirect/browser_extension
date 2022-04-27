@@ -69,8 +69,34 @@
         <option value="tor" data-localise="__MSG_tor__">Tor</option>
       </select>
     </div>
+    <div class="some-block option-block">
+      <h4 data-localise="__MSG_enableCustomSettings__">Enable Custom Settings (will use cookies)</h4>
+      <input id="enable-custom-settings" type="checkbox">
+    </div>
     <div id="proxiTok">
       <hr>
+      <div class="custom-settings">
+        <div class="some-block option-block">
+          <h2>General</h2>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_theme__">Theme</h4>
+          <select class="theme">
+            <option value="default">Default</option>
+            <option value="card">Card</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h2>Api</h2>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_legacyMode__">Legacy mode</h4>
+          <select class="api-legacy">
+            <option value="on">On</option>
+            <option value="off">Off</option>
+          </select>
+        </div>
+      </div>
       <div class="normal">
                 <div class="some-block option-block">
                   <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>

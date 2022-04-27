@@ -25,6 +25,7 @@ window.browser = window.browser || window.chrome;
 browser.runtime.onInstalled.addListener(async details => {
   if (details.reason == 'install') {
     await redditHelper.initDefaults();
+    await tiktokHelper.initDefaults();
     await wholeInit();
   }
 });
@@ -85,7 +86,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (imgurHelper.isImgur(url, initiator)) newUrl = imgurHelper.redirect(url, details.type);
 
-    if (tiktokHelper.isTiktok(url, initiator)) newUrl = tiktokHelper.redirect(url, details.type);
+    if (!newUrl) newUrl = tiktokHelper.redirect(url, details.type, initiator);
 
     if (!newUrl) newUrl = pixivHelper.redirect(url, details.type, initiator);
 

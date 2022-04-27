@@ -1,64 +1,93 @@
 import tiktokHelper from "../../../assets/javascripts/helpers/tiktok.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
-let disableTiktokElement = document.getElementById("disable-tiktok");
-disableTiktokElement.addEventListener("change",
-    event => tiktokHelper.setDisable(!event.target.checked)
-);
+let disable = document.getElementById("disable-tiktok");
+let protocol = document.getElementById("protocol")
 
-let protocolElement = document.getElementById("protocol")
-protocolElement.addEventListener("change",
-    event => {
-        let protocol = event.target.options[protocolElement.selectedIndex].value
-        tiktokHelper.setProtocol(protocol);
-        changeProtocolSettings(protocol);
-    }
-);
+let enableCustomSettings = document.getElementById("enable-custom-settings");
+let customSettingsDiv = document.getElementsByClassName("custom-settings")[0];
 
-function changeProtocolSettings(protocol) {
-    let normalDiv = document.getElementsByClassName("normal")[0];
-    let torDiv = document.getElementsByClassName("tor")[0];
-    if (protocol == 'normal') {
-        normalDiv.style.display = 'block';
-        torDiv.style.display = 'none';
-    }
-    else if (protocol == 'tor') {
-        normalDiv.style.display = 'none';
-        torDiv.style.display = 'block';
-    }
-}
+let theme = document.getElementById('proxiTok').getElementsByClassName('theme')[0];
+let api_legacy = document.getElementById('proxiTok').getElementsByClassName('api-legacy')[0];
 
-tiktokHelper.init().then(() => {
-    disableTiktokElement.checked = !tiktokHelper.getDisable();
+document.addEventListener("change", async () => {
+    await browser.storage.local.set({
+        disableTiktok: !disable.checked,
+        tiktokProtocol: protocol.value,
 
-    let protocol = tiktokHelper.getProtocol();
-    protocolElement.value = protocol;
-    changeProtocolSettings(protocol);
+        enableTiktokCustomSettings: enableCustomSettings.checked,
 
-    browser.storage.local.get("proxiTokLatency").then(r => {
+        proxiTokTheme: theme.value,
+        proxiTokApiLegacy: api_legacy.value,
+
+    });
+    init();
+})
+
+window.onblur = tiktokHelper.initProxiTokCookies;
+
+function init() {
+    tiktokHelper.init().then(() => {
+        browser.storage.local.get(
+            [
+                "disableTiktok",
+                "tiktokProtocol",
+
+                "enableTiktokCustomSettings",
+
+                "proxiTokTheme",
+                "proxiTokApiLegacy",
+            ],
+            r => {
+                disable.checked = !r.disableTiktok;
+                protocol.value = r.tiktokProtocol;
+                let normalDiv = document.getElementsByClassName("normal")[0];
+                let torDiv = document.getElementsByClassName("tor")[0];
+                if (r.tiktokProtocol == 'normal') {
+                    normalDiv.style.display = 'block';
+                    torDiv.style.display = 'none';
+                }
+                else if (r.tiktokProtocol == 'tor') {
+                    normalDiv.style.display = 'none';
+                    torDiv.style.display = 'block';
+                }
+
+                enableCustomSettings.checked = r.enableTiktokCustomSettings;
+                if (r.enableTiktokCustomSettings)
+                    customSettingsDiv.style.display = 'block';
+                else
+                    customSettingsDiv.style.display = 'none';
+
+                theme.value = r.proxiTokTheme;
+                api_legacy.value = r.proxiTokApiLegacy
+            }
+        )
+        browser.storage.local.get("proxiTokLatency").then(r => {
+            commonHelper.processDefaultCustomInstances(
+                'proxiTok',
+                'normal',
+                tiktokHelper,
+                document,
+                tiktokHelper.getProxiTokNormalRedirectsChecks,
+                tiktokHelper.setProxiTokNormalRedirectsChecks,
+                tiktokHelper.getProxiTokNormalCustomRedirects,
+                tiktokHelper.setProxiTokNormalCustomRedirects,
+                r.proxiTokLatency,
+            );
+        })
         commonHelper.processDefaultCustomInstances(
             'proxiTok',
-            'normal',
+            'tor',
             tiktokHelper,
             document,
-            tiktokHelper.getProxiTokNormalRedirectsChecks,
-            tiktokHelper.setProxiTokNormalRedirectsChecks,
-            tiktokHelper.getProxiTokNormalCustomRedirects,
-            tiktokHelper.setProxiTokNormalCustomRedirects,
-            r.proxiTokLatency,
-        );
+            tiktokHelper.getProxiTokTorRedirectsChecks,
+            tiktokHelper.setProxiTokTorRedirectsChecks,
+            tiktokHelper.getProxiTokTorCustomRedirects,
+            tiktokHelper.setProxiTokTorCustomRedirects
+        )
     })
-    commonHelper.processDefaultCustomInstances(
-        'proxiTok',
-        'tor',
-        tiktokHelper,
-        document,
-        tiktokHelper.getProxiTokTorRedirectsChecks,
-        tiktokHelper.setProxiTokTorRedirectsChecks,
-        tiktokHelper.getProxiTokTorCustomRedirects,
-        tiktokHelper.setProxiTokTorCustomRedirects
-    )
-})
+}
+init();
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");
