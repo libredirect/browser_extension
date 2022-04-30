@@ -504,6 +504,7 @@ function initPipedMaterialLocalStorage(tabId) {
 }
 
 function initInvidiousCookies() {
+  console.log('initInvidiousCookies()');
   if (!disable && frontend == 'invidious' && enableCustomSettings) {
     let checkedInstances = [
       ...invidiousNormalRedirectsChecks,

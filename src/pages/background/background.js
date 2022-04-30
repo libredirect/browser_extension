@@ -55,9 +55,19 @@ await wholeInit();
 
 browser.storage.onChanged.addListener(wholeInit);
 
+let incognitoInit = false;
+browser.tabs.onCreated.addListener(
+  tab => {
+    if (!incognitoInit && tab.incognito) {
+      browser.tabs.create({
+        url: browser.extension.getURL("/pages/background/incognito.html"),
+      });
+      incognitoInit = true;
+    }
+  });
+
+
 let BYPASSTABs = [];
-
-
 
 browser.webRequest.onBeforeRequest.addListener(
   details => {
@@ -145,6 +155,9 @@ browser.tabs.onRemoved.addListener(
     }
   }
 );
+
+
+
 
 
 // Set "blocking" and "responseHeaders".
