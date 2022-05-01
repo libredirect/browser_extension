@@ -89,12 +89,9 @@ let api_legacy;
 function initProxiTokCookies() {
     console.log('initProxiTokCookies')
     if (enableCustom) {
-        let checkedInstances = [
-            ...proxiTokNormalRedirectsChecks,
-            ...proxiTokNormalCustomRedirects,
-            ...proxiTokTorRedirectsChecks,
-            ...proxiTokTorCustomRedirects
-        ]
+        let checkedInstances;
+        if (protocol == 'normal') checkedInstances = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects]
+        else if (protocol == 'tor') checkedInstances = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects]
 
         for (const instance of checkedInstances) {
             browser.cookies.set({ url: instance, name: "theme", value: theme })

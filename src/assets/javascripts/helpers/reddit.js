@@ -161,12 +161,9 @@ let hide_hls_notification;
 
 function initLibredditCookies() {
   if (enableCustom) {
-    let checkedInstances = [
-      ...libredditNormalRedirectsChecks,
-      ...libredditNormalCustomRedirects,
-      ...libredditTorRedirectsChecks,
-      ...libredditTorCustomRedirects
-    ]
+    let checkedInstances;
+    if (protocol == 'normal') checkedInstances = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects];
+    else if (protocol == 'tor') checkedInstances = [...libredditTorRedirectsChecks, ...libredditTorCustomRedirects];
 
     for (const instance of checkedInstances) {
       browser.cookies.set({ url: instance, name: "theme", value: theme })

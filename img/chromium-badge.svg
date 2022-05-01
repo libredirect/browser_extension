@@ -28,8 +28,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="3.24539"
-     inkscape:cx="127.56556"
-     inkscape:cy="47.297859"
+     inkscape:cx="73.642921"
+     inkscape:cy="70.407563"
      inkscape:window-width="1888"
      inkscape:window-height="1060"
      inkscape:window-x="32"
@@ -168,7 +168,7 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.10451px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#818488;fill-opacity:1;stroke:none;stroke-width:0.0970465"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.10451px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0970465"
        x="214.87363"
        y="159.88052"
        id="text5452"
@@ -178,12 +178,12 @@
        transform="scale(0.99871289,1.0012888)"><tspan
          sodipodi:role="line"
          id="tspan5450"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#818488;fill-opacity:1;stroke-width:0.0970465"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#000000;fill-opacity:1;stroke-width:0.0970465"
          x="214.87363"
          y="159.88052">Available for</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:7.00835px;line-height:1.25;font-family:sans-serif;fill:#818488;fill-opacity:1;stroke:none;stroke-width:0.133242"
+       style="font-style:normal;font-weight:normal;font-size:7.00835px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.133242"
        x="214.51498"
        y="166.31212"
        id="text5746"
@@ -193,7 +193,7 @@
        transform="scale(0.99871289,1.0012888)"><tspan
          sodipodi:role="line"
          id="tspan5744"
-         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Medium';fill:#818488;fill-opacity:1;stroke-width:0.133242"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Medium';fill:#000000;fill-opacity:1;stroke-width:0.133242"
          x="214.51498"
          y="166.31212">Chromium</tspan></text>
   </g>

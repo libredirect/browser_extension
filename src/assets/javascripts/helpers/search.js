@@ -292,30 +292,14 @@ function initSearxCookies() {
   if (theme == 'light') themeValue = 'logicodev';
   if (theme == 'dark') themeValue = 'logicodev-dark';
   if (applyThemeToSites && themeValue) {
-    let allInstances = [...redirects.searx.normal, ...redirects.searx.tor, ...redirects.searx.i2p, ...searxNormalCustomRedirects, ...searxTorCustomRedirects, ...searxI2pCustomRedirects];
-    let checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects, ...searxTorRedirectsChecks, ...searxTorCustomRedirects, ...searxI2pRedirectsChecks, ...searxI2pCustomRedirects];
-    for (const instanceUrl of allInstances)
-      if (!checkedInstances.includes(instanceUrl)) {
-        browser.cookies.remove({
-          url: instanceUrl,
-          name: "oscar-style",
-        })
-        browser.cookies.remove({
-          url: instanceUrl,
-          name: "oscar",
-        })
-      }
+    let checkedInstances;
+    if (protocol == 'normal') checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
+    else if (protocol == 'tor') checkedInstances = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
+    else if (protocol == 'i2p') checkedInstances = [...searxI2pRedirectsChecks, ...searxI2pCustomRedirects];
+
     for (const instanceUrl of checkedInstances) {
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "oscar-style",
-        value: themeValue
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "theme",
-        value: 'oscar'
-      })
+      browser.cookies.set({ url: instanceUrl, name: "oscar-style", value: themeValue })
+      browser.cookies.set({ url: instanceUrl, name: "theme", value: 'oscar' })
     }
   }
 }
