@@ -210,7 +210,7 @@ function redirect(url, initiator) {
 
   // https://pbs.twimg.com/profile_images/648888480974508032/66_cUYfj_400x400.jpg
   if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video")
-    return `${randomInstance}/pic/${encodeURIComponent(url.href)}`;
+    return `${randomInstance}/pic/${encodeURIComponent(`${url.host}${url.pathname}`)}`;
   else if (url.pathname.split("/").includes("tweets"))
     return `${randomInstance}${url.pathname.replace("/tweets", "")}${url.search}`;
   else if (url.host == 't.co')
@@ -267,10 +267,9 @@ function removeXFrameOptions(e) {
   ];
   if (!twitterList.includes(protocolHost) || e.type != 'sub_frame') return;
   let isChanged = false;
-  console.log(e.responseHeaders);
   for (const i in e.responseHeaders) if (e.responseHeaders[i].name == 'x-frame-options') {
-    isChanged = true;
     e.responseHeaders.splice(i, 1);
+    isChanged = true;
   }
   if (isChanged) return { responseHeaders: e.responseHeaders };
 }
@@ -290,85 +289,25 @@ function isNitter(url, type) {
 
 function initNitterCookies() {
   if (enableCustomSettings) {
-    console.log('initNitterCookies')
-    let allInstances = [...redirects.nitter.normal, ...redirects.nitter.tor, ...nitterNormalCustomRedirects, ...nitterTorCustomRedirects]
-    let checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects, ...nitterTorRedirectsChecks, ...nitterTorCustomRedirects]
-    for (const instanceUrl of allInstances) if (!checkedInstances.includes(instanceUrl))
-      browser.cookies.remove({
-        url: instanceUrl,
-        name: "theme",
-      })
+    let checkedInstances;
+    if (protocol == 'normal') checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects]
+    else if (protocol == 'tor') checkedInstances = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects]
+
     for (const instanceUrl of checkedInstances) {
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "theme",
-        value: theme,
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "infiniteScroll",
-        value: infiniteScroll ? 'on' : '',
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "stickyProfile",
-        value: stickyProfile ? 'on' : '',
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "bidiSupport",
-        value: bidiSupport ? 'on' : '',
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "hideTweetStats",
-        value: hideTweetStats ? 'on' : '',
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "hideBanner",
-        value: hideBanner ? 'on' : '',
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "hidePins",
-        value: hidePins ? 'on' : '',
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "hideReplies",
-        value: hideReplies ? 'on' : '',
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "squareAvatars",
-        value: squareAvatars ? 'on' : '',
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "mp4Playback",
-        value: mp4Playback ? 'on' : '',
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "hlsPlayback",
-        value: hlsPlayback ? 'on' : '',
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "proxyVideos",
-        value: proxyVideos ? 'on' : '',
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "muteVideos",
-        value: muteVideos ? 'on' : '',
-      })
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "autoplayGifs",
-        value: autoplayGifs ? 'on' : '',
-      })
+      browser.cookies.set({ url: instanceUrl, name: "theme", value: theme })
+      browser.cookies.set({ url: instanceUrl, name: "infiniteScroll", value: infiniteScroll ? 'on' : '' })
+      browser.cookies.set({ url: instanceUrl, name: "stickyProfile", value: stickyProfile ? 'on' : '' })
+      browser.cookies.set({ url: instanceUrl, name: "bidiSupport", value: bidiSupport ? 'on' : '', })
+      browser.cookies.set({ url: instanceUrl, name: "hideTweetStats", value: hideTweetStats ? 'on' : '' })
+      browser.cookies.set({ url: instanceUrl, name: "hideBanner", value: hideBanner ? 'on' : '' })
+      browser.cookies.set({ url: instanceUrl, name: "hidePins", value: hidePins ? 'on' : '', })
+      browser.cookies.set({ url: instanceUrl, name: "hideReplies", value: hideReplies ? 'on' : '' })
+      browser.cookies.set({ url: instanceUrl, name: "squareAvatars", value: squareAvatars ? 'on' : '' })
+      browser.cookies.set({ url: instanceUrl, name: "mp4Playback", value: mp4Playback ? 'on' : '' })
+      browser.cookies.set({ url: instanceUrl, name: "hlsPlayback", value: hlsPlayback ? 'on' : '' })
+      browser.cookies.set({ url: instanceUrl, name: "proxyVideos", value: proxyVideos ? 'on' : '' })
+      browser.cookies.set({ url: instanceUrl, name: "muteVideos", value: muteVideos ? 'on' : '' })
+      browser.cookies.set({ url: instanceUrl, name: "autoplayGifs", value: autoplayGifs ? 'on' : '' })
     }
   }
 }
@@ -419,8 +358,6 @@ async function init() {
           bypassWatchOnTwitter = r.bypassWatchOnTwitter ?? true;
 
           alwaysUsePreferred = r.alwaysUsePreferred ?? false;
-
-          theme = r.theme ?? 'DEFAULT';
 
           redirects.nitter = dataJson.nitter;
           if (r.twitterRedirects) redirects = r.twitterRedirects;

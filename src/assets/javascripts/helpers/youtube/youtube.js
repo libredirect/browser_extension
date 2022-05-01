@@ -506,12 +506,10 @@ function initPipedMaterialLocalStorage(tabId) {
 function initInvidiousCookies() {
   console.log('initInvidiousCookies()');
   if (!disable && frontend == 'invidious' && enableCustomSettings) {
-    let checkedInstances = [
-      ...invidiousNormalRedirectsChecks,
-      ...invidiousNormalCustomRedirects,
-      ...invidiousTorRedirectsChecks,
-      ...invidiousTorCustomRedirects,
-    ];
+    let checkedInstances;
+    if (protocol == 'normal') checkedInstances = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
+    else if (protocol == 'tor') checkedInstances = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
+
     for (const instanceUrl of checkedInstances)
       browser.cookies.get(
         {

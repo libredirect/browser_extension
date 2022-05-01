@@ -118,20 +118,14 @@ function initWikilessCookies() {
   if (theme == 'light') themeValue = 'white';
   if (theme == 'dark') themeValue = 'dark';
   if (applyThemeToSites && themeValue) {
-    let allInstances = [...redirects.wikiless.normal, ...redirects.wikiless.tor, ...redirects.wikiless.i2p, ...wikilessNormalCustomRedirects, ...wikilessTorCustomRedirects, ...wikilessI2pCustomRedirects]
-    let checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects, ...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects, ...wikilessI2pRedirectsChecks, ...wikilessI2pCustomRedirects]
-    for (const instanceUrl of allInstances)
-      if (!checkedInstances.includes(instanceUrl))
-        browser.cookies.remove({
-          url: instanceUrl,
-          name: "theme",
-        })
+
+    let checkedInstances;
+    if (protocol == 'normal') checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects]
+    else if (protocol == 'tor') checkedInstances = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects]
+    else if (protocol == 'i2p') checkedInstances = [...wikilessI2pRedirectsChecks, ...wikilessI2pCustomRedirects]
+
     for (const instanceUrl of checkedInstances)
-      browser.cookies.set({
-        url: instanceUrl,
-        name: "theme",
-        value: themeValue
-      })
+      browser.cookies.set({ url: instanceUrl, name: "theme", value: themeValue })
   }
 }
 
@@ -212,16 +206,16 @@ async function init() {
           "wikipediaRedirects",
           "wikilessNormalRedirectsChecks",
           "wikilessTorRedirectsChecks",
-	  "wikilessI2pRedirectsChecks",
+          "wikilessI2pRedirectsChecks",
           "wikilessNormalCustomRedirects",
           "wikilessTorCustomRedirects",
-	  "wikilessI2pCustomRedirects",
+          "wikilessI2pCustomRedirects",
           "wikipediaProtocol",
 
           "theme",
           "applyThemeToSites",
 
-        ], r => { 
+        ], r => {
           disable = r.disableWikipedia ?? true;
 
           protocol = r.wikipediaProtocol ?? "normal";
@@ -235,8 +229,8 @@ async function init() {
           wikilessTorRedirectsChecks = r.wikilessTorRedirectsChecks ?? [...redirects.wikiless.tor];
           wikilessTorCustomRedirects = r.wikilessTorCustomRedirects ?? [];
 
-	  wikilessI2pRedirectsChecks = r.wikilessI2pRedirectsChecks ?? [...redirects.wikiless.i2p];
-	  wikilessI2pCustomRedirects = r.wikilessI2pCustomRedirects ?? [];
+          wikilessI2pRedirectsChecks = r.wikilessI2pRedirectsChecks ?? [...redirects.wikiless.i2p];
+          wikilessI2pCustomRedirects = r.wikilessI2pCustomRedirects ?? [];
 
           theme = r.theme ?? 'DEFAULT';
           applyThemeToSites = r.applyThemeToSites ?? false;
