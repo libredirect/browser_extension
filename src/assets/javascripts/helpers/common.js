@@ -1,4 +1,7 @@
 window.browser = window.browser || window.chrome;
+
+import { safeURL } from "../../../util.js";
+
 import twitterHelper from "./twitter.js";
 import youtubeHelper from "./youtube/youtube.js";
 import instagramHelper from "./instagram.js";
@@ -183,7 +186,7 @@ async function processDefaultCustomInstances(
   nameProtocolElement.getElementsByClassName('custom-instance-form')[0].addEventListener("submit", event => {
     event.preventDefault();
     let nameCustomInstanceInput = nameProtocolElement.getElementsByClassName('custom-instance')[0];
-    let url = new URL(nameCustomInstanceInput.value);
+    const url = safeURL(nameCustomInstanceInput.value);
     let protocolHostVar = protocolHost(url);
     if (nameCustomInstanceInput.validity.valid && !nameHelper.getRedirects()[name][protocol].includes(protocolHostVar)) {
       if (!nameCustomInstances.includes(protocolHostVar)) {

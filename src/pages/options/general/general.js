@@ -1,6 +1,8 @@
 "use strict";
 window.browser = window.browser || window.chrome;
 
+import { safeURL } from "../../util.js";
+
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 import generalHelper from "../../../assets/javascripts/helpers/general.js";
 
@@ -153,7 +155,7 @@ generalHelper.init().then(() => {
     let val
     if (instanceType == 'url') {
       if (nameCustomInstanceInput.validity.valid) {
-        let url = new URL(nameCustomInstanceInput.value);
+        const url = safeURL(nameCustomInstanceInput.value);
         val = `${url.protocol}//${url.host}`
         if (!exceptionsCustomInstances.url.includes(val)) exceptionsCustomInstances.url.push(val)
       }

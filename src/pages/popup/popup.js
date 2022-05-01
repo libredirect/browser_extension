@@ -1,6 +1,8 @@
 "use strict";
 window.browser = window.browser || window.chrome;
 
+import { safeURL } from "../../util.js";
+
 import commonHelper from "../../assets/javascripts/helpers/common.js";
 import youtubeHelper from "../../assets/javascripts/helpers/youtube/youtube.js";
 import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
@@ -118,9 +120,7 @@ function switchInstance() {
     let currTab = tabs[0];
     if (currTab) {
       let url = currTab.url;
-      let tabUrl
-      try { tabUrl = new URL(url); }
-      catch (_) { return false; }
+      const tabUrl = safeURL(url)
       let newUrl;
 
       newUrl = youtubeHelper.switchInstance(tabUrl);
@@ -161,9 +161,7 @@ function copyRaw() {
     let currTab = tabs[0];
     if (currTab) {
       let url = currTab.url;
-      let tabUrl
-      try { tabUrl = new URL(url); }
-      catch (_) { return false; }
+      const tabUrl = safeURL(url);
       let newUrl;
       newUrl = youtubeHelper.reverse(tabUrl);
       if (!newUrl) newUrl = twitterHelper.reverse(tabUrl);

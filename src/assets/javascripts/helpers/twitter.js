@@ -1,5 +1,6 @@
 window.browser = window.browser || window.chrome;
 
+import { safeURL } from "../../../util.js";
 import commonHelper from './common.js'
 
 const targets = [
@@ -257,7 +258,7 @@ function switchInstance(url) {
 }
 
 function removeXFrameOptions(e) {
-  let url = new URL(e.url);
+  const url = safeURL(e.url);
   let protocolHost = commonHelper.protocolHost(url);
   let twitterList = [
     ...redirects.nitter.normal,

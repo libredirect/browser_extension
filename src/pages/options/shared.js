@@ -1,9 +1,11 @@
+import { safeURL } from "../../util.js";
+
 var autocompletes = [];
 
 function parseURL(urlString) {
     if (urlString)
         try {
-            const url = new URL(urlString);
+            const url = safeURL(urlString);
             if (url.username && url.password)
                 return `${url.protocol}//${url.username}:${url.password}@${url.host}`;
             else

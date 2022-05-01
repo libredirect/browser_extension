@@ -1,5 +1,7 @@
 "use strict";
 
+import { safeURL } from "../../util.js"
+
 import youtubeHelper from "../../assets/javascripts/helpers/youtube/youtube.js";
 import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
@@ -71,13 +73,13 @@ let BYPASSTABs = [];
 
 browser.webRequest.onBeforeRequest.addListener(
   details => {
-    const url = new URL(details.url);
+    const url = safeURL(details.url);
     // console.info("url:", url.href, "type:", details.type);
     let initiator;
     if (details.originUrl)
-      initiator = new URL(details.originUrl);
+      initiator = safeURL(details.originUrl);
     else if (details.initiator)
-      initiator = new URL(details.initiator);
+      initiator = safeURL(details.initiator);
 
     var newUrl;
 
@@ -118,7 +120,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (
       details.frameAncestors && details.frameAncestors.length > 0 &&
-      generalHelper.isException(new URL(details.frameAncestors[0].url))
+      generalHelper.isException(safeURL(details.frameAncestors[0].url))
     ) newUrl = null;
 
     if (generalHelper.isException(url)) newUrl = 'BYPASSTAB';
@@ -214,7 +216,7 @@ browser.webRequest.onResponseStarted.addListener(
     if (details.type == 'main_frame' && (details.statusCode == 502 || details.statusCode == 503 || details.statusCode == 504)) {
       // if (details.type == 'main_frame' && details.statusCode >= 200) {
       // console.log("statusCode", details.statusCode);
-      const url = new URL(details.url);
+      const url = safeURL(details.url);
       redirectOfflineInstance(url, details.tabId);
     }
   },
@@ -225,7 +227,7 @@ browser.webRequest.onErrorOccurred.addListener(
   details => {
     if (!generalHelper.getAutoRedirect()) return;
     if (details.type == 'main_frame') {
-      const url = new URL(details.url);
+      const url = safeURL(details.url);
       redirectOfflineInstance(url, details.tabId);
     }
   },
@@ -234,9 +236,7 @@ browser.webRequest.onErrorOccurred.addListener(
 
 browser.tabs.onUpdated.addListener(
   (tabId, changeInfo, _) => {
-    let url;
-    try { url = new URL(changeInfo.url); }
-    catch (_) { return }
+    const url = safeURL(changeInfo.url);
     if (youtubeHelper.isPipedorInvidious(url, 'main_frame', 'piped')) youtubeHelper.initPipedLocalStorage(tabId);
     if (youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
     if (translateHelper.isTranslateRedirects(url, 'main_frame', 'lingva')) translateHelper.initLingvaLocalStorage(tabId);
@@ -278,9 +278,7 @@ browser.commands.onCommand.addListener(
       browser.tabs.query(
         { active: true, currentWindow: true },
         tabs => {
-          let url;
-          try { url = new URL(tabs[0].url); }
-          catch (_) { return }
+          const url = safeURL(tabs[0].url);
           let newUrl = changeWholeInstance(url);
           if (newUrl) browser.tabs.update({ url: newUrl });
         }
@@ -302,9 +300,8 @@ browser.contextMenus.create({
 
 browser.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId == 'switchInstance') {
-    let url;
-    try { url = new URL(tab.url); }
-    catch (_) { return }
+    const url = safeURL(tab.url);
+    console.log(JSON.stringify(url, 2, null));
     let newUrl = changeWholeInstance(url);
     if (newUrl) browser.tabs.update({ url: newUrl });
   }
