@@ -6,4 +6,11 @@ const safeURL = (url) => {
   }
 };
 
-export { safeURL };
+const toString = (target) => Object.prototype.toString.call(target);
+
+const isURL = (url) => toString(url) === "[object URL]";
+
+export {
+  safeURL,
+  isURL,
+};
