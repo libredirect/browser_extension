@@ -123,13 +123,6 @@ const EVENTS = [
 const setEventListener = (target, type, listener) =>
   target.addEventListener(type, listener);
 
-for (const event of EVENTS) {
-  const { id, type, listener } = event;
-  const el = document.getElementById(id);
-  if (!el) continue;
-  setEventListener(el, type, listener);
-};
-
 function switchInstance() {
   browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     let currTab = tabs[0];
@@ -211,3 +204,12 @@ generalHelper.init().then(() => {
     else
       document.getElementById(frontend).classList.remove("hide")
 });
+
+(async (doc) => {
+  for (const event of EVENTS) {
+    const { id, type, listener } = event;
+    const el = doc.getElementById(id);
+    if (!el) continue;
+    setEventListener(el, type, listener);
+  };
+})(document);
