@@ -39,7 +39,6 @@ let disableTiktokElement = document.getElementById("disable-tiktok");
 let disablePixivElement = document.getElementById("disable-pixiv");
 let disableSpotifyElement = document.getElementById("disable-spotify");
 
-let copyRawElement = document.getElementById('copy_raw');
 browser.storage.local.get(
   [
     "disableTwitter",
@@ -103,15 +102,33 @@ document.addEventListener("change", () => {
   });
 })
 
+const EVENTS = [
+  {
+    id: "more-options",
+    type: "click",
+    listener: () => browser.runtime.openOptionsPage(),
+  },
+  {
+    id: "change-instance",
+    type: "click",
+    listener: switchInstance,
+  },
+  {
+    id: "copy_raw",
+    type: "click",
+    listener: copyRaw,
+  }
+];
 
-let changeInstanceElement = document.getElementById("change-instance")
-changeInstanceElement.addEventListener("click", switchInstance);
-copyRawElement.addEventListener("click", copyRaw);
+const setEventListener = (target, type, listener) =>
+  target.addEventListener(type, listener);
 
-
-document.getElementById("more-options").addEventListener("click",
-  () => browser.runtime.openOptionsPage()
-);
+for (const event of EVENTS) {
+  const { id, type, listener } = event;
+  const el = document.getElementById(id);
+  if (!el) continue;
+  setEventListener(el, type, listener);
+};
 
 function switchInstance() {
   browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
