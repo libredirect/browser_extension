@@ -76,7 +76,6 @@ BTC: **bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q**
 - select `load unpacked extension`
 - select `src` folder
 
-Mirror Repos: [Codeberg](https://codeberg.org/LibRedirect/libredirect)
 ## Mirror Repos
 [![GitHub](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/github.svg)](https://github.com/libredirect/libredirect/)&nbsp;&nbsp;
 [![Codeberg](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/codeberg.svg)](https://codeberg.org/LibRedirect/libredirect)&nbsp;&nbsp;
