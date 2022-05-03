@@ -194,17 +194,6 @@ function copyRaw() {
   })
 }
 
-let popupFrontends;
-generalHelper.init().then(() => {
-  popupFrontends = generalHelper.getPopupFrontends();
-
-  for (const frontend of generalHelper.allPopupFrontends)
-    if (!popupFrontends.includes(frontend))
-      document.getElementById(frontend).classList.add("hide")
-    else
-      document.getElementById(frontend).classList.remove("hide")
-});
-
 (async (doc) => {
   for (const event of EVENTS) {
     const { id, type, listener } = event;
@@ -212,4 +201,14 @@ generalHelper.init().then(() => {
     if (!el) continue;
     setEventListener(el, type, listener);
   };
+
+  await generalHelper.init();
+  const { allPopupFrontends, getPopupFrontends } = generalHelper;
+  const popupFrontends = getPopupFrontends();
+  for (const frontend of allPopupFrontends) {
+    const element = doc.getElementById(frontend);
+    if (!element) continue;
+    const method = popupFrontends.includes(frontend) ? "remove" : "add";
+    element.classList[method]("hide");
+  }
 })(document);
