@@ -102,7 +102,7 @@ document.addEventListener("change", () => {
   });
 })
 
-const EVENTS = [
+const POPUP_EVENTS = [
   {
     id: "more-options",
     type: "click",
@@ -203,7 +203,7 @@ const setHandler = (event) => {
 };
 
 (async (doc) => {
-  for (const event of EVENTS) setHandler(event);
+  for (const event of POPUP_EVENTS) setHandler(event);
 
   await generalHelper.init();
   const { allPopupFrontends, getPopupFrontends } = generalHelper;
