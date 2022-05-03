@@ -195,13 +195,15 @@ function copyRaw() {
   })
 }
 
+const setHandler = (event) => {
+  const { id, type, listener } = event;
+  const element = document.getElementById(id);
+  if (!element) continue;
+  setEventListener(element, type, listener);
+};
+
 (async (doc) => {
-  for (const event of EVENTS) {
-    const { id, type, listener } = event;
-    const el = doc.getElementById(id);
-    if (!el) continue;
-    setEventListener(el, type, listener);
-  };
+  for (const event of EVENTS) setHandler(event);
 
   await generalHelper.init();
   const { allPopupFrontends, getPopupFrontends } = generalHelper;
