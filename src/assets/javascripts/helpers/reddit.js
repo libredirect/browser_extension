@@ -393,6 +393,7 @@ function switchInstance(url) {
 }
 
 async function initDefaults() {
+  console.log('init redditDefault')
   return new Promise(async resolve => {
     fetch('/instances/data.json').then(response => response.text()).then(async data => {
       let dataJson = JSON.parse(data);

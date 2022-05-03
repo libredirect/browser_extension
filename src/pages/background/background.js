@@ -22,13 +22,24 @@ import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js
 
 window.browser = window.browser || window.chrome;
 
+
+
 browser.runtime.onInstalled.addListener(async details => {
   if (details.reason == 'install') {
+    await instagramHelper.initDefaults();
     await redditHelper.initDefaults();
+    await youtubeHelper.initDefaults();
     await tiktokHelper.initDefaults();
+    await imgurHelper.initDefaults();
     await wholeInit();
+    browser.storage.local.set({ initDefaults: true })
+    initListener();
   }
 });
+
+function initListener() {
+  browser.storage.onChanged.addListener(wholeInit);
+}
 
 async function wholeInit() {
   await youtubeHelper.init();
@@ -51,9 +62,15 @@ async function wholeInit() {
   await spotifyHelper.init();
   await generalHelper.init();
 }
-await wholeInit();
 
-browser.storage.onChanged.addListener(wholeInit);
+await browser.storage.local.get(
+  'initDefaults',
+  async r => {
+    if (r.initDefaults == true) {
+      await wholeInit();
+      initListener();
+    }
+  })
 
 let incognitoInit = false;
 browser.tabs.onCreated.addListener(
@@ -79,7 +96,7 @@ browser.webRequest.onBeforeRequest.addListener(
     else if (details.initiator)
       initiator = new URL(details.initiator);
 
-    var newUrl;
+    let newUrl;
 
     if (!newUrl) newUrl = youtubeHelper.redirect(url, details, initiator)
     if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
@@ -94,7 +111,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (!newUrl) newUrl = mediumHelper.redirect(url, details.type, initiator);
 
-    if (imgurHelper.isImgur(url, initiator)) newUrl = imgurHelper.redirect(url, details.type);
+    if (!newUrl) newUrl = imgurHelper.redirect(url, details.type, initiator);
 
     if (!newUrl) newUrl = tiktokHelper.redirect(url, details.type, initiator);
 
@@ -126,11 +143,11 @@ browser.webRequest.onBeforeRequest.addListener(
     if (BYPASSTABs.includes(details.tabId)) newUrl = null;
 
     if (newUrl) {
-      if (newUrl == 'CANCEL') {
+      if (newUrl === 'CANCEL') {
         console.log(`Canceled ${url}`);
         return { cancel: true };
       }
-      else if (newUrl == 'BYPASSTAB') {
+      else if (newUrl === 'BYPASSTAB') {
         console.log(`Bybassed ${details.tabId} ${url}`);
         if (!BYPASSTABs.includes(details.tabId)) BYPASSTABs.push(details.tabId);
         return null;

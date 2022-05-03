@@ -2,18 +2,15 @@ import imgurHelper from "../../../assets/javascripts/helpers/imgur.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableImgurElement = document.getElementById("disable-imgur");
-disableImgurElement.addEventListener("change",
-    (event) => imgurHelper.setDisable(!event.target.checked)
-);
-
 let protocolElement = document.getElementById("protocol")
-protocolElement.addEventListener("change",
-    event => {
-        let protocol = event.target.options[protocolElement.selectedIndex].value
-        imgurHelper.setProtocol(protocol);
-        changeProtocolSettings(protocol);
-    }
-);
+
+document.addEventListener("change", async () => {
+    await browser.storage.local.set({
+        disableImgur: !disableImgurElement.checked,
+        imgurProtocol: protocolElement.value,
+    });
+    init();
+})
 
 function changeProtocolSettings(protocol) {
     let normalDiv = document.getElementsByClassName("normal")[0];
@@ -36,50 +33,45 @@ function changeProtocolSettings(protocol) {
     }
 }
 
-imgurHelper.init().then(() => {
-    disableImgurElement.checked = !imgurHelper.getDisable();
+function init() {
+    imgurHelper.init().then(() => {
+        browser.storage.local.get(
+            [
+                "disableImgur",
+                "imgurProtocol",
+            ],
+            r => {
+                disableImgurElement.checked = !r.disableImgur;
+                protocol.value = r.imgurProtocol;
+                changeProtocolSettings(r.imgurProtocol);
+            }
+        );
 
-    let protocol = imgurHelper.getProtocol();
-    console.log('protocol', protocol);
-    protocolElement.value = protocol;
-    changeProtocolSettings(protocol);
 
-    browser.storage.local.get("rimgoLatency").then(r => {
         commonHelper.processDefaultCustomInstances(
             'rimgo',
             'normal',
             imgurHelper,
-            document,
-            imgurHelper.getRimgoNormalRedirectsChecks,
-            imgurHelper.setRimgoNormalRedirectsChecks,
-            imgurHelper.getRimgoNormalCustomRedirects,
-            imgurHelper.setRimgoNormalCustomRedirects,
-            r.rimgoLatency
+            document
+        );
+
+        commonHelper.processDefaultCustomInstances(
+            'rimgo',
+            'tor',
+            imgurHelper,
+            document
+        );
+
+        commonHelper.processDefaultCustomInstances(
+            'rimgo',
+            'i2p',
+            imgurHelper,
+            document
         );
     });
+}
+init();
 
-    commonHelper.processDefaultCustomInstances(
-        'rimgo',
-        'tor',
-        imgurHelper,
-        document,
-        imgurHelper.getRimgoTorRedirectsChecks,
-        imgurHelper.setRimgoTorRedirectsChecks,
-        imgurHelper.getRimgoTorCustomRedirects,
-        imgurHelper.setRimgoTorCustomRedirects
-    );
-
-    commonHelper.processDefaultCustomInstances(
-        'rimgo',
-        'i2p',
-        imgurHelper,
-        document,
-        imgurHelper.getRimgoI2pRedirectsChecks,
-        imgurHelper.setRimgoI2pRedirectsChecks,
-        imgurHelper.getRimgoI2pCustomRedirects,
-        imgurHelper.setRimgoI2pCustomRedirects
-    );
-});
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");

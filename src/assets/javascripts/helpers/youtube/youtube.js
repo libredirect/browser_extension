@@ -3,46 +3,9 @@
 window.browser = window.browser || window.chrome;
 
 import commonHelper from '../common.js'
-import {
-  youtubeListen, getYoutubeListen,
-  invidiousQuality, getInvidiousQuality,
-  invidiousAlwaysProxy, getInvidiousAlwaysProxy,
-  invidiousPlayerStyle, getInvidiousPlayerStyle,
-  invidiousVideoLoop, getInvidiousVideoLoop,
-  invidiousContinueAutoplay, getInvidiousContinueAutoplay,
-  invidiousContinue, getInvidiousContinue,
-  invidiousSpeed, getInvidiousSpeed,
-  invidiousQualityDash, getInvidiousQualityDash,
-  invidiousComments, getInvidiousComments,
-  invidiousCaptions, getInvidiousCaptions,
-  invidiousRelatedVideos, getInvidiousRelatedVideos,
-  invidiousAnnotations, getInvidiousAnnotations,
-  invidiousExtendDesc, getInvidiousExtendDesc,
-  invidiousVrMode, getInvidiousVrMode,
-  invidiousSavePlayerPos, getInvidiousSavePlayerPos,
-  invidiousRegion, getInvidiousRegion,
-  invidiousDarkMode, getInvidiousDarkMode,
-  invidiousThinMode, getInvidiousThinMode,
-  invidiousDefaultHome, getInvidiousDefaultHome,
-  invidiousFeedMenuList, getInvidiousFeedMenuList,
-  getPipedBufferGoal,
-  getPipedComments,
-  getPipedDisableLBRY,
-  getPipedEnabledCodecs,
-  getPipedHomepage,
-  getPipedMinimizeDescription,
-  getPipedProxyLBRY,
-  getPipedQuality,
-  getPipedRegion,
-  getPipedSelectedSkip,
-  getPipedSponsorblock,
-  getPipedDdlTheme,
-  getPipedWatchHistory,
-  volume, getVolume, setVolume,
-  youtubeAutoplay, getAutoplay, setAutoplay,
-  getPipedMaterialSkipToLastPoint,
-  initOptions
-} from './options.js';
+import invidious from './invidious.js'
+import piped from './piped.js';
+import pipedMaterial from './pipedMaterial.js';
 
 const targets = [
   /^https?:\/{2}(www\.|music\.|m\.|)youtube\.com(\/.*|$)/,
@@ -89,164 +52,29 @@ let redirects = {
 
 const getRedirects = () => redirects;
 
-function getCustomRedirects() {
-  return {
-    "invidious": {
-      "normal": [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects],
-      "tor": [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects]
-    },
-    "piped": {
-      "normal": [...pipedNormalRedirectsChecks, ...pipedNormalCustomRedirects],
-      "tor": [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects]
-    }
-  };
-};
-
-async function setYoutubeSettings(val) {
-  return new Promise(
-    resolve => {
-      browser.storage.local.set(val).then(resolve);
-    }
-  )
-
-}
-
-function setInvidiousRedirects(val) {
-  redirects.invidious = val;
-  browser.storage.local.set({ youtubeRedirects: redirects })
-  console.log("invidiousRedirects: ", val)
-}
-
 let invidiousNormalRedirectsChecks;
-const getInvidiousNormalRedirectsChecks = () => invidiousNormalRedirectsChecks;
-function setInvidiousNormalRedirectsChecks(val) {
-  invidiousNormalRedirectsChecks = val;
-  browser.storage.local.set({ invidiousNormalRedirectsChecks })
-  console.log("invidiousNormalRedirectsChecks: ", val)
-}
-
 let invidiousNormalCustomRedirects = [];
-const getInvidiousNormalCustomRedirects = () => invidiousNormalCustomRedirects;
-function setInvidiousNormalCustomRedirects(val) {
-  invidiousNormalCustomRedirects = val;
-  browser.storage.local.set({ invidiousNormalCustomRedirects })
-  console.log("invidiousNormalCustomRedirects: ", val)
-}
-
 let invidiousTorRedirectsChecks;
-const getInvidiousTorRedirectsChecks = () => invidiousTorRedirectsChecks;
-function setInvidiousTorRedirectsChecks(val) {
-  invidiousTorRedirectsChecks = val;
-  browser.storage.local.set({ invidiousTorRedirectsChecks })
-  console.log("invidiousTorRedirectsChecks: ", val)
-}
-
 let invidiousTorCustomRedirects = [];
-const getInvidiousTorCustomRedirects = () => invidiousTorCustomRedirects;
-function setInvidiousTorCustomRedirects(val) {
-  invidiousTorCustomRedirects = val;
-  browser.storage.local.set({ invidiousTorCustomRedirects })
-  console.log("invidiousTorCustomRedirects: ", val)
-}
 
 let pipedNormalRedirectsChecks;
-const getPipedNormalRedirectsChecks = () => pipedNormalRedirectsChecks;
-function setPipedNormalRedirectsChecks(val) {
-  pipedNormalRedirectsChecks = val;
-  browser.storage.local.set({ pipedNormalRedirectsChecks })
-  console.log("pipedNormalRedirectsChecks: ", val)
-}
-
 let pipedNormalCustomRedirects = [];
-const getPipedNormalCustomRedirects = () => pipedNormalCustomRedirects;
-function setPipedNormalCustomRedirects(val) {
-  pipedNormalCustomRedirects = val;
-  browser.storage.local.set({ pipedNormalCustomRedirects })
-  console.log("pipedNormalCustomRedirects: ", val)
-}
-
 let pipedTorRedirectsChecks;
-const getPipedTorRedirectsChecks = () => pipedTorRedirectsChecks;
-function setPipedTorRedirectsChecks(val) {
-  pipedTorRedirectsChecks = val;
-  browser.storage.local.set({ pipedTorRedirectsChecks })
-  console.log("pipedTorRedirectsChecks: ", val)
-}
-
 let pipedTorCustomRedirects = [];
-const getPipedTorCustomRedirects = () => pipedTorCustomRedirects;
-function setPipedTorCustomRedirects(val) {
-  pipedTorCustomRedirects = val;
-  browser.storage.local.set({ pipedTorCustomRedirects })
-  console.log("pipedTorCustomRedirects: ", val)
-}
-
-function setPipedRedirects(val) {
-  redirects.piped = val;
-  browser.storage.local.set({ youtubeRedirects: redirects })
-  console.log("pipedRedirects: ", val)
-}
 
 let pipedMaterialNormalRedirectsChecks;
-const getPipedMaterialNormalRedirectsChecks = () => pipedMaterialNormalRedirectsChecks;
-function setPipedMaterialNormalRedirectsChecks(val) {
-  pipedMaterialNormalRedirectsChecks = val;
-  browser.storage.local.set({ pipedMaterialNormalRedirectsChecks })
-  console.log("pipedMaterialNormalRedirectsChecks: ", val)
-}
-
 let pipedMaterialNormalCustomRedirects = [];
-const getPipedMaterialNormalCustomRedirects = () => pipedMaterialNormalCustomRedirects;
-function setPipedMaterialNormalCustomRedirects(val) {
-  pipedMaterialNormalCustomRedirects = val;
-  browser.storage.local.set({ pipedMaterialNormalCustomRedirects })
-  console.log("pipedMaterialNormalCustomRedirects: ", val)
-}
-
 let pipedMaterialTorRedirectsChecks;
-const getPipedMaterialTorRedirectsChecks = () => pipedMaterialTorRedirectsChecks;
-function setPipedMaterialTorRedirectsChecks(val) {
-  pipedMaterialTorRedirectsChecks = val;
-  browser.storage.local.set({ pipedMaterialTorRedirectsChecks })
-  console.log("pipedMaterialTorRedirectsChecks: ", val)
-}
-
 let pipedMaterialTorCustomRedirects = [];
-const getPipedMaterialTorCustomRedirects = () => pipedMaterialTorCustomRedirects;
-function setPipedMaterialTorCustomRedirects(val) {
-  pipedMaterialTorCustomRedirects = val;
-  browser.storage.local.set({ pipedMaterialTorCustomRedirects })
-  console.log("pipedMaterialTorCustomRedirects: ", val)
-}
-
-function setPipedMaterialRedirects(val) {
-  redirects.pipedMaterial = val;
-  browser.storage.local.set({ youtubeRedirects: redirects })
-  console.log("pipedMaterialRedirects: ", val)
-}
 
 let disable;
-const getDisable = () => disable;
-function setDisable(val) {
-  disable = val;
-  browser.storage.local.set({ disableYoutube: disable })
-  console.log("disableYoutube: ", disable)
-}
-
-let enableCustomSettings;
-const getEnableCustomSettings = () => enableCustomSettings;
 let protocol;
-const getProtocol = () => protocol;
 let OnlyEmbeddedVideo;
-const getOnlyEmbeddedVideo = () => OnlyEmbeddedVideo;
 let frontend;
-const getFrontend = () => frontend;
 let youtubeEmbedFrontend;
-const getYoutubeEmbedFrontend = () => youtubeEmbedFrontend;
 let bypassWatchOnYoutube;
-const getBypassWatchOnYoutube = () => bypassWatchOnYoutube;
-
 let alwaysUsePreferred;
+
 function redirect(url, details, initiator) {
   if (disable) return null;
 
@@ -373,7 +201,6 @@ function redirect(url, details, initiator) {
 
 function reverse(url) {
   let protocolHost = commonHelper.protocolHost(url);
-
   if (![
     ...redirects.invidious.normal,
     ...redirects.invidious.tor,
@@ -428,13 +255,11 @@ function switchInstance(url) {
     if (protocol == 'normal') instancesList = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects];
     else if (protocol == 'tor') instancesList = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects];
   }
-  else return null;
 
-  console.log("instancesList", instancesList);
   let index = instancesList.indexOf(protocolHost);
   if (index > -1) instancesList.splice(index, 1);
 
-  if (instancesList.length === 0) return null;
+  if (instancesList.length == 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList);
   return `${randomInstance}${url.pathname}${url.search}`;
 }
@@ -481,272 +306,147 @@ function isPipedorInvidious(url, type, frontend) {
   ].includes(protocolHost);
 }
 
-function initPipedLocalStorage(tabId) {
-  if (!disable && frontend == 'piped' && enableCustomSettings)
-    browser.tabs.executeScript(
-      tabId,
-      {
-        file: "/assets/javascripts/helpers/youtube/piped-preferences.js",
-        runAt: "document_start"
-      }
-    );
-}
+async function initDefaults() {
+  console.log('youtube initDefaults')
+  return new Promise(async resolve => {
+    fetch('/instances/data.json').then(response => response.text()).then(async data => {
+      let dataJson = JSON.parse(data);
+      redirects.invidious = dataJson.invidious;
+      await browser.storage.local.set({
+        disableYoutube: false,
+        enableYoutubeCustomSettings: false,
+        OnlyEmbeddedVideo: 'both',
 
-function initPipedMaterialLocalStorage(tabId) {
-  if (!disable && frontend == 'pipedMaterial' && enableCustomSettings)
-    browser.tabs.executeScript(
-      tabId,
-      {
-        file: "/assets/javascripts/helpers/youtube/pipedMaterial-preferences.js",
-        runAt: "document_start"
-      }
-    );
-}
-
-function initInvidiousCookies() {
-  console.log('initInvidiousCookies()');
-  if (!disable && frontend == 'invidious' && enableCustomSettings) {
-    let checkedInstances;
-    if (protocol == 'normal') checkedInstances = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
-    else if (protocol == 'tor') checkedInstances = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
-
-    for (const instanceUrl of checkedInstances)
-      browser.cookies.get(
-        {
-          url: instanceUrl,
-          name: "PREFS",
+        youtubeRedirects: {
+          'invidious': dataJson.invidious,
+          'piped': redirects.piped,
+          'pipedMaterial': redirects.pipedMaterial
         },
-        cookie => {
-          let prefs = {};
-          if (cookie) {
-            prefs = JSON.parse(decodeURIComponent(cookie.value));
-            browser.cookies.remove({ url: instanceUrl, name: "PREFS" });
-          }
 
-          prefs.local = invidiousAlwaysProxy;
-          prefs.video_loop = invidiousVideoLoop;
-          prefs.continue_autoplay = invidiousContinueAutoplay;
-          prefs.continue = invidiousContinue;
-          prefs.listen = youtubeListen;
-          prefs.speed = parseFloat(invidiousSpeed);
-          prefs.quality = invidiousQuality;
-          prefs.quality_dash = invidiousQualityDash;
+        youtubeFrontend: 'invidious',
 
-          prefs.comments = invidiousComments;
-          prefs.captions = invidiousCaptions;
+        invidiousNormalRedirectsChecks: [...redirects.invidious.normal],
+        invidiousNormalCustomRedirects: [],
 
-          prefs.related_videos = invidiousRelatedVideos;
-          prefs.annotations = invidiousAnnotations
-          prefs.extend_desc = invidiousExtendDesc;
-          prefs.vr_mode = invidiousVrMode;
-          prefs.save_player_pos = invidiousSavePlayerPos;
+        invidiousTorRedirectsChecks: [...redirects.invidious.tor],
+        invidiousTorCustomRedirects: [],
 
-          prefs.volume = parseInt(volume);
-          prefs.player_style = invidiousPlayerStyle;
-          prefs.autoplay = youtubeAutoplay;
+        pipedNormalRedirectsChecks: [...redirects.piped.normal],
+        pipedNormalCustomRedirects: [],
 
-          prefs.region = invidiousRegion;
-          prefs.dark_mode = invidiousDarkMode;
-          prefs.thin_mode = invidiousThinMode;
-          prefs.default_home = invidiousDefaultHome;
-          prefs.feed_menu = invidiousFeedMenuList;
+        pipedTorRedirectsChecks: [...redirects.piped.tor],
+        pipedTorCustomRedirects: [],
 
-          browser.cookies.set({
-            url: instanceUrl,
-            name: "PREFS",
-            value: encodeURIComponent(JSON.stringify(prefs))
-          })
-        }
-      )
-  }
+        pipedMaterialNormalRedirectsChecks: [...redirects.pipedMaterial.normal],
+        pipedMaterialNormalCustomRedirects: [],
+
+        pipedMaterialTorRedirectsChecks: [...redirects.pipedMaterial.tor],
+        pipedMaterialTorCustomRedirects: [],
+
+        alwaysUsePreferred: false,
+        youtubeEmbedFrontend: 'invidious',
+        youtubeProtocol: 'normal',
+        bypassWatchOnYoutube: true,
+      })
+      
+      await invidious.initDefaults();
+      await piped.initDefaults();
+      await pipedMaterial.initDefaults();
+      resolve();
+    }
+    )
+  })
 }
 
-let theme;
 async function init() {
-  await initOptions();
   return new Promise(
     resolve => {
-      fetch('/instances/data.json').then(response => response.text()).then(data => {
-        let dataJson = JSON.parse(data);
-        browser.storage.local.get(
-          [
-            "theme",
-            "disableYoutube",
-            "enableYoutubeCustomSettings",
-            "OnlyEmbeddedVideo",
-            "youtubeRedirects",
-            "youtubeFrontend",
+      browser.storage.local.get(
+        [
+          "disableYoutube",
+          "OnlyEmbeddedVideo",
+          "youtubeRedirects",
+          "youtubeFrontend",
 
-            "invidiousNormalRedirectsChecks",
-            "invidiousNormalCustomRedirects",
+          "invidiousNormalRedirectsChecks",
+          "invidiousNormalCustomRedirects",
 
-            "invidiousTorRedirectsChecks",
-            "invidiousTorCustomRedirects",
+          "invidiousTorRedirectsChecks",
+          "invidiousTorCustomRedirects",
 
-            "pipedNormalRedirectsChecks",
-            "pipedNormalCustomRedirects",
+          "pipedNormalRedirectsChecks",
+          "pipedNormalCustomRedirects",
 
-            "pipedMaterialNormalRedirectsChecks",
-            "pipedMaterialNormalCustomRedirects",
+          "pipedTorRedirectsChecks",
+          "pipedTorCustomRedirects",
 
-            "pipedMaterialTorRedirectsChecks",
-            "pipedMaterialTorCustomRedirects",
+          "pipedMaterialNormalRedirectsChecks",
+          "pipedMaterialNormalCustomRedirects",
 
-            "pipedTorRedirectsChecks",
-            "pipedTorCustomRedirects",
-            "alwaysUsePreferred",
-            "youtubeEmbedFrontend",
+          "pipedMaterialTorRedirectsChecks",
+          "pipedMaterialTorCustomRedirects",
 
-            "youtubeProtocol",
+          "alwaysUsePreferred",
+          "youtubeEmbedFrontend",
+          "youtubeProtocol",
+          "bypassWatchOnYoutube",
+        ],
+        r => {
 
-            "bypassWatchOnYoutube"
-          ],
-          r => {
-            redirects.invidious = dataJson.invidious;
-            if (r.youtubeRedirects) redirects = r.youtubeRedirects;
+          console.log('inited r.youtubeRedirects', r.youtubeRedirects);
+          redirects = r.youtubeRedirects;
 
-            disable = r.disableYoutube ?? false;
-            enableCustomSettings = r.enableYoutubeCustomSettings ?? false;
-            protocol = r.youtubeProtocol ?? 'normal';
-            frontend = r.youtubeFrontend ?? 'invidious';
-            youtubeEmbedFrontend = r.youtubeEmbedFrontend ?? 'invidious';
+          disable = r.disableYoutube;
+          protocol = r.youtubeProtocol;
+          frontend = r.youtubeFrontend;
 
-            theme = r.theme ?? 'dark';
+          invidiousNormalRedirectsChecks = r.invidiousNormalRedirectsChecks;
+          invidiousNormalCustomRedirects = r.invidiousNormalCustomRedirects;
 
-            OnlyEmbeddedVideo = r.OnlyEmbeddedVideo ?? 'both';
+          invidiousTorRedirectsChecks = r.invidiousTorRedirectsChecks;
+          invidiousTorCustomRedirects = r.invidiousTorCustomRedirects;
 
-            invidiousNormalRedirectsChecks = r.invidiousNormalRedirectsChecks ?? [...redirects.invidious.normal];
-            invidiousNormalCustomRedirects = r.invidiousNormalCustomRedirects ?? [];
+          pipedNormalRedirectsChecks = r.pipedNormalRedirectsChecks;
+          pipedNormalCustomRedirects = r.pipedNormalCustomRedirects;
 
-            invidiousTorRedirectsChecks = r.invidiousTorRedirectsChecks ?? [...redirects.invidious.tor];
-            invidiousTorCustomRedirects = r.invidiousTorCustomRedirects ?? [];
+          pipedTorRedirectsChecks = r.pipedTorRedirectsChecks;
+          pipedTorCustomRedirects = r.pipedTorCustomRedirects;
 
-            pipedNormalRedirectsChecks = r.pipedNormalRedirectsChecks ?? [...redirects.piped.normal];
-            pipedNormalCustomRedirects = r.pipedNormalCustomRedirects ?? [];
+          pipedMaterialNormalRedirectsChecks = r.pipedMaterialNormalRedirectsChecks;
+          pipedMaterialNormalCustomRedirects = r.pipedMaterialNormalCustomRedirects;
 
-            pipedTorRedirectsChecks = r.pipedTorRedirectsChecks ?? [...redirects.piped.tor];
-            pipedTorCustomRedirects = r.pipedTorCustomRedirects ?? [];
+          pipedMaterialTorRedirectsChecks = r.pipedMaterialTorRedirectsChecks;
+          pipedMaterialTorCustomRedirects = r.pipedMaterialTorCustomRedirects;
 
-            pipedMaterialNormalRedirectsChecks = r.pipedMaterialNormalRedirectsChecks ?? [...redirects.pipedMaterial.normal];
-            pipedMaterialNormalCustomRedirects = r.pipedMaterialNormalCustomRedirects ?? [];
+          youtubeEmbedFrontend = r.youtubeEmbedFrontend;
+          OnlyEmbeddedVideo = r.OnlyEmbeddedVideo;
+          alwaysUsePreferred = r.alwaysUsePreferred;
+          bypassWatchOnYoutube = r.bypassWatchOnYoutube;
 
-            pipedMaterialTorRedirectsChecks = r.pipedMaterialTorRedirectsChecks ?? [...redirects.pipedMaterial.tor];
-            pipedMaterialTorCustomRedirects = r.pipedMaterialTorCustomRedirects ?? [];
-
-            alwaysUsePreferred = r.alwaysUsePreferred ?? false;
-
-            bypassWatchOnYoutube = r.bypassWatchOnYoutube ?? true;
-
-            initInvidiousCookies();
-
-            resolve();
-
-          });
-      });
+          resolve();
+        });
     })
 }
 
+let
+  initPipedLocalStorage = piped.initPipedLocalStorage,
+  initPipedMaterialLocalStorage = pipedMaterial.initPipedMaterialLocalStorage,
+  initInvidiousCookies = invidious.initInvidiousCookies;
+
 export default {
-  setYoutubeSettings,
-  getBypassWatchOnYoutube,
   initPipedLocalStorage,
   initPipedMaterialLocalStorage,
-  getFrontend,
-  getYoutubeEmbedFrontend,
-  getRedirects,
-  getCustomRedirects,
-  setInvidiousRedirects,
-  setPipedRedirects,
-  redirect,
-  switchInstance,
-  isPipedorInvidious,
   initInvidiousCookies,
-  getInvidiousAlwaysProxy,
-  getInvidiousQuality,
-  getInvidiousPlayerStyle,
-  getInvidiousVideoLoop,
-  getInvidiousRegion,
-  getInvidiousDarkMode,
-  getInvidiousThinMode,
-  getInvidiousDefaultHome,
-  getInvidiousFeedMenuList,
+  getRedirects,
 
-  getDisable,
-  setDisable,
-
+  redirect,
   reverse,
 
-  getEnableCustomSettings,
-  getProtocol,
-  getOnlyEmbeddedVideo,
-  setVolume,
-  getVolume,
-  setAutoplay,
-  getAutoplay,
-  getInvidiousContinueAutoplay,
-  getInvidiousContinue,
-  getYoutubeListen,
-  getInvidiousSpeed,
-  getInvidiousQualityDash,
-  getInvidiousComments,
-  getInvidiousCaptions,
-  getInvidiousRelatedVideos,
-  getInvidiousAnnotations,
-  getInvidiousExtendDesc,
-  getInvidiousVrMode,
-  getInvidiousSavePlayerPos,
-  getPipedBufferGoal,
-  getPipedComments,
-  getPipedDisableLBRY,
-  getPipedEnabledCodecs,
-  getPipedHomepage,
-  getPipedMinimizeDescription,
-  getPipedProxyLBRY,
-  getPipedQuality,
-  getPipedRegion,
-  getPipedSelectedSkip,
-  getPipedSponsorblock,
-  getPipedDdlTheme,
-  getPipedWatchHistory,
-  getPipedMaterialSkipToLastPoint,
+  switchInstance,
 
-  getInvidiousNormalRedirectsChecks,
-  setInvidiousNormalRedirectsChecks,
+  isPipedorInvidious,
 
-  getInvidiousNormalCustomRedirects,
-  setInvidiousNormalCustomRedirects,
-
-  getPipedNormalRedirectsChecks,
-  setPipedNormalRedirectsChecks,
-
-  getPipedNormalCustomRedirects,
-  setPipedNormalCustomRedirects,
-
-  getInvidiousTorRedirectsChecks,
-  setInvidiousTorRedirectsChecks,
-
-  getInvidiousTorCustomRedirects,
-  setInvidiousTorCustomRedirects,
-
-  getPipedTorRedirectsChecks,
-  setPipedTorRedirectsChecks,
-
-  getPipedTorCustomRedirects,
-  setPipedTorCustomRedirects,
-
-  getPipedMaterialNormalRedirectsChecks,
-  setPipedMaterialNormalRedirectsChecks,
-
-  getPipedMaterialNormalCustomRedirects,
-  setPipedMaterialNormalCustomRedirects,
-
-  getPipedMaterialTorRedirectsChecks,
-  setPipedMaterialTorRedirectsChecks,
-
-  getPipedMaterialTorCustomRedirects,
-  setPipedMaterialTorCustomRedirects,
-
-  setPipedMaterialRedirects,
+  initDefaults,
 
   init,
 };

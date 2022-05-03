@@ -44,7 +44,7 @@ pipedMaterialElement.addEventListener("change", async () => {
     selectSkipModify('selfpromo', selectedSkipSelfpromoElement.checked);
     selectSkipModify('music_offtopic', selectedSkipMusicOfftopicElement.checked);
 
-    await youtubeHelper.setYoutubeSettings({
+    await browser.storage.local.set({
         youtubeListen: listenElement.checked,
         pipedDisableLBRY: disableLBRYElement.checked,
         pipedProxyLBRY: proxyLBRYElement.checked,
@@ -68,77 +68,61 @@ pipedMaterialElement.addEventListener("change", async () => {
 });
 
 function init() {
-    youtubeHelper.init().then(() => {
-        autoplayElement.checked = youtubeHelper.getAutoplay();
+    browser.storage.local.get(
+        [
+            "youtubeAutoplay",
+            "youtubeVolume",
+            "youtubeListen",
 
-        listenElement.checked = youtubeHelper.getYoutubeListen();
-        disableLBRYElement.checked = youtubeHelper.getPipedDisableLBRY();
-        proxyLBRYElement.checked = youtubeHelper.getPipedProxyLBRY();
-        sponsorblockElement.checked = youtubeHelper.getPipedSponsorblock();
-        skipToLastPointElement.checked = youtubeHelper.getPipedMaterialSkipToLastPoint();
-        selectedSkipSponsorElement.checked = selectSkip.includes('sponsors');
-        selectedSkipIntroElement.checked = selectSkip.includes('intro');
-        selectedSkipOutroElement.checked = selectSkip.includes('outro');
-        selectedSkipPreviewElement.checked = selectSkip.includes('preview');
-        selectedSkipInteractionElement.checked = selectSkip.includes('interaction');
-        selectedSkipSelfpromoElement.checked = selectSkip.includes('selfpromo');
-        selectedSkipMusicOfftopicElement.checked = selectSkip.includes('music_offtopic');
+            "pipedDisableLBRY",
+            "pipedProxyLBRY",
+            "pipedSelectedSkip",
+            "pipedSponsorblock",
 
-        volumeElement.value = youtubeHelper.getVolume();
-        volumeValueElement.textContent = `${youtubeHelper.getVolume()}%`;
-        browser.storage.local.get("pipedMaterialLatency").then(r => {
-            commonHelper.processDefaultCustomInstances(
-                'pipedMaterial',
-                'normal',
-                youtubeHelper,
-                document,
-                youtubeHelper.getPipedMaterialNormalRedirectsChecks,
-                youtubeHelper.setPipedMaterialNormalRedirectsChecks,
-                youtubeHelper.getPipedMaterialNormalCustomRedirects,
-                youtubeHelper.setPipedMaterialNormalCustomRedirects,
-                r.pipedMaterialLatency,
-            );
+            "pipedMaterialSkipToLastPoint",
+        ],
+        r => {
+            autoplayElement.checked = r.youtubeAutoplay;
+
+            listenElement.checked = r.youtubeListen;
+            disableLBRYElement.checked = r.pipedDisableLBRY;
+            proxyLBRYElement.checked = r.pipedProxyLBRY;
+            sponsorblockElement.checked = r.pipedSponsorblock;
+            skipToLastPointElement.checked = r.pipedMaterialSkipToLastPoint;
+
+            selectSkip = r.pipedSelectedSkip;
+            selectedSkipSponsorElement.checked = selectSkip.includes('sponsors');
+            selectedSkipIntroElement.checked = selectSkip.includes('intro');
+            selectedSkipOutroElement.checked = selectSkip.includes('outro');
+            selectedSkipPreviewElement.checked = selectSkip.includes('preview');
+            selectedSkipInteractionElement.checked = selectSkip.includes('interaction');
+            selectedSkipSelfpromoElement.checked = selectSkip.includes('selfpromo');
+            selectedSkipMusicOfftopicElement.checked = selectSkip.includes('music_offtopic');
+
+            volumeElement.value = r.youtubeVolume;
+            volumeValueElement.textContent = `${r.youtubeVolume}%`;
+
+            commonHelper.processDefaultCustomInstances('pipedMaterial', 'normal', youtubeHelper, document);
+            commonHelper.processDefaultCustomInstances('pipedMaterial', 'tor', youtubeHelper, document);
         });
-
-        commonHelper.processDefaultCustomInstances(
-            'pipedMaterial',
-            'tor',
-            youtubeHelper,
-            document,
-            youtubeHelper.getPipedMaterialTorRedirectsChecks,
-            youtubeHelper.setPipedMaterialTorRedirectsChecks,
-            youtubeHelper.getPipedMaterialTorCustomRedirects,
-            youtubeHelper.setPipedMaterialTorCustomRedirects
-        );
-    });
 }
 init();
 
 let latencyPipedMaterialElement = document.getElementById("latency-pipedMaterial");
 let latencyPipedMaterialLabel = document.getElementById("latency-pipedMaterial-label");
 latencyPipedMaterialElement.addEventListener("click",
-  async () => {
-    let reloadWindow = () => location.reload();
-    latencyPipedMaterialElement.addEventListener("click", reloadWindow);
-    await youtubeHelper.init();
-    let redirects = youtubeHelper.getRedirects();
-    const oldHtml = latencyPipedMaterialLabel.innerHTML;
-    latencyPipedMaterialLabel.innerHTML = '...';
-    commonHelper.testLatency(latencyPipedMaterialLabel, redirects.pipedMaterial.normal).then(r => {
-      browser.storage.local.set({ pipedMaterialLatency: r });
-      latencyPipedMaterialLabel.innerHTML = oldHtml;
-      commonHelper.processDefaultCustomInstances(
-        'pipedMaterial',
-        'normal',
-        youtubeHelper,
-        document,
-        youtubeHelper.getPipedMaterialNormalRedirectsChecks,
-        youtubeHelper.setPipedMaterialNormalRedirectsChecks,
-        youtubeHelper.getPipedMaterialNormalCustomRedirects,
-        youtubeHelper.setPipedMaterialNormalCustomRedirects,
-        r,
-      );
-      latencyPipedMaterialElement.removeEventListener("click", reloadWindow);
-    });
-  }
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyPipedMaterialElement.addEventListener("click", reloadWindow);
+        await youtubeHelper.init();
+        let redirects = youtubeHelper.getRedirects();
+        const oldHtml = latencyPipedMaterialLabel.innerHTML;
+        latencyPipedMaterialLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyPipedMaterialLabel, redirects.pipedMaterial.normal).then(r => {
+            browser.storage.local.set({ pipedMaterialLatency: r });
+            latencyPipedMaterialLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances('pipedMaterial', 'normal', youtubeHelper, document);
+            latencyPipedMaterialElement.removeEventListener("click", reloadWindow);
+        });
+    }
 );

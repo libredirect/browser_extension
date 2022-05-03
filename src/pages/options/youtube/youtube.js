@@ -95,9 +95,8 @@ function changeProtocolSettings(protocol) {
     }
 }
 
-
-document.addEventListener("change", () => {
-    youtubeHelper.setYoutubeSettings({
+document.addEventListener("change", async () => {
+    await browser.storage.local.set({
         disableYoutube: !disableYoutubeElement.checked,
         youtubeFrontend: youtubeFrontendElement.value,
         youtubeEmbedFrontend: youtubeEmbedFrontendElement.value,
@@ -111,24 +110,43 @@ document.addEventListener("change", () => {
     changeFrontendsSettings();
 })
 
-youtubeHelper.init().then(() => {
-    disableYoutubeElement.checked = !youtubeHelper.getDisable();
-    enableYoutubeCustomSettingsElement.checked = youtubeHelper.getEnableCustomSettings();
-    
-    OnlyEmbeddedVideoElement.value = youtubeHelper.getOnlyEmbeddedVideo();
-    bypassWatchOnYoutubeElement.checked = youtubeHelper.getBypassWatchOnYoutube();
-    
-    let frontend = youtubeHelper.getFrontend();
-    youtubeFrontendElement.value = frontend;
-    changeFrontendsSettings();
+browser.storage.local.get(
+    [
+        "disableYoutube",
+        "enableYoutubeCustomSettings",
+        "OnlyEmbeddedVideo",
+        "youtubeRedirects",
+        "youtubeFrontend",
 
-    let protocol = youtubeHelper.getProtocol();
-    protocolElement.value = protocol;
-    changeProtocolSettings(protocol);
+        "alwaysUsePreferred",
+        "youtubeEmbedFrontend",
+        "youtubeProtocol",
+        "bypassWatchOnYoutube",
+    ],
+    r => {
+        disableYoutubeElement.checked = !r.disableYoutube;
+        enableYoutubeCustomSettingsElement.checked = r.enableYoutubeCustomSettings;
 
-    let youtubeEmbedFrontend = youtubeHelper.getYoutubeEmbedFrontend()
-    youtubeEmbedFrontendElement.value = youtubeEmbedFrontend
-    if (frontend == "freetube" || frontend == "yatte") {
-        changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontend)
-    };
-});
+        OnlyEmbeddedVideoElement.value = r.OnlyEmbeddedVideo;
+        bypassWatchOnYoutubeElement.checked = r.bypassWatchOnYoutube;
+
+        let frontend = r.youtubeFrontend;
+        youtubeFrontendElement.value = frontend;
+        changeFrontendsSettings();
+
+        let protocol = r.youtubeProtocol;
+        protocolElement.value = protocol;
+        changeProtocolSettings(protocol);
+
+        let youtubeEmbedFrontend = r.youtubeEmbedFrontend;
+        youtubeEmbedFrontendElement.value = youtubeEmbedFrontend
+        if (frontend == "freetube" || frontend == "yatte") {
+            changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontend)
+        };
+    }
+);
+
+
+window.onblur = () => {
+    youtubeHelper.initInvidiousCookies();
+}

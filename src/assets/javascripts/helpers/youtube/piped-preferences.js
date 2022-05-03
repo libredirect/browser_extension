@@ -2,7 +2,6 @@ window.browser = window.browser || window.chrome;
 
 browser.storage.local.get(
     [
-        "theme",
         "youtubeVolume",
         "youtubeAutoplay",
         "youtubeListen",
@@ -22,40 +21,21 @@ browser.storage.local.get(
         "pipedWatchHistory",
     ],
     r => {
-        let theme = r.theme ?? "dark";
-        let youtubeAutoplay = r.youtubeAutoplay ?? false;
-        let youtubeVolume = r.youtubeVolume ?? 100;
-        let youtubeListen = r.youtubeListen ?? false;
-
-        let pipedBufferGoal = r.pipedBufferGoal ?? 300;
-        let pipedComments = r.pipedComments ?? true;
-        let pipedDisableLBRY = r.pipedDisableLBRY ?? false;
-        let pipedEnabledCodecs = r.pipedEnabledCodecs ?? ["av1", "vp9", "avc"];
-        let pipedHomepage = r.pipedHomepage ?? "trending";
-        let pipedMinimizeDescription = r.pipedMinimizeDescription ?? false;
-        let pipedProxyLBRY = r.pipedProxyLBRY ?? false;
-        let pipedQuality = r.pipedQuality ?? 0;
-        let pipedRegion = r.pipedRegion ?? "US";
-        let pipedSelectedSkip = r.pipedSelectedSkip ?? ["sponsor", "interaction", "selfpromo", "music_offtopic"];
-        let pipedSponsorblock = r.pipedSponsorblock ?? true;
-        let pipedDdlTheme = r.pipedDdlTheme ?? 'auto';
-        let pipedWatchHistory = r.pipedWatchHistory ?? false;
-
-        localStorage.setItem("bufferGoal", pipedBufferGoal.toString());
-        localStorage.setItem("comments", pipedComments);
-        localStorage.setItem("disableLBRY", pipedDisableLBRY);
-        localStorage.setItem("enabledCodecs", pipedEnabledCodecs);
-        localStorage.setItem("homepage", pipedHomepage);
-        localStorage.setItem("listen", youtubeListen);
-        localStorage.setItem("minimizeDescription", pipedMinimizeDescription);
-        localStorage.setItem("playerAutoPlay", youtubeAutoplay);
-        localStorage.setItem("proxyLBRY", pipedProxyLBRY);
-        localStorage.setItem("quality", pipedQuality);
-        localStorage.setItem("region", pipedRegion);
-        localStorage.setItem("selectedSkip", pipedSelectedSkip);
-        localStorage.setItem("sponsorblock", pipedSponsorblock);
-        localStorage.setItem("theme", pipedDdlTheme);
-        localStorage.setItem("volume", youtubeVolume / 100);
-        localStorage.setItem("watchHistory", pipedWatchHistory);
+        localStorage.setItem("bufferGoal", r.pipedBufferGoal.toString());
+        localStorage.setItem("comments", r.pipedComments);
+        localStorage.setItem("disableLBRY", r.pipedDisableLBRY);
+        localStorage.setItem("enabledCodecs", r.pipedEnabledCodecs);
+        localStorage.setItem("homepage", r.pipedHomepage);
+        localStorage.setItem("listen", r.youtubeListen);
+        localStorage.setItem("minimizeDescription", r.pipedMinimizeDescription);
+        localStorage.setItem("playerAutoPlay", r.youtubeAutoplay);
+        localStorage.setItem("proxyLBRY", r.pipedProxyLBRY);
+        localStorage.setItem("quality", r.pipedQuality);
+        localStorage.setItem("region", r.pipedRegion);
+        localStorage.setItem("selectedSkip", r.pipedSelectedSkip);
+        localStorage.setItem("sponsorblock", r.pipedSponsorblock);
+        localStorage.setItem("theme", r.pipedDdlTheme);
+        localStorage.setItem("volume", r.youtubeVolume / 100);
+        localStorage.setItem("watchHistory", r.pipedWatchHistory);
     }
 )

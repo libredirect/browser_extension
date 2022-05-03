@@ -15,33 +15,22 @@ browser.storage.local.get(
         "pipedMaterialSkipToLastPoint",
     ],
     r => {
-        let theme = r.theme ?? "dark";
-        let youtubeAutoplay = r.youtubeAutoplay ?? false;
-        let youtubeVolume = r.youtubeVolume ?? 100;
-        let youtubeListen = r.youtubeListen ?? false;
-
-        let pipedDisableLBRY = r.pipedDisableLBRY ?? false;
-        let pipedProxyLBRY = r.pipedProxyLBRY ?? false;
-        let pipedSelectedSkip = r.pipedSelectedSkip ?? [];
-        let pipedSponsorblock = r.pipedSponsorblock ?? true;
-
-        let pipedMaterialSkipToLastPoint = r.pipedMaterialSkipToLastPoint ?? true;
-
         let prefs = {};
-        if (localStorage.getItem("PREFERENCES")) prefs = JSON.parse(localStorage.getItem("PREFERENCES"));
+        if (localStorage.getItem("PREFERENCES"))
+            prefs = JSON.parse(localStorage.getItem("PREFERENCES"));
 
-        if (theme == 'dark') prefs.darkMode = true;
-        if (theme == 'light') prefs.darkMode = false;
+        if (r.theme == 'dark') prefs.darkMode = true;
+        if (r.theme == 'light') prefs.darkMode = false;
 
-        prefs.volume = youtubeVolume / 100;
-        prefs.playerAutoplay = youtubeAutoplay;
+        prefs.volume = r.youtubeVolume / 100;
+        prefs.playerAutoplay = r.youtubeAutoplay;
 
-        prefs.listen = youtubeListen;
-        prefs.disableLBRY = pipedDisableLBRY;
-        prefs.proxyLBRY = pipedProxyLBRY;
-        prefs.sponsorblock = pipedSponsorblock;
-        prefs.skipToLastPoint = pipedMaterialSkipToLastPoint;
-        prefs.selectedSkip = pipedSelectedSkip;
+        prefs.listen = r.youtubeListen;
+        prefs.disableLBRY = r.pipedDisableLBRY;
+        prefs.proxyLBRY = r.pipedProxyLBRY;
+        prefs.sponsorblock = r.pipedSponsorblock;
+        prefs.skipToLastPoint = r.pipedMaterialSkipToLastPoint;
+        prefs.selectedSkip = r.pipedSelectedSkip;
 
         localStorage.setItem("PREFERENCES", JSON.stringify(prefs));
     }

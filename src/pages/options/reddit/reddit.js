@@ -45,7 +45,6 @@ document.addEventListener("change", async () => {
     init();
 })
 
-
 window.onblur = () => {
     redditHelper.initLibredditCookies();
     redditHelper.initTedditCookies();
@@ -93,100 +92,53 @@ function changeFrontendsSettings(frontend) {
     }
 }
 function init() {
-    redditHelper.init().then(() => {
-        browser.storage.local.get(
-            [
-                "disableReddit",
-                "bypassWatchOnReddit",
-                "redditProtocol",
-                "redditFrontend",
+    browser.storage.local.get(
+        [
+            "disableReddit",
+            "bypassWatchOnReddit",
+            "redditProtocol",
+            "redditFrontend",
 
-                "enableLibredditCustomSettings",
+            "enableLibredditCustomSettings",
 
-                "redditTheme",
-                "redditFrontPage",
-                "redditLayout",
-                "redditWide",
-                "redditPostSort",
-                "redditCommentSort",
-                "redditShowNsfw",
-                "redditAutoplayVideos",
-                "redditUseHls",
-                "redditHideHlsNotification",
-            ],
-            r => {
-                disableRedditElement.checked = !r.disableReddit
-                bypassWatchOnRedditElement.checked = r.bypassWatchOnReddit
-                protocolElement.value = r.redditProtocol
-                redditFrontendElement.value = r.redditFrontend
-                enableLibredditSettingsElement.checked = r.enableLibredditCustomSettings
-                changeFrontendsSettings(r.redditFrontend);
-                changeProtocolSettings(r.redditProtocol);
+            "redditTheme",
+            "redditFrontPage",
+            "redditLayout",
+            "redditWide",
+            "redditPostSort",
+            "redditCommentSort",
+            "redditShowNsfw",
+            "redditAutoplayVideos",
+            "redditUseHls",
+            "redditHideHlsNotification",
+        ],
+        r => {
+            disableRedditElement.checked = !r.disableReddit
+            bypassWatchOnRedditElement.checked = r.bypassWatchOnReddit
+            protocolElement.value = r.redditProtocol
+            redditFrontendElement.value = r.redditFrontend
+            enableLibredditSettingsElement.checked = r.enableLibredditCustomSettings
+            changeFrontendsSettings(r.redditFrontend);
+            changeProtocolSettings(r.redditProtocol);
 
-                theme.value = r.redditTheme;
-                front_page.value = r.redditFrontPage;
-                layout.value = r.redditLayout;
-                wide.checked = r.redditWide;
-                post_sort.value = r.redditPostSort;
-                comment_sort.value = r.redditCommentSort;
-                show_nsfw.checked = r.redditShowNsfw;
-                autoplay_videos.checked = r.redditAutoplayVideos;
-                use_hls.checked = r.redditUseHls;
-                hide_hls_notification.checked = r.redditHideHlsNotification;
-            }
-        )
+            theme.value = r.redditTheme;
+            front_page.value = r.redditFrontPage;
+            layout.value = r.redditLayout;
+            wide.checked = r.redditWide;
+            post_sort.value = r.redditPostSort;
+            comment_sort.value = r.redditCommentSort;
+            show_nsfw.checked = r.redditShowNsfw;
+            autoplay_videos.checked = r.redditAutoplayVideos;
+            use_hls.checked = r.redditUseHls;
+            hide_hls_notification.checked = r.redditHideHlsNotification;
+        }
+    )
 
-        browser.storage.local.get("libredditLatency").then(r => {
-            commonHelper.processDefaultCustomInstances(
-                'libreddit',
-                'normal',
-                redditHelper,
-                document,
-                redditHelper.getLibredditNormalRedirectsChecks,
-                redditHelper.setLibredditNormalRedirectsChecks,
-                redditHelper.getLibredditNormalCustomRedirects,
-                redditHelper.setLibredditNormalCustomRedirects,
-                r.libredditLatency,
-            )
-        })
+    commonHelper.processDefaultCustomInstances('libreddit', 'normal', redditHelper, document)
+    commonHelper.processDefaultCustomInstances('libreddit', 'tor', redditHelper, document)
 
-        commonHelper.processDefaultCustomInstances(
-            'libreddit',
-            'tor',
-            redditHelper,
-            document,
-            redditHelper.getLibredditTorRedirectsChecks,
-            redditHelper.setLibredditTorRedirectsChecks,
-            redditHelper.getLibredditTorCustomRedirects,
-            redditHelper.setLibredditTorCustomRedirects
-        )
-
-        browser.storage.local.get("tedditLatency").then(r => {
-            commonHelper.processDefaultCustomInstances(
-                'teddit',
-                'normal',
-                redditHelper,
-                document,
-                redditHelper.getTedditNormalRedirectsChecks,
-                redditHelper.setTedditNormalRedirectsChecks,
-                redditHelper.getTedditNormalCustomRedirects,
-                redditHelper.setTedditNormalCustomRedirects,
-                r.tedditLatency,
-            );
-        })
-
-        commonHelper.processDefaultCustomInstances(
-            'teddit',
-            'tor',
-            redditHelper,
-            document,
-            redditHelper.getTedditTorRedirectsChecks,
-            redditHelper.setTedditTorRedirectsChecks,
-            redditHelper.getTedditTorCustomRedirects,
-            redditHelper.setTedditTorCustomRedirects
-        );
-
-    })
+    commonHelper.processDefaultCustomInstances('teddit', 'normal', redditHelper, document);
+    commonHelper.processDefaultCustomInstances('teddit', 'tor', redditHelper, document);
 }
 init();
 
@@ -203,17 +155,7 @@ latencyLibredditElement.addEventListener("click",
         commonHelper.testLatency(latencyLibredditLabel, redirects.libreddit.normal).then(r => {
             browser.storage.local.set({ libredditLatency: r });
             latencyLibredditLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances(
-                'libreddit',
-                'normal',
-                redditHelper,
-                document,
-                redditHelper.getLibredditNormalRedirectsChecks,
-                redditHelper.setLibredditNormalRedirectsChecks,
-                redditHelper.getLibredditNormalCustomRedirects,
-                redditHelper.setLibredditNormalCustomRedirects,
-                r,
-            );
+            commonHelper.processDefaultCustomInstances('libreddit', 'normal', redditHelper, document);
             latencyLibredditElement.removeEventListener("click", reloadWindow);
         });
     }
@@ -232,17 +174,7 @@ latencyTedditElement.addEventListener("click",
         commonHelper.testLatency(latencyTedditLabel, redirects.teddit.normal).then(r => {
             browser.storage.local.set({ tedditLatency: r });
             latencyTedditLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances(
-                'teddit',
-                'normal',
-                redditHelper,
-                document,
-                redditHelper.getTedditNormalRedirectsChecks,
-                redditHelper.setTedditNormalRedirectsChecks,
-                redditHelper.getTedditNormalCustomRedirects,
-                redditHelper.setTedditNormalCustomRedirects,
-                r,
-            );
+            commonHelper.processDefaultCustomInstances('teddit', 'normal', redditHelper, document);
             latencyTedditElement.removeEventListener("click", reloadWindow);
         });
     }

@@ -12,13 +12,6 @@ let redirects = {
   }
 };
 const getRedirects = () => redirects;
-const getCustomRedirects = function () {
-  return {
-    "bibliogram": {
-      "normal": [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects]
-    },
-  };
-};
 function setRedirects(val) {
   redirects.bibliogram = val;
   browser.storage.local.set({ instagramRedirects: redirects })
@@ -28,40 +21,13 @@ function setRedirects(val) {
       var index = bibliogramNormalRedirectsChecks.indexOf(item);
       if (index !== -1) bibliogramNormalRedirectsChecks.splice(index, 1);
     }
-  setBibliogramNormalRedirectsChecks(bibliogramNormalRedirectsChecks);
+  browser.storage.local.set({ bibliogramNormalRedirectsChecks });
 }
 
 let bibliogramNormalRedirectsChecks;
-const getBibliogramNormalRedirectsChecks = () => bibliogramNormalRedirectsChecks;
-function setBibliogramNormalRedirectsChecks(val) {
-  bibliogramNormalRedirectsChecks = val;
-  browser.storage.local.set({ bibliogramNormalRedirectsChecks })
-  console.log("bibliogramNormalRedirectsChecks: ", val)
-}
-
 let bibliogramTorRedirectsChecks;
-const getBibliogramTorRedirectsChecks = () => bibliogramTorRedirectsChecks;
-function setBibliogramTorRedirectsChecks(val) {
-  bibliogramTorRedirectsChecks = val;
-  browser.storage.local.set({ bibliogramTorRedirectsChecks })
-  console.log("bibliogramTorRedirectsChecks: ", val)
-}
-
 let bibliogramNormalCustomRedirects = [];
-const getBibliogramNormalCustomRedirects = () => bibliogramNormalCustomRedirects;
-function setBibliogramNormalCustomRedirects(val) {
-  bibliogramNormalCustomRedirects = val;
-  browser.storage.local.set({ bibliogramNormalCustomRedirects })
-  console.log("bibliogramNormalCustomRedirects: ", val)
-}
-
 let bibliogramTorCustomRedirects = [];
-const getBibliogramTorCustomRedirects = () => bibliogramTorCustomRedirects;
-function setBibliogramTorCustomRedirects(val) {
-  bibliogramTorCustomRedirects = val;
-  browser.storage.local.set({ bibliogramTorCustomRedirects })
-  console.log("bibliogramTorCustomRedirects: ", val)
-}
 
 const reservedPaths = [
   "u",
@@ -81,20 +47,8 @@ const bypassPaths = [
   /\/(accounts\/|embeds?.js)/
 ];
 
-let disable;
-const getDisable = () => disable;
-function setDisable(val) {
-  disable = val;
-  browser.storage.local.set({ disableInstagram: disable })
-}
-
-let protocol;
-const getProtocol = () => protocol;
-function setProtocol(val) {
-  protocol = val;
-  browser.storage.local.set({ nitterProtocol: val })
-  console.log("nitterProtocol: ", val)
-}
+let disable; //disableInstagram
+let protocol; //instagramProtocol
 
 function redirect(url, type, initiator) {
   if (disable) return;
@@ -189,10 +143,7 @@ let applyThemeToSites;
 function initBibliogramCookies(url) {
   let protocolHost = commonHelper.protocolHost(url);
   browser.cookies.get(
-    {
-      url: protocolHost,
-      name: "settings"
-    },
+    { url: protocolHost, name: "settings" },
     cookie => {
       if (!cookie || !instancesCookies.includes(protocolHost)) {
         console.log(`initing cookie for ${protocolHost}`);
@@ -211,89 +162,94 @@ function initBibliogramCookies(url) {
             browser.storage.local.set({ instancesCookies })
           }
         }
-      } else {
-        console.log("cookie url", protocolHost);
-        console.log("instancesCookies", instancesCookies);
-      };
+      }
     })
 
 }
 
-async function init() {
-  return new Promise((resolve) => {
-    fetch('/instances/data.json').then(response => response.text()).then(data => {
+
+async function initDefaults() {
+  return new Promise(async resolve => {
+    fetch('/instances/data.json').then(response => response.text()).then(async data => {
       let dataJson = JSON.parse(data);
-      browser.storage.local.get(
-        [
-          "disableInstagram",
-          "instagramRedirects",
+      redirects.bibliogram = dataJson.bibliogram;
+      await browser.storage.local.set({
+        disableInstagram: false,
+        instagramRedirects: {
+          'bibliogram': redirects.bibliogram
+        },
 
-          "theme",
-          "applyThemeToSites",
+        theme: 'DEFAULT',
+        applyThemeToSites: false,
 
-          "instancesCookies",
+        instancesCookies: [],
 
-          "bibliogramNormalRedirectsChecks",
-          "bibliogramTorRedirectsChecks",
+        bibliogramNormalRedirectsChecks: [...redirects.bibliogram.normal],
+        bibliogramTorRedirectsChecks: [],
 
-          "bibliogramNormalCustomRedirects",
-          "bibliogramTorCustomRedirects",
-          "instagramProtocol"
-        ],
-        r => {
-          disable = r.disableInstagram ?? false;
+        bibliogramNormalCustomRedirects: [...redirects.bibliogram.tor],
+        bibliogramTorCustomRedirects: [],
+        instagramProtocol: "normal",
+      })
+      resolve();
+    }
+    )
+  })
+}
 
-          redirects.bibliogram = dataJson.bibliogram;
+async function init() {
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "disableInstagram",
+        "instagramRedirects",
 
-          if (r.instagramRedirects) redirects = r.instagramRedirects
+        "theme",
+        "applyThemeToSites",
 
-          theme = r.theme ?? 'DEFAULT';
-          applyThemeToSites = r.applyThemeToSites ?? false;
+        "instancesCookies",
 
-          instancesCookies = r.instancesCookies ?? [];
+        "bibliogramNormalRedirectsChecks",
+        "bibliogramTorRedirectsChecks",
 
-          bibliogramNormalRedirectsChecks = r.bibliogramNormalRedirectsChecks ?? [...redirects.bibliogram.normal];
-          bibliogramNormalCustomRedirects = r.bibliogramNormalCustomRedirects ?? [];
+        "bibliogramNormalCustomRedirects",
+        "bibliogramTorCustomRedirects",
+        "instagramProtocol"
+      ],
+      r => {
+        disable = r.disableInstagram;
+        if (r.instagramRedirects) redirects = r.instagramRedirects
 
-          bibliogramTorRedirectsChecks = r.bibliogramTorRedirectsChecks ?? [...redirects.bibliogram.tor];
-          bibliogramTorCustomRedirects = r.bibliogramTorCustomRedirects ?? [];
+        theme = r.theme;
+        applyThemeToSites = r.applyThemeToSites;
 
-          protocol = r.instagramProtocol ?? "normal";
+        instancesCookies = r.instancesCookies;
 
-          resolve();
-        }
-      )
-    })
+        bibliogramNormalRedirectsChecks = r.bibliogramNormalRedirectsChecks;
+        bibliogramNormalCustomRedirects = r.bibliogramNormalCustomRedirects;
+
+        bibliogramTorRedirectsChecks = r.bibliogramTorRedirectsChecks;
+        bibliogramTorCustomRedirects = r.bibliogramTorCustomRedirects;
+
+        protocol = r.instagramProtocol;
+
+        resolve();
+      }
+    )
   })
 }
 
 export default {
   getRedirects,
-  getCustomRedirects,
   setRedirects,
 
-  getDisable,
-  setDisable,
-
   reverse,
-
-  getProtocol,
-  setProtocol,
 
   isBibliogram,
   initBibliogramCookies,
 
-  getBibliogramNormalRedirectsChecks,
-  setBibliogramNormalRedirectsChecks,
-  getBibliogramTorRedirectsChecks,
-  setBibliogramTorRedirectsChecks,
-
-  getBibliogramNormalCustomRedirects,
-  setBibliogramNormalCustomRedirects,
-  getBibliogramTorCustomRedirects,
-  setBibliogramTorCustomRedirects,
-
   redirect,
   init,
+  initDefaults,
   switchInstance,
 };
