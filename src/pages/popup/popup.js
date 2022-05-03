@@ -182,6 +182,7 @@ function copyRaw() {
       if (!newUrl) newUrl = imgurHelper.reverse(tabUrl);
       if (newUrl) {
         navigator.clipboard.writeText(newUrl);
+        const copyRawElement = document.getElementById("copy_raw");
         const oldHtml = copyRawElement.innerHTML;
         copyRawElement.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
