@@ -21,24 +21,6 @@ import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
 import generalHelper from "../../assets/javascripts/helpers/general.js";
 
-let disableTwitterElement = document.getElementById("disable-nitter");
-let disableYoutubeElement = document.getElementById("disable-youtube");
-let disableYoutubeMusicElement = document.getElementById("disable-youtubeMusic");
-let disableInstagramElement = document.getElementById("disable-bibliogram");
-let disableMapsElement = document.getElementById("disable-osm");
-let disableRedditElement = document.getElementById("disable-reddit");
-let disableSearchElement = document.getElementById("disable-search");
-let disableElement = document.getElementById("disable-simplyTranslate");
-let disableWikipediaElement = document.getElementById("disable-wikipedia");
-let disableMediumElement = document.getElementById("disable-medium");
-let disablePeertubeElement = document.getElementById("disable-peertube");
-let disableLbryElement = document.getElementById("disable-lbry");
-let disableSendTargetsElement = document.getElementById("disable-sendTargets");
-let disableImgurElement = document.getElementById("disable-imgur");
-let disableTiktokElement = document.getElementById("disable-tiktok");
-let disablePixivElement = document.getElementById("disable-pixiv");
-let disableSpotifyElement = document.getElementById("disable-spotify");
-
 const SWITCHES = [
   "disableTwitter",
   "disableYoutube",
@@ -58,51 +40,6 @@ const SWITCHES = [
   "disableLbryTargets",
   "disableSendTarget",
 ];
-
-browser.storage.local.get(
-  SWITCHES,
-  r => {
-    disableTwitterElement.checked = !r.disableTwitter;
-    disableYoutubeElement.checked = !r.disableYoutube;
-    disableYoutubeMusicElement.checked = !r.disableYoutubeMusic;
-    disableInstagramElement.checked = !r.disableInstagram;
-    disableMapsElement.checked = !r.disableMaps;
-    disableRedditElement.checked = !r.disableReddit;
-    disableSearchElement.checked = !r.disableSearch;
-    disableElement.checked = !r.translateDisable;
-    disableWikipediaElement.checked = !r.disableWikipedia;
-    disableImgurElement.checked = !r.disableImgur;
-    disableTiktokElement.checked = !r.disableTiktok;
-    disablePixivElement.checked = !r.disablePixiv;
-    disableSpotifyElement.checked = !r.disableSpotifyTargets;
-    disableMediumElement.checked = !r.disableMedium;
-    disablePeertubeElement.checked = !r.disablePeertubeTargets;
-    disableLbryElement.checked = !r.disableLbryTargets;
-    disableSendTargetsElement.checked = r.disableSendTarget;
-  }
-)
-
-document.addEventListener("change", () => {
-  browser.storage.local.set({
-    disableTwitter: !disableTwitterElement.checked,
-    disableYoutube: !disableYoutubeElement.checked,
-    disableYoutubeMusic: !disableYoutubeMusicElement.checked,
-    disableInstagram: !disableInstagramElement.checked,
-    disableMaps: !disableMapsElement.checked,
-    disableReddit: !disableRedditElement.checked,
-    disableSearch: !disableSearchElement.checked,
-    translateDisable: !disableElement.checked,
-    disableWikipedia: !disableWikipediaElement.checked,
-    disableImgur: !disableImgurElement.checked,
-    disableTiktok: !disableTiktokElement.checked,
-    disablePixiv: !disablePixivElement.checked,
-    disableSpotifyTargets: !disableSpotifyElement.checked,
-    disableMedium: !disableMediumElement.checked,
-    disablePeertubeTargets: !disablePeertubeElement.checked,
-    disableLbryTargets: !disableLbryElement.checked,
-    disableSendTarget: !disableSendTargetsElement.checked,
-  });
-})
 
 const POPUP_EVENTS = [
   {
@@ -203,7 +140,35 @@ const setHandler = (event) => {
   if (element) setEventListener(element, type, listener);
 };
 
+const EMPTY = "";
+const CHARS = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+const isUpperChar = (c) => CHARS.has(c);
+
+const toLowerKebab = (s) => isUpperChar(s) ? `-${s}`.toLowerCase() : s;
+
+const toKebabCase = (s) => {
+  const chars = s.split(EMPTY);
+  return chars.map(toLowerKebab).join('');
+};
+
+const checkInput = (name, checked) => {
+  const id = toKebabCase(name);
+  const input = document.getElementById(id);
+  if (!input) return;
+  input.checked = !!checked;
+  const listener = async ({ target }) => {
+    const service = Object.create(null);
+    service[name] = target.checked;
+    await browser.storage.local.set(service);
+  };
+  setEventListener(input, "change", listener);
+};
+
 (async (doc) => {
+  const inputs = await browser.storage.local.get(SWITCHES);
+  for (const input of Object.entries(inputs)) checkInput(...input);
+
   for (const event of POPUP_EVENTS) setHandler(event);
 
   await generalHelper.init();
