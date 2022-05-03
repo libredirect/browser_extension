@@ -198,8 +198,7 @@ function copyRaw() {
 const setHandler = (event) => {
   const { id, type, listener } = event;
   const element = document.getElementById(id);
-  if (!element) continue;
-  setEventListener(element, type, listener);
+  if (element) setEventListener(element, type, listener);
 };
 
 (async (doc) => {
