@@ -39,26 +39,28 @@ let disableTiktokElement = document.getElementById("disable-tiktok");
 let disablePixivElement = document.getElementById("disable-pixiv");
 let disableSpotifyElement = document.getElementById("disable-spotify");
 
+const SWITCHES = [
+  "disableTwitter",
+  "disableYoutube",
+  "disableYoutubeMusic",
+  "disableInstagram",
+  "disableMaps",
+  "disableReddit",
+  "disableSearch",
+  "translateDisable",
+  "disableWikipedia",
+  "disableImgur",
+  "disableTiktok",
+  "disablePixiv",
+  "disableSpotifyTargets",
+  "disableMedium",
+  "disablePeertubeTargets",
+  "disableLbryTargets",
+  "disableSendTarget",
+];
+
 browser.storage.local.get(
-  [
-    "disableTwitter",
-    "disableYoutube",
-    "disableYoutubeMusic",
-    "disableInstagram",
-    "disableMaps",
-    "disableReddit",
-    "disableSearch",
-    "translateDisable",
-    "disableWikipedia",
-    "disableImgur",
-    "disableTiktok",
-    "disablePixiv",
-    "disableSpotifyTargets",
-    "disableMedium",
-    "disablePeertubeTargets",
-    "disableLbryTargets",
-    "disableSendTarget",
-  ],
+  SWITCHES,
   r => {
     disableTwitterElement.checked = !r.disableTwitter;
     disableYoutubeElement.checked = !r.disableYoutube;
