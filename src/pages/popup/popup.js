@@ -1,24 +1,24 @@
 "use strict";
 
-import commonHelper from "../../assets/javascripts/helpers/common.js";
-import youtubeHelper from "../../assets/javascripts/helpers/youtube/youtube.js";
-import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
-import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
-import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
-import mapsHelper from "../../assets/javascripts/helpers/maps.js";
-import redditHelper from "../../assets/javascripts/helpers/reddit.js";
-import searchHelper from "../../assets/javascripts/helpers/search.js";
-import translateHelper from "../../assets/javascripts/helpers/translate/translate.js";
-import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
-import mediumHelper from "../../assets/javascripts/helpers/medium.js";
-import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
-import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
-import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
-import spotifyHelper from "../../assets/javascripts/helpers/spotify.js";
-import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
-import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
-import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
-import generalHelper from "../../assets/javascripts/helpers/general.js";
+import commonHelper from "../../assets/javascripts/s/common.js";
+import youtube from "../../assets/javascripts/s/youtube/youtube.js";
+import youtubeMusic from "../../assets/javascripts/s/youtubeMusic.js";
+import twitter from "../../assets/javascripts/s/twitter.js";
+import instagram from "../../assets/javascripts/s/instagram.js";
+import maps from "../../assets/javascripts/s/maps.js";
+import reddit from "../../assets/javascripts/s/reddit.js";
+import search from "../../assets/javascripts/s/search.js";
+import translate from "../../assets/javascripts/s/translate/translate.js";
+import wikipedia from "../../assets/javascripts/s/wikipedia.js";
+import medium from "../../assets/javascripts/s/medium.js";
+import imgur from "../../assets/javascripts/s/imgur.js";
+import tiktok from "../../assets/javascripts/s/tiktok.js";
+import pixiv from "../../assets/javascripts/s/pixiv.js";
+import spotify from "../../assets/javascripts/s/spotify.js";
+import sendTargets from "../../assets/javascripts/s/sendTargets.js";
+import peertube from "../../assets/javascripts/s/peertube.js";
+import lbry from "../../assets/javascripts/s/lbry.js";
+import generalHelper from "../../assets/javascripts/s/general.js";
 
 import { setHandler, toKebabCase } from "./util.js";
 
@@ -72,29 +72,29 @@ function switchInstance() {
       catch (_) { return false; }
       let newUrl;
 
-      newUrl = youtubeHelper.switchInstance(tabUrl);
+      newUrl = youtube.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = twitterHelper.switchInstance(tabUrl);
+      if (!newUrl) newUrl = twitter.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = instagramHelper.switchInstance(tabUrl);
+      if (!newUrl) newUrl = instagram.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = redditHelper.switchInstance(tabUrl);
+      if (!newUrl) newUrl = reddit.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = searchHelper.switchInstance(tabUrl);
+      if (!newUrl) newUrl = search.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = translateHelper.switchInstance(tabUrl);
+      if (!newUrl) newUrl = translate.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = mediumHelper.switchInstance(tabUrl);
+      if (!newUrl) newUrl = medium.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = sendTargetsHelper.switchInstance(tabUrl);
+      if (!newUrl) newUrl = sendTargets.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = peertubeHelper.switchInstance(tabUrl);
+      if (!newUrl) newUrl = peertube.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = lbryHelper.switchInstance(tabUrl);
+      if (!newUrl) newUrl = lbry.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = imgurHelper.switchInstance(tabUrl);
+      if (!newUrl) newUrl = imgur.switchInstance(tabUrl);
 
-      if (!newUrl) newUrl = wikipediaHelper.switchInstance(tabUrl);
+      if (!newUrl) newUrl = wikipedia.switchInstance(tabUrl);
 
       if (newUrl) {
         tabs.update({ url: newUrl });
@@ -114,11 +114,11 @@ function copyRaw() {
       try { tabUrl = new URL(url); }
       catch (_) { return false; }
       let newUrl;
-      newUrl = youtubeHelper.reverse(tabUrl);
-      if (!newUrl) newUrl = twitterHelper.reverse(tabUrl);
-      if (!newUrl) newUrl = instagramHelper.reverse(tabUrl);
-      if (!newUrl) newUrl = tiktokHelper.reverse(tabUrl);
-      if (!newUrl) newUrl = imgurHelper.reverse(tabUrl);
+      newUrl = youtube.reverse(tabUrl);
+      if (!newUrl) newUrl = twitter.reverse(tabUrl);
+      if (!newUrl) newUrl = instagram.reverse(tabUrl);
+      if (!newUrl) newUrl = tiktok.reverse(tabUrl);
+      if (!newUrl) newUrl = imgur.reverse(tabUrl);
       if (newUrl) {
         navigator.clipboard.writeText(newUrl);
         const copyRawElement = document.getElementById("copy_raw");
