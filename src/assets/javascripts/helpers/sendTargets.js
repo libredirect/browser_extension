@@ -16,15 +16,6 @@ let redirects = {
 }
 
 const getRedirects = () => redirects;
-const getCustomRedirects = function () {
-    return {
-        "send": {
-            "normal": [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects],
-	    "tor": [...sendTorRedirectsChecks, ...sendTorCustomRedirects]
-        },
-    };
-};
-
 function setRedirects(val) {
     redirects.send = val;
     browser.storage.local.set({ sendTargetsRedirects: redirects })
@@ -34,62 +25,23 @@ function setRedirects(val) {
             var index = sendNormalRedirectsChecks.indexOf(item);
             if (index !== -1) sendNormalRedirectsChecks.splice(index, 1);
         }
-    setSendNormalRedirectsChecks(sendNormalRedirectsChecks);
+    browser.storage.local.set({ sendNormalRedirectsChecks })
 
     for (const item of sendTorRedirectsChecks)
         if (!redirects.send.normal.includes(item)) {
             var index = sendTorRedirectsChecks.indexOf(item);
             if (index !== -1) sendTorRedirectsChecks.splice(index, 1);
         }
-    setSendTorRedirectsChecks(sendTorRedirectsChecks);
+    browser.storage.local.set({ sendTorRedirectsChecks })
 }
 
 let sendNormalRedirectsChecks;
-const getSendNormalRedirectsChecks = () => sendNormalRedirectsChecks;
-function setSendNormalRedirectsChecks(val) {
-    sendNormalRedirectsChecks = val;
-    browser.storage.local.set({ sendNormalRedirectsChecks })
-    console.log("sendNormalRedirectsChecks: ", val)
-}
-
 let sendTorRedirectsChecks;
-const getSendTorRedirectsChecks = () => sendTorRedirectsChecks;
-function setSendTorRedirectsChecks(val) {
-    sendTorRedirectsChecks = val;
-    browser.storage.local.set({ sendTorRedirectsChecks })
-    console.log("sendTorRedirectsChecks: ", val)
-}
-
 let sendNormalCustomRedirects = [];
-const getSendNormalCustomRedirects = () => sendNormalCustomRedirects;
-function setSendNormalCustomRedirects(val) {
-    sendNormalCustomRedirects = val;
-    browser.storage.local.set({ sendNormalCustomRedirects })
-    console.log("sendNormalCustomRedirects: ", val)
-}
-
 let sendTorCustomRedirects = [];
-const getSendTorCustomRedirects = () => sendTorCustomRedirects;
-function setSendTorCustomRedirects(val) {
-    sendTorCustomRedirects = val;
-    browser.storage.local.set({ sendTorCustomRedirects })
-    console.log("sendTorCustomRedirects: ", val)
-}
 
-let disable;
-const getDisable = () => disable;
-function setDisable(val) {
-    disable = val;
-    browser.storage.local.set({ disableSendTarget: disable })
-}
-
-let protocol;
-const getProtocol = () => protocol;
-function setProtocol(val) {
-    protocol = val;
-    browser.storage.local.set({ sendTargetsProtocol: val })
-    console.log("sendTargetsProtocol: ", val)
-}
+let disable; // disableSendTarget
+let protocol; // sendTargetsProtocol
 
 function switchInstance(url) {
     let protocolHost = commonHelper.protocolHost(url);
@@ -136,68 +88,61 @@ function redirect(url, type, initiator) {
     return randomInstance;
 }
 
+async function initDefaults() {
+    fetch('/instances/data.json').then(response => response.text()).then(async data => {
+        let dataJson = JSON.parse(data);
+        redirects.send = dataJson.send;
+        await browser.storage.local.set({
+            disableSendTarget: false,
+            sendTargetsRedirects: redirects,
+
+            sendNormalRedirectsChecks: [...redirects.send.normal],
+            sendNormalCustomRedirects: [],
+
+            sendTorRedirectsChecks: [...redirects.send.tor],
+            sendTorCustomRedirects: [],
+
+            sendTargetsProtocol: "normal",
+        })
+    })
+}
+
 async function init() {
-    return new Promise(resolve => {
-        fetch('/instances/data.json').then(response => response.text()).then(data => {
-            let dataJson = JSON.parse(data);
-            browser.storage.local.get(
-                [
-                    "disableSendTarget",
-                    "sendTargetsRedirects",
+    browser.storage.local.get(
+        [
+            "disableSendTarget",
+            "sendTargetsRedirects",
 
-                    "sendNormalRedirectsChecks",
-                    "sendNormalCustomRedirects",
+            "sendNormalRedirectsChecks",
+            "sendNormalCustomRedirects",
 
-                    "sendTorRedirectsChecks",
-                    "sendTorCustomRedirects",
+            "sendTorRedirectsChecks",
+            "sendTorCustomRedirects",
 
-                    "sendTargetsProtocol"
-                ],
-                r => {
-		    redirects.send = dataJson.send;
-                    disable = r.disableSendTarget ?? false;
+            "sendTargetsProtocol"
+        ],
+        r => {
 
-                    protocol = r.sendTargetsProtocol ?? "normal";
+            disable = r.disableSendTarget;
+            protocol = r.sendTargetsProtocol;
+            redirects = r.sendTargetsRedirects;
 
-                    if (r.sendTargetsRedirects) redirects = r.sendTargetsRedirects;
+            sendNormalRedirectsChecks = r.sendNormalRedirectsChecks;
+            sendNormalCustomRedirects = r.sendNormalCustomRedirects;
 
-                    sendNormalRedirectsChecks = r.sendNormalRedirectsChecks ?? [...redirects.send.normal];
-                    sendNormalCustomRedirects = r.sendNormalCustomRedirects ?? [];
-
-                    sendTorRedirectsChecks = r.sendTorRedirectsChecks ?? [...redirects.send.tor];
-                    sendTorCustomRedirects = r.sendTorCustomRedirects ?? [];
-
-                    resolve();
-                }
-            )
-        });
-    });
+            sendTorRedirectsChecks = r.sendTorRedirectsChecks;
+            sendTorCustomRedirects = r.sendTorCustomRedirects;
+        }
+    )
 }
 
 export default {
-
     getRedirects,
-    getCustomRedirects,
     setRedirects,
-
-    getDisable,
-    setDisable,
-
-    getProtocol,
-    setProtocol,
-
-    getSendNormalRedirectsChecks,
-    setSendNormalRedirectsChecks,
-    getSendTorRedirectsChecks,
-    setSendTorRedirectsChecks,
-
-    getSendTorCustomRedirects,
-    setSendTorCustomRedirects,
-    getSendNormalCustomRedirects,
-    setSendNormalCustomRedirects,
 
     switchInstance,
 
     redirect,
+    initDefaults,
     init,
 };

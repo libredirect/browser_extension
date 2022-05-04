@@ -23,7 +23,6 @@ Instagram => [Bibliogram](https://sr.ht/~cadence/bibliogram/)\
 TikTok => [ProxiTok](https://github.com/pablouser1/ProxiTok)\
 Reddit => [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances), [Old Reddit](https://old.reddit.com)\
 Imgur => [Rimgo](https://codeberg.org/video-prize-ranch/rimgo)\
-Pixiv => [pixiv萌え](https://github.com/kokororin/pixiv.moe)\
 Speedtest => [Librespeed](https://github.com/librespeed/)\
 Spotify => [Soju](https://github.com/coffeebank/soju)\
 Wikipedia => [Wikiless](https://codeberg.org/orenom/wikiless)\

@@ -1,66 +1,75 @@
 import searchHelper from "../../../assets/javascripts/helpers/search.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
+let searxDiv = document.getElementById("searx");
+let searxngDiv = document.getElementById("searxng")
+let whoogleDiv = document.getElementById("whoogle");
+
 let disableSearchElement = document.getElementById("disable-search");
-disableSearchElement.addEventListener("change", event => searchHelper.setDisable(!event.target.checked));
+let searchFrontendElement = document.getElementById("search-frontend");
+let protocolElement = document.getElementById("protocol")
 
+browser.storage.local.get(
+  [
+    "disableSearch",
+    "searchFrontend",
+    "searchProtocol",
+  ],
+  r => {
+    disableSearchElement.checked = !disableSearch;
 
-let searxDivElement = document.getElementById("searx");
-let searxngDivElement = document.getElementById("searxng")
-let whoogleDivElement = document.getElementById("whoogle");
+    searchFrontendElement.value = r.searchFronten;
+    changeFrontendsSettings(r.searchFronten);
 
+    protocolElement.value = r.searchProtocol;
+    changeProtocolSettings(r.searchProtocol);
+  }
+);
+
+document.addEventListener("change", async () => {
+  await browser.storage.local.set({
+    disableSearch: !disableSearchElement.checked,
+    searchFrontend: searchFrontendElement.value,
+    searchProtocol: protocolElement.value,
+  });
+  changeFrontendsSettings(searchFrontendElement.value);
+  changeProtocolSettings(protocolElement.value);
+})
 
 function changeFrontendsSettings(frontend) {
   let SearxWhoogleElement = document.getElementById("searx-whoogle");
   if (frontend == 'searx') {
-    searxDivElement.style.display = 'block';
-    searxngDivElement.style.display = 'none';
-    whoogleDivElement.style.display = 'none';
+    searxDiv.style.display = 'block';
+    searxngDiv.style.display = 'none';
+    whoogleDiv.style.display = 'none';
     SearxWhoogleElement.style.display = 'block';
   }
   else if (frontend == 'searxng') {
-    searxDivElement.style.display = 'none';
-    searxngDivElement.style.display = 'block';
-    whoogleDivElement.style.display = 'none';
+    searxDiv.style.display = 'none';
+    searxngDiv.style.display = 'block';
+    whoogleDiv.style.display = 'none';
     SearxWhoogleElement.style.display = 'block';
   }
   else if (frontend == 'whoogle') {
-    searxDivElement.style.display = 'none';
-    searxngDivElement.style.display = 'none';
-    whoogleDivElement.style.display = 'block';
+    searxDiv.style.display = 'none';
+    searxngDiv.style.display = 'none';
+    whoogleDiv.style.display = 'block';
     SearxWhoogleElement.style.display = 'block';
   }
 }
-let searchFrontendElement = document.getElementById("search-frontend");
-searchFrontendElement.addEventListener("change",
-  event => {
-    let frontend = event.target.options[searchFrontendElement.selectedIndex].value
-    searchHelper.setFrontend(frontend)
-    changeFrontendsSettings(frontend);
-  }
-);
-
-let protocolElement = document.getElementById("protocol")
-protocolElement.addEventListener("change",
-  event => {
-    let protocol = event.target.options[protocolElement.selectedIndex].value
-    searchHelper.setProtocol(protocol);
-    changeProtocolSettings(protocol);
-  }
-);
 
 function changeProtocolSettings(protocol) {
-  let normalsearxDiv = searxDivElement.getElementsByClassName("normal")[0];
-  let torsearxDiv = searxDivElement.getElementsByClassName("tor")[0];
-  let i2psearxDiv = searxDivElement.getElementsByClassName("i2p")[0];
+  let normalsearxDiv = searxDiv.getElementsByClassName("normal")[0];
+  let torsearxDiv = searxDiv.getElementsByClassName("tor")[0];
+  let i2psearxDiv = searxDiv.getElementsByClassName("i2p")[0];
 
-  let normalsearxngDiv = searxngDivElement.getElementsByClassName("normal")[0];
-  let torsearxngDiv = searxngDivElement.getElementsByClassName("tor")[0];
-  let i2psearxngDiv = searxngDivElement.getElementsByClassName("i2p")[0];
+  let normalsearxngDiv = searxngDiv.getElementsByClassName("normal")[0];
+  let torsearxngDiv = searxngDiv.getElementsByClassName("tor")[0];
+  let i2psearxngDiv = searxngDiv.getElementsByClassName("i2p")[0];
 
-  let normalwhoogleDiv = whoogleDivElement.getElementsByClassName("normal")[0];
-  let torwhoogleDiv = whoogleDivElement.getElementsByClassName("tor")[0];
-  let i2pwhoogleDiv = whoogleDivElement.getElementsByClassName("i2p")[0];
+  let normalwhoogleDiv = whoogleDiv.getElementsByClassName("normal")[0];
+  let torwhoogleDiv = whoogleDiv.getElementsByClassName("tor")[0];
+  let i2pwhoogleDiv = whoogleDiv.getElementsByClassName("i2p")[0];
 
   if (protocol == 'normal') {
     normalsearxDiv.style.display = 'block';
@@ -97,125 +106,15 @@ function changeProtocolSettings(protocol) {
   }
 }
 
-searchHelper.init().then(() => {
-  disableSearchElement.checked = !searchHelper.getDisable();
-  let frontend = searchHelper.getFrontend();
-  searchFrontendElement.value = frontend;
-  changeFrontendsSettings(frontend);
-
-  let protocol = searchHelper.getProtocol();
-  protocolElement.value = protocol;
-  changeProtocolSettings(protocol);
-
-  browser.storage.local.get("searxLatency").then(r => {
-    commonHelper.processDefaultCustomInstances(
-      'searx',
-      'normal',
-      searchHelper,
-      document,
-      searchHelper.getSearxNormalRedirectsChecks,
-      searchHelper.setSearxNormalRedirectsChecks,
-      searchHelper.getSearxNormalCustomRedirects,
-      searchHelper.setSearxNormalCustomRedirects,
-      r.searxLatency
-    );
-  })
-
-  commonHelper.processDefaultCustomInstances(
-    'searx',
-    'tor',
-    searchHelper,
-    document,
-    searchHelper.getSearxTorRedirectsChecks,
-    searchHelper.setSearxTorRedirectsChecks,
-    searchHelper.getSearxTorCustomRedirects,
-    searchHelper.setSearxTorCustomRedirects
-  );
-
-  commonHelper.processDefaultCustomInstances(
-    'searx',
-    'i2p',
-    searchHelper,
-    document,
-    searchHelper.getSearxI2pRedirectsChecks,
-    searchHelper.setSearxI2pRedirectsChecks,
-    searchHelper.getSearxI2pCustomRedirects,
-    searchHelper.setSearxI2pCustomRedirects
-  );
-
-  browser.storage.local.get("searxngLatency").then(r => {
-    commonHelper.processDefaultCustomInstances(
-      'searxng',
-      'normal',
-      searchHelper,
-      document,
-      searchHelper.getSearxngNormalRedirectsChecks,
-      searchHelper.setSearxngNormalRedirectsChecks,
-      searchHelper.getSearxngNormalCustomRedirects,
-      searchHelper.setSearxngNormalCustomRedirects,
-      r.searxngLatency,
-    );
-  })
-
-  commonHelper.processDefaultCustomInstances(
-    'searxng',
-    'tor',
-    searchHelper,
-    document,
-    searchHelper.getSearxngTorRedirectsChecks,
-    searchHelper.setSearxngTorRedirectsChecks,
-    searchHelper.getSearxngTorCustomRedirects,
-    searchHelper.setSearxngTorCustomRedirects
-  );
-
-  commonHelper.processDefaultCustomInstances(
-    'searxng',
-    'i2p',
-    searchHelper,
-    document,
-    searchHelper.getSearxngI2pRedirectsChecks,
-    searchHelper.setSearxngI2pRedirectsChecks,
-    searchHelper.getSearxngI2pCustomRedirects,
-    searchHelper.setSearxngI2pCustomRedirects
-  );
-
-  browser.storage.local.get("whoogleLatency").then(r => {
-    commonHelper.processDefaultCustomInstances(
-      'whoogle',
-      'normal',
-      searchHelper,
-      document,
-      searchHelper.getWhoogleNormalRedirectsChecks,
-      searchHelper.setWhoogleNormalRedirectsChecks,
-      searchHelper.getWhoogleNormalCustomRedirects,
-      searchHelper.setWhoogleNormalCustomRedirects,
-      r.whoogleLatency,
-    );
-  })
-
-  commonHelper.processDefaultCustomInstances(
-    'whoogle',
-    'tor',
-    searchHelper,
-    document,
-    searchHelper.getWhoogleTorRedirectsChecks,
-    searchHelper.setWhoogleTorRedirectsChecks,
-    searchHelper.getWhoogleTorCustomRedirects,
-    searchHelper.setWhoogleTorCustomRedirects
-  );
-
-  commonHelper.processDefaultCustomInstances(
-    'whoogle',
-    'i2p',
-    searchHelper,
-    document,
-    searchHelper.getWhoogleI2pRedirectsChecks,
-    searchHelper.setWhoogleI2pRedirectsChecks,
-    searchHelper.getWhoogleI2pCustomRedirects,
-    searchHelper.setWhoogleI2pCustomRedirects
-  );
-});
-
+commonHelper.processDefaultCustomInstances('searx', 'normal', searchHelper, document);
+commonHelper.processDefaultCustomInstances('searx', 'tor', searchHelper, document);
+commonHelper.processDefaultCustomInstances('searx', 'i2p', searchHelper, document);
+commonHelper.processDefaultCustomInstances('searxng', 'normal', searchHelper, document);
+commonHelper.processDefaultCustomInstances('searxng', 'tor', searchHelper, document);
+commonHelper.processDefaultCustomInstances('searxng', 'i2p', searchHelper, document);
+commonHelper.processDefaultCustomInstances('whoogle', 'normal', searchHelper, document);
+commonHelper.processDefaultCustomInstances('whoogle', 'tor', searchHelper, document);
+commonHelper.processDefaultCustomInstances('whoogle', 'i2p', searchHelper, document);
 
 let latencySearxElement = document.getElementById("latency-searx");
 let latencySearxLabel = document.getElementById("latency-searx-label");
@@ -230,17 +129,7 @@ latencySearxElement.addEventListener("click",
     commonHelper.testLatency(latencySearxLabel, redirects.searx.normal).then(r => {
       browser.storage.local.set({ searxLatency: r });
       latencySearxLabel.innerHTML = oldHtml;
-      commonHelper.processDefaultCustomInstances(
-        'searx',
-        'normal',
-        searchHelper,
-        document,
-        searchHelper.getSearxNormalRedirectsChecks,
-        searchHelper.setSearxNormalRedirectsChecks,
-        searchHelper.getSearxNormalCustomRedirects,
-        searchHelper.setSearxNormalCustomRedirects,
-        r,
-      );
+      commonHelper.processDefaultCustomInstances('searx', 'normal', searchHelper, document);
       latencySearxElement.removeEventListener("click", reloadWindow);
     });
   }
@@ -259,17 +148,7 @@ latencySearxngElement.addEventListener("click",
     commonHelper.testLatency(latencySearxngLabel, redirects.searxng.normal).then(r => {
       browser.storage.local.set({ searxngLatency: r });
       latencySearxngLabel.innerHTML = oldHtml;
-      commonHelper.processDefaultCustomInstances(
-        'searxng',
-        'normal',
-        searchHelper,
-        document,
-        searchHelper.getSearxngNormalRedirectsChecks,
-        searchHelper.setSearxngNormalRedirectsChecks,
-        searchHelper.getSearxngNormalCustomRedirects,
-        searchHelper.setSearxngNormalCustomRedirects,
-        r,
-      );
+      commonHelper.processDefaultCustomInstances('searxng', 'normal', searchHelper, document);
       latencySearxngElement.removeEventListener("click", reloadWindow);
     });
   }
@@ -288,18 +167,13 @@ latencyWhoogleElement.addEventListener("click",
     commonHelper.testLatency(latencyWhoogleLabel, redirects.whoogle.normal).then(r => {
       browser.storage.local.set({ whoogleLatency: r });
       latencyWhoogleLabel.innerHTML = oldHtml;
-      commonHelper.processDefaultCustomInstances(
-        'whoogle',
-        'normal',
-        searchHelper,
-        document,
-        searchHelper.getWhoogleNormalRedirectsChecks,
-        searchHelper.setWhoogleNormalRedirectsChecks,
-        searchHelper.getWhoogleNormalCustomRedirects,
-        searchHelper.setWhoogleNormalCustomRedirects,
-        r,
-      );
+      commonHelper.processDefaultCustomInstances('whoogle', 'normal', searchHelper, document);
       latencyWhoogleElement.removeEventListener("click", reloadWindow);
     });
   }
 );
+
+window.onblur = () => {
+  searchHelper.initSearxCookies();
+  searchHelper.initSearxngCookies();
+}

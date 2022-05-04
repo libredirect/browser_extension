@@ -33,17 +33,7 @@ mapsHelper.init().then(() => {
     changeFrontendsSettings(frontend);
 
     browser.storage.local.get("facilLatency").then(r => {
-        commonHelper.processDefaultCustomInstances(
-            'facil',
-            'normal',
-            mapsHelper,
-            document,
-            mapsHelper.getFacilNormalRedirectsChecks,
-            mapsHelper.setFacilNormalRedirectsChecks,
-            mapsHelper.getFacilNormalCustomRedirects,
-            mapsHelper.setFacilNormalCustomRedirects,
-            r.facilLatency,
-        )
+        commonHelper.processDefaultCustomInstances('facil', 'normal', mapsHelper, document, r.facilLatency)
     })
 })
 
@@ -60,17 +50,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.facil.normal).then(r => {
             browser.storage.local.set({ facilLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances(
-                'facil',
-                'normal',
-                mapsHelper,
-                document,
-                mapsHelper.getFacilNormalRedirectsChecks,
-                mapsHelper.setFacilNormalRedirectsChecks,
-                mapsHelper.getFacilNormalCustomRedirects,
-                mapsHelper.setFacilNormalCustomRedirects,
-                r,
-            );
+            commonHelper.processDefaultCustomInstances('facil', 'normal', mapsHelper, document);
             latencyElement.removeEventListener("click", reloadWindow);
         });
     }

@@ -137,8 +137,9 @@ function redirect(url, details, initiator) {
   if (frontend == 'yatte' && details.type === "main_frame")
     return url.href.replace(/^https?:\/{2}/, 'yattee://');
 
-  else if (frontend == 'freetube' && details.type === "main_frame")
-    return `freetube://${url}`;
+  else if (frontend == 'freetube' && details.type === "main_frame") {
+    return `freetube://https:${url.pathname}${url.search}`;
+  }
 
   else if (frontend == 'freetube' && details.type !== "main_frame" && youtubeEmbedFrontend == "youtube")
     return null;
@@ -265,6 +266,7 @@ function switchInstance(url) {
 }
 
 function isPipedorInvidious(url, type, frontend) {
+  init();
   let protocolHost = commonHelper.protocolHost(url);
 
   if (type !== "main_frame" && type !== "sub_frame") return false;
@@ -348,7 +350,7 @@ async function initDefaults() {
         youtubeProtocol: 'normal',
         bypassWatchOnYoutube: true,
       })
-      
+
       await invidious.initDefaults();
       await piped.initDefaults();
       await pipedMaterial.initDefaults();
@@ -392,8 +394,6 @@ async function init() {
           "bypassWatchOnYoutube",
         ],
         r => {
-
-          console.log('inited r.youtubeRedirects', r.youtubeRedirects);
           redirects = r.youtubeRedirects;
 
           disable = r.disableYoutube;

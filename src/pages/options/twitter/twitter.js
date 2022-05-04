@@ -21,8 +21,56 @@ let hlsPlayback = document.getElementById('nitter').getElementsByClassName('hlsP
 let proxyVideos = document.getElementById('nitter').getElementsByClassName('proxyVideos')[0];
 let muteVideos = document.getElementById('nitter').getElementsByClassName('muteVideos')[0];
 let autoplayGifs = document.getElementById('nitter').getElementsByClassName('autoplayGifs')[0];
-
 let nitterElement = document.getElementById("nitter");
+
+browser.storage.local.get(
+    [
+        "disableTwitter",
+        "twitterProtocol",
+        "enableTwitterCustomSettings",
+        "bypassWatchOnTwitter",
+        "nitterTheme",
+        "nitterInfiniteScroll",
+        "nitterStickyProfile",
+        "nitterBidiSupport",
+        "nitterHideTweetStats",
+        "nitterHideBanner",
+        "nitterHidePins",
+        "nitterHideReplies",
+        "nitterSquareAvatars",
+        "nitterMp4Playback",
+        "nitterHlsPlayback",
+        "nitterProxyVideos",
+        "nitterMuteVideos",
+        "nitterAutoplayGifs",
+    ],
+    r => {
+        disableTwitterElement.checked = !r.disableTwitter;
+        enableYoutubeCustomSettingsElement.checked = r.enableTwitterCustomSettings;
+        bypassWatchOnTwitterElement.checked = r.bypassWatchOnTwitter;
+        protocolElement.value = r.twitterProtocol;
+        changeProtocolSettings(r.twitterProtocol);
+        
+        // Display
+        theme.value = r.nitterTheme;
+        infiniteScroll.checked = r.nitterInfiniteScroll;
+        stickyProfile.checked = r.nitterStickyProfile;
+        bidiSupport.checked = r.nitterBidiSupport;
+        hideTweetStats.checked = r.nitterHideTweetStats;
+        hideBanner.checked = r.nitterHideBanner;
+        hidePins.checked = r.nitterHidePins;
+        hideReplies.checked = r.nitterHideReplies;
+        squareAvatars.checked = r.nitterSquareAvatars;
+        
+        // Media
+        mp4Playback.checked = r.nitterMp4Playback;
+        hlsPlayback.checked = r.nitterHlsPlayback;
+        proxyVideos.checked = r.nitterProxyVideos;
+        muteVideos.checked = r.nitterMuteVideos;
+        autoplayGifs.checked = r.nitterAutoplayGifs;
+    }
+)
+
 document.addEventListener("change", async () => {
     await browser.storage.local.set({
         disableTwitter: !disableTwitterElement.checked,
@@ -68,58 +116,8 @@ function changeProtocolSettings(protocol) {
         for (const item of customSettingsDivElement) item.style.display = 'none';
 }
 
-function init() {
-    twitterHelper.init().then(() => {
-        disableTwitterElement.checked = !twitterHelper.getDisable();
-        enableYoutubeCustomSettingsElement.checked = twitterHelper.getEnableCustomSettings();
-        bypassWatchOnTwitterElement.checked = twitterHelper.getBypassWatchOnTwitter();
-
-        let protocol = twitterHelper.getProtocol();
-        protocolElement.value = protocol;
-        changeProtocolSettings(protocol);
-        theme.value = twitterHelper.getTheme();
-        infiniteScroll.checked = twitterHelper.getInfiniteScroll();
-        stickyProfile.checked = twitterHelper.getStickyProfile();
-        bidiSupport.checked = twitterHelper.getBidiSupport();
-        hideTweetStats.checked = twitterHelper.getHideTweetStats();
-        hideBanner.checked = twitterHelper.getHideBanner();
-        hidePins.checked = twitterHelper.getHidePins();
-        hideReplies.checked = twitterHelper.getHideReplies();
-        squareAvatars.checked = twitterHelper.getSquareAvatars();
-        mp4Playback.checked = twitterHelper.getMp4Playback();
-        hlsPlayback.checked = twitterHelper.getHlsPlayback();
-        proxyVideos.checked = twitterHelper.getProxyVideos();
-        muteVideos.checked = twitterHelper.getMuteVideos();
-        autoplayGifs.checked = twitterHelper.getAutoplayGifs();
-
-        browser.storage.local.get("nitterLatency").then(r => {
-            commonHelper.processDefaultCustomInstances(
-                'nitter',
-                'normal',
-                twitterHelper,
-                document,
-                twitterHelper.getNitterNormalRedirectsChecks,
-                twitterHelper.setNitterNormalRedirectsChecks,
-                twitterHelper.getNitterNormalCustomRedirects,
-                twitterHelper.setNitterNormalCustomRedirects,
-                r.nitterLatency,
-            );
-        });
-
-        commonHelper.processDefaultCustomInstances(
-            'nitter',
-            'tor',
-            twitterHelper,
-            document,
-            twitterHelper.getNitterTorRedirectsChecks,
-            twitterHelper.setNitterTorRedirectsChecks,
-            twitterHelper.getNitterTorCustomRedirects,
-            twitterHelper.setNitterTorCustomRedirects
-        )
-    });
-}
-init();
-
+// commonHelper.processDefaultCustomInstances('nitter', 'normal', twitterHelper, document);
+// commonHelper.processDefaultCustomInstances('nitter', 'tor', twitterHelper, document)
 window.onblur = twitterHelper.initNitterCookies;
 
 let latencyElement = document.getElementById("latency");
@@ -135,17 +133,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.nitter.normal).then(r => {
             browser.storage.local.set({ nitterLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances(
-                'nitter',
-                'normal',
-                twitterHelper,
-                document,
-                twitterHelper.getNitterNormalRedirectsChecks,
-                twitterHelper.setNitterNormalRedirectsChecks,
-                twitterHelper.getNitterNormalCustomRedirects,
-                twitterHelper.setNitterNormalCustomRedirects,
-                r,
-            )
+            commonHelper.processDefaultCustomInstances('nitter', 'normal', twitterHelper, document)
             latencyElement.removeEventListener("click", reloadWindow)
         });
     }

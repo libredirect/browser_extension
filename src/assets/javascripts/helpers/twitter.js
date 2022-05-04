@@ -15,17 +15,8 @@ let redirects = {
     "tor": []
   },
 };
+
 const getRedirects = () => redirects;
-
-function getCustomRedirects() {
-  return {
-    "nitter": {
-      "normal": [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects],
-      "tor": [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects]
-    },
-  };
-};
-
 function setRedirects(val) {
   redirects.nitter = val;
   browser.storage.local.set({ twitterRedirects: redirects })
@@ -35,133 +26,44 @@ function setRedirects(val) {
       var index = nitterNormalRedirectsChecks.indexOf(item);
       if (index !== -1) nitterNormalRedirectsChecks.splice(index, 1);
     }
-  setNitterNormalRedirectsChecks(nitterNormalRedirectsChecks);
+  browser.storage.local.set({ nitterNormalRedirectsChecks })
 
   for (const item of nitterTorRedirectsChecks)
     if (!redirects.nitter.tor.includes(item)) {
       var index = nitterTorRedirectsChecks.indexOf(item);
       if (index !== -1) nitterTorRedirectsChecks.splice(index, 1);
     }
-  setNitterTorRedirectsChecks(nitterTorRedirectsChecks);
+  browser.storage.local.set({ nitterTorRedirectsChecks })
 }
 
 let nitterNormalRedirectsChecks;
-const getNitterNormalRedirectsChecks = () => nitterNormalRedirectsChecks;
-function setNitterNormalRedirectsChecks(val) {
-  nitterNormalRedirectsChecks = val;
-  browser.storage.local.set({ nitterNormalRedirectsChecks })
-  console.log("nitterNormalRedirectsChecks: ", val)
-}
-
 let nitterNormalCustomRedirects = [];
-const getNitterNormalCustomRedirects = () => nitterNormalCustomRedirects;
-function setNitterNormalCustomRedirects(val) {
-  nitterNormalCustomRedirects = val;
-  browser.storage.local.set({ nitterNormalCustomRedirects })
-  console.log("nitterNormalCustomRedirects: ", val)
-}
-
 let nitterTorRedirectsChecks;
-const getNitterTorRedirectsChecks = () => nitterTorRedirectsChecks;
-function setNitterTorRedirectsChecks(val) {
-  nitterTorRedirectsChecks = val;
-  browser.storage.local.set({ nitterTorRedirectsChecks })
-  console.log("nitterTorRedirectsChecks: ", val)
-}
-
 let nitterTorCustomRedirects = [];
-const getNitterTorCustomRedirects = () => nitterTorCustomRedirects;
-function setNitterTorCustomRedirects(val) {
-  nitterTorCustomRedirects = val;
-  browser.storage.local.set({ nitterTorCustomRedirects })
-  console.log("nitterTorCustomRedirects: ", val)
-}
 
-let disable;
-const getDisable = () => disable;
-function setDisable(val) {
-  disable = val;
-  browser.storage.local.set({ disableTwitter: disable })
-}
+let disable; // disableTwitter
+let enableCustomSettings; // enableTwitterCustomSettings
 
-let enableCustomSettings;
-const getEnableCustomSettings = () => enableCustomSettings;
-function setEnableCustomSettings(val) {
-  enableCustomSettings = val;
-  browser.storage.local.set({ enableTwitterCustomSettings: enableCustomSettings })
-  console.log("enableTwitterCustomSettings: ", enableCustomSettings)
-}
-
-let protocol;
-const getProtocol = () => protocol;
-function setProtocol(val) {
-  protocol = val;
-  browser.storage.local.set({ twitterProtocol: val })
-  console.log("twitterProtocol: ", val)
-}
-
-let bypassWatchOnTwitter;
-const getBypassWatchOnTwitter = () => bypassWatchOnTwitter;
-function setBypassWatchOnTwitter(val) {
-  bypassWatchOnTwitter = val;
-  browser.storage.local.set({ bypassWatchOnTwitter })
-  console.log("bypassWatchOnTwitter: ", bypassWatchOnTwitter)
-}
-
+let protocol; // twitterProtocol
+let bypassWatchOnTwitter; // bypassWatchOnTwitter
 let alwaysUsePreferred;
 
-let theme;
-const getTheme = () => theme;
+let
+  theme,
+  infiniteScroll,
+  stickyProfile,
+  bidiSupport,
+  hideTweetStats,
+  hideBanner,
+  hidePins,
+  hideReplies,
+  squareAvatars,
+  mp4Playback,
+  hlsPlayback,
+  proxyVideos,
+  muteVideos,
+  autoplayGifs;
 
-let infiniteScroll;
-const getInfiniteScroll = () => infiniteScroll;
-
-let stickyProfile;
-const getStickyProfile = () => stickyProfile;
-
-let bidiSupport;
-const getBidiSupport = () => bidiSupport;
-
-let hideTweetStats;
-const getHideTweetStats = () => hideTweetStats;
-
-let hideBanner;
-const getHideBanner = () => hideBanner;
-
-let hidePins;
-const getHidePins = () => hidePins;
-
-let hideReplies;
-const getHideReplies = () => hideReplies;
-
-let squareAvatars;
-const getSquareAvatars = () => squareAvatars;
-
-let mp4Playback;
-const getMp4Playback = () => mp4Playback;
-
-let hlsPlayback;
-const getHlsPlayback = () => hlsPlayback;
-
-let proxyVideos;
-const getProxyVideos = () => proxyVideos;
-
-let muteVideos;
-const getMuteVideos = () => muteVideos;
-
-let autoplayGifs;
-const getAutoplayGifs = () => autoplayGifs;
-
-
-
-async function setSettings(val) {
-  return new Promise(
-    resolve => {
-      browser.storage.local.set(val).then(resolve);
-    }
-  )
-
-}
 
 function redirect(url, initiator) {
   let protocolHost = commonHelper.protocolHost(url);
@@ -312,138 +214,127 @@ function initNitterCookies() {
   }
 }
 
+
+async function initDefaults() {
+  await fetch('/instances/data.json').then(response => response.text()).then(async data => {
+    let dataJson = JSON.parse(data);
+    redirects.nitter = dataJson.nitter;
+    await browser.storage.local.set({
+      disableTwitter: false,
+
+      enableTwitterCustomSettings: false,
+
+      twitterRedirects: redirects,
+      bypassWatchOnTwitter: true,
+
+      nitterNormalRedirectsChecks: [...redirects.nitter.normal],
+      nitterNormalCustomRedirects: [],
+
+      nitterTorRedirectsChecks: [...redirects.nitter.tor],
+      nitterTorCustomRedirects: [],
+
+      twitterProtocol: "normal",
+      alwaysUsePreferred: false,
+
+      nitterTheme: 'Auto',
+      nitterInfiniteScroll: false,
+      nitterStickyProfile: true,
+      nitterBidiSupport: false,
+      nitterHideTweetStats: false,
+      nitterHideBanner: false,
+      nitterHidePins: false,
+      nitterHideReplies: false,
+      nitterSquareAvatars: false,
+      nitterMp4Playback: true,
+      nitterHlsPlayback: false,
+      nitterProxyVideos: true,
+      nitterMuteVideos: false,
+      nitterAutoplayGifs: true,
+    })
+  })
+}
+
 async function init() {
-  return new Promise(resolve => {
-    fetch('/instances/data.json').then(response => response.text()).then(data => {
-      let dataJson = JSON.parse(data);
-      browser.storage.local.get(
-        [
-          "disableTwitter",
+  browser.storage.local.get(
+    [
+      "disableTwitter",
 
-          "enableTwitterCustomSettings",
+      "enableTwitterCustomSettings",
 
-          "twitterRedirects",
-          "bypassWatchOnTwitter",
+      "twitterRedirects",
+      "bypassWatchOnTwitter",
 
-          "nitterNormalRedirectsChecks",
-          "nitterNormalCustomRedirects",
+      "nitterNormalRedirectsChecks",
+      "nitterNormalCustomRedirects",
 
-          "nitterTorRedirectsChecks",
-          "nitterTorCustomRedirects",
+      "nitterTorRedirectsChecks",
+      "nitterTorCustomRedirects",
 
-          "twitterProtocol",
-          "alwaysUsePreferred",
+      "twitterProtocol",
+      "alwaysUsePreferred",
 
-          "nitterTheme",
-          "nitterInfiniteScroll",
-          "nitterStickyProfile",
-          "nitterBidiSupport",
-          "nitterHideTweetStats",
-          "nitterHideBanner",
-          "nitterHidePins",
-          "nitterHideReplies",
-          "nitterSquareAvatars",
-          "nitterMp4Playback",
-          "nitterHlsPlayback",
-          "nitterProxyVideos",
-          "nitterMuteVideos",
-          "nitterAutoplayGifs",
-        ],
-        r => {
-          disable = r.disableTwitter ?? false;
-          enableCustomSettings = r.enableTwitterCustomSettings ?? false;
+      "nitterTheme",
+      "nitterInfiniteScroll",
+      "nitterStickyProfile",
+      "nitterBidiSupport",
+      "nitterHideTweetStats",
+      "nitterHideBanner",
+      "nitterHidePins",
+      "nitterHideReplies",
+      "nitterSquareAvatars",
+      "nitterMp4Playback",
+      "nitterHlsPlayback",
+      "nitterProxyVideos",
+      "nitterMuteVideos",
+      "nitterAutoplayGifs",
+    ],
+    r => {
+      disable = r.disableTwitter;
+      enableCustomSettings = r.enableTwitterCustomSettings;
 
-          protocol = r.twitterProtocol ?? "normal";
+      protocol = r.twitterProtocol;
 
-          bypassWatchOnTwitter = r.bypassWatchOnTwitter ?? true;
+      bypassWatchOnTwitter = r.bypassWatchOnTwitter;
 
-          alwaysUsePreferred = r.alwaysUsePreferred ?? false;
+      alwaysUsePreferred = r.alwaysUsePreferred;
 
-          redirects.nitter = dataJson.nitter;
-          if (r.twitterRedirects) redirects = r.twitterRedirects;
+      redirects = r.twitterRedirects;
 
-          nitterNormalRedirectsChecks = r.nitterNormalRedirectsChecks ?? [...redirects.nitter.normal];
-          nitterNormalCustomRedirects = r.nitterNormalCustomRedirects ?? [];
+      nitterNormalRedirectsChecks = r.nitterNormalRedirectsChecks;
+      nitterNormalCustomRedirects = r.nitterNormalCustomRedirects;
 
-          nitterTorRedirectsChecks = r.nitterTorRedirectsChecks ?? [...redirects.nitter.tor];
-          nitterTorCustomRedirects = r.nitterTorCustomRedirects ?? [];
+      nitterTorRedirectsChecks = r.nitterTorRedirectsChecks;
+      nitterTorCustomRedirects = r.nitterTorCustomRedirects;
 
-          theme = r.nitterTheme ?? 'Auto';
-          infiniteScroll = r.nitterInfiniteScroll ?? false;
-          stickyProfile = r.nitterStickyProfile ?? true;
-          bidiSupport = r.nitterBidiSupport ?? false;
-          hideTweetStats = r.nitterHideTweetStats ?? false;
-          hideBanner = r.nitterHideBanner ?? false;
-          hidePins = r.nitterHidePins ?? false;
-          hideReplies = r.nitterHideReplies ?? false;
-          squareAvatars = r.nitterSquareAvatars ?? false;
-          mp4Playback = r.nitterMp4Playback ?? true;
-          hlsPlayback = r.nitterHlsPlayback ?? false;
-          proxyVideos = r.nitterProxyVideos ?? true;
-          muteVideos = r.nitterMuteVideos ?? false;
-          autoplayGifs = r.nitterAutoplayGifs ?? true;
-
-          resolve();
-        }
-      );
-    });
-  });
+      theme = r.nitterTheme;
+      infiniteScroll = r.nitterInfiniteScroll;
+      stickyProfile = r.nitterStickyProfile;
+      bidiSupport = r.nitterBidiSupport;
+      hideTweetStats = r.nitterHideTweetStats;
+      hideBanner = r.nitterHideBanner;
+      hidePins = r.nitterHidePins;
+      hideReplies = r.nitterHideReplies;
+      squareAvatars = r.nitterSquareAvatars;
+      mp4Playback = r.nitterMp4Playback;
+      hlsPlayback = r.nitterHlsPlayback;
+      proxyVideos = r.nitterProxyVideos;
+      muteVideos = r.nitterMuteVideos;
+      autoplayGifs = r.nitterAutoplayGifs;
+    }
+  );
 }
 
 export default {
   getRedirects,
-  getCustomRedirects,
   setRedirects,
-
-  getDisable,
-  setDisable,
-
   reverse,
-
-  getEnableCustomSettings,
-  setEnableCustomSettings,
-
-  getNitterNormalRedirectsChecks,
-  setNitterNormalRedirectsChecks,
-
-  getNitterNormalCustomRedirects,
-  setNitterNormalCustomRedirects,
-
-  getNitterTorRedirectsChecks,
-  setNitterTorRedirectsChecks,
-
-  getNitterTorCustomRedirects,
-  setNitterTorCustomRedirects,
-
-  getBypassWatchOnTwitter,
-  setBypassWatchOnTwitter,
-
   removeXFrameOptions,
-
-  getProtocol,
-  setProtocol,
 
   isNitter,
   initNitterCookies,
 
-  getTheme,
-  getInfiniteScroll,
-  getStickyProfile,
-  getBidiSupport,
-  getHideTweetStats,
-  getHideBanner,
-  getHidePins,
-  getHideReplies,
-  getSquareAvatars,
-  getMp4Playback,
-  getHlsPlayback,
-  getProxyVideos,
-  getMuteVideos,
-  getAutoplayGifs,
-
-  setSettings,
-
   redirect,
+  initDefaults,
   init,
   switchInstance,
 };

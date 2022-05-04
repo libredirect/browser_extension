@@ -2,18 +2,28 @@ import speedtestHelper from "../../../assets/javascripts/helpers/speedtest.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableSpeedtestElement = document.getElementById("disable-speedtest");
-disableSpeedtestElement.addEventListener("change",
-    (event) => speedtestHelper.setDisable(!event.target.checked)
-);
-
 let protocolElement = document.getElementById("protocol")
-protocolElement.addEventListener("change",
-    (event) => {
-        let protocol = event.target.options[protocolElement.selectedIndex].value
-        speedtestHelper.setProtocol(protocol);
-        changeProtocolSettings(protocol);
+
+browser.storage.local.get(
+    [
+        "disableSpeedtest",
+        "speedtestProtocol",
+    ],
+    r => {
+        disableSpeedtestElement.checked = !r.disableSpeedtest;
+
+        protocolElement.value = r.speedtestProtocol;
+        changeProtocolSettings(r.speedtestProtocol);
     }
-);
+)
+
+document.addEventListener("change", async () => {
+    await browser.storage.local.set({
+        disableSpeedtest: !disableSpeedtestElement.checked,
+        speedtestProtocol: protocolElement.value,
+    })
+    changeProtocolSettings(protocolElement.value);
+})
 
 function changeProtocolSettings(protocol) {
     let normalDiv = document.getElementsByClassName("normal")[0];
@@ -28,38 +38,8 @@ function changeProtocolSettings(protocol) {
     }
 }
 
-speedtestHelper.init().then(() => {
-    disableSpeedtestElement.checked = !speedtestHelper.getDisable();
-
-    let protocol = speedtestHelper.getProtocol();
-    protocolElement.value = protocol;
-    changeProtocolSettings(protocol);
-
-    browser.storage.local.get("librespeedLatency").then(r => {
-    commonHelper.processDefaultCustomInstances(
-        'librespeed',
-        'normal',
-        speedtestHelper,
-        document,
-        speedtestHelper.getLibrespeedNormalRedirectsChecks,
-        speedtestHelper.setLibrespeedNormalRedirectsChecks,
-        speedtestHelper.getLibrespeedNormalCustomRedirects,
-        speedtestHelper.setLibrespeedNormalCustomRedirects,
-        r.librespeedLatency,
-    );
-    })
-
-    commonHelper.processDefaultCustomInstances(
-        'librespeed',
-        'tor',
-        speedtestHelper,
-        document,
-        speedtestHelper.getLibrespeedTorRedirectsChecks,
-        speedtestHelper.setLibrespeedTorRedirectsChecks,
-        speedtestHelper.getLibrespeedTorCustomRedirects,
-        speedtestHelper.setLibrespeedTorCustomRedirects
-    )
-})
+commonHelper.processDefaultCustomInstances('librespeed', 'normal', speedtestHelper, document);
+commonHelper.processDefaultCustomInstances('librespeed', 'tor', speedtestHelper, document);
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");
@@ -74,17 +54,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.librespeed.normal).then(r => {
             browser.storage.local.set({ librespeedLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances(
-                'librespeed',
-                'normal',
-                speedtestHelper,
-                document,
-                speedtestHelper.getLibrespeedNormalRedirectsChecks,
-                speedtestHelper.setLibrespeedNormalRedirectsChecks,
-                speedtestHelper.getLibrespeedNormalCustomRedirects,
-                speedtestHelper.setLibrespeedNormalCustomRedirects,
-                r,
-            )
+            commonHelper.processDefaultCustomInstances('librespeed', 'normal', speedtestHelper, document)
             latencyElement.removeEventListener("click", reloadWindow)
         });
     }

@@ -2,18 +2,15 @@ import lbryHelper from "../../../assets/javascripts/helpers/lbry.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableLbryElement = document.getElementById("disable-lbry");
-disableLbryElement.addEventListener("change",
-    (event) => lbryHelper.setDisable(!event.target.checked)
-);
-
 let protocolElement = document.getElementById("protocol")
-protocolElement.addEventListener("change",
-    event => {
-        let protocol = event.target.options[protocolElement.selectedIndex].value
-        lbryHelper.setProtocol(protocol);
-        changeProtocolSettings(protocol);
-    }
-);
+
+document.addEventListener("change", async () => {
+    await browser.storage.local.set({
+        disableLbryTargets: !lbryHelper.checked,
+        lbryTargetsProtocol: protocolElement.value,
+    });
+    changeProtocolSettings(protocolElement.value)
+})
 
 function changeProtocolSettings(protocol) {
     let normalDiv = document.getElementsByClassName("normal")[0];
@@ -28,37 +25,20 @@ function changeProtocolSettings(protocol) {
     }
 }
 
-lbryHelper.init().then(() => {
-    disableLbryElement.checked = !lbryHelper.getDisable();
+browser.storage.local.get(
+    [
+        "disableLbryTargets",
+        "lbryTargetsProtocol"
+    ],
+    r => {
+    disableLbryElement.checked = !r.disableLbryTargets;
 
-    let protocol = lbryHelper.getProtocol();
+    let protocol = r.lbryTargetsProtocol;
     protocolElement.value = protocol;
     changeProtocolSettings(protocol);
 
-    browser.storage.local.get("librarianLatency").then(r => {
-        commonHelper.processDefaultCustomInstances(
-            'librarian',
-            'normal',
-            lbryHelper,
-            document,
-            lbryHelper.getLibrarianNormalRedirectsChecks,
-            lbryHelper.setLibrarianNormalRedirectsChecks,
-            lbryHelper.getLibrarianNormalCustomRedirects,
-            lbryHelper.setLibrarianNormalCustomRedirects,
-            r.librarianLatency,
-        );
-    })
-
-    commonHelper.processDefaultCustomInstances(
-        'librarian',
-        'tor',
-        lbryHelper,
-        document,
-        lbryHelper.getLibrarianTorRedirectsChecks,
-        lbryHelper.setLibrarianTorRedirectsChecks,
-        lbryHelper.getLibrarianTorCustomRedirects,
-        lbryHelper.setLibrarianTorCustomRedirects
-    )
+    commonHelper.processDefaultCustomInstances('librarian', 'normal', lbryHelper, document);
+    commonHelper.processDefaultCustomInstances('librarian', 'tor', lbryHelper, document)
 })
 
 
@@ -75,17 +55,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.librarian.normal).then(r => {
             browser.storage.local.set({ librarianLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances(
-                'librarian',
-                'normal',
-                lbryHelper,
-                document,
-                lbryHelper.getLibrarianNormalRedirectsChecks,
-                lbryHelper.setLibrarianNormalRedirectsChecks,
-                lbryHelper.getLibrarianNormalCustomRedirects,
-                lbryHelper.setLibrarianNormalCustomRedirects,
-                r,
-            );
+            commonHelper.processDefaultCustomInstances('librarian', 'normal', lbryHelper, document);
             latencyElement.removeEventListener("click", reloadWindow);
         });
     }

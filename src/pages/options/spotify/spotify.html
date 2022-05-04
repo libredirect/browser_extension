@@ -23,7 +23,6 @@
       <div class="title"> <img src="../../../assets/images/tiktok-icon.png"><a href="../tiktok/tiktok.html" data-localise="__MSG_tiktok__">TikTok</a></div>
       <div class="title"> <img src="../../../assets/images/reddit-icon.png"><a href="../reddit/reddit.html" data-localise="__MSG_reddit__">Reddit</a></div>
       <div class="title"> <img src="../../../assets/images/imgur-icon.png"><a href="../imgur/imgur.html" data-localise="__MSG_imgur__">Imgur</a></div>
-      <div class="title"> <img src="../../../assets/images/pixiv-icon.svg"><a href="../pixiv/pixiv.html" data-localise="__MSG_pixiv__">Pixiv</a></div>
       <div class="title"> <img src="../../../assets/images/librespeed-icon.svg"><a href="../speedtest/speedtest.html" data-localise="__MSG_speedtest__">Speedtest</a></div>
       <div class="title"> <img src="../../../assets/images/spotify-icon.png"><a class="selected" href="../spotify/spotify.html" data-localise="__MSG_spotify__">Spotify</a></div>
       <div class="title"> <img src="../../../assets/images/wikipedia-icon.svg"><a href="../wikipedia/wikipedia.html" data-localise="__MSG_wikipedia__">Wikipedia</a></div>
@@ -62,13 +61,6 @@
       <h4 data-localise="__MSG_enable__">Enable</h4>
       <input id="disable-spotify" type="checkbox">
     </div>
-    <div class="some-block option-block">
-      <h4 data-localise="__MSG_protocol__">Protocol</h4>
-      <select id="protocol">
-        <option value="normal" data-localise="__MSG_normal__">Normal</option>
-        <option value="tor" data-localise="__MSG_tor__">Tor</option>
-      </select>
-    </div>
     <div id="soju">
       <hr>
       <div class="normal">
@@ -98,27 +90,6 @@
                   <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
                 </label>
                 <input class="button button-inline" id="latency" style="display:none;">
-      </div>
-      <div class="tor">
-                <div class="some-block option-block">
-                  <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
-                </div>
-                <div class="checklist"></div>
-                <hr>
-                <div class="some-block option-block">
-                  <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
-                </div>
-                <form class="custom-instance-form">
-                  <div class="some-block option-block">
-                    <input class="custom-instance" placeholder="https://soju.onion" type="url">
-                    <button class="add add-instance" type="submit">
-                      <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
-                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
-                      </svg>
-                    </button>
-                  </div>
-                </form>
-                <div class="checklist custom-checklist"></div>
       </div>
       <script type="module" src="../init.js"></script>
       <script type="module" src="./spotify.js"></script>

@@ -19,38 +19,11 @@ let redirects = {
 };
 const getRedirects = () => redirects;
 
-let disable;
-const getDisable = () => disable;
-function setDisable(val) {
-  disable = val;
-  browser.storage.local.set({ disableMaps: disable })
-  console.log("disableMaps: ", disable)
-}
-
-let frontend;
-const getFrontend = () => frontend;
-function setFrontend(val) {
-  frontend = val;
-  browser.storage.local.set({ mapsFrontend: frontend })
-  console.log("mapsFrontend: ", frontend)
-};
+let disable; // disableMaps
+let frontend; // mapsFrontend
 
 let facilNormalRedirectsChecks;
-const getFacilNormalRedirectsChecks = () => facilNormalRedirectsChecks;
-function setFacilNormalRedirectsChecks(val) {
-  facilNormalRedirectsChecks = val;
-  browser.storage.local.set({ facilNormalRedirectsChecks })
-  console.log("facilNormalRedirectsChecks: ", val)
-}
-
 let facilNormalCustomRedirects = [];
-const getFacilNormalCustomRedirects = () => facilNormalCustomRedirects;
-function setFacilNormalCustomRedirects(val) {
-  facilNormalCustomRedirects = val;
-  browser.storage.local.set({ facilNormalCustomRedirects })
-  console.log("facilNormalCustomRedirects: ", val)
-}
-
 
 function redirect(url, initiator) {
   const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
@@ -213,6 +186,18 @@ function redirect(url, initiator) {
   if (frontend == 'facil') return `${randomInstance}/${mapCentre}/Mpnk`
 }
 
+async function initDefaults() {
+  return new Promise(async resolve => {
+    await browser.storage.local.set({
+      disableMaps: false,
+      mapsFrontend: 'osm',
+
+      facilNormalRedirectsChecks: [...redirects.facil.normal],
+      facilNormalCustomRedirects: [],
+    })
+  })
+}
+
 async function init() {
   return new Promise(
     resolve => {
@@ -225,11 +210,11 @@ async function init() {
           "facilNormalCustomRedirects",
         ],
         r => {
-          disable = r.disableMaps ?? false;
-          frontend = r.mapsFrontend ?? 'osm';
+          disable = r.disableMaps;
+          frontend = r.mapsFrontend;
 
-          facilNormalRedirectsChecks = r.facilNormalRedirectsChecks ?? [...redirects.facil.normal];
-          facilNormalCustomRedirects = r.facilNormalCustomRedirects ?? [];
+          facilNormalRedirectsChecks = r.facilNormalRedirectsChecks;
+          facilNormalCustomRedirects = r.facilNormalCustomRedirects;
 
           resolve();
         }
@@ -238,19 +223,9 @@ async function init() {
 }
 
 export default {
-  getDisable,
-  setDisable,
-
-  getFrontend,
-  setFrontend,
-
   getRedirects,
-
-  getFacilNormalRedirectsChecks,
-  setFacilNormalRedirectsChecks,
-  getFacilNormalCustomRedirects,
-  setFacilNormalCustomRedirects,
 
   redirect,
   init,
+  initDefaults,
 };

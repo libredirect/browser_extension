@@ -14,7 +14,6 @@ import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
-import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
 import spotifyHelper from "../../assets/javascripts/helpers/spotify.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
@@ -36,7 +35,6 @@ let disableLbryElement = document.getElementById("disable-lbry");
 let disableSendTargetsElement = document.getElementById("disable-sendTargets");
 let disableImgurElement = document.getElementById("disable-imgur");
 let disableTiktokElement = document.getElementById("disable-tiktok");
-let disablePixivElement = document.getElementById("disable-pixiv");
 let disableSpotifyElement = document.getElementById("disable-spotify");
 
 let copyRawElement = document.getElementById('copy_raw');
@@ -53,7 +51,6 @@ browser.storage.local.get(
     "disableWikipedia",
     "disableImgur",
     "disableTiktok",
-    "disablePixiv",
     "disableSpotifyTargets",
     "disableMedium",
     "disablePeertubeTargets",
@@ -72,7 +69,6 @@ browser.storage.local.get(
     disableWikipediaElement.checked = !r.disableWikipedia;
     disableImgurElement.checked = !r.disableImgur;
     disableTiktokElement.checked = !r.disableTiktok;
-    disablePixivElement.checked = !r.disablePixiv;
     disableSpotifyElement.checked = !r.disableSpotifyTargets;
     disableMediumElement.checked = !r.disableMedium;
     disablePeertubeElement.checked = !r.disablePeertubeTargets;
@@ -94,7 +90,6 @@ document.addEventListener("change", () => {
     disableWikipedia: !disableWikipediaElement.checked,
     disableImgur: !disableImgurElement.checked,
     disableTiktok: !disableTiktokElement.checked,
-    disablePixiv: !disablePixivElement.checked,
     disableSpotifyTargets: !disableSpotifyElement.checked,
     disableMedium: !disableMediumElement.checked,
     disablePeertubeTargets: !disablePeertubeElement.checked,

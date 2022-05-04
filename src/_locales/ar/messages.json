@@ -89,11 +89,6 @@
       "description": "used in general.html"
     },
 
-    "pixiv": {
-      "message": "بكسيف",
-      "description": "used in general.html"
-    },
-
     "wikipedia": {
       "message": "ويكيبيديا",
       "description": "used in general.html"
@@ -117,11 +112,6 @@
     "tor": {
       "message": "تور",
       "description": "used in imgur.html"
-    },
-
-    "pixivMoe": {
-      "message": "pixiv萌え",
-      "description": "used in pixiv.html"
     },
 
     "theme": {
@@ -226,7 +216,7 @@
 
     "notFullyPrivate": {
       "message": "هذه الواجهة لا تحترم الخصوصية تماماً",
-      "description": "used in pixiv.html"
+      "description": ""
     },
 
     "oldReddit": {

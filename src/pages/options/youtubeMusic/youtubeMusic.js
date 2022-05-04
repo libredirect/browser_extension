@@ -2,27 +2,23 @@ import youtubeMusicHelper from "../../../assets/javascripts/helpers/youtubeMusic
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableYoutubeMusicElement = document.getElementById("disable-beatbump");
-disableYoutubeMusicElement.addEventListener("change",
-    (event) => youtubeMusicHelper.setDisable(!event.target.checked)
+
+browser.storage.local.get(
+    [
+        "disableYoutubeMusic",
+    ],
+    r => {
+        disableYoutubeMusicElement.checked = !r.disableYoutubeMusic;
+    }
 );
 
-youtubeMusicHelper.init().then(() => {
-    disableYoutubeMusicElement.checked = !youtubeMusicHelper.getDisable();
-
-    browser.storage.local.get("beatbumpLatency").then(r => {
-        commonHelper.processDefaultCustomInstances(
-            'beatbump',
-            'normal',
-            youtubeMusicHelper,
-            document,
-            youtubeMusicHelper.getBeatbumpNormalRedirectsChecks,
-            youtubeMusicHelper.setBeatbumpNormalRedirectsChecks,
-            youtubeMusicHelper.getBeatbumpNormalCustomRedirects,
-            youtubeMusicHelper.setBeatbumpNormalCustomRedirects,
-            r.beatbumpLatency,
-        );
+document.addEventListener("change", async () => {
+    await browser.storage.local.set({
+        disableYoutubeMusic: !disableYoutubeMusicElement.checked,
     })
-});
+})
+
+commonHelper.processDefaultCustomInstances('beatbump', 'normal', youtubeMusicHelper, document);
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");
@@ -37,17 +33,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.beatbump.normal).then(r => {
             browser.storage.local.set({ beatbumpLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances(
-                'beatbump',
-                'normal',
-                youtubeMusicHelper,
-                document,
-                youtubeMusicHelper.getBeatbumpNormalRedirectsChecks,
-                youtubeMusicHelper.setBeatbumpNormalRedirectsChecks,
-                youtubeMusicHelper.getBeatbumpNormalCustomRedirects,
-                youtubeMusicHelper.setBeatbumpNormalCustomRedirects,
-                r,
-            )
+            commonHelper.processDefaultCustomInstances('beatbump', 'normal', youtubeMusicHelper, document)
             latencyElement.removeEventListener("click", reloadWindow)
         });
     }

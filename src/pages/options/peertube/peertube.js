@@ -2,18 +2,31 @@ import peertubeHelper from "../../../assets/javascripts/helpers/peertube.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disablePeertubeElement = document.getElementById("disable-peertube");
-disablePeertubeElement.addEventListener("change",
-    (event) => peertubeHelper.setDisable(!event.target.checked)
-);
-
 let protocolElement = document.getElementById("protocol")
-protocolElement.addEventListener("change",
-    (event) => {
-        let protocol = event.target.options[protocolElement.selectedIndex].value
-        peertubeHelper.setProtocol(protocol);
+browser.storage.local.get(
+    [
+        "disablePeertubeTargets",
+        "peertubeTargetsProtocol"
+    ],
+    r => {
+        disablePeertubeElement.checked = !r.disablePeertubeTargets;
+
+        let protocol = peertubeTargetsProtocol;
+        protocolElement.value = protocol;
         changeProtocolSettings(protocol);
+
+        commonHelper.processDefaultCustomInstances('simpleertube', 'normal', peertubeHelper, document);
+        commonHelper.processDefaultCustomInstances('simpleertube', 'tor', peertubeHelper, document)
     }
-);
+)
+
+document.addEventListener("change", async () => {
+    await browser.storage.local.set({
+        disablePeertubeTargets: !disablePeertubeElement.checked,
+        peertubeTargetsProtocol: protocolElement.value
+    })
+    changeProtocolSettings(protocolElement.value);
+})
 
 function changeProtocolSettings(protocol) {
     let normalDiv = document.getElementsByClassName("normal")[0];
@@ -27,39 +40,6 @@ function changeProtocolSettings(protocol) {
         torDiv.style.display = 'block';
     }
 }
-
-peertubeHelper.init().then(() => {
-    disablePeertubeElement.checked = !peertubeHelper.getDisable();
-
-    let protocol = peertubeHelper.getProtocol();
-    protocolElement.value = protocol;
-    changeProtocolSettings(protocol);
-
-    browser.storage.local.get("simpleertubeLatency").then(r => {
-        commonHelper.processDefaultCustomInstances(
-            'simpleertube',
-            'normal',
-            peertubeHelper,
-            document,
-            peertubeHelper.getSimpleertubeNormalRedirectsChecks,
-            peertubeHelper.setSimpleertubeNormalRedirectsChecks,
-            peertubeHelper.getSimpleertubeNormalCustomRedirects,
-            peertubeHelper.setSimpleertubeNormalCustomRedirects
-        );
-    })
-
-    commonHelper.processDefaultCustomInstances(
-        'simpleertube',
-        'tor',
-        peertubeHelper,
-        document,
-        peertubeHelper.getSimpleertubeTorRedirectsChecks,
-        peertubeHelper.setSimpleertubeTorRedirectsChecks,
-        peertubeHelper.getSimpleertubeTorCustomRedirects,
-        peertubeHelper.setSimpleertubeTorCustomRedirects
-    )
-})
-
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");

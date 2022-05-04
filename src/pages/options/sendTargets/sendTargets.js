@@ -2,18 +2,28 @@ import sendTargetsHelper from "../../../assets/javascripts/helpers/sendTargets.j
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableSendTargetsElement = document.getElementById("disable-sendTargets");
-disableSendTargetsElement.addEventListener("change",
-    (event) => sendTargetsHelper.setDisable(!event.target.checked)
-);
-
 let protocolElement = document.getElementById("protocol")
-protocolElement.addEventListener("change",
-    (event) => {
-        let protocol = event.target.options[protocolElement.selectedIndex].value
-        sendTargetsHelper.setProtocol(protocol);
-        changeProtocolSettings(protocol);
+
+browser.storage.local.get(
+    [
+        "disableSendTarget",
+        "sendTargetsProtocol",
+    ],
+    r => {
+        disableSendTargetsElement.checked = !r.disableSendTarget;
+
+        protocolElement.value = r.sendTargetsProtocol;
+        changeProtocolSettings(r.sendTargetsProtocol);
     }
-);
+)
+
+document.addEventListener("change", async () => {
+    await browser.storage.local.set({
+        disableSendTarget: !disableSendTargetsElement.checked,
+        sendTargetsProtocol: protocolElement.value,
+    })
+    changeProtocolSettings(protocolElement.value);
+})
 
 function changeProtocolSettings(protocol) {
     let normalDiv = document.getElementsByClassName("normal")[0];
@@ -28,38 +38,8 @@ function changeProtocolSettings(protocol) {
     }
 }
 
-sendTargetsHelper.init().then(() => {
-    disableSendTargetsElement.checked = !sendTargetsHelper.getDisable();
-
-    let protocol = sendTargetsHelper.getProtocol();
-    protocolElement.value = protocol;
-    changeProtocolSettings(protocol);
-
-    browser.storage.local.get("sendLatency").then(r => {
-        commonHelper.processDefaultCustomInstances(
-            'send',
-            'normal',
-            sendTargetsHelper,
-            document,
-            sendTargetsHelper.getSendNormalRedirectsChecks,
-            sendTargetsHelper.setSendNormalRedirectsChecks,
-            sendTargetsHelper.getSendNormalCustomRedirects,
-            sendTargetsHelper.setSendNormalCustomRedirects,
-            r.sendLatency,
-        );
-    })
-
-    commonHelper.processDefaultCustomInstances(
-        'send',
-        'tor',
-        sendTargetsHelper,
-        document,
-        sendTargetsHelper.getSendTorRedirectsChecks,
-        sendTargetsHelper.setSendTorRedirectsChecks,
-        sendTargetsHelper.getSendTorCustomRedirects,
-        sendTargetsHelper.setSendTorCustomRedirects
-    )
-})
+commonHelper.processDefaultCustomInstances('send', 'normal', sendTargetsHelper, document);
+commonHelper.processDefaultCustomInstances('send', 'tor', sendTargetsHelper, document,)
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");
@@ -74,17 +54,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.send.normal).then(r => {
             browser.storage.local.set({ sendLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances(
-                'send',
-                'normal',
-                sendTargetsHelper,
-                document,
-                sendTargetsHelper.getSendNormalRedirectsChecks,
-                sendTargetsHelper.setSendNormalRedirectsChecks,
-                sendTargetsHelper.getSendNormalCustomRedirects,
-                sendTargetsHelper.setSendNormalCustomRedirects,
-                r,
-            )
+            commonHelper.processDefaultCustomInstances('send', 'normal', sendTargetsHelper, document)
             latencyElement.removeEventListener("click", reloadWindow)
         });
     }

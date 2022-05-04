@@ -12,15 +12,6 @@ let redirects = {
   }
 };
 const getRedirects = () => redirects;
-const getCustomRedirects = function () {
-  return {
-    "wikiless": {
-      "normal": [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects],
-      "tor": [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects],
-      "i2p": [...wikilessI2pRedirectsChecks, ...wikilessI2pCustomRedirects]
-    },
-  };
-};
 
 function setRedirects(val) {
   redirects.wikiless = val;
@@ -31,88 +22,37 @@ function setRedirects(val) {
       var index = wikilessNormalRedirectsChecks.indexOf(item);
       if (index !== -1) wikilessNormalRedirectsChecks.splice(index, 1);
     }
-  setWikilessNormalRedirectsChecks(wikilessNormalRedirectsChecks);
+  browser.storage.local.set({ wikilessNormalRedirectsChecks })
 
   for (const item of wikilessTorRedirectsChecks)
     if (!redirects.wikiless.tor.includes(item)) {
       var index = wikilessTorRedirectsChecks.indexOf(item);
       if (index !== -1) wikilessTorRedirectsChecks.splice(index, 1);
     }
-  setWikilessTorRedirectsChecks(wikilessTorRedirectsChecks);
+  browser.storage.local.set({ wikilessTorRedirectsChecks })
 
   for (const item of wikilessI2pRedirectsChecks)
     if (!redirects.wikiless.i2p.includes(item)) {
       var index = wikilessI2pRedirectsChecks.indexOf(item);
       if (index !== -1) wikilessI2pRedirectsChecks.splice(index, 1);
     }
-  setWikilessI2pRedirectsChecks(wikilessI2pRedirectsChecks);
+  browser.storage.local.set({ wikilessI2pRedirectsChecks })
 }
 
-let disable;
-const getDisable = () => disable;
-function setDisable(val) {
-  disable = val;
-  browser.storage.local.set({ disableWikipedia: disable })
-}
-
-let protocol;
-const getProtocol = () => protocol;
-function setProtocol(val) {
-  protocol = val;
-  browser.storage.local.set({ wikipediaProtocol: val })
-  console.log("wikipediaProtocol: ", val)
-}
+let disable; // disableWikipedia
+let protocol; // wikipediaProtocol
 
 let wikilessNormalRedirectsChecks;
-const getWikilessNormalRedirectsChecks = () => wikilessNormalRedirectsChecks;
-function setWikilessNormalRedirectsChecks(val) {
-  wikilessNormalRedirectsChecks = val;
-  browser.storage.local.set({ wikilessNormalRedirectsChecks })
-  console.log("wikilessNormalRedirectsChecks: ", val)
-}
-
 let wikilessTorRedirectsChecks;
-const getWikilessTorRedirectsChecks = () => wikilessTorRedirectsChecks;
-function setWikilessTorRedirectsChecks(val) {
-  wikilessTorRedirectsChecks = val;
-  browser.storage.local.set({ wikilessTorRedirectsChecks })
-  console.log("wikilessTorRedirectsChecks: ", val)
-}
-
 let wikilessI2pRedirectsChecks;
-const getWikilessI2pRedirectsChecks = () => wikilessI2pRedirectsChecks;
-function setWikilessI2pRedirectsChecks(val) {
-  wikilessI2pRedirectsChecks = val;
-  browser.storage.local.set({ wikilessI2pRedirectsChecks })
-  console.log("wikilessI2pRedirectsChecks: ", val)
-}
-
 let wikilessNormalCustomRedirects = [];
-const getWikilessNormalCustomRedirects = () => wikilessNormalCustomRedirects;
-function setWikilessNormalCustomRedirects(val) {
-  wikilessNormalCustomRedirects = val;
-  browser.storage.local.set({ wikilessNormalCustomRedirects })
-  console.log("wikilessNormalCustomRedirects: ", val)
-}
-
 let wikilessTorCustomRedirects = [];
-const getWikilessTorCustomRedirects = () => wikilessTorCustomRedirects;
-function setWikilessTorCustomRedirects(val) {
-  wikilessTorCustomRedirects = val;
-  browser.storage.local.set({ wikilessTorCustomRedirects })
-  console.log("wikilessTorCustomRedirects: ", val)
-}
-
 let wikilessI2pCustomRedirects = [];
-const getWikilessI2pCustomRedirects = () => wikilessI2pCustomRedirects;
-function setWikilessI2pCustomRedirects(val) {
-  wikilessI2pCustomRedirects = val;
-  browser.storage.local.set({ wikilessI2pCustomRedirects })
-  console.log("wikilessI2pCustomRedirects: ", val)
-}
+
 
 let theme;
 let applyThemeToSites;
+
 function initWikilessCookies() {
   let themeValue;
   if (theme == 'light') themeValue = 'white';
@@ -196,82 +136,74 @@ function switchInstance(url) {
   return `${randomInstance}${url.pathname}${url.search}`;
 }
 
+
+async function initDefaults() {
+  fetch('/instances/data.json').then(response => response.text()).then(async data => {
+    let dataJson = JSON.parse(data);
+    redirects.wikiless = dataJson.wikiless;
+    await browser.storage.local.set({
+      disableWikipedia: true,
+      wikipediaRedirects: redirects,
+      wikilessNormalRedirectsChecks: [...redirects.wikiless.normal],
+      wikilessTorRedirectsChecks: [...redirects.wikiless.tor],
+      wikilessI2pRedirectsChecks: [...redirects.wikiless.i2p],
+      wikilessNormalCustomRedirects: [],
+      wikilessTorCustomRedirects: [],
+      wikilessI2pCustomRedirects: [],
+      wikipediaProtocol: "normal",
+
+      theme: 'DEFAULT',
+      applyThemeToSites: false,
+    })
+
+  })
+}
+
 async function init() {
-  return new Promise((resolve) => {
-    fetch('/instances/data.json').then(response => response.text()).then(data => {
-      let dataJson = JSON.parse(data);
-      browser.storage.local.get(
-        [
-          "disableWikipedia",
-          "wikipediaRedirects",
-          "wikilessNormalRedirectsChecks",
-          "wikilessTorRedirectsChecks",
-          "wikilessI2pRedirectsChecks",
-          "wikilessNormalCustomRedirects",
-          "wikilessTorCustomRedirects",
-          "wikilessI2pCustomRedirects",
-          "wikipediaProtocol",
+  browser.storage.local.get(
+    [
+      "disableWikipedia",
+      "wikipediaRedirects",
+      "wikilessNormalRedirectsChecks",
+      "wikilessTorRedirectsChecks",
+      "wikilessI2pRedirectsChecks",
+      "wikilessNormalCustomRedirects",
+      "wikilessTorCustomRedirects",
+      "wikilessI2pCustomRedirects",
+      "wikipediaProtocol",
 
-          "theme",
-          "applyThemeToSites",
+      "theme",
+      "applyThemeToSites",
 
-        ], r => {
-          disable = r.disableWikipedia ?? true;
+    ], r => {
+      disable = r.disableWikipedia;
 
-          protocol = r.wikipediaProtocol ?? "normal";
+      protocol = r.wikipediaProtocol;
+      redirects = r.wikipediaRedirects;
 
-          redirects.wikiless = dataJson.wikiless;
-          if (r.wikipediaRedirects) redirects = r.wikipediaRedirects;
+      wikilessNormalRedirectsChecks = r.wikilessNormalRedirectsChecks;
+      wikilessNormalCustomRedirects = r.wikilessNormalCustomRedirects;
 
-          wikilessNormalRedirectsChecks = r.wikilessNormalRedirectsChecks ?? [...redirects.wikiless.normal];
-          wikilessNormalCustomRedirects = r.wikilessNormalCustomRedirects ?? [];
+      wikilessTorRedirectsChecks = r.wikilessTorRedirectsChecks;
+      wikilessTorCustomRedirects = r.wikilessTorCustomRedirects;
 
-          wikilessTorRedirectsChecks = r.wikilessTorRedirectsChecks ?? [...redirects.wikiless.tor];
-          wikilessTorCustomRedirects = r.wikilessTorCustomRedirects ?? [];
+      wikilessI2pRedirectsChecks = r.wikilessI2pRedirectsChecks;
+      wikilessI2pCustomRedirects = r.wikilessI2pCustomRedirects;
 
-          wikilessI2pRedirectsChecks = r.wikilessI2pRedirectsChecks ?? [...redirects.wikiless.i2p];
-          wikilessI2pCustomRedirects = r.wikilessI2pCustomRedirects ?? [];
-
-          theme = r.theme ?? 'DEFAULT';
-          applyThemeToSites = r.applyThemeToSites ?? false;
-
-          initWikilessCookies();
-
-          resolve();
-        }
-      );
-    });
-  });
+      theme = r.theme;
+      applyThemeToSites = r.applyThemeToSites;
+    }
+  );
 }
 
 export default {
   getRedirects,
-  getCustomRedirects,
   setRedirects,
-
-  setDisable,
-  getDisable,
-
-  getProtocol,
-  setProtocol,
-
-  getWikilessNormalRedirectsChecks,
-  setWikilessNormalRedirectsChecks,
-  getWikilessTorRedirectsChecks,
-  setWikilessTorRedirectsChecks,
-  getWikilessI2pRedirectsChecks,
-  setWikilessI2pRedirectsChecks,
-
-  getWikilessNormalCustomRedirects,
-  setWikilessNormalCustomRedirects,
-  getWikilessTorCustomRedirects,
-  setWikilessTorCustomRedirects,
-  getWikilessI2pCustomRedirects,
-  setWikilessI2pCustomRedirects,
 
   initWikilessCookies,
 
   redirect,
+  initDefaults,
   init,
   switchInstance,
 };

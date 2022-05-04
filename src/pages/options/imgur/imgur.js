@@ -42,7 +42,7 @@ function init() {
             ],
             r => {
                 disableImgurElement.checked = !r.disableImgur;
-                protocol.value = r.imgurProtocol;
+                protocolElement.value = r.imgurProtocol;
                 changeProtocolSettings(r.imgurProtocol);
             }
         );

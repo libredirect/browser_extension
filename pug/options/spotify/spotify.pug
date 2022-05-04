@@ -12,12 +12,6 @@ body.option(dir="auto")
             h4(data-localise="__MSG_enable__") Enable
             input#disable-spotify(type="checkbox")
 
-        .some-block.option-block
-            h4(data-localise="__MSG_protocol__") Protocol
-            select#protocol
-                option(value="normal" data-localise="__MSG_normal__") Normal
-                option(value="tor" data-localise="__MSG_tor__") Tor
-
         #soju
             hr
             .normal
@@ -25,9 +19,6 @@ body.option(dir="auto")
                 +instances('https://soju.com')
                 include ../../widgets/latency.pug
                 +latency()
-            .tor
-                include ../../widgets/instances.pug
-                +instances('https://soju.onion')
 
             script(type="module" src="../init.js")
             script(type="module" src="./spotify.js")

@@ -111,7 +111,6 @@ let allPopupFrontends = [
     "tikTok",
     "imgur",
     "reddit",
-    "pixiv",
     "spotify",
     "search",
     "translate",

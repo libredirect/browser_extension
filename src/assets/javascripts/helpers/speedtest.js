@@ -16,15 +16,6 @@ let redirects = {
 }
 
 const getRedirects = () => redirects;
-const getCustomRedirects = function () {
-    return {
-        "librespeed": {
-            "normal": [...librespeedNormalRedirectsChecks, ...librespeedNormalCustomRedirects],
-            "tor": []
-        },
-    };
-};
-
 function setRedirects(val) {
     redirects.librespeed = val;
     browser.storage.local.set({ speedtestRedirects: redirects })
@@ -34,63 +25,23 @@ function setRedirects(val) {
             var index = librespeedNormalRedirectsChecks.indexOf(item);
             if (index !== -1) librespeedNormalRedirectsChecks.splice(index, 1);
         }
-    setLibrespeedNormalRedirectsChecks(librespeedNormalRedirectsChecks);
+    browser.storage.local.set({ librespeedNormalRedirectsChecks })
 
     for (const item of librespeedTorRedirectsChecks)
         if (!redirects.librespeed.normal.includes(item)) {
             var index = librespeedTorRedirectsChecks.indexOf(item);
             if (index !== -1) librespeedTorRedirectsChecks.splice(index, 1);
         }
-    setLibrespeedTorRedirectsChecks(librespeedTorRedirectsChecks);
+    browser.storage.local.set({ librespeedTorRedirectsChecks })
 }
 
 let librespeedNormalRedirectsChecks;
-const getLibrespeedNormalRedirectsChecks = () => librespeedNormalRedirectsChecks;
-function setLibrespeedNormalRedirectsChecks(val) {
-    librespeedNormalRedirectsChecks = val;
-    browser.storage.local.set({ librespeedNormalRedirectsChecks })
-    console.log("librespeedNormalRedirectsChecks: ", val)
-}
-
 let librespeedTorRedirectsChecks;
-const getLibrespeedTorRedirectsChecks = () => librespeedTorRedirectsChecks;
-function setLibrespeedTorRedirectsChecks(val) {
-    librespeedTorRedirectsChecks = val;
-    browser.storage.local.set({ librespeedTorRedirectsChecks })
-    console.log("librespeedTorRedirectsChecks: ", val)
-}
-
 let librespeedNormalCustomRedirects = [];
-const getLibrespeedNormalCustomRedirects = () => librespeedNormalCustomRedirects;
-function setLibrespeedNormalCustomRedirects(val) {
-    librespeedNormalCustomRedirects = val;
-    browser.storage.local.set({ librespeedNormalCustomRedirects })
-    console.log("librespeedNormalCustomRedirects: ", val)
-}
-
 let librespeedTorCustomRedirects = [];
-const getLibrespeedTorCustomRedirects = () => librespeedTorCustomRedirects;
-function setLibrespeedTorCustomRedirects(val) {
-    librespeedTorCustomRedirects = val;
-    browser.storage.local.set({ librespeedTorCustomRedirects })
-    console.log("librespeedTorCustomRedirects: ", val)
-}
 
-let disable;
-const getDisable = () => disable;
-function setDisable(val) {
-    disable = val;
-    browser.storage.local.set({ disableSpeedtest: disable })
-    console.log("disableSpeedtest", val);
-}
-
-let protocol;
-const getProtocol = () => protocol;
-function setProtocol(val) {
-    protocol = val;
-    browser.storage.local.set({ speedtestProtocol: val })
-    console.log("speedtestProtocol: ", val)
-}
+let disable; // disableSpeedtest
+let protocol; // speedtestProtocol
 
 function redirect(url, type, initiator) {
     if (disable) return null;
@@ -109,65 +60,52 @@ function redirect(url, type, initiator) {
     return `${randomInstance}`;
 }
 
+async function initDefaults() {
+    await browser.storage.local.set({
+        disableSpeedtest: true,
+
+        librespeedNormalRedirectsChecks: [...redirects.librespeed.normal],
+        librespeedNormalCustomRedirects: [],
+
+        librespeedTorRedirectsChecks: [...redirects.librespeed.tor],
+        librespeedTorCustomRedirects: [],
+
+        speedtestProtocol: "normal",
+    })
+}
+
 async function init() {
-    return new Promise(resolve => {
-        fetch('/instances/data.json').then(response => response.text()).then(data => {
-            let dataJson = JSON.parse(data);
-            browser.storage.local.get(
-                [
-                    "disableSpeedtest",
-                    "speedtestRedirects",
+    browser.storage.local.get(
+        [
+            "disableSpeedtest",
+            "speedtestRedirects",
 
-                    "librespeedNormalRedirectsChecks",
-                    "librespeedNormalCustomRedirects",
+            "librespeedNormalRedirectsChecks",
+            "librespeedNormalCustomRedirects",
 
-                    "librespeedTorRedirectsChecks",
-                    "librespeedTorCustomRedirects",
+            "librespeedTorRedirectsChecks",
+            "librespeedTorCustomRedirects",
 
-                    "speedtestProtocol"
-                ],
-                r => {
-                    disable = r.disableSpeedtest ?? true;
+            "speedtestProtocol"
+        ],
+        r => {
+            disable = r.disableSpeedtest;
+            protocol = r.speedtestProtocol;
 
-                    protocol = r.speedtestProtocol ?? "normal";
+            librespeedNormalRedirectsChecks = r.librespeedNormalRedirectsChecks;
+            librespeedNormalCustomRedirects = r.librespeedNormalCustomRedirects;
 
-                    if (r.speedtestRedirects) redirects = r.speedtestRedirects;
-
-                    librespeedNormalRedirectsChecks = r.librespeedNormalRedirectsChecks ?? [...redirects.librespeed.normal];
-                    librespeedNormalCustomRedirects = r.librespeedNormalCustomRedirects ?? [];
-
-                    librespeedTorRedirectsChecks = r.librespeedTorRedirectsChecks ?? [...redirects.librespeed.tor];
-                    librespeedTorCustomRedirects = r.librespeedTorCustomRedirects ?? [];
-
-                    resolve();
-                }
-            )
-        });
-    });
+            librespeedTorRedirectsChecks = r.librespeedTorRedirectsChecks;
+            librespeedTorCustomRedirects = r.librespeedTorCustomRedirects;
+        }
+    )
 }
 
 export default {
-
     getRedirects,
-    getCustomRedirects,
     setRedirects,
 
-    getDisable,
-    setDisable,
-
-    getProtocol,
-    setProtocol,
-
-    getLibrespeedNormalRedirectsChecks,
-    setLibrespeedNormalRedirectsChecks,
-    getLibrespeedTorRedirectsChecks,
-    setLibrespeedTorRedirectsChecks,
-
-    getLibrespeedTorCustomRedirects,
-    setLibrespeedTorCustomRedirects,
-    getLibrespeedNormalCustomRedirects,
-    setLibrespeedNormalCustomRedirects,
-
     redirect,
+    initDefaults,
     init,
 };

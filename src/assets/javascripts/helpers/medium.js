@@ -51,68 +51,28 @@ function setRedirects(val) {
     var index = scribeNormalRedirectsChecks.indexOf(item);
     if (index !== -1) scribeNormalRedirectsChecks.splice(index, 1);
   }
-  setScribeNormalRedirectsChecks(scribeNormalRedirectsChecks);
+  browser.storage.local.set({ scribeNormalRedirectsChecks })
 
   for (const item of scribeNormalRedirectsChecks) if (!redirects.scribe.normal.includes(item)) {
     var index = scribeNormalRedirectsChecks.indexOf(item);
     if (index !== -1) scribeNormalRedirectsChecks.splice(index, 1);
   }
-  setScribeNormalRedirectsChecks(scribeNormalRedirectsChecks);
+  browser.storage.local.set({ scribeNormalRedirectsChecks })
 
   for (const item of scribeTorRedirectsChecks) if (!redirects.scribe.normal.includes(item)) {
     var index = scribeTorRedirectsChecks.indexOf(item);
     if (index !== -1) scribeTorRedirectsChecks.splice(index, 1);
   }
-  setScribeTorRedirectsChecks(scribeTorRedirectsChecks);
+  browser.storage.local.set({ scribeTorRedirectsChecks })
 }
 
 let scribeNormalRedirectsChecks;
-const getScribeNormalRedirectsChecks = () => scribeNormalRedirectsChecks;
-function setScribeNormalRedirectsChecks(val) {
-  scribeNormalRedirectsChecks = val;
-  browser.storage.local.set({ scribeNormalRedirectsChecks })
-  console.log("scribeNormalRedirectsChecks: ", val)
-}
-
 let scribeTorRedirectsChecks;
-const getScribeTorRedirectsChecks = () => scribeTorRedirectsChecks;
-function setScribeTorRedirectsChecks(val) {
-  scribeTorRedirectsChecks = val;
-  browser.storage.local.set({ scribeTorRedirectsChecks })
-  console.log("scribeTorRedirectsChecks: ", val)
-}
-
 let scribeNormalCustomRedirects = [];
-const getScribeNormalCustomRedirects = () => scribeNormalCustomRedirects;
-function setScribeNormalCustomRedirects(val) {
-  scribeNormalCustomRedirects = val;
-  browser.storage.local.set({ scribeNormalCustomRedirects })
-  console.log("scribeNormalCustomRedirects: ", val)
-}
-
 let scribeTorCustomRedirects = [];
-const getScribeTorCustomRedirects = () => scribeTorCustomRedirects;
-function setScribeTorCustomRedirects(val) {
-  scribeTorCustomRedirects = val;
-  browser.storage.local.set({ scribeTorCustomRedirects })
-  console.log("scribeTorCustomRedirects: ", val)
-}
 
 let disable;
-const getDisable = () => disable;
-function setDisable(val) {
-  disable = val;
-  browser.storage.local.set({ disableMedium: disable })
-  console.log("disableMedium", disable)
-}
-
 let protocol;
-const getProtocol = () => protocol;
-function setProtocol(val) {
-  protocol = val;
-  browser.storage.local.set({ mediumProtocol: val });
-  console.log("mediumProtocol: ", val);
-}
 
 function redirect(url, type, initiator) {
 
@@ -162,38 +122,54 @@ function switchInstance(url) {
   return `${randomInstance}${url.pathname}${url.search}`;
 }
 
+async function initDefaults() {
+  return new Promise(async resolve => {
+    fetch('/instances/data.json').then(response => response.text()).then(async data => {
+      let dataJson = JSON.parse(data);
+      redirects.scribe = dataJson.scribe;
+      await browser.storage.local.set({
+        disableMedium: false,
+        mediumRedirects: redirects,
+        scribeNormalRedirectsChecks: [...redirects.scribe.normal],
+        scribeNormalCustomRedirects: [],
+        scribeTorRedirectsChecks: [...redirects.scribe.tor],
+        scribeTorCustomRedirects: [],
+        mediumProtocol: "normal",
+      })
+      resolve();
+    })
+  })
+}
+
 async function init() {
   return new Promise(resolve => {
-    fetch('/instances/data.json').then(response => response.text()).then(data => {
-      let dataJson = JSON.parse(data);
-      browser.storage.local.get(
-        [
-          "disableMedium",
-          "mediumRedirects",
-          "scribeNormalRedirectsChecks",
-          "scribeNormalCustomRedirects",
-          "scribeTorRedirectsChecks",
-          "scribeTorCustomRedirects",
-          "mediumProtocol"
-        ],
-        r => {
-          disable = r.disableMedium ?? false;
+    browser.storage.local.get(
+      [
+        "disableMedium",
+        "mediumRedirects",
+        "scribeNormalRedirectsChecks",
+        "scribeNormalCustomRedirects",
+        "scribeTorRedirectsChecks",
+        "scribeTorCustomRedirects",
+        "mediumProtocol"
+      ],
+      r => {
+        disable = r.disableMedium;
 
-          protocol = r.mediumProtocol ?? "normal";
+        protocol = r.mediumProtocol;
 
-          redirects.scribe = dataJson.scribe;
-          if (r.mediumRedirects) redirects = r.mediumRedirects;
 
-          scribeNormalRedirectsChecks = r.scribeNormalRedirectsChecks ?? [...redirects.scribe.normal];
-          scribeNormalCustomRedirects = r.scribeNormalCustomRedirects ?? [];
+        redirects = r.mediumRedirects;
 
-          scribeTorRedirectsChecks = r.scribeTorRedirectsChecks ?? [...redirects.scribe.tor];
-          scribeTorCustomRedirects = r.scribeTorCustomRedirects ?? [];
+        scribeNormalRedirectsChecks = r.scribeNormalRedirectsChecks;
+        scribeNormalCustomRedirects = r.scribeNormalCustomRedirects;
 
-          resolve();
-        }
-      )
-    })
+        scribeTorRedirectsChecks = r.scribeTorRedirectsChecks;
+        scribeTorCustomRedirects = r.scribeTorCustomRedirects;
+
+        resolve();
+      }
+    )
   })
 }
 
@@ -204,23 +180,8 @@ export default {
   getCustomRedirects,
   setRedirects,
 
-  getDisable,
-  setDisable,
-
-  getProtocol,
-  setProtocol,
-
-  getScribeNormalRedirectsChecks,
-  setScribeNormalRedirectsChecks,
-  getScribeTorRedirectsChecks,
-  setScribeTorRedirectsChecks,
-
-  getScribeNormalCustomRedirects,
-  setScribeNormalCustomRedirects,
-  getScribeTorCustomRedirects,
-  setScribeTorCustomRedirects,
-
   redirect,
   init,
+  initDefaults,
   switchInstance,
 };

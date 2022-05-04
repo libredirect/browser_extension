@@ -15,7 +15,6 @@ let redirects = {
     "normal": [],
     "tor": []
   },
-  "desktop": "https://old.reddit.com", // desktop
 };
 const getRedirects = () => redirects;
 const getCustomRedirects = function () {
@@ -265,11 +264,6 @@ function redirect(url, type, initiator) {
   ) return 'BYPASSTAB';
 
   if (type !== "main_frame" || url.pathname.match(bypassPaths)) return null;
-
-  if (frontend == 'old' && url.host !== "i.redd.it") {
-    if (url.host == 'old.reddit.com') return;
-    return `${redirects.desktop}${url.pathname}${url.search}`;
-  }
 
   let libredditInstancesList;
   let tedditInstancesList;

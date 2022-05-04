@@ -89,11 +89,6 @@
     "description": "used in general.html"
   },
 
-  "pixiv": {
-    "message": "Pixiv",
-    "description": "used in general.html"
-  },
-
   "wikipedia": {
     "message": "Wikipedia",
     "description": "used in general.html"
@@ -117,11 +112,6 @@
   "tor": {
     "message": "Tor",
     "description": "used in imgur.html"
-  },
-
-  "pixivMoe": {
-    "message": "pixiv萌え",
-    "description": "used in pixiv.html"
   },
 
   "theme": {
@@ -226,7 +216,7 @@
 
   "notFullyPrivate": {
     "message": "Das ist kein völlig privates Frontend.",
-    "description": "used in pixiv.html"
+    "description": ""
   },
 
   "oldReddit": {

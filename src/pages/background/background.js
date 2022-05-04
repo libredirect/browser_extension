@@ -11,7 +11,6 @@ import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
-import pixivHelper from "../../assets/javascripts/helpers/pixiv.js";
 import speedtestHelper from "../../assets/javascripts/helpers/speedtest.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
@@ -22,24 +21,27 @@ import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js
 
 window.browser = window.browser || window.chrome;
 
-
-
 browser.runtime.onInstalled.addListener(async details => {
   if (details.reason == 'install') {
-    await instagramHelper.initDefaults();
-    await redditHelper.initDefaults();
-    await youtubeHelper.initDefaults();
-    await tiktokHelper.initDefaults();
-    await imgurHelper.initDefaults();
-    await wholeInit();
-    browser.storage.local.set({ initDefaults: true })
-    initListener();
+    youtubeHelper.initDefaults();
+    youtubeMusicHelper.initDefaults();
+    twitterHelper.initDefaults();
+    instagramHelper.initDefaults();
+    mapsHelper.initDefaults();
+    searchHelper.initDefaults();
+    translateHelper.initDefaults();
+    mediumHelper.initDefaults();
+    redditHelper.initDefaults();
+    wikipediaHelper.initDefaults();
+    imgurHelper.initDefaults();
+    tiktokHelper.initDefaults();
+    speedtestHelper.initDefaults();
+    sendTargetsHelper.initDefaults();
+    peertubeHelper.initDefaults();
+    lbryHelper.initDefaults();
+    spotifyHelper.initDefaults();
   }
 });
-
-function initListener() {
-  browser.storage.onChanged.addListener(wholeInit);
-}
 
 async function wholeInit() {
   await youtubeHelper.init();
@@ -54,7 +56,6 @@ async function wholeInit() {
   await wikipediaHelper.init();
   await imgurHelper.init();
   await tiktokHelper.init();
-  await pixivHelper.init();
   await speedtestHelper.init();
   await sendTargetsHelper.init();
   await peertubeHelper.init();
@@ -62,15 +63,6 @@ async function wholeInit() {
   await spotifyHelper.init();
   await generalHelper.init();
 }
-
-await browser.storage.local.get(
-  'initDefaults',
-  async r => {
-    if (r.initDefaults == true) {
-      await wholeInit();
-      initListener();
-    }
-  })
 
 let incognitoInit = false;
 browser.tabs.onCreated.addListener(
@@ -87,7 +79,8 @@ browser.tabs.onCreated.addListener(
 let BYPASSTABs = [];
 
 browser.webRequest.onBeforeRequest.addListener(
-  details => {
+  async details => {
+    await wholeInit();
     const url = new URL(details.url);
     // console.info("url:", url.href, "type:", details.type);
     let initiator;
@@ -114,8 +107,6 @@ browser.webRequest.onBeforeRequest.addListener(
     if (!newUrl) newUrl = imgurHelper.redirect(url, details.type, initiator);
 
     if (!newUrl) newUrl = tiktokHelper.redirect(url, details.type, initiator);
-
-    if (!newUrl) newUrl = pixivHelper.redirect(url, details.type, initiator);
 
     if (!newUrl) newUrl = speedtestHelper.redirect(url, details.type, initiator);
 
@@ -173,20 +164,17 @@ browser.tabs.onRemoved.addListener(
   }
 );
 
-
-
-
-
-// Set "blocking" and "responseHeaders".
 browser.webRequest.onHeadersReceived.addListener(
-  e => {
+  async e => {
+    await wholeInit();
     return twitterHelper.removeXFrameOptions(e);
   },
   { urls: ["<all_urls>"], },
   ["blocking", "responseHeaders"]
 );
 
-function redirectOfflineInstance(url, tabId) {
+async function redirectOfflineInstance(url, tabId) {
+  await wholeInit();
   let newUrl;
 
   newUrl = youtubeHelper.switchInstance(url);
@@ -250,7 +238,8 @@ browser.webRequest.onErrorOccurred.addListener(
 )
 
 browser.tabs.onUpdated.addListener(
-  (tabId, changeInfo, _) => {
+  async (tabId, changeInfo, _) => {
+    await wholeInit();
     let url;
     try { url = new URL(changeInfo.url); }
     catch (_) { return }
@@ -259,11 +248,11 @@ browser.tabs.onUpdated.addListener(
     if (translateHelper.isTranslateRedirects(url, 'main_frame', 'lingva')) translateHelper.initLingvaLocalStorage(tabId);
     if (instagramHelper.isBibliogram(url)) instagramHelper.initBibliogramCookies(url);
     // if (changeInfo.url && youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
-
   }
 );
 
-function changeWholeInstance(url) {
+async function changeWholeInstance(url) {
+  await wholeInit();
   let newUrl = youtubeHelper.switchInstance(url);
 
   if (!newUrl) newUrl = twitterHelper.switchInstance(url);

@@ -14,14 +14,6 @@ let redirects = {
 }
 
 const getRedirects = () => redirects;
-const getCustomRedirects = function () {
-    return {
-        "proxiTok": {
-            "normal": [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects]
-        },
-    };
-};
-
 function setRedirects(val) {
     redirects.proxiTok = val;
     browser.storage.local.set({ tiktokRedirects: redirects })
@@ -31,55 +23,22 @@ function setRedirects(val) {
             var index = proxiTokNormalRedirectsChecks.indexOf(item);
             if (index !== -1) proxiTokNormalRedirectsChecks.splice(index, 1);
         }
-    setProxiTokNormalRedirectsChecks(proxiTokNormalRedirectsChecks);
+    browser.storage.local.set({ proxiTokNormalRedirectsChecks })
 
     for (const item of proxiTokTorRedirectsChecks)
         if (!redirects.proxiTok.normal.includes(item)) {
             var index = proxiTokTorRedirectsChecks.indexOf(item);
             if (index !== -1) proxiTokTorRedirectsChecks.splice(index, 1);
         }
-    setProxiTokTorRedirectsChecks(proxiTokTorRedirectsChecks);
+    browser.storage.local.set({ proxiTokTorRedirectsChecks })
 }
 
 let proxiTokNormalRedirectsChecks;
-const getProxiTokNormalRedirectsChecks = () => proxiTokNormalRedirectsChecks;
-function setProxiTokNormalRedirectsChecks(val) {
-    proxiTokNormalRedirectsChecks = val;
-    browser.storage.local.set({ proxiTokNormalRedirectsChecks })
-    console.log("proxiTokNormalRedirectsChecks: ", val)
-}
-
 let proxiTokTorRedirectsChecks;
-const getProxiTokTorRedirectsChecks = () => proxiTokTorRedirectsChecks;
-function setProxiTokTorRedirectsChecks(val) {
-    proxiTokTorRedirectsChecks = val;
-    browser.storage.local.set({ proxiTokTorRedirectsChecks })
-    console.log("proxiTokTorRedirectsChecks: ", val)
-}
-
 let proxiTokNormalCustomRedirects = [];
-const getProxiTokNormalCustomRedirects = () => proxiTokNormalCustomRedirects;
-function setProxiTokNormalCustomRedirects(val) {
-    proxiTokNormalCustomRedirects = val;
-    browser.storage.local.set({ proxiTokNormalCustomRedirects })
-    console.log("proxiTokNormalCustomRedirects: ", val)
-}
-
 let proxiTokTorCustomRedirects = [];
-const getProxiTokTorCustomRedirects = () => proxiTokTorCustomRedirects;
-function setProxiTokTorCustomRedirects(val) {
-    proxiTokTorCustomRedirects = val;
-    browser.storage.local.set({ proxiTokTorCustomRedirects })
-    console.log("proxiTokTorCustomRedirects: ", val)
-}
 
-let disable;
-const getDisable = () => disable;
-function setDisable(val) {
-    disable = val;
-    browser.storage.local.set({ disableTiktok: disable })
-}
-
+let disable; // disableTiktok
 let protocol;
 let enableCustom;
 
@@ -148,9 +107,7 @@ async function initDefaults() {
                 disableTiktok: false,
                 tiktokProtocol: "normal",
 
-                tiktokRedirects: {
-                    'proxiTok': redirects.proxiTok,
-                },
+                tiktokRedirects: redirects,
 
                 proxiTokNormalRedirectsChecks: [...redirects.proxiTok.normal],
                 proxiTokNormalCustomRedirects: [],
@@ -170,66 +127,48 @@ async function initDefaults() {
 }
 
 async function init() {
-    return new Promise(resolve => {
-        browser.storage.local.get(
-            [
-                "disableTiktok",
-                "tiktokProtocol",
-                "tiktokRedirects",
+    browser.storage.local.get(
+        [
+            "disableTiktok",
+            "tiktokProtocol",
+            "tiktokRedirects",
 
-                "proxiTokNormalRedirectsChecks",
-                "proxiTokNormalCustomRedirects",
+            "proxiTokNormalRedirectsChecks",
+            "proxiTokNormalCustomRedirects",
 
-                "proxiTokTorRedirectsChecks",
-                "proxiTokTorCustomRedirects",
+            "proxiTokTorRedirectsChecks",
+            "proxiTokTorCustomRedirects",
 
-                "enableTiktokCustomSettings",
+            "enableTiktokCustomSettings",
 
-                "proxiTokTheme",
-                "proxiTokApiLegacy",
-            ],
-            r => {
-                disable = r.disableTiktok;
-                protocol = r.tiktokProtocol;
-                redirects = r.tiktokRedirects;
+            "proxiTokTheme",
+            "proxiTokApiLegacy",
+        ],
+        r => {
+            disable = r.disableTiktok;
+            protocol = r.tiktokProtocol;
+            redirects = r.tiktokRedirects;
 
-                proxiTokNormalRedirectsChecks = r.proxiTokNormalRedirectsChecks;
-                proxiTokNormalCustomRedirects = r.proxiTokNormalCustomRedirects;
+            proxiTokNormalRedirectsChecks = r.proxiTokNormalRedirectsChecks;
+            proxiTokNormalCustomRedirects = r.proxiTokNormalCustomRedirects;
 
-                proxiTokTorRedirectsChecks = r.proxiTokTorRedirectsChecks;
-                proxiTokTorCustomRedirects = r.proxiTokTorCustomRedirects;
+            proxiTokTorRedirectsChecks = r.proxiTokTorRedirectsChecks;
+            proxiTokTorCustomRedirects = r.proxiTokTorCustomRedirects;
 
-                enableCustom = r.enableTiktokCustomSettings;
+            enableCustom = r.enableTiktokCustomSettings;
 
-                theme = r.proxiTokTheme;
-                api_legacy = r.proxiTokApiLegacy;
-
-                resolve();
-            }
-        )
-    })
+            theme = r.proxiTokTheme;
+            api_legacy = r.proxiTokApiLegacy;
+        }
+    )
 }
 
 export default {
 
     getRedirects,
-    getCustomRedirects,
     setRedirects,
 
-    getDisable,
-    setDisable,
-
     reverse,
-
-    getProxiTokNormalRedirectsChecks,
-    setProxiTokNormalRedirectsChecks,
-    getProxiTokTorRedirectsChecks,
-    setProxiTokTorRedirectsChecks,
-
-    getProxiTokTorCustomRedirects,
-    setProxiTokTorCustomRedirects,
-    getProxiTokNormalCustomRedirects,
-    setProxiTokNormalCustomRedirects,
 
     initProxiTokCookies,
 
