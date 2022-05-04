@@ -145,7 +145,7 @@ const checkInput = (name, checked) => {
   if (input) input.checked = !!checked;
 };
 
-(async (doc) => {
+(async () => {
   const inputs = await storage.local.get(SWITCHES);
   for (const input of Object.entries(inputs)) checkInput(...input);
 
@@ -155,9 +155,9 @@ const checkInput = (name, checked) => {
   const { allPopupFrontends, getPopupFrontends } = generalHelper;
   const popupFrontends = getPopupFrontends();
   for (const frontend of allPopupFrontends) {
-    const element = doc.getElementById(frontend);
+    const element = document.getElementById(frontend);
     if (!element) continue;
     const method = popupFrontends.includes(frontend) ? "remove" : "add";
     element.classList[method]("hide");
   }
-})(document);
+})();
