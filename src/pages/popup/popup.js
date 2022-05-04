@@ -1,5 +1,4 @@
 "use strict";
-window.browser = window.browser || window.chrome;
 
 import commonHelper from "../../assets/javascripts/helpers/common.js";
 import youtubeHelper from "../../assets/javascripts/helpers/youtube/youtube.js";
@@ -22,6 +21,8 @@ import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
 import generalHelper from "../../assets/javascripts/helpers/general.js";
 
 import { setHandler, toKebabCase } from "./util.js";
+
+const { runtime, storage, tabs } = window.browser || window.chrome;
 
 const SWITCHES = [
   "disableTwitter",
@@ -47,7 +48,7 @@ const POPUP_EVENTS = [
   {
     id: "more-options",
     type: "click",
-    listener: () => browser.runtime.openOptionsPage(),
+    listener: () => runtime.openOptionsPage(),
   },
   {
     id: "change-instance",
@@ -62,7 +63,7 @@ const POPUP_EVENTS = [
 ];
 
 function switchInstance() {
-  browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  tabs.query({ active: true, currentWindow: true }, function (tabs) {
     let currTab = tabs[0];
     if (currTab) {
       let url = currTab.url;
@@ -96,7 +97,7 @@ function switchInstance() {
       if (!newUrl) newUrl = wikipediaHelper.switchInstance(tabUrl);
 
       if (newUrl) {
-        browser.tabs.update({ url: newUrl });
+        tabs.update({ url: newUrl });
         return true;
       }
     }
@@ -105,7 +106,7 @@ function switchInstance() {
 }
 
 function copyRaw() {
-  browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  tabs.query({ active: true, currentWindow: true }, function (tabs) {
     let currTab = tabs[0];
     if (currTab) {
       let url = currTab.url;
@@ -141,13 +142,13 @@ const checkInput = (name, checked) => {
   const listener = async ({ target }) => {
     const service = Object.create(null);
     service[name] = target.checked;
-    await browser.storage.local.set(service);
+    await storage.local.set(service);
   };
   setEventListener(input, "change", listener);
 };
 
 (async (doc) => {
-  const inputs = await browser.storage.local.get(SWITCHES);
+  const inputs = await storage.local.get(SWITCHES);
   for (const input of Object.entries(inputs)) checkInput(...input);
 
   for (const event of POPUP_EVENTS) setHandler(event);
