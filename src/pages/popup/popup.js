@@ -1,23 +1,24 @@
 "use strict";
 
-import youtube from "../../assets/javascripts/helpers/youtube/youtube.js";
-import youtubeMusic from "../../assets/javascripts/helpers/youtubeMusic.js";
-import twitter from "../../assets/javascripts/helpers/twitter.js";
+import generalHelper from "../../assets/javascripts/helpers/general.js";
+
+import imgur from "../../assets/javascripts/helpers/imgur.js";
 import instagram from "../../assets/javascripts/helpers/instagram.js";
+import lbry from "../../assets/javascripts/helpers/lbry.js";
 import maps from "../../assets/javascripts/helpers/maps.js";
+import medium from "../../assets/javascripts/helpers/medium.js";
+import peertube from "../../assets/javascripts/helpers/peertube.js";
+import pixiv from "../../assets/javascripts/helpers/pixiv.js";
 import reddit from "../../assets/javascripts/helpers/reddit.js";
 import search from "../../assets/javascripts/helpers/search.js";
-import translate from "../../assets/javascripts/helpers/translate/translate.js";
-import wikipedia from "../../assets/javascripts/helpers/wikipedia.js";
-import medium from "../../assets/javascripts/helpers/medium.js";
-import imgur from "../../assets/javascripts/helpers/imgur.js";
-import tiktok from "../../assets/javascripts/helpers/tiktok.js";
-import pixiv from "../../assets/javascripts/helpers/pixiv.js";
-import spotify from "../../assets/javascripts/helpers/spotify.js";
 import sendTargets from "../../assets/javascripts/helpers/sendTargets.js";
-import peertube from "../../assets/javascripts/helpers/peertube.js";
-import lbry from "../../assets/javascripts/helpers/lbry.js";
-import generalHelper from "../../assets/javascripts/helpers/general.js";
+import spotify from "../../assets/javascripts/helpers/spotify.js";
+import tiktok from "../../assets/javascripts/helpers/tiktok.js";
+import translate from "../../assets/javascripts/helpers/translate/translate.js";
+import twitter from "../../assets/javascripts/helpers/twitter.js";
+import wikipedia from "../../assets/javascripts/helpers/wikipedia.js";
+import youtube from "../../assets/javascripts/helpers/youtube/youtube.js";
+import youtubeMusic from "../../assets/javascripts/helpers/youtubeMusic.js";
 
 import { setHandler, toKebabCase } from "./util.js";
 
