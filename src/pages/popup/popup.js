@@ -1,23 +1,23 @@
 "use strict";
 
-import youtube from "../../assets/javascripts/s/youtube/youtube.js";
-import youtubeMusic from "../../assets/javascripts/s/youtubeMusic.js";
-import twitter from "../../assets/javascripts/s/twitter.js";
-import instagram from "../../assets/javascripts/s/instagram.js";
-import maps from "../../assets/javascripts/s/maps.js";
-import reddit from "../../assets/javascripts/s/reddit.js";
-import search from "../../assets/javascripts/s/search.js";
-import translate from "../../assets/javascripts/s/translate/translate.js";
-import wikipedia from "../../assets/javascripts/s/wikipedia.js";
-import medium from "../../assets/javascripts/s/medium.js";
-import imgur from "../../assets/javascripts/s/imgur.js";
-import tiktok from "../../assets/javascripts/s/tiktok.js";
-import pixiv from "../../assets/javascripts/s/pixiv.js";
-import spotify from "../../assets/javascripts/s/spotify.js";
-import sendTargets from "../../assets/javascripts/s/sendTargets.js";
-import peertube from "../../assets/javascripts/s/peertube.js";
-import lbry from "../../assets/javascripts/s/lbry.js";
-import generalHelper from "../../assets/javascripts/s/general.js";
+import youtube from "../../assets/javascripts/helpers/youtube/youtube.js";
+import youtubeMusic from "../../assets/javascripts/helpers/youtubeMusic.js";
+import twitter from "../../assets/javascripts/helpers/twitter.js";
+import instagram from "../../assets/javascripts/helpers/instagram.js";
+import maps from "../../assets/javascripts/helpers/maps.js";
+import reddit from "../../assets/javascripts/helpers/reddit.js";
+import search from "../../assets/javascripts/helpers/search.js";
+import translate from "../../assets/javascripts/helpers/translate/translate.js";
+import wikipedia from "../../assets/javascripts/helpers/wikipedia.js";
+import medium from "../../assets/javascripts/helpers/medium.js";
+import imgur from "../../assets/javascripts/helpers/imgur.js";
+import tiktok from "../../assets/javascripts/helpers/tiktok.js";
+import pixiv from "../../assets/javascripts/helpers/pixiv.js";
+import spotify from "../../assets/javascripts/helpers/spotify.js";
+import sendTargets from "../../assets/javascripts/helpers/sendTargets.js";
+import peertube from "../../assets/javascripts/helpers/peertube.js";
+import lbry from "../../assets/javascripts/helpers/lbry.js";
+import generalHelper from "../../assets/javascripts/helpers/general.js";
 
 import { setHandler, toKebabCase } from "./util.js";
 
