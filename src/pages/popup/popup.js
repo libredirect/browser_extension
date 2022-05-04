@@ -1,6 +1,5 @@
 "use strict";
 
-import commonHelper from "../../assets/javascripts/s/common.js";
 import youtube from "../../assets/javascripts/s/youtube/youtube.js";
 import youtubeMusic from "../../assets/javascripts/s/youtubeMusic.js";
 import twitter from "../../assets/javascripts/s/twitter.js";
