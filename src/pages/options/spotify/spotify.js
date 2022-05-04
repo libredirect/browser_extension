@@ -12,7 +12,7 @@ browser.storage.local.get(
     }
 )
 
-commonHelper.processDefaultCustomInstances('soju', 'normal', spotifyHelper, document);
+commonHelper.processDefaultCustomInstances('spotify', 'soju', 'normal', document);
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");
@@ -27,7 +27,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.soju.normal).then(r => {
             browser.storage.local.set({ sojuLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('soju', 'normal', spotifyHelper, document)
+            commonHelper.processDefaultCustomInstances('spotify', 'soju', 'normal', document);
             latencyElement.removeEventListener("click", reloadWindow)
         });
     }

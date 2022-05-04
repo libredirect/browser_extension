@@ -94,21 +94,29 @@ function redirect(url, type, initiator) {
 }
 
 async function initDefaults() {
-    console.log('init peertube defaults')
     fetch('/instances/data.json').then(response => response.text()).then(async data => {
         let dataJson = JSON.parse(data);
-        await browser.storage.local.set({
-            peerTubeTargets: ['https://search.joinpeertube.org', ...dataJson.peertube],
+        browser.storage.local.get('cloudflareList', async r => {
+            simpleertubeNormalRedirectsChecks = [...redirects.simpleertube.normal];
+            for (const instance of r.cloudflareList) {
+                let i = simpleertubeNormalRedirectsChecks.indexOf(instance);
+                if (i > -1) simpleertubeNormalRedirectsChecks.splice(i, 1);
+            }
+            await browser.storage.local.set({
+                peerTubeTargets: ['https://search.joinpeertube.org', ...dataJson.peertube],
 
-            disablePeertubeTargets: true,
+                disablePeertubeTargets: true,
 
-            simpleertubeNormalRedirectsChecks: [...redirects.simpleertube.normal],
-            simpleertubeNormalCustomRedirects: [],
+                peertubeRedirects: redirects,
 
-            simpleertubeTorRedirectsChecks: [...redirects.simpleertube.tor],
-            simpleertubeTorCustomRedirects: [],
+                simpleertubeNormalRedirectsChecks: simpleertubeNormalRedirectsChecks,
+                simpleertubeNormalCustomRedirects: [],
 
-            peertubeTargetsProtocol: "normal",
+                simpleertubeTorRedirectsChecks: [...redirects.simpleertube.tor],
+                simpleertubeTorCustomRedirects: [],
+
+                peertubeTargetsProtocol: "normal",
+            })
         })
     })
 }

@@ -5,7 +5,7 @@ let disable = document.getElementById("disable-tiktok");
 let protocol = document.getElementById("protocol")
 
 let enableCustomSettings = document.getElementById("enable-custom-settings");
-let customSettingsDiv = document.getElementsByClassName("custom-settings")[0];
+let customSettingsDiv = document.getElementsByClassName("custom-settings");
 
 let theme = document.getElementById('proxiTok').getElementsByClassName('theme')[0];
 let api_legacy = document.getElementById('proxiTok').getElementsByClassName('api-legacy')[0];
@@ -21,7 +21,7 @@ document.addEventListener("change", async () => {
         proxiTokApiLegacy: api_legacy.value,
 
     });
-    init();
+    changeProtocolSettings(protocol.value);
 })
 
 window.onblur = tiktokHelper.initProxiTokCookies;
@@ -39,6 +39,7 @@ browser.storage.local.get(
     r => {
         disable.checked = !r.disableTiktok;
         protocol.value = r.tiktokProtocol;
+        changeProtocolSettings(r.tiktokProtocol);
         let normalDiv = document.getElementsByClassName("normal")[0];
         let torDiv = document.getElementsByClassName("tor")[0];
         if (r.tiktokProtocol == 'normal') {
@@ -57,13 +58,29 @@ browser.storage.local.get(
             customSettingsDiv.style.display = 'none';
 
         theme.value = r.proxiTokTheme;
-        api_legacy.value = r.proxiTokApiLegacy
+        api_legacy.value = r.proxiTokApiLegacy;
     }
 )
 
-commonHelper.processDefaultCustomInstances('proxiTok', 'normal', tiktokHelper, document);
-commonHelper.processDefaultCustomInstances('proxiTok', 'tor', tiktokHelper, document)
+function changeProtocolSettings(protocol) {
+    let normalDiv = document.getElementsByClassName("normal")[0];
+    let torDiv = document.getElementsByClassName("tor")[0];
+    if (protocol == 'normal') {
+        normalDiv.style.display = 'block';
+        torDiv.style.display = 'none';
+    }
+    else if (protocol == 'tor') {
+        normalDiv.style.display = 'none';
+        torDiv.style.display = 'block';
+    }
+    if (enableCustomSettings.checked)
+        for (const item of customSettingsDiv) item.style.display = 'block';
+    else
+        for (const item of customSettingsDiv) item.style.display = 'none';
+}
 
+commonHelper.processDefaultCustomInstances('tiktok', 'proxiTok', 'normal', document);
+commonHelper.processDefaultCustomInstances('tiktok', 'proxiTok', 'tor', document);
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");
@@ -78,7 +95,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.proxiTok.normal).then(r => {
             browser.storage.local.set({ proxiTokLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('proxiTok', 'normal', tiktokHelper, document)
+            commonHelper.processDefaultCustomInstances('tiktok', 'proxiTok', 'normal', document);
             latencyElement.removeEventListener("click", reloadWindow)
         });
     }

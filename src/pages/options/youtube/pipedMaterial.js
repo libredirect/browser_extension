@@ -67,46 +67,43 @@ pipedMaterialElement.addEventListener("change", async () => {
     init();
 });
 
-function init() {
-    browser.storage.local.get(
-        [
-            "youtubeAutoplay",
-            "youtubeVolume",
-            "youtubeListen",
+browser.storage.local.get(
+    [
+        "youtubeAutoplay",
+        "youtubeVolume",
+        "youtubeListen",
 
-            "pipedDisableLBRY",
-            "pipedProxyLBRY",
-            "pipedSelectedSkip",
-            "pipedSponsorblock",
+        "pipedDisableLBRY",
+        "pipedProxyLBRY",
+        "pipedSelectedSkip",
+        "pipedSponsorblock",
 
-            "pipedMaterialSkipToLastPoint",
-        ],
-        r => {
-            autoplayElement.checked = r.youtubeAutoplay;
+        "pipedMaterialSkipToLastPoint",
+    ],
+    r => {
+        autoplayElement.checked = r.youtubeAutoplay;
 
-            listenElement.checked = r.youtubeListen;
-            disableLBRYElement.checked = r.pipedDisableLBRY;
-            proxyLBRYElement.checked = r.pipedProxyLBRY;
-            sponsorblockElement.checked = r.pipedSponsorblock;
-            skipToLastPointElement.checked = r.pipedMaterialSkipToLastPoint;
+        listenElement.checked = r.youtubeListen;
+        disableLBRYElement.checked = r.pipedDisableLBRY;
+        proxyLBRYElement.checked = r.pipedProxyLBRY;
+        sponsorblockElement.checked = r.pipedSponsorblock;
+        skipToLastPointElement.checked = r.pipedMaterialSkipToLastPoint;
 
-            selectSkip = r.pipedSelectedSkip;
-            selectedSkipSponsorElement.checked = selectSkip.includes('sponsors');
-            selectedSkipIntroElement.checked = selectSkip.includes('intro');
-            selectedSkipOutroElement.checked = selectSkip.includes('outro');
-            selectedSkipPreviewElement.checked = selectSkip.includes('preview');
-            selectedSkipInteractionElement.checked = selectSkip.includes('interaction');
-            selectedSkipSelfpromoElement.checked = selectSkip.includes('selfpromo');
-            selectedSkipMusicOfftopicElement.checked = selectSkip.includes('music_offtopic');
+        selectSkip = r.pipedSelectedSkip;
+        selectedSkipSponsorElement.checked = selectSkip.includes('sponsors');
+        selectedSkipIntroElement.checked = selectSkip.includes('intro');
+        selectedSkipOutroElement.checked = selectSkip.includes('outro');
+        selectedSkipPreviewElement.checked = selectSkip.includes('preview');
+        selectedSkipInteractionElement.checked = selectSkip.includes('interaction');
+        selectedSkipSelfpromoElement.checked = selectSkip.includes('selfpromo');
+        selectedSkipMusicOfftopicElement.checked = selectSkip.includes('music_offtopic');
 
-            volumeElement.value = r.youtubeVolume;
-            volumeValueElement.textContent = `${r.youtubeVolume}%`;
+        volumeElement.value = r.youtubeVolume;
+        volumeValueElement.textContent = `${r.youtubeVolume}%`;
+    });
 
-            commonHelper.processDefaultCustomInstances('pipedMaterial', 'normal', youtubeHelper, document);
-            commonHelper.processDefaultCustomInstances('pipedMaterial', 'tor', youtubeHelper, document);
-        });
-}
-init();
+commonHelper.processDefaultCustomInstances('youtube' ,'pipedMaterial', 'normal',  document);
+commonHelper.processDefaultCustomInstances('youtube' ,'pipedMaterial', 'tor',  document);
 
 let latencyPipedMaterialElement = document.getElementById("latency-pipedMaterial");
 let latencyPipedMaterialLabel = document.getElementById("latency-pipedMaterial-label");
@@ -121,7 +118,7 @@ latencyPipedMaterialElement.addEventListener("click",
         commonHelper.testLatency(latencyPipedMaterialLabel, redirects.pipedMaterial.normal).then(r => {
             browser.storage.local.set({ pipedMaterialLatency: r });
             latencyPipedMaterialLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('pipedMaterial', 'normal', youtubeHelper, document);
+            commonHelper.processDefaultCustomInstances('youtube' ,'pipedMaterial', 'normal',  document);
             latencyPipedMaterialElement.removeEventListener("click", reloadWindow);
         });
     }

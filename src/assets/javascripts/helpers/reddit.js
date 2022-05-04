@@ -387,12 +387,22 @@ function switchInstance(url) {
 }
 
 async function initDefaults() {
-  console.log('init redditDefault')
-  return new Promise(async resolve => {
-    fetch('/instances/data.json').then(response => response.text()).then(async data => {
-      let dataJson = JSON.parse(data);
-      redirects.teddit = dataJson.teddit;
-      redirects.libreddit = dataJson.libreddit;
+  fetch('/instances/data.json').then(response => response.text()).then(async data => {
+    let dataJson = JSON.parse(data);
+    redirects.teddit = dataJson.teddit;
+    redirects.libreddit = dataJson.libreddit;
+    browser.storage.local.get('cloudflareList', async r => {
+      libredditNormalRedirectsChecks = [...redirects.libreddit.normal];
+      tedditNormalRedirectsChecks = [...redirects.teddit.normal]
+      for (const instance of r.cloudflareList) {
+        let i;
+        
+        i = libredditNormalRedirectsChecks.indexOf(instance);
+        if (i > -1) libredditNormalRedirectsChecks.splice(i, 1);
+
+        i = tedditNormalRedirectsChecks.indexOf(instance);
+        if (i > -1) tedditNormalRedirectsChecks.splice(i, 1);
+      }
       await browser.storage.local.set({
         disableReddit: false,
         redditProtocol: 'normal',
@@ -401,18 +411,15 @@ async function initDefaults() {
         bypassWatchOnReddit: true,
         alwaysUsePreferred: false,
 
-        redditRedirects: {
-          'libreddit': redirects.libreddit,
-          'teddit': redirects.teddit,
-        },
+        redditRedirects: redirects,
 
-        libredditNormalRedirectsChecks: [...redirects.libreddit.normal],
+        libredditNormalRedirectsChecks: libredditNormalRedirectsChecks,
         libredditNormalCustomRedirects: [],
 
         libredditTorRedirectsChecks: [...redirects.libreddit.tor],
         libredditTorCustomRedirects: [],
 
-        tedditNormalRedirectsChecks: [...redirects.teddit.normal],
+        tedditNormalRedirectsChecks: tedditNormalRedirectsChecks,
         tedditNormalCustomRedirects: [],
 
         tedditTorRedirectsChecks: [...redirects.teddit.tor],
@@ -430,9 +437,8 @@ async function initDefaults() {
         redditUseHls: false,
         redditHideHlsNotification: false,
       });
-      resolve();
     });
-  })
+  });
 }
 
 async function init() {

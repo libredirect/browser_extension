@@ -44,9 +44,9 @@ function changeProtocolSettings(protocol) {
         i2pDiv.style.display = 'block';
     }
 }
-commonHelper.processDefaultCustomInstances('wikiless', 'normal', wikipediaHelper, document);
-commonHelper.processDefaultCustomInstances('wikiless', 'tor', wikipediaHelper, document)
-commonHelper.processDefaultCustomInstances('wikiless', 'i2p', wikipediaHelper, document)
+commonHelper.processDefaultCustomInstances('wikipedia' ,'wikiless', 'normal', document);
+commonHelper.processDefaultCustomInstances('wikipedia' ,'wikiless', 'tor',  document);
+commonHelper.processDefaultCustomInstances('wikipedia' ,'wikiless', 'i2p',  document);
 
 window.onblur = wikipediaHelper.initWikilessCookies;
 
@@ -63,7 +63,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.wikiless.normal).then(r => {
             browser.storage.local.set({ wikilessLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('wikiless', 'normal', wikipediaHelper, document)
+            commonHelper.processDefaultCustomInstances('wikipedia' ,'wikiless', 'normal', document);
             latencyElement.removeEventListener("click", reloadWindow)
         });
     }

@@ -31,16 +31,15 @@ browser.storage.local.get(
         "instagramProtocol"
     ],
     r => {
-
         disableInstagramElement.checked = !r.disableInstagram;
 
         let protocol = r.instagramProtocol;
         protocolElement.value = protocol;
         changeProtocolSettings(protocol);
-
-        commonHelper.processDefaultCustomInstances('bibliogram', 'normal', instagramHelper, document)
-        commonHelper.processDefaultCustomInstances('bibliogram', 'tor', instagramHelper, document)
     })
+
+commonHelper.processDefaultCustomInstances('instagram', 'bibliogram', 'normal', document);
+commonHelper.processDefaultCustomInstances('instagram', 'bibliogram', 'tor', document);
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");
@@ -55,7 +54,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.bibliogram.normal).then(r => {
             browser.storage.local.set({ bibliogramLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('bibliogram', 'normal', instagramHelper, document);
+            commonHelper.processDefaultCustomInstances('instagram', 'bibliogram', 'normal', document);
             latencyElement.removeEventListener("click", reloadWindow);
         });
     }

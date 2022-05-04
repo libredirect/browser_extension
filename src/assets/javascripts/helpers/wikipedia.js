@@ -141,21 +141,29 @@ async function initDefaults() {
   fetch('/instances/data.json').then(response => response.text()).then(async data => {
     let dataJson = JSON.parse(data);
     redirects.wikiless = dataJson.wikiless;
-    await browser.storage.local.set({
-      disableWikipedia: true,
-      wikipediaRedirects: redirects,
-      wikilessNormalRedirectsChecks: [...redirects.wikiless.normal],
-      wikilessTorRedirectsChecks: [...redirects.wikiless.tor],
-      wikilessI2pRedirectsChecks: [...redirects.wikiless.i2p],
-      wikilessNormalCustomRedirects: [],
-      wikilessTorCustomRedirects: [],
-      wikilessI2pCustomRedirects: [],
-      wikipediaProtocol: "normal",
+    browser.storage.local.get('cloudflareList', async r => {
+      wikilessNormalRedirectsChecks = [...redirects.wikiless.normal];
+      for (const instance of r.cloudflareList) {
+        let i;
 
-      theme: 'DEFAULT',
-      applyThemeToSites: false,
+        i = wikilessNormalRedirectsChecks.indexOf(instance);
+        if (i > -1) wikilessNormalRedirectsChecks.splice(i, 1);
+      }
+      await browser.storage.local.set({
+        disableWikipedia: true,
+        wikipediaRedirects: redirects,
+        wikilessNormalRedirectsChecks: wikilessNormalRedirectsChecks,
+        wikilessTorRedirectsChecks: [...redirects.wikiless.tor],
+        wikilessI2pRedirectsChecks: [...redirects.wikiless.i2p],
+        wikilessNormalCustomRedirects: [],
+        wikilessTorCustomRedirects: [],
+        wikilessI2pCustomRedirects: [],
+        wikipediaProtocol: "normal",
+
+        theme: 'DEFAULT',
+        applyThemeToSites: false,
+      })
     })
-
   })
 }
 

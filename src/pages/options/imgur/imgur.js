@@ -9,7 +9,7 @@ document.addEventListener("change", async () => {
         disableImgur: !disableImgurElement.checked,
         imgurProtocol: protocolElement.value,
     });
-    init();
+    changeProtocolSettings(protocolElement.value);
 })
 
 function changeProtocolSettings(protocol) {
@@ -33,44 +33,21 @@ function changeProtocolSettings(protocol) {
     }
 }
 
-function init() {
-    imgurHelper.init().then(() => {
-        browser.storage.local.get(
-            [
-                "disableImgur",
-                "imgurProtocol",
-            ],
-            r => {
-                disableImgurElement.checked = !r.disableImgur;
-                protocolElement.value = r.imgurProtocol;
-                changeProtocolSettings(r.imgurProtocol);
-            }
-        );
+browser.storage.local.get(
+    [
+        "disableImgur",
+        "imgurProtocol",
+    ],
+    r => {
+        disableImgurElement.checked = !r.disableImgur;
+        protocolElement.value = r.imgurProtocol;
+        changeProtocolSettings(r.imgurProtocol);
+    }
+);
 
-
-        commonHelper.processDefaultCustomInstances(
-            'rimgo',
-            'normal',
-            imgurHelper,
-            document
-        );
-
-        commonHelper.processDefaultCustomInstances(
-            'rimgo',
-            'tor',
-            imgurHelper,
-            document
-        );
-
-        commonHelper.processDefaultCustomInstances(
-            'rimgo',
-            'i2p',
-            imgurHelper,
-            document
-        );
-    });
-}
-init();
+commonHelper.processDefaultCustomInstances('imgur', 'rimgo', 'normal', document);
+commonHelper.processDefaultCustomInstances('imgur', 'rimgo', 'tor', document);
+commonHelper.processDefaultCustomInstances('imgur', 'rimgo', 'i2p', document);
 
 
 let latencyElement = document.getElementById("latency");
@@ -86,17 +63,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.rimgo.normal).then(r => {
             browser.storage.local.set({ rimgoLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances(
-                'rimgo',
-                'normal',
-                imgurHelper,
-                document,
-                imgurHelper.getRimgoNormalRedirectsChecks,
-                imgurHelper.setRimgoNormalRedirectsChecks,
-                imgurHelper.getRimgoNormalCustomRedirects,
-                imgurHelper.setRimgoNormalCustomRedirects,
-                r
-            );
+            commonHelper.processDefaultCustomInstances('imgur', 'rimgo', 'normal', document);
             latencyElement.removeEventListener("click", reloadWindow)
         });
     }

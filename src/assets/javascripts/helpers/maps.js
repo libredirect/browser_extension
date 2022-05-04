@@ -17,7 +17,6 @@ let redirects = {
     ]
   }
 };
-const getRedirects = () => redirects;
 
 let disable; // disableMaps
 let frontend; // mapsFrontend
@@ -187,14 +186,14 @@ function redirect(url, initiator) {
 }
 
 async function initDefaults() {
-  return new Promise(async resolve => {
-    await browser.storage.local.set({
-      disableMaps: false,
-      mapsFrontend: 'osm',
+  await browser.storage.local.set({
+    disableMaps: false,
+    mapsFrontend: 'osm',
 
-      facilNormalRedirectsChecks: [...redirects.facil.normal],
-      facilNormalCustomRedirects: [],
-    })
+    mapsRedirects: redirects,
+
+    facilNormalRedirectsChecks: [...redirects.facil.normal],
+    facilNormalCustomRedirects: [],
   })
 }
 
@@ -223,8 +222,6 @@ async function init() {
 }
 
 export default {
-  getRedirects,
-
   redirect,
   init,
   initDefaults,

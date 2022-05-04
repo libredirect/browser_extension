@@ -50,7 +50,7 @@ browser.storage.local.get(
         bypassWatchOnTwitterElement.checked = r.bypassWatchOnTwitter;
         protocolElement.value = r.twitterProtocol;
         changeProtocolSettings(r.twitterProtocol);
-        
+
         // Display
         theme.value = r.nitterTheme;
         infiniteScroll.checked = r.nitterInfiniteScroll;
@@ -61,7 +61,7 @@ browser.storage.local.get(
         hidePins.checked = r.nitterHidePins;
         hideReplies.checked = r.nitterHideReplies;
         squareAvatars.checked = r.nitterSquareAvatars;
-        
+
         // Media
         mp4Playback.checked = r.nitterMp4Playback;
         hlsPlayback.checked = r.nitterHlsPlayback;
@@ -96,7 +96,7 @@ document.addEventListener("change", async () => {
         nitterMuteVideos: muteVideos.checked,
         nitterAutoplayGifs: autoplayGifs.checked,
     });
-    init();
+    changeProtocolSettings(protocolElement.value);
 })
 
 function changeProtocolSettings(protocol) {
@@ -116,8 +116,8 @@ function changeProtocolSettings(protocol) {
         for (const item of customSettingsDivElement) item.style.display = 'none';
 }
 
-// commonHelper.processDefaultCustomInstances('nitter', 'normal', twitterHelper, document);
-// commonHelper.processDefaultCustomInstances('nitter', 'tor', twitterHelper, document)
+commonHelper.processDefaultCustomInstances('twitter', 'nitter', 'normal', document);
+commonHelper.processDefaultCustomInstances('twitter', 'nitter', 'tor', document)
 window.onblur = twitterHelper.initNitterCookies;
 
 let latencyElement = document.getElementById("latency");
@@ -133,7 +133,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.nitter.normal).then(r => {
             browser.storage.local.set({ nitterLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('nitter', 'normal', twitterHelper, document)
+            commonHelper.processDefaultCustomInstances('twitter', 'nitter', 'normal', document);
             latencyElement.removeEventListener("click", reloadWindow)
         });
     }

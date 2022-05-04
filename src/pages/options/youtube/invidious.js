@@ -80,84 +80,82 @@ invidious.addEventListener("change", async _ => {
         invidiousDefaultHome: default_home.value,
         invidiousFeedMenuList: feedMenuList,
       });
-      init();
     }
   )
 });
 
-function init() {
-  browser.storage.local.get(
-    [
-      "youtubeListen",
-      "youtubeVolume",
-      "youtubeAutoplay",
-      "invidiousQuality",
-      "invidiousAlwaysProxy",
-      "invidiousQuality",
-      "invidiousPlayerStyle",
-      "invidiousVideoLoop",
-      "invidiousContinueAutoplay",
-      "invidiousContinue",
-      "invidiousSpeed",
-      "invidiousQualityDash",
-      "invidiousComments",
-      "invidiousCaptions",
-      "invidiousRelatedVideos",
-      "invidiousAnnotations",
-      "invidiousExtendDesc",
-      "invidiousVrMode",
-      "invidiousSavePlayerPos",
-      "invidiousRegion",
-      "invidiousDarkMode",
-      "invidiousThinMode",
-      "invidiousDefaultHome",
-      "invidiousFeedMenuList",
-    ],
-    r => {
-      videoLoop.checked = r.invidiousVideoLoop;
-      autoplay.checked = r.youtubeAutoplay;
-      playerStyle.value = r.invidiousPlayerStyle;
+browser.storage.local.get(
+  [
+    "youtubeListen",
+    "youtubeVolume",
+    "youtubeAutoplay",
+    "invidiousQuality",
+    "invidiousAlwaysProxy",
+    "invidiousQuality",
+    "invidiousPlayerStyle",
+    "invidiousVideoLoop",
+    "invidiousContinueAutoplay",
+    "invidiousContinue",
+    "invidiousSpeed",
+    "invidiousQualityDash",
+    "invidiousComments",
+    "invidiousCaptions",
+    "invidiousRelatedVideos",
+    "invidiousAnnotations",
+    "invidiousExtendDesc",
+    "invidiousVrMode",
+    "invidiousSavePlayerPos",
+    "invidiousRegion",
+    "invidiousDarkMode",
+    "invidiousThinMode",
+    "invidiousDefaultHome",
+    "invidiousFeedMenuList",
+  ],
+  r => {
+    videoLoop.checked = r.invidiousVideoLoop;
+    autoplay.checked = r.youtubeAutoplay;
+    playerStyle.value = r.invidiousPlayerStyle;
 
-      continueAutoplay.checked = r.invidiousContinueAutoplay;
-      invidiousContinue.checked = r.invidiousContinue;
-      alwaysProxy.checked = r.invidiousAlwaysProxy;
-      youtubeListen.checked = r.youtubeListen;
+    continueAutoplay.checked = r.invidiousContinueAutoplay;
+    invidiousContinue.checked = r.invidiousContinue;
+    alwaysProxy.checked = r.invidiousAlwaysProxy;
+    youtubeListen.checked = r.youtubeListen;
 
-      speed.value = r.invidiousSpeed;
-      quality.value = r.invidiousQuality;
-      qualityDash.value = r.invidiousQualityDash;
+    speed.value = r.invidiousSpeed;
+    quality.value = r.invidiousQuality;
+    qualityDash.value = r.invidiousQualityDash;
 
-      volume.value = r.youtubeVolume;
-      volumeValue.textContent = `${r.youtubeVolume}%`;
+    volume.value = r.youtubeVolume;
+    volumeValue.textContent = `${r.youtubeVolume}%`;
 
-      comments0.value = r.invidiousComments[0];
-      comments1.value = r.invidiousComments[1];
+    comments0.value = r.invidiousComments[0];
+    comments1.value = r.invidiousComments[1];
 
-      captions0.value = r.invidiousCaptions[0];
-      captions1.value = r.invidiousCaptions[1];
-      captions2.value = r.invidiousCaptions[2];
+    captions0.value = r.invidiousCaptions[0];
+    captions1.value = r.invidiousCaptions[1];
+    captions2.value = r.invidiousCaptions[2];
 
-      relatedVideo.checked = r.invidiousRelatedVideos;
-      annotations.checked = r.invidiousAnnotations;
-      extendDesc.checked = r.invidiousExtendDesc;
-      vrMode.checked = r.invidiousVrMode;
-      savePlayerPos.checked = r.invidiousSavePlayerPos;
+    relatedVideo.checked = r.invidiousRelatedVideos;
+    annotations.checked = r.invidiousAnnotations;
+    extendDesc.checked = r.invidiousExtendDesc;
+    vrMode.checked = r.invidiousVrMode;
+    savePlayerPos.checked = r.invidiousSavePlayerPos;
 
-      region.value = r.invidiousRegion;
-      darkMode.value = r.invidiousDarkMode;
-      thin_mode.checked = r.invidiousThinMode;
-      default_home.value = r.invidiousDefaultHome;
+    region.value = r.invidiousRegion;
+    darkMode.value = r.invidiousDarkMode;
+    thin_mode.checked = r.invidiousThinMode;
+    default_home.value = r.invidiousDefaultHome;
 
-      feed_menu0.value = r.invidiousFeedMenuList[0];
-      feed_menu1.value = r.invidiousFeedMenuList[1];
+    feed_menu0.value = r.invidiousFeedMenuList[0];
+    feed_menu1.value = r.invidiousFeedMenuList[1];
 
-      commonHelper.processDefaultCustomInstances('invidious', 'normal', youtubeHelper, document);
-      commonHelper.processDefaultCustomInstances('invidious', 'tor', youtubeHelper, document);
-    }
-  )
-}
 
-init();
+  }
+)
+
+commonHelper.processDefaultCustomInstances('youtube', 'invidious', 'normal', document);
+commonHelper.processDefaultCustomInstances('youtube', 'invidious', 'tor', document);
+
 
 let latencyInvidiousElement = document.getElementById("latency-invidious");
 let latencyInvidiousLabel = document.getElementById("latency-invidious-label");
@@ -172,7 +170,7 @@ latencyInvidiousElement.addEventListener("click",
     commonHelper.testLatency(latencyInvidiousLabel, redirects.invidious.normal).then(r => {
       browser.storage.local.set({ invidiousLatency: r });
       latencyInvidiousLabel.innerHTML = oldHtml;
-      commonHelper.processDefaultCustomInstances('invidious', 'normal', youtubeHelper, document);
+      commonHelper.processDefaultCustomInstances('youtube', 'invidious', 'normal', document);
       latencyInvidiousElement.removeEventListener("click", reloadWindow);
     });
   }

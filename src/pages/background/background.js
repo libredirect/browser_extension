@@ -23,25 +23,28 @@ window.browser = window.browser || window.chrome;
 
 browser.runtime.onInstalled.addListener(async details => {
   if (details.reason == 'install') {
-    youtubeHelper.initDefaults();
-    youtubeMusicHelper.initDefaults();
-    twitterHelper.initDefaults();
-    instagramHelper.initDefaults();
-    mapsHelper.initDefaults();
-    searchHelper.initDefaults();
-    translateHelper.initDefaults();
-    mediumHelper.initDefaults();
-    redditHelper.initDefaults();
-    wikipediaHelper.initDefaults();
-    imgurHelper.initDefaults();
-    tiktokHelper.initDefaults();
-    speedtestHelper.initDefaults();
-    sendTargetsHelper.initDefaults();
-    peertubeHelper.initDefaults();
-    lbryHelper.initDefaults();
-    spotifyHelper.initDefaults();
+    fetch('/instances/cloudflare.json').then(response => response.text()).then(async data => {
+      await browser.storage.local.set({ cloudflareList: JSON.parse(data) })
+      youtubeHelper.initDefaults();
+      youtubeMusicHelper.initDefaults();
+      twitterHelper.initDefaults();
+      instagramHelper.initDefaults();
+      mapsHelper.initDefaults();
+      searchHelper.initDefaults();
+      translateHelper.initDefaults();
+      mediumHelper.initDefaults();
+      redditHelper.initDefaults();
+      wikipediaHelper.initDefaults();
+      imgurHelper.initDefaults();
+      tiktokHelper.initDefaults();
+      speedtestHelper.initDefaults();
+      sendTargetsHelper.initDefaults();
+      peertubeHelper.initDefaults();
+      lbryHelper.initDefaults();
+      spotifyHelper.initDefaults();
+    })
   }
-});
+})
 
 async function wholeInit() {
   await youtubeHelper.init();

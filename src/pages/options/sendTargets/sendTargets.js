@@ -38,8 +38,8 @@ function changeProtocolSettings(protocol) {
     }
 }
 
-commonHelper.processDefaultCustomInstances('send', 'normal', sendTargetsHelper, document);
-commonHelper.processDefaultCustomInstances('send', 'tor', sendTargetsHelper, document,)
+commonHelper.processDefaultCustomInstances('sendTargets', 'send', 'normal', document);
+commonHelper.processDefaultCustomInstances('sendTargets', 'send', 'tor', document);
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");
@@ -54,7 +54,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.send.normal).then(r => {
             browser.storage.local.set({ sendLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('send', 'normal', sendTargetsHelper, document)
+            commonHelper.processDefaultCustomInstances('sendTargets', 'send', 'normal', document);
             latencyElement.removeEventListener("click", reloadWindow)
         });
     }

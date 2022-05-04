@@ -74,7 +74,6 @@ async function init() {
 
                 popupFrontends = r.popupFrontends ?? [
                     "youtube",
-                    "youtubeMusic",
                     "twitter",
                     "instagram",
                     "tikTok",

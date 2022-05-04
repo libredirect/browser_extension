@@ -173,27 +173,34 @@ async function initDefaults() {
     fetch('/instances/data.json').then(response => response.text()).then(async data => {
       let dataJson = JSON.parse(data);
       redirects.bibliogram = dataJson.bibliogram;
-      await browser.storage.local.set({
-        disableInstagram: false,
-        instagramRedirects: {
-          'bibliogram': redirects.bibliogram
-        },
+      browser.storage.local.get('cloudflareList', async r => {
+        bibliogramNormalRedirectsChecks = [...redirects.bibliogram.normal];
+        for (const instance of r.cloudflareList) {
+          let i;
 
-        theme: 'DEFAULT',
-        applyThemeToSites: false,
+          i = bibliogramNormalRedirectsChecks.indexOf(instance);
+          if (i > -1) bibliogramNormalRedirectsChecks.splice(i, 1);
+        }
+        await browser.storage.local.set({
+          disableInstagram: false,
+          instagramRedirects: redirects,
 
-        instancesCookies: [],
+          theme: 'DEFAULT',
+          applyThemeToSites: false,
 
-        bibliogramNormalRedirectsChecks: [...redirects.bibliogram.normal],
-        bibliogramTorRedirectsChecks: [],
+          instancesCookies: [],
 
-        bibliogramNormalCustomRedirects: [...redirects.bibliogram.tor],
-        bibliogramTorCustomRedirects: [],
-        instagramProtocol: "normal",
-      })
-      resolve();
-    }
-    )
+          bibliogramNormalRedirectsChecks: bibliogramNormalRedirectsChecks,
+          bibliogramTorRedirectsChecks: [],
+
+          bibliogramNormalCustomRedirects: [...redirects.bibliogram.tor],
+          bibliogramTorCustomRedirects: [],
+          instagramProtocol: "normal",
+        })
+        resolve();
+      }
+      )
+    })
   })
 }
 

@@ -76,65 +76,61 @@ piped.addEventListener("change", async () => {
         youtubeListen: pipedListen.checked,
         pipedSelectedSkip: selectSkip,
     });
-    init();
 });
 
-async function init() {
-    await browser.storage.local.get(
-        [
-            "youtubeVolume",
-            "youtubeAutoplay",
-            "youtubeListen",
+await browser.storage.local.get(
+    [
+        "youtubeVolume",
+        "youtubeAutoplay",
+        "youtubeListen",
 
-            "pipedBufferGoal",
-            "pipedComments",
-            "pipedDisableLBRY",
-            "pipedEnabledCodecs",
-            "pipedHomepage",
-            "pipedMinimizeDescription",
-            "pipedProxyLBRY",
-            "pipedQuality",
-            "pipedRegion",
-            "pipedSelectedSkip",
-            "pipedSponsorblock",
-            "pipedDdlTheme",
-            "pipedWatchHistory",
-        ],
-        r => {
-            pipedSponsorblock.checked = r.pipedSponsorblock;
-            pipedDdlTheme.value = r.pipedDdlTheme;
-            selectSkip = r.pipedSelectedSkip;
-            pipedSelectedSkipSponsor.checked = selectSkip.includes('sponsor');
-            pipedSelectedSkipIntro.checked = selectSkip.includes('intro');
-            pipedSelectedSkipOutro.checked = selectSkip.includes('outro');
-            pipedSelectedSkipPreview.checked = selectSkip.includes('preview');
-            autoplay.checked = r.youtubeAutoplay;
-            pipedSelectedSkipInteraction.checked = selectSkip.includes('interaction');
-            pipedSelectedSkipSelfpromo.checked = selectSkip.includes('selfpromo');
-            pipedSelectedSkipMusicOfftopic.checked = selectSkip.includes('music_offtopic');
-            pipedSelectedSkipPoiHighlight.checked = selectSkip.includes('poi_highlight');
-            pipedSelectedSkipFiller.checked = selectSkip.includes('filler');
-            pipedListen.checked = r.youtubeListen;
-            pipedQuality.value = r.pipedQuality;
-            pipedBufferGoal.value = r.pipedBufferGoal;
-            pipedRegion.value = r.pipedRegion;
-            pipedHomepage.value = r.pipedHomepage;
-            pipedComments.checked = r.pipedComments;
-            pipedMinimizeDescription.checked = r.pipedMinimizeDescription;
-            pipedWatchHistory.checked = r.pipedWatchHistory;
-            pipedEnabledCodecs.value = r.pipedEnabledCodecs;
-            pipedDisableLBRY.checked = r.pipedDisableLBRY;
-            pipedProxyLBRY.checked = r.pipedProxyLBRY;
+        "pipedBufferGoal",
+        "pipedComments",
+        "pipedDisableLBRY",
+        "pipedEnabledCodecs",
+        "pipedHomepage",
+        "pipedMinimizeDescription",
+        "pipedProxyLBRY",
+        "pipedQuality",
+        "pipedRegion",
+        "pipedSelectedSkip",
+        "pipedSponsorblock",
+        "pipedDdlTheme",
+        "pipedWatchHistory",
+    ],
+    r => {
+        pipedSponsorblock.checked = r.pipedSponsorblock;
+        pipedDdlTheme.value = r.pipedDdlTheme;
+        selectSkip = r.pipedSelectedSkip;
+        pipedSelectedSkipSponsor.checked = selectSkip.includes('sponsor');
+        pipedSelectedSkipIntro.checked = selectSkip.includes('intro');
+        pipedSelectedSkipOutro.checked = selectSkip.includes('outro');
+        pipedSelectedSkipPreview.checked = selectSkip.includes('preview');
+        autoplay.checked = r.youtubeAutoplay;
+        pipedSelectedSkipInteraction.checked = selectSkip.includes('interaction');
+        pipedSelectedSkipSelfpromo.checked = selectSkip.includes('selfpromo');
+        pipedSelectedSkipMusicOfftopic.checked = selectSkip.includes('music_offtopic');
+        pipedSelectedSkipPoiHighlight.checked = selectSkip.includes('poi_highlight');
+        pipedSelectedSkipFiller.checked = selectSkip.includes('filler');
+        pipedListen.checked = r.youtubeListen;
+        pipedQuality.value = r.pipedQuality;
+        pipedBufferGoal.value = r.pipedBufferGoal;
+        pipedRegion.value = r.pipedRegion;
+        pipedHomepage.value = r.pipedHomepage;
+        pipedComments.checked = r.pipedComments;
+        pipedMinimizeDescription.checked = r.pipedMinimizeDescription;
+        pipedWatchHistory.checked = r.pipedWatchHistory;
+        pipedEnabledCodecs.value = r.pipedEnabledCodecs;
+        pipedDisableLBRY.checked = r.pipedDisableLBRY;
+        pipedProxyLBRY.checked = r.pipedProxyLBRY;
 
-            volume.value = r.youtubeVolume;
-            volumeValue.textContent = `${r.youtubeVolume}%`;
+        volume.value = r.youtubeVolume;
+        volumeValue.textContent = `${r.youtubeVolume}%`;
+    }
+);
 
-            commonHelper.processDefaultCustomInstances('piped', 'normal', youtubeHelper, document);
-            commonHelper.processDefaultCustomInstances('piped', 'tor', youtubeHelper, document);
-        }
-    );
-}
-init();
+commonHelper.processDefaultCustomInstances('youtube', 'piped', 'normal', document);
+commonHelper.processDefaultCustomInstances('youtube', 'piped', 'tor', document);
 
 let latencyPipedElement = document.getElementById("latency-piped");
 let latencyPipedLabel = document.getElementById("latency-piped-label");
@@ -149,7 +145,7 @@ latencyPipedElement.addEventListener("click",
         commonHelper.testLatency(latencyPipedLabel, redirects.piped.normal).then(r => {
             browser.storage.local.set({ pipedLatency: r });
             latencyPipedLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('piped', 'normal', youtubeHelper, document);
+            commonHelper.processDefaultCustomInstances('youtube', 'piped', 'normal', document);
             latencyPipedElement.removeEventListener("click", reloadWindow);
         });
     }

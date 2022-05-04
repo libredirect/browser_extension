@@ -31,16 +31,14 @@ browser.storage.local.get(
         "lbryTargetsProtocol"
     ],
     r => {
-    disableLbryElement.checked = !r.disableLbryTargets;
+        disableLbryElement.checked = !r.disableLbryTargets;
 
-    let protocol = r.lbryTargetsProtocol;
-    protocolElement.value = protocol;
-    changeProtocolSettings(protocol);
-
-    commonHelper.processDefaultCustomInstances('librarian', 'normal', lbryHelper, document);
-    commonHelper.processDefaultCustomInstances('librarian', 'tor', lbryHelper, document)
-})
-
+        let protocol = r.lbryTargetsProtocol;
+        protocolElement.value = protocol;
+        changeProtocolSettings(protocol);
+    })
+commonHelper.processDefaultCustomInstances('lbry', 'librarian', 'normal', document);
+commonHelper.processDefaultCustomInstances('lbry', 'librarian', 'tor', document);
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");
@@ -55,7 +53,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.librarian.normal).then(r => {
             browser.storage.local.set({ librarianLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('librarian', 'normal', lbryHelper, document);
+            commonHelper.processDefaultCustomInstances('lbry', 'librarian', 'normal', document);
             latencyElement.removeEventListener("click", reloadWindow);
         });
     }

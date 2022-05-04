@@ -68,15 +68,13 @@ let lingvaNormalCustomRedirects = [];
 let lingvaTorCustomRedirects = [];
 
 
-let disable; // translateDisable
-let frontend; // translateFrontend
-let protocol; // translateProtocol
-
-let from; // translateFrom
-let to; // translateTo
-
-
-let simplyTranslateEngine;
+let
+  disable, // translateDisable
+  frontend, // translateFrontend
+  protocol, // translateProtocol
+  from, // translateFrom
+  to, // translateTo
+  simplyTranslateEngine;
 
 function isTranslateRedirects(url, type, frontend) {
   let protocolHost = commonHelper.protocolHost(url);
@@ -203,82 +201,91 @@ function switchInstance(url) {
 }
 
 async function initDefaults() {
-
   fetch('/instances/data.json').then(response => response.text()).then(async data => {
     let dataJson = JSON.parse(data);
     redirects.simplyTranslate = dataJson.simplyTranslate;
     redirects.lingva = dataJson.lingva;
-    await browser.storage.local.set({
-      translateDisable: false,
-      translateFrontend: "simplyTranslate",
-      translateProtocol: 'normal',
-      translateRedirects: redirects,
+    browser.storage.local.get('cloudflareList', async r => {
+      simplyTranslateNormalRedirectsChecks = [...redirects.simplyTranslate.normal];
+      lingvaNormalRedirectsChecks = [...redirects.lingva.normal]
+      for (const instance of r.cloudflareList) {
+        let i;
+        
+        i = simplyTranslateNormalRedirectsChecks.indexOf(instance);
+        if (i > -1) simplyTranslateNormalRedirectsChecks.splice(i, 1);
 
-      simplyTranslateNormalRedirectsChecks: [...redirects.simplyTranslate.normal],
-      simplyTranslateNormalCustomRedirects: [],
-      simplyTranslateTorRedirectsChecks: [...redirects.simplyTranslate.tor],
-      simplyTranslateTorCustomRedirects: [],
+        i = lingvaNormalRedirectsChecks.indexOf(instance);
+        if (i > -1) lingvaNormalRedirectsChecks.splice(i, 1);
+      }
+      await browser.storage.local.set({
+        translateDisable: false,
+        translateFrontend: "simplyTranslate",
+        translateProtocol: 'normal',
+        translateRedirects: redirects,
 
-      lingvaNormalRedirectsChecks: [...redirects.lingva.normal],
-      lingvaNormalCustomRedirects: [],
-      lingvaTorRedirectsChecks: [...redirects.lingva.tor],
-      lingvaTorCustomRedirects: [],
+        simplyTranslateNormalRedirectsChecks: simplyTranslateNormalRedirectsChecks,
+        simplyTranslateNormalCustomRedirects: [],
+        simplyTranslateTorRedirectsChecks: [...redirects.simplyTranslate.tor],
+        simplyTranslateTorCustomRedirects: [],
 
-      translateFrom: "auto",
-      translateTo: 'en',
-      simplyTranslateEngine: 'google',
+        lingvaNormalRedirectsChecks: lingvaNormalRedirectsChecks,
+        lingvaNormalCustomRedirects: [],
+        lingvaTorRedirectsChecks: [...redirects.lingva.tor],
+        lingvaTorCustomRedirects: [],
+
+        translateFrom: "auto",
+        translateTo: 'en',
+        simplyTranslateEngine: 'google',
+      })
     })
   })
 }
 
 async function init() {
-  fetch('/instances/data.json').then(response => response.text()).then(data => {
-    let dataJson = JSON.parse(data);
-    browser.storage.local.get(
-      [
-        "translateDisable",
-        "translateFrontend",
-        "translateProtocol",
-        "translateRedirects",
+  browser.storage.local.get(
+    [
+      "translateDisable",
+      "translateFrontend",
+      "translateProtocol",
+      "translateRedirects",
 
-        "simplyTranslateNormalRedirectsChecks",
-        "simplyTranslateNormalCustomRedirects",
-        "simplyTranslateTorRedirectsChecks",
-        "simplyTranslateTorCustomRedirects",
+      "simplyTranslateNormalRedirectsChecks",
+      "simplyTranslateNormalCustomRedirects",
+      "simplyTranslateTorRedirectsChecks",
+      "simplyTranslateTorCustomRedirects",
 
-        "lingvaNormalRedirectsChecks",
-        "lingvaNormalCustomRedirects",
-        "lingvaTorRedirectsChecks",
-        "lingvaTorCustomRedirects",
+      "lingvaNormalRedirectsChecks",
+      "lingvaNormalCustomRedirects",
+      "lingvaTorRedirectsChecks",
+      "lingvaTorCustomRedirects",
 
-        "translateFrom",
-        "translateTo",
-        "simplyTranslateEngine",
-      ],
-      result => {
-        disable = result.translateDisable;
-        frontend = result.translateFrontend;
-        protocol = result.translateProtocol;
+      "translateFrom",
+      "translateTo",
+      "simplyTranslateEngine",
+    ],
+    result => {
+      disable = result.translateDisable;
+      frontend = result.translateFrontend;
+      protocol = result.translateProtocol;
 
-        from = result.translateFrom;
-        to = result.translateTo;
-        simplyTranslateEngine = result.simplyTranslateEngine;
+      from = result.translateFrom;
+      to = result.translateTo;
+      simplyTranslateEngine = result.simplyTranslateEngine;
 
-        redirects = result.translateRedirects;
+      redirects = result.translateRedirects;
 
-        simplyTranslateNormalRedirectsChecks = result.simplyTranslateNormalRedirectsChecks;
-        simplyTranslateNormalCustomRedirects = result.simplyTranslateNormalCustomRedirects;
+      simplyTranslateNormalRedirectsChecks = result.simplyTranslateNormalRedirectsChecks;
+      simplyTranslateNormalCustomRedirects = result.simplyTranslateNormalCustomRedirects;
 
-        simplyTranslateTorRedirectsChecks = result.simplyTranslateTorRedirectsChecks;
-        simplyTranslateTorCustomRedirects = result.simplyTranslateTorCustomRedirects;
+      simplyTranslateTorRedirectsChecks = result.simplyTranslateTorRedirectsChecks;
+      simplyTranslateTorCustomRedirects = result.simplyTranslateTorCustomRedirects;
 
-        lingvaNormalRedirectsChecks = result.lingvaNormalRedirectsChecks;
-        lingvaNormalCustomRedirects = result.lingvaNormalCustomRedirects;
+      lingvaNormalRedirectsChecks = result.lingvaNormalRedirectsChecks;
+      lingvaNormalCustomRedirects = result.lingvaNormalCustomRedirects;
 
-        lingvaTorRedirectsChecks = result.lingvaTorRedirectsChecks;
-        lingvaTorCustomRedirects = result.lingvaTorCustomRedirects;
-      });
-  });
+      lingvaTorRedirectsChecks = result.lingvaTorRedirectsChecks;
+      lingvaTorCustomRedirects = result.lingvaTorCustomRedirects;
+    });
 }
 
 export default {

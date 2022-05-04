@@ -42,7 +42,8 @@ document.addEventListener("change", async () => {
         redditUseHls: use_hls.checked,
         redditHideHlsNotification: hide_hls_notification.checked,
     });
-    init();
+    changeFrontendsSettings(redditFrontendElement.value);
+    changeProtocolSettings(protocolElement.value);
 })
 
 function changeProtocolSettings(protocol) {
@@ -129,10 +130,10 @@ browser.storage.local.get(
     }
 )
 
-commonHelper.processDefaultCustomInstances('libreddit', 'normal', redditHelper, document)
-commonHelper.processDefaultCustomInstances('libreddit', 'tor', redditHelper, document)
-commonHelper.processDefaultCustomInstances('teddit', 'normal', redditHelper, document);
-commonHelper.processDefaultCustomInstances('teddit', 'tor', redditHelper, document);
+commonHelper.processDefaultCustomInstances('reddit', 'libreddit', 'normal', document);
+commonHelper.processDefaultCustomInstances('reddit', 'libreddit', 'tor', document);
+commonHelper.processDefaultCustomInstances('reddit', 'teddit', 'normal', document);
+commonHelper.processDefaultCustomInstances('reddit', 'teddit', 'tor', document);
 
 
 let latencyLibredditElement = document.getElementById("latency-libreddit");
@@ -148,7 +149,7 @@ latencyLibredditElement.addEventListener("click",
         commonHelper.testLatency(latencyLibredditLabel, redirects.libreddit.normal).then(r => {
             browser.storage.local.set({ libredditLatency: r });
             latencyLibredditLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('libreddit', 'normal', redditHelper, document);
+            commonHelper.processDefaultCustomInstances('reddit', 'libreddit', 'normal', document);
             latencyLibredditElement.removeEventListener("click", reloadWindow);
         });
     }
@@ -167,7 +168,7 @@ latencyTedditElement.addEventListener("click",
         commonHelper.testLatency(latencyTedditLabel, redirects.teddit.normal).then(r => {
             browser.storage.local.set({ tedditLatency: r });
             latencyTedditLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('teddit', 'normal', redditHelper, document);
+            commonHelper.processDefaultCustomInstances('reddit', 'teddit', 'normal', document);
             latencyTedditElement.removeEventListener("click", reloadWindow);
         });
     }

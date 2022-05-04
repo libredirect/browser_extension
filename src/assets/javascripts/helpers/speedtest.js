@@ -64,6 +64,8 @@ async function initDefaults() {
     await browser.storage.local.set({
         disableSpeedtest: true,
 
+        speedtestRedirects: redirects,
+
         librespeedNormalRedirectsChecks: [...redirects.librespeed.normal],
         librespeedNormalCustomRedirects: [],
 

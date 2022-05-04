@@ -18,7 +18,7 @@ document.addEventListener("change", async () => {
     })
 })
 
-commonHelper.processDefaultCustomInstances('beatbump', 'normal', youtubeMusicHelper, document);
+commonHelper.processDefaultCustomInstances('youtubeMusic', 'beatbump', 'normal', document);
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");
@@ -33,7 +33,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.beatbump.normal).then(r => {
             browser.storage.local.set({ beatbumpLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('beatbump', 'normal', youtubeMusicHelper, document)
+            commonHelper.processDefaultCustomInstances('youtubeMusic', 'beatbump', 'normal', document);
             latencyElement.removeEventListener("click", reloadWindow)
         });
     }

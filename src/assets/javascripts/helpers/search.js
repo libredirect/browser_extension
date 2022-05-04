@@ -27,7 +27,6 @@ let redirects = {
     "i2p": []
   }
 };
-const getRedirects = () => redirects;
 
 function setSearxRedirects(val) {
   redirects.searx = val;
@@ -283,42 +282,60 @@ async function initDefaults() {
     redirects.searx = dataJson.searx;
     redirects.searxng = dataJson.searxng;
     redirects.whoogle = dataJson.whoogle;
-    await browser.storage.local.set({
-      disableSearch: false,
-      searchFrontend: 'searxng',
-      searchRedirects: redirects,
 
-      whoogleNormalRedirectsChecks: [...redirects.whoogle.normal],
-      whoogleNormalCustomRedirects: [],
+    browser.storage.local.get('cloudflareList', async r => {
+      whoogleNormalRedirectsChecks = [...redirects.whoogle.normal];
+      searxNormalRedirectsChecks = [...redirects.searx.normal];
+      searxngNormalRedirectsChecks = [...redirects.searxng.normal];
+      for (const instance of r.cloudflareList) {
+        let i;
 
-      whoogleTorRedirectsChecks: [...redirects.whoogle.tor],
-      whoogleTorCustomRedirects: [],
+        i = whoogleNormalRedirectsChecks.indexOf(instance);
+        if (i > -1) whoogleNormalRedirectsChecks.splice(i, 1);
 
-      whoogleI2pRedirectsChecks: [...redirects.whoogle.i2p],
-      whoogleI2pCustomRedirects: [],
+        i = searxNormalRedirectsChecks.indexOf(instance);
+        if (i > -1) searxNormalRedirectsChecks.splice(i, 1);
 
-      searxNormalRedirectsChecks: [...redirects.searx.normal],
-      searxNormalCustomRedirects: [],
+        i = searxngNormalRedirectsChecks.indexOf(instance);
+        if (i > -1) searxngNormalRedirectsChecks.splice(i, 1);
+      }
+      await browser.storage.local.set({
+        disableSearch: false,
+        searchFrontend: 'searxng',
+        searchRedirects: redirects,
 
-      searxTorRedirectsChecks: [...redirects.searx.tor],
-      searxTorCustomRedirects: [],
+        whoogleNormalRedirectsChecks: whoogleNormalRedirectsChecks,
+        whoogleNormalCustomRedirects: [],
 
-      searxI2pRedirectsChecks: [...redirects.searx.i2p],
-      searxI2pCustomRedirects: [],
+        whoogleTorRedirectsChecks: [...redirects.whoogle.tor],
+        whoogleTorCustomRedirects: [],
 
-      searxngNormalRedirectsChecks: [...redirects.searxng.normal],
-      searxngNormalCustomRedirects: [],
+        whoogleI2pRedirectsChecks: [...redirects.whoogle.i2p],
+        whoogleI2pCustomRedirects: [],
 
-      searxngTorRedirectsChecks: [...redirects.searxng.tor],
-      searxngTorCustomRedirects: [],
+        searxNormalRedirectsChecks: searxNormalRedirectsChecks,
+        searxNormalCustomRedirects: [],
 
-      searxngI2pRedirectsChecks: [...redirects.searxng.i2p],
-      searxngI2pCustomRedirects: [],
+        searxTorRedirectsChecks: [...redirects.searx.tor],
+        searxTorCustomRedirects: [],
 
-      theme: 'DEFAULT',
-      applyThemeToSites: false,
+        searxI2pRedirectsChecks: [...redirects.searx.i2p],
+        searxI2pCustomRedirects: [],
 
-      searchProtocol: 'normal',
+        searxngNormalRedirectsChecks: searxngNormalRedirectsChecks,
+        searxngNormalCustomRedirects: [],
+
+        searxngTorRedirectsChecks: [...redirects.searxng.tor],
+        searxngTorCustomRedirects: [],
+
+        searxngI2pRedirectsChecks: [...redirects.searxng.i2p],
+        searxngI2pCustomRedirects: [],
+
+        theme: 'DEFAULT',
+        applyThemeToSites: false,
+
+        searchProtocol: 'normal',
+      })
     })
   })
 }
@@ -403,7 +420,6 @@ async function init() {
 }
 
 export default {
-  getRedirects,
 
   setSearxRedirects,
   setSearxngRedirects,

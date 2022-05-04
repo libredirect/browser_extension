@@ -21,33 +21,35 @@ function setRedirects(val) {
             var index = rimgoNormalRedirectsChecks.indexOf(item);
             if (index !== -1) rimgoNormalRedirectsChecks.splice(index, 1);
         }
-    browser.storage.local.set({rimgoNormalRedirectsChecks});
+    browser.storage.local.set({ rimgoNormalRedirectsChecks });
 
     for (const item of rimgoTorRedirectsChecks)
         if (!redirects.rimgo.tor.includes(item)) {
             var index = rimgoTorRedirectsChecks.indexOf(item);
             if (index !== -1) rimgoTorRedirectsChecks.splice(index, 1);
         }
-    browser.storage.local.set({rimgoTorRedirectsChecks});
+    browser.storage.local.set({ rimgoTorRedirectsChecks });
 
     for (const item of rimgoI2pRedirectsChecks)
         if (!redirects.rimgo.i2p.includes(item)) {
             var index = rimgoI2pRedirectsChecks.indexOf(item);
             if (index !== -1) rimgoI2pRedirectsChecks.splice(index, 1);
         }
-    browser.storage.local.set({rimgoI2pRedirectsChecks});
+    browser.storage.local.set({ rimgoI2pRedirectsChecks });
 
 }
 
-let disable;
-let protocol;
+let
+    disable,
+    protocol;
 
-let rimgoNormalRedirectsChecks;
-let rimgoTorRedirectsChecks;
-let rimgoI2pRedirectsChecks;
-let rimgoNormalCustomRedirects = [];
-let rimgoTorCustomRedirects = [];
-let rimgoI2pCustomRedirects = [];
+let
+    rimgoNormalRedirectsChecks,
+    rimgoTorRedirectsChecks,
+    rimgoI2pRedirectsChecks,
+    rimgoNormalCustomRedirects,
+    rimgoTorCustomRedirects,
+    rimgoI2pCustomRedirects;
 
 function redirect(url, type, initiator) {
     // https://imgur.com/gallery/s4WXQmn
@@ -129,18 +131,23 @@ function switchInstance(url) {
 }
 
 async function initDefaults() {
-    return new Promise(async resolve => {
-        fetch('/instances/data.json').then(response => response.text()).then(async data => {
-            let dataJson = JSON.parse(data);
-            redirects.rimgo = dataJson.rimgo
+    fetch('/instances/data.json').then(response => response.text()).then(async data => {
+        let dataJson = JSON.parse(data);
+        redirects.rimgo = dataJson.rimgo;
+        browser.storage.local.get('cloudflareList', async r => {
+            rimgoNormalRedirectsChecks = [...redirects.rimgo.normal];
+            for (const instance of r.cloudflareList) {
+                let i;
+
+                i = rimgoNormalRedirectsChecks.indexOf(instance);
+                if (i > -1) rimgoNormalRedirectsChecks.splice(i, 1);
+            }
             await browser.storage.local.set({
                 disableImgur: false,
                 imgurProtocol: 'normal',
-                imgurRedirects: {
-                    'rimgo': redirects.rimgo,
-                },
+                imgurRedirects: redirects,
 
-                rimgoNormalRedirectsChecks: [...redirects.rimgo.normal],
+                rimgoNormalRedirectsChecks: rimgoNormalRedirectsChecks,
                 rimgoNormalCustomRedirects: [],
 
                 rimgoTorRedirectsChecks: [...redirects.rimgo.tor],
@@ -149,9 +156,8 @@ async function initDefaults() {
                 rimgoI2pRedirectsChecks: [...redirects.rimgo.i2p],
                 rimgoI2pCustomRedirects: [],
             });
-            resolve();
         });
-    })
+    });
 }
 
 async function init() {

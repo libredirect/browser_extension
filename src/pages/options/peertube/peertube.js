@@ -11,14 +11,13 @@ browser.storage.local.get(
     r => {
         disablePeertubeElement.checked = !r.disablePeertubeTargets;
 
-        let protocol = peertubeTargetsProtocol;
+        let protocol = r.peertubeTargetsProtocol;
         protocolElement.value = protocol;
         changeProtocolSettings(protocol);
-
-        commonHelper.processDefaultCustomInstances('simpleertube', 'normal', peertubeHelper, document);
-        commonHelper.processDefaultCustomInstances('simpleertube', 'tor', peertubeHelper, document)
     }
 )
+commonHelper.processDefaultCustomInstances('peertube', 'simpleertube', 'normal', document);
+commonHelper.processDefaultCustomInstances('peertube', 'simpleertube', 'tor', document);
 
 document.addEventListener("change", async () => {
     await browser.storage.local.set({
@@ -54,17 +53,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.simpleertube.normal).then(r => {
             browser.storage.local.set({ simpleertubeLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances(
-                'simpleertube',
-                'normal',
-                peertubeHelper,
-                document,
-                peertubeHelper.getSimpleertubeNormalRedirectsChecks,
-                peertubeHelper.setSimpleertubeNormalRedirectsChecks,
-                peertubeHelper.getSimpleertubeNormalCustomRedirects,
-                peertubeHelper.setSimpleertubeNormalCustomRedirects,
-                r,
-            );
+            commonHelper.processDefaultCustomInstances('peertube', 'simpleertube', 'normal', document);
             latencyElement.removeEventListener("click", reloadWindow);
         });
     }

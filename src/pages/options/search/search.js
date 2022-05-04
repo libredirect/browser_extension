@@ -16,10 +16,10 @@ browser.storage.local.get(
     "searchProtocol",
   ],
   r => {
-    disableSearchElement.checked = !disableSearch;
+    disableSearchElement.checked = !r.disableSearch;
 
-    searchFrontendElement.value = r.searchFronten;
-    changeFrontendsSettings(r.searchFronten);
+    searchFrontendElement.value = r.searchFrontend;
+    changeFrontendsSettings(r.searchFrontend);
 
     protocolElement.value = r.searchProtocol;
     changeProtocolSettings(r.searchProtocol);
@@ -106,15 +106,15 @@ function changeProtocolSettings(protocol) {
   }
 }
 
-commonHelper.processDefaultCustomInstances('searx', 'normal', searchHelper, document);
-commonHelper.processDefaultCustomInstances('searx', 'tor', searchHelper, document);
-commonHelper.processDefaultCustomInstances('searx', 'i2p', searchHelper, document);
-commonHelper.processDefaultCustomInstances('searxng', 'normal', searchHelper, document);
-commonHelper.processDefaultCustomInstances('searxng', 'tor', searchHelper, document);
-commonHelper.processDefaultCustomInstances('searxng', 'i2p', searchHelper, document);
-commonHelper.processDefaultCustomInstances('whoogle', 'normal', searchHelper, document);
-commonHelper.processDefaultCustomInstances('whoogle', 'tor', searchHelper, document);
-commonHelper.processDefaultCustomInstances('whoogle', 'i2p', searchHelper, document);
+commonHelper.processDefaultCustomInstances('search', 'searx', 'normal', document);
+commonHelper.processDefaultCustomInstances('search', 'searx', 'tor', document);
+commonHelper.processDefaultCustomInstances('search', 'searx', 'i2p', document);
+commonHelper.processDefaultCustomInstances('search', 'searxng', 'normal', document);
+commonHelper.processDefaultCustomInstances('search', 'searxng', 'tor', document);
+commonHelper.processDefaultCustomInstances('search', 'searxng', 'i2p', document);
+commonHelper.processDefaultCustomInstances('search', 'whoogle', 'normal', document);
+commonHelper.processDefaultCustomInstances('search', 'whoogle', 'tor', document);
+commonHelper.processDefaultCustomInstances('search', 'whoogle', 'i2p', document);
 
 let latencySearxElement = document.getElementById("latency-searx");
 let latencySearxLabel = document.getElementById("latency-searx-label");
@@ -129,7 +129,7 @@ latencySearxElement.addEventListener("click",
     commonHelper.testLatency(latencySearxLabel, redirects.searx.normal).then(r => {
       browser.storage.local.set({ searxLatency: r });
       latencySearxLabel.innerHTML = oldHtml;
-      commonHelper.processDefaultCustomInstances('searx', 'normal', searchHelper, document);
+      commonHelper.processDefaultCustomInstances('search', 'searx', 'normal', document);
       latencySearxElement.removeEventListener("click", reloadWindow);
     });
   }
@@ -148,7 +148,7 @@ latencySearxngElement.addEventListener("click",
     commonHelper.testLatency(latencySearxngLabel, redirects.searxng.normal).then(r => {
       browser.storage.local.set({ searxngLatency: r });
       latencySearxngLabel.innerHTML = oldHtml;
-      commonHelper.processDefaultCustomInstances('searxng', 'normal', searchHelper, document);
+      commonHelper.processDefaultCustomInstances('search', 'searxng', 'normal', document);
       latencySearxngElement.removeEventListener("click", reloadWindow);
     });
   }
@@ -167,7 +167,7 @@ latencyWhoogleElement.addEventListener("click",
     commonHelper.testLatency(latencyWhoogleLabel, redirects.whoogle.normal).then(r => {
       browser.storage.local.set({ whoogleLatency: r });
       latencyWhoogleLabel.innerHTML = oldHtml;
-      commonHelper.processDefaultCustomInstances('whoogle', 'normal', searchHelper, document);
+      commonHelper.processDefaultCustomInstances('search', 'whoogle', 'normal', document);
       latencyWhoogleElement.removeEventListener("click", reloadWindow);
     });
   }

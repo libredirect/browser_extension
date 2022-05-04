@@ -93,14 +93,21 @@ function redirect(url, type, initiator) {
 }
 
 async function initDefaults() {
-    return new Promise(async resolve => {
+    browser.storage.local.get('cloudflareList', async r => {
+        librarianNormalRedirectsChecks = [...redirects.librarian.normal];
+        for (const instance of r.cloudflareList) {
+            let i;
+
+            i = librarianNormalRedirectsChecks.indexOf(instance);
+            if (i > -1) librarianNormalRedirectsChecks.splice(i, 1);
+        }
         await browser.storage.local.set({
             disableLbryTargets: true,
             lbryTargetsRedirects: {
                 'librarian': redirects.librarian
             },
 
-            librarianNormalRedirectsChecks: [...redirects.librarian.normal],
+            librarianNormalRedirectsChecks: librarianNormalRedirectsChecks,
             librarianNormalCustomRedirects: [],
 
             librarianTorRedirectsChecks: [...redirects.librarian.tor],
@@ -108,7 +115,6 @@ async function initDefaults() {
 
             lbryTargetsProtocol: "normal",
         })
-        resolve();
     })
 }
 
@@ -129,7 +135,6 @@ async function init() {
                 "lbryTargetsProtocol"
             ],
             r => {
-
                 disable = r.disableLbryTargets;
 
                 protocol = r.lbryTargetsProtocol;

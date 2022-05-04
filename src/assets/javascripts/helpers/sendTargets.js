@@ -92,17 +92,24 @@ async function initDefaults() {
     fetch('/instances/data.json').then(response => response.text()).then(async data => {
         let dataJson = JSON.parse(data);
         redirects.send = dataJson.send;
-        await browser.storage.local.set({
-            disableSendTarget: false,
-            sendTargetsRedirects: redirects,
+        browser.storage.local.get('cloudflareList', async r => {
+            sendNormalRedirectsChecks = [...redirects.send.normal];
+            for (const instance of r.cloudflareList) {
+                let i = sendNormalRedirectsChecks.indexOf(instance);
+                if (i > -1) sendNormalRedirectsChecks.splice(i, 1);
+            }
+            await browser.storage.local.set({
+                disableSendTarget: false,
+                sendTargetsRedirects: redirects,
 
-            sendNormalRedirectsChecks: [...redirects.send.normal],
-            sendNormalCustomRedirects: [],
+                sendNormalRedirectsChecks: sendNormalRedirectsChecks,
+                sendNormalCustomRedirects: [],
 
-            sendTorRedirectsChecks: [...redirects.send.tor],
-            sendTorCustomRedirects: [],
+                sendTorRedirectsChecks: [...redirects.send.tor],
+                sendTorCustomRedirects: [],
 
-            sendTargetsProtocol: "normal",
+                sendTargetsProtocol: "normal",
+            })
         })
     })
 }

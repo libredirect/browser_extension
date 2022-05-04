@@ -2,13 +2,10 @@ import translateHelper from "../../../assets/javascripts/helpers/translate/trans
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let disableElement = document.getElementById("disable-simplyTranslate");
-disableElement.addEventListener("change",
-    (event) => translateHelper.setDisable(!event.target.checked)
-);
-
 let simplyTranslateDivElement = document.getElementById("simplyTranslate");
 let lingvaDivElement = document.getElementById("lingva");
-
+let translateFrontendElement = document.getElementById("translate-frontend");
+let protocolElement = document.getElementById("protocol");
 
 function changeFrontendsSettings(frontend) {
     if (frontend == 'simplyTranslate') {
@@ -20,23 +17,20 @@ function changeFrontendsSettings(frontend) {
         lingvaDivElement.style.display = 'block';
     }
 }
-let translateFrontendElement = document.getElementById("translate-frontend");
-translateFrontendElement.addEventListener("change",
-    event => {
-        let frontend = event.target.options[translateFrontendElement.selectedIndex].value
-        translateHelper.setFrontend(frontend)
-        changeFrontendsSettings(frontend);
-    }
-);
 
-let protocolElement = document.getElementById("protocol");
-protocolElement.addEventListener("change",
-    (event) => {
-        let protocol = event.target.options[protocolElement.selectedIndex].value
-        translateHelper.setProtocol(protocol);
-        changeProtocolSettings(protocol);
-    }
-);
+document.addEventListener("change", async () => {
+    await browser.storage.local.set({
+        translateDisable: !disableElement.checked,
+        translateFrontend: translateFrontendElement.value,
+        translateProtocol: protocolElement.value,
+        translateFrom: fromElement.value,
+        translateTo: toElement.value,
+        simplyTranslateEngine: simplyTranslateEngineElement.value,
+    })
+    changeProtocolSettings(protocolElement.value);
+    changeFrontendsSettings(translateFrontendElement.value);
+})
+
 
 function changeProtocolSettings(protocol) {
     let normalSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("normal")[0];
@@ -60,88 +54,38 @@ function changeProtocolSettings(protocol) {
 }
 
 let fromElement = document.getElementsByClassName("from")[0];
-fromElement.addEventListener("change",
-    event => translateHelper.setFrom(event.target.options[fromElement.selectedIndex].value)
-);
-
 let toElement = document.getElementsByClassName("to")[0];
-toElement.addEventListener("change",
-    event => translateHelper.setTo(event.target.options[toElement.selectedIndex].value)
-);
-
 let simplyTranslateElement = document.getElementById("simplyTranslate")
 let simplyTranslateEngineElement = simplyTranslateElement.getElementsByClassName("engine")[0];
-simplyTranslateEngineElement.addEventListener("change",
-    event => translateHelper.setSimplyTranslateEngine(event.target.options[simplyTranslateEngineElement.selectedIndex].value)
+
+browser.storage.local.get(
+    [
+        "translateDisable",
+        "translateFrontend",
+        "translateProtocol",
+        "translateFrom",
+        "translateTo",
+        "simplyTranslateEngine",
+    ],
+    r => {
+        disableElement.checked = !r.translateDisable;
+
+        translateFrontendElement.value = r.translateFrontend;
+        changeFrontendsSettings(r.translateFrontend);
+
+        protocolElement.value = r.translateProtocol;
+        changeProtocolSettings(r.translateProtocol);
+
+        fromElement.value = r.translateFrom;
+        toElement.value = r.translateTo;
+        simplyTranslateEngineElement.value = r.simplyTranslateEngine;
+    }
 );
 
-translateHelper.init().then(() => {
-    disableElement.checked = !translateHelper.getDisable();
-
-    let frontend = translateHelper.getFrontend();
-    translateFrontendElement.value = frontend;
-    changeFrontendsSettings(frontend);
-
-    let protocol = translateHelper.getProtocol();
-    protocolElement.value = protocol;
-    changeProtocolSettings(protocol);
-
-    fromElement.value = translateHelper.getFrom();
-    toElement.value = translateHelper.getTo();
-    simplyTranslateEngineElement.value = translateHelper.getSimplyTranslateEngine();
-
-    browser.storage.local.get("simplyTranslateLatency").then(r => {
-        commonHelper.processDefaultCustomInstances(
-            'simplyTranslate',
-            'normal',
-            translateHelper,
-            document,
-            translateHelper.getSimplyTranslateNormalRedirectsChecks,
-            translateHelper.setSimplyTranslateNormalRedirectsChecks,
-            translateHelper.getSimplyTranslateNormalCustomRedirects,
-            translateHelper.setSimplyTranslateNormalCustomRedirects,
-            r.simplyTranslateLatency,
-        )
-    })
-
-    commonHelper.processDefaultCustomInstances(
-        'simplyTranslate',
-        'tor',
-        translateHelper,
-        document,
-        translateHelper.getSimplyTranslateTorRedirectsChecks,
-        translateHelper.setSimplyTranslateTorRedirectsChecks,
-        translateHelper.getSimplyTranslateTorCustomRedirects,
-        translateHelper.setSimplyTranslateTorCustomRedirects
-    );
-
-    browser.storage.local.get("lingvaLatency").then(r => {
-        commonHelper.processDefaultCustomInstances(
-            'lingva',
-            'normal',
-            translateHelper,
-            document,
-            translateHelper.getLingvaNormalRedirectsChecks,
-            translateHelper.setLingvaNormalRedirectsChecks,
-            translateHelper.getLingvaNormalCustomRedirects,
-            translateHelper.setLingvaNormalCustomRedirects,
-            r.lingvaLatency,
-        );
-    });
-
-
-    commonHelper.processDefaultCustomInstances(
-        'lingva',
-        'tor',
-        translateHelper,
-        document,
-        translateHelper.getLingvaTorRedirectsChecks,
-        translateHelper.setLingvaTorRedirectsChecks,
-        translateHelper.getLingvaTorCustomRedirects,
-        translateHelper.setLingvaTorCustomRedirects,
-    )
-});
-
+commonHelper.processDefaultCustomInstances('translate', 'simplyTranslate', 'normal', document)
+commonHelper.processDefaultCustomInstances('translate', 'simplyTranslate', 'tor', document);
+commonHelper.processDefaultCustomInstances('translate', 'lingva', 'normal', document);
+commonHelper.processDefaultCustomInstances('translate', 'lingva', 'tor', document);
 
 let latencySimplyTranslateElement = document.getElementById("latency-simplyTranslate");
 let latencySimplyTranslateLabel = document.getElementById("latency-simplyTranslate-label");
@@ -156,17 +100,7 @@ latencySimplyTranslateElement.addEventListener("click",
         commonHelper.testLatency(latencySimplyTranslateLabel, redirects.simplyTranslate.normal).then(r => {
             browser.storage.local.set({ simplyTranslateLatency: r });
             latencySimplyTranslateLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances(
-                'simplyTranslate',
-                'normal',
-                translateHelper,
-                document,
-                translateHelper.getSimplyTranslateNormalRedirectsChecks,
-                translateHelper.setSimplyTranslateNormalRedirectsChecks,
-                translateHelper.getSimplyTranslateNormalCustomRedirects,
-                translateHelper.setSimplyTranslateNormalCustomRedirects,
-                r,
-            );
+            commonHelper.processDefaultCustomInstances('translate', 'simplyTranslate', 'normal', document)
             latencySimplyTranslateElement.removeEventListener("click", reloadWindow);
         });
     }
@@ -185,17 +119,7 @@ latencyLingvaElement.addEventListener("click",
         commonHelper.testLatency(latencyLingvaLabel, redirects.lingva.normal).then(r => {
             browser.storage.local.set({ lingvaLatency: r });
             latencyLingvaLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances(
-                'lingva',
-                'normal',
-                translateHelper,
-                document,
-                translateHelper.getLingvaNormalRedirectsChecks,
-                translateHelper.setLingvaNormalRedirectsChecks,
-                translateHelper.getLingvaNormalCustomRedirects,
-                translateHelper.setLingvaNormalCustomRedirects,
-                r,
-            );
+            commonHelper.processDefaultCustomInstances('translate', 'lingva', 'normal', document);
             latencyLingvaElement.removeEventListener("click", reloadWindow);
         });
     }

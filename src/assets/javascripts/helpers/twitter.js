@@ -219,37 +219,44 @@ async function initDefaults() {
   await fetch('/instances/data.json').then(response => response.text()).then(async data => {
     let dataJson = JSON.parse(data);
     redirects.nitter = dataJson.nitter;
-    await browser.storage.local.set({
-      disableTwitter: false,
+    browser.storage.local.get('cloudflareList', async r => {
+      nitterNormalRedirectsChecks = [...redirects.nitter.normal];
+      for (const instance of r.cloudflareList) {
+        let i = nitterNormalRedirectsChecks.indexOf(instance);
+        if (i > -1) nitterNormalRedirectsChecks.splice(i, 1);
+      }
+      await browser.storage.local.set({
+        disableTwitter: false,
 
-      enableTwitterCustomSettings: false,
+        enableTwitterCustomSettings: false,
 
-      twitterRedirects: redirects,
-      bypassWatchOnTwitter: true,
+        twitterRedirects: redirects,
+        bypassWatchOnTwitter: true,
 
-      nitterNormalRedirectsChecks: [...redirects.nitter.normal],
-      nitterNormalCustomRedirects: [],
+        nitterNormalRedirectsChecks: nitterNormalRedirectsChecks,
+        nitterNormalCustomRedirects: [],
 
-      nitterTorRedirectsChecks: [...redirects.nitter.tor],
-      nitterTorCustomRedirects: [],
+        nitterTorRedirectsChecks: [...redirects.nitter.tor],
+        nitterTorCustomRedirects: [],
 
-      twitterProtocol: "normal",
-      alwaysUsePreferred: false,
+        twitterProtocol: "normal",
+        alwaysUsePreferred: false,
 
-      nitterTheme: 'Auto',
-      nitterInfiniteScroll: false,
-      nitterStickyProfile: true,
-      nitterBidiSupport: false,
-      nitterHideTweetStats: false,
-      nitterHideBanner: false,
-      nitterHidePins: false,
-      nitterHideReplies: false,
-      nitterSquareAvatars: false,
-      nitterMp4Playback: true,
-      nitterHlsPlayback: false,
-      nitterProxyVideos: true,
-      nitterMuteVideos: false,
-      nitterAutoplayGifs: true,
+        nitterTheme: 'Auto',
+        nitterInfiniteScroll: false,
+        nitterStickyProfile: true,
+        nitterBidiSupport: false,
+        nitterHideTweetStats: false,
+        nitterHideBanner: false,
+        nitterHidePins: false,
+        nitterHideReplies: false,
+        nitterSquareAvatars: false,
+        nitterMp4Playback: true,
+        nitterHlsPlayback: false,
+        nitterProxyVideos: true,
+        nitterMuteVideos: false,
+        nitterAutoplayGifs: true,
+      })
     })
   })
 }

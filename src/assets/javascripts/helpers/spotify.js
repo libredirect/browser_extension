@@ -14,7 +14,6 @@ let redirects = {
     }
 }
 
-const getRedirects = () => redirects;
 function setRedirects(val) {
     redirects.soju = val;
     browser.storage.local.set({ spotifyTargetsRedirects: redirects })
@@ -25,20 +24,10 @@ function setRedirects(val) {
             if (index !== -1) sojuNormalRedirectsChecks.splice(index, 1);
         }
     browser.storage.local.set({ sojuNormalRedirectsChecks })
-
-    for (const item of sojuTorRedirectsChecks)
-        if (!redirects.soju.normal.includes(item)) {
-            var index = sojuTorRedirectsChecks.indexOf(item);
-            if (index !== -1) sojuTorRedirectsChecks.splice(index, 1);
-        }
-    browser.storage.local.set({ sojuTorRedirectsChecks })
 }
 
 let sojuNormalRedirectsChecks;
-let sojuTorRedirectsChecks;
-let sojuNormalCustomRedirects = [];
-let sojuTorCustomRedirects = [];
-
+let sojuNormalCustomRedirects;
 let disable; // disableSpotifyTargets
 
 function switchInstance(url) {
@@ -83,6 +72,8 @@ async function initDefaults() {
     await browser.storage.local.set({
         disableSpotifyTargets: true,
 
+        spotifyRedirects: redirects,
+
         sojuNormalRedirectsChecks: [...redirects.soju.normal],
         sojuNormalCustomRedirects: [],
     })
@@ -95,9 +86,6 @@ async function init() {
 
             "sojuNormalRedirectsChecks",
             "sojuNormalCustomRedirects",
-
-            "sojuTorRedirectsChecks",
-            "sojuTorCustomRedirects",
         ],
         r => {
             disable = r.disableSpotifyTargets;
@@ -109,7 +97,6 @@ async function init() {
 }
 
 export default {
-    getRedirects,
     setRedirects,
 
     switchInstance,

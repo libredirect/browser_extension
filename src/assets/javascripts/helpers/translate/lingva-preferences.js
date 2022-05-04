@@ -6,8 +6,8 @@ browser.storage.local.get(
         "applyThemeToSites",
     ],
     r => {
-        let applyThemeToSites = r.applyThemeToSites ?? false;
-        let theme = r.theme ?? "DEFAULT";
+        let applyThemeToSites = r.applyThemeToSites;
+        let theme = r.theme;
 
         if (applyThemeToSites && theme != "DEFAULT") localStorage.setItem("chakra-ui-color-mode", r.theme);
     }

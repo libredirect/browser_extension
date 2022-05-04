@@ -19,11 +19,12 @@ let cloudflareList = [];
 async function initCloudflareList() {
   return new Promise(resolve => {
     fetch('/instances/cloudflare.json').then(response => response.text()).then(data => {
-      cloudflareList = data;
+      cloudflareList = JSON.parse(data);
       resolve();
     })
   });
 }
+
 async function wholeInit() {
   await youtubeHelper.init();
   await twitterHelper.init();
@@ -98,9 +99,9 @@ function protocolHost(url) {
 }
 
 async function processDefaultCustomInstances(
+  target,
   name,
   protocol,
-  nameHelper,
   document,
 ) {
   function camelCase(str) {
@@ -116,9 +117,38 @@ async function processDefaultCustomInstances(
 
   await initCloudflareList();
 
+
+  let nameDefaultRedirects;
+
+  let redirectsChecks = `${name}${camelCase(protocol)}RedirectsChecks`;
+  let customRedirects = `${name}${camelCase(protocol)}CustomRedirects`;
+  let redirectsKey = `${target}Redirects`;
+
+  let redirects;
+
+  async function getFromStorage() {
+    return new Promise(async resolve => {
+
+      browser.storage.local.get(
+        [
+          redirectsChecks,
+          customRedirects,
+          redirectsKey
+        ],
+        r => {
+          nameDefaultRedirects = r[redirectsChecks];
+          nameCustomInstances = r[customRedirects];
+          redirects = r[redirectsKey];
+          resolve();
+        }
+      )
+    })
+  }
+  await getFromStorage();
+
   function calcNameCheckBoxes() {
     let isTrue = true;
-    for (const item of nameHelper.getRedirects()[name][protocol])
+    for (const item of redirects[name][protocol])
       if (!nameDefaultRedirects.includes(item)) {
         isTrue = false;
         break;
@@ -129,11 +159,6 @@ async function processDefaultCustomInstances(
     nameProtocolElement.getElementsByClassName('toogle-all')[0].checked = isTrue;
   }
 
-  let nameDefaultRedirects;
-
-  let redirectsChecks = `${name}${camelCase(protocol)}RedirectsChecks`;
-  let customRedirects = `${name}${camelCase(protocol)}CustomRedirects`;
-
   async function setRedirectsChecks(val) {
     await browser.storage.local.set({ [redirectsChecks]: val });
   }
@@ -142,24 +167,6 @@ async function processDefaultCustomInstances(
     await browser.storage.local.set({ [customRedirects]: val });
   }
 
-  async function getFromStorage() {
-    return new Promise(async resolve => {
-      nameHelper.init().then(() =>
-        browser.storage.local.get(
-          [
-            redirectsChecks,
-            customRedirects,
-          ],
-          r => {
-            nameDefaultRedirects = r[redirectsChecks];
-            nameCustomInstances = r[customRedirects];
-            resolve();
-          }
-        )
-      )
-    })
-  }
-  await getFromStorage();
 
   nameCheckListElement.innerHTML =
     [
@@ -167,7 +174,7 @@ async function processDefaultCustomInstances(
         <x data-localise="__MSG_toggleAll__">Toggle All</x>
         <input type="checkbox" class="toogle-all"/>
       </div>`,
-      ...nameHelper.getRedirects()[name][protocol].map(
+      ...redirects[name][protocol].map(
         x => {
           let cloudflare = cloudflareList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : '';
 
@@ -185,7 +192,7 @@ async function processDefaultCustomInstances(
   calcNameCheckBoxes();
   nameProtocolElement.getElementsByClassName('toogle-all')[0].addEventListener("change", async event => {
     if (event.target.checked)
-      nameDefaultRedirects = [...nameHelper.getRedirects()[name][protocol]];
+      nameDefaultRedirects = [...redirects[name][protocol]];
     else
       nameDefaultRedirects = [];
 
@@ -236,7 +243,7 @@ async function processDefaultCustomInstances(
     let nameCustomInstanceInput = nameProtocolElement.getElementsByClassName('custom-instance')[0];
     let url = new URL(nameCustomInstanceInput.value);
     let protocolHostVar = protocolHost(url);
-    if (nameCustomInstanceInput.validity.valid && !nameHelper.getRedirects()[name][protocol].includes(protocolHostVar)) {
+    if (nameCustomInstanceInput.validity.valid && !redirects[name][protocol].includes(protocolHostVar)) {
       if (!nameCustomInstances.includes(protocolHostVar)) {
         nameCustomInstances.push(protocolHostVar)
         setCustom(nameCustomInstances);

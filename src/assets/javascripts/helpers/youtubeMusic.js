@@ -68,7 +68,9 @@ function redirect(url, type) {
 
 async function initDefaults() {
     await browser.storage.local.set({
-        disableYoutubeMusic: false,
+        disableYoutubeMusic: true,
+
+        youtubeMusicRedirects: redirects,
 
         beatbumpNormalRedirectsChecks: [...redirects.beatbump.normal],
         beatbumpNormalCustomRedirects: [],

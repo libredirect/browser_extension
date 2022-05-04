@@ -25,21 +25,8 @@ let redirects = {
     "tor": []
   },
   "piped": {
-    "normal": [
-      "https://piped.kavin.rocks",
-      "https://piped.silkky.cloud",
-      "https://piped.tokhmi.xyz",
-      "https://piped.moomoo.me",
-      "https://il.ax",
-      "https://piped.syncpundit.com",
-      "https://piped.mha.fi",
-      "https://piped.mint.lgbt",
-      "https://piped.privacy.com.de",
-      "https://piped.notyourcomputer.net"
-    ],
-    "tor": [
-      "http://piped2bbch4xslbl2ckr6k62q56kon56ffowxaqzy42ai22a4sash3ad.onion"
-    ]
+    "normal": [],
+    "tor": []
   },
   "pipedMaterial": {
     "normal": [
@@ -52,28 +39,32 @@ let redirects = {
 
 const getRedirects = () => redirects;
 
-let invidiousNormalRedirectsChecks;
-let invidiousNormalCustomRedirects = [];
-let invidiousTorRedirectsChecks;
-let invidiousTorCustomRedirects = [];
+let
+  invidiousNormalRedirectsChecks,
+  invidiousNormalCustomRedirects,
+  invidiousTorRedirectsChecks,
+  invidiousTorCustomRedirects;
 
-let pipedNormalRedirectsChecks;
-let pipedNormalCustomRedirects = [];
-let pipedTorRedirectsChecks;
-let pipedTorCustomRedirects = [];
+let
+  pipedNormalRedirectsChecks,
+  pipedNormalCustomRedirects,
+  pipedTorRedirectsChecks,
+  pipedTorCustomRedirects;
 
-let pipedMaterialNormalRedirectsChecks;
-let pipedMaterialNormalCustomRedirects = [];
-let pipedMaterialTorRedirectsChecks;
-let pipedMaterialTorCustomRedirects = [];
+let
+  pipedMaterialNormalRedirectsChecks,
+  pipedMaterialNormalCustomRedirects,
+  pipedMaterialTorRedirectsChecks,
+  pipedMaterialTorCustomRedirects;
 
-let disable;
-let protocol;
-let OnlyEmbeddedVideo;
-let frontend;
-let youtubeEmbedFrontend;
-let bypassWatchOnYoutube;
-let alwaysUsePreferred;
+let
+  disable,
+  protocol,
+  OnlyEmbeddedVideo,
+  frontend,
+  youtubeEmbedFrontend,
+  bypassWatchOnYoutube,
+  alwaysUsePreferred;
 
 function redirect(url, details, initiator) {
   if (disable) return null;
@@ -309,54 +300,69 @@ function isPipedorInvidious(url, type, frontend) {
 }
 
 async function initDefaults() {
-  console.log('youtube initDefaults')
   return new Promise(async resolve => {
     fetch('/instances/data.json').then(response => response.text()).then(async data => {
       let dataJson = JSON.parse(data);
       redirects.invidious = dataJson.invidious;
-      await browser.storage.local.set({
-        disableYoutube: false,
-        enableYoutubeCustomSettings: false,
-        OnlyEmbeddedVideo: 'both',
+      redirects.piped = dataJson.piped;
+      browser.storage.local.get('cloudflareList', async r => {
 
-        youtubeRedirects: {
-          'invidious': dataJson.invidious,
-          'piped': redirects.piped,
-          'pipedMaterial': redirects.pipedMaterial
-        },
+        invidiousNormalRedirectsChecks = [...redirects.invidious.normal];
+        pipedNormalRedirectsChecks = [...redirects.piped.normal];
+        pipedMaterialNormalRedirectsChecks = [...redirects.pipedMaterial.normal];
 
-        youtubeFrontend: 'invidious',
+        for (const instance of r.cloudflareList) {
+          let i;
 
-        invidiousNormalRedirectsChecks: [...redirects.invidious.normal],
-        invidiousNormalCustomRedirects: [],
+          i = invidiousNormalRedirectsChecks.indexOf(instance);
+          if (i > -1) invidiousNormalRedirectsChecks.splice(i, 1);
 
-        invidiousTorRedirectsChecks: [...redirects.invidious.tor],
-        invidiousTorCustomRedirects: [],
+          i = pipedNormalRedirectsChecks.indexOf(instance);
+          if (i > -1) pipedNormalRedirectsChecks.splice(i, 1);
 
-        pipedNormalRedirectsChecks: [...redirects.piped.normal],
-        pipedNormalCustomRedirects: [],
+          i = pipedMaterialNormalRedirectsChecks.indexOf(instance);
+          if (i > -1) pipedMaterialNormalRedirectsChecks.splice(i, 1);
+        }
 
-        pipedTorRedirectsChecks: [...redirects.piped.tor],
-        pipedTorCustomRedirects: [],
+        await browser.storage.local.set({
+          disableYoutube: false,
+          enableYoutubeCustomSettings: false,
+          OnlyEmbeddedVideo: 'both',
 
-        pipedMaterialNormalRedirectsChecks: [...redirects.pipedMaterial.normal],
-        pipedMaterialNormalCustomRedirects: [],
+          youtubeRedirects: redirects,
 
-        pipedMaterialTorRedirectsChecks: [...redirects.pipedMaterial.tor],
-        pipedMaterialTorCustomRedirects: [],
+          youtubeFrontend: 'invidious',
 
-        alwaysUsePreferred: false,
-        youtubeEmbedFrontend: 'invidious',
-        youtubeProtocol: 'normal',
-        bypassWatchOnYoutube: true,
+          invidiousNormalRedirectsChecks: invidiousNormalRedirectsChecks,
+          invidiousNormalCustomRedirects: [],
+
+          invidiousTorRedirectsChecks: [...redirects.invidious.tor],
+          invidiousTorCustomRedirects: [],
+
+          pipedNormalRedirectsChecks: pipedNormalRedirectsChecks,
+          pipedNormalCustomRedirects: [],
+
+          pipedTorRedirectsChecks: [...redirects.piped.tor],
+          pipedTorCustomRedirects: [],
+
+          pipedMaterialNormalRedirectsChecks: pipedMaterialNormalRedirectsChecks,
+          pipedMaterialNormalCustomRedirects: [],
+
+          pipedMaterialTorRedirectsChecks: [...redirects.pipedMaterial.tor],
+          pipedMaterialTorCustomRedirects: [],
+
+          alwaysUsePreferred: false,
+          youtubeEmbedFrontend: 'invidious',
+          youtubeProtocol: 'normal',
+          bypassWatchOnYoutube: true,
+        })
+
+        await invidious.initDefaults();
+        await piped.initDefaults();
+        await pipedMaterial.initDefaults();
+        resolve();
       })
-
-      await invidious.initDefaults();
-      await piped.initDefaults();
-      await pipedMaterial.initDefaults();
-      resolve();
-    }
-    )
+    })
   })
 }
 

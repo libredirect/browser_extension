@@ -123,20 +123,27 @@ function switchInstance(url) {
 }
 
 async function initDefaults() {
-  return new Promise(async resolve => {
-    fetch('/instances/data.json').then(response => response.text()).then(async data => {
-      let dataJson = JSON.parse(data);
-      redirects.scribe = dataJson.scribe;
+  fetch('/instances/data.json').then(response => response.text()).then(async data => {
+    let dataJson = JSON.parse(data);
+    redirects.scribe = dataJson.scribe;
+    browser.storage.local.get('cloudflareList', async r => {
+      scribeNormalRedirectsChecks = [...redirects.scribe.normal];
+      for (const instance of r.cloudflareList) {
+        let i = scribeNormalRedirectsChecks.indexOf(instance);
+        if (i > -1) scribeNormalRedirectsChecks.splice(i, 1);
+      }
       await browser.storage.local.set({
         disableMedium: false,
         mediumRedirects: redirects,
-        scribeNormalRedirectsChecks: [...redirects.scribe.normal],
+
+        scribeNormalRedirectsChecks: scribeNormalRedirectsChecks,
         scribeNormalCustomRedirects: [],
+
         scribeTorRedirectsChecks: [...redirects.scribe.tor],
         scribeTorCustomRedirects: [],
+
         mediumProtocol: "normal",
       })
-      resolve();
     })
   })
 }

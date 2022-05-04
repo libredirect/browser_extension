@@ -15,11 +15,10 @@ browser.storage.local.get(
         let protocol = r.mediumProtocol;
         protocolElement.value = protocol;
         changeProtocolSettings(protocol);
-
-        commonHelper.processDefaultCustomInstances('scribe', 'normal', mediumHelper, document)
-        commonHelper.processDefaultCustomInstances('scribe', 'tor', mediumHelper, document)
     }
 )
+commonHelper.processDefaultCustomInstances('medium', 'scribe', 'normal', document);
+commonHelper.processDefaultCustomInstances('medium', 'scribe', 'tor', document);
 
 document.addEventListener("change", async () => {
     await browser.storage.local.set({
@@ -55,7 +54,7 @@ latencyElement.addEventListener("click",
         commonHelper.testLatency(latencyLabel, redirects.scribe.normal).then(r => {
             browser.storage.local.set({ scribeLatency: r });
             latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('scribe', 'normal', mediumHelper, document);
+            commonHelper.processDefaultCustomInstances('medium', 'scribe', 'normal', document);
             latencyElement.removeEventListener("click", reloadWindow);
         });
     }
