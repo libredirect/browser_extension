@@ -135,16 +135,14 @@ function copyRaw() {
 }
 
 const checkInput = (name, checked) => {
-  const id = toKebabCase(name);
-  const input = document.getElementById(id);
-  if (!input) return;
-  input.checked = !!checked;
   const listener = async ({ target }) => {
     const service = Object.create(null);
     service[name] = target.checked;
     await storage.local.set(service);
   };
-  setEventListener(input, "change", listener);
+  const id = toKebabCase(name);
+  const input = setHandler({ id, type: "change", listener });
+  if (input) input.checked = !!checked;
 };
 
 (async (doc) => {
