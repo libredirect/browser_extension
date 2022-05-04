@@ -21,6 +21,8 @@ import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
 import generalHelper from "../../assets/javascripts/helpers/general.js";
 
+import { setHandler, toKebabCase } from "./util.js";
+
 const SWITCHES = [
   "disableTwitter",
   "disableYoutube",
@@ -58,9 +60,6 @@ const POPUP_EVENTS = [
     listener: copyRaw,
   }
 ];
-
-const setEventListener = (target, type, listener) =>
-  target.addEventListener(type, listener);
 
 function switchInstance() {
   browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -133,24 +132,6 @@ function copyRaw() {
     }
   })
 }
-
-const setHandler = (event) => {
-  const { id, type, listener } = event;
-  const element = document.getElementById(id);
-  if (element) setEventListener(element, type, listener);
-};
-
-const EMPTY = "";
-const CHARS = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-
-const isUpperChar = (c) => CHARS.has(c);
-
-const toLowerKebab = (s) => isUpperChar(s) ? `-${s}`.toLowerCase() : s;
-
-const toKebabCase = (s) => {
-  const chars = s.split(EMPTY);
-  return chars.map(toLowerKebab).join('');
-};
 
 const checkInput = (name, checked) => {
   const id = toKebabCase(name);
