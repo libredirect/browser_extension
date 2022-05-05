@@ -24,25 +24,27 @@ import { setHandler, toKebabCase } from "./util.js";
 
 const { runtime, storage, tabs } = window.browser || window.chrome;
 
-const SWITCHES = [
-  "disableTwitter",
-  "disableYoutube",
-  "disableYoutubeMusic",
-  "disableInstagram",
-  "disableMaps",
-  "disableReddit",
-  "disableSearch",
-  "translateDisable",
-  "disableWikipedia",
-  "disableImgur",
-  "disableTiktok",
-  "disablePixiv",
-  "disableSpotifyTargets",
-  "disableMedium",
-  "disablePeertubeTargets",
-  "disableLbryTargets",
-  "disableSendTarget",
-];
+const SERVICES = {
+  imgur,
+  instagram,
+  lbry,
+  maps,
+  medium,
+  peertube,
+  pixiv,
+  reddit,
+  search,
+  sendTargets,
+  spotify,
+  tiktok,
+  translate,
+  twitter,
+  wikipedia,
+  youtube,
+  youtubeMusic,
+};
+
+const SUFFIX = "disable-";
 
 const POPUP_EVENTS = [
   {
@@ -140,14 +142,18 @@ const checkInput = (name, checked) => {
     service[name] = target.checked;
     await storage.local.set(service);
   };
-  const id = toKebabCase(name);
+  const id = SUFFIX + toKebabCase(name);
   const input = setHandler({ id, type: "change", listener });
   if (input) input.checked = !!checked;
 };
 
 (async () => {
-  const inputs = await storage.local.get(SWITCHES);
-  for (const input of Object.entries(inputs)) checkInput(...input);
+  const serviceKeys = Object.keys(SERVICES);
+  const services = await storage.local.get(serviceKeys);
+  for (const key of serviceKeys) {
+    const value = services[key] ?? true;
+    checkInput(key, value);
+  }
 
   for (const event of POPUP_EVENTS) setHandler(event);
 
