@@ -5,16 +5,16 @@ import generalHelper from "../../assets/javascripts/helpers/general.js";
 import imgur from "../../assets/javascripts/helpers/imgur.js";
 import instagram from "../../assets/javascripts/helpers/instagram.js";
 import lbry from "../../assets/javascripts/helpers/lbry.js";
-import maps from "../../assets/javascripts/helpers/maps.js";
 import medium from "../../assets/javascripts/helpers/medium.js";
 import peertube from "../../assets/javascripts/helpers/peertube.js";
 import pixiv from "../../assets/javascripts/helpers/pixiv.js";
+import privacyMaps from "../../assets/javascripts/helpers/maps.js";
+import privacySearch from "../../assets/javascripts/helpers/search.js";
+import privacyTranslate from "../../assets/javascripts/helpers/translate/translate.js";
 import reddit from "../../assets/javascripts/helpers/reddit.js";
-import search from "../../assets/javascripts/helpers/search.js";
-import sendTargets from "../../assets/javascripts/helpers/sendTargets.js";
+import sendfiles from "../../assets/javascripts/helpers/sendTargets.js";
 import spotify from "../../assets/javascripts/helpers/spotify.js";
 import tiktok from "../../assets/javascripts/helpers/tiktok.js";
-import translate from "../../assets/javascripts/helpers/translate/translate.js";
 import twitter from "../../assets/javascripts/helpers/twitter.js";
 import wikipedia from "../../assets/javascripts/helpers/wikipedia.js";
 import youtube from "../../assets/javascripts/helpers/youtube/youtube.js";
@@ -28,16 +28,16 @@ const SERVICES = {
   imgur,
   instagram,
   lbry,
-  maps,
+  privacyMaps,
   medium,
   peertube,
   pixiv,
   reddit,
-  search,
-  sendTargets,
+  privacySearch,
+  sendfiles,
   spotify,
   tiktok,
-  translate,
+  privacyTranslate,
   twitter,
   wikipedia,
   youtube,
@@ -58,7 +58,7 @@ const POPUP_EVENTS = [
     listener: switchInstance,
   },
   {
-    id: "copy_raw",
+    id: "copy-raw",
     type: "click",
     listener: copyRaw,
   }
@@ -123,7 +123,7 @@ function copyRaw() {
       if (!newUrl) newUrl = imgur.reverse(tabUrl);
       if (newUrl) {
         navigator.clipboard.writeText(newUrl);
-        const copyRawElement = document.getElementById("copy_raw");
+        const copyRawElement = document.getElementById("copy-raw");
         const oldHtml = copyRawElement.innerHTML;
         copyRawElement.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">

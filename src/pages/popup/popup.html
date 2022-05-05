@@ -9,6 +9,7 @@
 </head>
 
 <body dir="auto">
+
   <div id="youtube" class="some-block">
     <a class="title" href="https://youtube.com">
       <img src="../../assets/images/youtube-icon.png" />
@@ -17,12 +18,12 @@
     <input id="disable-youtube" type="checkbox" checked />
   </div>
 
-  <div id="youtubeMusic" class="some-block">
+  <div id="youtube-music" class="some-block">
     <a class="title" href="https://music.youtube.com">
       <img src="../../assets/images/youtube-music-icon.png" />
       <h4 data-localise="__MSG_ytmusic__">YT Music</h4>
     </a>
-    <input id="disable-youtubeMusic" type="checkbox" checked />
+    <input id="disable-youtube-music" type="checkbox" checked />
   </div>
 
   <div id="twitter" class="some-block">
@@ -30,7 +31,7 @@
       <img src="../../assets/images/twitter-icon.png" />
       <h4 data-localise="__MSG_twitter__">Twitter</h4>
     </a>
-    <input id="disable-nitter" type="checkbox" checked />
+    <input id="disable-twitter" type="checkbox" checked />
   </div>
 
   <div id="instagram" class="some-block">
@@ -39,10 +40,10 @@
       <img src="../../assets/images/instagram-icon.png" />
       <h4 data-localise="__MSG_instagram__">Instagram</h4>
     </a>
-    <input id="disable-bibliogram" type="checkbox" checked />
+    <input id="disable-instagram" type="checkbox" checked />
   </div>
 
-  <div id="tikTok" class="some-block">
+  <div id="tiktok" class="some-block">
     <a class="title" href="https://tiktok.com">
       <!-- https://www.flaticon.com/authors/designer-shah -->
       <img src="../../assets/images/tiktok-icon.png" />
@@ -121,7 +122,8 @@
     </a>
     <input id="disable-lbry" type="checkbox" checked />
   </div>
-  <div id="search" class="some-block">
+
+  <div id="privacy-search" class="some-block">
     <a class="title" href="http://libredirect.invalid">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path d="M0 0h24v24H0V0z" fill="none" />
@@ -130,10 +132,10 @@
       </svg>
       <h4 data-localise="__MSG_search__">Search</h4>
     </a>
-    <input id="disable-search" type="checkbox" checked />
+    <input id="disable-privacy-search" type="checkbox" checked />
   </div>
 
-  <div id="translate" class="some-block">
+  <div id="privacy-translate" class="some-block">
     <a class="title" href="https://translate.google.com">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
         <path
@@ -141,10 +143,10 @@
       </svg>
       <h4 data-localise="__MSG_translate__">Translate</h4>
     </a>
-    <input id="disable-simplyTranslate" type="checkbox" checked />
+    <input id="disable-privacy-translate" type="checkbox" checked />
   </div>
 
-  <div id="maps" class="some-block">
+  <div id="privacy-maps" class="some-block">
     <a class="title" href="https://maps.google.com">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
         <path d="M0 0h24v24H0V0z" fill="none" />
@@ -153,10 +155,10 @@
       </svg>
       <h4 data-localise="__MSG_maps__">Maps</h4>
     </a>
-    <input id="disable-osm" type="checkbox" checked />
+    <input id="disable-privacy-maps" type="checkbox" checked />
   </div>
 
-  <div id="sendTargets" class="some-block">
+  <div id="sendfiles" class="some-block">
     <a class="title" href="http://send.invalid">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
         <path
@@ -164,7 +166,7 @@
       </svg>
       <h4 data-localise="__MSG_sendFiles__">Send Files</h4>
     </a>
-    <input id="disable-sendTargets" type="checkbox" checked />
+    <input id="disable-sendfiles" type="checkbox" checked />
   </div>
 
   <div class="buttons-popup">
@@ -175,6 +177,7 @@
       </svg>
       <x data-localise="__MSG_instance__">Instance</x>
     </a>
+
     <a class="button" id="more-options">
       <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="26px" viewBox="0 0 24 24"
         width="26px" fill="currentColor">
@@ -183,7 +186,8 @@
       </svg>
       <x data-localise="__MSG_settings__">Settings</x>
     </a>
-    <a class="button" id="copy_raw">
+
+    <a class="button" id="copy-raw">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
         <path
           d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
@@ -196,5 +200,4 @@
   <script type="module" src="./popup.js"></script>
   <script src="../../assets/javascripts/localise.js"></script>
 </body>
-
 </html>
