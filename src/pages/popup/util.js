@@ -20,7 +20,19 @@ const toKebabCase = (s) => {
   return chars.map(toLowerKebab).join(EMPTY);
 };
 
+const isFunction = (fn) => typeof fn === "function";
+
+const safeURL = (url) => {
+  try {
+    return new URL(url);
+  } catch (_) {
+    return {};
+  }
+};
+
 export {
   setHandler,
   toKebabCase,
+  isFunction,
+  safeURL,
 };

@@ -20,7 +20,7 @@ import wikipedia from "../../assets/javascripts/helpers/wikipedia.js";
 import youtube from "../../assets/javascripts/helpers/youtube/youtube.js";
 import youtubeMusic from "../../assets/javascripts/helpers/youtubeMusic.js";
 
-import { setHandler, toKebabCase } from "./util.js";
+import { isFunction, safeURL, setHandler, toKebabCase } from "./util.js";
 
 const { runtime, storage, tabs } = window.browser || window.chrome;
 
@@ -44,6 +44,26 @@ const SERVICES = {
   youtubeMusic,
 };
 
+const switchInstance = async () => {
+  const query = { active: true, currentWindow: true };
+  const [ currentTab ] = await tabs.query(query);
+  if (!currentTab) return false;
+  const { url } = currentTab;
+  if (!url) return false;
+  const chunks = new URL(url);
+  const { host } = chunks;
+  if (!host) return false;
+  const serviceValue = Object.values(SERVICES);
+  for (const { switchInstance } of serviceValue) {
+    if (!isFunction(switchInstance)) continue;
+    console.log(switchInstance);
+    const instanceURL = switchInstance(chunks);
+    if (!instanceURL) continue;
+    tabs.update({ url: instanceURL });
+    return true;
+  }
+};
+
 const SUFFIX = "disable-";
 
 const POPUP_EVENTS = [
@@ -53,7 +73,7 @@ const POPUP_EVENTS = [
     listener: () => runtime.openOptionsPage(),
   },
   {
-    id: "change-instance",
+    id: "switch-instance",
     type: "click",
     listener: switchInstance,
   },
@@ -63,49 +83,6 @@ const POPUP_EVENTS = [
     listener: copyRaw,
   }
 ];
-
-function switchInstance() {
-  tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    let currTab = tabs[0];
-    if (currTab) {
-      let url = currTab.url;
-      let tabUrl
-      try { tabUrl = new URL(url); }
-      catch (_) { return false; }
-      let newUrl;
-
-      newUrl = youtube.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = twitter.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = instagram.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = reddit.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = search.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = translate.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = medium.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = sendTargets.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = peertube.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = lbry.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = imgur.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = wikipedia.switchInstance(tabUrl);
-
-      if (newUrl) {
-        tabs.update({ url: newUrl });
-        return true;
-      }
-    }
-  })
-  return false;
-}
 
 function copyRaw() {
   tabs.query({ active: true, currentWindow: true }, function (tabs) {
