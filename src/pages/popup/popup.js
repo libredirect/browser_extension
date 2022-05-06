@@ -50,13 +50,12 @@ const switchInstance = async () => {
   if (!currentTab) return false;
   const { url } = currentTab;
   if (!url) return false;
-  const chunks = new URL(url);
+  const chunks = safeURL(url);
   const { host } = chunks;
   if (!host) return false;
   const serviceValue = Object.values(SERVICES);
   for (const { switchInstance } of serviceValue) {
     if (!isFunction(switchInstance)) continue;
-    console.log(switchInstance);
     const instanceURL = switchInstance(chunks);
     if (!instanceURL) continue;
     tabs.update({ url: instanceURL });
