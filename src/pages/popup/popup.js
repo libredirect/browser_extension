@@ -64,6 +64,43 @@ const switchInstance = async () => {
   }
 };
 
+const SUCCESS_SVG = `
+<svg xmlns="http://www.w3.org/2000/svg"
+height="24px"
+viewBox="0 0 24 24"
+width="24px"
+fill="currentColor">
+<path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+</svg>`;
+
+const copied = () => {
+  const element = document.getElementById("copy-raw");
+  const childs = element.cloneNode(true);
+  element.innerHTML = SUCCESS_SVG + "Copied";
+  setTimeout(() => element.replaceWith(childs), 1000);
+};
+
+const copyRaw = async () => {
+  const query = { active: true, currentWindow: true };
+  const [currentTab] = await tabs.query(query);
+  if (!currentTab) return false;
+  const { url } = currentTab;
+  const chunks = safeURL(url);
+  const { host } = chunks;
+  if (!host) return false;
+  const serviceValue = Object.values(SERVICES);
+  for (const { reverse } of serviceValue) {
+    if (!isFunction(reverse)) continue;
+    const instanceURL = reverse(chunks);
+    if (!instanceURL) continue;
+    navigator.clipboard
+      .writeText(instanceURL)
+      .then(copied)
+      .catch(console.error);
+    return true;
+  }
+};
+
 const SUFFIX = "disable-";
 
 const POPUP_EVENTS = [
@@ -83,35 +120,6 @@ const POPUP_EVENTS = [
     listener: copyRaw,
   }
 ];
-
-function copyRaw() {
-  tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    let currTab = tabs[0];
-    if (currTab) {
-      let url = currTab.url;
-      let tabUrl
-      try { tabUrl = new URL(url); }
-      catch (_) { return false; }
-      let newUrl;
-      newUrl = youtube.reverse(tabUrl);
-      if (!newUrl) newUrl = twitter.reverse(tabUrl);
-      if (!newUrl) newUrl = instagram.reverse(tabUrl);
-      if (!newUrl) newUrl = tiktok.reverse(tabUrl);
-      if (!newUrl) newUrl = imgur.reverse(tabUrl);
-      if (newUrl) {
-        navigator.clipboard.writeText(newUrl);
-        const copyRawElement = document.getElementById("copy-raw");
-        const oldHtml = copyRawElement.innerHTML;
-        copyRawElement.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-          <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
-        </svg>
-        Copied`;
-        setTimeout(() => copyRawElement.innerHTML = oldHtml, 1000);
-      }
-    }
-  })
-}
 
 const checkInput = (name, checked) => {
   const listener = async ({ target }) => {
