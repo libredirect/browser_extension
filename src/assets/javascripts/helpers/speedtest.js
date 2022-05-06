@@ -6,6 +6,8 @@ const targets = [
     /^https?:\/{2}(www\.|)speedtest\.net\/$/
 ];
 
+const NAME = "speedtest";
+
 let redirects = {
     "librespeed": {
         "normal": [
@@ -104,6 +106,7 @@ async function init() {
 }
 
 export default {
+    NAME,
     getRedirects,
     setRedirects,
 

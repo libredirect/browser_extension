@@ -5,6 +5,8 @@ import commonHelper from './common.js'
 
 const targets = /^https?:\/{2}(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
 
+const NAME = "privacyMaps";
+
 let redirects = {
   'osm': {
     "normal": [
@@ -222,6 +224,7 @@ async function init() {
 }
 
 export default {
+  NAME,
   redirect,
   init,
   initDefaults,

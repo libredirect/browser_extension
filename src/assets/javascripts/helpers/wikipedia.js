@@ -4,6 +4,8 @@ import commonHelper from './common.js'
 
 const targets = /^https?:\/{2}(([a-z]{1,}\.){0,})wikipedia\.org/
 
+const NAME = "wikipedia";
+
 let redirects = {
   "wikiless": {
     "normal": [],
@@ -205,6 +207,7 @@ async function init() {
 }
 
 export default {
+  NAME,
   getRedirects,
   setRedirects,
 

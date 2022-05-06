@@ -6,6 +6,8 @@ const targets = [
   /^https?:\/{2}translate\.google(\.[a-z]{2,3}){1,2}\//,
 ];
 
+const NAME = "privacyTranslate";
+
 let redirects = {
   "simplyTranslate": {
     "normal": [],
@@ -289,6 +291,7 @@ async function init() {
 }
 
 export default {
+  NAME,
   getRedirects,
 
   isTranslateRedirects,

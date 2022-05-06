@@ -4,6 +4,8 @@ import commonHelper from './common.js'
 
 let targets = ["odysee.com"];
 
+const NAME = "lbry";
+
 let redirects = {
     "librarian": {
         "normal": [
@@ -154,7 +156,7 @@ async function init() {
 }
 
 export default {
-
+    NAME,
     getRedirects,
     setRedirects,
     switchInstance,

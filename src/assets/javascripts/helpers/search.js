@@ -10,6 +10,9 @@ const targets = [
 
   /^https?:\/{2}libredirect\.invalid/,
 ];
+
+const NAME = "privacySearch";
+
 let redirects = {
   "searx": {
     "normal": [],
@@ -420,7 +423,7 @@ async function init() {
 }
 
 export default {
-
+  NAME,
   setSearxRedirects,
   setSearxngRedirects,
   setWhoogleRedirects,

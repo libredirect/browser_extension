@@ -7,6 +7,9 @@ window.browser = window.browser || window.chrome;
 const targets = [
     /^https?:\/{2}music\.youtube\.com(\/.*|$)/,
 ];
+
+const NAME = "youtubeMusic";
+
 let redirects = {
     "beatbump": {
         "normal": [
@@ -94,6 +97,7 @@ async function init() {
 }
 
 export default {
+    NAME,
     getRedirects,
     redirect,
     isYoutubeMusic,

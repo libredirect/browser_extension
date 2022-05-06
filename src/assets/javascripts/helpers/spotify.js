@@ -6,6 +6,8 @@ let targets = [
     /^https?:\/{2}(open\.|)spotify\.com/,
 ];
 
+const NAME = "spotify";
+
 let redirects = {
     "soju": {
         "normal": [
@@ -97,6 +99,7 @@ async function init() {
 }
 
 export default {
+    NAME,
     setRedirects,
 
     switchInstance,

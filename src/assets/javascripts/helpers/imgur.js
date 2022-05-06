@@ -4,6 +4,8 @@ import commonHelper from './common.js'
 
 const targets = /^https?:\/{2}([im]\.)?imgur\.com(\/|$)/
 
+const NAME = "imgur";
+
 let redirects = {
     "rimgo": {
         "normal": [],
@@ -194,6 +196,7 @@ async function init() {
 }
 
 export default {
+    NAME,
     getRedirects,
     setRedirects,
 

@@ -9,6 +9,8 @@ const targets = [
   /^https?:\/{2}t\.co/
 ];
 
+const NAME = "twitter";
+
 let redirects = {
   "nitter": {
     "normal": [],
@@ -332,6 +334,7 @@ async function init() {
 }
 
 export default {
+  NAME,
   getRedirects,
   setRedirects,
   reverse,

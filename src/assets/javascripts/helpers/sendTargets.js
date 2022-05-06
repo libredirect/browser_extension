@@ -8,6 +8,8 @@ const targets = [
     /^https?:\/{2}sendfiles\.online\/$/
 ];
 
+const NAME = "sendFile";
+
 let redirects = {
     "send": {
         "normal": [],
@@ -144,6 +146,7 @@ async function init() {
 }
 
 export default {
+    NAME,
     getRedirects,
     setRedirects,
 

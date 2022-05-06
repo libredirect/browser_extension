@@ -28,6 +28,8 @@ const targets = [
   /^ writingcooperative\.com /,
 ];
 
+const NAME = "medium";
+
 let redirects = {
   "scribe": {
     "normal": [],
@@ -181,6 +183,7 @@ async function init() {
 }
 
 export default {
+  NAME,
   targets,
 
   getRedirects,

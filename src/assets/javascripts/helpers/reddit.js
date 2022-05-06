@@ -2,6 +2,8 @@ window.browser = window.browser || window.chrome;
 
 import commonHelper from './common.js'
 
+const NAME = "reddit";
+
 const targets = [
   /^https?:\/{2}(www\.|old\.|np\.|new\.|amp\.|)reddit\.com/,
   /^https?:\/{2}(i\.|preview\.)redd\.it/,
@@ -519,6 +521,7 @@ async function init() {
 }
 
 export default {
+  NAME,
   targets,
   getRedirects,
   getCustomRedirects,

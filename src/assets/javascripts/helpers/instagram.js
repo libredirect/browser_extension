@@ -5,6 +5,9 @@ const targets = [
   "instagram.com",
   "www.instagram.com",
 ];
+
+const NAME = "instagram";
+
 let redirects = {
   "bibliogram": {
     "normal": [],
@@ -247,6 +250,7 @@ async function init() {
 }
 
 export default {
+  NAME,
   getRedirects,
   setRedirects,
 

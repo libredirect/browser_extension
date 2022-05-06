@@ -4,6 +4,8 @@ import commonHelper from './common.js'
 
 let targets = [];
 
+const NAME = "peertube";
+
 let redirects = {
     "simpleertube": {
         "normal": [
@@ -152,7 +154,7 @@ async function init() {
 }
 
 export default {
-
+    NAME,
     getRedirects,
     setRedirects,
 

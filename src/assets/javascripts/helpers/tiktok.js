@@ -6,6 +6,8 @@ const targets = [
     /^https?:\/{2}(www\.|)tiktok\.com.*/
 ];
 
+const NAME = "tiktok";
+
 let redirects = {
     "proxiTok": {
         "normal": [],

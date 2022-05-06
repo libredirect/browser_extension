@@ -19,6 +19,9 @@ const targets = [
 
   /^https?:\/{2}(www\.|)(youtube|youtube-nocookie)\.com\/embed\/..*/,
 ];
+
+const NAME = "youtube";
+
 let redirects = {
   "invidious": {
     "normal": [],
@@ -440,6 +443,7 @@ let
   initInvidiousCookies = invidious.initInvidiousCookies;
 
 export default {
+  NAME,
   initPipedLocalStorage,
   initPipedMaterialLocalStorage,
   initInvidiousCookies,
