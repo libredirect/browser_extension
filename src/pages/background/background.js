@@ -11,7 +11,6 @@ import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/helpers/medium.js";
 import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
 import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
-import speedtestHelper from "../../assets/javascripts/helpers/speedtest.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
@@ -37,7 +36,6 @@ browser.runtime.onInstalled.addListener(async details => {
       wikipediaHelper.initDefaults();
       imgurHelper.initDefaults();
       tiktokHelper.initDefaults();
-      speedtestHelper.initDefaults();
       sendTargetsHelper.initDefaults();
       peertubeHelper.initDefaults();
       lbryHelper.initDefaults();
@@ -59,7 +57,6 @@ async function wholeInit() {
   await wikipediaHelper.init();
   await imgurHelper.init();
   await tiktokHelper.init();
-  await speedtestHelper.init();
   await sendTargetsHelper.init();
   await peertubeHelper.init();
   await lbryHelper.init();
@@ -110,8 +107,6 @@ browser.webRequest.onBeforeRequest.addListener(
     if (!newUrl) newUrl = imgurHelper.redirect(url, details.type, initiator);
 
     if (!newUrl) newUrl = tiktokHelper.redirect(url, details.type, initiator);
-
-    if (!newUrl) newUrl = speedtestHelper.redirect(url, details.type, initiator);
 
     if (!newUrl) newUrl = sendTargetsHelper.redirect(url, details.type, initiator);
 
