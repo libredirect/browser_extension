@@ -1,6 +1,6 @@
 <img src="./img/libredirect_full.svg" height="50"/>
 
-A web extension that redirects YouTube, Twitter, Instagram and many more requests to alternative privacy friendly frontends and backends.
+A web extension that redirects YouTube, Twitter, Instagram... requests to alternative privacy friendly frontends and backends.
 
 [![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)&nbsp;
 <a href="https://microsoftedge.microsoft.com/addons/detail/libredirect/aodffkeankebfonljgbcfbbaljopcpdb">
@@ -8,13 +8,10 @@ A web extension that redirects YouTube, Twitter, Instagram and many more request
 </a>&nbsp;
 <a href="./chromium.md"><img src ="./img/badge-chromium.png" height=60 ></a>
 
-[![Mozilla Users](https://badges.alefvanoon.xyz/amo/users/libredirect?label=Firefox%20Users)](https://addons.mozilla.org/firefox/addon/libredirect/)
-
 <img src ="./img/1.png" width=350>&nbsp;
 <img src ="./img/2.png" width=350>&nbsp;
 <img src ="./img/3.png" width=350>&nbsp;
 <img src ="./img/4.png" width=350>&nbsp;
-<img src ="./img/5.png" width=350>&nbsp;
 
 Youtube => [Piped](https://github.com/TeamPiped/Piped), [Invidious](https://github.com/iv-org/invidious), [Piped-Material](https://github.com/mmjee/Piped-Material), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee)\
 Youtube Music => [Beatbump](https://github.com/snuffyDev/Beatbump)\
@@ -44,17 +41,25 @@ BTC: **bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q**
 [![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
 ### Install Dependencies
 - [Node.js](https://nodejs.org/) latest LTS is recommended
-- `npm update`
-- `npm install`
+```
+npm update
+npm install
+```
 
 ### Build
-- `npm run build`
+```
+npm run build
+```
 
 ### Test
-- `npm run test`
+```
+npm run test
+```
 
 ### Test in Firefox
-- `npm run start`
+```
+npm run start
+```
 
 ### Install temporarily
 - open `about:addons`
@@ -78,7 +83,6 @@ BTC: **bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q**
 [![GitHub](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/github.svg)](https://github.com/libredirect/libredirect/)&nbsp;&nbsp;
 [![Codeberg](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/codeberg.svg)](https://codeberg.org/LibRedirect/libredirect)&nbsp;&nbsp;
 
-<br>
 
 [FAQ](https://github.com/libredirect/libredirect/wiki/FAQ)\
 [Privacy Policy](Privacy-Policy.md)\
