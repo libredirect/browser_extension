@@ -129,7 +129,8 @@ body.option(dir="auto")
                         option(value="" data-localise="__MSG_none__") none
                         option(value="youtube") YouTube
                         option(value="reddit") Reddit
-                    |&nbsp;
+                .some-block.option-block
+                    h4 
                     select(class="comments[1]")
                         option(value="" data-localise="__MSG_none__") none
                         option(value="youtube") YouTube
@@ -140,13 +141,13 @@ body.option(dir="auto")
                     select(class="captions[0]")
                         include ../../widgets/captions_options.pug
 
-                    |&nbsp;
-
+                .some-block.option-block
+                    h4
                     select(class="captions[1]")
                         include ../../widgets/captions_options.pug
 
-                    |&nbsp;
-
+                .some-block.option-block
+                    h4
                     select(class="captions[2]")
                         include ../../widgets/captions_options.pug
 

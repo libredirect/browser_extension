@@ -146,20 +146,107 @@ function initSearxCookies() {
 }
 
 function initSearxngCookies() {
-  let themeValue;
-  if (theme == 'light') themeValue = 'logicodev';
-  if (theme == 'dark') themeValue = 'logicodev-dark';
-  if (applyThemeToSites && themeValue) {
-    let checkedInstances;
-    if (protocol == 'normal') checkedInstances = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
-    else if (protocol == 'tor') checkedInstances = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
-    else if (protocol == 'i2p') checkedInstances = [...searxngI2pRedirectsChecks, ...searxngI2pCustomRedirects];
+  browser.storage.local.get(
+    [
+      "searchProtocol",
+      "searchFrontend",
+      "searxngCustomSettings",
 
-    for (const instanceUrl of checkedInstances) {
-      browser.cookies.set({ url: instanceUrl, name: "oscar-style", value: themeValue })
-      browser.cookies.set({ url: instanceUrl, name: "theme", value: 'oscar' })
+      "searxngNormalRedirectsChecks",
+      "searxngNormalCustomRedirects",
+      "searxngTorRedirectsChecks",
+      "searxngTorCustomRedirects",
+      "searxngI2pRedirectsChecks",
+      "searxngI2pCustomRedirects",
+
+      "searxng_category_general",
+      "searxng_category_images",
+      "searxng_category_videos",
+      "searxng_category_news",
+      "searxng_category_map",
+      "searxng_category_music",
+      "searxng_category_it",
+      "searxng_category_science",
+      "searxng_category_files",
+      "searxng_category_social_media",
+      "searxng_language",
+      "searxng_autocomplete",
+      "searxng_safesearch",
+      "searxng_hostname_replace",
+      "searxng_oa_doi_rewrite",
+      "searxng_doi_resolver",
+      "searxng_tokens",
+      "searxng_locale",
+      "searxng_theme",
+      "searxng_simple_style",
+      "searxng_results_on_new_tab",
+      "searxng_infinite_scroll",
+      "searxng_search_on_category_select",
+      "searxng_vim_hotkeys",
+      "searxng_method",
+      "searxng_image_proxy",
+      "searxng_query_in_title",
+      "searxng_tracker_url_remover",
+    ],
+    r => {
+      if (!r.searxngCustomSettings || r.searchFrontend != 'searxng') return;
+      console.log('init SearXNG Cookies');
+      let checkedInstances;
+      if (r.searchProtocol == 'normal') checkedInstances = [...r.searxngNormalRedirectsChecks, ...r.searxngNormalCustomRedirects];
+      else if (r.searchProtocol == 'tor') checkedInstances = [...r.searxngTorRedirectsChecks, ...r.searxngTorCustomRedirects];
+      else if (r.searchProtocol == 'i2p') checkedInstances = [...r.searxngI2pRedirectsChecks, ...r.searxngI2pCustomRedirects];
+
+      let categoryList = [];
+      if (r.searxng_category_general) categoryList.push('general')
+      if (r.searxng_category_images) categoryList.push('images')
+      if (r.searxng_category_videos) categoryList.push('videos')
+      if (r.searxng_category_news) categoryList.push('news')
+      if (r.searxng_category_map) categoryList.push('map')
+      if (r.searxng_category_music) categoryList.push('music')
+      if (r.searxng_category_it) categoryList.push('it')
+      if (r.searxng_category_science) categoryList.push('science')
+      if (r.searxng_category_files) categoryList.push('files')
+      if (r.searxng_category_social_media) categoryList.push('social media')
+      let categoryString = '"' + categoryList.join("\\054") + '"'  // ""general\054images\054videos""
+
+      let enabledPluginsList = [];
+      if (r.searxng_hostname_replace) enabledPluginsList.push('searx.plugins.hostname_replace')
+      if (r.searxng_oa_doi_rewrite) enabledPluginsList.push('searx.plugins.oa_doi_rewrite')
+      if (r.searxng_vim_hotkeys) enabledPluginsList.push('searx.plugins.vim_hotkeys')
+      
+      let enabledPluginsString = '"' + enabledPluginsList.join("\\054") + '"' // ""searx.plugins.hostname_replace\054searx.plugins.oa_doi_rewrite""   
+
+
+      let disabledPluginsList = [];
+      if (!r.searxng_search_on_category_select) disabledPluginsList.push('searx.plugins.search_on_category_select')
+      if (!r.searxng_tracker_url_remover) disabledPluginsList.push('searx.plugins.tracker_url_remover')
+      let disabledPluginsString = '"' + disabledPluginsList.join("\\054") + '"' // ""searx.plugins.hostname_replace\054searx.plugins.oa_doi_rewrite""   
+
+      for (const instanceUrl of checkedInstances) {
+        browser.cookies.set({ url: instanceUrl, name: "categories", value: categoryString });
+
+        browser.cookies.set({ url: instanceUrl, name: "language", value: r.searxng_language });
+        browser.cookies.set({ url: instanceUrl, name: "autocomplete", value: r.searxng_autocomplete });
+        browser.cookies.set({ url: instanceUrl, name: "safesearch", value: r.searxng_safesearch });
+
+        browser.cookies.set({ url: instanceUrl, name: "enabled_plugins", value: enabledPluginsString });
+        browser.cookies.set({ url: instanceUrl, name: "disabled_plugins", value: disabledPluginsString });
+
+        browser.cookies.set({ url: instanceUrl, name: "doi_resolver", value: r.searxng_doi_resolver });
+        browser.cookies.set({ url: instanceUrl, name: "tokens", value: r.searxng_tokens });
+        browser.cookies.set({ url: instanceUrl, name: "locale", value: r.searxng_locale });
+        browser.cookies.set({ url: instanceUrl, name: "theme", value: r.searxng_theme });
+        browser.cookies.set({ url: instanceUrl, name: "simple_style", value: r.searxng_simple_style });
+        browser.cookies.set({ url: instanceUrl, name: "results_on_new_tab", value: r.searxng_results_on_new_tab });
+        browser.cookies.set({ url: instanceUrl, name: "infinite_scroll", value: r.searxng_infinite_scroll });
+        browser.cookies.set({ url: instanceUrl, name: "method", value: r.searxng_method });
+        browser.cookies.set({ url: instanceUrl, name: "image_proxy", value: r.searxng_image_proxy });
+        browser.cookies.set({ url: instanceUrl, name: "query_in_title", value: r.searxng_query_in_title });
+      }
     }
-  }
+  )
+
+
 }
 
 function redirect(url) {
@@ -303,6 +390,7 @@ async function initDefaults() {
         disableSearch: false,
         searchFrontend: 'searxng',
         searchRedirects: redirects,
+        searxngCustomSettings: false,
 
         whoogleNormalRedirectsChecks: whoogleNormalRedirectsChecks,
         whoogleNormalCustomRedirects: [],
@@ -335,6 +423,41 @@ async function initDefaults() {
         applyThemeToSites: false,
 
         searchProtocol: 'normal',
+
+        searxng_category_general: true,
+        searxng_category_images: false,
+        searxng_category_videos: false,
+        searxng_category_news: false,
+        searxng_category_map: false,
+        searxng_category_music: false,
+        searxng_category_it: false,
+        searxng_category_science: false,
+        searxng_category_files: false,
+        searxng_category_social_media: false,
+
+        searxng_language: 'en',
+        searxng_autocomplete: 'google',
+        searxng_safesearch: '0',
+
+        searxng_hostname_replace: false,
+        searxng_oa_doi_rewrite: false,
+
+        searxng_doi_resolver: 'oadoi.org',
+        searxng_tokens: '',
+
+        searxng_locale: 'en',
+        searxng_theme: 'simple',
+        searxng_simple_style: 'auto',
+        searxng_results_on_new_tab: '0',
+        searxng_infinite_scroll: '0',
+
+        searxng_search_on_category_select: true,
+        searxng_vim_hotkeys: false,
+
+        searxng_method: 'POST',
+        searxng_image_proxy: '1',
+        searxng_query_in_title: '',
+        searxng_tracker_url_remover: false,
       })
     })
   })

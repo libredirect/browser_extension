@@ -2,18 +2,49 @@ import searchHelper from "../../../assets/javascripts/helpers/search.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let searxDiv = document.getElementById("searx");
-let searxngDiv = document.getElementById("searxng")
+
+let searxngDiv = document.getElementById("searxng");
+let searxngCustomSettings = document.getElementById("enable-searxng-custom-settings");
+
+let searxngCustomSettingsDiv = searxngDiv.getElementsByClassName('custom-settings')[0]
+
 let whoogleDiv = document.getElementById("whoogle");
 
 let disableSearchElement = document.getElementById("disable-search");
 let searchFrontendElement = document.getElementById("search-frontend");
 let protocolElement = document.getElementById("protocol")
 
+let customSettingsDivElement = document.getElementsByClassName("custom-settings");
+
+let checkboxes_xpath = document.evaluate(
+  "//div[@id='searxng']//input[@type='checkbox']",
+  document, null, XPathResult.ANY_TYPE, null,
+);
+const inputChecked = [];
+let checkbox = checkboxes_xpath.iterateNext();
+while (checkbox) {
+  inputChecked.push(checkbox);
+  checkbox = checkboxes_xpath.iterateNext();
+}
+
+let textInputs_xpath = document.evaluate(
+  "//div[@id='searxng']//input[@type='text']",
+  document, null, XPathResult.ANY_TYPE, null,
+);
+const inputValues = [];
+let textInput = textInputs_xpath.iterateNext();
+while (textInput) {
+  inputValues.push(textInput);
+  textInput = textInputs_xpath.iterateNext();
+}
+inputValues.push(...searxngCustomSettingsDiv.getElementsByTagName('select'));
+
 browser.storage.local.get(
   [
     "disableSearch",
     "searchFrontend",
     "searchProtocol",
+    "searxngCustomSettings"
   ],
   r => {
     disableSearchElement.checked = !r.disableSearch;
@@ -23,18 +54,48 @@ browser.storage.local.get(
 
     protocolElement.value = r.searchProtocol;
     changeProtocolSettings(r.searchProtocol);
+
+
+    searxngCustomSettings.checked = r.searxngCustomSettings
+    changeCustomSettings()
   }
 );
+
+for (const element of inputChecked) {
+  let k = `searxng_${element.className}`
+  browser.storage.local.get(k, r => element.checked = r[k])
+}
+for (const element of inputValues) {
+  let k = `searxng_${element.className}`
+  browser.storage.local.get(k, r => element.value = r[k])
+}
+
+searxngCustomSettingsDiv.addEventListener("change", async () => {
+  for (const element of inputChecked)
+    browser.storage.local.set({ [`searxng_${element.className}`]: element.checked })
+
+  for (const element of inputValues)
+    browser.storage.local.set({ [`searxng_${element.className}`]: element.value });
+})
 
 document.addEventListener("change", async () => {
   await browser.storage.local.set({
     disableSearch: !disableSearchElement.checked,
     searchFrontend: searchFrontendElement.value,
     searchProtocol: protocolElement.value,
+    searxngCustomSettings: searxngCustomSettings.checked,
   });
   changeFrontendsSettings(searchFrontendElement.value);
   changeProtocolSettings(protocolElement.value);
+  changeCustomSettings();
 })
+
+function changeCustomSettings() {
+  if (searxngCustomSettings.checked)
+    for (const item of customSettingsDivElement) item.style.display = 'block';
+  else
+    for (const item of customSettingsDivElement) item.style.display = 'none';
+}
 
 function changeFrontendsSettings(frontend) {
   let SearxWhoogleElement = document.getElementById("searx-whoogle");
