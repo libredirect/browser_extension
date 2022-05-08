@@ -20,7 +20,6 @@ Instagram => [Bibliogram](https://sr.ht/~cadence/bibliogram/)\
 TikTok => [ProxiTok](https://github.com/pablouser1/ProxiTok)\
 Reddit => [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances), [Old Reddit](https://old.reddit.com)\
 Imgur => [Rimgo](https://codeberg.org/video-prize-ranch/rimgo)\
-Spotify => [Soju](https://github.com/coffeebank/soju)\
 Wikipedia => [Wikiless](https://codeberg.org/orenom/wikiless)\
 Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)\
 Peertube => [SimpleerTube](https://git.sr.ht/~metalune/simpleweb_peertube)\
@@ -36,6 +35,12 @@ Send Files => [Send](https://github.com/timvisee/send)
 [![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)
 [![Patreon](./img/patreon.svg)](https://patreon.com/LibRedirect)\
 BTC: **bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q**
+
+[FAQ](https://libredirect.github.io/faq.html)
+
+## Mirror Repos
+[![GitHub](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/github.svg)](https://github.com/libredirect/libredirect/)&nbsp;&nbsp;
+[![Codeberg](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/codeberg.svg)](https://codeberg.org/LibRedirect/libredirect)&nbsp;&nbsp;
 
 ## Development
 [![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
@@ -79,11 +84,5 @@ npm run start
 - select `load unpacked extension`
 - select `src` folder
 
-## Mirror Repos
-[![GitHub](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/github.svg)](https://github.com/libredirect/libredirect/)&nbsp;&nbsp;
-[![Codeberg](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/codeberg.svg)](https://codeberg.org/LibRedirect/libredirect)&nbsp;&nbsp;
-
-
-[FAQ](https://github.com/libredirect/libredirect/wiki/FAQ)\
 [Privacy Policy](Privacy-Policy.md)\
 Credits: [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)

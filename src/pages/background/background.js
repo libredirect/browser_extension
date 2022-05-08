@@ -14,7 +14,7 @@ import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
-import spotifyHelper from "../../assets/javascripts/helpers/spotify.js";
+
 import generalHelper from "../../assets/javascripts/helpers/general.js";
 import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
 
@@ -39,7 +39,6 @@ browser.runtime.onInstalled.addListener(async details => {
       sendTargetsHelper.initDefaults();
       peertubeHelper.initDefaults();
       lbryHelper.initDefaults();
-      spotifyHelper.initDefaults();
     })
   }
 })
@@ -60,7 +59,6 @@ async function wholeInit() {
   await sendTargetsHelper.init();
   await peertubeHelper.init();
   await lbryHelper.init();
-  await spotifyHelper.init();
   await generalHelper.init();
 }
 
@@ -113,8 +111,6 @@ browser.webRequest.onBeforeRequest.addListener(
     if (!newUrl) newUrl = peertubeHelper.redirect(url, details.type, initiator);
 
     if (!newUrl) newUrl = lbryHelper.redirect(url, details.type, initiator);
-
-    if (!newUrl) newUrl = spotifyHelper.redirect(url, details.type, initiator);
 
     if (!newUrl) newUrl = translateHelper.redirect(url);
 
@@ -195,8 +191,6 @@ async function redirectOfflineInstance(url, tabId) {
   if (!newUrl) newUrl = peertubeHelper.switchInstance(url);
 
   if (!newUrl) newUrl = lbryHelper.switchInstance(url);
-
-  if (!newUrl) newUrl = spotifyHelper.switchInstance(url);
 
   if (newUrl) {
     if (counter >= 5) {

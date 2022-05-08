@@ -23,7 +23,6 @@
       <div class="title"> <img src="../../../assets/images/tiktok-icon.png"><a href="../tiktok/tiktok.html" data-localise="__MSG_tiktok__">TikTok</a></div>
       <div class="title"> <img src="../../../assets/images/reddit-icon.png"><a href="../reddit/reddit.html" data-localise="__MSG_reddit__">Reddit</a></div>
       <div class="title"> <img src="../../../assets/images/imgur-icon.png"><a href="../imgur/imgur.html" data-localise="__MSG_imgur__">Imgur</a></div>
-      <div class="title"> <img src="../../../assets/images/spotify-icon.png"><a href="../spotify/spotify.html" data-localise="__MSG_spotify__">Spotify</a></div>
       <div class="title"> <img src="../../../assets/images/wikipedia-icon.svg"><a href="../wikipedia/wikipedia.html" data-localise="__MSG_wikipedia__">Wikipedia</a></div>
       <div class="title"> 
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1770 1000" fill="currentColor">
@@ -156,6 +155,356 @@
     </div>
     <div id="searxng">
       <hr>
+      <div class="custom-settings">
+        <div class="some-block option-block">
+          <h2>General</h2>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Default categories</h4>
+        </div>
+        <div class="checklist-popup">
+          <div> 
+            <div>
+              <svg viewBox="0 0 512 512" aria-hidden="true">
+                <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448"></path>
+              </svg>General
+            </div>
+            <input class="category_general" type="checkbox">
+          </div>
+          <div> 
+            <div>
+              <svg viewBox="0 0 512 512" aria-hidden="true">
+                <rect x="48" y="80" width="416" height="352" rx="48" ry="48" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"></rect>
+                <circle cx="336" cy="176" r="32" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></circle>
+                <path d="M304 335.79l-90.66-90.49a32 32 0 00-43.87-1.3L48 352M224 432l123.34-123.34a32 32 0 0143.11-2L464 368" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
+              </svg>Images
+            </div>
+            <input class="category_images" type="checkbox">
+          </div>
+          <div> 
+            <div>
+              <svg viewBox="0 0 512 512" aria-hidden="true">
+                <path d="M112 111v290c0 17.44 17 28.52 31 20.16l247.9-148.37c12.12-7.25 12.12-26.33 0-33.58L143 90.84c-14-8.36-31 2.72-31 20.16z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
+              </svg>Videos
+            </div>
+            <input class="category_videos" type="checkbox">
+          </div>
+          <div> 
+            <div> 
+              <svg viewBox="0 0 512 512" aria-hidden="true">
+                <path d="M368 415.86V72a24.07 24.07 0 00-24-24H72a24.07 24.07 0 00-24 24v352a40.12 40.12 0 0040 40h328" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"></path>
+                <path d="M416 464h0a48 48 0 01-48-48V128h72a24 24 0 0124 24v264a48 48 0 01-48 48z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"></path>
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M240 128h64M240 192h64M112 256h192M112 320h192M112 384h192"></path>
+                <path d="M176 208h-64a16 16 0 01-16-16v-64a16 16 0 0116-16h64a16 16 0 0116 16v64a16 16 0 01-16 16z"></path>
+              </svg>News
+            </div>
+            <input class="category_news" type="checkbox">
+          </div>
+          <div> 
+            <div> 
+              <svg viewBox="0 0 512 512" aria-hidden="true">
+                <path d="M256 48c-79.5 0-144 61.39-144 137 0 87 96 224.87 131.25 272.49a15.77 15.77 0 0025.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
+                <circle cx="256" cy="192" r="48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></circle>
+              </svg>Maps
+            </div>
+            <input class="category_map" type="checkbox">
+          </div>
+          <div> 
+            <div> 
+              <svg viewBox="0 0 512 512" aria-hidden="true">
+                <path d="M192 218v-6c0-14.84 10-27 24.24-30.59l174.59-46.68A20 20 0 01416 154v22" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
+                <path d="M416 295.94v80c0 13.91-8.93 25.59-22 30l-22 8c-25.9 8.72-52-10.42-52-38h0a33.37 33.37 0 0123-32l51-18.15c13.07-4.4 22-15.94 22-29.85V58a10 10 0 00-12.6-9.61L204 102a16.48 16.48 0 00-12 16v226c0 13.91-8.93 25.6-22 30l-52 18c-13.88 4.68-22 17.22-22 32h0c0 27.58 26.52 46.55 52 38l22-8c13.07-4.4 22-16.08 22-30v-80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
+              </svg>Music
+            </div>
+            <input class="category_music" type="checkbox">
+          </div>
+          <div> 
+            <div> 
+              <svg class="ion-icon-big" viewBox="0 0 512 512" aria-hidden="true">
+                <path d="M434.8 137.65l-149.36-68.1c-16.19-7.4-42.69-7.4-58.88 0L77.3 137.65c-17.6 8-17.6 21.09 0 29.09l148 67.5c16.89 7.7 44.69 7.7 61.58 0l148-67.5c17.52-8 17.52-21.1-.08-29.09zM160 308.52l-82.7 37.11c-17.6 8-17.6 21.1 0 29.1l148 67.5c16.89 7.69 44.69 7.69 61.58 0l148-67.5c17.6-8 17.6-21.1 0-29.1l-79.94-38.47" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
+                <path d="M160 204.48l-82.8 37.16c-17.6 8-17.6 21.1 0 29.1l148 67.49c16.89 7.7 44.69 7.7 61.58 0l148-67.49c17.7-8 17.7-21.1.1-29.1L352 204.48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
+              </svg>It
+            </div>
+            <input class="category_it" type="checkbox">
+          </div>
+          <div> 
+            <div> 
+              <svg class="ion-icon-big" viewBox="0 0 512 512" aria-hidden="true">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M32 192L256 64l224 128-224 128L32 192z"></path>
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M112 240v128l144 80 144-80V240M480 368V192M256 320v128"></path>
+              </svg>Science
+            </div>
+            <input class="category_science" type="checkbox">
+          </div>
+          <div> 
+            <div>
+              <svg viewBox="0 0 512 512" aria-hidden="true">
+                <path d="M384 80H128c-26 0-43 14-48 40L48 272v112a48.14 48.14 0 0048 48h320a48.14 48.14 0 0048-48V272l-32-152c-5-27-23-40-48-40z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"></path>
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M48 272h144M320 272h144M192 272a64 64 0 00128 0M144 144h224M128 208h256"></path>
+              </svg>Files
+            </div>
+            <input class="category_files" type="checkbox">
+          </div>
+          <div> 
+            <div> 
+              <svg viewBox="0 0 512 512" aria-hidden="true">
+                <path d="M402 168c-2.93 40.67-33.1 72-66 72s-63.12-31.32-66-72c-3-42.31 26.37-72 66-72s69 30.46 66 72z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
+                <path d="M336 304c-65.17 0-127.84 32.37-143.54 95.41-2.08 8.34 3.15 16.59 11.72 16.59h263.65c8.57 0 13.77-8.25 11.72-16.59C463.85 335.36 401.18 304 336 304z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
+                <path d="M200 185.94c-2.34 32.48-26.72 58.06-53 58.06s-50.7-25.57-53-58.06C91.61 152.15 115.34 128 147 128s55.39 24.77 53 57.94z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
+                <path d="M206 306c-18.05-8.27-37.93-11.45-59-11.45-52 0-102.1 25.85-114.65 76.2-1.65 6.66 2.53 13.25 9.37 13.25H154" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32"></path>
+              </svg>Social Media
+            </div>
+            <input class="category_social_media" type="checkbox">
+          </div>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Search language</h4>
+          <select class="language">
+            <option value="all">Default language</option>
+            <option value="af-ZA">🇿🇦 Afrikaans (Suid-Afrika) </option>
+            <option value="ca-ES">🇪🇸 Català (Espanya) </option>
+            <option value="da-DK">🇩🇰 Dansk (Danmark) </option>
+            <option value="de">🌐 Deutsch </option>
+            <option value="de-AT">🇦🇹 Deutsch (Österreich) </option>
+            <option value="de-CH">🇨🇭 Deutsch (Schweiz) </option>
+            <option value="de-DE">🇩🇪 Deutsch (Deutschland) </option>
+            <option value="et-EE">🇪🇪 Eesti (Eesti) </option>
+            <option value="en">🌐 English </option>
+            <option value="en-AU">🇦🇺 English (Australia) </option>
+            <option value="en-CA">🇨🇦 English (Canada) </option>
+            <option value="en-GB">🇬🇧 English (United Kingdom) </option>
+            <option value="en-IE">🇮🇪 English (Ireland) </option>
+            <option value="en-MY">🇲🇾 English (Malaysia) </option>
+            <option value="en-NZ">🇳🇿 English (New Zealand) </option>
+            <option value="en-US">🇺🇸 English (United States) </option>
+            <option value="es">🌐 Español </option>
+            <option value="es-AR">🇦🇷 Español (Argentina) </option>
+            <option value="es-CL">🇨🇱 Español (Chile) </option>
+            <option value="es-ES">🇪🇸 Español (España) </option>
+            <option value="es-MX">🇲🇽 Español (México) </option>
+            <option value="fil-PH">🇵🇭 Filipino (Pilipinas) </option>
+            <option value="fr">🌐 Français </option>
+            <option value="fr-BE">🇧🇪 Français (Belgique) </option>
+            <option value="fr-CA">🇨🇦 Français (Canada) </option>
+            <option value="fr-CH">🇨🇭 Français (Suisse) </option>
+            <option value="fr-FR">🇫🇷 Français (France) </option>
+            <option value="hr-HR">🇭🇷 Hrvatski (Hrvatska) </option>
+            <option value="id-ID">🇮🇩 Indonesia (Indonesia) </option>
+            <option value="it-IT">🇮🇹 Italiano (Italia) </option>
+            <option value="sw-TZ">🇹🇿 Kiswahili (Tanzania) </option>
+            <option value="lv-LV">🇱🇻 Latviešu (Latvija) </option>
+            <option value="lt-LT">🇱🇹 Lietuvių (Lietuva) </option>
+            <option value="hu-HU">🇭🇺 Magyar (Magyarország) </option>
+            <option value="nl">🌐 Nederlands </option>
+            <option value="nl-BE">🇧🇪 Nederlands (België) </option>
+            <option value="nl-NL">🇳🇱 Nederlands (Nederland) </option>
+            <option value="no-NO">🇳🇴 Norsk </option>
+            <option value="pl-PL">🇵🇱 Polski (Polska) </option>
+            <option value="pt">🌐 Português </option>
+            <option value="pt-BR">🇧🇷 Português (Brasil) </option>
+            <option value="pt-PT">🇵🇹 Português (Portugal) </option>
+            <option value="ro-RO">🇷🇴 Română (România) </option>
+            <option value="sk-SK">🇸🇰 Slovenčina (Slovensko) </option>
+            <option value="sl-SI">🇸🇮 Slovenščina (Slovenija) </option>
+            <option value="fi-FI">🇫🇮 Suomi (Suomi) </option>
+            <option value="sv-SE">🇸🇪 Svenska (Sverige) </option>
+            <option value="vi-VN">🇻🇳 Tiếng Việt (Việt Nam) </option>
+            <option value="tr-TR">🇹🇷 Türkçe (Türkiye) </option>
+            <option value="is-IS">🇮🇸 Íslenska (Ísland) </option>
+            <option value="cs-CZ">🇨🇿 Čeština (Česko) </option>
+            <option value="el-GR">🇬🇷 Ελληνικά (Ελλάδα) </option>
+            <option value="be-BY">🇧🇾 Беларуская (Беларусь) </option>
+            <option value="bg-BG">🇧🇬 Български (България) </option>
+            <option value="ru-RU">🇷🇺 Русский (Россия) </option>
+            <option value="sr-RS">🇷🇸 Српски (Србија) </option>
+            <option value="uk-UA">🇺🇦 Українська (Україна) </option>
+            <option value="he-IL">🇮🇱 עברית (ישראל) </option>
+            <option value="ar-EG">🇪🇬 العربية (مصر) </option>
+            <option value="fa-IR">🇮🇷 فارسی (ایران) </option>
+            <option value="hi-IN">🇮🇳 हिन्दी (भारत) </option>
+            <option value="th-TH">🇹🇭 ไทย (ไทย) </option>
+            <option value="zh">🌐 中文 </option>
+            <option value="zh-CN">🇨🇳 中文 (中国) </option>
+            <option value="zh-HK">🇭🇰 中文 (中國香港) </option>
+            <option value="zh-TW">🇹🇼 中文 (台灣) </option>
+            <option value="ja-JP">🇯🇵 日本語 (日本) </option>
+            <option value="ko-KR">🇰🇷 한국어 (대한민국) </option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Autocomplete</h4>
+          <select class="autocomplete">
+            <option value=""> - </option>
+            <option value="dbpedia">dbpedia</option>
+            <option value="duckduckgo">duckduckgo</option>
+            <option value="google">google</option>
+            <option value="seznam">seznam</option>
+            <option value="startpage">startpage</option>
+            <option value="swisscows">swisscows</option>
+            <option value="qwant">qwant</option>
+            <option value="wikipedia">wikipedia</option>
+            <option value="brave">brave</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">SafeSearch</h4>
+          <select class="safesearch">
+            <option value="2">Strict</option>
+            <option value="1">Moderate</option>
+            <option value="0">None</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Hostname replace</h4>
+          <input class="hostname_replace" type="checkbox">
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Open Access DOI rewrite</h4>
+          <input class="oa_doi_rewrite" type="checkbox">
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Open Access DOI resolver</h4>
+          <select class="doi_resolver">
+            <option value="oadoi.org">oadoi.org - https://oadoi.org/</option>
+            <option value="doi.org">doi.org - https://doi.org/</option>
+            <option value="doai.io">doai.io - https://dissem.in/</option>
+            <option value="sci-hub.se">sci-hub.se - https://sci-hub.se/</option>
+            <option value="sci-hub.do">sci-hub.do - https://sci-hub.do/</option>
+            <option value="scihubtw.tw">scihubtw.tw - https://scihubtw.tw/</option>
+            <option value="sci-hub.st">sci-hub.st - https://sci-hub.st/</option>
+            <option value="sci-hub.bar">sci-hub.bar - https://sci-hub.bar/</option>
+            <option value="sci-hub.it.nf">sci-hub.it.nf - https://sci-hub.it.nf/</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Engine tokens</h4>
+          <input class="tokens" type="text">
+        </div>
+        <hr>
+        <div class="some-block option-block">
+          <h2>User Interface</h2>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Interface language</h4>
+          <select class="locale">
+            <option value="ar">العربية (Arabic)</option>
+            <option value="bg">Български (Bulgarian)</option>
+            <option value="bo">བོད་སྐད་ (Tibetan)</option>
+            <option value="ca">Català (Catalan)</option>
+            <option value="cs">Čeština (Czech)</option>
+            <option value="cy">Cymraeg (Welsh)</option>
+            <option value="da">Dansk (Danish)</option>
+            <option value="de">Deutsch (German)</option>
+            <option value="el-GR">Ελληνικά, Ελλάδα (Greek, Greece)</option>
+            <option value="en" selected="selected">English</option>
+            <option value="eo">Esperanto</option>
+            <option value="es">Español (Spanish)</option>
+            <option value="et">Eesti (Estonian)</option>
+            <option value="eu">Euskara (Basque)</option>
+            <option value="fa-IR">فارسی, ایران (Persian, Iran)</option>
+            <option value="fi">Suomi (Finnish)</option>
+            <option value="fil">Filipino</option>
+            <option value="fr">Français (French)</option>
+            <option value="gl">Galego (Galician)</option>
+            <option value="he">עברית (Hebrew)</option>
+            <option value="hr">Hrvatski (Croatian)</option>
+            <option value="hu">Magyar (Hungarian)</option>
+            <option value="ia">Interlingua</option>
+            <option value="id">Indonesia (Indonesian)</option>
+            <option value="it">Italiano (Italian)</option>
+            <option value="ja">日本語 (Japanese)</option>
+            <option value="ko">한국어 (Korean)</option>
+            <option value="lt">Lietuvių (Lithuanian)</option>
+            <option value="nb-NO">Norsk bokmål, Norge (Norwegian bokmål, Norway)</option>
+            <option value="nl">Nederlands (Dutch)</option>
+            <option value="nl-BE">Vlaams (Dutch, Belgium)</option>
+            <option value="oc">Occitan</option>
+            <option value="pl">Polski (Polish)</option>
+            <option value="pt">Português (Portuguese)</option>
+            <option value="pt-BR">Português, Brasil (Portuguese, Brazil)</option>
+            <option value="ro">Română (Romanian)</option>
+            <option value="ru">Русский (Russian)</option>
+            <option value="sk">Slovenčina (Slovak)</option>
+            <option value="sl">Slovenščina (Slovenian)</option>
+            <option value="sr">Српски (Serbian)</option>
+            <option value="sv">Svenska (Swedish)</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+            <option value="te">తెలుగు (Telugu)</option>
+            <option value="tr">Türkçe (Turkish)</option>
+            <option value="uk">Українська (Ukrainian)</option>
+            <option value="vi">Tiếng việt (Vietnamese)</option>
+            <option value="zh-Hans-CN">中文, 中国 (Chinese, China)</option>
+            <option value="zh-Hant-TW">中文, 台灣 (Chinese, Taiwan)</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Theme</h4>
+          <select class="theme">
+            <option value="simple">simple</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Theme style</h4>
+          <select class="simple_style">
+            <option value="auto">auto</option>
+            <option value="light">light</option>
+            <option value="dark">dark</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Results on new tabs</h4>
+          <select class="results_on_new_tab">
+            <option value="1">On</option>
+            <option value="0">Off</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Infinite scroll</h4>
+          <select class="infinite_scroll">
+            <option value="1">On</option>
+            <option value="0">Off</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Search on category select</h4>
+          <input class="search_on_category_select" type="checkbox">
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Vim-like hotkeys</h4>
+          <input class="vim_hotkeys" type="checkbox">
+        </div>
+        <hr>
+        <div class="some-block option-block">
+          <h2>Privacy </h2>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">HTTP Method</h4>
+          <select class="method">
+            <option value="POST">POST</option>
+            <option value="GET">GET</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Image proxy</h4>
+          <select class="image_proxy">
+            <option value="1">Enabled</option>
+            <option value="">Disabled</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Query in the page's title</h4>
+          <select class="query_in_title">
+            <option value="1">Enabled</option>
+            <option value="" selected="selected">Disabled</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="">Tracker URL remover</h4>
+          <input class="tracker_url_remover" type="checkbox">
+        </div>
+        <hr>
+      </div>
       <div class="normal">
                 <div class="some-block option-block">
                   <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>

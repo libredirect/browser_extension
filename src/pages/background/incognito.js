@@ -14,7 +14,6 @@ import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
-import spotifyHelper from "../../assets/javascripts/helpers/spotify.js";
 import generalHelper from "../../assets/javascripts/helpers/general.js";
 import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
 
@@ -36,7 +35,6 @@ async function wholeInit() {
   await sendTargetsHelper.init();
   await peertubeHelper.init();
   await lbryHelper.init();
-  await spotifyHelper.init();
   await generalHelper.init();
 }
 await wholeInit();
