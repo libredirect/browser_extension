@@ -32,8 +32,10 @@ Send Files => [Send](https://github.com/timvisee/send)
 **Note**: The Extension will be using random instances by default. You can modify this and add custom instances too.
 
 ## Donate
-[![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)
-[![Patreon](./img/patreon.svg)](https://patreon.com/LibRedirect)\
+[![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)&nbsp;
+[![Patreon](./img/patreon.svg)](https://patreon.com/LibRedirect)&nbsp;
+[![Buy me a coffee](./img/bmc.svg)](https://www.buymeacoffee.com/libredirect)
+
 BTC: **bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q**
 
 [FAQ](https://libredirect.github.io/faq.html)
@@ -45,7 +47,7 @@ BTC: **bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q**
 ## Development
 [![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
 ### Install Dependencies
-- [Node.js](https://nodejs.org/) latest LTS is recommended
+[Node.js](https://nodejs.org/) latest LTS is recommended
 ```
 npm update
 npm install
@@ -67,22 +69,22 @@ npm run start
 ```
 
 ### Install temporarily
-- open `about:addons`
-- click on the settings button below the addon search bar and select `debug add-on`
-- press `load temporarily addon`
+open `about:addons`\
+click on the settings button below the addon search bar and select `debug add-on`\
+press `load temporarily addon`
 
 ### Install in Firefox ESR, Developer Edition, Nightly
-- open `about:config`
-- set `xpinstall.signatures.required` to `false`
-- open `about:addons`
-- click on the gear shaped `settings` button and select `Install Add-on From File...`
-- select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
+open `about:config`\
+set `xpinstall.signatures.required` to `false`\
+open `about:addons`\
+click on the gear shaped `settings` button and select `Install Add-on From File...`\
+select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
 
 ### Install in Chromium browsers
-- open `chrome://extensions`
-- enable `dev mode`
-- select `load unpacked extension`
-- select `src` folder
+open `chrome://extensions`\
+enable `dev mode`\
+select `load unpacked extension`\
+select `src` folder
 
 [Privacy Policy](Privacy-Policy.md)\
 Credits: [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)
