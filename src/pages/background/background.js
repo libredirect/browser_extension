@@ -96,7 +96,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (!newUrl) newUrl = instagramHelper.redirect(url, details.type, initiator);
 
-    if (!newUrl) newUrl = mapsHelper.redirect(url, initiator);
+    if (!newUrl) newUrl = await mapsHelper.redirect(url, initiator);
 
     if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator);
 

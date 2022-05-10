@@ -24,7 +24,7 @@ let frontend; // mapsFrontend
 let facilNormalRedirectsChecks;
 let facilNormalCustomRedirects = [];
 
-function redirect(url, initiator) {
+async function redirect(url, initiator) {
   const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
   const dataLatLngRegex = /!3d(-?[0-9]{1,}.[0-9]{1,})!4d(-?[0-9]{1,}.[0-9]{1,})/;
   const placeRegex = /\/place\/(.*)\//;
@@ -47,26 +47,32 @@ function redirect(url, initiator) {
     bicycling: "C",
   };
 
-  function addressToLatLng(address, callback) {
-    const xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = () => {
-      if (xmlhttp.readyState === XMLHttpRequest.DONE) {
-        if (xmlhttp.status === 200) {
-          const json = JSON.parse(xmlhttp.responseText)[0];
-          if (json) callback(
-            `${json.lat},${json.lon}`,
-            `${json.boundingbox[2]},${json.boundingbox[1]},${json.boundingbox[3]},${json.boundingbox[0]}`,
-          );
-        } else
-          console.info("Error: Status is " + xmlhttp.status);
-      }
-    };
-    xmlhttp.open(
-      "GET",
-      `https://nominatim.openstreetmap.org/search/${address}?format=json&limit=1`,
-      false
-    );
-    xmlhttp.send();
+  async function addressToLatLng(address) {
+    return new Promise(async resolve => {
+      const xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = () => {
+        if (xmlhttp.readyState === XMLHttpRequest.DONE) {
+          if (xmlhttp.status === 200) {
+            const json = JSON.parse(xmlhttp.responseText)[0];
+
+            if (json) {
+              console.log('json', json)
+              resolve([
+                `${json.lat},${json.lon}`,
+                `${json.boundingbox[2]},${json.boundingbox[1]},${json.boundingbox[3]},${json.boundingbox[0]}`,
+              ]);
+            }
+          } else
+            console.info("Error: Status is " + xmlhttp.status);
+        }
+      };
+      xmlhttp.open(
+        "GET",
+        `https://nominatim.openstreetmap.org/search/${address}?format=json&limit=1`,
+        true
+      );
+      xmlhttp.send();
+    })
   }
 
   if (disable) return;
@@ -107,13 +113,9 @@ function redirect(url, initiator) {
       try { query = url.searchParams.get("pb").split(/!2s(.*?)!/)[1]; }
       catch (error) { console.error(error); } // Unable to find map marker in URL.
 
-    addressToLatLng(
-      query,
-      (coords, boundingbox) => {
-        prefs.bbox = boundingbox;
-        prefs.marker = coords;
-      }
-    );
+    let [coords, boundingbox] = await addressToLatLng(query);
+    prefs.bbox = boundingbox;
+    prefs.marker = coords;
     prefs.layer = "mapnik";
     let prefsEncoded = new URLSearchParams(prefs).toString();
     if (frontend == 'osm') return `${randomInstance}/export/embed.html?${prefsEncoded}`;
