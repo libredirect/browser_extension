@@ -182,7 +182,7 @@ async function processDefaultCustomInstances(
           let latencyLimit = (instancesLatency[x] == 5000 ? '5000ms+' : instancesLatency[x] + 'ms')
           let latency = x in instancesLatency ? '<span style="color:' + latencyColor + ';">' + latencyLimit + '</span>' : '';
 
-          return `<div><x>${x}${cloudflare} ${latency}</x><input type="checkbox" class="${x}"/></div>`;
+          return `<div><x><a href="${x}" target="_blank">${x}</a>${cloudflare} ${latency}</x><input type="checkbox" class="${x}"/></div>`;
         }
       ),
     ].join('\n<hr>\n');

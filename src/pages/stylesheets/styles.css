@@ -106,9 +106,8 @@ section.option-block h2 {
 
 body.option {
   display: flex;
-  align-items: flex-start;
   padding: 40px;
-  width: 1200px;
+  width: 900px;
 }
 
 section.links div {
@@ -358,6 +357,16 @@ div.checklist div {
   padding: 10px 0;
   word-wrap: break-word;
   display: flex;
+
+}
+
+div.checklist a {
+  text-decoration: none;
+  color: var(--text);
+}
+
+div.checklist a:hover {
+  text-decoration: underline;
 }
 
 div.checklist-popup div {
