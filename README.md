@@ -2,11 +2,17 @@
 
 A web extension that redirects YouTube, Twitter, Instagram... requests to alternative privacy friendly frontends and backends.
 
+[![Matrix Badge](https://img.shields.io/matrix/libredirect:matrix.org?label=matrix%20chat)](https://matrix.to/#/#libredirect:tokhmi.xyz)
+[![Firefox users Badge](https://img.shields.io/amo/users/libredirect?label=Firefox%20users)](https://addons.mozilla.org/firefox/addon/libredirect/)
+[![Matrix Badge](https://img.shields.io/liberapay/gives/libredirect?label=Liberapay)](https://liberapay.com/LibRedirect)
+
 [![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)&nbsp;
 <a href="https://microsoftedge.microsoft.com/addons/detail/libredirect/aodffkeankebfonljgbcfbbaljopcpdb">
   <img src="./img/badge-ms.png" height=60>
 </a>&nbsp;
-<a href="./chromium.md"><img src ="./img/badge-chromium.png" height=60 ></a>
+<a href="./chromium.md">
+  <img src ="./img/badge-chromium.png" height=60 >
+</a>
 
 <img src ="./img/1.png" width=350>&nbsp;
 <img src ="./img/2.png" width=350>&nbsp;
@@ -18,7 +24,7 @@ Youtube Music => [Beatbump](https://github.com/snuffyDev/Beatbump)\
 Twitter => [Nitter](https://github.com/zedeus/nitter)\
 Instagram => [Bibliogram](https://sr.ht/~cadence/bibliogram/)\
 TikTok => [ProxiTok](https://github.com/pablouser1/ProxiTok)\
-Reddit => [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances), [Old Reddit](https://old.reddit.com)\
+Reddit => [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances)\
 Imgur => [Rimgo](https://codeberg.org/video-prize-ranch/rimgo)\
 Wikipedia => [Wikiless](https://codeberg.org/orenom/wikiless)\
 Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)\
@@ -45,7 +51,6 @@ BTC: **bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q**
 [![Codeberg](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/codeberg.svg)](https://codeberg.org/LibRedirect/libredirect)&nbsp;&nbsp;
 
 ## Development
-[![Matrix Badge](https://badges.alefvanoon.xyz/matrix/libredirect:matrix.org?label=matrix)](https://matrix.to/#/#libredirect:tokhmi.xyz)
 ### Install Dependencies
 [Node.js](https://nodejs.org/) latest LTS is recommended
 ```
