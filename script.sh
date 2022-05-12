@@ -1,1 +1,1 @@
-pug ./pug/options/ -o ./src/pages/options/ -P -w
+pug ./src/pages/options/ -P -w

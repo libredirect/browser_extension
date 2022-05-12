@@ -445,3 +445,14 @@ section.general div {
 #customize-popup {
   width: 250px;
 }
+
+button {
+  background-color:transparent;
+  color: var(--text);
+  border: none;
+  padding: 10px 5px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 5px;
+}

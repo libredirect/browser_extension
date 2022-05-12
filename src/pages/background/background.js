@@ -173,23 +173,14 @@ async function redirectOfflineInstance(url, tabId) {
 
   newUrl = youtubeHelper.switchInstance(url);
   if (!newUrl) newUrl = twitterHelper.switchInstance(url);
-
   if (!newUrl) newUrl = instagramHelper.switchInstance(url);
-
   if (!newUrl) newUrl = redditHelper.switchInstance(url);
-
   if (!newUrl) newUrl = searchHelper.switchInstance(url);
-
   if (!newUrl) newUrl = translateHelper.switchInstance(url);
-
   if (!newUrl) newUrl = mediumHelper.switchInstance(url);
-
   if (!newUrl) newUrl = imgurHelper.switchInstance(url);
-
   if (!newUrl) newUrl = wikipediaHelper.switchInstance(url);
-
   if (!newUrl) newUrl = peertubeHelper.switchInstance(url);
-
   if (!newUrl) newUrl = lbryHelper.switchInstance(url);
 
   if (newUrl) {

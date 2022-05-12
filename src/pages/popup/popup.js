@@ -104,7 +104,7 @@ document.getElementById("more-options").addEventListener("click",
 );
 
 function switchInstance() {
-  browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+  browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
     let currTab = tabs[0];
     if (currTab) {
       let url = currTab.url;
@@ -113,29 +113,18 @@ function switchInstance() {
       catch (_) { return false; }
       let newUrl;
 
-      newUrl = youtubeHelper.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = twitterHelper.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = instagramHelper.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = redditHelper.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = searchHelper.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = translateHelper.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = mediumHelper.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = sendTargetsHelper.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = peertubeHelper.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = lbryHelper.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = imgurHelper.switchInstance(tabUrl);
-
-      if (!newUrl) newUrl = wikipediaHelper.switchInstance(tabUrl);
+      // newUrl = youtubeHelper.switchInstance(tabUrl);
+      // if (!newUrl) newUrl = twitterHelper.switchInstance(tabUrl);
+      // if (!newUrl) newUrl = instagramHelper.switchInstance(tabUrl);
+      if (!newUrl) newUrl = await redditHelper.switchInstance(tabUrl);
+      // if (!newUrl) newUrl = searchHelper.switchInstance(tabUrl);
+      // if (!newUrl) newUrl = translateHelper.switchInstance(tabUrl);
+      // if (!newUrl) newUrl = mediumHelper.switchInstance(tabUrl);
+      // if (!newUrl) newUrl = sendTargetsHelper.switchInstance(tabUrl);
+      // if (!newUrl) newUrl = peertubeHelper.switchInstance(tabUrl);
+      // if (!newUrl) newUrl = lbryHelper.switchInstance(tabUrl);
+      // if (!newUrl) newUrl = imgurHelper.switchInstance(tabUrl);
+      // if (!newUrl) newUrl = wikipediaHelper.switchInstance(tabUrl);
 
       if (newUrl) {
         browser.tabs.update({ url: newUrl });

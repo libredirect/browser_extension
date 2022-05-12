@@ -128,7 +128,6 @@ async function processDefaultCustomInstances(
 
   async function getFromStorage() {
     return new Promise(async resolve => {
-
       browser.storage.local.get(
         [
           redirectsChecks,
@@ -158,16 +157,6 @@ async function processDefaultCustomInstances(
     if (nameDefaultRedirects.length == 0) isTrue = false;
     nameProtocolElement.getElementsByClassName('toogle-all')[0].checked = isTrue;
   }
-
-  async function setRedirectsChecks(val) {
-    await browser.storage.local.set({ [redirectsChecks]: val });
-  }
-
-  async function setCustom(val) {
-    await browser.storage.local.set({ [customRedirects]: val });
-  }
-
-
   nameCheckListElement.innerHTML =
     [
       `<div>
@@ -182,7 +171,10 @@ async function processDefaultCustomInstances(
           let latencyLimit = (instancesLatency[x] == 5000 ? '5000ms+' : instancesLatency[x] + 'ms')
           let latency = x in instancesLatency ? '<span style="color:' + latencyColor + ';">' + latencyLimit + '</span>' : '';
 
-          return `<div><x><a href="${x}" target="_blank">${x}</a>${cloudflare} ${latency}</x><input type="checkbox" class="${x}"/></div>`;
+          return `<div>
+                    <x><a href="${x}" target="_blank">${x}</a>${cloudflare} ${latency}</x>
+                    <input type="checkbox" class="${x}"/>
+                  </div>`;
         }
       ),
     ].join('\n<hr>\n');
@@ -196,7 +188,7 @@ async function processDefaultCustomInstances(
     else
       nameDefaultRedirects = [];
 
-    await setRedirectsChecks(nameDefaultRedirects);
+    await browser.storage.local.set({ [redirectsChecks]: nameDefaultRedirects });
     calcNameCheckBoxes();
   });
 
@@ -209,7 +201,7 @@ async function processDefaultCustomInstances(
           let index = nameDefaultRedirects.indexOf(element.className);
           if (index > -1) nameDefaultRedirects.splice(index, 1);
         }
-        await setRedirectsChecks(nameDefaultRedirects);
+        await browser.storage.local.set({ [redirectsChecks]: nameDefaultRedirects });
         calcNameCheckBoxes();
       });
   }
@@ -229,16 +221,16 @@ async function processDefaultCustomInstances(
       ).join('\n');
 
     for (const item of nameCustomInstances) {
-      nameProtocolElement.getElementsByClassName(`clear-${item}`)[0].addEventListener("click", () => {
+      nameProtocolElement.getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
         let index = nameCustomInstances.indexOf(item);
         if (index > -1) nameCustomInstances.splice(index, 1);
-        setCustom(nameCustomInstances);
+        await browser.storage.local.set({ [customRedirects]: nameCustomInstances });
         calcNameCustomInstances();
       });
     }
   }
   calcNameCustomInstances();
-  nameProtocolElement.getElementsByClassName('custom-instance-form')[0].addEventListener("submit", event => {
+  nameProtocolElement.getElementsByClassName('custom-instance-form')[0].addEventListener("submit", async event => {
     event.preventDefault();
     let nameCustomInstanceInput = nameProtocolElement.getElementsByClassName('custom-instance')[0];
     let url = new URL(nameCustomInstanceInput.value);
@@ -246,7 +238,7 @@ async function processDefaultCustomInstances(
     if (nameCustomInstanceInput.validity.valid && !redirects[name][protocol].includes(protocolHostVar)) {
       if (!nameCustomInstances.includes(protocolHostVar)) {
         nameCustomInstances.push(protocolHostVar)
-        setCustom(nameCustomInstances);
+        await browser.storage.local.set({ [customRedirects]: nameCustomInstances });
         nameCustomInstanceInput.value = '';
       }
       calcNameCustomInstances();
@@ -298,6 +290,16 @@ async function testLatency(element, instances) {
     resolve(myList);
   })
 }
+
+function copyCookie(targetUrl, url, name) {
+  browser.cookies.get(
+    { url: protocolHost(targetUrl), name: name },
+    r => {
+      if (r) browser.cookies.set({ url: url, name: name, value: r.value })
+    }
+  )
+}
+
 export default {
   getRandomInstance,
   updateInstances,
@@ -305,4 +307,5 @@ export default {
   processDefaultCustomInstances,
   isRtl,
   testLatency,
+  copyCookie
 }
