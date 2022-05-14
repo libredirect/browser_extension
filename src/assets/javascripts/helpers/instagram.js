@@ -79,7 +79,7 @@ function redirect(url, type, initiator) {
   if (url.pathname === "/" || reservedPaths.includes(url.pathname.split("/")[1]))
     return `${randomInstance}${url.pathname}${url.search}`;
   if (url.pathname.startsWith("/reel") || url.pathname.startsWith("/tv"))
-    return `${randomInstance}/p${url.pathname.replace('/reel', '')}${url.search}`;
+    return `${randomInstance}/p${url.pathname.replace(/\/reel|\/tv/i, '')}${url.search}`;
   else
     return `${randomInstance}/u${url.pathname}${url.search}`; // Likely a user profile, redirect to '/u/...'
 }
