@@ -67,6 +67,16 @@ def is_cloudflare(url):
     return False
 
 
+def is_authenticate(url):
+    try:
+        r = requests.get(url, timeout=5)
+        if 'www-authenticate' in r.headers:
+            return True
+    except:
+        return False
+    return False
+
+
 def invidious():
     r = requests.get('https://api.invidious.io/instances.json')
     rJson = json.loads(r.text)
@@ -366,7 +376,7 @@ searx_searxng()
 whoogle()
 rimgo()
 
-cloudflareMightyList = []
+blocklist = []
 for k1, v1 in mightyList.items():
     if type(mightyList[k1]) is dict:
         for k2, v2 in mightyList[k1].items():
@@ -376,7 +386,9 @@ for k1, v1 in mightyList.items():
                 #     print("removed " + instance)
                 # else:
                 if not instance.endswith('.onion') and not instance.endswith('.i2p') and is_cloudflare(instance):
-                    cloudflareMightyList.append(instance)
+                    blocklist.append(instance)
+                if not instance.endswith('.onion') and not instance.endswith('.i2p') and is_authenticate(instance):
+                    blocklist.append(instance)
 
 peertube()
 
@@ -387,9 +399,9 @@ with open('./src/instances/data.json', 'w') as outfile:
     outfile.write(json_object)
 print(Fore.BLUE + 'wrote ' + Style.RESET_ALL + 'instances/data.json')
 
-json_object = json.dumps(cloudflareMightyList, ensure_ascii=False, indent=2)
-with open('./src/instances/cloudflare.json', 'w') as outfile:
+json_object = json.dumps(blocklist, ensure_ascii=False, indent=2)
+with open('./src/instances/blocklist.json', 'w') as outfile:
     outfile.write(json_object)
-print(Fore.BLUE + 'wrote ' + Style.RESET_ALL + 'instances/cloudflare.json')
+print(Fore.BLUE + 'wrote ' + Style.RESET_ALL + 'instances/blocklist')
 
 # print(json_object)

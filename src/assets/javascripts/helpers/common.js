@@ -18,7 +18,7 @@ function getRandomInstance(instances) {
 let cloudflareList = [];
 async function initCloudflareList() {
   return new Promise(resolve => {
-    fetch('/instances/cloudflare.json').then(response => response.text()).then(data => {
+    fetch('/instances/blocklist').then(response => response.text()).then(data => {
       cloudflareList = JSON.parse(data);
       resolve();
     })

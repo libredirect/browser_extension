@@ -22,7 +22,7 @@ window.browser = window.browser || window.chrome;
 
 browser.runtime.onInstalled.addListener(async details => {
   if (details.reason == 'install') {
-    fetch('/instances/cloudflare.json').then(response => response.text()).then(async data => {
+    fetch('/instances/blocklist.json').then(response => response.text()).then(async data => {
       await browser.storage.local.set({ cloudflareList: JSON.parse(data) })
       youtubeHelper.initDefaults();
       youtubeMusicHelper.initDefaults();

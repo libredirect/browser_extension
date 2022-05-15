@@ -2,7 +2,6 @@
   "invidious": {
     "normal": [
       "https://yewtu.be",
-      "https://vid.puffyan.us",
       "https://invidious.snopyta.org",
       "https://invidious.kavin.rocks",
       "https://inv.riverside.rocks",
@@ -19,7 +18,8 @@
       "https://invidious.weblibre.org",
       "https://invidious.esmailelbob.xyz",
       "https://youtube.076.ne.jp",
-      "https://invidious.namazso.eu"
+      "https://invidious.namazso.eu",
+      "https://vid.puffyan.us"
     ],
     "tor": [
       "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
@@ -376,7 +376,6 @@
       "https://searx.nixnet.services",
       "https://searx.openhoofd.nl",
       "https://searx.org",
-      "https://searx.ppeb.me",
       "https://searx.pwoss.org",
       "https://searx.rasp.fr",
       "https://searx.ru",
@@ -444,6 +443,7 @@
       "https://searx.mha.fi",
       "https://searx.namejeff.xyz",
       "https://searx.orion-hub.fr",
+      "https://searx.ppeb.me",
       "https://searx.prvcy.eu",
       "https://searx.sev.monster",
       "https://searx.tiekoetter.com",
