@@ -3,7 +3,6 @@
 window.browser = window.browser || window.chrome;
 
 import commonHelper from '../common.js'
-import invidious from './invidious.js'
 import piped from './piped.js';
 import pipedMaterial from './pipedMaterial.js';
 
@@ -62,63 +61,27 @@ let
   protocol,
   OnlyEmbeddedVideo,
   frontend,
-  youtubeEmbedFrontend,
-  bypassWatchOnYoutube,
-  alwaysUsePreferred;
+  youtubeEmbedFrontend;
 
 function redirect(url, details, initiator) {
   if (disable) return null;
 
   let protocolHost = commonHelper.protocolHost(url);
 
-  let isInvidious = [
-    ...redirects.invidious.normal,
-    ...redirects.invidious.tor
-  ].includes(protocolHost);
-
-  let isCheckedInvidious = [
-    ...invidiousNormalRedirectsChecks,
-    ...invidiousNormalCustomRedirects,
-    ...invidiousTorRedirectsChecks,
-    ...invidiousTorCustomRedirects,
-  ].includes(protocolHost);
-
-  let isPiped = [
-    ...redirects.piped.normal,
-    ...redirects.piped.tor
-  ].includes(protocolHost);
-
-  let isCheckedPiped = [
-    ...pipedNormalRedirectsChecks,
-    ...pipedNormalCustomRedirects,
-    ...pipedTorRedirectsChecks,
-    ...pipedTorCustomRedirects,
-  ].includes(protocolHost)
-
-  if (
-    alwaysUsePreferred && frontend == 'invidious' &&
-    (isInvidious || isPiped) && !isCheckedInvidious
-  ) return switchInstance(url);
-
-  if (
-    alwaysUsePreferred && frontend == 'piped' &&
-    (isInvidious || isPiped) && !isCheckedPiped
-  ) return switchInstance(url);
-
   if (!targets.some(rx => rx.test(url.href))) return null;
 
   if (
-    bypassWatchOnYoutube &&
     initiator && (
-      [...redirects.invidious.normal,
-      ...invidiousNormalCustomRedirects,
-      ...redirects.invidious.tor,
-      ...invidiousTorCustomRedirects,
+      [
+        ...redirects.invidious.normal,
+        ...invidiousNormalCustomRedirects,
+        ...redirects.invidious.tor,
+        ...invidiousTorCustomRedirects,
 
-      ...redirects.piped.normal,
-      ...redirects.piped.tor,
-      ...pipedNormalCustomRedirects,
-      ...pipedTorCustomRedirects
+        ...redirects.piped.normal,
+        ...redirects.piped.tor,
+        ...pipedNormalCustomRedirects,
+        ...pipedTorCustomRedirects
       ].includes(initiator.origin)
     )
   ) return 'BYPASSTAB';
@@ -192,19 +155,32 @@ function redirect(url, details, initiator) {
 }
 
 function reverse(url) {
-  let protocolHost = commonHelper.protocolHost(url);
-  if (![
-    ...redirects.invidious.normal,
-    ...redirects.invidious.tor,
-    ...invidiousNormalCustomRedirects,
-    ...invidiousTorCustomRedirects,
-    ...redirects.piped.normal,
-    ...redirects.piped.tor,
-    ...pipedNormalCustomRedirects,
-    ...pipedTorCustomRedirects,
-  ].includes(protocolHost)) return;
+  browser.storage.local.get(
+    [
+      "youtubeRedirects",
+      "invidiousNormalCustomRedirects",
+      "invidiousTorCustomRedirects",
+      "pipedNormalCustomRedirects",
+      "pipedTorCustomRedirects",
+    ],
+    r => {
+      let protocolHost = commonHelper.protocolHost(url);
+      if (![
+        ...r.youtubeRedirects.invidious.normal,
+        ...r.youtubeRedirects.invidious.tor,
 
-  return `https://youtube.com${url.pathname}${url.search}`;
+        ...r.youtubeRedirects.piped.normal,
+        ...r.youtubeRedirects.piped.tor,
+
+        ...r.invidiousNormalCustomRedirects,
+        ...r.invidiousTorCustomRedirects,
+
+        ...r.pipedNormalCustomRedirects,
+        ...r.pipedTorCustomRedirects,
+      ].includes(protocolHost)) return;
+
+      return `https://youtube.com${url.pathname}${url.search}`;
+    })
 }
 
 function switchInstance(url) {
@@ -351,13 +327,10 @@ async function initDefaults() {
           pipedMaterialTorRedirectsChecks: [...redirects.pipedMaterial.tor],
           pipedMaterialTorCustomRedirects: [],
 
-          alwaysUsePreferred: false,
           youtubeEmbedFrontend: 'invidious',
           youtubeProtocol: 'normal',
-          bypassWatchOnYoutube: true,
         })
 
-        await invidious.initDefaults();
         await piped.initDefaults();
         await pipedMaterial.initDefaults();
         resolve();
@@ -394,10 +367,8 @@ async function init() {
           "pipedMaterialTorRedirectsChecks",
           "pipedMaterialTorCustomRedirects",
 
-          "alwaysUsePreferred",
           "youtubeEmbedFrontend",
           "youtubeProtocol",
-          "bypassWatchOnYoutube",
         ],
         r => {
           redirects = r.youtubeRedirects;
@@ -426,18 +397,46 @@ async function init() {
 
           youtubeEmbedFrontend = r.youtubeEmbedFrontend;
           OnlyEmbeddedVideo = r.OnlyEmbeddedVideo;
-          alwaysUsePreferred = r.alwaysUsePreferred;
-          bypassWatchOnYoutube = r.bypassWatchOnYoutube;
 
           resolve();
         });
     })
 }
 
+async function initInvidiousCookies(from) {
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "youtubeProtocol",
+        "invidiousNormalRedirectsChecks",
+        "invidiousNormalCustomRedirects",
+        "invidiousTorRedirectsChecks",
+        "invidiousTorCustomRedirects",
+      ],
+      r => {
+        let protocolHost = commonHelper.protocolHost(from);
+        if (![
+          ...r.invidiousNormalRedirectsChecks,
+          ...r.invidiousTorRedirectsChecks,
+          ...r.invidiousNormalCustomRedirects,
+          ...r.invidiousTorCustomRedirects,
+        ].includes(protocolHost)) resolve();
+        let checkedInstances;
+        if (r.youtubeProtocol == 'normal') checkedInstances = [...r.invidiousNormalRedirectsChecks, ...r.invidiousNormalCustomRedirects]
+        else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.invidiousTorRedirectsChecks, ...r.invidiousTorCustomRedirects]
+        for (const to of checkedInstances)
+          commonHelper.copyCookie('invidious', from, to, 'PREFS');
+        resolve(true);
+      }
+    )
+  }
+  )
+}
+
 let
   initPipedLocalStorage = piped.initPipedLocalStorage,
   initPipedMaterialLocalStorage = pipedMaterial.initPipedMaterialLocalStorage,
-  initInvidiousCookies = invidious.initInvidiousCookies;
+  copyPipedLocalStorage = piped.copyPipedLocalStorage;
 
 export default {
   initPipedLocalStorage,
@@ -451,6 +450,8 @@ export default {
   switchInstance,
 
   isPipedorInvidious,
+
+  copyPipedLocalStorage,
 
   initDefaults,
 

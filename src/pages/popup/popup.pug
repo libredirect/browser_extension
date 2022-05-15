@@ -1,0 +1,123 @@
+include ../widgets/icons.pug
+
+doctype html
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1")
+        link(href="../stylesheets/styles.css" rel="stylesheet")
+        link(href="./style.css" rel="stylesheet")
+    body(dir="auto")
+        #youtube.some-block
+            a.title(href="https://youtube.com")
+                img(src="../../assets/images/youtube-icon.png")
+                h4 YouTube
+            input#disable-youtube(type="checkbox")
+
+        #youtubeMusic.some-block
+            a.title(href="https://music.youtube.com")
+                img(src="../../assets/images/youtube-music-icon.png")
+                h4 YT Music
+            input#disable-youtubeMusic(type="checkbox")
+
+        #twitter.some-block
+            a.title(href="https://twitter.com")
+                img(src="../../assets/images/twitter-icon.png")
+                h4 Twitter
+            input#disable-nitter(type="checkbox")
+
+        #instagram.some-block
+            a.title(href="https://instagram.com")
+                img(src="../../assets/images/instagram-icon.png")
+                h4 Instagram
+            input#disable-bibliogram(type="checkbox")
+
+        #tikTok.some-block
+            a.title(href="https://tiktok.com")
+                img(src="../../assets/images/tiktok-icon.png")
+                h4 TikTok
+            input#disable-tiktok(type="checkbox")
+
+        #imgur.some-block
+            a.title(href="https://imgur.com")
+                img(src="../../assets/images/imgur-icon.png")
+                h4 Imgur
+            input#disable-imgur(type="checkbox")
+
+        #reddit.some-block
+            a.title(href="https://reddit.com")
+                img(src="../../assets/images/reddit-icon.png")
+                h4 Reddit
+            input#disable-reddit(type="checkbox")
+
+        #wikipedia.some-block
+            a.title(href="https://wikipedia.com")
+                img(src="../../assets/images/wikipedia-icon.png")
+                h4 Wikipedia
+            input#disable-wikipedia(type="checkbox")
+
+        #medium.some-block
+            a.title(href="https://medium.com")
+                +medium
+                h4 Medium
+            input#disable-medium(type="checkbox")
+
+        #peertube.some-block
+            a.title(href="https://peertube.com")
+                img(src="../../assets/images/peertube-icon.png")
+                h4 Peertube
+            input#disable-peertube(type="checkbox")
+
+        #lbry.some-block
+            a.title(href="https://lbry.com")
+                img(src="../../assets/images/lbry-icon.png")
+                h4 LBRY
+            input#disable-lbry(type="checkbox")
+
+        #search.some-block
+            a.title(href="https://search.com")
+                +search
+                h4 Search
+            input#disable-search(type="checkbox")
+
+        #translate.some-block
+            a.title(href="https://translate.com")
+                +translate
+                h4 Translate
+            input#disable-simplyTranslate(type="checkbox")
+
+        #maps.some-block
+            a.title(href="https://maps.com")
+                +maps
+                h4 Maps
+            input#disable-osm(type="checkbox")
+
+        #sendTargets.some-block
+            a.title(href="https://send.invalid")
+                +send
+                h4 Send Files
+            input#disable-sendTargets(type="checkbox")
+
+        .some-block
+            a#change-instance.title.button
+                +change_instance
+                h4 Change Instance
+
+        .some-block
+            a#more-options.title.button
+                +settings
+                h4 Settings
+
+        .some-block(title="Copy the original redirected link")         
+            a#copy_raw.title.button
+                +copy_raw
+                h4 Copy Raw
+
+        .some-block(title="Unify cookies across all selected instances")
+            a#unify.title.button
+                +unify
+                h4 Unify Settings
+
+        script(type="module" src="../options/init.js")
+        script(type="module" src="./popup.js")
+        script(src="../../assets/javascripts/localise.js")

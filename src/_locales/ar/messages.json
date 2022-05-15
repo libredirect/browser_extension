@@ -219,11 +219,6 @@
       "description": "used in reddit.html"
     },
 
-    "bypassReddit": {
-      "message": "تجاوز \"Open in Reddit\"",
-      "description": "used in reddit.html"
-    },
-
     "searchNote": {
       "message": "ملاحظة: لاستعمال \"البحث\" بكامل إمكانيته، اجعل LibRedirect محرك البحث الافتراضي",
       "description": "used in search.html"
@@ -264,11 +259,6 @@
       "description": "used in translate.html"
     },
 
-    "bypassTwitter": {
-      "message": "تجاوز \"Open in Twitter\"",
-      "description": "used in twitter.html"
-    },
-
     "embeddedVids": {
       "message": "واجهة الفيديوهات المضمنة",
       "description": "used in youtube.html"
@@ -291,11 +281,6 @@
 
     "onlyNotEmbedded": {
       "message": "فقط لغير التضمينات",
-      "description": "used in youtube.html"
-    },
-
-    "bypassYoutube": {
-      "message": "تجاوز \"Watch on YouTube\"",
       "description": "used in youtube.html"
     },
 

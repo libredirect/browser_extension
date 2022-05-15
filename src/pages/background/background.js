@@ -93,29 +93,17 @@ browser.webRequest.onBeforeRequest.addListener(
     if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
 
     if (!newUrl) newUrl = twitterHelper.redirect(url, initiator);
-
     if (!newUrl) newUrl = instagramHelper.redirect(url, details.type, initiator);
-
     if (!newUrl) newUrl = await mapsHelper.redirect(url, initiator);
-
     if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator);
-
     if (!newUrl) newUrl = mediumHelper.redirect(url, details.type, initiator);
-
     if (!newUrl) newUrl = imgurHelper.redirect(url, details.type, initiator);
-
     if (!newUrl) newUrl = tiktokHelper.redirect(url, details.type, initiator);
-
     if (!newUrl) newUrl = sendTargetsHelper.redirect(url, details.type, initiator);
-
     if (!newUrl) newUrl = peertubeHelper.redirect(url, details.type, initiator);
-
     if (!newUrl) newUrl = lbryHelper.redirect(url, details.type, initiator);
-
     if (!newUrl) newUrl = translateHelper.redirect(url);
-
     if (!newUrl) newUrl = searchHelper.redirect(url)
-
     if (!newUrl) newUrl = wikipediaHelper.redirect(url);
 
     if (
@@ -198,7 +186,6 @@ browser.webRequest.onResponseStarted.addListener(
   details => {
     if (!generalHelper.getAutoRedirect()) return null;
 
-    console.log('details.statusCode', details.statusCode);
     if (details.type == 'main_frame' && (details.statusCode == 502 || details.statusCode == 503 || details.statusCode == 504)) {
       // if (details.type == 'main_frame' && details.statusCode >= 200) {
       // console.log("statusCode", details.statusCode);
@@ -226,10 +213,10 @@ browser.tabs.onUpdated.addListener(
     let url;
     try { url = new URL(changeInfo.url); }
     catch (_) { return }
-    if (youtubeHelper.isPipedorInvidious(url, 'main_frame', 'piped')) youtubeHelper.initPipedLocalStorage(tabId);
-    if (youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
-    if (translateHelper.isTranslateRedirects(url, 'main_frame', 'lingva')) translateHelper.initLingvaLocalStorage(tabId);
-    if (instagramHelper.isBibliogram(url)) instagramHelper.initBibliogramCookies(url);
+    let result = await youtubeHelper.initPipedLocalStorage(url, tabId);
+    // if (youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
+    // if (translateHelper.isTranslateRedirects(url, 'main_frame', 'lingva')) translateHelper.initLingvaLocalStorage(tabId);
+    // if (instagramHelper.isBibliogram(url)) instagramHelper.initBibliogramCookies(url);
     // if (changeInfo.url && youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
   }
 );
@@ -237,27 +224,16 @@ browser.tabs.onUpdated.addListener(
 async function changeWholeInstance(url) {
   await wholeInit();
   let newUrl = youtubeHelper.switchInstance(url);
-
   if (!newUrl) newUrl = twitterHelper.switchInstance(url);
-
   if (!newUrl) newUrl = instagramHelper.switchInstance(url);
-
   if (!newUrl) newUrl = redditHelper.switchInstance(url);
-
   if (!newUrl) newUrl = searchHelper.switchInstance(url);
-
   if (!newUrl) newUrl = translateHelper.switchInstance(url);
-
   if (!newUrl) newUrl = mediumHelper.switchInstance(url);
-
   if (!newUrl) newUrl = sendTargetsHelper.switchInstance(url);
-
   if (!newUrl) newUrl = peertubeHelper.switchInstance(url);
-
   if (!newUrl) newUrl = imgurHelper.switchInstance(url);
-
   if (!newUrl) newUrl = wikipediaHelper.switchInstance(url);
-
   return newUrl;
 }
 

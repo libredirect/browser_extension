@@ -36,6 +36,8 @@ let disableImgurElement = document.getElementById("disable-imgur");
 let disableTiktokElement = document.getElementById("disable-tiktok");
 
 let copyRawElement = document.getElementById('copy_raw');
+let unifyElement = document.getElementById('unify');
+
 browser.storage.local.get(
   [
     "disableTwitter",
@@ -93,38 +95,60 @@ document.addEventListener("change", () => {
   });
 })
 
-
 let changeInstanceElement = document.getElementById("change-instance")
 changeInstanceElement.addEventListener("click", switchInstance);
 copyRawElement.addEventListener("click", copyRaw);
+document.getElementById("more-options").addEventListener("click", () => browser.runtime.openOptionsPage());
+unifyElement.addEventListener("click", unify)
 
+function unify() {
+  browser.tabs.query(
+    { active: true, currentWindow: true },
+    async tabs => {
+      let currTab = tabs[0]
+      if (currTab) {
+        let url = new URL(currTab.url);
 
-document.getElementById("more-options").addEventListener("click",
-  () => browser.runtime.openOptionsPage()
-);
+        let result = await youtubeHelper.initInvidiousCookies(url);
+        if (!result) result = await youtubeHelper.copyPipedLocalStorage(url, currTab.id);
+        if (!result) result = await twitterHelper.initNitterCookies(url);
+        if (!result) result = await redditHelper.initLibredditCookies(url);
+        if (!result) result = await redditHelper.initTedditCookies(url);
+        if (!result) result = await redditHelper.initSearxCookies(url);
+        if (!result) result = await redditHelper.initSearxngCookies(url);
+        if (!result) result = await tiktokHelper.initProxiTokCookies(url);
+        if (!result) result = await tiktokHelper.initWikilessCookies(url);
+
+        if (result) {
+          const textElement = unifyElement.getElementsByTagName('h4')[0]
+          const oldHtml = textElement.innerHTML;
+          textElement.innerHTML = 'Unified';
+          setTimeout(() => textElement.innerHTML = oldHtml, 1000);
+        }
+      }
+    }
+  )
+}
 
 function switchInstance() {
   browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
     let currTab = tabs[0];
     if (currTab) {
-      let url = currTab.url;
-      let tabUrl
-      try { tabUrl = new URL(url); }
-      catch (_) { return false; }
+      let url = new URL(currTab.url);
       let newUrl;
 
-      // newUrl = youtubeHelper.switchInstance(tabUrl);
-      // if (!newUrl) newUrl = twitterHelper.switchInstance(tabUrl);
-      // if (!newUrl) newUrl = instagramHelper.switchInstance(tabUrl);
-      if (!newUrl) newUrl = await redditHelper.switchInstance(tabUrl);
-      // if (!newUrl) newUrl = searchHelper.switchInstance(tabUrl);
-      // if (!newUrl) newUrl = translateHelper.switchInstance(tabUrl);
-      // if (!newUrl) newUrl = mediumHelper.switchInstance(tabUrl);
-      // if (!newUrl) newUrl = sendTargetsHelper.switchInstance(tabUrl);
-      // if (!newUrl) newUrl = peertubeHelper.switchInstance(tabUrl);
-      // if (!newUrl) newUrl = lbryHelper.switchInstance(tabUrl);
-      // if (!newUrl) newUrl = imgurHelper.switchInstance(tabUrl);
-      // if (!newUrl) newUrl = wikipediaHelper.switchInstance(tabUrl);
+      // newUrl = youtubeHelper.switchInstance(url);
+      // if (!newUrl) newUrl = twitterHelper.switchInstance(url);
+      // if (!newUrl) newUrl = instagramHelper.switchInstance(url);
+      if (!newUrl) newUrl = await redditHelper.switchInstance(url);
+      // if (!newUrl) newUrl = searchHelper.switchInstance(url);
+      // if (!newUrl) newUrl = translateHelper.switchInstance(url);
+      // if (!newUrl) newUrl = mediumHelper.switchInstance(url);
+      // if (!newUrl) newUrl = sendTargetsHelper.switchInstance(url);
+      // if (!newUrl) newUrl = peertubeHelper.switchInstance(url);
+      // if (!newUrl) newUrl = lbryHelper.switchInstance(url);
+      // if (!newUrl) newUrl = imgurHelper.switchInstance(url);
+      // if (!newUrl) newUrl = wikipediaHelper.switchInstance(url);
 
       if (newUrl) {
         browser.tabs.update({ url: newUrl });
@@ -136,31 +160,29 @@ function switchInstance() {
 }
 
 function copyRaw() {
-  browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    let currTab = tabs[0];
-    if (currTab) {
-      let url = currTab.url;
-      let tabUrl
-      try { tabUrl = new URL(url); }
-      catch (_) { return false; }
-      let newUrl;
-      newUrl = youtubeHelper.reverse(tabUrl);
-      if (!newUrl) newUrl = twitterHelper.reverse(tabUrl);
-      if (!newUrl) newUrl = instagramHelper.reverse(tabUrl);
-      if (!newUrl) newUrl = tiktokHelper.reverse(tabUrl);
-      if (!newUrl) newUrl = imgurHelper.reverse(tabUrl);
-      if (newUrl) {
-        navigator.clipboard.writeText(newUrl);
-        const oldHtml = copyRawElement.innerHTML;
-        copyRawElement.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-          <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
-        </svg>
-        Copied`;
-        setTimeout(() => copyRawElement.innerHTML = oldHtml, 1000);
+  browser.tabs.query(
+    { active: true, currentWindow: true }, tabs => {
+      let currTab = tabs[0];
+      if (currTab) {
+        let url = new URL(currTab.url);
+        let newUrl;
+        newUrl = youtubeHelper.reverse(url);
+
+        if (!newUrl) newUrl = twitterHelper.reverse(url);
+        if (!newUrl) newUrl = instagramHelper.reverse(url);
+        if (!newUrl) newUrl = tiktokHelper.reverse(url);
+        if (!newUrl) newUrl = imgurHelper.reverse(url);
+
+        if (newUrl) {
+          navigator.clipboard.writeText(newUrl);
+          const textElement = copyRawElement.getElementsByTagName('h4')[0]
+          const oldHtml = textElement.innerHTML;
+          textElement.innerHTML = 'Copied';
+          setTimeout(() => textElement.innerHTML = oldHtml, 1000);
+        }
       }
     }
-  })
+  )
 }
 
 let popupFrontends;

@@ -28,7 +28,6 @@ function isYoutubeMusic(url, initiator) {
 }
 
 function redirect(url, type) {
-
     // Video
     // https://music.youtube.com/watch?v=_PkGiKBW-DA&list=RDAMVM_PkGiKBW-DA
     // https://beatbump.ml/listen?id=_PkGiKBW-DA&list=RDAMVM_PkGiKBW-DA
@@ -69,7 +68,6 @@ function redirect(url, type) {
 async function initDefaults() {
     await browser.storage.local.set({
         disableYoutubeMusic: true,
-
         youtubeMusicRedirects: redirects,
 
         beatbumpNormalRedirectsChecks: [...redirects.beatbump.normal],

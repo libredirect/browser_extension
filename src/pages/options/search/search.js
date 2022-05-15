@@ -2,116 +2,70 @@ import searchHelper from "../../../assets/javascripts/helpers/search.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
 let searxDiv = document.getElementById("searx");
-
 let searxngDiv = document.getElementById("searxng");
-let searxngCustomSettings = document.getElementById("enable-searxng-custom-settings");
-
-let searxngCustomSettingsDiv = searxngDiv.getElementsByClassName('custom-settings')[0]
-
 let whoogleDiv = document.getElementById("whoogle");
 
-let disableSearchElement = document.getElementById("disable-search");
-let searchFrontendElement = document.getElementById("search-frontend");
-let protocolElement = document.getElementById("protocol")
+let disable = document.getElementById("disable-search");
+let frontend = document.getElementById("search-frontend");
+let protocol = document.getElementById("protocol")
 
-let customSettingsDivElement = document.getElementsByClassName("custom-settings");
+const searxngForm = searxngDiv.getElementsByTagName('form')[0];
+const searxngCookies = searxngForm.getElementsByTagName('input')[0];
+searxngForm.addEventListener('submit', async event => {
+  event.preventDefault();
+  const url = new URL(searxngCookies.value);
+  searchHelper.initSearxngCookies(url);
+});
 
-let checkboxes_xpath = document.evaluate(
-  "//div[@id='searxng']//input[@type='checkbox']",
-  document, null, XPathResult.ANY_TYPE, null,
-);
-const inputChecked = [];
-let checkbox = checkboxes_xpath.iterateNext();
-while (checkbox) {
-  inputChecked.push(checkbox);
-  checkbox = checkboxes_xpath.iterateNext();
-}
-
-let textInputs_xpath = document.evaluate(
-  "//div[@id='searxng']//input[@type='text']",
-  document, null, XPathResult.ANY_TYPE, null,
-);
-const inputValues = [];
-let textInput = textInputs_xpath.iterateNext();
-while (textInput) {
-  inputValues.push(textInput);
-  textInput = textInputs_xpath.iterateNext();
-}
-inputValues.push(...searxngCustomSettingsDiv.getElementsByTagName('select'));
+const searxForm = searxDiv.getElementsByTagName('form')[0];
+const searxCookies = searxForm.getElementsByTagName('input')[0];
+searxForm.addEventListener('submit', async event => {
+  event.preventDefault();
+  const url = new URL(searxCookies.value);
+  searchHelper.initSearxCookies(url);
+});
 
 browser.storage.local.get(
   [
     "disableSearch",
     "searchFrontend",
     "searchProtocol",
-    "searxngCustomSettings"
   ],
   r => {
-    disableSearchElement.checked = !r.disableSearch;
+    disable.checked = !r.disableSearch;
+    frontend.value = r.searchFrontend;
+    protocol.value = r.searchProtocol;
 
-    searchFrontendElement.value = r.searchFrontend;
-    changeFrontendsSettings(r.searchFrontend);
-
-    protocolElement.value = r.searchProtocol;
-    changeProtocolSettings(r.searchProtocol);
-
-
-    searxngCustomSettings.checked = r.searxngCustomSettings
-    changeCustomSettings()
+    changeFrontendsSettings();
+    changeProtocolSettings();
   }
 );
 
-for (const element of inputChecked) {
-  let k = `searxng_${element.className}`
-  browser.storage.local.get(k, r => element.checked = r[k])
-}
-for (const element of inputValues) {
-  let k = `searxng_${element.className}`
-  browser.storage.local.get(k, r => element.value = r[k])
-}
-
-searxngCustomSettingsDiv.addEventListener("change", async () => {
-  for (const element of inputChecked)
-    browser.storage.local.set({ [`searxng_${element.className}`]: element.checked })
-
-  for (const element of inputValues)
-    browser.storage.local.set({ [`searxng_${element.className}`]: element.value });
-})
-
 document.addEventListener("change", async () => {
   await browser.storage.local.set({
-    disableSearch: !disableSearchElement.checked,
-    searchFrontend: searchFrontendElement.value,
-    searchProtocol: protocolElement.value,
-    searxngCustomSettings: searxngCustomSettings.checked,
+    disableSearch: !disable.checked,
+    searchFrontend: frontend.value,
+    searchProtocol: protocol.value,
   });
-  changeFrontendsSettings(searchFrontendElement.value);
-  changeProtocolSettings(protocolElement.value);
-  changeCustomSettings();
+  changeFrontendsSettings(frontend.value);
+  changeProtocolSettings(protocol.value);
 })
 
-function changeCustomSettings() {
-  if (searxngCustomSettings.checked)
-    for (const item of customSettingsDivElement) item.style.display = 'block';
-  else
-    for (const item of customSettingsDivElement) item.style.display = 'none';
-}
-
-function changeFrontendsSettings(frontend) {
+function changeFrontendsSettings() {
   let SearxWhoogleElement = document.getElementById("searx-whoogle");
-  if (frontend == 'searx') {
+  if (frontend.value == 'searx') {
     searxDiv.style.display = 'block';
     searxngDiv.style.display = 'none';
     whoogleDiv.style.display = 'none';
     SearxWhoogleElement.style.display = 'block';
   }
-  else if (frontend == 'searxng') {
+  else if (frontend.value == 'searxng') {
     searxDiv.style.display = 'none';
     searxngDiv.style.display = 'block';
     whoogleDiv.style.display = 'none';
     SearxWhoogleElement.style.display = 'block';
   }
-  else if (frontend == 'whoogle') {
+  else if (frontend.value == 'whoogle') {
     searxDiv.style.display = 'none';
     searxngDiv.style.display = 'none';
     whoogleDiv.style.display = 'block';
@@ -119,7 +73,7 @@ function changeFrontendsSettings(frontend) {
   }
 }
 
-function changeProtocolSettings(protocol) {
+function changeProtocolSettings() {
   let normalsearxDiv = searxDiv.getElementsByClassName("normal")[0];
   let torsearxDiv = searxDiv.getElementsByClassName("tor")[0];
   let i2psearxDiv = searxDiv.getElementsByClassName("i2p")[0];
@@ -132,35 +86,41 @@ function changeProtocolSettings(protocol) {
   let torwhoogleDiv = whoogleDiv.getElementsByClassName("tor")[0];
   let i2pwhoogleDiv = whoogleDiv.getElementsByClassName("i2p")[0];
 
-  if (protocol == 'normal') {
+  if (protocol.value == 'normal') {
     normalsearxDiv.style.display = 'block';
     normalsearxngDiv.style.display = 'block';
     normalwhoogleDiv.style.display = 'block';
+
     torsearxDiv.style.display = 'none';
     torsearxngDiv.style.display = 'none';
     torwhoogleDiv.style.display = 'none';
+
     i2psearxDiv.style.display = 'none';
     i2psearxngDiv.style.display = 'none';
     i2pwhoogleDiv.style.display = 'none';
   }
-  else if (protocol == 'tor') {
+  else if (protocol.value == 'tor') {
     normalsearxDiv.style.display = 'none';
     normalsearxngDiv.style.display = 'none';
     normalwhoogleDiv.style.display = 'none';
+
     torsearxDiv.style.display = 'block';
     torsearxngDiv.style.display = 'block';
     torwhoogleDiv.style.display = 'block';
+
     i2psearxDiv.style.display = 'none';
     i2psearxngDiv.style.display = 'none';
     i2pwhoogleDiv.style.display = 'none';
   }
-  else if (protocol == 'i2p') {
+  else if (protocol.value == 'i2p') {
     normalsearxDiv.style.display = 'none';
     normalsearxngDiv.style.display = 'none';
     normalwhoogleDiv.style.display = 'none';
+
     torsearxDiv.style.display = 'none';
     torsearxngDiv.style.display = 'none';
     torwhoogleDiv.style.display = 'none';
+
     i2psearxDiv.style.display = 'block';
     i2psearxngDiv.style.display = 'block';
     i2pwhoogleDiv.style.display = 'block';
@@ -233,8 +193,3 @@ latencyWhoogleElement.addEventListener("click",
     });
   }
 );
-
-window.onblur = () => {
-  searchHelper.initSearxCookies();
-  searchHelper.initSearxngCookies();
-}

@@ -1,79 +1,80 @@
 import youtubeHelper from "../../../assets/javascripts/helpers/youtube/youtube.js";
+import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
-let disableYoutubeElement = document.getElementById("disable-invidious");
-let youtubeFrontendElement = document.getElementById("youtube-frontend");
-let invidiousDivElement = document.getElementById("invidious");
-let pipedDivElement = document.getElementById("piped");
-let pipedMaterialDivElement = document.getElementById("pipedMaterial");
-let freetubeYatteeDivElement = document.getElementById("freetube-yatte");
-let customSettingsDivElement = document.getElementsByClassName("custom-settings");
-let youtubeEmbedFrontendElement = document.getElementById("youtube-embed-frontend");
-let enableYoutubeCustomSettingsElement = document.getElementById("enable-youtube-custom-settings");
-let OnlyEmbeddedVideoElement = document.getElementById("only-embed");
-let bypassWatchOnYoutubeElement = document.getElementById("bypass-watch-on-youtube");
-let protocolElement = document.getElementById("protocol");
+let disableYoutube = document.getElementById("disable-invidious");
+let youtubeFrontend = document.getElementById("youtube-frontend");
+let invidiousDiv = document.getElementById("invidious");
+let pipedDiv = document.getElementById("piped");
+let pipedMaterialDiv = document.getElementById("pipedMaterial");
+let freetubeYatteeDiv = document.getElementById("freetube-yatte");
+let youtubeEmbedFrontend = document.getElementById("youtube-embed-frontend");
+let OnlyEmbeddedVideo = document.getElementById("only-embed");
+let protoco = document.getElementById("protocol");
 
 function changeFrontendsSettings() {
-    let frontend = youtubeFrontendElement.value;
-
-    if (enableYoutubeCustomSettingsElement.checked)
-        for (const item of customSettingsDivElement) item.style.display = 'block';
-    else
-        for (const item of customSettingsDivElement) item.style.display = 'none';
+    let frontend = youtubeFrontend.value;
 
     if (frontend == 'invidious') {
-        invidiousDivElement.style.display = 'block';
-        pipedDivElement.style.display = 'none';
-        pipedMaterialDivElement.style.display = 'none';
-        freetubeYatteeDivElement.style.display = 'none';
+        invidiousDiv.style.display = 'block';
+        pipedDiv.style.display = 'none';
+        pipedMaterialDiv.style.display = 'none';
+        freetubeYatteeDiv.style.display = 'none';
     }
     else if (frontend == 'piped') {
-        invidiousDivElement.style.display = 'none';
-        pipedDivElement.style.display = 'block';
-        pipedMaterialDivElement.style.display = 'none';
-        freetubeYatteeDivElement.style.display = 'none';
+        invidiousDiv.style.display = 'none';
+        pipedDiv.style.display = 'block';
+        pipedMaterialDiv.style.display = 'none';
+        freetubeYatteeDiv.style.display = 'none';
     }
     else if (frontend == 'pipedMaterial') {
-        invidiousDivElement.style.display = 'none';
-        pipedDivElement.style.display = 'none';
-        pipedMaterialDivElement.style.display = 'block';
-        freetubeYatteeDivElement.style.display = 'none';
+        invidiousDiv.style.display = 'none';
+        pipedDiv.style.display = 'none';
+        pipedMaterialDiv.style.display = 'block';
+        freetubeYatteeDiv.style.display = 'none';
     }
     else if (frontend == 'freetube' || frontend == 'yatte') {
-        invidiousDivElement.style.display = 'none';
-        pipedDivElement.style.display = 'none';
-        pipedMaterialDivElement.style.display = 'none';
-        freetubeYatteeDivElement.style.display = 'block';
-        changeYoutubeEmbedFrontendsSettings(youtubeHelper.getYoutubeEmbedFrontend());
+        invidiousDiv.style.display = 'none';
+        pipedDiv.style.display = 'none';
+        pipedMaterialDiv.style.display = 'none';
+        freetubeYatteeDiv.style.display = 'block';
+        changeYoutubeEmbedFrontendsSettings();
     }
 }
 
-function changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontend) {
-    if (youtubeEmbedFrontend == 'invidious') {
-        pipedDivElement.style.display = 'none';
-        invidiousDivElement.style.display = 'block';
+function changeYoutubeEmbedFrontendsSettings() {
+    if (youtubeEmbedFrontend.value == 'invidious') {
+        pipedDiv.style.display = 'none';
+        pipedMaterialDiv.style.display = 'none';
+        invidiousDiv.style.display = 'block';
     }
-    if (youtubeEmbedFrontend == 'piped') {
-        pipedDivElement.style.display = 'block';
-        invidiousDivElement.style.display = 'none';
+    if (youtubeEmbedFrontend.value == 'piped') {
+        pipedDiv.style.display = 'block';
+        pipedMaterialDiv.style.display = 'none';
+        invidiousDiv.style.display = 'none';
     }
-    else if (youtubeEmbedFrontend == 'youtube') {
-        pipedDivElement.style.display = 'none';
-        invidiousDivElement.style.display = 'none';
+    if (youtubeEmbedFrontend.value == 'pipedMaterial') {
+        pipedDiv.style.display = 'none';
+        pipedMaterialDiv.style.display = 'block';
+        invidiousDiv.style.display = 'none';
+    }
+    else if (youtubeEmbedFrontend.value == 'youtube') {
+        pipedDiv.style.display = 'none';
+        pipedMaterialDiv.style.display = 'none';
+        invidiousDiv.style.display = 'none';
     }
 }
 
-function changeProtocolSettings(protocol) {
-    let normalPipedDiv = document.getElementById('piped').getElementsByClassName("normal")[0];
-    let torPipedDiv = document.getElementById('piped').getElementsByClassName("tor")[0];
+function changeProtocolSettings() {
+    const normalPipedDiv = document.getElementById('piped').getElementsByClassName("normal")[0];
+    const torPipedDiv = document.getElementById('piped').getElementsByClassName("tor")[0];
 
-    let normalPipedMaterialDiv = document.getElementById('pipedMaterial').getElementsByClassName("normal")[0];
-    let torPipedMaterialDiv = document.getElementById('pipedMaterial').getElementsByClassName("tor")[0];
+    const normalPipedMaterialDiv = document.getElementById('pipedMaterial').getElementsByClassName("normal")[0];
+    const torPipedMaterialDiv = document.getElementById('pipedMaterial').getElementsByClassName("tor")[0];
 
-    let normalInvidiousDiv = document.getElementById('invidious').getElementsByClassName("normal")[0];
-    let torInvidiousDiv = document.getElementById('invidious').getElementsByClassName("tor")[0];
+    const normalInvidiousDiv = document.getElementById('invidious').getElementsByClassName("normal")[0];
+    const torInvidiousDiv = document.getElementById('invidious').getElementsByClassName("tor")[0];
 
-    if (protocol == 'normal') {
+    if (protoco.value == 'normal') {
         normalInvidiousDiv.style.display = 'block';
         torInvidiousDiv.style.display = 'none';
 
@@ -83,7 +84,7 @@ function changeProtocolSettings(protocol) {
         normalPipedMaterialDiv.style.display = 'block';
         torPipedMaterialDiv.style.display = 'none';
     }
-    else if (protocol == 'tor') {
+    else if (protoco.value == 'tor') {
         normalInvidiousDiv.style.display = 'none';
         torInvidiousDiv.style.display = 'block';
 
@@ -97,56 +98,118 @@ function changeProtocolSettings(protocol) {
 
 document.addEventListener("change", async () => {
     await browser.storage.local.set({
-        disableYoutube: !disableYoutubeElement.checked,
-        youtubeFrontend: youtubeFrontendElement.value,
-        youtubeEmbedFrontend: youtubeEmbedFrontendElement.value,
-        enableYoutubeCustomSettings: enableYoutubeCustomSettingsElement.checked,
-        OnlyEmbeddedVideo: OnlyEmbeddedVideoElement.value,
-        bypassWatchOnYoutube: bypassWatchOnYoutubeElement.checked,
-        youtubeProtocol: protocolElement.value,
+        disableYoutube: !disableYoutube.checked,
+        youtubeFrontend: youtubeFrontend.value,
+        youtubeEmbedFrontend: youtubeEmbedFrontend.value,
+        OnlyEmbeddedVideo: OnlyEmbeddedVideo.value,
+        youtubeProtocol: protoco.value,
     })
-    changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontendElement.value);
-    changeProtocolSettings(protocolElement.value);
+    changeProtocolSettings();
+    changeYoutubeEmbedFrontendsSettings();
     changeFrontendsSettings();
 })
 
 browser.storage.local.get(
     [
         "disableYoutube",
-        "enableYoutubeCustomSettings",
         "OnlyEmbeddedVideo",
         "youtubeRedirects",
         "youtubeFrontend",
 
-        "alwaysUsePreferred",
         "youtubeEmbedFrontend",
         "youtubeProtocol",
-        "bypassWatchOnYoutube",
     ],
     r => {
-        disableYoutubeElement.checked = !r.disableYoutube;
-        enableYoutubeCustomSettingsElement.checked = r.enableYoutubeCustomSettings;
+        disableYoutube.checked = !r.disableYoutube;
+        OnlyEmbeddedVideo.value = r.OnlyEmbeddedVideo;
+        youtubeFrontend.value = r.youtubeFrontend;
+        protoco.value = r.youtubeProtocol;
 
-        OnlyEmbeddedVideoElement.value = r.OnlyEmbeddedVideo;
-        bypassWatchOnYoutubeElement.checked = r.bypassWatchOnYoutube;
-
-        let frontend = r.youtubeFrontend;
-        youtubeFrontendElement.value = frontend;
         changeFrontendsSettings();
+        changeProtocolSettings();
 
-        let protocol = r.youtubeProtocol;
-        protocolElement.value = protocol;
-        changeProtocolSettings(protocol);
-
-        let youtubeEmbedFrontend = r.youtubeEmbedFrontend;
-        youtubeEmbedFrontendElement.value = youtubeEmbedFrontend
-        if (frontend == "freetube" || frontend == "yatte") {
-            changeYoutubeEmbedFrontendsSettings(youtubeEmbedFrontend)
-        };
+        youtubeEmbedFrontend.value = youtubeEmbedFrontend.value
+        if (r.youtubeFrontend == "freetube" || r.youtubeFrontend == "yatte") changeYoutubeEmbedFrontendsSettings()
     }
 );
 
+const invidiousForm = invidiousDiv.getElementsByTagName('form')[0];
+const invidiousCookies = invidiousForm.getElementsByTagName('input')[0];
+invidiousForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    const url = new URL(invidiousCookies.value);
+    youtubeHelper.initInvidiousCookies(url);
+});
 
-window.onblur = () => {
-    youtubeHelper.initInvidiousCookies();
-}
+// const pipedForm = pipedDiv.getElementsByTagName('form')[0];
+// const pipedCookies = pipedForm.getElementsByTagName('input')[0];
+// pipedForm.addEventListener('submit', async event => {
+//     event.preventDefault();
+//     const url = new URL(pipedCookies.value);
+//     youtubeHelper.initPipedLocalStorage(url);
+// });
+
+commonHelper.processDefaultCustomInstances('youtube', 'invidious', 'normal', document);
+commonHelper.processDefaultCustomInstances('youtube', 'invidious', 'tor', document);
+commonHelper.processDefaultCustomInstances('youtube', 'pipedMaterial', 'normal', document);
+commonHelper.processDefaultCustomInstances('youtube', 'pipedMaterial', 'tor', document);
+commonHelper.processDefaultCustomInstances('youtube', 'piped', 'normal', document);
+commonHelper.processDefaultCustomInstances('youtube', 'piped', 'tor', document);
+
+
+let latencyInvidiousElement = document.getElementById("latency-invidious");
+let latencyInvidiousLabel = document.getElementById("latency-invidious-label");
+latencyInvidiousElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyInvidiousElement.addEventListener("click", reloadWindow);
+        await youtubeHelper.init();
+        let redirects = youtubeHelper.getRedirects();
+        const oldHtml = latencyInvidiousLabel.innerHTML;
+        latencyInvidiousLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyInvidiousLabel, redirects.invidious.normal).then(r => {
+            browser.storage.local.set({ invidiousLatency: r });
+            latencyInvidiousLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances('youtube', 'invidious', 'normal', document);
+            latencyInvidiousElement.removeEventListener("click", reloadWindow);
+        });
+    }
+);
+
+let latencyPipedMaterialElement = document.getElementById("latency-pipedMaterial");
+let latencyPipedMaterialLabel = document.getElementById("latency-pipedMaterial-label");
+latencyPipedMaterialElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyPipedMaterialElement.addEventListener("click", reloadWindow);
+        await youtubeHelper.init();
+        let redirects = youtubeHelper.getRedirects();
+        const oldHtml = latencyPipedMaterialLabel.innerHTML;
+        latencyPipedMaterialLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyPipedMaterialLabel, redirects.pipedMaterial.normal).then(r => {
+            browser.storage.local.set({ pipedMaterialLatency: r });
+            latencyPipedMaterialLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances('youtube', 'pipedMaterial', 'normal', document);
+            latencyPipedMaterialElement.removeEventListener("click", reloadWindow);
+        });
+    }
+);
+
+let latencyPipedElement = document.getElementById("latency-piped");
+let latencyPipedLabel = document.getElementById("latency-piped-label");
+latencyPipedElement.addEventListener("click",
+    async () => {
+        let reloadWindow = () => location.reload();
+        latencyPipedElement.addEventListener("click", reloadWindow);
+        await youtubeHelper.init();
+        let redirects = youtubeHelper.getRedirects();
+        const oldHtml = latencyPipedLabel.innerHTML;
+        latencyPipedLabel.innerHTML = '...';
+        commonHelper.testLatency(latencyPipedLabel, redirects.piped.normal).then(r => {
+            browser.storage.local.set({ pipedLatency: r });
+            latencyPipedLabel.innerHTML = oldHtml;
+            commonHelper.processDefaultCustomInstances('youtube', 'piped', 'normal', document);
+            latencyPipedElement.removeEventListener("click", reloadWindow);
+        });
+    }
+);

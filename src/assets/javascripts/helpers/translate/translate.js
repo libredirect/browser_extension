@@ -38,11 +38,6 @@ function setSimplyTranslateRedirects(val) {
   browser.storage.local.set({ simplyTranslateTorRedirectsChecks })
 }
 
-let simplyTranslateNormalRedirectsChecks;
-let simplyTranslateTorRedirectsChecks;
-let simplyTranslateNormalCustomRedirects = [];
-let simplyTranslateTorCustomRedirects = [];
-
 function setLingvaRedirects(val) {
   redirects.lingva = val;
   browser.storage.local.set({ translateRedirects: redirects })
@@ -62,24 +57,26 @@ function setLingvaRedirects(val) {
   browser.storage.local.set({ lingvaTorRedirectsChecks })
 }
 
-let lingvaNormalRedirectsChecks;
-let lingvaTorRedirectsChecks;
-let lingvaNormalCustomRedirects = [];
-let lingvaTorCustomRedirects = [];
+let
+  simplyTranslateNormalRedirectsChecks,
+  simplyTranslateTorRedirectsChecks,
+  simplyTranslateNormalCustomRedirects,
+  simplyTranslateTorCustomRedirects,
+  lingvaNormalRedirectsChecks,
+  lingvaTorRedirectsChecks,
+  lingvaNormalCustomRedirects,
+  lingvaTorCustomRedirects;
 
 
 let
   disable, // translateDisable
   frontend, // translateFrontend
-  protocol, // translateProtocol
-  from, // translateFrom
-  to, // translateTo
-  simplyTranslateEngine;
+  protocol; // translateProtocol
 
 function isTranslateRedirects(url, type, frontend) {
   let protocolHost = commonHelper.protocolHost(url);
 
-  if (type !== "main_frame") return false;
+  if (type !== "main_frame") return;
 
   if (frontend == 'simplyTranslate')
     return [
@@ -124,40 +121,33 @@ function redirect(url) {
   if (disable) return;
   if (!targets.some(rx => rx.test(url.href))) return;
 
-  let params_arr = url.search.split('&');
-  params_arr[0] = params_arr[0].substring(1);
-  let myMap = {};
-  for (let i = 0; i < params_arr.length; i++) {
-    let pair = params_arr[i].split('=');
-    myMap[pair[0]] = pair[1];
-  }
   if (frontend == 'simplyTranslate') {
     let instancesList;
     if (protocol == 'normal') instancesList = [...simplyTranslateNormalRedirectsChecks, ...simplyTranslateNormalCustomRedirects];
     if (protocol == 'tor') instancesList = [...simplyTranslateTorRedirectsChecks, ...simplyTranslateTorCustomRedirects];
-    if (instancesList.length === 0) return null;
+    if (instancesList.length === 0) return;
     let randomInstance = commonHelper.getRandomInstance(instancesList)
 
-    if (myMap.sl && myMap.tl && myMap.text)
-      return `${randomInstance}/${url.search}`;
-    else {
-      if (from != "DEFAULT") url.searchParams.append("sl", from);
-      if (to != "DEFAULT") url.searchParams.append("tl", to);
-      if (simplyTranslateEngine != "DEFAULT") url.searchParams.append("engine", simplyTranslateEngine);
-      return `${randomInstance}/${url.search}`
-    }
+    return `${randomInstance}/${url.search}`;
   }
   else if (frontend == 'lingva') {
+    let params_arr = url.search.split('&');
+    params_arr[0] = params_arr[0].substring(1);
+    let myMap = {};
+    for (let i = 0; i < params_arr.length; i++) {
+      let pair = params_arr[i].split('=');
+      myMap[pair[0]] = pair[1];
+    }
     let instancesList;
     if (protocol == 'normal') instancesList = [...lingvaNormalRedirectsChecks, ...lingvaNormalCustomRedirects];
     if (protocol == 'tor') instancesList = [...lingvaTorRedirectsChecks, ...lingvaTorCustomRedirects];
-    if (instancesList.length === 0) return null;
+    if (instancesList.length === 0) return;
     let randomInstance = commonHelper.getRandomInstance(instancesList)
 
     if (myMap.sl && myMap.tl && myMap.text)
       return `${randomInstance}/${myMap.sl}/${myMap.tl}/${myMap.text}`;
-    else
-      return randomInstance;
+
+    return randomInstance;
   }
 }
 
@@ -190,10 +180,8 @@ function switchInstance(url) {
     else if (protocol == 'tor') instancesList = [...lingvaTorRedirectsChecks, ...lingvaTorCustomRedirects];
   }
 
-  console.log("instancesList", instancesList);
   let index = instancesList.indexOf(protocolHost);
   if (index > -1) instancesList.splice(index, 1);
-
   if (instancesList.length === 0) return null;
 
   let randomInstance = commonHelper.getRandomInstance(instancesList);
@@ -210,7 +198,7 @@ async function initDefaults() {
       lingvaNormalRedirectsChecks = [...redirects.lingva.normal]
       for (const instance of r.cloudflareList) {
         let i;
-        
+
         i = simplyTranslateNormalRedirectsChecks.indexOf(instance);
         if (i > -1) simplyTranslateNormalRedirectsChecks.splice(i, 1);
 
@@ -232,10 +220,6 @@ async function initDefaults() {
         lingvaNormalCustomRedirects: [],
         lingvaTorRedirectsChecks: [...redirects.lingva.tor],
         lingvaTorCustomRedirects: [],
-
-        translateFrom: "auto",
-        translateTo: 'en',
-        simplyTranslateEngine: 'google',
       })
     })
   })
@@ -258,33 +242,24 @@ async function init() {
       "lingvaNormalCustomRedirects",
       "lingvaTorRedirectsChecks",
       "lingvaTorCustomRedirects",
-
-      "translateFrom",
-      "translateTo",
-      "simplyTranslateEngine",
     ],
-    result => {
-      disable = result.translateDisable;
-      frontend = result.translateFrontend;
-      protocol = result.translateProtocol;
+    r => {
+      disable = r.translateDisable;
+      frontend = r.translateFrontend;
+      protocol = r.translateProtocol;
+      redirects = r.translateRedirects;
 
-      from = result.translateFrom;
-      to = result.translateTo;
-      simplyTranslateEngine = result.simplyTranslateEngine;
+      simplyTranslateNormalRedirectsChecks = r.simplyTranslateNormalRedirectsChecks;
+      simplyTranslateNormalCustomRedirects = r.simplyTranslateNormalCustomRedirects;
 
-      redirects = result.translateRedirects;
+      simplyTranslateTorRedirectsChecks = r.simplyTranslateTorRedirectsChecks;
+      simplyTranslateTorCustomRedirects = r.simplyTranslateTorCustomRedirects;
 
-      simplyTranslateNormalRedirectsChecks = result.simplyTranslateNormalRedirectsChecks;
-      simplyTranslateNormalCustomRedirects = result.simplyTranslateNormalCustomRedirects;
+      lingvaNormalRedirectsChecks = r.lingvaNormalRedirectsChecks;
+      lingvaNormalCustomRedirects = r.lingvaNormalCustomRedirects;
 
-      simplyTranslateTorRedirectsChecks = result.simplyTranslateTorRedirectsChecks;
-      simplyTranslateTorCustomRedirects = result.simplyTranslateTorCustomRedirects;
-
-      lingvaNormalRedirectsChecks = result.lingvaNormalRedirectsChecks;
-      lingvaNormalCustomRedirects = result.lingvaNormalCustomRedirects;
-
-      lingvaTorRedirectsChecks = result.lingvaTorRedirectsChecks;
-      lingvaTorCustomRedirects = result.lingvaTorCustomRedirects;
+      lingvaTorRedirectsChecks = r.lingvaTorRedirectsChecks;
+      lingvaTorCustomRedirects = r.lingvaTorCustomRedirects;
     });
 }
 

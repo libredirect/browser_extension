@@ -17,90 +17,9 @@ body.option(dir="auto")
             select#protocol
                 option(value="normal" data-localise="__MSG_normal__") Normal
                 option(value="tor" data-localise="__MSG_tor__") Tor
-                option(value="i2p" data-localise="__MSG_i2p__") I2P
 
-        .some-block.option-block
-            h4(data-localise="__MSG_bypassTwitter__") Bypass "Open in Twitter"
-            input#bypass-watch-on-twitter(type="checkbox")
-
-        .some-block.option-block
-            h4(data-localise="__MSG_enableCustomNitter__") Enable Custom Settings (will use cookies)
-            input#enable-twitter-custom-settings(type="checkbox")
-
-        #nitter 
-            .custom-settings
-                .some-block.option-block
-                    h2 Display 
-                
-                .some-block.option-block
-                    h4(data-localise="__MSG_theme__") Theme
-                    select.theme
-                        option(value="Auto") Auto
-                        option(value="Auto (Twitter)") Auto (Twitter)
-                        option(value="Black") Black
-                        option(value="Mastodon") Mastodon
-                        option(value="Nitter") Nitter
-                        option(value="Pleroma") Pleroma
-                        option(value="Twitter") Twitter
-                        option(value="Twitter Dark") Twitter Dark
-
-                .some-block.option-block
-                    h4(data-localise="__MSG_infiniteScroll__") Infinite scrolling (experimental, requires JavaScript)
-                    input.infiniteScroll(type="checkbox")
-
-                .some-block.option-block
-                    h4(data-localise="__MSG_stickyProfile__") Make profile sidebar stick to top
-                    input.stickyProfile(type="checkbox")
-
-                .some-block.option-block
-                    h4(data-localise="__MSG_bidiSupport__") Support bidirectional text (makes clicking on tweets harder)
-                    input.bidiSupport(type="checkbox")
-
-                .some-block.option-block
-                    h4(data-localise="__MSG_hideTweetStats__") Hide tweet stats (replies, retweets, likes)
-                    input.hideTweetStats(type="checkbox")
-
-                .some-block.option-block
-                    h4(data-localise="__MSG_hideBanner__") Hide profile banner
-                    input.hideBanner(type="checkbox")
-
-                .some-block.option-block
-                    h4(data-localise="__MSG_hidePins__") Hide pinned tweets
-                    input.hidePins(type="checkbox")
-
-                .some-block.option-block
-                    h4(data-localise="__MSG_hideReplies__") Hide tweet replies
-                    input.hideReplies(type="checkbox")
-
-                .some-block.option-block
-                    h4(data-localise="__MSG_squareAvatars__") Square profile pictures
-                    input.squareAvatars(type="checkbox")
-
-                hr
-
-                .some-block.option-block
-                    h2 Media
-
-                .some-block.option-block
-                    h4(data-localise="__MSG_mp4Playback__") Enable mp4 video playback (only for gifs)
-                    input.mp4Playback(type="checkbox")
-
-                .some-block.option-block
-                    h4(data-localise="__MSG_hlsPlayback__") Enable hls video streaming (requires JavaScript)
-                    input.hlsPlayback(type="checkbox")
-
-                .some-block.option-block
-                    h4(data-localise="__MSG_proxyVideos__") Proxy video streaming through the server (might be slow)
-                    input.proxyVideos(type="checkbox")
-
-                .some-block.option-block
-                    h4(data-localise="__MSG_muteVideos__") Mute videos by default
-                    input.muteVideos(type="checkbox")
-
-                .some-block.option-block
-                    h4(data-localise="__MSG_autoplayGifs__") Autoplay gifs
-                    input.autoplayGifs(type="checkbox")
-
+        #nitter
+            hr
             .normal
                 include ../../widgets/instances.pug
                 +instances('https://nitter.com')
@@ -112,7 +31,7 @@ body.option(dir="auto")
             .i2p
                 include ../../widgets/instances.pug
                 +instances('https://nitter.i2p')
-            
+
 
     script(type="module" src="../init.js")
     script(type="module" src="./twitter.js")

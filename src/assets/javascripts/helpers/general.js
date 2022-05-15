@@ -1,28 +1,12 @@
 "use strict";
 window.browser = window.browser || window.chrome;
 
-let alwaysUsePreferred;
-const getAlwaysUsePreferred = () => alwaysUsePreferred;
-function setAlwaysUsePreferred(val) {
-    alwaysUsePreferred = val;
-    browser.storage.local.set({ alwaysUsePreferred })
-    console.log("alwaysUsePreferred: ", alwaysUsePreferred)
-}
-
 let theme;
 const getTheme = () => theme;
 function setTheme(val) {
     theme = val
     browser.storage.local.set({ theme, instancesCookies: [] });
     console.log("theme: ", theme)
-}
-
-let applyThemeToSites;
-const getApplyThemeToSites = () => applyThemeToSites;
-function setApplyThemeToSites(val) {
-    applyThemeToSites = val;
-    browser.storage.local.set({ applyThemeToSites })
-    console.log("applyThemeToSites: ", applyThemeToSites)
 }
 
 let exceptions = {
@@ -59,18 +43,14 @@ async function init() {
         resolve => browser.storage.local.get(
             [
                 "exceptions",
-                "alwaysUsePreferred",
                 "theme",
-                "applyThemeToSites",
                 "popupFrontends",
                 "autoRedirect"
             ],
-            r => { 
+            r => {
                 if (r.exceptions) exceptions = r.exceptions;
-                alwaysUsePreferred = r.alwaysUsePreferred ?? false;
 
                 theme = r.theme ?? "DEFAULT"
-                applyThemeToSites = r.applyThemeToSites ?? false;
 
                 popupFrontends = r.popupFrontends ?? [
                     "youtube",
@@ -127,12 +107,6 @@ export default {
 
     getAutoRedirect,
     setAutoRedirect,
-
-    getAlwaysUsePreferred,
-    setAlwaysUsePreferred,
-
-    getApplyThemeToSites,
-    setApplyThemeToSites,
 
     getPopupFrontends,
     setPopupFrontends,

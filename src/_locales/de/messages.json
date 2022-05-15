@@ -219,11 +219,6 @@
     "description": "used in reddit.html"
   },
 
-  "bypassReddit": {
-    "message": "„Öffnen mit Reddit“ umgehen",
-    "description": "used in reddit.html"
-  },
-
   "searchNote": {
     "message": "Hinweis: Um das volle Potenzial der Suchweiterleitung auszunutzen, lege LibRedirect als Standardsuchmaschine fest.",
     "description": "used in search.html"
@@ -264,11 +259,6 @@
     "description": "used in translate.html"
   },
 
-  "bypassTwitter": {
-    "message": "„Öffnen mit Twitter“ umgehen",
-    "description": "used in twitter.html"
-  },
-
   "invidious": {
     "message": "Invidious",
     "description": "used in youtube.html"
@@ -296,11 +286,6 @@
 
   "onlyNotEmbedded": {
     "message": "nur nicht-eingebunden",
-    "description": "used in youtube.html"
-  },
-
-  "bypassYoutube": {
-    "message": "„Auf YouTube ansehen“ umgehen",
     "description": "used in youtube.html"
   },
 

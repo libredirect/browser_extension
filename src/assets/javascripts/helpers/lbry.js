@@ -118,7 +118,6 @@ async function initDefaults() {
     })
 }
 
-
 async function init() {
     return new Promise(resolve => {
         browser.storage.local.get(

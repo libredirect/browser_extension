@@ -40,16 +40,13 @@ async function wholeInit() {
 }
 
 async function updateInstances() {
-  const apiEndpoint = 'https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json';
-  let request = new XMLHttpRequest();
-  request.open('GET', apiEndpoint, false);
-  request.send(null);
+  let http = new XMLHttpRequest();
+  http.open('GET', 'https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json', false);
+  http.send(null);
 
-  if (request.status === 200) {
-
+  if (http.status === 200) {
     await wholeInit();
-
-    const instances = JSON.parse(request.responseText);
+    const instances = JSON.parse(http.responseText);
 
     brwoser.storage.local.get(
       [
@@ -98,12 +95,7 @@ function protocolHost(url) {
   return `${url.protocol}//${url.host}`;
 }
 
-async function processDefaultCustomInstances(
-  target,
-  name,
-  protocol,
-  document,
-) {
+async function processDefaultCustomInstances(target, name, protocol, document) {
   function camelCase(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -116,7 +108,6 @@ async function processDefaultCustomInstances(
   let nameCheckListElement = nameProtocolElement.getElementsByClassName('checklist')[0];
 
   await initCloudflareList();
-
 
   let nameDefaultRedirects;
 
@@ -250,21 +241,39 @@ function isRtl() {
   return ["ar", "iw", "ku", "fa", "ur"].includes(browser.i18n.getUILanguage())
 }
 
-async function ping(href) {
+function getIp(href) {
   return new Promise(resolve => {
+    let host = new URL(href).hostname;
     let http = new XMLHttpRequest();
-    http.open("GET", href + '?_=' + new Date().getTime(), /*async*/true);
+    http.open("GET", `https://dns.google/resolve?name=${host}`, /*async*/true);
+    http.onreadystatechange = () => {
+      if (http.readyState == 4 && http.status == 200) {
+        let r = JSON.parse(http.responseText);
+        resolve(r.Answer[0].data)
+      }
+    };
+    http.ontimeout = () => resolve()
+    http.onerror = () => resolve()
+    try {
+      http.send(null)
+    }
+    catch (exception) {
+      resolve()
+    }
+  })
+}
+
+async function ping(href) {
+  return new Promise(async resolve => {
+    let http = new XMLHttpRequest();
+    http.open("GET", `${href}?_=${new Date().getTime()}`, /*async*/true);
     http.timeout = 5000;
     let started = new Date().getTime();
-    http.onreadystatechange = function () {
+    http.onreadystatechange = () => {
       if (http.readyState == 2) {
-        if (http.status == 200) {
-          let ended = new Date().getTime();
-          let ms = ended - started;
-          http.abort();
-          resolve(ms);
-        }
-        else resolve()
+        let ended = new Date().getTime();
+        http.abort();
+        resolve(ended - started);
       }
     };
     http.ontimeout = () => resolve(5000)
@@ -283,19 +292,33 @@ async function testLatency(element, instances) {
     for (const href of instances) await ping(href).then(m => {
       if (m) {
         myList[href] = m;
-        element.innerHTML = `${href}:&nbsp;${'<span style="color:' + (m <= 1000 ? "green" : m <= 2000 ? "orange" : "red") + ';">' + (m == 5000 ? '5000ms+' : m + 'ms') + '</span>'}`;
-        console.log(`${href}: ${m}ms`)
+        let color = m <= 1000 ? "green" : m <= 2000 ? "orange" : "red";
+        let text = m == 5000 ? '5000ms+' : m + 'ms';
+        element.innerHTML = `${href}:&nbsp;'<span style="color:${color};">${text}</span>`;
       }
     })
     resolve(myList);
   })
 }
 
-function copyCookie(targetUrl, url, name) {
+function copyCookie(frontend, targetUrl, url, name) {
   browser.cookies.get(
     { url: protocolHost(targetUrl), name: name },
     r => {
-      if (r) browser.cookies.set({ url: url, name: name, value: r.value })
+      if (r) {
+        browser.cookies.set({ url: url, name: name, value: r.value })
+        browser.storage.local.set({ [`${frontend}_${name}`]: r.value })
+      }
+    }
+  )
+}
+
+function getCookiesFromStorage(frontend, to, name) {
+  let key = `${frontend}_${name}`;
+  browser.storage.local.get(
+    key,
+    r => {
+      if (r) browser.cookies.set({ url: to, name: name, value: r[key] })
     }
   )
 }
@@ -307,5 +330,6 @@ export default {
   processDefaultCustomInstances,
   isRtl,
   testLatency,
-  copyCookie
+  copyCookie,
+  getCookiesFromStorage,
 }

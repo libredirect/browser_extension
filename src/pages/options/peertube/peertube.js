@@ -1,19 +1,17 @@
 import peertubeHelper from "../../../assets/javascripts/helpers/peertube.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
-let disablePeertubeElement = document.getElementById("disable-peertube");
-let protocolElement = document.getElementById("protocol")
+let disable = document.getElementById("disable-peertube");
+let protocol = document.getElementById("protocol")
 browser.storage.local.get(
     [
         "disablePeertubeTargets",
         "peertubeTargetsProtocol"
     ],
     r => {
-        disablePeertubeElement.checked = !r.disablePeertubeTargets;
-
-        let protocol = r.peertubeTargetsProtocol;
-        protocolElement.value = protocol;
-        changeProtocolSettings(protocol);
+        disable.checked = !r.disablePeertubeTargets;
+        protocol.value = r.peertubeTargetsProtocol;
+        changeProtocolSettings();
     }
 )
 commonHelper.processDefaultCustomInstances('peertube', 'simpleertube', 'normal', document);
@@ -21,20 +19,20 @@ commonHelper.processDefaultCustomInstances('peertube', 'simpleertube', 'tor', do
 
 document.addEventListener("change", async () => {
     await browser.storage.local.set({
-        disablePeertubeTargets: !disablePeertubeElement.checked,
-        peertubeTargetsProtocol: protocolElement.value
+        disablePeertubeTargets: !disable.checked,
+        peertubeTargetsProtocol: protocol.value
     })
-    changeProtocolSettings(protocolElement.value);
+    changeProtocolSettings();
 })
 
-function changeProtocolSettings(protocol) {
-    let normalDiv = document.getElementsByClassName("normal")[0];
-    let torDiv = document.getElementsByClassName("tor")[0];
-    if (protocol == 'normal') {
+function changeProtocolSettings() {
+    const normalDiv = document.getElementsByClassName("normal")[0];
+    const torDiv = document.getElementsByClassName("tor")[0];
+    if (protocol.value == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';
     }
-    else if (protocol == 'tor') {
+    else if (protocol.value == 'tor') {
         normalDiv.style.display = 'none';
         torDiv.style.display = 'block';
     }

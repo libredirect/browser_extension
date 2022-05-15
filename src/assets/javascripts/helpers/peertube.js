@@ -73,11 +73,18 @@ function switchInstance(url) {
 }
 
 function redirect(url, type, initiator) {
-
-    let protocolHost = commonHelper.protocolHost(url);
-
     if (disable) return null;
-    if (initiator && ([...redirects.simpleertube.normal, ...simpleertubeNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))) return null;
+    if (
+        initiator &&
+        (
+            [
+                ...redirects.simpleertube.normal,
+                ...simpleertubeNormalCustomRedirects
+            ].includes(initiator.origin) ||
+            targets.includes(initiator.host)
+        )
+    ) return null;
+    let protocolHost = commonHelper.protocolHost(url);
     if (!targets.includes(protocolHost)) return null;
 
     if (type != "main_frame") return null;
@@ -104,9 +111,7 @@ async function initDefaults() {
             }
             await browser.storage.local.set({
                 peerTubeTargets: ['https://search.joinpeertube.org', ...dataJson.peertube],
-
                 disablePeertubeTargets: true,
-
                 peertubeRedirects: redirects,
 
                 simpleertubeNormalRedirectsChecks: simpleertubeNormalRedirectsChecks,
@@ -132,14 +137,11 @@ async function init() {
             "simpleertubeTorCustomRedirects",
 
             "peerTubeTargets",
-
             "peertubeTargetsProtocol"
         ],
         r => {
             disable = r.disablePeertubeTargets;
-
             protocol = r.peertubeTargetsProtocol;
-
             targets = r.peerTubeTargets;
 
             simpleertubeNormalRedirectsChecks = r.simpleertubeNormalRedirectsChecks;
@@ -152,7 +154,6 @@ async function init() {
 }
 
 export default {
-
     getRedirects,
     setRedirects,
 

@@ -4,24 +4,12 @@ import commonHelper from "../../../assets/javascripts/helpers/common.js";
 let disable = document.getElementById("disable-tiktok");
 let protocol = document.getElementById("protocol")
 
-let enableCustomSettings = document.getElementById("enable-custom-settings");
-let customSettingsDiv = document.getElementsByClassName("custom-settings");
-
-let theme = document.getElementById('proxiTok').getElementsByClassName('theme')[0];
-let api_legacy = document.getElementById('proxiTok').getElementsByClassName('api-legacy')[0];
-
-document.addEventListener("change", async () => {
-    await browser.storage.local.set({
+document.addEventListener("change", () => {
+    browser.storage.local.set({
         disableTiktok: !disable.checked,
         tiktokProtocol: protocol.value,
-
-        enableTiktokCustomSettings: enableCustomSettings.checked,
-
-        proxiTokTheme: theme.value,
-        proxiTokApiLegacy: api_legacy.value,
-
     });
-    changeProtocolSettings(protocol.value);
+    changeProtocolSettings();
 })
 
 window.onblur = tiktokHelper.initProxiTokCookies;
@@ -30,16 +18,11 @@ browser.storage.local.get(
     [
         "disableTiktok",
         "tiktokProtocol",
-
-        "enableTiktokCustomSettings",
-
-        "proxiTokTheme",
-        "proxiTokApiLegacy",
     ],
     r => {
         disable.checked = !r.disableTiktok;
         protocol.value = r.tiktokProtocol;
-        changeProtocolSettings(r.tiktokProtocol);
+        changeProtocolSettings();
         let normalDiv = document.getElementsByClassName("normal")[0];
         let torDiv = document.getElementsByClassName("tor")[0];
         if (r.tiktokProtocol == 'normal') {
@@ -50,33 +33,20 @@ browser.storage.local.get(
             normalDiv.style.display = 'none';
             torDiv.style.display = 'block';
         }
-
-        enableCustomSettings.checked = r.enableTiktokCustomSettings;
-        if (r.enableTiktokCustomSettings)
-            customSettingsDiv.style.display = 'block';
-        else
-            customSettingsDiv.style.display = 'none';
-
-        theme.value = r.proxiTokTheme;
-        api_legacy.value = r.proxiTokApiLegacy;
     }
 )
 
-function changeProtocolSettings(protocol) {
+function changeProtocolSettings() {
     let normalDiv = document.getElementsByClassName("normal")[0];
     let torDiv = document.getElementsByClassName("tor")[0];
-    if (protocol == 'normal') {
+    if (protocol.value == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';
     }
-    else if (protocol == 'tor') {
+    else if (protocol.value == 'tor') {
         normalDiv.style.display = 'none';
         torDiv.style.display = 'block';
     }
-    if (enableCustomSettings.checked)
-        for (const item of customSettingsDiv) item.style.display = 'block';
-    else
-        for (const item of customSettingsDiv) item.style.display = 'none';
 }
 
 commonHelper.processDefaultCustomInstances('tiktok', 'proxiTok', 'normal', document);

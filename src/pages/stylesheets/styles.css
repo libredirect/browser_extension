@@ -278,15 +278,9 @@ div.buttons-popup {
 }
 
 .button {
-  display: flex;
-  text-align: center;
-  justify-content: space-between;
-  align-items: center;
   color: var(--text);
   font-size: 16px;
   font-weight: bold;
-  margin: 0;
-  padding: 5px 5px;
   text-decoration: none;
   cursor: pointer;
   transition-duration: 0.1s;

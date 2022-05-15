@@ -84,21 +84,33 @@ function redirect(url, type, initiator) {
     return `${randomInstance}/u${url.pathname}${url.search}`; // Likely a user profile, redirect to '/u/...'
 }
 
-function reverse(url) {
-  let protocolHost = commonHelper.protocolHost(url);
-  if (
-    ![...redirects.bibliogram.normal,
-    ...redirects.bibliogram.tor,
-    ...bibliogramNormalCustomRedirects,
-    ...bibliogramTorCustomRedirects].includes(protocolHost)
-  ) return;
-  if (url.pathname.startsWith('/p'))
-    return `https://instagram.com${url.pathname.replace('/p', '')}${url.search}`;
+async function reverse(url) {
+  browser.storage.local.get(
+    [
+      "instagramRedirects",
+      "bibliogramNormalCustomRedirects",
+      "bibliogramTorCustomRedirects",
+    ],
+    r => {
+      let protocolHost = commonHelper.protocolHost(url);
+      if (
+        ![
+          ...r.instagramRedirects.bibliogram.normal,
+          ...r.instagramRedirects.bibliogram.tor,
+          ...r.bibliogramNormalCustomRedirects,
+          ...r.bibliogramTorCustomRedirects
+        ].includes(protocolHost)
+      ) return;
 
-  if (url.pathname.startsWith('/u'))
-    return `https://instagram.com${url.pathname.replace('/u', '')}${url.search}`;
+      if (url.pathname.startsWith('/p'))
+        return `https://instagram.com${url.pathname.replace('/p', '')}${url.search}`;
 
-  return `https://instagram.com${url.pathname}${url.search}`;
+      if (url.pathname.startsWith('/u'))
+        return `https://instagram.com${url.pathname.replace('/u', '')}${url.search}`;
+
+      return `https://instagram.com${url.pathname}${url.search}`;
+    }
+  )
 }
 
 function switchInstance(url) {
@@ -139,7 +151,6 @@ function isBibliogram(url) {
 
 let instancesCookies;
 let theme;
-let applyThemeToSites;
 function initBibliogramCookies(url) {
   let protocolHost = commonHelper.protocolHost(url);
   browser.cookies.get(
@@ -150,17 +161,15 @@ function initBibliogramCookies(url) {
         let request = new XMLHttpRequest();
         request.open("POST", `${protocolHost}/settings/return?referrer=%2F`);
 
-        if (applyThemeToSites) {
-          let themeValue;
-          if (theme == 'light') themeValue = "classic";
-          if (theme == 'dark') themeValue = "pussthecat.org-v2"
+        let themeValue;
+        if (theme == 'light') themeValue = "classic";
+        if (theme == 'dark') themeValue = "pussthecat.org-v2"
 
-          if (themeValue) {
-            let data = `csrf=x&theme=${themeValue}`;
-            request.send(data);
-            if (!instancesCookies.includes(protocolHost)) instancesCookies.push(protocolHost);
-            browser.storage.local.set({ instancesCookies })
-          }
+        if (themeValue) {
+          let data = `csrf=x&theme=${themeValue}`;
+          request.send(data);
+          if (!instancesCookies.includes(protocolHost)) instancesCookies.push(protocolHost);
+          browser.storage.local.set({ instancesCookies })
         }
       }
     })
@@ -168,25 +177,22 @@ function initBibliogramCookies(url) {
 }
 
 
-async function initDefaults() {
-  return new Promise(async resolve => {
-    fetch('/instances/data.json').then(response => response.text()).then(async data => {
+function initDefaults() {
+  return new Promise(resolve => {
+    fetch('/instances/data.json').then(response => response.text()).then(data => {
       let dataJson = JSON.parse(data);
       redirects.bibliogram = dataJson.bibliogram;
-      browser.storage.local.get('cloudflareList', async r => {
+      browser.storage.local.get('cloudflareList', r => {
         bibliogramNormalRedirectsChecks = [...redirects.bibliogram.normal];
         for (const instance of r.cloudflareList) {
-          let i;
-
-          i = bibliogramNormalRedirectsChecks.indexOf(instance);
+          let i = bibliogramNormalRedirectsChecks.indexOf(instance);
           if (i > -1) bibliogramNormalRedirectsChecks.splice(i, 1);
         }
-        await browser.storage.local.set({
+        browser.storage.local.set({
           disableInstagram: false,
           instagramRedirects: redirects,
 
           theme: 'DEFAULT',
-          applyThemeToSites: false,
 
           instancesCookies: [],
 
@@ -212,7 +218,6 @@ async function init() {
         "instagramRedirects",
 
         "theme",
-        "applyThemeToSites",
 
         "instancesCookies",
 
@@ -228,7 +233,6 @@ async function init() {
         if (r.instagramRedirects) redirects = r.instagramRedirects
 
         theme = r.theme;
-        applyThemeToSites = r.applyThemeToSites;
 
         instancesCookies = r.instancesCookies;
 

@@ -1,35 +1,32 @@
 import mapsHelper from "../../../assets/javascripts/helpers/maps.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
-let disableMapsElement = document.getElementById("disable-osm");
-let mapsFrontendElement = document.getElementById("maps-frontend");
+const disable = document.getElementById("disable-osm");
+const frontend = document.getElementById("maps-frontend");
 
 document.addEventListener("change", async () => {
     await browser.storage.local.set({
-        disableMaps: !disableMapsElement.checked,
-        mapsFrontend: mapsFrontendElement.value,
+        disableMaps: !disable.checked,
+        mapsFrontend: frontend.value,
     })
-    changeFrontendsSettings(mapsFrontendElement.value);
+    changeFrontendsSettings();
 })
 
-let facilDivElement = document.getElementById("facil")
-function changeFrontendsSettings(frontend) {
-    if (frontend == 'facil') {
-        facilDivElement.style.display = 'block';
-    }
-    else if (frontend == 'osm') {
-        facilDivElement.style.display = 'none';
-    }
+const facilDiv = document.getElementById("facil")
+function changeFrontendsSettings() {
+    if (frontend.value == 'facil') facilDiv.style.display = 'block';
+    else if (frontend.value == 'osm') facilDiv.style.display = 'none';
 }
+
 browser.storage.local.get(
     [
         "disableMaps",
         "mapsFrontend",
     ],
     r => {
-        disableMapsElement.checked = !r.disableMaps;
-        mapsFrontendElement.value = r.mapsFrontend;
-        changeFrontendsSettings(r.mapsFrontend);
+        disable.checked = !r.disableMaps;
+        frontend.value = r.mapsFrontend;
+        changeFrontendsSettings();
     }
 )
 commonHelper.processDefaultCustomInstances('maps', 'facil', 'normal', document);

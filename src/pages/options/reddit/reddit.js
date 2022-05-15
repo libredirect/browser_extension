@@ -5,19 +5,17 @@ let libredditDivElement = document.getElementById("libreddit")
 let tedditDivElement = document.getElementById("teddit")
 
 let disableRedditElement = document.getElementById("disable-reddit");
-let redditFrontendElement = document.getElementById("reddit-frontend");
-let protocolElement = document.getElementById("protocol")
-let bypassWatchOnRedditElement = document.getElementById("bypass-watch-on-reddit")
+let frontend = document.getElementById("reddit-frontend");
+let protocol = document.getElementById("protocol")
 
-document.addEventListener("change", async () => {
-    await browser.storage.local.set({
+document.addEventListener("change", () => {
+    browser.storage.local.set({
         disableReddit: !disableRedditElement.checked,
-        bypassWatchOnReddit: bypassWatchOnRedditElement.checked,
-        redditProtocol: protocolElement.value,
-        redditFrontend: redditFrontendElement.value,
+        redditProtocol: protocol.value,
+        redditFrontend: frontend.value,
     });
-    changeFrontendsSettings(redditFrontendElement.value);
-    changeProtocolSettings(protocolElement.value);
+    changeFrontendsSettings();
+    changeProtocolSettings();
 })
 
 const libredditForm = libredditDivElement.getElementsByTagName('form')[0];
@@ -26,50 +24,49 @@ libredditForm.addEventListener('submit', async event => {
     event.preventDefault();
     const url = new URL(libredditCookies.value);
     redditHelper.initLibredditCookies(url);
-})
+});
 
-function changeProtocolSettings(protocol) {
+const tedditForm = tedditDivElement.getElementsByTagName('form')[0];
+const tedditCookies = tedditForm.getElementsByTagName('input')[0];
+tedditForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    const url = new URL(tedditCookies.value);
+    redditHelper.initTedditCookies(url);
+});
+
+function changeProtocolSettings() {
     let normalLibredditDiv = libredditDivElement.getElementsByClassName("normal")[0];
     let torLibredditDiv = libredditDivElement.getElementsByClassName("tor")[0];
 
     let normalTedditDiv = tedditDivElement.getElementsByClassName("normal")[0];
     let torTedditDiv = tedditDivElement.getElementsByClassName("tor")[0];
-    if (protocol == 'normal') {
+    if (protocol.value == 'normal') {
         normalLibredditDiv.style.display = 'block';
         normalTedditDiv.style.display = 'block';
         torTedditDiv.style.display = 'none';
         torLibredditDiv.style.display = 'none';
     }
-    else if (protocol == 'tor') {
+    else if (protocol.value == 'tor') {
         normalLibredditDiv.style.display = 'none';
         normalTedditDiv.style.display = 'none';
         torTedditDiv.style.display = 'block';
         torLibredditDiv.style.display = 'block';
     }
 }
-function changeFrontendsSettings(frontend) {
-    let frontendElement = document.getElementById("frontend");
-    if (frontend == 'libreddit') {
-        frontendElement.innerHTML = 'Frontend';
+function changeFrontendsSettings() {
+    if (frontend.value == 'libreddit') {
         libredditDivElement.style.display = 'block';
         tedditDivElement.style.display = 'none';
     }
-    else if (frontend == 'teddit') {
-        frontendElement.innerHTML = 'Frontend';
+    else if (frontend.value == 'teddit') {
         libredditDivElement.style.display = 'none';
         tedditDivElement.style.display = 'block';
-    }
-    else if (frontend == 'old') {
-        frontendElement.innerHTML = `Frontend: <span style="color:red;">This isn't a fully private frontend</span>`;
-        libredditDivElement.style.display = 'none';
-        tedditDivElement.style.display = 'none';
     }
 }
 
 browser.storage.local.get(
     [
         "disableReddit",
-        "bypassWatchOnReddit",
         "redditProtocol",
         "redditFrontend",
 
@@ -77,11 +74,10 @@ browser.storage.local.get(
     ],
     r => {
         disableRedditElement.checked = !r.disableReddit
-        bypassWatchOnRedditElement.checked = r.bypassWatchOnReddit
-        protocolElement.value = r.redditProtocol
-        redditFrontendElement.value = r.redditFrontend
-        changeFrontendsSettings(r.redditFrontend);
-        changeProtocolSettings(r.redditProtocol);
+        protocol.value = r.redditProtocol
+        frontend.value = r.redditFrontend
+        changeFrontendsSettings();
+        changeProtocolSettings();
     }
 )
 

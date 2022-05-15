@@ -57,19 +57,9 @@ resetSettingsElement.addEventListener("click",
   }
 );
 
-let alwaysUsePreferredElement = document.getElementById("always-use-preferred")
-alwaysUsePreferredElement.addEventListener("change",
-  event => generalHelper.setAlwaysUsePreferred(event.target.checked)
-);
-
 let autoRedirectElement = document.getElementById("auto-redirect")
 autoRedirectElement.addEventListener("change",
   event => generalHelper.setAutoRedirect(event.target.checked)
-);
-
-let applyThemeToSitesElement = document.getElementById("apply-theme-to-sites")
-applyThemeToSitesElement.addEventListener("change",
-  event => generalHelper.setApplyThemeToSites(event.target.checked)
 );
 let themeElement = document.getElementById("theme");
 themeElement.addEventListener("change", event => {
@@ -96,10 +86,8 @@ for (const frontend of generalHelper.allPopupFrontends)
   )
 
 generalHelper.init().then(() => {
-  alwaysUsePreferredElement.checked = generalHelper.getAlwaysUsePreferred();
   autoRedirectElement.checked = generalHelper.getAutoRedirect();
   themeElement.value = generalHelper.getTheme();
-  applyThemeToSitesElement.checked = generalHelper.getApplyThemeToSites();
   instanceTypeElement.addEventListener("change",
     event => {
       instanceType = event.target.options[instanceTypeElement.selectedIndex].value
@@ -117,13 +105,14 @@ generalHelper.init().then(() => {
   function calcExceptionsCustomInstances() {
     document.getElementById("exceptions-custom-checklist").innerHTML =
       [...exceptionsCustomInstances.url, ...exceptionsCustomInstances.regex].map(
-        (x) => `<div>${x}<button class="add" id="clear-${x}">
-                      <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
-                      fill="currentColor">
-                        <path d="M0 0h24v24H0V0z" fill="none" />
-                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
-                      </svg>
-                    </button>
+        (x) => `<div>
+                  ${x}
+                  <button class="add" id="clear-${x}">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                    fill="currentColor">
+                      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+                    </svg>
+                  </button>
                 </div>
                 <hr>`
       ).join('\n');

@@ -1,8 +1,8 @@
 import sendTargetsHelper from "../../../assets/javascripts/helpers/sendTargets.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
-let disableSendTargetsElement = document.getElementById("disable-sendTargets");
-let protocolElement = document.getElementById("protocol")
+let disable = document.getElementById("disable-sendTargets");
+let protocol = document.getElementById("protocol")
 
 browser.storage.local.get(
     [
@@ -10,29 +10,28 @@ browser.storage.local.get(
         "sendTargetsProtocol",
     ],
     r => {
-        disableSendTargetsElement.checked = !r.disableSendTarget;
-
-        protocolElement.value = r.sendTargetsProtocol;
-        changeProtocolSettings(r.sendTargetsProtocol);
+        disable.checked = !r.disableSendTarget;
+        protocol.value = r.sendTargetsProtocol;
+        changeProtocolSettings();
     }
 )
 
 document.addEventListener("change", async () => {
     await browser.storage.local.set({
-        disableSendTarget: !disableSendTargetsElement.checked,
-        sendTargetsProtocol: protocolElement.value,
+        disableSendTarget: !disable.checked,
+        sendTargetsProtocol: protocol.value,
     })
-    changeProtocolSettings(protocolElement.value);
+    changeProtocolSettings();
 })
 
-function changeProtocolSettings(protocol) {
+function changeProtocolSettings() {
     let normalDiv = document.getElementsByClassName("normal")[0];
     let torDiv = document.getElementsByClassName("tor")[0];
-    if (protocol == 'normal') {
+    if (protocol.value == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';
     }
-    else if (protocol == 'tor') {
+    else if (protocol.value == 'tor') {
         normalDiv.style.display = 'none';
         torDiv.style.display = 'block';
     }

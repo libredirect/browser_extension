@@ -1,25 +1,25 @@
 import lbryHelper from "../../../assets/javascripts/helpers/lbry.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
-let disableLbryElement = document.getElementById("disable-lbry");
-let protocolElement = document.getElementById("protocol")
+let disable = document.getElementById("disable-lbry");
+let protocol = document.getElementById("protocol")
 
 document.addEventListener("change", async () => {
     await browser.storage.local.set({
         disableLbryTargets: !lbryHelper.checked,
-        lbryTargetsProtocol: protocolElement.value,
+        lbryTargetsProtocol: protocol.value,
     });
-    changeProtocolSettings(protocolElement.value)
+    changeProtocolSettings()
 })
 
-function changeProtocolSettings(protocol) {
+function changeProtocolSettings() {
     let normalDiv = document.getElementsByClassName("normal")[0];
     let torDiv = document.getElementsByClassName("tor")[0];
-    if (protocol == 'normal') {
+    if (protocol.value == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';
     }
-    else if (protocol == 'tor') {
+    else if (protocol.value == 'tor') {
         normalDiv.style.display = 'none';
         torDiv.style.display = 'block';
     }
@@ -31,14 +31,14 @@ browser.storage.local.get(
         "lbryTargetsProtocol"
     ],
     r => {
-        disableLbryElement.checked = !r.disableLbryTargets;
+        disable.checked = !r.disableLbryTargets;
+        protocol.value = r.lbryTargetsProtocol;
+        changeProtocolSettings();
+    }
+)
 
-        let protocol = r.lbryTargetsProtocol;
-        protocolElement.value = protocol;
-        changeProtocolSettings(protocol);
-    })
-commonHelper.processDefaultCustomInstances('lbry', 'librarian', 'normal', document);
-commonHelper.processDefaultCustomInstances('lbry', 'librarian', 'tor', document);
+commonHelper.processDefaultCustomInstances('lbryTargets', 'librarian', 'normal', document);
+commonHelper.processDefaultCustomInstances('lbryTargets', 'librarian', 'tor', document);
 
 let latencyElement = document.getElementById("latency");
 let latencyLabel = document.getElementById("latency-label");

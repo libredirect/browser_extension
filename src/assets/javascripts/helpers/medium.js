@@ -35,18 +35,9 @@ let redirects = {
   }
 };
 const getRedirects = () => redirects;
-const getCustomRedirects = function () {
-  return {
-    "scribe": {
-      "normal": [...scribeNormalRedirectsChecks, ...scribeNormalCustomRedirects],
-      "tor": [...scribeTorRedirectsChecks, ...scribeTorCustomRedirects]
-    },
-  };
-};
 function setRedirects(val) {
   redirects.scribe = val;
   browser.storage.local.set({ mediumRedirects: redirects })
-  console.log("mediumRedirects: ", val)
   for (const item of scribeNormalRedirectsChecks) if (!redirects.scribe.normal.includes(item)) {
     var index = scribeNormalRedirectsChecks.indexOf(item);
     if (index !== -1) scribeNormalRedirectsChecks.splice(index, 1);
@@ -78,12 +69,11 @@ function redirect(url, type, initiator) {
 
   if (disable) return;
 
-  if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") return null;
+  if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") return;
 
   if (initiator && ([...redirects.scribe.normal, ...scribeNormalCustomRedirects].includes(initiator.origin))) return;
 
   if (!targets.some(rx => rx.test(url.host))) return;
-  console.log('url.pathname', url.pathname);
   if (/^\/($|@[a-zA-Z.]{0,}(\/|)$)/.test(url.pathname)) return;
 
   let instancesList;
@@ -112,7 +102,6 @@ function switchInstance(url) {
   if (protocol == 'normal') instancesList = [...scribeNormalCustomRedirects, ...scribeNormalRedirectsChecks];
   else if (protocol == 'tor') instancesList = [...scribeTorCustomRedirects, ...scribeTorRedirectsChecks];
 
-  console.log("instancesList", instancesList);
   let index = instancesList.indexOf(protocolHost);
   if (index > -1) instancesList.splice(index, 1);
 
@@ -122,17 +111,17 @@ function switchInstance(url) {
   return `${randomInstance}${url.pathname}${url.search}`;
 }
 
-async function initDefaults() {
-  fetch('/instances/data.json').then(response => response.text()).then(async data => {
+function initDefaults() {
+  fetch('/instances/data.json').then(response => response.text()).then(data => {
     let dataJson = JSON.parse(data);
     redirects.scribe = dataJson.scribe;
-    browser.storage.local.get('cloudflareList', async r => {
+    browser.storage.local.get('cloudflareList', r => {
       scribeNormalRedirectsChecks = [...redirects.scribe.normal];
       for (const instance of r.cloudflareList) {
         let i = scribeNormalRedirectsChecks.indexOf(instance);
         if (i > -1) scribeNormalRedirectsChecks.splice(i, 1);
       }
-      await browser.storage.local.set({
+      browser.storage.local.set({
         disableMedium: false,
         mediumRedirects: redirects,
 
@@ -162,10 +151,7 @@ async function init() {
       ],
       r => {
         disable = r.disableMedium;
-
         protocol = r.mediumProtocol;
-
-
         redirects = r.mediumRedirects;
 
         scribeNormalRedirectsChecks = r.scribeNormalRedirectsChecks;
@@ -181,10 +167,7 @@ async function init() {
 }
 
 export default {
-  targets,
-
   getRedirects,
-  getCustomRedirects,
   setRedirects,
 
   redirect,

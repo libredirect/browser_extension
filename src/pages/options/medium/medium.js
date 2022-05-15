@@ -1,8 +1,8 @@
 import mediumHelper from "../../../assets/javascripts/helpers/medium.js";
 import commonHelper from "../../../assets/javascripts/helpers/common.js";
 
-let disableMediumElement = document.getElementById("disable-medium");
-let protocolElement = document.getElementById("protocol")
+let disable = document.getElementById("disable-medium");
+let protocol = document.getElementById("protocol")
 
 browser.storage.local.get(
     [
@@ -10,11 +10,9 @@ browser.storage.local.get(
         "mediumProtocol"
     ],
     r => {
-        disableMediumElement.checked = !r.disableMedium;
-
-        let protocol = r.mediumProtocol;
-        protocolElement.value = protocol;
-        changeProtocolSettings(protocol);
+        disable.checked = !r.disableMedium;
+        protocol.value = r.mediumProtocol;
+        changeProtocolSettings();
     }
 )
 commonHelper.processDefaultCustomInstances('medium', 'scribe', 'normal', document);
@@ -22,20 +20,20 @@ commonHelper.processDefaultCustomInstances('medium', 'scribe', 'tor', document);
 
 document.addEventListener("change", async () => {
     await browser.storage.local.set({
-        disableMedium: !disableMediumElement.checked,
-        mediumProtocol: protocolElement.value,
+        disableMedium: !disable.checked,
+        mediumProtocol: protocol.value,
     })
-    changeProtocolSettings(protocolElement.value);
+    changeProtocolSettings();
 })
 
-function changeProtocolSettings(protocol) {
+function changeProtocolSettings() {
     let normalDiv = document.getElementsByClassName("normal")[0];
     let torDiv = document.getElementsByClassName("tor")[0];
-    if (protocol == 'normal') {
+    if (protocol.value == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';
     }
-    else if (protocol == 'tor') {
+    else if (protocol.value == 'tor') {
         normalDiv.style.display = 'none';
         torDiv.style.display = 'block';
     }
