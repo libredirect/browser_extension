@@ -18,7 +18,7 @@ function getRandomInstance(instances) {
 let cloudflareList = [];
 async function initCloudflareList() {
   return new Promise(resolve => {
-    fetch('/instances/blocklist').then(response => response.text()).then(data => {
+    fetch('/instances/blocklist.json').then(response => response.text()).then(data => {
       cloudflareList = JSON.parse(data);
       resolve();
     })
@@ -96,6 +96,7 @@ function protocolHost(url) {
 }
 
 async function processDefaultCustomInstances(target, name, protocol, document) {
+
   function camelCase(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -108,6 +109,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
   let nameCheckListElement = nameProtocolElement.getElementsByClassName('checklist')[0];
 
   await initCloudflareList();
+
 
   let nameDefaultRedirects;
 
@@ -271,9 +273,13 @@ async function ping(href) {
     let started = new Date().getTime();
     http.onreadystatechange = () => {
       if (http.readyState == 2) {
-        let ended = new Date().getTime();
-        http.abort();
-        resolve(ended - started);
+        if (http.status == 200) {
+          let ended = new Date().getTime();
+          http.abort();
+          resolve(ended - started);
+        }
+        else
+          resolve(5000 + http.status)
       }
     };
     http.ontimeout = () => resolve(5000)
@@ -292,9 +298,16 @@ async function testLatency(element, instances) {
     for (const href of instances) await ping(href).then(m => {
       if (m) {
         myList[href] = m;
-        let color = m <= 1000 ? "green" : m <= 2000 ? "orange" : "red";
-        let text = m == 5000 ? '5000ms+' : m + 'ms';
-        element.innerHTML = `${href}:&nbsp;'<span style="color:${color};">${text}</span>`;
+        let color;
+        if (m <= 1000) color = "green"
+        else if (m <= 2000) color = "orange"
+        else color = "red";
+
+        let text;
+        if (m == 5000) text = '5000ms+'
+        else if (m > 5000) text = m - 5000
+        else text = `${m}ms`;
+        element.innerHTML = `${href}:&nbsp;<span style="color:${color};">${text}</span>`;
       }
     })
     resolve(myList);
