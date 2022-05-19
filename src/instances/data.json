@@ -2,6 +2,7 @@
   "invidious": {
     "normal": [
       "https://yewtu.be",
+      "https://vid.puffyan.us",
       "https://invidious.snopyta.org",
       "https://invidious.kavin.rocks",
       "https://inv.riverside.rocks",
@@ -18,8 +19,7 @@
       "https://invidious.weblibre.org",
       "https://invidious.esmailelbob.xyz",
       "https://youtube.076.ne.jp",
-      "https://invidious.namazso.eu",
-      "https://vid.puffyan.us"
+      "https://invidious.namazso.eu"
     ],
     "tor": [
       "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
@@ -111,7 +111,6 @@
       "https://nitter.bus-hit.me",
       "https://fuckthesacklers.network",
       "https://nitter.govt.land",
-      "https://nitter.datatunnel.xyz",
       "https://nitter.esmailelbob.xyz",
       "https://tw.artemislena.eu",
       "https://de.nttr.stream",
@@ -162,6 +161,8 @@
       "https://insta.trom.tf",
       "https://insta.tromdienste.de",
       "https://biblio.alefvanoon.xyz",
+      "https://ig.beparanoid.de",
+      "https://bibliogram.privacydev.net",
       "https://bib.actionsack.com"
     ],
     "tor": []
@@ -205,6 +206,7 @@
       "https://libreddit.hu",
       "https://libreddit.totaldarkness.net",
       "https://libreddit.esmailelbob.xyz",
+      "https://lr.vern.cc",
       "https://libreddit.nl",
       "https://lr.stilic.ml",
       "https://reddi.tk",
@@ -217,7 +219,14 @@
       "https://libreddit.winscloud.net",
       "https://libreddit.tiekoetter.com",
       "https://reddit.rtrace.io",
-      "https://libreddit.lunar.icu"
+      "https://libreddit.lunar.icu",
+      "https://libreddit.privacydev.net",
+      "https://libreddit.notyourcomputer.net",
+      "https://r.ahwx.org",
+      "https://bob.fr.to",
+      "https://reddit.beparanoid.de",
+      "https://libreddit.dcs0.hu",
+      "https://reddit.dr460nf1r3.org"
     ],
     "tor": [
       "http://spjmllawtheisznfs7uryhxumin26ssv2draj7oope3ok3wuhy43eoyd.onion",
@@ -232,7 +241,8 @@
       "http://libreddit.2syis2nnyytz6jnusnjurva4swlaizlnleiks5mjp46phuwjbdjqwgqd.onion",
       "http://ol5begilptoou34emq2sshf3may3hlblvipdjtybbovpb7c7zodxmtqd.onion",
       "http://lbrdtjaj7567ptdd4rv74lv27qhxfkraabnyphgcvptl64ijx2tijwid.onion",
-      "http://libreddit.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion"
+      "http://libreddit.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion",
+      "reddit.prnoid54e44a4bduq5due64jkk7wcnkxcp5kv3juncm7veptjcqudgyd.onion"
     ]
   },
   "teddit": {
@@ -491,6 +501,10 @@
     ]
   },
   "peertube": [
+    "https://video.mikka.md",
+    "https://www.aktion-nordost.tv",
+    "https://tube.rooty.fr",
+    "https://tube.dnet.one",
     "https://peertube.io",
     "https://peertube.echelon4.space",
     "https://dalek.zone",
@@ -558,7 +572,6 @@
     "https://videos.sadx.moe",
     "https://pt.nospy.net",
     "https://yhwh.tube",
-    "https://tube.zee.li",
     "https://peerlook.ru",
     "https://monero.wf",
     "https://tube.kicou.info",
@@ -657,7 +670,6 @@
     "https://peertube.ignifi.me",
     "https://docker.videos.lecygnenoir.info",
     "https://video.barcelo.cf",
-    "https://videotube.duckdns.org",
     "https://tv.based.quest",
     "https://peertube.beardedtek.com",
     "https://casnocensure.site",
@@ -677,7 +689,6 @@
     "https://poast.tv",
     "https://testube.distrilab.fr",
     "https://peertube.rse43.com",
-    "https://podlibre.video",
     "https://libremedia.video",
     "https://vid.lelux.fi",
     "https://v.wolfskaempf.de",
@@ -1060,7 +1071,6 @@
     "https://peertube.eu.org",
     "https://peertube.mxinfo.fr",
     "https://tube.frischesicht.de",
-    "https://videos.traumaheilung.net",
     "https://peertube1.zeteo.me",
     "https://conspiracydistillery.com",
     "https://peertube.chemnitz.freifunk.net",
