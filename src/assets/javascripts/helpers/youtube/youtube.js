@@ -3,8 +3,6 @@
 window.browser = window.browser || window.chrome;
 
 import commonHelper from '../common.js'
-import piped from './piped.js';
-import pipedMaterial from './pipedMaterial.js';
 
 const targets = [
   /^https?:\/{2}(www\.|music\.|m\.|)youtube\.com(\/.*|$)/,
@@ -330,9 +328,6 @@ async function initDefaults() {
           youtubeEmbedFrontend: 'invidious',
           youtubeProtocol: 'normal',
         })
-
-        await piped.initDefaults();
-        await pipedMaterial.initDefaults();
         resolve();
       })
     })
@@ -420,7 +415,7 @@ async function initInvidiousCookies(from) {
           ...r.invidiousTorRedirectsChecks,
           ...r.invidiousNormalCustomRedirects,
           ...r.invidiousTorCustomRedirects,
-        ].includes(protocolHost)) resolve();
+        ].includes(protocolHost)) return;
         let checkedInstances;
         if (r.youtubeProtocol == 'normal') checkedInstances = [...r.invidiousNormalRedirectsChecks, ...r.invidiousNormalCustomRedirects]
         else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.invidiousTorRedirectsChecks, ...r.invidiousTorCustomRedirects]
@@ -429,7 +424,150 @@ async function initInvidiousCookies(from) {
         resolve(true);
       }
     )
-  }
+  })
+}
+
+function setInvidiousCookies() {
+  browser.storage.local.get(
+    [
+      "disableYoutube",
+      "youtubeProtocol",
+      "youtubeFrontend",
+      "invidiousNormalRedirectsChecks",
+      "invidiousNormalCustomRedirects",
+      "invidiousTorRedirectsChecks",
+      "invidiousTorCustomRedirects",
+    ],
+    r => {
+      if (r.disableYoutube || r.youtubeFrontend != 'invidious' || r.youtubeProtocol === undefined) return;
+      let checkedInstances;
+      if (r.youtubeProtocol == 'normal') checkedInstances = [...r.invidiousNormalRedirectsChecks, ...r.invidiousNormalCustomRedirects]
+      else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.invidiousTorRedirectsChecks, ...r.invidiousTorCustomRedirects]
+      for (const to of checkedInstances)
+        commonHelper.getCookiesFromStorage('invidious', to, 'PREFS');
+    }
+  )
+}
+
+async function initPipedLocalStorage(url, tabId) {
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "pipedNormalRedirectsChecks",
+        "pipedNormalCustomRedirects",
+        "pipedTorRedirectsChecks",
+        "pipedTorCustomRedirects",
+      ],
+      r => {
+        let protocolHost = commonHelper.protocolHost(url);
+        if (![
+          ...r.pipedNormalCustomRedirects,
+          ...r.pipedNormalRedirectsChecks,
+          ...r.pipedTorRedirectsChecks,
+          ...r.pipedTorCustomRedirects,
+        ].includes(protocolHost)) resolve();
+        browser.tabs.executeScript(
+          tabId,
+          {
+            file: "/assets/javascripts/helpers/youtube/get_piped_settings.js",
+            runAt: "document_start"
+          }
+        );
+        resolve(true);
+      }
+    )
+  })
+}
+
+async function setPipedLocalStorage(url, tabId) {
+  browser.storage.local.get(
+    [
+      "disableYoutube",
+      "youtubeFrontend",
+      "pipedNormalRedirectsChecks",
+      "pipedNormalCustomRedirects",
+      "pipedTorRedirectsChecks",
+      "pipedTorCustomRedirects",
+    ],
+    r => {
+      if (!r.disableYoutube && r.youtubeFrontend == 'pipedMaterial') return;
+      let protocolHost = commonHelper.protocolHost(url);
+      if (![
+        ...r.pipedNormalRedirectsChecks,
+        ...r.pipedTorRedirectsChecks,
+        ...r.pipedNormalCustomRedirects,
+        ...r.pipedTorCustomRedirects,
+      ].includes(protocolHost)) return;
+      browser.tabs.executeScript(
+        tabId,
+        {
+          file: "/assets/javascripts/helpers/youtube/set_piped_preferences.js",
+          runAt: "document_start"
+        }
+      );
+      return true;
+    }
+  )
+}
+
+async function initPipedMaterialLocalStorage(tabId) {
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "pipedMaterialNormalRedirectsChecks",
+        "pipedMaterialNormalCustomRedirects",
+        "pipedMaterialTorRedirectsChecks",
+        "pipedMaterialTorCustomRedirects",
+      ],
+      r => {
+        const protocolHost = commonHelper.protocolHost(url);
+        if (![
+          ...r.pipedMaterialNormalCustomRedirects,
+          ...r.pipedMaterialNormalRedirectsChecks,
+          ...r.pipedMaterialTorRedirectsChecks,
+          ...r.pipedMaterialTorCustomRedirects,
+        ].includes(protocolHost)) return;
+        browser.tabs.executeScript(
+          tabId,
+          {
+            file: "/assets/javascripts/helpers/youtube/get_pipedMaterial_preferences.js",
+            runAt: "document_start"
+          }
+        );
+        resolve(true);
+      }
+    )
+  })
+}
+
+async function setPipedMaterialLocalStorage(url, tabId) {
+  browser.storage.local.get(
+    [
+      "disableYoutube",
+      "youtubeFrontend",
+      "pipedMaterialNormalRedirectsChecks",
+      "pipedMaterialTorRedirectsChecks",
+      "pipedMaterialNormalCustomRedirects",
+      "pipedMaterialTorCustomRedirects",
+    ],
+    r => {
+      if (r.disableYoutube || r.youtubeFrontend != 'pipedMaterial') return;
+      const protocolHost = commonHelper.protocolHost(url);
+      if (![
+        ...r.pipedMaterialNormalRedirectsChecks,
+        ...r.pipedMaterialTorRedirectsChecks,
+        ...r.pipedMaterialNormalCustomRedirects,
+        ...r.pipedMaterialTorCustomRedirects,
+      ].includes(protocolHost)) return;
+      browser.tabs.executeScript(
+        tabId,
+        {
+          file: "/assets/javascripts/helpers/youtube/set_pipedMaterial_preferences.js",
+          runAt: "document_start"
+        }
+      );
+      return true;
+    }
   )
 }
 
@@ -456,15 +594,12 @@ function removeXFrameOptions(e) {
   if (isChanged) return { responseHeaders: e.responseHeaders };
 }
 
-let
-  initPipedLocalStorage = piped.initPipedLocalStorage,
-  initPipedMaterialLocalStorage = pipedMaterial.initPipedMaterialLocalStorage,
-  copyPipedLocalStorage = piped.copyPipedLocalStorage;
-
 export default {
-  initPipedLocalStorage,
   initPipedMaterialLocalStorage,
+  setPipedLocalStorage,
+  setPipedMaterialLocalStorage,
   initInvidiousCookies,
+  setInvidiousCookies,
   getRedirects,
 
   redirect,
@@ -474,7 +609,7 @@ export default {
 
   isPipedorInvidious,
 
-  copyPipedLocalStorage,
+  initPipedLocalStorage,
 
   initDefaults,
   init,

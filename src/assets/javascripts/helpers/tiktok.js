@@ -73,6 +73,29 @@ function initProxiTokCookies(from) {
     })
 }
 
+function setProxiTokCookies() {
+    browser.storage.local.get(
+        [
+            "tiktokProtocol",
+            "disableTiktok",
+            "proxiTokNormalRedirectsChecks",
+            "proxiTokNormalCustomRedirects",
+            "proxiTokTorRedirectsChecks",
+            "proxiTokTorCustomRedirects",
+        ],
+        r => {
+            if (r.disableTiktok || r.tiktokProtocol === undefined) return;
+            let checkedInstances;
+            if (r.youtubeProtocol == 'normal') checkedInstances = [...r.proxiTokNormalRedirectsChecks, ...r.proxiTokNormalCustomRedirects]
+            else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.proxiTokTorRedirectsChecks, ...r.proxiTokTorCustomRedirects]
+            for (const to of checkedInstances) {
+                commonHelper.getCookiesFromStorage('proxitok', from, to, 'theme');
+                commonHelper.getCookiesFromStorage('proxitok', from, to, 'api-legacy');
+            }
+        }
+    )
+}
+
 function redirect(url, type, initiator) {
     if (disable) return;
     if (type != "main_frame") return null;
@@ -174,6 +197,7 @@ export default {
     reverse,
 
     initProxiTokCookies,
+    setProxiTokCookies,
 
     initDefaults,
     init,

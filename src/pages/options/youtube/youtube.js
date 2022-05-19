@@ -146,7 +146,7 @@ invidiousForm.addEventListener('submit', async event => {
 // pipedForm.addEventListener('submit', async event => {
 //     event.preventDefault();
 //     const url = new URL(pipedCookies.value);
-//     youtubeHelper.initPipedLocalStorage(url);
+//     youtubeHelper.applyPipedLocalStorage(url);
 // });
 
 commonHelper.processDefaultCustomInstances('youtube', 'invidious', 'normal', document);

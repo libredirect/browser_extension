@@ -114,6 +114,38 @@ function initLibredditCookies(from) {
 
 }
 
+function setLibredditCookies() {
+  browser.storage.local.get(
+    [
+      "redditProtocol",
+      "disableReddit",
+      "redditFrontend",
+      "libredditNormalRedirectsChecks",
+      "libredditNormalCustomRedirects",
+      "libredditTorRedirectsChecks",
+      "libredditTorCustomRedirects",
+    ],
+    r => {
+      if (r.disableReddit || r.redditFrontend != 'libreddit' || r.redditProtocol === undefined) return;
+      let checkedInstances;
+      if (r.redditProtocol == 'normal') checkedInstances = [...r.libredditNormalRedirectsChecks, ...r.libredditNormalCustomRedirects]
+      else if (r.redditProtocol == 'tor') checkedInstances = [...r.libredditTorRedirectsChecks, ...r.libredditTorCustomRedirects]
+      for (const to of checkedInstances) {
+        commonHelper.getCookiesFromStorage('libreddit', to, "theme");
+        commonHelper.getCookiesFromStorage('libreddit', to, "front_page");
+        commonHelper.getCookiesFromStorage('libreddit', to, "layout");
+        commonHelper.getCookiesFromStorage('libreddit', to, "wide");
+        commonHelper.getCookiesFromStorage('libreddit', to, "post_sort");
+        commonHelper.getCookiesFromStorage('libreddit', to, "comment_sort");
+        commonHelper.getCookiesFromStorage('libreddit', to, "show_nsfw");
+        commonHelper.getCookiesFromStorage('libreddit', to, "autoplay_videos");
+        commonHelper.getCookiesFromStorage('libreddit', to, "use_hls");
+        commonHelper.getCookiesFromStorage('libreddit', to, "hide_hls_notification");
+      }
+    }
+  )
+}
+
 function initTedditCookies(from) {
   return new Promise(resolve => {
     browser.storage.local.get(
@@ -154,6 +186,40 @@ function initTedditCookies(from) {
       }
     )
   })
+}
+
+function setTedditCookies() {
+  browser.storage.local.get(
+    [
+      "redditProtocol",
+      "disableReddit",
+      "redditFrontend",
+      "tedditNormalRedirectsChecks",
+      "tedditNormalCustomRedirects",
+      "tedditTorRedirectsChecks",
+      "tedditTorCustomRedirects",
+    ],
+    r => {
+      if (r.disableReddit || r.redditFrontend != 'teddit' || r.redditProtocol === undefined) return;
+      let checkedInstances;
+      if (r.redditProtocol == 'normal') checkedInstances = [...r.tedditNormalRedirectsChecks, ...r.tedditNormalCustomRedirects]
+      else if (r.redditProtocol == 'tor') checkedInstances = [...r.tedditTorRedirectsChecks, ...r.tedditTorCustomRedirects]
+      for (const to of checkedInstances) {
+        commonHelper.getCookiesFromStorage('teddit', to, 'collapse_child_comments')
+        commonHelper.getCookiesFromStorage('teddit', to, 'domain_instagram')
+        commonHelper.getCookiesFromStorage('teddit', to, 'domain_twitter')
+        commonHelper.getCookiesFromStorage('teddit', to, 'domain_youtube')
+        commonHelper.getCookiesFromStorage('teddit', to, 'flairs')
+        commonHelper.getCookiesFromStorage('teddit', to, 'highlight_controversial')
+        commonHelper.getCookiesFromStorage('teddit', to, 'nsfw_enabled')
+        commonHelper.getCookiesFromStorage('teddit', to, 'post_media_max_height')
+        commonHelper.getCookiesFromStorage('teddit', to, 'show_upvoted_percentage')
+        commonHelper.getCookiesFromStorage('teddit', to, 'show_upvotes')
+        commonHelper.getCookiesFromStorage('teddit', to, 'theme')
+        commonHelper.getCookiesFromStorage('teddit', to, 'videos_muted')
+      }
+    }
+  )
 }
 
 function redirect(url, type, initiator) {
@@ -200,12 +266,12 @@ function redirect(url, type, initiator) {
     if (frontend == 'teddit') {
       if (tedditInstancesList.length === 0) return null;
       let tedditRandomInstance = commonHelper.getRandomInstance(tedditInstancesList);
-      return `${tedditRandomInstance}/pics/w:null_${url.pathname.substring(1)}${url.search}`;
+      return `${tedditRandomInstance}/pics/w:null_${url.pathname.substring(1)}${url.reddit}`;
     }
     if (frontend == 'libreddit') {
       if (libredditInstancesList.length === 0) return null;
       let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
-      return `${libredditRandomInstance}/img${url.pathname}${url.search}`;
+      return `${libredditRandomInstance}/img${url.pathname}${url.reddit}`;
     }
   }
   else if (url.host === "redd.it") {
@@ -213,13 +279,13 @@ function redirect(url, type, initiator) {
       if (libredditInstancesList.length === 0) return null;
       let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
       // https://redd.it/foo => https://libredd.it/comments/foo
-      return `${libredditRandomInstance}/comments${url.pathname}${url.search}`;
+      return `${libredditRandomInstance}/comments${url.pathname}${url.reddit}`;
     }
     if (frontend == 'teddit' && !url.pathname.match(/^\/+[^\/]+\/+[^\/]/)) {
       if (tedditInstancesList.length === 0) return null;
       let tedditRandomInstance = commonHelper.getRandomInstance(tedditInstancesList);
       // https://redd.it/foo => https://teddit.net/comments/foo
-      return `${tedditRandomInstance}/comments${url.pathname}${url.search}`;
+      return `${tedditRandomInstance}/comments${url.pathname}${url.reddit}`;
     }
   }
   else if (url.host === 'preview.redd.it') {
@@ -229,19 +295,19 @@ function redirect(url, type, initiator) {
     if (frontend == 'libreddit') {
       if (libredditInstancesList.length === 0) return null;
       let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
-      return `${libredditRandomInstance}/preview/pre${url.pathname}${url.search}`;
+      return `${libredditRandomInstance}/preview/pre${url.pathname}${url.reddit}`;
     }
   }
 
   if (frontend == 'libreddit') {
     if (libredditInstancesList.length === 0) return null;
     let libredditRandomInstance = commonHelper.getRandomInstance(libredditInstancesList);
-    return `${libredditRandomInstance}${url.pathname}${url.search}`;
+    return `${libredditRandomInstance}${url.pathname}${url.reddit}`;
   }
   if (frontend == 'teddit') {
     if (tedditInstancesList.length === 0) return null;
     let tedditRandomInstance = commonHelper.getRandomInstance(tedditInstancesList);
-    return `${tedditRandomInstance}${url.pathname}${url.search}`;
+    return `${tedditRandomInstance}${url.pathname}${url.reddit}`;
   }
 }
 
@@ -254,7 +320,7 @@ function reverse(url) {
     ...nitterTorCustomRedirects].includes(protocolHost)
   ) return;
   if (url.pathname.includes('/pics/w:null_'))
-    return `https://reddit.com${url.pathname}${url.search}`;
+    return `https://reddit.com${url.pathname}${url.reddit}`;
 }
 
 async function switchInstance(url) {
@@ -319,7 +385,7 @@ async function switchInstance(url) {
 
         let randomInstance = commonHelper.getRandomInstance(instancesList);
 
-        resolve(`${randomInstance}${url.pathname}${url.search}`)
+        resolve(`${randomInstance}${url.pathname}${url.reddit}`)
       }
     )
   })
@@ -412,9 +478,9 @@ export default {
   setLibredditRedirects,
 
   initLibredditCookies,
+  setLibredditCookies,
   initTedditCookies,
-
-  initLibredditCookies,
+  setTedditCookies,
 
   redirect,
   init,

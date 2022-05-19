@@ -129,11 +129,6 @@
     "description": "used in general.html"
   },
 
-  "applyTheme": {
-    "message": "Apply theme to sites",
-    "description": "used in general.html"
-  },
-
   "alwaysPref": {
     "message": "Always use Preferred Instances",
     "description": "used in general.html"

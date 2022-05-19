@@ -67,7 +67,6 @@ let
   lingvaNormalCustomRedirects,
   lingvaTorCustomRedirects;
 
-
 let
   disable, // translateDisable
   frontend, // translateFrontend
@@ -107,14 +106,129 @@ function isTranslateRedirects(url, type, frontend) {
   ].includes(protocolHost);
 }
 
-function initLingvaLocalStorage(tabId) {
-  browser.tabs.executeScript(
-    tabId,
-    {
-      file: "/assets/javascripts/helpers/translate/lingva-preferences.js",
-      runAt: "document_start"
+function initLingvaLocalStorage(url, tabId) {
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "lingvaNormalRedirectsChecks",
+        "lingvaNormalCustomRedirects",
+        "lingvaTorRedirectsChecks",
+        "lingvaTorCustomRedirects",
+      ],
+      r => {
+        let protocolHost = commonHelper.protocolHost(url);
+        if (![
+          ...r.lingvaNormalRedirectsChecks,
+          ...r.lingvaTorRedirectsChecks,
+          ...r.lingvaNormalCustomRedirects,
+          ...r.lingvaTorCustomRedirects,
+        ].includes(protocolHost)) return;
+        browser.tabs.executeScript(
+          tabId,
+          {
+            file: "/assets/javascripts/helpers/translate/get_lingva_preferences.js",
+            runAt: "document_start"
+          }
+        );
+        resolve(true);
+      }
+    )
+  })
+}
+
+async function setLingvaLocalStorage(url, tabId) {
+  browser.storage.local.get(
+    [
+      "disableYoutube",
+      "youtubeFrontend",
+      "lingvaNormalRedirectsChecks",
+      "lingvaNormalCustomRedirects",
+      "lingvaTorRedirectsChecks",
+      "lingvaTorCustomRedirects",
+    ],
+    r => {
+      if (r.disableYoutube || r.youtubeFrontend != 'lingva') return;
+      let protocolHost = commonHelper.protocolHost(url);
+      if (![
+        ...r.lingvaNormalRedirectsChecks,
+        ...r.lingvaTorRedirectsChecks,
+        ...r.lingvaNormalCustomRedirects,
+        ...r.lingvaTorCustomRedirects,
+      ].includes(protocolHost)) return;
+      browser.tabs.executeScript(
+        tabId,
+        {
+          file: "/assets/javascripts/helpers/youtube/set_lingva_preferences.js",
+          runAt: "document_start"
+        }
+      );
+      return true;
+    })
+}
+
+function initSimplyTranslateCookies(from) {
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "translateProtocol",
+        "simplyTranslateNormalRedirectsChecks",
+        "simplyTranslateNormalCustomRedirects",
+        "simplyTranslateTorRedirectsChecks",
+        "simplyTranslateTorCustomRedirects",
+        "simplyTranslateI2pRedirectsChecks",
+        "simplyTranslateI2pCustomRedirects",
+      ],
+      r => {
+        let protocolHost = commonHelper.protocolHost(from);
+        if (![
+          ...r.simplyTranslateNormalRedirectsChecks,
+          ...r.simplyTranslateNormalCustomRedirects,
+          ...r.simplyTranslateTorRedirectsChecks,
+          ...r.simplyTranslateTorCustomRedirects,
+          ...r.simplyTranslateI2pRedirectsChecks,
+          ...r.simplyTranslateI2pCustomRedirects,
+        ].includes(protocolHost)) resolve();
+
+        let checkedInstances;
+        if (r.translateProtocol == 'normal') checkedInstances = [...r.simplyTranslateNormalRedirectsChecks, ...r.simplyTranslateNormalCustomRedirects]
+        else if (r.translateProtocol == 'tor') checkedInstances = [...r.simplyTranslateTorRedirectsChecks, ...r.simplyTranslateTorCustomRedirects]
+        else if (r.translateProtocol == 'i2p') checkedInstances = [...r.simplyTranslateI2pRedirectsChecks, ...r.simplyTranslateI2pCustomRedirects]
+        for (const to of checkedInstances) {
+          commonHelper.copyCookie('simplyTranslate', from, to, 'from_lang');
+          commonHelper.copyCookie('simplyTranslate', from, to, 'to_lang');
+          commonHelper.copyCookie('simplyTranslate', from, to, 'tts_enabled');
+          commonHelper.copyCookie('simplyTranslate', from, to, 'use_text_fields');
+        }
+        resolve(true);
+      }
+    )
+  })
+}
+
+function setSimplyTranslateCookies() {
+  browser.storage.local.get(
+    [
+      "translateProtocol",
+      "translateDisable",
+      "translateFrontend",
+      "simplyTranslateNormalRedirectsChecks",
+      "simplyTranslateNormalCustomRedirects",
+      "simplyTranslateTorRedirectsChecks",
+      "simplyTranslateTorCustomRedirects",
+    ],
+    r => {
+      if (r.translateDisable || r.translateFrontend != 'simplyTranslate' || r.translateProtocol === undefined) return;
+      let checkedInstances;
+      if (r.translateProtocol == 'normal') checkedInstances = [...r.simplyTranslateNormalRedirectsChecks, ...r.simplyTranslateNormalCustomRedirects]
+      else if (r.translateProtocol == 'tor') checkedInstances = [...r.simplyTranslateTorRedirectsChecks, ...r.simplyTranslateTorCustomRedirects]
+      for (const to of checkedInstances) {
+        commonHelper.getCookiesFromStorage('simplyTranslate', to, 'from_lang');
+        commonHelper.getCookiesFromStorage('simplyTranslate', to, 'to_lang');
+        commonHelper.getCookiesFromStorage('simplyTranslate', to, 'tts_enabled');
+        commonHelper.getCookiesFromStorage('simplyTranslate', to, 'use_text_fields');
+      }
     }
-  );
+  )
 }
 
 function redirect(url) {
@@ -267,7 +381,10 @@ export default {
   getRedirects,
 
   isTranslateRedirects,
+  initSimplyTranslateCookies,
+  setSimplyTranslateCookies,
   initLingvaLocalStorage,
+  setLingvaLocalStorage,
 
   setSimplyTranslateRedirects,
   setLingvaRedirects,

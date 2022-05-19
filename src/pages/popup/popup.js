@@ -110,14 +110,23 @@ function unify() {
         let url = new URL(currTab.url);
 
         let result = await youtubeHelper.initInvidiousCookies(url);
-        if (!result) result = await youtubeHelper.copyPipedLocalStorage(url, currTab.id);
+        if (!result) result = await youtubeHelper.initPipedLocalStorage(url, currTab.id);
+        if (!result) result = await youtubeHelper.initPipedMaterialLocalStorage(url, currTab.id);
+
         if (!result) result = await twitterHelper.initNitterCookies(url);
+
         if (!result) result = await redditHelper.initLibredditCookies(url);
         if (!result) result = await redditHelper.initTedditCookies(url);
-        if (!result) result = await redditHelper.initSearxCookies(url);
-        if (!result) result = await redditHelper.initSearxngCookies(url);
+
+        if (!result) result = await searchHelper.initSearxCookies(url);
+        if (!result) result = await searchHelper.initSearxngCookies(url);
+
         if (!result) result = await tiktokHelper.initProxiTokCookies(url);
-        if (!result) result = await tiktokHelper.initWikilessCookies(url);
+
+        if (!result) result = await wikipediaHelper.initWikilessCookies(url);
+
+        if (!result) result = await translateHelper.initSimplyTranslateCookies(url);
+        if (!result) result = await translateHelper.initLingvaLocalStorage(url);
 
         if (result) {
           const textElement = unifyElement.getElementsByTagName('h4')[0]

@@ -1,6 +1,8 @@
 "use strict";
 
+import generalHelper from "../../assets/javascripts/helpers/general.js";
 import youtubeHelper from "../../assets/javascripts/helpers/youtube/youtube.js";
+import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
 import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
 import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
 import redditHelper from "../../assets/javascripts/helpers/reddit.js";
@@ -15,33 +17,42 @@ import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
 
-import generalHelper from "../../assets/javascripts/helpers/general.js";
-import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
-
 window.browser = window.browser || window.chrome;
 
-browser.runtime.onInstalled.addListener(async details => {
-  if (details.reason == 'install') {
-    fetch('/instances/blocklist.json').then(response => response.text()).then(async data => {
-      await browser.storage.local.set({ cloudflareList: JSON.parse(data) })
-      youtubeHelper.initDefaults();
-      youtubeMusicHelper.initDefaults();
-      twitterHelper.initDefaults();
-      instagramHelper.initDefaults();
-      mapsHelper.initDefaults();
-      searchHelper.initDefaults();
-      translateHelper.initDefaults();
-      mediumHelper.initDefaults();
-      redditHelper.initDefaults();
-      wikipediaHelper.initDefaults();
-      imgurHelper.initDefaults();
-      tiktokHelper.initDefaults();
-      sendTargetsHelper.initDefaults();
-      peertubeHelper.initDefaults();
-      lbryHelper.initDefaults();
-    })
+youtubeHelper.setInvidiousCookies();
+translateHelper.setSimplyTranslateCookies();
+twitterHelper.setNitterCookies();
+wikipediaHelper.setWikilessCookies();
+searchHelper.setSearxCookies();
+searchHelper.setSearxngCookies();
+redditHelper.setLibredditCookies();
+redditHelper.setTedditCookies();
+tiktokHelper.setProxiTokCookies();
+
+browser.runtime.onInstalled.addListener(
+  async details => {
+    if (details.reason == 'install') {
+      fetch('/instances/blocklist.json').then(response => response.text()).then(async data => {
+        await browser.storage.local.set({ cloudflareList: JSON.parse(data) })
+        youtubeHelper.initDefaults();
+        youtubeMusicHelper.initDefaults();
+        twitterHelper.initDefaults();
+        instagramHelper.initDefaults();
+        mapsHelper.initDefaults();
+        searchHelper.initDefaults();
+        translateHelper.initDefaults();
+        mediumHelper.initDefaults();
+        redditHelper.initDefaults();
+        wikipediaHelper.initDefaults();
+        imgurHelper.initDefaults();
+        tiktokHelper.initDefaults();
+        sendTargetsHelper.initDefaults();
+        peertubeHelper.initDefaults();
+        lbryHelper.initDefaults();
+      })
+    }
   }
-})
+)
 
 async function wholeInit() {
   await youtubeHelper.init();
@@ -71,11 +82,10 @@ browser.tabs.onCreated.addListener(
       });
       incognitoInit = true;
     }
-  });
-
+  }
+);
 
 let BYPASSTABs = [];
-
 browser.webRequest.onBeforeRequest.addListener(
   async details => {
     const url = new URL(details.url);
@@ -213,11 +223,9 @@ browser.tabs.onUpdated.addListener(
     let url;
     try { url = new URL(changeInfo.url); }
     catch (_) { return }
-    let result = await youtubeHelper.initPipedLocalStorage(url, tabId);
-    // if (youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
-    // if (translateHelper.isTranslateRedirects(url, 'main_frame', 'lingva')) translateHelper.initLingvaLocalStorage(tabId);
-    // if (instagramHelper.isBibliogram(url)) instagramHelper.initBibliogramCookies(url);
-    // if (changeInfo.url && youtubeHelper.isPipedorInvidious(url, 'main_frame', 'pipedMaterial')) youtubeHelper.initPipedMaterialLocalStorage(tabId);
+    let result = await youtubeHelper.setPipedLocalStorage(url, tabId);
+    if (!result) result = await youtubeHelper.setPipedMaterialLocalStorage(url, tabId);
+    if (!result) result = await translateHelper.initLingvaLocalStorage(url, tabId);
   }
 );
 
@@ -265,14 +273,16 @@ browser.contextMenus.create({
   contexts: ["browser_action"]
 });
 
-browser.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId == 'switchInstance') {
-    let url;
-    try { url = new URL(tab.url); }
-    catch (_) { return }
-    let newUrl = changeWholeInstance(url);
-    if (newUrl) browser.tabs.update({ url: newUrl });
+browser.contextMenus.onClicked.addListener(
+  (info, tab) => {
+    if (info.menuItemId == 'switchInstance') {
+      let url;
+      try { url = new URL(tab.url); }
+      catch (_) { return }
+      let newUrl = changeWholeInstance(url);
+      if (newUrl) browser.tabs.update({ url: newUrl });
+    }
+    else if (info.menuItemId == 'settings')
+      browser.runtime.openOptionsPage()
   }
-  else if (info.menuItemId == 'settings')
-    browser.runtime.openOptionsPage()
-});
+);

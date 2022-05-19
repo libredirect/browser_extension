@@ -29,24 +29,6 @@ let bibliogramTorRedirectsChecks;
 let bibliogramNormalCustomRedirects = [];
 let bibliogramTorCustomRedirects = [];
 
-const reservedPaths = [
-  "u",
-  "p",
-  "privacy",
-];
-
-const bypassPaths = [
-  /about/,
-  /explore/,
-  /support/,
-  /press/,
-  /api/,
-  /privacy/,
-  /safety/,
-  /admin/,
-  /\/(accounts\/|embeds?.js)/
-];
-
 let disable; //disableInstagram
 let protocol; //instagramProtocol
 
@@ -68,6 +50,18 @@ function redirect(url, type, initiator) {
     "media",
   ].includes(type)) return null;
 
+  const bypassPaths = [
+    /about/,
+    /explore/,
+    /support/,
+    /press/,
+    /api/,
+    /privacy/,
+    /safety/,
+    /admin/,
+    /\/(accounts\/|embeds?.js)/
+  ];
+
   if (bypassPaths.some(rx => rx.test(url.pathname))) return;
 
   let instancesList;
@@ -75,6 +69,12 @@ function redirect(url, type, initiator) {
   else if (protocol == 'tor') instancesList = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects];
   if (instancesList.length === 0) return null;
   let randomInstance = commonHelper.getRandomInstance(instancesList)
+
+  const reservedPaths = [
+    "u",
+    "p",
+    "privacy",
+  ];
 
   if (url.pathname === "/" || reservedPaths.includes(url.pathname.split("/")[1]))
     return `${randomInstance}${url.pathname}${url.search}`;
@@ -139,44 +139,6 @@ function switchInstance(url) {
   return `${randomInstance}${url.pathname}${url.search}`;
 }
 
-function isBibliogram(url) {
-  let protocolHost = commonHelper.protocolHost(url);
-  return [
-    ...redirects.bibliogram.normal,
-    ...redirects.bibliogram.tor,
-    ...bibliogramNormalCustomRedirects,
-    ...bibliogramTorCustomRedirects,
-  ].includes(protocolHost);
-}
-
-let instancesCookies;
-let theme;
-function initBibliogramCookies(url) {
-  let protocolHost = commonHelper.protocolHost(url);
-  browser.cookies.get(
-    { url: protocolHost, name: "settings" },
-    cookie => {
-      if (!cookie || !instancesCookies.includes(protocolHost)) {
-        console.log(`initing cookie for ${protocolHost}`);
-        let request = new XMLHttpRequest();
-        request.open("POST", `${protocolHost}/settings/return?referrer=%2F`);
-
-        let themeValue;
-        if (theme == 'light') themeValue = "classic";
-        if (theme == 'dark') themeValue = "pussthecat.org-v2"
-
-        if (themeValue) {
-          let data = `csrf=x&theme=${themeValue}`;
-          request.send(data);
-          if (!instancesCookies.includes(protocolHost)) instancesCookies.push(protocolHost);
-          browser.storage.local.set({ instancesCookies })
-        }
-      }
-    })
-
-}
-
-
 function initDefaults() {
   return new Promise(resolve => {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
@@ -191,10 +153,6 @@ function initDefaults() {
         browser.storage.local.set({
           disableInstagram: false,
           instagramRedirects: redirects,
-
-          theme: 'DEFAULT',
-
-          instancesCookies: [],
 
           bibliogramNormalRedirectsChecks: bibliogramNormalRedirectsChecks,
           bibliogramTorRedirectsChecks: [],
@@ -217,10 +175,6 @@ async function init() {
         "disableInstagram",
         "instagramRedirects",
 
-        "theme",
-
-        "instancesCookies",
-
         "bibliogramNormalRedirectsChecks",
         "bibliogramTorRedirectsChecks",
 
@@ -231,10 +185,6 @@ async function init() {
       r => {
         disable = r.disableInstagram;
         if (r.instagramRedirects) redirects = r.instagramRedirects
-
-        theme = r.theme;
-
-        instancesCookies = r.instancesCookies;
 
         bibliogramNormalRedirectsChecks = r.bibliogramNormalRedirectsChecks;
         bibliogramNormalCustomRedirects = r.bibliogramNormalCustomRedirects;
@@ -255,9 +205,6 @@ export default {
   setRedirects,
 
   reverse,
-
-  isBibliogram,
-  initBibliogramCookies,
 
   redirect,
   init,

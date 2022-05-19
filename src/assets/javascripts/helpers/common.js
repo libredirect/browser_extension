@@ -331,7 +331,7 @@ function getCookiesFromStorage(frontend, to, name) {
   browser.storage.local.get(
     key,
     r => {
-      if (r) browser.cookies.set({ url: to, name: name, value: r[key] })
+      if (r[key] !== undefined) browser.cookies.set({ url: to, name: name, value: r[key] })
     }
   )
 }

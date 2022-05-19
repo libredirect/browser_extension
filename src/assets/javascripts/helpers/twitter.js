@@ -134,18 +134,6 @@ function removeXFrameOptions(e) {
   if (isChanged) return { responseHeaders: e.responseHeaders };
 }
 
-function isNitter(url, type) {
-  if (type !== "main_frame" && type !== "sub_frame") return false;
-
-  let protocolHost = commonHelper.protocolHost(url);
-  return [
-    ...redirects.nitter.normal,
-    ...redirects.nitter.tor,
-    ...nitterNormalCustomRedirects,
-    ...nitterTorCustomRedirects,
-  ].includes(protocolHost);
-}
-
 async function initNitterCookies(from) {
   return new Promise(resolve => {
     browser.storage.local.get(
@@ -188,6 +176,42 @@ async function initNitterCookies(from) {
         resolve(true);
       })
   })
+}
+
+function setNitterCookies() {
+  browser.storage.local.get(
+    [
+      "twitterProtocol",
+      "disableTwitter",
+      "youtubeFrontend",
+      "nitterNormalRedirectsChecks",
+      "nitterNormalCustomRedirects",
+      "nitterTorRedirectsChecks",
+      "nitterTorCustomRedirects",
+    ],
+    r => {
+      if (r.disableYoutube || r.youtubeFrontend != 'nitter' || r.twitterProtocol === undefined) return;
+      let checkedInstances;
+      if (r.youtubeProtocol == 'normal') checkedInstances = [...r.nitterNormalRedirectsChecks, ...r.nitterNormalCustomRedirects]
+      else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.nitterTorRedirectsChecks, ...r.nitterTorCustomRedirects]
+      for (const to of checkedInstances) {
+        commonHelper.getCookiesFromStorage('nitter', to, 'theme');
+        commonHelper.getCookiesFromStorage('nitter', to, 'infiniteScroll');
+        commonHelper.getCookiesFromStorage('nitter', to, 'stickyProfile');
+        commonHelper.getCookiesFromStorage('nitter', to, 'bidiSupport');
+        commonHelper.getCookiesFromStorage('nitter', to, 'hideTweetStats');
+        commonHelper.getCookiesFromStorage('nitter', to, 'hideBanner');
+        commonHelper.getCookiesFromStorage('nitter', to, 'hidePins');
+        commonHelper.getCookiesFromStorage('nitter', to, 'hideReplies');
+        commonHelper.getCookiesFromStorage('nitter', to, 'squareAvatars');
+        commonHelper.getCookiesFromStorage('nitter', to, 'mp4Playback');
+        commonHelper.getCookiesFromStorage('nitter', to, 'hlsPlayback');
+        commonHelper.getCookiesFromStorage('nitter', to, 'proxyVideos');
+        commonHelper.getCookiesFromStorage('nitter', to, 'muteVideos');
+        commonHelper.getCookiesFromStorage('nitter', to, 'autoplayGifs');
+      }
+    }
+  )
 }
 
 function initDefaults() {
@@ -248,8 +272,8 @@ export default {
   reverse,
   removeXFrameOptions,
 
-  isNitter,
   initNitterCookies,
+  setNitterCookies,
 
   redirect,
   initDefaults,
