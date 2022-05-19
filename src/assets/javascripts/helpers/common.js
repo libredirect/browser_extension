@@ -48,7 +48,7 @@ async function updateInstances() {
     await wholeInit();
     const instances = JSON.parse(http.responseText);
 
-    brwoser.storage.local.get(
+    browser.storage.local.get(
       [
         'youtubeRedirects'
       ],

@@ -37,16 +37,34 @@ exportSettings();
 browser.storage.onChanged.addListener(exportSettings);
 
 let importSettingsElement = document.getElementById("import-settings");
+let importSettingsElementText = document.getElementById('import_settings_text');
 importSettingsElement.addEventListener("change",
   () => {
     let file = importSettingsElement.files[0];
     const reader = new FileReader();
     reader.readAsText(file);
-    reader.onload = () => browser.storage.local.set({ ...JSON.parse(reader.result) })
-    reader.onerror = error => reject(error);
-    location.reload();
+    reader.onload = async () => {
+      const data = JSON.parse(reader.result)
+      if (
+        "theme" in data &&
+        "disableImgur" in data &&
+        "cloudflareList" in data &&
+        "imgurRedirects" in data
+      ) {
+        console.log('importing a valid file...');
+        await browser.storage.local.set({ ...data })
+        location.reload();
+      } else
+        importError()
+    }
+    reader.onerror = error => importError();
   }
 );
+function importError() {
+  const oldHTML = importSettingsElementText.innerHTML;
+  importSettingsElementText.innerHTML = '<span style="color:red;">Error!</span>';
+  setTimeout(() => importSettingsElementText.innerHTML = oldHTML, 1000);
+}
 
 let resetSettingsElement = document.getElementById("reset-settings");
 resetSettingsElement.addEventListener("click",
