@@ -86,10 +86,8 @@ browser.webRequest.onBeforeRequest.addListener(
       initiator = new URL(details.originUrl);
     else if (details.initiator)
       initiator = new URL(details.initiator);
-
-    let newUrl;
-
-    if (!newUrl) newUrl = youtubeHelper.redirect(url, details, initiator)
+    
+    let newUrl = youtubeHelper.redirect(url, details, initiator)
     if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
 
     if (!newUrl) newUrl = twitterHelper.redirect(url, initiator);
@@ -149,7 +147,9 @@ browser.tabs.onRemoved.addListener(
 browser.webRequest.onHeadersReceived.addListener(
   async e => {
     await wholeInit();
-    return twitterHelper.removeXFrameOptions(e);
+    let response = twitterHelper.removeXFrameOptions(e)
+    if (!response) youtubeHelper.removeXFrameOptions(e)
+    return response;
   },
   { urls: ["<all_urls>"], },
   ["blocking", "responseHeaders"]

@@ -433,6 +433,29 @@ async function initInvidiousCookies(from) {
   )
 }
 
+function removeXFrameOptions(e) {
+  const url = new URL(e.url);
+  let protocolHost = commonHelper.protocolHost(url);
+  const list = [
+    ...redirects.invidious.normal,
+    ...invidiousNormalCustomRedirects,
+    ...redirects.invidious.tor,
+    ...invidiousTorCustomRedirects,
+
+    ...redirects.piped.normal,
+    ...redirects.piped.tor,
+    ...pipedNormalCustomRedirects,
+    ...pipedTorCustomRedirects
+  ];
+  if (!list.includes(protocolHost) || e.type != 'sub_frame') return;
+  let isChanged = false;
+  for (const i in e.responseHeaders) if (e.responseHeaders[i].name == 'x-frame-options') {
+    e.responseHeaders.splice(i, 1);
+    isChanged = true;
+  }
+  if (isChanged) return { responseHeaders: e.responseHeaders };
+}
+
 let
   initPipedLocalStorage = piped.initPipedLocalStorage,
   initPipedMaterialLocalStorage = pipedMaterial.initPipedMaterialLocalStorage,
@@ -454,6 +477,7 @@ export default {
   copyPipedLocalStorage,
 
   initDefaults,
-
   init,
+
+  removeXFrameOptions,
 };
