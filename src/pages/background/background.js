@@ -78,15 +78,15 @@ let BYPASSTABs = [];
 
 browser.webRequest.onBeforeRequest.addListener(
   async details => {
-    await wholeInit();
     const url = new URL(details.url);
-    // console.info("url:", url.href, "type:", details.type);
+    if (new RegExp(/^chrome-extension:\/{2}.*\/instances\/(blocklist|data).json$/).test(url.href) && details.type == 'xmlhttprequest') return;
+    await wholeInit();
     let initiator;
     if (details.originUrl)
       initiator = new URL(details.originUrl);
     else if (details.initiator)
       initiator = new URL(details.initiator);
-    
+
     let newUrl = youtubeHelper.redirect(url, details, initiator)
     if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
 

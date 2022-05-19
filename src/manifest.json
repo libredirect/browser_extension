@@ -23,6 +23,7 @@
     "webRequest",
     "webRequestBlocking",
     "storage",
+    "unlimitedStorage",
     "cookies",
     "contextMenus",
     "<all_urls>"
