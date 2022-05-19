@@ -11,8 +11,8 @@
       "https://tube.cthd.icu",
       "https://yt.artemislena.eu",
       "https://invidious.flokinet.to",
-      "https://invidious.mutahar.rocks",
       "https://invidious.sethforprivacy.com",
+      "https://invidious.mutahar.rocks",
       "https://invidious.tiekoetter.com",
       "https://inv.bp.projectsegfau.lt",
       "https://invidious.lunar.icu",
@@ -34,7 +34,6 @@
   "piped": {
     "normal": [
       "https://piped.kavin.rocks",
-      "https://piped.silkky.cloud",
       "https://piped.tokhmi.xyz",
       "https://piped.moomoo.me",
       "https://il.ax",
@@ -58,7 +57,6 @@
   "send": {
     "normal": [
       "https://send.vis.ee",
-      "https://send.silkky.cloud",
       "https://send.turingpoint.de",
       "https://send.ephemeral.land",
       "https://send.mni.li",
@@ -102,7 +100,6 @@
       "https://nitter.fly.dev",
       "https://notabird.site",
       "https://nitter.weiler.rocks",
-      "https://nitter.silkky.cloud",
       "https://nitter.sethforprivacy.com",
       "https://nttr.stream",
       "https://nitter.cutelab.space",
@@ -177,7 +174,6 @@
       "https://reddit.invak.id",
       "https://reddit.phii.me",
       "https://lr.riverside.rocks",
-      "https://libreddit.silkky.cloud",
       "https://libreddit.strongthany.cc",
       "https://libreddit.database.red",
       "https://libreddit.privacy.com.de",
@@ -242,7 +238,7 @@
       "http://ol5begilptoou34emq2sshf3may3hlblvipdjtybbovpb7c7zodxmtqd.onion",
       "http://lbrdtjaj7567ptdd4rv74lv27qhxfkraabnyphgcvptl64ijx2tijwid.onion",
       "http://libreddit.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion",
-      "reddit.prnoid54e44a4bduq5due64jkk7wcnkxcp5kv3juncm7veptjcqudgyd.onion"
+      "http://reddit.prnoid54e44a4bduq5due64jkk7wcnkxcp5kv3juncm7veptjcqudgyd.onion"
     ]
   },
   "teddit": {
@@ -408,7 +404,6 @@
       "https://suche.dasnetzundich.de",
       "https://suche.tromdienste.de",
       "https://suche.uferwerk.org",
-      "https://swag.pw",
       "https://sx.catgirl.cloud",
       "https://timdor.noip.me/searx",
       "https://www.gruble.de",
@@ -458,6 +453,7 @@
       "https://searx.sev.monster",
       "https://searx.tiekoetter.com",
       "https://searxng.zackptg5.com",
+      "https://swag.pw",
       "https://www.webrats.xyz"
     ]
   },
@@ -507,7 +503,6 @@
     "https://tube.dnet.one",
     "https://peertube.io",
     "https://peertube.echelon4.space",
-    "https://dalek.zone",
     "https://www.kotikoff.net",
     "https://manicphase.me",
     "https://3.600900.su",
@@ -521,7 +516,6 @@
     "https://peertube.egroc.de",
     "https://zcxfruit.ru",
     "https://pt.k2s.sk",
-    "https://video.xonumi.com",
     "https://gameplay.wtf",
     "https://peertube.louis.software",
     "https://tube.zrx.one",
@@ -556,7 +550,6 @@
     "https://vidz.dou.bet",
     "https://dev.dollarvigilante.tv",
     "https://praxis.su",
-    "https://v.bearvideo.win",
     "https://videos.redeyes.site",
     "https://video.hostpath.de",
     "https://free-streams.com",
@@ -846,7 +839,6 @@
     "https://queermotion.org",
     "https://video.audiovisuel-participatif.org",
     "https://peertube.vip",
-    "https://videos.jacksonchen666.com",
     "https://video.eutychia.org",
     "https://video.liveitlive.show",
     "https://vid.plantplotting.co.uk",
@@ -866,7 +858,6 @@
     "https://video.matomocamp.org",
     "https://media.fsfe.org",
     "https://flytandemeistring.space",
-    "https://xn--modervr-jxa.space",
     "https://video.windfluechter.org",
     "https://pocketnetpeertube10.nohost.me",
     "https://tube.io18.top",
@@ -1040,7 +1031,6 @@
     "https://video.selea.se",
     "https://twctube.twc-zone.eu",
     "https://tv.neue.city",
-    "https://tv.piejacker.net",
     "https://videos.shmalls.pw",
     "https://peertube.iriseden.eu",
     "https://video.shitposter.club",
@@ -1266,7 +1256,6 @@
     "https://peertube.cipherbliss.com",
     "https://peertube.stemy.me",
     "https://daschauher.aksel.rocks",
-    "https://video.mstddntfdn.online",
     "https://tube.cyano.at",
     "https://peertube.koehn.com",
     "https://tube.nox-rhea.org",
