@@ -34,7 +34,6 @@ let redirects = {
     "tor": []
   }
 };
-const getRedirects = () => redirects;
 function setRedirects(val) {
   redirects.scribe = val;
   browser.storage.local.set({ mediumRedirects: redirects })
@@ -160,7 +159,6 @@ function initDefaults() {
 }
 
 export default {
-  getRedirects,
   setRedirects,
 
   redirect,

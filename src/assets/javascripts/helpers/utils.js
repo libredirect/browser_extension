@@ -10,7 +10,7 @@ import wikipediaHelper from "./wikipedia.js";
 import peertubeHelper from "./peertube.js";
 import lbryHelper from "./lbry.js";
 import sendTargetsHelper from "./sendTargets.js";
-import tikTokHelper from "./tiktok.js";
+import tiktokHelper from "./tiktok.js";
 import imgurHelper from "./imgur.js";
 import localise from '../localise.js'
 
@@ -30,7 +30,7 @@ async function initCloudflareList() {
 
 async function wholeInit() {
   await sendTargetsHelper.init();
-  await tikTokHelper.init();
+  await tiktokHelper.init();
   await initCloudflareList();
 }
 
@@ -64,8 +64,7 @@ async function updateInstances() {
     redditHelper.setTedditRedirects(instances.teddit);
     redditHelper.setLibredditRedirects(instances.libreddit);
 
-    translateHelper.setSimplyTranslateRedirects(instances.simplyTranslate);
-    translateHelper.setLingvaRedirects(instances.lingva)
+    translateHelper.setRedirects({ "simplyTranslate": instances.simplyTranslate, "lingva": instances.lingva });
 
     searchHelper.setSearxRedirects(instances.searx);
     searchHelper.setSearxngRedirects(instances.searxng);
@@ -77,7 +76,7 @@ async function updateInstances() {
 
     sendTargetsHelper.setRedirects(instances.send);
 
-    tikTokHelper.setRedirects(instances.proxiTok);
+    tiktokHelper.setRedirects(instances.proxiTok);
 
     console.info("Successfully updated Instances");
     return true;
@@ -336,69 +335,83 @@ function getCookiesFromStorage(frontend, to, name) {
   )
 }
 
-function copyRaw() {
-  browser.tabs.query(
-    { active: true, currentWindow: true }, tabs => {
-      let currTab = tabs[0];
-      if (currTab) {
-        let url = new URL(currTab.url);
-        let newUrl;
-        newUrl = youtubeHelper.reverse(url);
+function copyRaw(test, copyRawElement) {
+  return new Promise(resolve => {
+    browser.tabs.query(
+      { active: true, currentWindow: true }, async tabs => {
+        let currTab = tabs[0];
+        if (currTab) {
+          let url;
+          try {
+            url = new URL(currTab.url);
+          } catch { resolve(); return; }
+          let newUrl;
+          newUrl = await youtubeHelper.reverse(url);
 
-        if (!newUrl) newUrl = twitterHelper.reverse(url);
-        if (!newUrl) newUrl = instagramHelper.reverse(url);
-        if (!newUrl) newUrl = tiktokHelper.reverse(url);
-        if (!newUrl) newUrl = imgurHelper.reverse(url);
+          if (!newUrl) newUrl = await twitterHelper.reverse(url);
+          if (!newUrl) newUrl = await instagramHelper.reverse(url);
+          if (!newUrl) newUrl = await tiktokHelper.reverse(url);
+          if (!newUrl) newUrl = await imgurHelper.reverse(url);
 
-        if (newUrl) {
-          navigator.clipboard.writeText(newUrl);
-          const textElement = copyRawElement.getElementsByTagName('h4')[0]
-          const oldHtml = textElement.innerHTML;
-          textElement.innerHTML = 'Copied';
-          setTimeout(() => textElement.innerHTML = oldHtml, 1000);
+          if (newUrl) {
+            resolve(true);
+            if (test) return;
+            navigator.clipboard.writeText(newUrl);
+            if (copyRawElement) {
+              const textElement = copyRawElement.getElementsByTagName('h4')[0]
+              const oldHtml = textElement.innerHTML;
+              textElement.innerHTML = 'Copied';
+              setTimeout(() => textElement.innerHTML = oldHtml, 1000);
+            }
+          } else resolve()
         }
       }
-    }
-  )
+    )
+  })
 }
 
+function unify(unifyElement) {
+  return new Promise(resolve => {
+    browser.tabs.query(
+      { active: true, currentWindow: true },
+      async tabs => {
+        let currTab = tabs[0]
+        if (currTab) {
+          let url;
+          try {
+            url = new URL(currTab.url);
+          } catch { resolve(); return; }
 
-function unify() {
-  browser.tabs.query(
-    { active: true, currentWindow: true },
-    async tabs => {
-      let currTab = tabs[0]
-      if (currTab) {
-        let url = new URL(currTab.url);
+          let result = await youtubeHelper.initInvidiousCookies(url);
+          if (!result) result = await youtubeHelper.initPipedLocalStorage(url, currTab.id);
+          if (!result) result = await youtubeHelper.initPipedMaterialLocalStorage(url, currTab.id);
 
-        let result = await youtubeHelper.initInvidiousCookies(url);
-        if (!result) result = await youtubeHelper.initPipedLocalStorage(url, currTab.id);
-        if (!result) result = await youtubeHelper.initPipedMaterialLocalStorage(url, currTab.id);
+          if (!result) result = await twitterHelper.initNitterCookies(url);
 
-        if (!result) result = await twitterHelper.initNitterCookies(url);
+          if (!result) result = await redditHelper.initLibredditCookies(url);
+          if (!result) result = await redditHelper.initTedditCookies(url);
 
-        if (!result) result = await redditHelper.initLibredditCookies(url);
-        if (!result) result = await redditHelper.initTedditCookies(url);
+          if (!result) result = await searchHelper.initSearxCookies(url);
+          if (!result) result = await searchHelper.initSearxngCookies(url);
 
-        if (!result) result = await searchHelper.initSearxCookies(url);
-        if (!result) result = await searchHelper.initSearxngCookies(url);
+          if (!result) result = await tiktokHelper.initProxiTokCookies(url);
 
-        if (!result) result = await tiktokHelper.initProxiTokCookies(url);
+          if (!result) result = await wikipediaHelper.initWikilessCookies(url);
 
-        if (!result) result = await wikipediaHelper.initWikilessCookies(url);
+          if (!result) result = await translateHelper.initSimplyTranslateCookies(url);
+          if (!result) result = await translateHelper.initLingvaLocalStorage(url);
 
-        if (!result) result = await translateHelper.initSimplyTranslateCookies(url);
-        if (!result) result = await translateHelper.initLingvaLocalStorage(url);
-
-        if (result) {
-          const textElement = unifyElement.getElementsByTagName('h4')[0]
-          const oldHtml = textElement.innerHTML;
-          textElement.innerHTML = 'Unified';
-          setTimeout(() => textElement.innerHTML = oldHtml, 1000);
+          if (result) {
+            resolve(true);
+            const textElement = unifyElement.getElementsByTagName('h4')[0]
+            const oldHtml = textElement.innerHTML;
+            textElement.innerHTML = 'Unified';
+            setTimeout(() => textElement.innerHTML = oldHtml, 1000);
+          } else resolve()
         }
       }
-    }
-  )
+    )
+  })
 }
 
 function switchInstance() {
@@ -461,8 +474,6 @@ function latency(name, frontend, document, location, splitNames) {
     }
   );
 }
-
-
 
 export default {
   getRandomInstance,

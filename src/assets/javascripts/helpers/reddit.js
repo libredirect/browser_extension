@@ -16,8 +16,6 @@ let redirects = {
     "tor": []
   },
 };
-const getRedirects = () => redirects;
-
 function setLibredditRedirects(val) {
   redirects.libreddit = val;
   browser.storage.local.set({ redditRedirects: redirects })
@@ -443,7 +441,6 @@ function initDefaults() {
 }
 
 export default {
-  getRedirects,
   setTedditRedirects,
   setLibredditRedirects,
 

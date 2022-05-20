@@ -485,7 +485,7 @@ function setPipedLocalStorage(url, tabId) {
   })
 }
 
-function initPipedMaterialLocalStorage(tabId) {
+function initPipedMaterialLocalStorage(url, tabId) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [

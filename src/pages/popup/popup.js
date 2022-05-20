@@ -78,9 +78,16 @@ document.addEventListener("change", () => {
 })
 
 document.getElementById("change_instance").addEventListener("click", utils.switchInstance);
-document.getElementById('copy_raw').addEventListener("click", utils.copyRaw);
+let copyRawElement = document.getElementById('copy_raw');
+copyRawElement.addEventListener("click", () => utils.copyRaw(false, copyRawElement));
+
+utils.copyRaw(true).then(r => { if (!r) document.getElementById('copy_raw_div').style.display = 'none'; })
+// utils.unify().then(r => { if (!r) document.getElementById('unify_div').style.display = 'none'; })
+
 document.getElementById("more-options").addEventListener("click", () => browser.runtime.openOptionsPage());
-document.getElementById('unify').addEventListener("click", unify);
+
+let unifyElement = document.getElementById('unify');
+unifyElement.addEventListener("click", () => utils.unify(unifyElement));
 
 generalHelper.init().then(() => {
   let popupFrontends = generalHelper.getPopupFrontends();

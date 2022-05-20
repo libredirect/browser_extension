@@ -76,32 +76,36 @@ function redirect(url, type, initiator) {
   })
 }
 function reverse(url) {
-  browser.storage.local.get(
-    [
-      "instagramRedirects",
-      "bibliogramNormalCustomRedirects",
-      "bibliogramTorCustomRedirects",
-    ],
-    r => {
-      let protocolHost = utils.protocolHost(url);
-      if (
-        ![
-          ...r.instagramRedirects.bibliogram.normal,
-          ...r.instagramRedirects.bibliogram.tor,
-          ...r.bibliogramNormalCustomRedirects,
-          ...r.bibliogramTorCustomRedirects
-        ].includes(protocolHost)
-      ) return;
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "instagramRedirects",
+        "bibliogramNormalCustomRedirects",
+        "bibliogramTorCustomRedirects",
+      ],
+      r => {
+        let protocolHost = utils.protocolHost(url);
+        if (
+          ![
+            ...r.instagramRedirects.bibliogram.normal,
+            ...r.instagramRedirects.bibliogram.tor,
+            ...r.bibliogramNormalCustomRedirects,
+            ...r.bibliogramTorCustomRedirects
+          ].includes(protocolHost)
+        ) { resolve(); return; }
 
-      if (url.pathname.startsWith('/p'))
-        return `https://instagram.com${url.pathname.replace('/p', '')}${url.search}`;
+        if (url.pathname.startsWith('/p')) {
+          resolve(`https://instagram.com${url.pathname.replace('/p', '')}${url.search}`); return;
+        }
 
-      if (url.pathname.startsWith('/u'))
-        return `https://instagram.com${url.pathname.replace('/u', '')}${url.search}`;
+        if (url.pathname.startsWith('/u')) {
+          resolve(`https://instagram.com${url.pathname.replace('/u', '')}${url.search}`); return;
+        }
 
-      return `https://instagram.com${url.pathname}${url.search}`;
-    }
-  )
+        resolve(`https://instagram.com${url.pathname}${url.search}`);
+      }
+    )
+  })
 }
 
 function switchInstance(url) {

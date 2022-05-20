@@ -11,7 +11,6 @@ let redirects = {
         "i2p": []
     }
 }
-const getRedirects = () => redirects;
 function setRedirects(val) {
     redirects.rimgo = val;
     browser.storage.local.set({ imgurRedirects: redirects })
@@ -98,28 +97,30 @@ function redirect(url, type, initiator) {
 }
 
 async function reverse(url) {
-    browser.storage.local.get(
-        [
-            "imgurRedirects",
-            "rimgoNormalCustomRedirects",
-            "rimgoTorCustomRedirects",
-            "rimgoI2pCustomRedirects",
-        ],
-        r => {
-            let protocolHost = utils.protocolHost(url);
-            if (
-                ![
-                    ...r.imgurRedirects.rimgo.normal,
-                    ...r.imgurRedirects.rimgo.tor,
-                    ...r.imgurRedirects.rimgo.i2p,
-                    ...r.rimgoNormalCustomRedirects,
-                    ...r.rimgoTorCustomRedirects,
-                    ...r.rimgoI2pCustomRedirects
-                ].includes(protocolHost)
-            ) return;
-            return `https://imgur.com${url.pathname}${url.search}`;
-        }
-    )
+    return new Promise(resolve => {
+        browser.storage.local.get(
+            [
+                "imgurRedirects",
+                "rimgoNormalCustomRedirects",
+                "rimgoTorCustomRedirects",
+                "rimgoI2pCustomRedirects",
+            ],
+            r => {
+                let protocolHost = utils.protocolHost(url);
+                if (
+                    ![
+                        ...r.imgurRedirects.rimgo.normal,
+                        ...r.imgurRedirects.rimgo.tor,
+                        ...r.imgurRedirects.rimgo.i2p,
+                        ...r.rimgoNormalCustomRedirects,
+                        ...r.rimgoTorCustomRedirects,
+                        ...r.rimgoI2pCustomRedirects
+                    ].includes(protocolHost)
+                ) { resolve(); return; }
+                resolve(`https://imgur.com${url.pathname}${url.search}`);
+            }
+        )
+    })
 }
 
 function switchInstance(url) {
@@ -197,7 +198,6 @@ async function initDefaults() {
 }
 
 export default {
-    getRedirects,
     setRedirects,
 
     redirect,

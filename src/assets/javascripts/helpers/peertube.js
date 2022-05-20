@@ -16,8 +16,6 @@ let redirects = {
         "tor": []
     }
 }
-
-const getRedirects = () => redirects;
 function setRedirects(val) {
     redirects.simpleertube = val;
     browser.storage.local.set({ peertubeTargetsRedirects: redirects })
@@ -165,7 +163,6 @@ async function init() {
 }
 
 export default {
-    getRedirects,
     setRedirects,
 
     switchInstance,

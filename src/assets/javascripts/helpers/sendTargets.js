@@ -14,8 +14,6 @@ let redirects = {
         "tor": []
     }
 }
-
-const getRedirects = () => redirects;
 function setRedirects(val) {
     redirects.send = val;
     browser.storage.local.set({ sendTargetsRedirects: redirects })
@@ -158,7 +156,6 @@ async function init() {
 }
 
 export default {
-    getRedirects,
     setRedirects,
 
     redirect,

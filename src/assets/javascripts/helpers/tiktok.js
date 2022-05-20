@@ -12,8 +12,6 @@ let redirects = {
         "tor": []
     }
 }
-
-const getRedirects = () => redirects;
 function setRedirects(val) {
     redirects.proxiTok = val;
     browser.storage.local.set({ tiktokRedirects: redirects })
@@ -139,26 +137,28 @@ function redirect(url, type, initiator) {
 }
 
 async function reverse(url) {
-    browser.storage.local.get(
-        [
-            "tiktokRedirects",
-            "proxiTokNormalCustomRedirects",
-            "proxiTokTorCustomRedirects",
-        ],
-        r => {
-            let protocolHost = utils.protocolHost(url);
-            if (
-                ![
-                    ...r.tiktokRedirects.proxiTok.normal,
-                    ...r.tiktokRedirects.proxiTok.tor,
-                    ...r.proxiTokNormalCustomRedirects,
-                    ...r.proxiTokTorCustomRedirects
-                ].includes(protocolHost)
-            ) return;
+    return new Promise(resolve => {
+        browser.storage.local.get(
+            [
+                "tiktokRedirects",
+                "proxiTokNormalCustomRedirects",
+                "proxiTokTorCustomRedirects",
+            ],
+            r => {
+                let protocolHost = utils.protocolHost(url);
+                if (
+                    ![
+                        ...r.tiktokRedirects.proxiTok.normal,
+                        ...r.tiktokRedirects.proxiTok.tor,
+                        ...r.proxiTokNormalCustomRedirects,
+                        ...r.proxiTokTorCustomRedirects
+                    ].includes(protocolHost)
+                ) { resolve(); return; }
 
-            return `https://tiktok.com${url.pathname}${url.search}`;
-        }
-    )
+                resolve(`https://tiktok.com${url.pathname}${url.search}`);
+            }
+        )
+    })
 }
 
 async function initDefaults() {
@@ -184,7 +184,6 @@ async function initDefaults() {
 }
 
 export default {
-    getRedirects,
     setRedirects,
 
     redirect,

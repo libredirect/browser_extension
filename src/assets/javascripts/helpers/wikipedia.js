@@ -11,7 +11,6 @@ let redirects = {
     "i2p": []
   }
 };
-const getRedirects = () => redirects;
 function setRedirects(val) {
   redirects.wikiless = val;
   browser.storage.local.set({ wikipediaRedirects: redirects })
@@ -238,7 +237,6 @@ async function initDefaults() {
 }
 
 export default {
-  getRedirects,
   setRedirects,
 
   initWikilessCookies,
