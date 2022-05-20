@@ -1,5 +1,5 @@
 import redditHelper from "../../../assets/javascripts/helpers/reddit.js";
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 
 let libredditDivElement = document.getElementById("libreddit")
 let tedditDivElement = document.getElementById("teddit")
@@ -81,46 +81,10 @@ browser.storage.local.get(
     }
 )
 
-commonHelper.processDefaultCustomInstances('reddit', 'libreddit', 'normal', document);
-commonHelper.processDefaultCustomInstances('reddit', 'libreddit', 'tor', document);
-commonHelper.processDefaultCustomInstances('reddit', 'teddit', 'normal', document);
-commonHelper.processDefaultCustomInstances('reddit', 'teddit', 'tor', document);
+utils.processDefaultCustomInstances('reddit', 'libreddit', 'normal', document);
+utils.processDefaultCustomInstances('reddit', 'libreddit', 'tor', document);
+utils.processDefaultCustomInstances('reddit', 'teddit', 'normal', document);
+utils.processDefaultCustomInstances('reddit', 'teddit', 'tor', document);
 
-
-let latencyLibredditElement = document.getElementById("latency-libreddit");
-let latencyLibredditLabel = document.getElementById("latency-libreddit-label");
-latencyLibredditElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyLibredditElement.addEventListener("click", reloadWindow);
-        await redditHelper.init();
-        let redirects = redditHelper.getRedirects();
-        const oldHtml = latencyLibredditLabel.innerHTML;
-        latencyLibredditLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyLibredditLabel, redirects.libreddit.normal).then(r => {
-            browser.storage.local.set({ libredditLatency: r });
-            latencyLibredditLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('reddit', 'libreddit', 'normal', document);
-            latencyLibredditElement.removeEventListener("click", reloadWindow);
-        });
-    }
-);
-
-let latencyTedditElement = document.getElementById("latency-teddit");
-let latencyTedditLabel = document.getElementById("latency-teddit-label");
-latencyTedditElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyTedditElement.addEventListener("click", reloadWindow);
-        await redditHelper.init();
-        let redirects = redditHelper.getRedirects();
-        const oldHtml = latencyTedditLabel.innerHTML;
-        latencyTedditLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyTedditLabel, redirects.teddit.normal).then(r => {
-            browser.storage.local.set({ tedditLatency: r });
-            latencyTedditLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('reddit', 'teddit', 'normal', document);
-            latencyTedditElement.removeEventListener("click", reloadWindow);
-        });
-    }
-);
+utils.latency('reddit', 'libreddit', document, location, true)
+utils.latency('reddit', 'teddit', document, location, true)

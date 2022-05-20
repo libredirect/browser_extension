@@ -1,6 +1,6 @@
 window.browser = window.browser || window.chrome;
 
-import commonHelper from './common.js'
+import utils from './utils.js'
 
 const targets = [
   /^https?:\/{2}(www\.|mobile\.|)twitter\.com/,
@@ -16,125 +16,171 @@ let redirects = {
   },
 };
 
-const getRedirects = () => redirects;
 function setRedirects(val) {
-  redirects.nitter = val;
-  browser.storage.local.set({ twitterRedirects: redirects })
-  console.log("twitterRedirects:", val)
-  for (const item of nitterNormalRedirectsChecks)
-    if (!redirects.nitter.normal.includes(item)) {
-      var index = nitterNormalRedirectsChecks.indexOf(item);
-      if (index !== -1) nitterNormalRedirectsChecks.splice(index, 1);
+  browser.storage.local.get('cloudflareList', r => {
+    redirects.nitter = val;
+    nitterNormalRedirectsChecks = [...redirects.nitter.normal];
+    for (const instance of r.cloudflareList) {
+      let i = nitterNormalRedirectsChecks.indexOf(instance);
+      if (i > -1) nitterNormalRedirectsChecks.splice(i, 1);
     }
-  browser.storage.local.set({ nitterNormalRedirectsChecks })
-
-  for (const item of nitterTorRedirectsChecks)
-    if (!redirects.nitter.tor.includes(item)) {
-      var index = nitterTorRedirectsChecks.indexOf(item);
-      if (index !== -1) nitterTorRedirectsChecks.splice(index, 1);
-    }
-  browser.storage.local.set({ nitterTorRedirectsChecks })
+    browser.storage.local.set({
+      twitterRedirects: redirects,
+      nitterNormalRedirectsChecks,
+      nitterTorRedirectsChecks: [...redirects.nitter.tor]
+    })
+  })
 }
 
 let nitterNormalRedirectsChecks;
-let nitterNormalCustomRedirects = [];
-let nitterTorRedirectsChecks;
-let nitterTorCustomRedirects = [];
 
-let disable; // disableTwitter
-let protocol; // twitterProtocol
+async function redirect(url, initiator) {
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "disableTwitter",
+        "twitterProtocol",
 
-function redirect(url, initiator) {
-  if (disable) return;
-  if (!targets.some(rx => rx.test(url.href))) return;
-  if (url.pathname.split("/").includes("home")) return;
+        "twitterRedirects",
 
-  if (
-    initiator &&
-    [...redirects.nitter.normal,
-    ...redirects.nitter.tor,
-    ...nitterTorCustomRedirects,
-    ...nitterNormalCustomRedirects
-    ].includes(initiator.origin)
+        "nitterNormalRedirectsChecks",
+        "nitterNormalCustomRedirects",
 
-  ) return 'BYPASSTAB';
+        "nitterTorRedirectsChecks",
+        "nitterTorCustomRedirects",
+      ],
+      r => {
+        if (r.disableTwitter) { resolve(); return; }
+        if (!targets.some(rx => rx.test(url.href))) { resolve(); return; }
+        if (url.pathname.split("/").includes("home")) { resolve(); return; }
 
-  let instancesList;
-  if (protocol == 'normal')
-    instancesList = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
-  else if (protocol == 'tor')
-    instancesList = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+        if (
+          initiator &&
+          [...r.twitterRedirects.nitter.normal,
+          ...r.twitterRedirects.nitter.tor,
+          ...r.nitterTorCustomRedirects,
+          ...r.nitterNormalCustomRedirects
+          ].includes(initiator.origin)
+        ) { resolve('BYPASSTAB'); return; }
 
-  if (instancesList.length === 0) return null;
-  let randomInstance = commonHelper.getRandomInstance(instancesList)
+        let instancesList;
+        if (r.twitterProtocol == 'normal') instancesList = [...r.nitterNormalRedirectsChecks, ...r.nitterNormalCustomRedirects];
+        else if (r.twitterProtocol == 'tor') instancesList = [...r.nitterTorRedirectsChecks, ...r.nitterTorCustomRedirects];
+        if (instancesList.length === 0) { resolve(); return; }
 
-  // https://pbs.twimg.com/profile_images/648888480974508032/66_cUYfj_400x400.jpg
-  if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video")
-    return `${randomInstance}/pic/${encodeURIComponent(`${url.host}${url.pathname}`)}`;
-  else if (url.pathname.split("/").includes("tweets"))
-    return `${randomInstance}${url.pathname.replace("/tweets", "")}${url.search}`;
-  else if (url.host == 't.co')
-    return `${randomInstance}/t.co${url.pathname}`;
-  else
-    return `${randomInstance}${url.pathname}${url.search}`;
+        let randomInstance = utils.getRandomInstance(instancesList)
+        console.log('randomInstance', randomInstance);
+        // https://pbs.twimg.com/profile_images/648888480974508032/66_cUYfj_400x400.jpg
+        if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video")
+          resolve(`${randomInstance}/pic/${encodeURIComponent(`${url.host}${url.pathname}`)}`);
+        else if (url.pathname.split("/").includes("tweets"))
+          resolve(`${randomInstance}${url.pathname.replace("/tweets", "")}${url.search}`);
+        else if (url.host == 't.co')
+          resolve(`${randomInstance}/t.co${url.pathname}`);
+        else
+          resolve(`${randomInstance}${url.pathname}${url.search}`);
+      }
+    )
+  })
 }
 
 function reverse(url) {
-  let protocolHost = commonHelper.protocolHost(url);
-  if (
-    ![...redirects.nitter.normal,
-    ...redirects.nitter.tor,
-    ...nitterNormalCustomRedirects,
-    ...nitterTorCustomRedirects].includes(protocolHost)
-  ) return;
-  return `https://twitter.com${url.pathname}${url.search}`;
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "twitterRedirects",
+        "nitterNormalCustomRedirects",
+        "nitterTorCustomRedirects",
+      ],
+      r => {
+        let protocolHost = utils.protocolHost(url);
+        if (
+          ![
+            ...r.twitterRedirects.nitter.normal,
+            ...r.twitterRedirects.nitter.tor,
+            ...r.nitterNormalCustomRedirects,
+            ...r.nitterTorCustomRedirects
+          ].includes(protocolHost)
+        ) { resolve(); return; }
+        resolve(`https://twitter.com${url.pathname}${url.search}`);
+      }
+    )
+  })
 }
 
 function switchInstance(url) {
-  let protocolHost = commonHelper.protocolHost(url);
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "twitterRedirects",
+        "twitterProtocol",
 
-  let twitterList = [
-    ...redirects.nitter.normal,
-    ...redirects.nitter.tor,
-    ...nitterNormalCustomRedirects,
-    ...nitterTorCustomRedirects,
-  ];
+        "nitterNormalRedirectsChecks",
+        "nitterNormalCustomRedirects",
 
-  if (!twitterList.includes(protocolHost)) return null;
+        "nitterTorRedirectsChecks",
+        "nitterTorCustomRedirects",
+      ],
+      r => {
+        let protocolHost = utils.protocolHost(url);
+        if (![
+          ...r.twitterRedirects.nitter.normal,
+          ...r.twitterRedirects.nitter.tor,
+          ...r.nitterNormalCustomRedirects,
+          ...r.nitterTorCustomRedirects,
+        ].includes(protocolHost)) { resolve(); return; }
 
-  let instancesList;
-  if (protocol == 'normal') instancesList = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
-  else if (protocol == 'tor') instancesList = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+        let instancesList;
+        if (r.twitterProtocol == 'normal') instancesList = [...r.nitterNormalRedirectsChecks, ...r.nitterNormalCustomRedirects];
+        else if (r.twitterProtocol == 'tor') instancesList = [...r.nitterTorRedirectsChecks, ...r.nitterTorCustomRedirects];
 
-  console.log("instancesList", instancesList);
-  let index = instancesList.indexOf(protocolHost);
-  if (index > -1) instancesList.splice(index, 1);
+        let index = instancesList.indexOf(protocolHost);
+        if (index > -1) instancesList.splice(index, 1);
+        if (instancesList.length === 0) { resolve(); return; }
 
-  if (instancesList.length === 0) return null;
-
-  let randomInstance = commonHelper.getRandomInstance(instancesList);
-  return `${randomInstance}${url.pathname}${url.search}`;
+        let randomInstance = utils.getRandomInstance(instancesList);
+        resolve(`${randomInstance}${url.pathname}${url.search}`);
+      })
+  })
 }
 
 function removeXFrameOptions(e) {
-  let url = new URL(e.url);
-  let protocolHost = commonHelper.protocolHost(url);
-  let twitterList = [
-    ...redirects.nitter.normal,
-    ...redirects.nitter.tor,
-    ...nitterNormalCustomRedirects,
-    ...nitterTorCustomRedirects,
-  ];
-  if (!twitterList.includes(protocolHost) || e.type != 'sub_frame') return;
-  let isChanged = false;
-  for (const i in e.responseHeaders) if (e.responseHeaders[i].name == 'x-frame-options') {
-    e.responseHeaders.splice(i, 1);
-    isChanged = true;
-  }
-  if (isChanged) return { responseHeaders: e.responseHeaders };
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "twitterRedirects",
+        "twitterProtocol",
+
+        "nitterNormalRedirectsChecks",
+        "nitterNormalCustomRedirects",
+
+        "nitterTorRedirectsChecks",
+        "nitterTorCustomRedirects",
+      ],
+      r => {
+        let url = new URL(e.url);
+        let protocolHost = utils.protocolHost(url);
+        if (
+          ![
+            ...r.twitterRedirects.nitter.normal,
+            ...r.twitterRedirects.nitter.tor,
+            ...r.nitterNormalCustomRedirects,
+            ...r.nitterTorCustomRedirects,
+          ].includes(protocolHost) ||
+          e.type != 'sub_frame'
+        ) { resolve(); return; }
+        let isChanged = false;
+        for (const i in e.responseHeaders) if (e.responseHeaders[i].name == 'x-frame-options') {
+          e.responseHeaders.splice(i, 1);
+          isChanged = true;
+        }
+        if (isChanged) resolve({ responseHeaders: e.responseHeaders });
+      }
+    )
+  })
 }
 
-async function initNitterCookies(from) {
+function initNitterCookies(from) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [
@@ -145,33 +191,35 @@ async function initNitterCookies(from) {
         "nitterTorCustomRedirects",
       ],
       r => {
-        let protocolHost = commonHelper.protocolHost(from);
-        if (![
-          ...r.nitterNormalRedirectsChecks,
-          ...r.nitterTorRedirectsChecks,
-          ...r.nitterNormalCustomRedirects,
-          ...r.nitterTorCustomRedirects,
-        ].includes(protocolHost)) resolve();
+        let protocolHost = utils.protocolHost(from);
+        if (
+          ![
+            ...r.nitterNormalRedirectsChecks,
+            ...r.nitterTorRedirectsChecks,
+            ...r.nitterNormalCustomRedirects,
+            ...r.nitterTorCustomRedirects,
+          ].includes(protocolHost)
+        ) { resolve(); return; }
 
         let checkedInstances;
         if (r.twitterProtocol == 'normal') checkedInstances = [...r.nitterNormalRedirectsChecks, ...r.nitterNormalCustomRedirects]
         else if (r.twitterProtocol == 'tor') checkedInstances = [...r.nitterTorRedirectsChecks, ...r.nitterTorCustomRedirects]
 
         for (const to of checkedInstances) {
-          commonHelper.copyCookie('nitter', from, to, 'theme');
-          commonHelper.copyCookie('nitter', from, to, 'infiniteScroll');
-          commonHelper.copyCookie('nitter', from, to, 'stickyProfile');
-          commonHelper.copyCookie('nitter', from, to, 'bidiSupport');
-          commonHelper.copyCookie('nitter', from, to, 'hideTweetStats');
-          commonHelper.copyCookie('nitter', from, to, 'hideBanner');
-          commonHelper.copyCookie('nitter', from, to, 'hidePins');
-          commonHelper.copyCookie('nitter', from, to, 'hideReplies');
-          commonHelper.copyCookie('nitter', from, to, 'squareAvatars');
-          commonHelper.copyCookie('nitter', from, to, 'mp4Playback');
-          commonHelper.copyCookie('nitter', from, to, 'hlsPlayback');
-          commonHelper.copyCookie('nitter', from, to, 'proxyVideos');
-          commonHelper.copyCookie('nitter', from, to, 'muteVideos');
-          commonHelper.copyCookie('nitter', from, to, 'autoplayGifs');
+          utils.copyCookie('nitter', from, to, 'theme');
+          utils.copyCookie('nitter', from, to, 'infiniteScroll');
+          utils.copyCookie('nitter', from, to, 'stickyProfile');
+          utils.copyCookie('nitter', from, to, 'bidiSupport');
+          utils.copyCookie('nitter', from, to, 'hideTweetStats');
+          utils.copyCookie('nitter', from, to, 'hideBanner');
+          utils.copyCookie('nitter', from, to, 'hidePins');
+          utils.copyCookie('nitter', from, to, 'hideReplies');
+          utils.copyCookie('nitter', from, to, 'squareAvatars');
+          utils.copyCookie('nitter', from, to, 'mp4Playback');
+          utils.copyCookie('nitter', from, to, 'hlsPlayback');
+          utils.copyCookie('nitter', from, to, 'proxyVideos');
+          utils.copyCookie('nitter', from, to, 'muteVideos');
+          utils.copyCookie('nitter', from, to, 'autoplayGifs');
         }
         resolve(true);
       })
@@ -195,20 +243,20 @@ function setNitterCookies() {
       if (r.youtubeProtocol == 'normal') checkedInstances = [...r.nitterNormalRedirectsChecks, ...r.nitterNormalCustomRedirects]
       else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.nitterTorRedirectsChecks, ...r.nitterTorCustomRedirects]
       for (const to of checkedInstances) {
-        commonHelper.getCookiesFromStorage('nitter', to, 'theme');
-        commonHelper.getCookiesFromStorage('nitter', to, 'infiniteScroll');
-        commonHelper.getCookiesFromStorage('nitter', to, 'stickyProfile');
-        commonHelper.getCookiesFromStorage('nitter', to, 'bidiSupport');
-        commonHelper.getCookiesFromStorage('nitter', to, 'hideTweetStats');
-        commonHelper.getCookiesFromStorage('nitter', to, 'hideBanner');
-        commonHelper.getCookiesFromStorage('nitter', to, 'hidePins');
-        commonHelper.getCookiesFromStorage('nitter', to, 'hideReplies');
-        commonHelper.getCookiesFromStorage('nitter', to, 'squareAvatars');
-        commonHelper.getCookiesFromStorage('nitter', to, 'mp4Playback');
-        commonHelper.getCookiesFromStorage('nitter', to, 'hlsPlayback');
-        commonHelper.getCookiesFromStorage('nitter', to, 'proxyVideos');
-        commonHelper.getCookiesFromStorage('nitter', to, 'muteVideos');
-        commonHelper.getCookiesFromStorage('nitter', to, 'autoplayGifs');
+        utils.getCookiesFromStorage('nitter', to, 'theme');
+        utils.getCookiesFromStorage('nitter', to, 'infiniteScroll');
+        utils.getCookiesFromStorage('nitter', to, 'stickyProfile');
+        utils.getCookiesFromStorage('nitter', to, 'bidiSupport');
+        utils.getCookiesFromStorage('nitter', to, 'hideTweetStats');
+        utils.getCookiesFromStorage('nitter', to, 'hideBanner');
+        utils.getCookiesFromStorage('nitter', to, 'hidePins');
+        utils.getCookiesFromStorage('nitter', to, 'hideReplies');
+        utils.getCookiesFromStorage('nitter', to, 'squareAvatars');
+        utils.getCookiesFromStorage('nitter', to, 'mp4Playback');
+        utils.getCookiesFromStorage('nitter', to, 'hlsPlayback');
+        utils.getCookiesFromStorage('nitter', to, 'proxyVideos');
+        utils.getCookiesFromStorage('nitter', to, 'muteVideos');
+        utils.getCookiesFromStorage('nitter', to, 'autoplayGifs');
       }
     }
   )
@@ -229,7 +277,7 @@ function initDefaults() {
         twitterRedirects: redirects,
         twitterProtocol: "normal",
 
-        nitterNormalRedirectsChecks: nitterNormalRedirectsChecks,
+        nitterNormalRedirectsChecks,
         nitterNormalCustomRedirects: [],
 
         nitterTorRedirectsChecks: [...redirects.nitter.tor],
@@ -239,44 +287,16 @@ function initDefaults() {
   })
 }
 
-async function init() {
-  browser.storage.local.get(
-    [
-      "disableTwitter",
-      "twitterRedirects",
-      "twitterProtocol",
-
-      "nitterNormalRedirectsChecks",
-      "nitterNormalCustomRedirects",
-
-      "nitterTorRedirectsChecks",
-      "nitterTorCustomRedirects",
-    ],
-    r => {
-      disable = r.disableTwitter;
-      protocol = r.twitterProtocol;
-      redirects = r.twitterRedirects;
-
-      nitterNormalRedirectsChecks = r.nitterNormalRedirectsChecks;
-      nitterNormalCustomRedirects = r.nitterNormalCustomRedirects;
-
-      nitterTorRedirectsChecks = r.nitterTorRedirectsChecks;
-      nitterTorCustomRedirects = r.nitterTorCustomRedirects;
-    }
-  );
-}
-
 export default {
-  getRedirects,
   setRedirects,
+
+  redirect,
+  switchInstance,
   reverse,
   removeXFrameOptions,
 
   initNitterCookies,
   setNitterCookies,
 
-  redirect,
   initDefaults,
-  init,
-  switchInstance,
 };

@@ -60,6 +60,18 @@
         "default": "Alt+Shift+L"
       },
       "description": "__MSG_switchInstance__"
+    },
+    "copyRaw": {
+      "suggested_key": {
+        "default": "Alt+Shift+C"
+      },
+      "description": "Copies the original link. Ex: Copies the original twitter link when in while nitter website"
+    },
+    "unify": {
+      "suggested_key": {
+        "default": "Alt+Shift+U"
+      },
+      "description": "Copies the preferences (cookies, localStorage) from the current opened instance and copy them to all the other selected instances"
     }
   },
   "default_locale": "en",

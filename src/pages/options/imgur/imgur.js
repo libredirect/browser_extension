@@ -1,5 +1,5 @@
 import imgurHelper from "../../../assets/javascripts/helpers/imgur.js";
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 
 let disableImgurElement = document.getElementById("disable-imgur");
 let protocolElement = document.getElementById("protocol")
@@ -45,26 +45,8 @@ browser.storage.local.get(
     }
 );
 
-commonHelper.processDefaultCustomInstances('imgur', 'rimgo', 'normal', document);
-commonHelper.processDefaultCustomInstances('imgur', 'rimgo', 'tor', document);
-commonHelper.processDefaultCustomInstances('imgur', 'rimgo', 'i2p', document);
+utils.processDefaultCustomInstances('imgur', 'rimgo', 'normal', document);
+utils.processDefaultCustomInstances('imgur', 'rimgo', 'tor', document);
+utils.processDefaultCustomInstances('imgur', 'rimgo', 'i2p', document);
 
-
-let latencyElement = document.getElementById("latency");
-let latencyLabel = document.getElementById("latency-label");
-latencyElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyElement.addEventListener("click", reloadWindow);
-        await imgurHelper.init();
-        let redirects = imgurHelper.getRedirects();
-        const oldHtml = latencyLabel.innerHTML;
-        latencyLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyLabel, redirects.rimgo.normal).then(r => {
-            browser.storage.local.set({ rimgoLatency: r });
-            latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('imgur', 'rimgo', 'normal', document);
-            latencyElement.removeEventListener("click", reloadWindow)
-        });
-    }
-);
+utils.latency('imgur', 'rimgo', document, location)

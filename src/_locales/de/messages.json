@@ -201,7 +201,7 @@
 
   "toggleAll": {
     "message": "Alle umschalten",
-    "description": "used in common.js"
+    "description": "used in utils.js"
   },
 
   "frontend": {

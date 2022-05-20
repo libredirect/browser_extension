@@ -20,21 +20,10 @@ import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js
 window.browser = window.browser || window.chrome;
 
 async function wholeInit() {
-  await youtubeHelper.init();
   await youtubeMusicHelper.init();
-  await twitterHelper.init();
-  await instagramHelper.init();
   await mapsHelper.init();
-  await searchHelper.init();
-  await translateHelper.init();
-  await mediumHelper.init();
-  await redditHelper.init();
-  await wikipediaHelper.init();
-  await imgurHelper.init();
-  await tiktokHelper.init();
   await sendTargetsHelper.init();
   await peertubeHelper.init();
-  await lbryHelper.init();
   await generalHelper.init();
 }
 await wholeInit();

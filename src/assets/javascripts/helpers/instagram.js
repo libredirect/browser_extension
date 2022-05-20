@@ -1,5 +1,5 @@
 window.browser = window.browser || window.chrome;
-import commonHelper from './common.js'
+import utils from './utils.js'
 
 const targets = [
   "instagram.com",
@@ -11,7 +11,6 @@ let redirects = {
     "tor": []
   }
 };
-const getRedirects = () => redirects;
 function setRedirects(val) {
   redirects.bibliogram = val;
   browser.storage.local.set({ instagramRedirects: redirects })
@@ -25,66 +24,58 @@ function setRedirects(val) {
 }
 
 let bibliogramNormalRedirectsChecks;
-let bibliogramTorRedirectsChecks;
-let bibliogramNormalCustomRedirects = [];
-let bibliogramTorCustomRedirects = [];
-
-let disable; //disableInstagram
-let protocol; //instagramProtocol
 
 function redirect(url, type, initiator) {
-  if (disable) return;
-  if (
-    initiator &&
-    ([...redirects.bibliogram.normal, ...bibliogramNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))
-  ) return;
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "disableInstagram",
+        "instagramProtocol",
 
-  if (!targets.includes(url.host)) return;
+        "instagramRedirects",
 
-  if (![
-    "main_frame",
-    "sub_frame",
-    "xmlhttprequest",
-    "other",
-    "image",
-    "media",
-  ].includes(type)) return null;
+        "bibliogramNormalRedirectsChecks",
+        "bibliogramTorRedirectsChecks",
 
-  const bypassPaths = [
-    /about/,
-    /explore/,
-    /support/,
-    /press/,
-    /api/,
-    /privacy/,
-    /safety/,
-    /admin/,
-    /\/(accounts\/|embeds?.js)/
-  ];
+        "bibliogramNormalCustomRedirects",
+        "bibliogramTorCustomRedirects",
+      ],
+      r => {
+        if (r.disableInstagram) { resolve(); return; }
+        if (
+          initiator &&
+          ([
+            ...r.instagramRedirects.bibliogram.normal,
+            ...r.instagramRedirects.bibliogram.tor,
+            ...r.bibliogramNormalCustomRedirects,
+            ...r.bibliogramTorCustomRedirects,
+          ].includes(initiator.origin) || targets.includes(initiator.host))
+        ) { resolve('BYPASSTAB'); return; }
 
-  if (bypassPaths.some(rx => rx.test(url.pathname))) return;
+        if (!targets.includes(url.host)) { resolve(); return; }
+        if (!["main_frame", "sub_frame", "xmlhttprequest", "other", "image", "media"].includes(type)) { resolve(); return; }
 
-  let instancesList;
-  if (protocol == 'normal') instancesList = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects];
-  else if (protocol == 'tor') instancesList = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects];
-  if (instancesList.length === 0) return null;
-  let randomInstance = commonHelper.getRandomInstance(instancesList)
+        const bypassPaths = [/about/, /explore/, /support/, /press/, /api/, /privacy/, /safety/, /admin/, /\/(accounts\/|embeds?.js)/];
+        if (bypassPaths.some(rx => rx.test(url.pathname))) { resolve(); return; }
 
-  const reservedPaths = [
-    "u",
-    "p",
-    "privacy",
-  ];
+        let instancesList;
+        if (r.instagramProtocol == 'normal') instancesList = [...r.bibliogramNormalRedirectsChecks, ...r.bibliogramNormalCustomRedirects];
+        else if (r.instagramProtocol == 'tor') instancesList = [...r.bibliogramTorRedirectsChecks, ...r.bibliogramTorCustomRedirects];
+        if (instancesList.length === 0) { resolve(); return; }
+        let randomInstance = utils.getRandomInstance(instancesList)
 
-  if (url.pathname === "/" || reservedPaths.includes(url.pathname.split("/")[1]))
-    return `${randomInstance}${url.pathname}${url.search}`;
-  if (url.pathname.startsWith("/reel") || url.pathname.startsWith("/tv"))
-    return `${randomInstance}/p${url.pathname.replace(/\/reel|\/tv/i, '')}${url.search}`;
-  else
-    return `${randomInstance}/u${url.pathname}${url.search}`; // Likely a user profile, redirect to '/u/...'
+        const reservedPaths = ["u", "p", "privacy",];
+        if (url.pathname === "/" || reservedPaths.includes(url.pathname.split("/")[1]))
+          resolve(`${randomInstance}${url.pathname}${url.search}`);
+        if (url.pathname.startsWith("/reel") || url.pathname.startsWith("/tv"))
+          resolve(`${randomInstance}/p${url.pathname.replace(/\/reel|\/tv/i, '')}${url.search}`);
+        else
+          resolve(`${randomInstance}/u${url.pathname}${url.search}`); // Likely a user profile, redirect to '/u/...'
+      }
+    )
+  })
 }
-
-async function reverse(url) {
+function reverse(url) {
   browser.storage.local.get(
     [
       "instagramRedirects",
@@ -92,7 +83,7 @@ async function reverse(url) {
       "bibliogramTorCustomRedirects",
     ],
     r => {
-      let protocolHost = commonHelper.protocolHost(url);
+      let protocolHost = utils.protocolHost(url);
       if (
         ![
           ...r.instagramRedirects.bibliogram.normal,
@@ -114,29 +105,41 @@ async function reverse(url) {
 }
 
 function switchInstance(url) {
-  let protocolHost = commonHelper.protocolHost(url);
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "instagramRedirects",
+        "instagramProtocol",
 
-  let instagramList = [
-    ...redirects.bibliogram.normal,
-    ...redirects.bibliogram.tor,
-    ...bibliogramNormalCustomRedirects,
-    ...bibliogramTorCustomRedirects,
-  ];
+        "bibliogramNormalRedirectsChecks",
+        "bibliogramTorRedirectsChecks",
 
-  if (!instagramList.includes(protocolHost)) return null;
+        "bibliogramNormalCustomRedirects",
+        "bibliogramTorCustomRedirects",
+      ],
+      r => {
+        let protocolHost = utils.protocolHost(url);
 
-  let instancesList;
-  if (protocol == 'normal') instancesList = [...bibliogramNormalCustomRedirects, ...bibliogramNormalRedirectsChecks];
-  else if (protocol == 'tor') instancesList = [...bibliogramTorCustomRedirects, ...bibliogramTorRedirectsChecks];
+        if (![
+          ...r.instagramRedirects.bibliogram.normal,
+          ...r.instagramRedirects.bibliogram.tor,
+          ...r.bibliogramNormalCustomRedirects,
+          ...r.bibliogramTorCustomRedirects,
+        ].includes(protocolHost)) { resolve(); return; }
 
-  console.log("instancesList", instancesList);
-  let index = instancesList.indexOf(protocolHost);
-  if (index > -1) instancesList.splice(index, 1);
+        let instancesList;
+        if (r.instagramProtocol == 'normal') instancesList = [...r.bibliogramNormalCustomRedirects, ...r.bibliogramNormalRedirectsChecks];
+        else if (r.instagramProtocol == 'tor') instancesList = [...r.bibliogramTorCustomRedirects, ...r.bibliogramTorRedirectsChecks];
 
-  if (instancesList.length === 0) return null;
+        let index = instancesList.indexOf(protocolHost);
+        if (index > -1) instancesList.splice(index, 1);
+        if (instancesList.length === 0) { resolve(); return; }
 
-  let randomInstance = commonHelper.getRandomInstance(instancesList);
-  return `${randomInstance}${url.pathname}${url.search}`;
+        let randomInstance = utils.getRandomInstance(instancesList);
+        resolve(`${randomInstance}${url.pathname}${url.search}`);
+      }
+    )
+  })
 }
 
 function initDefaults() {
@@ -168,46 +171,12 @@ function initDefaults() {
   })
 }
 
-async function init() {
-  return new Promise(resolve => {
-    browser.storage.local.get(
-      [
-        "disableInstagram",
-        "instagramRedirects",
-
-        "bibliogramNormalRedirectsChecks",
-        "bibliogramTorRedirectsChecks",
-
-        "bibliogramNormalCustomRedirects",
-        "bibliogramTorCustomRedirects",
-        "instagramProtocol"
-      ],
-      r => {
-        disable = r.disableInstagram;
-        if (r.instagramRedirects) redirects = r.instagramRedirects
-
-        bibliogramNormalRedirectsChecks = r.bibliogramNormalRedirectsChecks;
-        bibliogramNormalCustomRedirects = r.bibliogramNormalCustomRedirects;
-
-        bibliogramTorRedirectsChecks = r.bibliogramTorRedirectsChecks;
-        bibliogramTorCustomRedirects = r.bibliogramTorCustomRedirects;
-
-        protocol = r.instagramProtocol;
-
-        resolve();
-      }
-    )
-  })
-}
-
 export default {
-  getRedirects,
   setRedirects,
 
   reverse,
 
   redirect,
-  init,
   initDefaults,
   switchInstance,
 };

@@ -16,6 +16,7 @@ import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
+import utils from "../../assets/javascripts/helpers/utils.js";
 
 window.browser = window.browser || window.chrome;
 
@@ -55,21 +56,9 @@ browser.runtime.onInstalled.addListener(
 )
 
 async function wholeInit() {
-  await youtubeHelper.init();
-  await youtubeMusicHelper.init();
-  await twitterHelper.init();
-  await instagramHelper.init();
   await mapsHelper.init();
-  await searchHelper.init();
-  await translateHelper.init();
-  await mediumHelper.init();
-  await redditHelper.init();
-  await wikipediaHelper.init();
-  await imgurHelper.init();
-  await tiktokHelper.init();
   await sendTargetsHelper.init();
   await peertubeHelper.init();
-  await lbryHelper.init();
   await generalHelper.init();
 }
 
@@ -97,22 +86,21 @@ browser.webRequest.onBeforeRequest.addListener(
     else if (details.initiator)
       initiator = new URL(details.initiator);
 
-    let newUrl = youtubeHelper.redirect(url, details, initiator)
-    if (youtubeMusicHelper.isYoutubeMusic(url, initiator)) newUrl = youtubeMusicHelper.redirect(url, details.type)
-
-    if (!newUrl) newUrl = twitterHelper.redirect(url, initiator);
-    if (!newUrl) newUrl = instagramHelper.redirect(url, details.type, initiator);
+    let newUrl = await youtubeHelper.redirect(url, details, initiator)
+    if (!newUrl) newUrl = await youtubeMusicHelper.redirect(url, details.type)
+    if (!newUrl) newUrl = await twitterHelper.redirect(url, initiator);
+    if (!newUrl) newUrl = await instagramHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = await mapsHelper.redirect(url, initiator);
-    if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = mediumHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = imgurHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = tiktokHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = sendTargetsHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = peertubeHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = lbryHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = translateHelper.redirect(url);
-    if (!newUrl) newUrl = searchHelper.redirect(url)
-    if (!newUrl) newUrl = wikipediaHelper.redirect(url);
+    if (!newUrl) newUrl = await redditHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = await mediumHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = await imgurHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = await tiktokHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = await sendTargetsHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = await peertubeHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = await lbryHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = await translateHelper.redirect(url);
+    if (!newUrl) newUrl = await searchHelper.redirect(url)
+    if (!newUrl) newUrl = await wikipediaHelper.redirect(url);
 
     if (
       details.frameAncestors && details.frameAncestors.length > 0 &&
@@ -229,35 +217,13 @@ browser.tabs.onUpdated.addListener(
   }
 );
 
-async function changeWholeInstance(url) {
-  await wholeInit();
-  let newUrl = youtubeHelper.switchInstance(url);
-  if (!newUrl) newUrl = twitterHelper.switchInstance(url);
-  if (!newUrl) newUrl = instagramHelper.switchInstance(url);
-  if (!newUrl) newUrl = redditHelper.switchInstance(url);
-  if (!newUrl) newUrl = searchHelper.switchInstance(url);
-  if (!newUrl) newUrl = translateHelper.switchInstance(url);
-  if (!newUrl) newUrl = mediumHelper.switchInstance(url);
-  if (!newUrl) newUrl = sendTargetsHelper.switchInstance(url);
-  if (!newUrl) newUrl = peertubeHelper.switchInstance(url);
-  if (!newUrl) newUrl = imgurHelper.switchInstance(url);
-  if (!newUrl) newUrl = wikipediaHelper.switchInstance(url);
-  return newUrl;
-}
+
 
 browser.commands.onCommand.addListener(
   command => {
-    if (command === 'switchInstance')
-      browser.tabs.query(
-        { active: true, currentWindow: true },
-        tabs => {
-          let url;
-          try { url = new URL(tabs[0].url); }
-          catch (_) { return }
-          let newUrl = changeWholeInstance(url);
-          if (newUrl) browser.tabs.update({ url: newUrl });
-        }
-      );
+    if (command === 'switchInstance') utils.switchInstance();
+    else if (command == 'copyRaw') utils.copyRaw();
+    else if (command == 'unify') utils.unify();
   }
 )
 
@@ -273,16 +239,24 @@ browser.contextMenus.create({
   contexts: ["browser_action"]
 });
 
+browser.contextMenus.create({
+  id: "copyRaw",
+  title: "Copy Raw",
+  contexts: ["browser_action"]
+});
+
+browser.contextMenus.create({
+  id: "unify",
+  title: "Unify",
+  contexts: ["browser_action"]
+});
+
+
 browser.contextMenus.onClicked.addListener(
-  (info, tab) => {
-    if (info.menuItemId == 'switchInstance') {
-      let url;
-      try { url = new URL(tab.url); }
-      catch (_) { return }
-      let newUrl = changeWholeInstance(url);
-      if (newUrl) browser.tabs.update({ url: newUrl });
-    }
-    else if (info.menuItemId == 'settings')
-      browser.runtime.openOptionsPage()
+  (info) => {
+    if (info.menuItemId == 'switchInstance') utils.switchInstance();
+    else if (info.menuItemId == 'settings') browser.runtime.openOptionsPage()
+    else if (info.menuItemId == 'copyRaw') utils.copyRaw();
+    else if (info.menuItemId == 'unify') utils.unify();
   }
 );

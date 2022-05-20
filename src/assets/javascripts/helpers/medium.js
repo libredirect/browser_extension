@@ -1,5 +1,5 @@
 window.browser = window.browser || window.chrome;
-import commonHelper from './common.js'
+import utils from './utils.js'
 
 
 const targets = [
@@ -59,56 +59,78 @@ function setRedirects(val) {
 
 let scribeNormalRedirectsChecks;
 let scribeTorRedirectsChecks;
-let scribeNormalCustomRedirects = [];
-let scribeTorCustomRedirects = [];
-
-let disable;
-let protocol;
 
 function redirect(url, type, initiator) {
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "disableMedium",
+        "mediumRedirects",
+        "scribeNormalRedirectsChecks",
+        "scribeNormalCustomRedirects",
+        "scribeTorRedirectsChecks",
+        "scribeTorCustomRedirects",
+        "mediumProtocol"
+      ],
+      r => {
+        if (r.disableMedium) { resolve(); return; }
+        if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") { resolve(); return; }
+        if (initiator && (
+          [
+            ...r.mediumRedirects.scribe.normal,
+            ...r.mediumRedirects.scribe.tor,
+            ...r.scribeNormalCustomRedirects,
+            ...r.scribeTorCustomRedirects,
+          ].includes(initiator.origin))) { resolve(); return; }
 
-  if (disable) return;
+        if (!targets.some(rx => rx.test(url.host))) { resolve(); return; }
+        if (/^\/($|@[a-zA-Z.]{0,}(\/|)$)/.test(url.pathname)) { resolve(); return; }
 
-  if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") return;
+        let instancesList;
+        if (r.mediumProtocol == 'normal') instancesList = [...r.scribeNormalRedirectsChecks, ...r.scribeNormalCustomRedirects];
+        else if (r.mediumProtocol == 'tor') instancesList = [...r.scribeTorRedirectsChecks, ...r.scribeTorCustomRedirects];
+        if (instancesList.length === 0) { resolve(); return; }
 
-  if (initiator && ([...redirects.scribe.normal, ...scribeNormalCustomRedirects].includes(initiator.origin))) return;
-
-  if (!targets.some(rx => rx.test(url.host))) return;
-  if (/^\/($|@[a-zA-Z.]{0,}(\/|)$)/.test(url.pathname)) return;
-
-  let instancesList;
-  if (protocol == 'normal') instancesList = [...scribeNormalRedirectsChecks, ...scribeNormalCustomRedirects];
-  else if (protocol == 'tor') instancesList = [...scribeTorRedirectsChecks, ...scribeTorCustomRedirects];
-  if (instancesList.length === 0) return null;
-  let randomInstance = commonHelper.getRandomInstance(instancesList)
-
-  return `${randomInstance}${url.pathname}${url.search}`;
+        let randomInstance = utils.getRandomInstance(instancesList)
+        resolve(`${randomInstance}${url.pathname}${url.search}`);
+      }
+    )
+  })
 }
-
 function switchInstance(url) {
-  let protocolHost = commonHelper.protocolHost(url);
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "mediumRedirects",
+        "mediumProtocol",
 
-  let mediumList = [
-    ...redirects.scribe.tor,
-    ...redirects.scribe.normal,
+        "scribeNormalRedirectsChecks",
+        "scribeNormalCustomRedirects",
+        "scribeTorRedirectsChecks",
+        "scribeTorCustomRedirects",
+      ],
+      r => {
+        let protocolHost = utils.protocolHost(url);
+        if (![
+          ...r.mediumRedirects.scribe.tor,
+          ...r.mediumRedirects.scribe.normal,
 
-    ...scribeNormalCustomRedirects,
-    ...scribeTorCustomRedirects,
-  ];
+          ...r.scribeNormalCustomRedirects,
+          ...r.scribeTorCustomRedirects,
+        ].includes(protocolHost)) { resolve(); return; }
 
-  if (!mediumList.includes(protocolHost)) return null;
+        let instancesList;
+        if (r.mediumProtocol == 'normal') instancesList = [...r.scribeNormalCustomRedirects, ...r.scribeNormalRedirectsChecks];
+        else if (r.mediumProtocol == 'tor') instancesList = [...r.scribeTorCustomRedirects, ...r.scribeTorRedirectsChecks];
 
-  let instancesList;
-  if (protocol == 'normal') instancesList = [...scribeNormalCustomRedirects, ...scribeNormalRedirectsChecks];
-  else if (protocol == 'tor') instancesList = [...scribeTorCustomRedirects, ...scribeTorRedirectsChecks];
+        let index = instancesList.indexOf(protocolHost);
+        if (index > -1) instancesList.splice(index, 1);
+        if (instancesList.length === 0) { resolve(); return; }
 
-  let index = instancesList.indexOf(protocolHost);
-  if (index > -1) instancesList.splice(index, 1);
-
-  if (instancesList.length === 0) return null;
-
-  let randomInstance = commonHelper.getRandomInstance(instancesList);
-  return `${randomInstance}${url.pathname}${url.search}`;
+        let randomInstance = utils.getRandomInstance(instancesList);
+        resolve(`${randomInstance}${url.pathname}${url.search}`);
+      })
+  })
 }
 
 function initDefaults() {
@@ -137,41 +159,11 @@ function initDefaults() {
   })
 }
 
-async function init() {
-  return new Promise(resolve => {
-    browser.storage.local.get(
-      [
-        "disableMedium",
-        "mediumRedirects",
-        "scribeNormalRedirectsChecks",
-        "scribeNormalCustomRedirects",
-        "scribeTorRedirectsChecks",
-        "scribeTorCustomRedirects",
-        "mediumProtocol"
-      ],
-      r => {
-        disable = r.disableMedium;
-        protocol = r.mediumProtocol;
-        redirects = r.mediumRedirects;
-
-        scribeNormalRedirectsChecks = r.scribeNormalRedirectsChecks;
-        scribeNormalCustomRedirects = r.scribeNormalCustomRedirects;
-
-        scribeTorRedirectsChecks = r.scribeTorRedirectsChecks;
-        scribeTorCustomRedirects = r.scribeTorCustomRedirects;
-
-        resolve();
-      }
-    )
-  })
-}
-
 export default {
   getRedirects,
   setRedirects,
 
   redirect,
-  init,
   initDefaults,
   switchInstance,
 };

@@ -1,5 +1,5 @@
 window.browser = window.browser || window.chrome;
-import commonHelper from "../../assets/javascripts/helpers/common.js";
+import utils from "../../assets/javascripts/helpers/utils.js";
 
 function changeTheme() {
     browser.storage.local.get(
@@ -34,4 +34,4 @@ browser.storage.onChanged.addListener(changeTheme)
 
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", changeTheme)
 
-if (commonHelper.isRtl()) document.getElementsByTagName("body")[0].classList.add("rtl");
+if (utils.isRtl()) document.getElementsByTagName("body")[0].classList.add("rtl");

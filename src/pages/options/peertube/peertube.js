@@ -1,5 +1,5 @@
 import peertubeHelper from "../../../assets/javascripts/helpers/peertube.js";
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 
 let disable = document.getElementById("disable-peertube");
 let protocol = document.getElementById("protocol")
@@ -14,8 +14,8 @@ browser.storage.local.get(
         changeProtocolSettings();
     }
 )
-commonHelper.processDefaultCustomInstances('peertube', 'simpleertube', 'normal', document);
-commonHelper.processDefaultCustomInstances('peertube', 'simpleertube', 'tor', document);
+utils.processDefaultCustomInstances('peertube', 'simpleertube', 'normal', document);
+utils.processDefaultCustomInstances('peertube', 'simpleertube', 'tor', document);
 
 document.addEventListener("change", async () => {
     await browser.storage.local.set({
@@ -37,22 +37,4 @@ function changeProtocolSettings() {
         torDiv.style.display = 'block';
     }
 }
-
-let latencyElement = document.getElementById("latency");
-let latencyLabel = document.getElementById("latency-label");
-latencyElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyElement.addEventListener("click", reloadWindow);
-        await peertubeHelper.init();
-        let redirects = peertubeHelper.getRedirects();
-        const oldHtml = latencyLabel.innerHTML;
-        latencyLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyLabel, redirects.simpleertube.normal).then(r => {
-            browser.storage.local.set({ simpleertubeLatency: r });
-            latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('peertube', 'simpleertube', 'normal', document);
-            latencyElement.removeEventListener("click", reloadWindow);
-        });
-    }
-);
+utils.latency('peertube', 'simpleertube', document, location)

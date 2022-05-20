@@ -1,6 +1,6 @@
 window.browser = window.browser || window.chrome;
 
-import commonHelper from './common.js'
+import utils from './utils.js'
 
 let targets = [];
 
@@ -46,30 +46,41 @@ let simpleertubeTorCustomRedirects = [];
 let disable;
 let protocol;
 
-function switchInstance(url) {
-    let protocolHost = commonHelper.protocolHost(url);
+async function switchInstance(url) {
+    return new Promise(resolve => {
+        browser.storage.local.get(
+            [
+                "peerTubeTargets",
+                "peertubeTargetsProtocol",
 
-    let simpleertubeList = [
-        ...redirects.simpleertube.normal,
-        ...redirects.simpleertube.tor,
-        ...simpleertubeNormalCustomRedirects,
-        ...simpleertubeTorCustomRedirects,
-    ];
+                "simpleertubeNormalRedirectsChecks",
+                "simpleertubeNormalCustomRedirects",
 
-    if (!simpleertubeList.includes(protocolHost)) return;
+                "simpleertubeTorRedirectsChecks",
+                "simpleertubeTorCustomRedirects",
+            ],
+            r => {
+                let protocolHost = utils.protocolHost(url);
+                if (![
+                    ...redirects.simpleertube.normal,
+                    ...redirects.simpleertube.tor,
+                    ...r.simpleertubeNormalCustomRedirects,
+                    ...r.simpleertubeTorCustomRedirects,
+                ].includes(protocolHost)) resolve();
 
-    let instancesList;
-    if (protocol == 'normal') instancesList = [...simpleertubeNormalRedirectsChecks, ...simpleertubeNormalCustomRedirects];
-    else if (protocol == 'tor') instancesList = [...simpleertubeTorRedirectsChecks, ...simpleertubeTorCustomRedirects];
+                let instancesList;
+                if (r.peertubeTargetsProtocol == 'normal') instancesList = [...r.simpleertubeNormalRedirectsChecks, ...r.simpleertubeNormalCustomRedirects];
+                else if (r.peertubeTargetsProtocol == 'tor') instancesList = [...r.simpleertubeTorRedirectsChecks, ...r.simpleertubeTorCustomRedirects];
 
-    console.log("instancesList", instancesList);
-    let index = instancesList.indexOf(protocolHost);
-    if (index > -1) instancesList.splice(index, 1);
+                let index = instancesList.indexOf(protocolHost);
+                if (index > -1) instancesList.splice(index, 1);
+                if (instancesList.length === 0) resolve()
 
-    if (instancesList.length === 0) return null;
-
-    let randomInstance = commonHelper.getRandomInstance(instancesList);
-    return `${randomInstance}${url.pathname}${url.search}`;
+                let randomInstance = utils.getRandomInstance(instancesList);
+                resolve(`${randomInstance}${url.pathname}${url.search}`);
+            }
+        )
+    })
 }
 
 function redirect(url, type, initiator) {
@@ -84,7 +95,7 @@ function redirect(url, type, initiator) {
             targets.includes(initiator.host)
         )
     ) return null;
-    let protocolHost = commonHelper.protocolHost(url);
+    let protocolHost = utils.protocolHost(url);
     if (!targets.includes(protocolHost)) return null;
 
     if (type != "main_frame") return null;
@@ -93,7 +104,7 @@ function redirect(url, type, initiator) {
     if (protocol == 'normal') instancesList = [...simpleertubeNormalRedirectsChecks, ...simpleertubeNormalCustomRedirects];
     if (protocol == 'tor') instancesList = [...simpleertubeTorRedirectsChecks, ...simpleertubeTorCustomRedirects];
     if (instancesList.length === 0) return null;
-    let randomInstance = commonHelper.getRandomInstance(instancesList);
+    let randomInstance = utils.getRandomInstance(instancesList);
 
     if (url.host == 'search.joinpeertube.org') return randomInstance;
 

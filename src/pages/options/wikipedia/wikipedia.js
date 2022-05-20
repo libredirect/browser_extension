@@ -1,5 +1,5 @@
 import wikipediaHelper from "../../../assets/javascripts/helpers/wikipedia.js";
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 
 let disableWikipediaElement = document.getElementById("disable-wikipedia");
 let protocolElement = document.getElementById("protocol");
@@ -44,27 +44,10 @@ function changeProtocolSettings(protocol) {
         i2pDiv.style.display = 'block';
     }
 }
-commonHelper.processDefaultCustomInstances('wikipedia' ,'wikiless', 'normal', document);
-commonHelper.processDefaultCustomInstances('wikipedia' ,'wikiless', 'tor',  document);
-commonHelper.processDefaultCustomInstances('wikipedia' ,'wikiless', 'i2p',  document);
+utils.processDefaultCustomInstances('wikipedia', 'wikiless', 'normal', document);
+utils.processDefaultCustomInstances('wikipedia', 'wikiless', 'tor', document);
+utils.processDefaultCustomInstances('wikipedia', 'wikiless', 'i2p', document);
 
 window.onblur = wikipediaHelper.initWikilessCookies;
 
-let latencyElement = document.getElementById("latency");
-let latencyLabel = document.getElementById("latency-label");
-latencyElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyElement.addEventListener("click", reloadWindow);
-        await wikipediaHelper.init();
-        let redirects = wikipediaHelper.getRedirects();
-        const oldHtml = latencyLabel.innerHTML;
-        latencyLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyLabel, redirects.wikiless.normal).then(r => {
-            browser.storage.local.set({ wikilessLatency: r });
-            latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('wikipedia' ,'wikiless', 'normal', document);
-            latencyElement.removeEventListener("click", reloadWindow)
-        });
-    }
-);
+utils.latency('wikipedia', 'wikiless', document, location)

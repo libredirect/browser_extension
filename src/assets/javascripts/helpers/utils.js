@@ -7,9 +7,12 @@ import redditHelper from "./reddit.js";
 import searchHelper from "./search.js";
 import translateHelper from "./translate/translate.js";
 import wikipediaHelper from "./wikipedia.js";
-import localise from '../localise.js'
+import peertubeHelper from "./peertube.js";
+import lbryHelper from "./lbry.js";
 import sendTargetsHelper from "./sendTargets.js";
 import tikTokHelper from "./tiktok.js";
+import imgurHelper from "./imgur.js";
+import localise from '../localise.js'
 
 function getRandomInstance(instances) {
   return instances[~~(instances.length * Math.random())];
@@ -26,14 +29,6 @@ async function initCloudflareList() {
 }
 
 async function wholeInit() {
-  await youtubeHelper.init();
-  await twitterHelper.init();
-  await instagramHelper.init();
-  await redditHelper.init();
-  await translateHelper.init();
-  await searchHelper.init();
-  await wikipediaHelper.init();
-  await mediumHelper.init();
   await sendTargetsHelper.init();
   await tikTokHelper.init();
   await initCloudflareList();
@@ -160,8 +155,13 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
         x => {
           let cloudflare = cloudflareList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : '';
 
-          let latencyColor = (instancesLatency[x] <= 1000 ? "green" : instancesLatency[x] <= 2000 ? "orange" : "red");
-          let latencyLimit = (instancesLatency[x] == 5000 ? '5000ms+' : instancesLatency[x] + 'ms')
+          let ms = instancesLatency[x];
+          let latencyColor = (ms <= 1000 ? "green" : ms <= 2000 ? "orange" : "red");
+          let latencyLimit;
+          if (ms == 5000) latencyLimit = '5000ms+';
+          else if (ms > 5000) latencyLimit = `ERROR: ${ms - 5000}`;
+          else latencyLimit = ms + 'ms';
+
           let latency = x in instancesLatency ? '<span style="color:' + latencyColor + ';">' + latencyLimit + '</span>' : '';
 
           return `<div>
@@ -305,7 +305,7 @@ async function testLatency(element, instances) {
 
         let text;
         if (m == 5000) text = '5000ms+'
-        else if (m > 5000) text = m - 5000
+        else if (m > 5000) text = `ERROR: ${m - 5000}`;
         else text = `${m}ms`;
         element.innerHTML = `${href}:&nbsp;<span style="color:${color};">${text}</span>`;
       }
@@ -336,13 +336,144 @@ function getCookiesFromStorage(frontend, to, name) {
   )
 }
 
+function copyRaw() {
+  browser.tabs.query(
+    { active: true, currentWindow: true }, tabs => {
+      let currTab = tabs[0];
+      if (currTab) {
+        let url = new URL(currTab.url);
+        let newUrl;
+        newUrl = youtubeHelper.reverse(url);
+
+        if (!newUrl) newUrl = twitterHelper.reverse(url);
+        if (!newUrl) newUrl = instagramHelper.reverse(url);
+        if (!newUrl) newUrl = tiktokHelper.reverse(url);
+        if (!newUrl) newUrl = imgurHelper.reverse(url);
+
+        if (newUrl) {
+          navigator.clipboard.writeText(newUrl);
+          const textElement = copyRawElement.getElementsByTagName('h4')[0]
+          const oldHtml = textElement.innerHTML;
+          textElement.innerHTML = 'Copied';
+          setTimeout(() => textElement.innerHTML = oldHtml, 1000);
+        }
+      }
+    }
+  )
+}
+
+
+function unify() {
+  browser.tabs.query(
+    { active: true, currentWindow: true },
+    async tabs => {
+      let currTab = tabs[0]
+      if (currTab) {
+        let url = new URL(currTab.url);
+
+        let result = await youtubeHelper.initInvidiousCookies(url);
+        if (!result) result = await youtubeHelper.initPipedLocalStorage(url, currTab.id);
+        if (!result) result = await youtubeHelper.initPipedMaterialLocalStorage(url, currTab.id);
+
+        if (!result) result = await twitterHelper.initNitterCookies(url);
+
+        if (!result) result = await redditHelper.initLibredditCookies(url);
+        if (!result) result = await redditHelper.initTedditCookies(url);
+
+        if (!result) result = await searchHelper.initSearxCookies(url);
+        if (!result) result = await searchHelper.initSearxngCookies(url);
+
+        if (!result) result = await tiktokHelper.initProxiTokCookies(url);
+
+        if (!result) result = await wikipediaHelper.initWikilessCookies(url);
+
+        if (!result) result = await translateHelper.initSimplyTranslateCookies(url);
+        if (!result) result = await translateHelper.initLingvaLocalStorage(url);
+
+        if (result) {
+          const textElement = unifyElement.getElementsByTagName('h4')[0]
+          const oldHtml = textElement.innerHTML;
+          textElement.innerHTML = 'Unified';
+          setTimeout(() => textElement.innerHTML = oldHtml, 1000);
+        }
+      }
+    }
+  )
+}
+
+function switchInstance() {
+  browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+    let currTab = tabs[0];
+    if (currTab) {
+      let url = new URL(currTab.url);
+      let newUrl;
+      newUrl = await youtubeHelper.switchInstance(url);
+      if (!newUrl) newUrl = await twitterHelper.switchInstance(url);
+      if (!newUrl) newUrl = await instagramHelper.switchInstance(url);
+      if (!newUrl) newUrl = await redditHelper.switchInstance(url);
+      if (!newUrl) newUrl = await searchHelper.switchInstance(url);
+      if (!newUrl) newUrl = await translateHelper.switchInstance(url);
+      if (!newUrl) newUrl = await mediumHelper.switchInstance(url);
+      if (!newUrl) newUrl = await sendTargetsHelper.switchInstance(url);
+      if (!newUrl) newUrl = await peertubeHelper.switchInstance(url);
+      if (!newUrl) newUrl = await lbryHelper.switchInstance(url);
+      if (!newUrl) newUrl = await imgurHelper.switchInstance(url);
+      if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url);
+
+      if (newUrl) {
+        browser.tabs.update({ url: newUrl });
+        return true;
+      }
+    }
+  })
+  return false;
+}
+
+function latency(name, frontend, document, location, splitNames) {
+  let latencyElement;
+  let latencyLabel;
+  if (splitNames == true) {
+    latencyElement = document.getElementById(`latency-${frontend}`);
+    latencyLabel = document.getElementById(`latency-${frontend}-label`);
+  } else {
+    latencyElement = document.getElementById("latency");
+    latencyLabel = document.getElementById("latency-label");
+  }
+  latencyElement.addEventListener("click",
+    async () => {
+      let reloadWindow = () => location.reload();
+      latencyElement.addEventListener("click", reloadWindow);
+      let key = `${name}Redirects`
+      browser.storage.local.get(
+        key,
+        r => {
+          let redirects = r[key];
+          const oldHtml = latencyLabel.innerHTML;
+          latencyLabel.innerHTML = '...';
+          testLatency(latencyLabel, redirects[frontend].normal).then(r => {
+            browser.storage.local.set({ [`${frontend}Latency`]: r });
+            latencyLabel.innerHTML = oldHtml;
+            processDefaultCustomInstances(name, frontend, 'normal', document);
+            latencyElement.removeEventListener("click", reloadWindow)
+          });
+        }
+      )
+    }
+  );
+}
+
+
+
 export default {
   getRandomInstance,
   updateInstances,
   protocolHost,
   processDefaultCustomInstances,
   isRtl,
-  testLatency,
+  latency,
   copyCookie,
   getCookiesFromStorage,
+  switchInstance,
+  copyRaw,
+  unify,
 }

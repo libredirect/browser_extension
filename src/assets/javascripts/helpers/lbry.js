@@ -1,6 +1,6 @@
 window.browser = window.browser || window.chrome;
 
-import commonHelper from './common.js'
+import utils from './utils.js'
 
 let targets = ["odysee.com"];
 
@@ -20,8 +20,6 @@ let redirects = {
         ]
     }
 }
-
-const getRedirects = () => redirects;
 
 function setRedirects(val) {
     redirects.librarian = val;
@@ -44,52 +42,82 @@ function setRedirects(val) {
 
 let librarianNormalRedirectsChecks;
 let librarianTorRedirectsChecks;
-let librarianNormalCustomRedirects = [];
-let librarianTorCustomRedirects = [];
 
-let disable; // disableLbryTargets
-let protocol; // lbryTargetsProtocol
+async function switchInstance(url) {
+    return new Promise(resolve => {
+        browser.storage.local.get(
+            [
+                "lbryTargetsRedirects",
+                "lbryTargetsProtocol",
 
-function switchInstance(url) {
-    let protocolHost = commonHelper.protocolHost(url);
+                "librarianNormalRedirectsChecks",
+                "librarianNormalCustomRedirects",
 
-    let librarianList = [
-        ...redirects.librarian.normal,
-        ...redirects.librarian.tor,
-        ...librarianNormalCustomRedirects,
-        ...librarianTorCustomRedirects,
-    ];
+                "librarianTorRedirectsChecks",
+                "librarianTorCustomRedirects",
+            ],
+            r => {
+                let protocolHost = utils.protocolHost(url);
+                if (![
+                    ...redirects.librarian.normal,
+                    ...redirects.librarian.tor,
+                    ...r.librarianNormalCustomRedirects,
+                    ...r.librarianTorCustomRedirects,
+                ].includes(protocolHost)) resolve();
 
-    if (!librarianList.includes(protocolHost)) return;
+                let instancesList;
+                if (r.lbryTargetsProtocol == 'normal') instancesList = [...r.librarianNormalRedirectsChecks, ...r.librarianNormalCustomRedirects];
+                else if (r.lbryTargetsProtocol == 'tor') instancesList = [...r.librarianTorRedirectsChecks, ...r.librarianTorCustomRedirects];
 
-    let instancesList;
-    if (protocol == 'normal') instancesList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects];
-    else if (protocol == 'tor') instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects];
+                let index = instancesList.indexOf(protocolHost);
+                if (index > -1) instancesList.splice(index, 1);
+                if (instancesList.length === 0) resolve();
 
-    console.log("instancesList", instancesList);
-    let index = instancesList.indexOf(protocolHost);
-    if (index > -1) instancesList.splice(index, 1);
-
-    if (instancesList.length === 0) return null;
-
-    let randomInstance = commonHelper.getRandomInstance(instancesList);
-    return `${randomInstance}${url.pathname}${url.search}`;
+                let randomInstance = utils.getRandomInstance(instancesList);
+                resolve(`${randomInstance}${url.pathname}${url.search}`);
+            }
+        )
+    })
 }
 
 function redirect(url, type, initiator) {
-    if (disable) return null;
-    if (initiator && ([...redirects.librarian.normal, ...librarianNormalCustomRedirects].includes(initiator.origin) || targets.includes(initiator.host))) return null;
-    if (!targets.includes(url.host)) return null;
+    return new Promise(resolve => {
+        browser.storage.local.get(
+            [
+                "disableLbryTargets",
+                "lbryTargetsProtocol",
 
-    if (type != "main_frame") return null;
+                "lbryTargetsRedirects",
 
-    let instancesList;
-    if (protocol == 'normal') instancesList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects];
-    if (protocol == 'tor') instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects];
-    if (instancesList.length === 0) return null;
-    let randomInstance = commonHelper.getRandomInstance(instancesList);
+                "librarianNormalRedirectsChecks",
+                "librarianNormalCustomRedirects",
 
-    return `${randomInstance}${url.pathname}${url.search}`;
+                "librarianTorRedirectsChecks",
+                "librarianTorCustomRedirects",
+            ],
+            r => {
+                if (r.disableLbryTargets) { resolve(); return; }
+                if (initiator && (
+                    [
+                        ...r.lbryTargetsRedirects.librarian.normal,
+                        ...r.librarianNormalCustomRedirects,
+                        ...r.librarianTorCustomRedirects,
+                    ].includes(initiator.origin) ||
+                    targets.includes(initiator.host))
+                ) { resolve(); return; }
+                if (!targets.includes(url.host)) { resolve(); return; }
+                if (type != "main_frame") { resolve(); return; }
+
+                let instancesList;
+                if (r.lbryTargetsProtocol == 'normal') instancesList = [...r.librarianNormalRedirectsChecks, ...r.librarianNormalCustomRedirects];
+                if (r.lbryTargetsProtocol == 'tor') instancesList = [...r.librarianTorRedirectsChecks, ...r.librarianTorCustomRedirects];
+                if (instancesList.length === 0) { resolve(); return; }
+
+                let randomInstance = utils.getRandomInstance(instancesList);
+                resolve(`${randomInstance}${url.pathname}${url.search}`);
+            }
+        )
+    })
 }
 
 async function initDefaults() {
@@ -118,47 +146,10 @@ async function initDefaults() {
     })
 }
 
-async function init() {
-    return new Promise(resolve => {
-        browser.storage.local.get(
-            [
-                "disableLbryTargets",
-                "lbryTargetsRedirects",
-
-                "librarianNormalRedirectsChecks",
-                "librarianNormalCustomRedirects",
-
-                "librarianTorRedirectsChecks",
-                "librarianTorCustomRedirects",
-
-                "lbryTargetsProtocol"
-            ],
-            r => {
-                disable = r.disableLbryTargets;
-
-                protocol = r.lbryTargetsProtocol;
-
-                redirects = r.lbryTargetsRedirects;
-
-                librarianNormalRedirectsChecks = r.librarianNormalRedirectsChecks;
-                librarianNormalCustomRedirects = r.librarianNormalCustomRedirects;
-
-                librarianTorRedirectsChecks = r.librarianTorRedirectsChecks;
-                librarianTorCustomRedirects = r.librarianTorCustomRedirects;
-
-                resolve();
-            }
-        )
-    });
-}
-
 export default {
-
-    getRedirects,
     setRedirects,
     switchInstance,
 
     redirect,
-    init,
     initDefaults,
 };

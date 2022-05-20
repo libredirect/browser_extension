@@ -1,5 +1,5 @@
 import searchHelper from "../../../assets/javascripts/helpers/search.js";
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 
 let searxDiv = document.getElementById("searx");
 let searxngDiv = document.getElementById("searxng");
@@ -127,69 +127,16 @@ function changeProtocolSettings() {
   }
 }
 
-commonHelper.processDefaultCustomInstances('search', 'searx', 'normal', document);
-commonHelper.processDefaultCustomInstances('search', 'searx', 'tor', document);
-commonHelper.processDefaultCustomInstances('search', 'searx', 'i2p', document);
-commonHelper.processDefaultCustomInstances('search', 'searxng', 'normal', document);
-commonHelper.processDefaultCustomInstances('search', 'searxng', 'tor', document);
-commonHelper.processDefaultCustomInstances('search', 'searxng', 'i2p', document);
-commonHelper.processDefaultCustomInstances('search', 'whoogle', 'normal', document);
-commonHelper.processDefaultCustomInstances('search', 'whoogle', 'tor', document);
-commonHelper.processDefaultCustomInstances('search', 'whoogle', 'i2p', document);
+utils.processDefaultCustomInstances('search', 'searx', 'normal', document);
+utils.processDefaultCustomInstances('search', 'searx', 'tor', document);
+utils.processDefaultCustomInstances('search', 'searx', 'i2p', document);
+utils.processDefaultCustomInstances('search', 'searxng', 'normal', document);
+utils.processDefaultCustomInstances('search', 'searxng', 'tor', document);
+utils.processDefaultCustomInstances('search', 'searxng', 'i2p', document);
+utils.processDefaultCustomInstances('search', 'whoogle', 'normal', document);
+utils.processDefaultCustomInstances('search', 'whoogle', 'tor', document);
+utils.processDefaultCustomInstances('search', 'whoogle', 'i2p', document);
 
-let latencySearxElement = document.getElementById("latency-searx");
-let latencySearxLabel = document.getElementById("latency-searx-label");
-latencySearxElement.addEventListener("click",
-  async () => {
-    let reloadWindow = () => location.reload();
-    latencySearxElement.addEventListener("click", reloadWindow);
-    await searchHelper.init();
-    let redirects = searchHelper.getRedirects();
-    const oldHtml = latencySearxLabel.innerHTML;
-    latencySearxLabel.innerHTML = '...';
-    commonHelper.testLatency(latencySearxLabel, redirects.searx.normal).then(r => {
-      browser.storage.local.set({ searxLatency: r });
-      latencySearxLabel.innerHTML = oldHtml;
-      commonHelper.processDefaultCustomInstances('search', 'searx', 'normal', document);
-      latencySearxElement.removeEventListener("click", reloadWindow);
-    });
-  }
-);
-
-let latencySearxngElement = document.getElementById("latency-searxng");
-let latencySearxngLabel = document.getElementById("latency-searxng-label");
-latencySearxngElement.addEventListener("click",
-  async () => {
-    let reloadWindow = () => location.reload();
-    latencySearxngElement.addEventListener("click", reloadWindow);
-    await searchHelper.init();
-    let redirects = searchHelper.getRedirects();
-    const oldHtml = latencySearxngLabel.innerHTML;
-    latencySearxngLabel.innerHTML = '...';
-    commonHelper.testLatency(latencySearxngLabel, redirects.searxng.normal).then(r => {
-      browser.storage.local.set({ searxngLatency: r });
-      latencySearxngLabel.innerHTML = oldHtml;
-      commonHelper.processDefaultCustomInstances('search', 'searxng', 'normal', document);
-      latencySearxngElement.removeEventListener("click", reloadWindow);
-    });
-  }
-);
-
-let latencyWhoogleElement = document.getElementById("latency-whoogle");
-let latencyWhoogleLabel = document.getElementById("latency-whoogle-label");
-latencyWhoogleElement.addEventListener("click",
-  async () => {
-    let reloadWindow = () => location.reload();
-    latencyWhoogleElement.addEventListener("click", reloadWindow);
-    await searchHelper.init();
-    let redirects = searchHelper.getRedirects();
-    const oldHtml = latencyWhoogleLabel.innerHTML;
-    latencyWhoogleLabel.innerHTML = '...';
-    commonHelper.testLatency(latencyWhoogleLabel, redirects.whoogle.normal).then(r => {
-      browser.storage.local.set({ whoogleLatency: r });
-      latencyWhoogleLabel.innerHTML = oldHtml;
-      commonHelper.processDefaultCustomInstances('search', 'whoogle', 'normal', document);
-      latencyWhoogleElement.removeEventListener("click", reloadWindow);
-    });
-  }
-);
+utils.latency('search', 'searx', document, location, true)
+utils.latency('search', 'searxng', document, location, true)
+utils.latency('search', 'whoogle', document, location, true)

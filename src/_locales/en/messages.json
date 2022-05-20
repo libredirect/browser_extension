@@ -196,7 +196,7 @@
 
   "toggleAll": {
     "message": "Toggle all",
-    "description": "used in common.js"
+    "description": "used in utils.js"
   },
 
   "frontend": {

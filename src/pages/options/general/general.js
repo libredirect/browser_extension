@@ -1,7 +1,7 @@
 "use strict";
 window.browser = window.browser || window.chrome;
 
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 import generalHelper from "../../../assets/javascripts/helpers/general.js";
 
 
@@ -10,7 +10,7 @@ let updateInstancesElement = document.getElementById("update-instances");
 updateInstancesElement.addEventListener("click", () => {
   let oldHtml = updateInstancesElement.innerHTML
   updateInstancesElement.innerHTML = '...';
-  if (commonHelper.updateInstances()) {
+  if (utils.updateInstances()) {
     updateInstancesElement.innerHTML = 'Done!';
     new Promise(resolve => setTimeout(resolve, 1500)).then( // sleep 1500ms
       () => updateInstancesElement.innerHTML = oldHtml

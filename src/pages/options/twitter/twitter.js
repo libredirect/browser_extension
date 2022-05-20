@@ -1,5 +1,5 @@
 import twitterHelper from "../../../assets/javascripts/helpers/twitter.js";
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 
 let disable = document.getElementById("disable-nitter");
 let protocol = document.getElementById("protocol");
@@ -47,24 +47,7 @@ function changeProtocolSettings() {
     }
 }
 
-commonHelper.processDefaultCustomInstances('twitter', 'nitter', 'normal', document);
-commonHelper.processDefaultCustomInstances('twitter', 'nitter', 'tor', document)
+utils.processDefaultCustomInstances('twitter', 'nitter', 'normal', document);
+utils.processDefaultCustomInstances('twitter', 'nitter', 'tor', document)
 
-let latencyElement = document.getElementById("latency");
-let latencyLabel = document.getElementById("latency-label");
-latencyElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyElement.addEventListener("click", reloadWindow);
-        await twitterHelper.init();
-        let redirects = twitterHelper.getRedirects();
-        const oldHtml = latencyLabel.innerHTML;
-        latencyLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyLabel, redirects.nitter.normal).then(r => {
-            browser.storage.local.set({ nitterLatency: r });
-            latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('twitter', 'nitter', 'normal', document);
-            latencyElement.removeEventListener("click", reloadWindow)
-        });
-    }
-);
+utils.latency('twitter', 'nitter', document, location)

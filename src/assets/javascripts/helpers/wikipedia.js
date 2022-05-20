@@ -1,6 +1,6 @@
 window.browser = window.browser || window.chrome;
 
-import commonHelper from './common.js'
+import utils from './utils.js'
 
 const targets = /^https?:\/{2}(([a-z]{1,}\.){0,})wikipedia\.org/
 
@@ -63,7 +63,7 @@ function initWikilessCookies(from) {
         "wikilessI2pCustomRedirects",
       ],
       r => {
-        let protocolHost = commonHelper.protocolHost(from);
+        let protocolHost = utils.protocolHost(from);
         if (![
           ...r.wikilessNormalRedirectsChecks,
           ...r.wikilessNormalCustomRedirects,
@@ -79,8 +79,8 @@ function initWikilessCookies(from) {
         else if (r.wikipediaProtocol == 'i2p') checkedInstances = [...r.wikilessI2pRedirectsChecks, ...r.wikilessI2pCustomRedirects]
 
         for (const to of checkedInstances) {
-          commonHelper.copyCookie('wikiless', from, to, 'theme');
-          commonHelper.copyCookie('wikiless', from, to, 'default_lang');
+          utils.copyCookie('wikiless', from, to, 'theme');
+          utils.copyCookie('wikiless', from, to, 'default_lang');
         }
         resolve(true);
       }
@@ -104,76 +104,112 @@ function setWikilessCookies() {
       if (r.wikipediaProtocol == 'normal') checkedInstances = [...r.wikilessNormalRedirectsChecks, ...r.wikilessNormalCustomRedirects]
       else if (r.wikipediaProtocol == 'tor') checkedInstances = [...r.wikilessTorRedirectsChecks, ...r.wikilessTorCustomRedirects]
       for (const to of checkedInstances) {
-        commonHelper.getCookiesFromStorage('wikiless', to, 'theme');
-        commonHelper.getCookiesFromStorage('wikiless', to, 'default_lang');
+        utils.getCookiesFromStorage('wikiless', to, 'theme');
+        utils.getCookiesFromStorage('wikiless', to, 'default_lang');
       }
     }
   )
 }
 
 function redirect(url) {
-  if (disable) return;
-  if (!targets.test(url.href)) return;
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "disableWikipedia",
+        "wikipediaRedirects",
+        "wikipediaProtocol",
 
-  let GETArguments = [];
-  if (url.search.length > 0) {
-    let search = url.search.substring(1); //get rid of '?'
-    let argstrings = search.split("&");
-    for (let i = 0; i < argstrings.length; i++) {
-      let args = argstrings[i].split("=");
-      GETArguments.push([args[0], args[1]]);
-    }
-  }
-  let instancesList;
-  if (protocol == 'normal') instancesList = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
-  else if (protocol == 'tor') instancesList = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects];
-  else if (protocol == 'i2p') instancesList = [...wikilessI2pRedirectsChecks, ...wikilessI2pCustomRedirects];
-  if (instancesList.length === 0) return null;
-  let randomInstance = commonHelper.getRandomInstance(instancesList)
+        "wikilessNormalRedirectsChecks",
+        "wikilessTorRedirectsChecks",
+        "wikilessI2pRedirectsChecks",
+        "wikilessNormalCustomRedirects",
+        "wikilessTorCustomRedirects",
+        "wikilessI2pCustomRedirects",
+      ],
+      r => {
+        if (r.disableWikipedia) { resolve(); return; }
+        if (!targets.test(url.href)) { resolve(); return; }
 
-  let link = `${randomInstance}${url.pathname}`;
-  let urlSplit = url.host.split(".");
-  if (urlSplit[0] != "wikipedia" && urlSplit[0] != "www") {
-    if (urlSplit[0] == "m")
-      GETArguments.push(["mobileaction", "toggle_view_mobile"]);
-    else
-      GETArguments.push(["lang", urlSplit[0]]);
-    if (urlSplit[1] == "m")
-      GETArguments.push(["mobileaction", "toggle_view_mobile"]);
-    // wikiless doesn't have mobile view support yet
-  }
-  for (let i = 0; i < GETArguments.length; i++)
-    link += (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1];
+        let GETArguments = [];
+        if (url.search.length > 0) {
+          let search = url.search.substring(1); //get rid of '?'
+          let argstrings = search.split("&");
+          for (let i = 0; i < argstrings.length; i++) {
+            let args = argstrings[i].split("=");
+            GETArguments.push([args[0], args[1]]);
+          }
+        }
+        let instancesList;
+        if (r.wikipediaProtocol == 'normal') instancesList = [...r.wikilessNormalRedirectsChecks, ...r.wikilessNormalCustomRedirects];
+        else if (r.wikipediaProtocol == 'tor') instancesList = [...r.wikilessTorRedirectsChecks, ...r.wikilessTorCustomRedirects];
+        else if (r.wikipediaProtocol == 'i2p') instancesList = [...r.wikilessI2pRedirectsChecks, ...r.wikilessI2pCustomRedirects];
+        if (instancesList.length === 0) { resolve(); return; }
+        let randomInstance = utils.getRandomInstance(instancesList)
 
-  return link;
+        let link = `${randomInstance}${url.pathname}`;
+        let urlSplit = url.host.split(".");
+        if (urlSplit[0] != "wikipedia" && urlSplit[0] != "www") {
+          if (urlSplit[0] == "m")
+            GETArguments.push(["mobileaction", "toggle_view_mobile"]);
+          else
+            GETArguments.push(["lang", urlSplit[0]]);
+          if (urlSplit[1] == "m")
+            GETArguments.push(["mobileaction", "toggle_view_mobile"]);
+          // wikiless doesn't have mobile view support yet
+        }
+        for (let i = 0; i < GETArguments.length; i++)
+          link += (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1];
+
+        resolve(link);
+      }
+    )
+  })
 }
 
 function switchInstance(url) {
-  let protocolHost = commonHelper.protocolHost(url);
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "wikipediaRedirects",
+        "wikipediaProtocol",
 
-  let wikipediaList = [
-    ...redirects.wikiless.normal,
-    ...redirects.wikiless.tor,
-    ...redirects.wikiless.i2p,
+        "wikilessNormalRedirectsChecks",
+        "wikilessTorRedirectsChecks",
 
-    ...wikilessNormalCustomRedirects,
-    ...wikilessTorCustomRedirects,
-    ...wikilessI2pCustomRedirects
-  ]
-  if (!wikipediaList.includes(protocolHost)) return null;
+        "wikilessI2pRedirectsChecks",
+        "wikilessNormalCustomRedirects",
 
-  let instancesList;
-  if (protocol == 'normal') instancesList = [...wikilessNormalCustomRedirects, ...wikilessNormalRedirectsChecks];
-  else if (protocol == 'tor') instancesList = [...wikilessTorCustomRedirects, ...wikilessTorRedirectsChecks];
-  else if (protocol == 'i2p') instancesList = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
+        "wikilessTorCustomRedirects",
+        "wikilessI2pCustomRedirects",
+      ],
+      r => {
+        let protocolHost = utils.protocolHost(url);
 
-  let index = instancesList.indexOf(protocolHost);
-  if (index > -1) instancesList.splice(index, 1);
+        let wikipediaList = [
+          ...r.wikipediaRedirects.wikiless.normal,
+          ...r.wikipediaRedirects.wikiless.tor,
+          ...r.wikipediaRedirects.wikiless.i2p,
 
-  if (instancesList.length === 0) return null;
+          ...r.wikilessNormalCustomRedirects,
+          ...r.wikilessTorCustomRedirects,
+          ...r.wikilessI2pCustomRedirects
+        ]
+        if (!wikipediaList.includes(protocolHost)) resolve();
 
-  let randomInstance = commonHelper.getRandomInstance(instancesList);
-  return `${randomInstance}${url.pathname}${url.search}`;
+        let instancesList;
+        if (r.wikipediaProtocol == 'normal') instancesList = [...r.wikilessNormalCustomRedirects, ...r.wikilessNormalRedirectsChecks];
+        else if (r.wikipediaProtocol == 'tor') instancesList = [...r.wikilessTorCustomRedirects, ...r.wikilessTorRedirectsChecks];
+        else if (r.wikipediaProtocol == 'i2p') instancesList = [...r.wikilessI2pCustomRedirects, ...r.wikilessI2pRedirectsChecks];
+
+        let index = instancesList.indexOf(protocolHost);
+        if (index > -1) instancesList.splice(index, 1);
+        if (instancesList.length === 0) resolve();
+
+        let randomInstance = utils.getRandomInstance(instancesList);
+        resolve(`${randomInstance}${url.pathname}${url.search}`);
+      }
+    )
+  })
 }
 
 async function initDefaults() {
@@ -201,37 +237,6 @@ async function initDefaults() {
   })
 }
 
-async function init() {
-  browser.storage.local.get(
-    [
-      "disableWikipedia",
-      "wikipediaRedirects",
-      "wikipediaProtocol",
-
-      "wikilessNormalRedirectsChecks",
-      "wikilessTorRedirectsChecks",
-      "wikilessI2pRedirectsChecks",
-      "wikilessNormalCustomRedirects",
-      "wikilessTorCustomRedirects",
-      "wikilessI2pCustomRedirects",
-    ],
-    r => {
-      disable = r.disableWikipedia;
-      protocol = r.wikipediaProtocol;
-      redirects = r.wikipediaRedirects;
-
-      wikilessNormalRedirectsChecks = r.wikilessNormalRedirectsChecks;
-      wikilessNormalCustomRedirects = r.wikilessNormalCustomRedirects;
-
-      wikilessTorRedirectsChecks = r.wikilessTorRedirectsChecks;
-      wikilessTorCustomRedirects = r.wikilessTorCustomRedirects;
-
-      wikilessI2pRedirectsChecks = r.wikilessI2pRedirectsChecks;
-      wikilessI2pCustomRedirects = r.wikilessI2pCustomRedirects;
-    }
-  );
-}
-
 export default {
   getRedirects,
   setRedirects,
@@ -241,6 +246,5 @@ export default {
 
   redirect,
   initDefaults,
-  init,
   switchInstance,
 };

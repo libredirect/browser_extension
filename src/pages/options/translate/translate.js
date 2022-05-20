@@ -1,5 +1,5 @@
 import translateHelper from "../../../assets/javascripts/helpers/translate/translate.js";
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 
 let disable = document.getElementById("disable-simplyTranslate");
 let simplyTranslateDiv = document.getElementById("simplyTranslate");
@@ -66,45 +66,10 @@ document.addEventListener("change", () => {
 })
 
 
-commonHelper.processDefaultCustomInstances('translate', 'simplyTranslate', 'normal', document)
-commonHelper.processDefaultCustomInstances('translate', 'simplyTranslate', 'tor', document);
-commonHelper.processDefaultCustomInstances('translate', 'lingva', 'normal', document);
-commonHelper.processDefaultCustomInstances('translate', 'lingva', 'tor', document);
+utils.processDefaultCustomInstances('translate', 'simplyTranslate', 'normal', document)
+utils.processDefaultCustomInstances('translate', 'simplyTranslate', 'tor', document);
+utils.processDefaultCustomInstances('translate', 'lingva', 'normal', document);
+utils.processDefaultCustomInstances('translate', 'lingva', 'tor', document);
 
-let latencySimplyTranslateElement = document.getElementById("latency-simplyTranslate");
-let latencySimplyTranslateLabel = document.getElementById("latency-simplyTranslate-label");
-latencySimplyTranslateElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencySimplyTranslateElement.addEventListener("click", reloadWindow);
-        await translateHelper.init();
-        let redirects = translateHelper.getRedirects();
-        const oldHtml = latencySimplyTranslateLabel.innerHTML;
-        latencySimplyTranslateLabel.innerHTML = '...';
-        commonHelper.testLatency(latencySimplyTranslateLabel, redirects.simplyTranslate.normal).then(r => {
-            browser.storage.local.set({ simplyTranslateLatency: r });
-            latencySimplyTranslateLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('translate', 'simplyTranslate', 'normal', document)
-            latencySimplyTranslateElement.removeEventListener("click", reloadWindow);
-        });
-    }
-);
-
-let latencyLingvaElement = document.getElementById("latency-lingva");
-let latencyLingvaLabel = document.getElementById("latency-lingva-label");
-latencyLingvaElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyLingvaElement.addEventListener("click", reloadWindow);
-        await translateHelper.init();
-        let redirects = translateHelper.getRedirects();
-        const oldHtml = latencyLingvaLabel.innerHTML;
-        latencyLingvaLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyLingvaLabel, redirects.lingva.normal).then(r => {
-            browser.storage.local.set({ lingvaLatency: r });
-            latencyLingvaLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('translate', 'lingva', 'normal', document);
-            latencyLingvaElement.removeEventListener("click", reloadWindow);
-        });
-    }
-);
+utils.latency('translate', 'simplyTranslate', document, location, true)
+utils.latency('translate', 'lingva', document, location, true)

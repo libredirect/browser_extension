@@ -1,5 +1,5 @@
 import tiktokHelper from "../../../assets/javascripts/helpers/tiktok.js";
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 
 let disable = document.getElementById("disable-tiktok");
 let protocol = document.getElementById("protocol")
@@ -49,24 +49,7 @@ function changeProtocolSettings() {
     }
 }
 
-commonHelper.processDefaultCustomInstances('tiktok', 'proxiTok', 'normal', document);
-commonHelper.processDefaultCustomInstances('tiktok', 'proxiTok', 'tor', document);
+utils.processDefaultCustomInstances('tiktok', 'proxiTok', 'normal', document);
+utils.processDefaultCustomInstances('tiktok', 'proxiTok', 'tor', document);
 
-let latencyElement = document.getElementById("latency");
-let latencyLabel = document.getElementById("latency-label");
-latencyElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyElement.addEventListener("click", reloadWindow);
-        await tiktokHelper.init();
-        let redirects = tiktokHelper.getRedirects();
-        const oldHtml = latencyLabel.innerHTML;
-        latencyLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyLabel, redirects.proxiTok.normal).then(r => {
-            browser.storage.local.set({ proxiTokLatency: r });
-            latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('tiktok', 'proxiTok', 'normal', document);
-            latencyElement.removeEventListener("click", reloadWindow)
-        });
-    }
-);
+utils.latency('tiktok', 'proxiTok', document, location)

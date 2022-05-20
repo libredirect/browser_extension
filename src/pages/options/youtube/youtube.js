@@ -1,5 +1,5 @@
 import youtubeHelper from "../../../assets/javascripts/helpers/youtube/youtube.js";
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 
 let disableYoutube = document.getElementById("disable-invidious");
 let youtubeFrontend = document.getElementById("youtube-frontend");
@@ -149,67 +149,13 @@ invidiousForm.addEventListener('submit', async event => {
 //     youtubeHelper.applyPipedLocalStorage(url);
 // });
 
-commonHelper.processDefaultCustomInstances('youtube', 'invidious', 'normal', document);
-commonHelper.processDefaultCustomInstances('youtube', 'invidious', 'tor', document);
-commonHelper.processDefaultCustomInstances('youtube', 'pipedMaterial', 'normal', document);
-commonHelper.processDefaultCustomInstances('youtube', 'pipedMaterial', 'tor', document);
-commonHelper.processDefaultCustomInstances('youtube', 'piped', 'normal', document);
-commonHelper.processDefaultCustomInstances('youtube', 'piped', 'tor', document);
+utils.processDefaultCustomInstances('youtube', 'invidious', 'normal', document);
+utils.processDefaultCustomInstances('youtube', 'invidious', 'tor', document);
+utils.processDefaultCustomInstances('youtube', 'pipedMaterial', 'normal', document);
+utils.processDefaultCustomInstances('youtube', 'pipedMaterial', 'tor', document);
+utils.processDefaultCustomInstances('youtube', 'piped', 'normal', document);
+utils.processDefaultCustomInstances('youtube', 'piped', 'tor', document);
 
-
-let latencyInvidiousElement = document.getElementById("latency-invidious");
-let latencyInvidiousLabel = document.getElementById("latency-invidious-label");
-latencyInvidiousElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyInvidiousElement.addEventListener("click", reloadWindow);
-        await youtubeHelper.init();
-        let redirects = youtubeHelper.getRedirects();
-        const oldHtml = latencyInvidiousLabel.innerHTML;
-        latencyInvidiousLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyInvidiousLabel, redirects.invidious.normal).then(r => {
-            browser.storage.local.set({ invidiousLatency: r });
-            latencyInvidiousLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('youtube', 'invidious', 'normal', document);
-            latencyInvidiousElement.removeEventListener("click", reloadWindow);
-        });
-    }
-);
-
-let latencyPipedMaterialElement = document.getElementById("latency-pipedMaterial");
-let latencyPipedMaterialLabel = document.getElementById("latency-pipedMaterial-label");
-latencyPipedMaterialElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyPipedMaterialElement.addEventListener("click", reloadWindow);
-        await youtubeHelper.init();
-        let redirects = youtubeHelper.getRedirects();
-        const oldHtml = latencyPipedMaterialLabel.innerHTML;
-        latencyPipedMaterialLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyPipedMaterialLabel, redirects.pipedMaterial.normal).then(r => {
-            browser.storage.local.set({ pipedMaterialLatency: r });
-            latencyPipedMaterialLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('youtube', 'pipedMaterial', 'normal', document);
-            latencyPipedMaterialElement.removeEventListener("click", reloadWindow);
-        });
-    }
-);
-
-let latencyPipedElement = document.getElementById("latency-piped");
-let latencyPipedLabel = document.getElementById("latency-piped-label");
-latencyPipedElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyPipedElement.addEventListener("click", reloadWindow);
-        await youtubeHelper.init();
-        let redirects = youtubeHelper.getRedirects();
-        const oldHtml = latencyPipedLabel.innerHTML;
-        latencyPipedLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyPipedLabel, redirects.piped.normal).then(r => {
-            browser.storage.local.set({ pipedLatency: r });
-            latencyPipedLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('youtube', 'piped', 'normal', document);
-            latencyPipedElement.removeEventListener("click", reloadWindow);
-        });
-    }
-);
+utils.latency('youtube', 'invidious', document, location, true)
+utils.latency('youtube', 'piped', document, location, true)
+utils.latency('youtube', 'pipedMaterial', document, location, true)

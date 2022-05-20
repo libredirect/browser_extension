@@ -1,6 +1,6 @@
 window.browser = window.browser || window.chrome;
 
-import commonHelper from './common.js'
+import utils from './utils.js'
 
 const targets = [
     /^https?:\/{2}send.invalid\/$/,
@@ -43,32 +43,44 @@ let sendTorCustomRedirects = [];
 let disable; // disableSendTarget
 let protocol; // sendTargetsProtocol
 
-function switchInstance(url) {
-    let protocolHost = commonHelper.protocolHost(url);
+async function switchInstance(url) {
+    return new Promise(resolve => {
+        browser.storage.local.get(
+            [
+                "disableSendTarget",
+                "sendTargetsRedirects",
+                "sendTargetsProtocol",
 
-    let sendList = [
-        ...redirects.send.normal,
-        ...redirects.send.tor,
-        ...sendNormalCustomRedirects,
-        ...sendTorCustomRedirects,
-    ];
+                "sendNormalRedirectsChecks",
+                "sendNormalCustomRedirects",
 
-    if (!sendList.includes(protocolHost)) return;
+                "sendTorRedirectsChecks",
+                "sendTorCustomRedirects",
+            ],
+            r => {
+                let protocolHost = utils.protocolHost(url);
+                if (![
+                    ...r.sendTargetsRedirects.send.normal,
+                    ...r.sendTargetsRedirects.send.tor,
+                    ...r.sendNormalCustomRedirects,
+                    ...r.sendTorCustomRedirects,
+                ].includes(protocolHost)) resolve();
 
-    if (url.pathname != '/') return;
+                if (url.pathname != '/') resolve();
 
-    let instancesList;
-    if (protocol == 'normal') instancesList = [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects];
-    else if (protocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
+                let instancesList;
+                if (r.sendTargetsProtocol == 'normal') instancesList = [...r.sendNormalRedirectsChecks, ...r.sendNormalCustomRedirects];
+                else if (r.sendTargetsProtocol == 'tor') instancesList = [...r.sendTorRedirectsChecks, ...r.sendTorCustomRedirects];
 
-    console.log("instancesList", instancesList);
-    let index = instancesList.indexOf(protocolHost);
-    if (index > -1) instancesList.splice(index, 1);
+                let index = instancesList.indexOf(protocolHost);
+                if (index > -1) instancesList.splice(index, 1);
+                if (instancesList.length === 0) resolve();
 
-    if (instancesList.length === 0) return null;
-
-    let randomInstance = commonHelper.getRandomInstance(instancesList);
-    return `${randomInstance}${url.pathname}${url.search}`;
+                let randomInstance = utils.getRandomInstance(instancesList);
+                resolve(`${randomInstance}${url.pathname}${url.search}`);
+            }
+        )
+    })
 }
 
 function redirect(url, type, initiator) {
@@ -86,7 +98,7 @@ function redirect(url, type, initiator) {
     if (protocol == 'normal') instancesList = [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects];
     if (protocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
     if (instancesList.length === 0) return null;
-    let randomInstance = commonHelper.getRandomInstance(instancesList);
+    let randomInstance = utils.getRandomInstance(instancesList);
 
     return randomInstance;
 }
@@ -132,7 +144,6 @@ async function init() {
             "sendTargetsProtocol"
         ],
         r => {
-
             disable = r.disableSendTarget;
             protocol = r.sendTargetsProtocol;
             redirects = r.sendTargetsRedirects;

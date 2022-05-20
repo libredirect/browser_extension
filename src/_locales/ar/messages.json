@@ -201,7 +201,7 @@
 
     "toggleAll": {
       "message": "تبديل الكل",
-      "description": "used in common.js"
+      "description": "used in utils.js"
     },
 
     "frontend": {

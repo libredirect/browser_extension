@@ -87,7 +87,7 @@ html(lang="en")
             input#disable-simplyTranslate(type="checkbox")
 
         #maps.some-block
-            a.title(href="https://maps.com")
+            a.title(href="https://www.openstreetmap.org")
                 +maps
                 h4 Maps
             input#disable-osm(type="checkbox")
@@ -99,7 +99,7 @@ html(lang="en")
             input#disable-sendTargets(type="checkbox")
 
         .some-block
-            a#change-instance.title.button
+            a#change_instance.title.button
                 +change_instance
                 h4 Change Instance
 
@@ -120,4 +120,4 @@ html(lang="en")
 
         script(type="module" src="../options/init.js")
         script(type="module" src="./popup.js")
-        //- script(src="../../assets/javascripts/localise.js")
+        script(src="../../assets/javascripts/localise.js")

@@ -10,10 +10,3 @@ html, body {
 .hide {
     display: none !important;
 }
-
-.button {
-    margin: auto;
-    width: 50%;
-    border: 3px rgb(180, 201, 180);
-    padding: 10px;
-  }

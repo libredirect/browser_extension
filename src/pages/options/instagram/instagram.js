@@ -1,5 +1,5 @@
 import instagramHelper from "../../../assets/javascripts/helpers/instagram.js";
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 
 const disable = document.getElementById("disable-bibliogram");
 const protocol = document.getElementById("protocol");
@@ -36,24 +36,7 @@ browser.storage.local.get(
         changeProtocolSettings();
     })
 
-commonHelper.processDefaultCustomInstances('instagram', 'bibliogram', 'normal', document);
-commonHelper.processDefaultCustomInstances('instagram', 'bibliogram', 'tor', document);
+utils.processDefaultCustomInstances('instagram', 'bibliogram', 'normal', document);
+utils.processDefaultCustomInstances('instagram', 'bibliogram', 'tor', document);
 
-let latencyElement = document.getElementById("latency");
-let latencyLabel = document.getElementById("latency-label");
-latencyElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyElement.addEventListener("click", reloadWindow);
-        await instagramHelper.init();
-        let redirects = instagramHelper.getRedirects();
-        const oldHtml = latencyLabel.innerHTML;
-        latencyLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyLabel, redirects.bibliogram.normal).then(r => {
-            browser.storage.local.set({ bibliogramLatency: r });
-            latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('instagram', 'bibliogram', 'normal', document);
-            latencyElement.removeEventListener("click", reloadWindow);
-        });
-    }
-);
+utils.latency('instagram', 'bibliogram', document, location)

@@ -1,5 +1,5 @@
 import mediumHelper from "../../../assets/javascripts/helpers/medium.js";
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 
 let disable = document.getElementById("disable-medium");
 let protocol = document.getElementById("protocol")
@@ -15,8 +15,8 @@ browser.storage.local.get(
         changeProtocolSettings();
     }
 )
-commonHelper.processDefaultCustomInstances('medium', 'scribe', 'normal', document);
-commonHelper.processDefaultCustomInstances('medium', 'scribe', 'tor', document);
+utils.processDefaultCustomInstances('medium', 'scribe', 'normal', document);
+utils.processDefaultCustomInstances('medium', 'scribe', 'tor', document);
 
 document.addEventListener("change", async () => {
     await browser.storage.local.set({
@@ -39,21 +39,4 @@ function changeProtocolSettings() {
     }
 }
 
-let latencyElement = document.getElementById("latency");
-let latencyLabel = document.getElementById("latency-label");
-latencyElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyElement.addEventListener("click", reloadWindow);
-        await mediumHelper.init();
-        let redirects = mediumHelper.getRedirects();
-        const oldHtml = latencyLabel.innerHTML;
-        latencyLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyLabel, redirects.scribe.normal).then(r => {
-            browser.storage.local.set({ scribeLatency: r });
-            latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('medium', 'scribe', 'normal', document);
-            latencyElement.removeEventListener("click", reloadWindow);
-        });
-    }
-);
+utils.latency('medium', 'scribe', document, location)

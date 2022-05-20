@@ -1,5 +1,5 @@
 import lbryHelper from "../../../assets/javascripts/helpers/lbry.js";
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 
 let disable = document.getElementById("disable-lbry");
 let protocol = document.getElementById("protocol")
@@ -37,24 +37,7 @@ browser.storage.local.get(
     }
 )
 
-commonHelper.processDefaultCustomInstances('lbryTargets', 'librarian', 'normal', document);
-commonHelper.processDefaultCustomInstances('lbryTargets', 'librarian', 'tor', document);
+utils.processDefaultCustomInstances('lbryTargets', 'librarian', 'normal', document);
+utils.processDefaultCustomInstances('lbryTargets', 'librarian', 'tor', document);
 
-let latencyElement = document.getElementById("latency");
-let latencyLabel = document.getElementById("latency-label");
-latencyElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyElement.addEventListener("click", reloadWindow);
-        await lbryHelper.init();
-        let redirects = lbryHelper.getRedirects();
-        const oldHtml = latencyLabel.innerHTML;
-        latencyLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyLabel, redirects.librarian.normal).then(r => {
-            browser.storage.local.set({ librarianLatency: r });
-            latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('lbry', 'librarian', 'normal', document);
-            latencyElement.removeEventListener("click", reloadWindow);
-        });
-    }
-);
+utils.latency('lbryTargets', 'librarian', document, location)

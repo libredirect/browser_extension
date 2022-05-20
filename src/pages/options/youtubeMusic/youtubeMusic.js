@@ -1,5 +1,5 @@
 import youtubeMusicHelper from "../../../assets/javascripts/helpers/youtubeMusic.js";
-import commonHelper from "../../../assets/javascripts/helpers/common.js";
+import utils from "../../../assets/javascripts/helpers/utils.js";
 
 let disableYoutubeMusicElement = document.getElementById("disable-beatbump");
 
@@ -18,23 +18,6 @@ document.addEventListener("change", async () => {
     })
 })
 
-commonHelper.processDefaultCustomInstances('youtubeMusic', 'beatbump', 'normal', document);
+utils.processDefaultCustomInstances('youtubeMusic', 'beatbump', 'normal', document);
 
-let latencyElement = document.getElementById("latency");
-let latencyLabel = document.getElementById("latency-label");
-latencyElement.addEventListener("click",
-    async () => {
-        let reloadWindow = () => location.reload();
-        latencyElement.addEventListener("click", reloadWindow);
-        await youtubeMusicHelper.init();
-        let redirects = youtubeMusicHelper.getRedirects();
-        const oldHtml = latencyLabel.innerHTML;
-        latencyLabel.innerHTML = '...';
-        commonHelper.testLatency(latencyLabel, redirects.beatbump.normal).then(r => {
-            browser.storage.local.set({ beatbumpLatency: r });
-            latencyLabel.innerHTML = oldHtml;
-            commonHelper.processDefaultCustomInstances('youtubeMusic', 'beatbump', 'normal', document);
-            latencyElement.removeEventListener("click", reloadWindow)
-        });
-    }
-);
+utils.latency('youtubeMusic', 'beatbump', document, location)

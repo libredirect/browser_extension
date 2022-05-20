@@ -1,7 +1,7 @@
 "use strict";
 
 window.browser = window.browser || window.chrome;
-import commonHelper from './common.js'
+import utils from './utils.js'
 
 const targets = /^https?:\/{2}(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/;
 
@@ -80,12 +80,11 @@ async function redirect(url, initiator) {
   if (!url.href.match(targets)) return;
 
   let randomInstance;
-  if (frontend == 'osm') randomInstance = commonHelper.getRandomInstance(redirects.osm.normal);
-  if (frontend == 'facil') randomInstance = commonHelper.getRandomInstance([...facilNormalRedirectsChecks, ...facilNormalCustomRedirects]);
+  if (frontend == 'osm') randomInstance = utils.getRandomInstance(redirects.osm.normal);
+  if (frontend == 'facil') randomInstance = utils.getRandomInstance([...facilNormalRedirectsChecks, ...facilNormalCustomRedirects]);
 
   let mapCentre = "#";
   let prefs = {};
-  let facilPrefs = {};
 
   if (url.pathname.match(mapCentreRegex)) { // Set map centre if present
     var [, lat, lon, zoom] = url.pathname.match(mapCentreRegex);
