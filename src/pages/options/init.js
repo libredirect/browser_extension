@@ -22,7 +22,6 @@ function changeTheme() {
                         document.body.classList.add("dark-theme");
                         document.body.classList.remove("light-theme");
                     }
-
             }
         }
     )

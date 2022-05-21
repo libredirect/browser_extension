@@ -12,13 +12,13 @@
       "https://yt.artemislena.eu",
       "https://invidious.flokinet.to",
       "https://invidious.sethforprivacy.com",
-      "https://invidious.mutahar.rocks",
       "https://invidious.tiekoetter.com",
       "https://inv.bp.projectsegfau.lt",
       "https://invidious.lunar.icu",
       "https://invidious.weblibre.org",
       "https://invidious.esmailelbob.xyz",
       "https://youtube.076.ne.jp",
+      "https://invidious.mutahar.rocks",
       "https://invidious.namazso.eu"
     ],
     "tor": [
@@ -280,7 +280,8 @@
       "https://wikiless.lunar.icu",
       "https://wiki.froth.zone",
       "https://wikiless.northboot.xyz",
-      "https://wikiless.tiekoetter.com"
+      "https://wikiless.tiekoetter.com",
+      "https://wikiless.esmailelbob.xyz/"
     ],
     "tor": [
       "http://dj2tbh2nqfxyfmvq33cjmhuw7nb6am7thzd3zsjvizeqf374fixbrxyd.onion",
@@ -366,6 +367,7 @@
       "https://search.snopyta.org",
       "https://search.stinpriza.org",
       "https://search.trom.tf",
+      "https://search.vojkovic.xyz",
       "https://searx.bissisoft.com",
       "https://searx.divided-by-zero.eu",
       "https://searx.dresden.network",
@@ -392,6 +394,7 @@
       "https://searx.sp-codes.de",
       "https://searx.stuehieyr.com",
       "https://searx.theanonymouse.xyz",
+      "https://searx.tiekoetter.com",
       "https://searx.tk",
       "https://searx.tux.land",
       "https://searx.tuxcloud.net",
@@ -435,7 +438,6 @@
       "https://search.privacyguides.net",
       "https://search.rabbit-company.com",
       "https://search.roombob.cat",
-      "https://search.vojkovic.xyz",
       "https://search.zzls.xyz",
       "https://searx.albony.xyz",
       "https://searx.bardia.tech",
@@ -451,7 +453,6 @@
       "https://searx.ppeb.me",
       "https://searx.prvcy.eu",
       "https://searx.sev.monster",
-      "https://searx.tiekoetter.com",
       "https://searxng.zackptg5.com",
       "https://swag.pw",
       "https://www.webrats.xyz"
@@ -1021,7 +1022,6 @@
     "https://media.over-world.org",
     "https://tube.avensio.de",
     "https://peertube.klaewyss.fr",
-    "https://video.cpn.so",
     "https://sender-fm.veezee.tube",
     "https://peertube.takeko.cyou",
     "https://tube.chatelet.ovh",
@@ -1077,7 +1077,6 @@
     "https://fair.tube",
     "https://tube.lokad.com",
     "https://videos.benjaminbrady.ie",
-    "https://peertube.bgzashtita.es",
     "https://video.binarydad.com",
     "https://tube.pmj.rocks",
     "https://gary.vger.cloud",

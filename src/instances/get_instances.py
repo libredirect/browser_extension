@@ -381,14 +381,14 @@ for k1, v1 in mightyList.items():
     if type(mightyList[k1]) is dict:
         for k2, v2 in mightyList[k1].items():
             for instance in mightyList[k1][k2]:
-                # if (not isValid(instance)):
-                #     del mightyList[k1][k2][instance]
-                #     print("removed " + instance)
-                # else:
-                if not instance.endswith('.onion') and not instance.endswith('.i2p') and is_cloudflare(instance):
-                    blocklist.append(instance)
-                if not instance.endswith('.onion') and not instance.endswith('.i2p') and is_authenticate(instance):
-                    blocklist.append(instance)
+                if (not isValid(instance)):
+                    mightyList[k1][k2].pop(instance)
+                    print("removed " + instance)
+                else:
+                    if not instance.endswith('.onion') and not instance.endswith('.i2p') and is_cloudflare(instance):
+                        blocklist.append(instance)
+                    if not instance.endswith('.onion') and not instance.endswith('.i2p') and is_authenticate(instance):
+                        blocklist.append(instance)
 
 peertube()
 

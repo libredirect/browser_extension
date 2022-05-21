@@ -42,10 +42,10 @@ Send Files => [Send](https://github.com/timvisee/send)
 [![Patreon](./img/patreon.svg)](https://patreon.com/LibRedirect)&nbsp;
 [![Buy me a coffee](./img/bmc.svg)](https://www.buymeacoffee.com/libredirect)
 
-BTC: bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q\
+BTC: [bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q](bitcoin:bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q)\
 BCH: [qqz5vfnrngk0tjy73q2688qzw4wnllnuzqfndflhl8](bitcoincash:qqz5vfnrngk0tjy73q2688qzw4wnllnuzqfndflhl8)\
-ETH: 0x896E5796Da76E49A400A9186E1c459CD2C64b4E8\
-XMR: 4AM5CVfaGsnEXQQjZSzJvaWufe7pT86ubcZPr83fCjb2Hn3iwcForTWFy2Z3ugXcufUwHaGcucfPMFgPXBFSYGFvNrmV5XR
+ETH: [0x896E5796Da76E49A400A9186E1c459CD2C64b4E8](ethereum:0x896E5796Da76E49A400A9186E1c459CD2C64b4E8)\
+XMR: [4AM5CVfaGsnEXQQjZSzJvaWufe7pT86ubcZPr83fCjb2Hn3iwcForTWFy2Z3ugXcufUwHaGcucfPMFgPXBFSYGFvNrmV5XR](monero:4AM5CVfaGsnEXQQjZSzJvaWufe7pT86ubcZPr83fCjb2Hn3iwcForTWFy2Z3ugXcufUwHaGcucfPMFgPXBFSYGFvNrmV5XR)
 
 [FAQ](https://libredirect.github.io/faq.html)
 
