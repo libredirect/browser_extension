@@ -180,7 +180,7 @@ function removeXFrameOptions(e) {
   })
 }
 
-function initNitterCookies(from) {
+function initNitterCookies(test, from) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [
@@ -201,25 +201,26 @@ function initNitterCookies(from) {
           ].includes(protocolHost)
         ) { resolve(); return; }
 
-        let checkedInstances;
-        if (r.twitterProtocol == 'normal') checkedInstances = [...r.nitterNormalRedirectsChecks, ...r.nitterNormalCustomRedirects]
-        else if (r.twitterProtocol == 'tor') checkedInstances = [...r.nitterTorRedirectsChecks, ...r.nitterTorCustomRedirects]
-
-        for (const to of checkedInstances) {
-          utils.copyCookie('nitter', from, to, 'theme');
-          utils.copyCookie('nitter', from, to, 'infiniteScroll');
-          utils.copyCookie('nitter', from, to, 'stickyProfile');
-          utils.copyCookie('nitter', from, to, 'bidiSupport');
-          utils.copyCookie('nitter', from, to, 'hideTweetStats');
-          utils.copyCookie('nitter', from, to, 'hideBanner');
-          utils.copyCookie('nitter', from, to, 'hidePins');
-          utils.copyCookie('nitter', from, to, 'hideReplies');
-          utils.copyCookie('nitter', from, to, 'squareAvatars');
-          utils.copyCookie('nitter', from, to, 'mp4Playback');
-          utils.copyCookie('nitter', from, to, 'hlsPlayback');
-          utils.copyCookie('nitter', from, to, 'proxyVideos');
-          utils.copyCookie('nitter', from, to, 'muteVideos');
-          utils.copyCookie('nitter', from, to, 'autoplayGifs');
+        if (!test) {
+          let checkedInstances;
+          if (r.twitterProtocol == 'normal') checkedInstances = [...r.nitterNormalRedirectsChecks, ...r.nitterNormalCustomRedirects]
+          else if (r.twitterProtocol == 'tor') checkedInstances = [...r.nitterTorRedirectsChecks, ...r.nitterTorCustomRedirects]
+          for (const to of checkedInstances) {
+            utils.copyCookie('nitter', from, to, 'theme');
+            utils.copyCookie('nitter', from, to, 'infiniteScroll');
+            utils.copyCookie('nitter', from, to, 'stickyProfile');
+            utils.copyCookie('nitter', from, to, 'bidiSupport');
+            utils.copyCookie('nitter', from, to, 'hideTweetStats');
+            utils.copyCookie('nitter', from, to, 'hideBanner');
+            utils.copyCookie('nitter', from, to, 'hidePins');
+            utils.copyCookie('nitter', from, to, 'hideReplies');
+            utils.copyCookie('nitter', from, to, 'squareAvatars');
+            utils.copyCookie('nitter', from, to, 'mp4Playback');
+            utils.copyCookie('nitter', from, to, 'hlsPlayback');
+            utils.copyCookie('nitter', from, to, 'proxyVideos');
+            utils.copyCookie('nitter', from, to, 'muteVideos');
+            utils.copyCookie('nitter', from, to, 'autoplayGifs');
+          }
         }
         resolve(true);
       })

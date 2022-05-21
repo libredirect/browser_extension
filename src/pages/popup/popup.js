@@ -77,17 +77,29 @@ document.addEventListener("change", () => {
   });
 })
 
-document.getElementById("change_instance").addEventListener("click", utils.switchInstance);
-let copyRawElement = document.getElementById('copy_raw');
-copyRawElement.addEventListener("click", () => utils.copyRaw(false, copyRawElement));
+utils.switchInstance(true).then(r => {
+  if (!r) document.getElementById("change_instance_div").style.display = 'none';
+  else document.getElementById("change_instance").addEventListener("click", () => utils.switchInstance(false));
+});
 
-utils.copyRaw(true).then(r => { if (!r) document.getElementById('copy_raw_div').style.display = 'none'; })
-// utils.unify().then(r => { if (!r) document.getElementById('unify_div').style.display = 'none'; })
+utils.copyRaw(true).then(r => {
+  if (!r) document.getElementById('copy_raw_div').style.display = 'none';
+  else {
+    const copy_raw = document.getElementById('copy_raw');
+    copy_raw.addEventListener("click", () => utils.copyRaw(false, copy_raw));
+  }
+})
+
+utils.unify(true).then(r => {
+  if (!r) document.getElementById('unify_div').style.display = 'none';
+  else {
+    const unify = document.getElementById('unify');
+    unify.addEventListener("click", () => utils.unify(false, unify));
+  }
+})
+
 
 document.getElementById("more-options").addEventListener("click", () => browser.runtime.openOptionsPage());
-
-let unifyElement = document.getElementById('unify');
-unifyElement.addEventListener("click", () => utils.unify(unifyElement));
 
 generalHelper.init().then(() => {
   let popupFrontends = generalHelper.getPopupFrontends();

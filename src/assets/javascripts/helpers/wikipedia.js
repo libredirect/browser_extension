@@ -38,18 +38,11 @@ function setRedirects(val) {
 }
 
 let
-  disable, // disableWikipedia
-  protocol; // wikipediaProtocol
-
-let
   wikilessNormalRedirectsChecks,
   wikilessTorRedirectsChecks,
-  wikilessI2pRedirectsChecks,
-  wikilessNormalCustomRedirects,
-  wikilessTorCustomRedirects,
-  wikilessI2pCustomRedirects;
+  wikilessI2pRedirectsChecks;
 
-function initWikilessCookies(from) {
+function initWikilessCookies(test, from) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [
@@ -72,14 +65,16 @@ function initWikilessCookies(from) {
           ...r.wikilessI2pCustomRedirects,
         ].includes(protocolHost)) resolve();
 
-        let checkedInstances;
-        if (r.wikipediaProtocol == 'normal') checkedInstances = [...r.wikilessNormalRedirectsChecks, ...r.wikilessNormalCustomRedirects]
-        else if (r.wikipediaProtocol == 'tor') checkedInstances = [...r.wikilessTorRedirectsChecks, ...r.wikilessTorCustomRedirects]
-        else if (r.wikipediaProtocol == 'i2p') checkedInstances = [...r.wikilessI2pRedirectsChecks, ...r.wikilessI2pCustomRedirects]
+        if (!test) {
+          let checkedInstances;
+          if (r.wikipediaProtocol == 'normal') checkedInstances = [...r.wikilessNormalRedirectsChecks, ...r.wikilessNormalCustomRedirects]
+          else if (r.wikipediaProtocol == 'tor') checkedInstances = [...r.wikilessTorRedirectsChecks, ...r.wikilessTorCustomRedirects]
+          else if (r.wikipediaProtocol == 'i2p') checkedInstances = [...r.wikilessI2pRedirectsChecks, ...r.wikilessI2pCustomRedirects]
 
-        for (const to of checkedInstances) {
-          utils.copyCookie('wikiless', from, to, 'theme');
-          utils.copyCookie('wikiless', from, to, 'default_lang');
+          for (const to of checkedInstances) {
+            utils.copyCookie('wikiless', from, to, 'theme');
+            utils.copyCookie('wikiless', from, to, 'default_lang');
+          }
         }
         resolve(true);
       }

@@ -102,31 +102,15 @@ let
   searxI2pRedirectsChecks,
   searxTorRedirectsChecks,
 
-  searxNormalCustomRedirects,
-  searxTorCustomRedirects,
-  searxI2pCustomRedirects,
-
   searxngNormalRedirectsChecks,
   searxngI2pRedirectsChecks,
   searxngTorRedirectsChecks,
 
-  searxngNormalCustomRedirects,
-  searxngTorCustomRedirects,
-  searxngI2pCustomRedirects,
-
   whoogleNormalRedirectsChecks,
   whoogleI2pRedirectsChecks,
-  whoogleTorRedirectsChecks,
+  whoogleTorRedirectsChecks;
 
-  whoogleNormalCustomRedirects,
-  whoogleTorCustomRedirects,
-  whoogleI2pCustomRedirects;
-
-let disable, // disableSearch
-  frontend, // searchFrontend
-  protocol; // searchProtocol
-
-function initSearxCookies(from) {
+function initSearxCookies(test, from) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [
@@ -149,29 +133,30 @@ function initSearxCookies(from) {
           ...r.searxI2pCustomRedirects,
         ].includes(protocolHost)) return;
 
-
-        let checkedInstances;
-        if (protocol == 'normal') checkedInstances = [...r.searxNormalRedirectsChecks, ...r.searxNormalCustomRedirects];
-        else if (protocol == 'tor') checkedInstances = [...r.searxTorRedirectsChecks, ...r.searxTorCustomRedirects];
-        else if (protocol == 'i2p') checkedInstances = [...r.searxI2pRedirectsChecks, ...r.searxI2pCustomRedirects];
-        for (const to of checkedInstances) {
-          utils.copyCookie('searx', from, to, 'advanced_search');
-          utils.copyCookie('searx', from, to, 'autocomplete');
-          utils.copyCookie('searx', from, to, 'categories');
-          utils.copyCookie('searx', from, to, 'disabled_engines');
-          utils.copyCookie('searx', from, to, 'disabled_plugins');
-          utils.copyCookie('searx', from, to, 'doi_resolver');
-          utils.copyCookie('searx', from, to, 'enabled_engines');
-          utils.copyCookie('searx', from, to, 'enabled_plugins');
-          utils.copyCookie('searx', from, to, 'image_proxy');
-          utils.copyCookie('searx', from, to, 'language');
-          utils.copyCookie('searx', from, to, 'locale');
-          utils.copyCookie('searx', from, to, 'method');
-          utils.copyCookie('searx', from, to, 'oscar-style');
-          utils.copyCookie('searx', from, to, 'results_on_new_tab');
-          utils.copyCookie('searx', from, to, 'safesearch');
-          utils.copyCookie('searx', from, to, 'theme');
-          utils.copyCookie('searx', from, to, 'tokens');
+        if (!test) {
+          let checkedInstances;
+          if (r.searchProtocol == 'normal') checkedInstances = [...r.searxNormalRedirectsChecks, ...r.searxNormalCustomRedirects];
+          else if (r.searchProtocol == 'tor') checkedInstances = [...r.searxTorRedirectsChecks, ...r.searxTorCustomRedirects];
+          else if (r.searchProtocol == 'i2p') checkedInstances = [...r.searxI2pRedirectsChecks, ...r.searxI2pCustomRedirects];
+          for (const to of checkedInstances) {
+            utils.copyCookie('searx', from, to, 'advanced_search');
+            utils.copyCookie('searx', from, to, 'autocomplete');
+            utils.copyCookie('searx', from, to, 'categories');
+            utils.copyCookie('searx', from, to, 'disabled_engines');
+            utils.copyCookie('searx', from, to, 'disabled_plugins');
+            utils.copyCookie('searx', from, to, 'doi_resolver');
+            utils.copyCookie('searx', from, to, 'enabled_engines');
+            utils.copyCookie('searx', from, to, 'enabled_plugins');
+            utils.copyCookie('searx', from, to, 'image_proxy');
+            utils.copyCookie('searx', from, to, 'language');
+            utils.copyCookie('searx', from, to, 'locale');
+            utils.copyCookie('searx', from, to, 'method');
+            utils.copyCookie('searx', from, to, 'oscar-style');
+            utils.copyCookie('searx', from, to, 'results_on_new_tab');
+            utils.copyCookie('searx', from, to, 'safesearch');
+            utils.copyCookie('searx', from, to, 'theme');
+            utils.copyCookie('searx', from, to, 'tokens');
+          }
         }
         resolve(true);
       }
@@ -218,7 +203,7 @@ function setSearxCookies() {
   )
 }
 
-function initSearxngCookies(from) {
+function initSearxngCookies(test, from) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [
@@ -241,30 +226,32 @@ function initSearxngCookies(from) {
           ...r.searxngI2pCustomRedirects,
         ].includes(protocolHost)) return;
 
-        let checkedInstances;
-        if (r.searchProtocol == 'normal') checkedInstances = [...r.searxngNormalRedirectsChecks, ...r.searxngNormalCustomRedirects];
-        else if (r.searchProtocol == 'tor') checkedInstances = [...r.searxngTorRedirectsChecks, ...r.searxngTorCustomRedirects];
-        else if (r.searchProtocol == 'i2p') checkedInstances = [...r.searxngI2pRedirectsChecks, ...r.searxngI2pCustomRedirects];
-        for (const to of checkedInstances) {
-          utils.copyCookie('searxng', from, to, 'autocomplete');
-          utils.copyCookie('searxng', from, to, 'categories');
-          utils.copyCookie('searxng', from, to, 'disabled_engines');
-          utils.copyCookie('searxng', from, to, 'disabled_plugins');
-          utils.copyCookie('searxng', from, to, 'doi_resolver');
-          utils.copyCookie('searxng', from, to, 'enabled_plugins');
-          utils.copyCookie('searxng', from, to, 'enabled_engines');
-          utils.copyCookie('searxng', from, to, 'image_proxy');
-          utils.copyCookie('searxng', from, to, 'infinite_scroll');
-          utils.copyCookie('searxng', from, to, 'language');
-          utils.copyCookie('searxng', from, to, 'locale');
-          utils.copyCookie('searxng', from, to, 'maintab');
-          utils.copyCookie('searxng', from, to, 'method');
-          utils.copyCookie('searxng', from, to, 'query_in_title');
-          utils.copyCookie('searxng', from, to, 'results_on_new_tab');
-          utils.copyCookie('searxng', from, to, 'safesearch');
-          utils.copyCookie('searxng', from, to, 'simple_style');
-          utils.copyCookie('searxng', from, to, 'theme');
-          utils.copyCookie('searxng', from, to, 'tokens');
+        if (!test) {
+          let checkedInstances;
+          if (r.searchProtocol == 'normal') checkedInstances = [...r.searxngNormalRedirectsChecks, ...r.searxngNormalCustomRedirects];
+          else if (r.searchProtocol == 'tor') checkedInstances = [...r.searxngTorRedirectsChecks, ...r.searxngTorCustomRedirects];
+          else if (r.searchProtocol == 'i2p') checkedInstances = [...r.searxngI2pRedirectsChecks, ...r.searxngI2pCustomRedirects];
+          for (const to of checkedInstances) {
+            utils.copyCookie('searxng', from, to, 'autocomplete');
+            utils.copyCookie('searxng', from, to, 'categories');
+            utils.copyCookie('searxng', from, to, 'disabled_engines');
+            utils.copyCookie('searxng', from, to, 'disabled_plugins');
+            utils.copyCookie('searxng', from, to, 'doi_resolver');
+            utils.copyCookie('searxng', from, to, 'enabled_plugins');
+            utils.copyCookie('searxng', from, to, 'enabled_engines');
+            utils.copyCookie('searxng', from, to, 'image_proxy');
+            utils.copyCookie('searxng', from, to, 'infinite_scroll');
+            utils.copyCookie('searxng', from, to, 'language');
+            utils.copyCookie('searxng', from, to, 'locale');
+            utils.copyCookie('searxng', from, to, 'maintab');
+            utils.copyCookie('searxng', from, to, 'method');
+            utils.copyCookie('searxng', from, to, 'query_in_title');
+            utils.copyCookie('searxng', from, to, 'results_on_new_tab');
+            utils.copyCookie('searxng', from, to, 'safesearch');
+            utils.copyCookie('searxng', from, to, 'simple_style');
+            utils.copyCookie('searxng', from, to, 'theme');
+            utils.copyCookie('searxng', from, to, 'tokens');
+          }
         }
         resolve(true);
       }
@@ -350,7 +337,7 @@ function redirect(url) {
         "searxngI2pCustomRedirects",
       ],
       r => {
-        if (disable) { resolve(); return; }
+        if (r.disableSearch) { resolve(); return; }
         if (!targets.some(rx => rx.test(url.href))) { resolve(); return; }
         if (url.searchParams.has('tbm')) { resolve(); return; }
         if (url.hostname.includes('google') && !url.searchParams.has('q') && url.pathname != '/') { resolve(); return; }

@@ -33,24 +33,19 @@ let redirects = {
     "tor": []
   }
 };
-
 function setRedirects(val) {
-  browser.storage.local.get('cloudflareList', async r => {
+  browser.storage.local.get('cloudflareList', r => {
     redirects.invidious = val.invidious;
     redirects.piped = val.piped;
     invidiousNormalRedirectsChecks = [...redirects.invidious.normal];
     pipedNormalRedirectsChecks = [...redirects.piped.normal];
-
     for (const instance of r.cloudflareList) {
-      let i;
+      const a = invidiousNormalRedirectsChecks.indexOf(instance);
+      if (a > -1) invidiousNormalRedirectsChecks.splice(a, 1);
 
-      i = invidiousNormalRedirectsChecks.indexOf(instance);
-      if (i > -1) invidiousNormalRedirectsChecks.splice(i, 1);
-
-      i = pipedNormalRedirectsChecks.indexOf(instance);
-      if (i > -1) pipedNormalRedirectsChecks.splice(i, 1);
+      const b = pipedNormalRedirectsChecks.indexOf(instance);
+      if (b > -1) pipedNormalRedirectsChecks.splice(b, 1);
     }
-
     browser.storage.local.set({
       youtubeRedirects: redirects,
       invidiousNormalRedirectsChecks,
@@ -63,21 +58,13 @@ function setRedirects(val) {
 
 let
   invidiousNormalRedirectsChecks,
-  invidiousNormalCustomRedirects,
   invidiousTorRedirectsChecks,
-  invidiousTorCustomRedirects;
 
-let
   pipedNormalRedirectsChecks,
-  pipedNormalCustomRedirects,
   pipedTorRedirectsChecks,
-  pipedTorCustomRedirects;
 
-let
   pipedMaterialNormalRedirectsChecks,
-  pipedMaterialNormalCustomRedirects,
-  pipedMaterialTorRedirectsChecks,
-  pipedMaterialTorCustomRedirects;
+  pipedMaterialTorRedirectsChecks;
 
 function redirect(url, details, initiator) {
   return new Promise(resolve => {
@@ -129,27 +116,38 @@ function redirect(url, details, initiator) {
           )
         ) { resolve('BYPASSTAB'); return; }
 
+        const isInvidious = r.youtubeFrontend == 'invidious';
+        const isPiped = r.youtubeFrontend == 'piped';
+        const isPipedMaterial = r.youtubeFrontend == 'pipedMaterial'
+        const isFreetube = r.youtubeFrontend == 'freetube';
+        const isYatte = r.youtubeFrontend == 'yatte';
+
+        const isFrontendYoutube = r.youtubeEmbedFrontend == "youtube";
+        const isFrontendInvidious = r.youtubeEmbedFrontend == 'invidious';
+        const isFrontendPiped = r.youtubeEmbedFrontend == 'piped';
+        const isFrontendPipedMaterial = r.youtubeEmbedFrontend == 'pipedMaterial';
+
+        const isOnlyEmbeddedVideo = r.OnlyEmbeddedVideo == 'onlyNotEmbedded';
+        const isOnlyNotEmbedded = r.OnlyEmbeddedVideo == 'onlyNotEmbedded'
+
+        const is_main_frame = details.type === "main_frame";
+        const is_sub_frame = details.type === "sub_frame";
+
         if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) { resolve(); return; } // Don't redirect YouTube Player API.
 
-        if (r.youtubeFrontend == 'yatte' && details.type === "main_frame")
+        if (r.youtubeFrontend == 'yatte' && is_main_frame)
           resolve(url.href.replace(/^https?:\/{2}/, 'yattee://'));
 
-        else if (r.youtubeFrontend == 'freetube' && details.type === "main_frame")
+        else if (isFreetube && is_main_frame)
           resolve(`freetube://https:${url.pathname}${url.search}`);
 
-        else if (r.youtubeFrontend == 'freetube' && details.type !== "main_frame" && r.youtubeEmbedFrontend == "youtube")
+        else if (isFreetube && params && isFrontendYoutube)
           resolve();
 
-        else if (
-          r.youtubeFrontend == 'invidious' ||
-          ((r.youtubeFrontend == 'freetube' || r.youtubeFrontend == 'yatte') && r.youtubeEmbedFrontend == 'invidious' && details.type == "sub_frame")
-        ) {
+        else if (isInvidious || ((isFreetube || isYatte) && isFrontendInvidious && is_sub_frame)) {
 
-          if (r.OnlyEmbeddedVideo == 'onlyEmbedded' && details.type !== "sub_frame") { resolve(); return; }
-          if (
-            r.OnlyEmbeddedVideo == 'onlyNotEmbedded' && details.type !== "main_frame" &&
-            !((r.youtubeFrontend == 'freetube' || r.youtubeFrontend == 'yatte') && r.youtubeEmbedFrontend == 'invidious' && details.type === "sub_frame")
-          ) { resolve(); return; }
+          if (isOnlyEmbeddedVideo && !is_sub_frame) { resolve(); return; }
+          if (isOnlyNotEmbedded && params && !((isFreetube || isYatte) && isFrontendInvidious && is_sub_frame)) { resolve(); return; }
 
           let instancesList;
           if (r.youtubeProtocol == 'normal') instancesList = [...r.invidiousNormalRedirectsChecks, ...r.invidiousNormalCustomRedirects];
@@ -158,16 +156,12 @@ function redirect(url, details, initiator) {
           let randomInstance = utils.getRandomInstance(instancesList);
 
           resolve(`${randomInstance}${url.pathname}${url.search}`);
+        } else if (isPiped || ((isFreetube || isYatte) && isFrontendPiped && is_sub_frame)) {
 
-        } else if (
-          r.youtubeFrontend == 'piped' ||
-          ((r.youtubeFrontend == 'freetube' || r.youtubeFrontend == 'yatte') && r.youtubeEmbedFrontend == 'piped' && details.type === "sub_frame")
-        ) {
-
-          if (r.OnlyEmbeddedVideo == 'onlyEmbedded' && details.type !== "sub_frame") { resolve(); return; }
+          if (isOnlyEmbeddedVideo && !is_sub_frame) { resolve(); return; }
           if (
-            r.OnlyEmbeddedVideo == 'onlyNotEmbedded' && details.type !== "main_frame" &&
-            !((r.youtubeFrontend == 'freetube' || r.youtubeFrontend == 'yatte') && r.youtubeEmbedFrontend == 'piped' && details.type == "sub_frame")
+            isOnlyNotEmbedded && params &&
+            !((isFreetube || isYatte) && isFrontendPiped && is_sub_frame)
           ) { resolve(); return; }
 
           let instancesList;
@@ -178,12 +172,11 @@ function redirect(url, details, initiator) {
 
           resolve(`${randomInstance}${url.pathname}${url.search}`)
         }
-        else if (r.youtubeFrontend == 'pipedMaterial' ||
-          ((r.youtubeFrontend == 'freetube' || r.youtubeFrontend == 'yatte') && r.youtubeEmbedFrontend == 'pipedMaterial' && details.type === "sub_frame")) {
-          if (r.OnlyEmbeddedVideo == 'onlyEmbedded' && details.type !== "sub_frame") { resolve(); return; }
+        else if (isPipedMaterial || ((isFreetube || isYatte) && isFrontendPipedMaterial && is_sub_frame)) {
+          if (isOnlyEmbeddedVideo && details.type !== "sub_frame") { resolve(); return; }
           if (
-            r.OnlyEmbeddedVideo == 'onlyNotEmbedded' && details.type !== "main_frame" &&
-            !((r.youtubeFrontend == 'freetube' || r.youtubeFrontend == 'yatte') && r.youtubeEmbedFrontend == 'pipedMaterial' && details.type == "sub_frame")
+            isOnlyNotEmbedded && params &&
+            !((isFreetube || isYatte) && isFrontendPipedMaterial && is_sub_frame)
           ) { resolve(); return; }
 
           let instancesList;
@@ -371,7 +364,7 @@ function initDefaults() {
   })
 }
 
-function initInvidiousCookies(from) {
+function initInvidiousCookies(test, from) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [
@@ -389,11 +382,13 @@ function initInvidiousCookies(from) {
           ...r.invidiousNormalCustomRedirects,
           ...r.invidiousTorCustomRedirects,
         ].includes(protocolHost)) { resolve(); return; }
-        let checkedInstances;
-        if (r.youtubeProtocol == 'normal') checkedInstances = [...r.invidiousNormalRedirectsChecks, ...r.invidiousNormalCustomRedirects]
-        else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.invidiousTorRedirectsChecks, ...r.invidiousTorCustomRedirects]
-        for (const to of checkedInstances)
-          utils.copyCookie('invidious', from, to, 'PREFS');
+        if (!test) {
+          let checkedInstances;
+          if (r.youtubeProtocol == 'normal') checkedInstances = [...r.invidiousNormalRedirectsChecks, ...r.invidiousNormalCustomRedirects]
+          else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.invidiousTorRedirectsChecks, ...r.invidiousTorCustomRedirects]
+          for (const to of checkedInstances)
+            utils.copyCookie('invidious', from, to, 'PREFS');
+        }
         resolve(true);
       }
     )
@@ -422,7 +417,7 @@ function setInvidiousCookies() {
   )
 }
 
-function initPipedLocalStorage(url, tabId) {
+function initPipedLocalStorage(test, url, tabId) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [
@@ -439,13 +434,15 @@ function initPipedLocalStorage(url, tabId) {
           ...r.pipedTorRedirectsChecks,
           ...r.pipedTorCustomRedirects,
         ].includes(protocolHost)) { resolve(); return; }
-        browser.tabs.executeScript(
-          tabId,
-          {
-            file: "/assets/javascripts/helpers/youtube/get_piped_settings.js",
-            runAt: "document_start"
-          }
-        );
+
+        if (!test)
+          browser.tabs.executeScript(
+            tabId,
+            {
+              file: "/assets/javascripts/helpers/youtube/get_piped_settings.js",
+              runAt: "document_start"
+            }
+          );
         resolve(true);
       }
     )
@@ -485,7 +482,7 @@ function setPipedLocalStorage(url, tabId) {
   })
 }
 
-function initPipedMaterialLocalStorage(url, tabId) {
+function initPipedMaterialLocalStorage(test, url, tabId,) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [
@@ -502,13 +499,15 @@ function initPipedMaterialLocalStorage(url, tabId) {
           ...r.pipedMaterialTorRedirectsChecks,
           ...r.pipedMaterialTorCustomRedirects,
         ].includes(protocolHost)) { resolve(); return; }
-        browser.tabs.executeScript(
-          tabId,
-          {
-            file: "/assets/javascripts/helpers/youtube/get_pipedMaterial_preferences.js",
-            runAt: "document_start"
-          }
-        );
+
+        if (!test)
+          browser.tabs.executeScript(
+            tabId,
+            {
+              file: "/assets/javascripts/helpers/youtube/get_pipedMaterial_preferences.js",
+              runAt: "document_start"
+            }
+          );
         resolve(true);
       }
     )

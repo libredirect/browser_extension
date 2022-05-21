@@ -370,7 +370,7 @@ function copyRaw(test, copyRawElement) {
   })
 }
 
-function unify(unifyElement) {
+function unify(test, unifyElement) {
   return new Promise(resolve => {
     browser.tabs.query(
       { active: true, currentWindow: true },
@@ -378,35 +378,36 @@ function unify(unifyElement) {
         let currTab = tabs[0]
         if (currTab) {
           let url;
-          try {
-            url = new URL(currTab.url);
-          } catch { resolve(); return; }
+          try { url = new URL(currTab.url); }
+          catch { resolve(); return; }
 
-          let result = await youtubeHelper.initInvidiousCookies(url);
-          if (!result) result = await youtubeHelper.initPipedLocalStorage(url, currTab.id);
-          if (!result) result = await youtubeHelper.initPipedMaterialLocalStorage(url, currTab.id);
+          let result = await youtubeHelper.initInvidiousCookies(test, url);
+          if (!result) result = await youtubeHelper.initPipedLocalStorage(test, url, currTab.id);
+          if (!result) result = await youtubeHelper.initPipedMaterialLocalStorage(test, url, currTab.id);
 
-          if (!result) result = await twitterHelper.initNitterCookies(url);
+          if (!result) result = await twitterHelper.initNitterCookies(test, url);
 
-          if (!result) result = await redditHelper.initLibredditCookies(url);
-          if (!result) result = await redditHelper.initTedditCookies(url);
+          if (!result) result = await redditHelper.initLibredditCookies(test, url);
+          if (!result) result = await redditHelper.initTedditCookies(test, url);
 
-          if (!result) result = await searchHelper.initSearxCookies(url);
-          if (!result) result = await searchHelper.initSearxngCookies(url);
+          if (!result) result = await searchHelper.initSearxCookies(test, url);
+          if (!result) result = await searchHelper.initSearxngCookies(test, url);
 
-          if (!result) result = await tiktokHelper.initProxiTokCookies(url);
+          if (!result) result = await tiktokHelper.initProxiTokCookies(test, url);
 
-          if (!result) result = await wikipediaHelper.initWikilessCookies(url);
+          if (!result) result = await wikipediaHelper.initWikilessCookies(test, url);
 
-          if (!result) result = await translateHelper.initSimplyTranslateCookies(url);
-          if (!result) result = await translateHelper.initLingvaLocalStorage(url);
+          if (!result) result = await translateHelper.initSimplyTranslateCookies(test, url);
+          if (!result) result = await translateHelper.initLingvaLocalStorage(test, url);
 
           if (result) {
+            if (!test) {
+              const textElement = unifyElement.getElementsByTagName('h4')[0]
+              const oldHtml = textElement.innerHTML;
+              textElement.innerHTML = 'Unified';
+              setTimeout(() => textElement.innerHTML = oldHtml, 1000);
+            }
             resolve(true);
-            const textElement = unifyElement.getElementsByTagName('h4')[0]
-            const oldHtml = textElement.innerHTML;
-            textElement.innerHTML = 'Unified';
-            setTimeout(() => textElement.innerHTML = oldHtml, 1000);
           } else resolve()
         }
       }
@@ -414,30 +415,36 @@ function unify(unifyElement) {
   })
 }
 
-function switchInstance() {
-  browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
-    let currTab = tabs[0];
-    if (currTab) {
-      let url = new URL(currTab.url);
-      let newUrl;
-      newUrl = await youtubeHelper.switchInstance(url);
-      if (!newUrl) newUrl = await twitterHelper.switchInstance(url);
-      if (!newUrl) newUrl = await instagramHelper.switchInstance(url);
-      if (!newUrl) newUrl = await redditHelper.switchInstance(url);
-      if (!newUrl) newUrl = await searchHelper.switchInstance(url);
-      if (!newUrl) newUrl = await translateHelper.switchInstance(url);
-      if (!newUrl) newUrl = await mediumHelper.switchInstance(url);
-      if (!newUrl) newUrl = await sendTargetsHelper.switchInstance(url);
-      if (!newUrl) newUrl = await peertubeHelper.switchInstance(url);
-      if (!newUrl) newUrl = await lbryHelper.switchInstance(url);
-      if (!newUrl) newUrl = await imgurHelper.switchInstance(url);
-      if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url);
+function switchInstance(test) {
+  return new Promise(resolve => {
+    browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+      let currTab = tabs[0];
+      if (currTab) {
+        let url;
+        try { url = new URL(currTab.url); }
+        catch { resolve(); return };
+        let newUrl = await youtubeHelper.switchInstance(url);
+        if (!newUrl) newUrl = await twitterHelper.switchInstance(url);
+        if (!newUrl) newUrl = await instagramHelper.switchInstance(url);
+        if (!newUrl) newUrl = await redditHelper.switchInstance(url);
+        if (!newUrl) newUrl = await searchHelper.switchInstance(url);
+        if (!newUrl) newUrl = await translateHelper.switchInstance(url);
+        if (!newUrl) newUrl = await mediumHelper.switchInstance(url);
+        if (!newUrl) newUrl = await sendTargetsHelper.switchInstance(url);
+        if (!newUrl) newUrl = await peertubeHelper.switchInstance(url);
+        if (!newUrl) newUrl = await lbryHelper.switchInstance(url);
+        if (!newUrl) newUrl = await imgurHelper.switchInstance(url);
+        if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url);
 
-      if (newUrl) {
-        browser.tabs.update({ url: newUrl });
-        return true;
+        console.log('newUrl', newUrl);
+        console.log('test');
+        if (newUrl) {
+          if (!test)
+            browser.tabs.update({ url: newUrl });
+          resolve(true)
+        } else resolve()
       }
-    }
+    })
   })
   return false;
 }

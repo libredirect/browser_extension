@@ -39,7 +39,7 @@ let proxiTokTorCustomRedirects = [];
 let disable; // disableTiktok
 let protocol;
 
-function initProxiTokCookies(from) {
+function initProxiTokCookies(test, from) {
     return new Promise(resolve => {
         browser.storage.local.get(
             [
@@ -57,13 +57,15 @@ function initProxiTokCookies(from) {
                     ...r.proxiTokTorRedirectsChecks,
                     ...r.proxiTokTorCustomRedirects,
                 ].includes(protocolHost)) resolve();
-
-                let checkedInstances;
-                if (r.tiktokProtocol == 'normal') checkedInstances = [...r.proxiTokNormalRedirectsChecks, ...r.proxiTokNormalCustomRedirects]
-                else if (r.tiktokProtocol == 'tor') checkedInstances = [...r.proxiTokTorRedirectsChecks, ...r.proxiTokTorCustomRedirects]
-                for (const to of checkedInstances) {
-                    utils.copyCookie('proxitok', from, to, 'theme');
-                    utils.copyCookie('proxitok', from, to, 'api-legacy');
+                
+                if (!test) {
+                    let checkedInstances;
+                    if (r.tiktokProtocol == 'normal') checkedInstances = [...r.proxiTokNormalRedirectsChecks, ...r.proxiTokNormalCustomRedirects]
+                    else if (r.tiktokProtocol == 'tor') checkedInstances = [...r.proxiTokTorRedirectsChecks, ...r.proxiTokTorCustomRedirects]
+                    for (const to of checkedInstances) {
+                        utils.copyCookie('proxitok', from, to, 'theme');
+                        utils.copyCookie('proxitok', from, to, 'api-legacy');
+                    }
                 }
                 resolve(true);
             }
