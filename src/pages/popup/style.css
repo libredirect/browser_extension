@@ -1,5 +1,5 @@
 body {
-    width: 240px;
+    width: 230px;
     min-height: auto;
 }
 
@@ -9,4 +9,15 @@ html, body {
 
 .hide {
     display: none !important;
+}
+
+.button {
+    display: flex;
+    margin: 0 auto;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.space {
+    height: 10px;
 }

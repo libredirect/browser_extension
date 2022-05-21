@@ -167,31 +167,32 @@ function switchInstance(url) {
     })
 }
 
-async function initDefaults() {
-    fetch('/instances/data.json').then(response => response.text()).then(async data => {
-        let dataJson = JSON.parse(data);
-        redirects.rimgo = dataJson.rimgo;
-        browser.storage.local.get('cloudflareList', async r => {
-            rimgoNormalRedirectsChecks = [...redirects.rimgo.normal];
-            for (const instance of r.cloudflareList) {
-                let i;
+function initDefaults() {
+    return new Promise(resolve => {
+        fetch('/instances/data.json').then(response => response.text()).then(async data => {
+            let dataJson = JSON.parse(data);
+            redirects.rimgo = dataJson.rimgo;
+            browser.storage.local.get('cloudflareList', async r => {
+                rimgoNormalRedirectsChecks = [...redirects.rimgo.normal];
+                for (const instance of r.cloudflareList) {
+                    let i = rimgoNormalRedirectsChecks.indexOf(instance);
+                    if (i > -1) rimgoNormalRedirectsChecks.splice(i, 1);
+                }
+                await browser.storage.local.set({
+                    disableImgur: false,
+                    imgurProtocol: 'normal',
+                    imgurRedirects: redirects,
 
-                i = rimgoNormalRedirectsChecks.indexOf(instance);
-                if (i > -1) rimgoNormalRedirectsChecks.splice(i, 1);
-            }
-            await browser.storage.local.set({
-                disableImgur: false,
-                imgurProtocol: 'normal',
-                imgurRedirects: redirects,
+                    rimgoNormalRedirectsChecks: rimgoNormalRedirectsChecks,
+                    rimgoNormalCustomRedirects: [],
 
-                rimgoNormalRedirectsChecks: rimgoNormalRedirectsChecks,
-                rimgoNormalCustomRedirects: [],
+                    rimgoTorRedirectsChecks: [...redirects.rimgo.tor],
+                    rimgoTorCustomRedirects: [],
 
-                rimgoTorRedirectsChecks: [...redirects.rimgo.tor],
-                rimgoTorCustomRedirects: [],
-
-                rimgoI2pRedirectsChecks: [...redirects.rimgo.i2p],
-                rimgoI2pCustomRedirects: [],
+                    rimgoI2pRedirectsChecks: [...redirects.rimgo.i2p],
+                    rimgoI2pCustomRedirects: [],
+                });
+                resolve();
             });
         });
     });

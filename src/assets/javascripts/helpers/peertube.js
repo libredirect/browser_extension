@@ -2,8 +2,6 @@ window.browser = window.browser || window.chrome;
 
 import utils from './utils.js'
 
-let targets = [];
-
 let redirects = {
     "simpleertube": {
         "normal": [
@@ -19,7 +17,6 @@ let redirects = {
 function setRedirects(val) {
     redirects.simpleertube = val;
     browser.storage.local.set({ peertubeTargetsRedirects: redirects })
-    console.log("peertubeTargetsRedirects: ", val)
     for (const item of simpleertubeNormalRedirectsChecks)
         if (!redirects.simpleertube.normal.includes(item)) {
             var index = simpleertubeNormalRedirectsChecks.indexOf(item);
@@ -34,15 +31,10 @@ function setRedirects(val) {
         }
     browser.storage.local.set({ simpleertubeTorRedirectsChecks })
 }
+let
+    simpleertubeNormalRedirectsChecks,
+    simpleertubeTorRedirectsChecks;
 
-let simpleertubeNormalRedirectsChecks;
-let simpleertubeTorRedirectsChecks;
-
-let simpleertubeNormalCustomRedirects = [];
-let simpleertubeTorCustomRedirects = [];
-
-let disable;
-let protocol;
 
 async function switchInstance(url) {
     return new Promise(resolve => {
@@ -82,92 +74,82 @@ async function switchInstance(url) {
 }
 
 function redirect(url, type, initiator) {
-    if (disable) return null;
-    if (
-        initiator &&
-        (
+    return new Promise(resolve => {
+        browser.storage.local.get(
             [
-                ...redirects.simpleertube.normal,
-                ...simpleertubeNormalCustomRedirects
-            ].includes(initiator.origin) ||
-            targets.includes(initiator.host)
-        )
-    ) return null;
-    let protocolHost = utils.protocolHost(url);
-    if (!targets.includes(protocolHost)) return null;
+                "disablePeertubeTargets",
 
-    if (type != "main_frame") return null;
+                "peertubeRedirects",
 
-    let instancesList;
-    if (protocol == 'normal') instancesList = [...simpleertubeNormalRedirectsChecks, ...simpleertubeNormalCustomRedirects];
-    if (protocol == 'tor') instancesList = [...simpleertubeTorRedirectsChecks, ...simpleertubeTorCustomRedirects];
-    if (instancesList.length === 0) return null;
-    let randomInstance = utils.getRandomInstance(instancesList);
+                "simpleertubeNormalRedirectsChecks",
+                "simpleertubeNormalCustomRedirects",
 
-    if (url.host == 'search.joinpeertube.org') return randomInstance;
+                "simpleertubeTorRedirectsChecks",
+                "simpleertubeTorCustomRedirects",
 
-    return `${randomInstance}/${url.host}${url.pathname}${url.search}`;
-}
+                "peerTubeTargets",
+                "peertubeTargetsProtocol"
+            ],
+            r => {
+                if (r.disablePeertubeTargets) { resolve(); return; }
+                if (
+                    initiator &&
+                    (
+                        [
+                            ...r.peertubeRedirects.simpleertube.normal,
+                            ...r.simpleertubeNormalCustomRedirects
+                        ].includes(initiator.origin) ||
+                        r.peerTubeTargets.includes(initiator.host)
+                    )
+                ) { resolve(); return; }
+                let protocolHost = utils.protocolHost(url);
+                if (!r.peerTubeTargets.includes(protocolHost)) { resolve(); return; }
+                if (type != "main_frame") { resolve(); return; }
 
-async function initDefaults() {
-    fetch('/instances/data.json').then(response => response.text()).then(async data => {
-        let dataJson = JSON.parse(data);
-        browser.storage.local.get('cloudflareList', async r => {
-            simpleertubeNormalRedirectsChecks = [...redirects.simpleertube.normal];
-            for (const instance of r.cloudflareList) {
-                let i = simpleertubeNormalRedirectsChecks.indexOf(instance);
-                if (i > -1) simpleertubeNormalRedirectsChecks.splice(i, 1);
+                let instancesList;
+                if (r.peertubeTargetsProtocol == 'normal') instancesList = [...r.simpleertubeNormalRedirectsChecks, ...r.simpleertubeNormalCustomRedirects];
+                if (r.peertubeTargetsProtocol == 'tor') instancesList = [...r.simpleertubeTorRedirectsChecks, ...r.simpleertubeTorCustomRedirects];
+                if (instancesList.length === 0) { resolve(); return; }
+                let randomInstance = utils.getRandomInstance(instancesList);
+                if (url.host == 'search.joinpeertube.org') { resolve(randomInstance); return; }
+
+                resolve(`${randomInstance}/${url.host}${url.pathname}${url.search}`);
             }
-            await browser.storage.local.set({
-                peerTubeTargets: ['https://search.joinpeertube.org', ...dataJson.peertube],
-                disablePeertubeTargets: true,
-                peertubeRedirects: redirects,
+        )
+    })
+}
+async function initDefaults() {
+    return new Promise(resolve => {
+        fetch('/instances/data.json').then(response => response.text()).then(async data => {
+            let dataJson = JSON.parse(data);
+            browser.storage.local.get('cloudflareList', async r => {
+                simpleertubeNormalRedirectsChecks = [...redirects.simpleertube.normal];
+                for (const instance of r.cloudflareList) {
+                    let i = simpleertubeNormalRedirectsChecks.indexOf(instance);
+                    if (i > -1) simpleertubeNormalRedirectsChecks.splice(i, 1);
+                }
+                await browser.storage.local.set({
+                    peerTubeTargets: ['https://search.joinpeertube.org', ...dataJson.peertube],
+                    disablePeertubeTargets: true,
+                    peertubeRedirects: redirects,
 
-                simpleertubeNormalRedirectsChecks: simpleertubeNormalRedirectsChecks,
-                simpleertubeNormalCustomRedirects: [],
+                    simpleertubeNormalRedirectsChecks: simpleertubeNormalRedirectsChecks,
+                    simpleertubeNormalCustomRedirects: [],
 
-                simpleertubeTorRedirectsChecks: [...redirects.simpleertube.tor],
-                simpleertubeTorCustomRedirects: [],
+                    simpleertubeTorRedirectsChecks: [...redirects.simpleertube.tor],
+                    simpleertubeTorCustomRedirects: [],
 
-                peertubeTargetsProtocol: "normal",
+                    peertubeTargetsProtocol: "normal",
+                })
+                resolve();
             })
         })
     })
 }
 
-async function init() {
-    await browser.storage.local.get(
-        [
-            "disablePeertubeTargets",
-            "simpleertubeNormalRedirectsChecks",
-            "simpleertubeNormalCustomRedirects",
-
-            "simpleertubeTorRedirectsChecks",
-            "simpleertubeTorCustomRedirects",
-
-            "peerTubeTargets",
-            "peertubeTargetsProtocol"
-        ],
-        r => {
-            disable = r.disablePeertubeTargets;
-            protocol = r.peertubeTargetsProtocol;
-            targets = r.peerTubeTargets;
-
-            simpleertubeNormalRedirectsChecks = r.simpleertubeNormalRedirectsChecks;
-            simpleertubeNormalCustomRedirects = r.simpleertubeNormalCustomRedirects;
-
-            simpleertubeTorRedirectsChecks = r.simpleertubeTorRedirectsChecks;
-            simpleertubeTorCustomRedirects = r.simpleertubeTorCustomRedirects;
-        }
-    )
-}
-
 export default {
     setRedirects,
-
     switchInstance,
-
     redirect,
     initDefaults,
-    init,
 };

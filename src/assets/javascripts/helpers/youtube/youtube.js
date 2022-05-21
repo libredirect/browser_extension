@@ -396,25 +396,28 @@ function initInvidiousCookies(test, from) {
 }
 
 function setInvidiousCookies() {
-  browser.storage.local.get(
-    [
-      "disableYoutube",
-      "youtubeProtocol",
-      "youtubeFrontend",
-      "invidiousNormalRedirectsChecks",
-      "invidiousNormalCustomRedirects",
-      "invidiousTorRedirectsChecks",
-      "invidiousTorCustomRedirects",
-    ],
-    r => {
-      if (r.disableYoutube || r.youtubeFrontend != 'invidious' || r.youtubeProtocol === undefined) return;
-      let checkedInstances;
-      if (r.youtubeProtocol == 'normal') checkedInstances = [...r.invidiousNormalRedirectsChecks, ...r.invidiousNormalCustomRedirects]
-      else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.invidiousTorRedirectsChecks, ...r.invidiousTorCustomRedirects]
-      for (const to of checkedInstances)
-        utils.getCookiesFromStorage('invidious', to, 'PREFS');
-    }
-  )
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "disableYoutube",
+        "youtubeProtocol",
+        "youtubeFrontend",
+        "invidiousNormalRedirectsChecks",
+        "invidiousNormalCustomRedirects",
+        "invidiousTorRedirectsChecks",
+        "invidiousTorCustomRedirects",
+      ],
+      r => {
+        if (r.disableYoutube || r.youtubeFrontend != 'invidious' || r.youtubeProtocol === undefined) { resolve(); return; }
+        let checkedInstances;
+        if (r.youtubeProtocol == 'normal') checkedInstances = [...r.invidiousNormalRedirectsChecks, ...r.invidiousNormalCustomRedirects]
+        else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.invidiousTorRedirectsChecks, ...r.invidiousTorCustomRedirects]
+        for (const to of checkedInstances)
+          utils.getCookiesFromStorage('invidious', to, 'PREFS');
+        resolve();
+      }
+    )
+  })
 }
 
 function initPipedLocalStorage(test, url, tabId) {

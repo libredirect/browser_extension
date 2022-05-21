@@ -56,10 +56,11 @@ async function redirect(url, initiator) {
 
         if (
           initiator &&
-          [...r.twitterRedirects.nitter.normal,
-          ...r.twitterRedirects.nitter.tor,
-          ...r.nitterTorCustomRedirects,
-          ...r.nitterNormalCustomRedirects
+          [
+            ...r.twitterRedirects.nitter.normal,
+            ...r.twitterRedirects.nitter.tor,
+            ...r.nitterTorCustomRedirects,
+            ...r.nitterNormalCustomRedirects
           ].includes(initiator.origin)
         ) { resolve('BYPASSTAB'); return; }
 
@@ -228,61 +229,67 @@ function initNitterCookies(test, from) {
 }
 
 function setNitterCookies() {
-  browser.storage.local.get(
-    [
-      "twitterProtocol",
-      "disableTwitter",
-      "youtubeFrontend",
-      "nitterNormalRedirectsChecks",
-      "nitterNormalCustomRedirects",
-      "nitterTorRedirectsChecks",
-      "nitterTorCustomRedirects",
-    ],
-    r => {
-      if (r.disableYoutube || r.youtubeFrontend != 'nitter' || r.twitterProtocol === undefined) return;
-      let checkedInstances;
-      if (r.youtubeProtocol == 'normal') checkedInstances = [...r.nitterNormalRedirectsChecks, ...r.nitterNormalCustomRedirects]
-      else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.nitterTorRedirectsChecks, ...r.nitterTorCustomRedirects]
-      for (const to of checkedInstances) {
-        utils.getCookiesFromStorage('nitter', to, 'theme');
-        utils.getCookiesFromStorage('nitter', to, 'infiniteScroll');
-        utils.getCookiesFromStorage('nitter', to, 'stickyProfile');
-        utils.getCookiesFromStorage('nitter', to, 'bidiSupport');
-        utils.getCookiesFromStorage('nitter', to, 'hideTweetStats');
-        utils.getCookiesFromStorage('nitter', to, 'hideBanner');
-        utils.getCookiesFromStorage('nitter', to, 'hidePins');
-        utils.getCookiesFromStorage('nitter', to, 'hideReplies');
-        utils.getCookiesFromStorage('nitter', to, 'squareAvatars');
-        utils.getCookiesFromStorage('nitter', to, 'mp4Playback');
-        utils.getCookiesFromStorage('nitter', to, 'hlsPlayback');
-        utils.getCookiesFromStorage('nitter', to, 'proxyVideos');
-        utils.getCookiesFromStorage('nitter', to, 'muteVideos');
-        utils.getCookiesFromStorage('nitter', to, 'autoplayGifs');
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "twitterProtocol",
+        "disableTwitter",
+        "youtubeFrontend",
+        "nitterNormalRedirectsChecks",
+        "nitterNormalCustomRedirects",
+        "nitterTorRedirectsChecks",
+        "nitterTorCustomRedirects",
+      ],
+      r => {
+        if (r.disableYoutube || r.youtubeFrontend != 'nitter' || r.twitterProtocol === undefined) { resolve(); return; }
+        let checkedInstances;
+        if (r.youtubeProtocol == 'normal') checkedInstances = [...r.nitterNormalRedirectsChecks, ...r.nitterNormalCustomRedirects]
+        else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.nitterTorRedirectsChecks, ...r.nitterTorCustomRedirects]
+        for (const to of checkedInstances) {
+          utils.getCookiesFromStorage('nitter', to, 'theme');
+          utils.getCookiesFromStorage('nitter', to, 'infiniteScroll');
+          utils.getCookiesFromStorage('nitter', to, 'stickyProfile');
+          utils.getCookiesFromStorage('nitter', to, 'bidiSupport');
+          utils.getCookiesFromStorage('nitter', to, 'hideTweetStats');
+          utils.getCookiesFromStorage('nitter', to, 'hideBanner');
+          utils.getCookiesFromStorage('nitter', to, 'hidePins');
+          utils.getCookiesFromStorage('nitter', to, 'hideReplies');
+          utils.getCookiesFromStorage('nitter', to, 'squareAvatars');
+          utils.getCookiesFromStorage('nitter', to, 'mp4Playback');
+          utils.getCookiesFromStorage('nitter', to, 'hlsPlayback');
+          utils.getCookiesFromStorage('nitter', to, 'proxyVideos');
+          utils.getCookiesFromStorage('nitter', to, 'muteVideos');
+          utils.getCookiesFromStorage('nitter', to, 'autoplayGifs');
+        }
+        resolve();
       }
-    }
-  )
+    )
+  })
 }
 
 function initDefaults() {
-  fetch('/instances/data.json').then(response => response.text()).then(data => {
-    let dataJson = JSON.parse(data);
-    redirects.nitter = dataJson.nitter;
-    browser.storage.local.get('cloudflareList', r => {
-      nitterNormalRedirectsChecks = [...redirects.nitter.normal];
-      for (const instance of r.cloudflareList) {
-        let i = nitterNormalRedirectsChecks.indexOf(instance);
-        if (i > -1) nitterNormalRedirectsChecks.splice(i, 1);
-      }
-      browser.storage.local.set({
-        disableTwitter: false,
-        twitterRedirects: redirects,
-        twitterProtocol: "normal",
+  return new Promise(resolve => {
+    fetch('/instances/data.json').then(response => response.text()).then(data => {
+      let dataJson = JSON.parse(data);
+      redirects.nitter = dataJson.nitter;
+      browser.storage.local.get('cloudflareList', async r => {
+        nitterNormalRedirectsChecks = [...redirects.nitter.normal];
+        for (const instance of r.cloudflareList) {
+          let i = nitterNormalRedirectsChecks.indexOf(instance);
+          if (i > -1) nitterNormalRedirectsChecks.splice(i, 1);
+        }
+        await browser.storage.local.set({
+          disableTwitter: false,
+          twitterRedirects: redirects,
+          twitterProtocol: "normal",
 
-        nitterNormalRedirectsChecks,
-        nitterNormalCustomRedirects: [],
+          nitterNormalRedirectsChecks,
+          nitterNormalCustomRedirects: [],
 
-        nitterTorRedirectsChecks: [...redirects.nitter.tor],
-        nitterTorCustomRedirects: [],
+          nitterTorRedirectsChecks: [...redirects.nitter.tor],
+          nitterTorCustomRedirects: [],
+        })
+        resolve();
       })
     })
   })

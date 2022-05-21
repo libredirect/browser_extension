@@ -98,14 +98,14 @@ utils.unify(true).then(r => {
   }
 })
 
-
 document.getElementById("more-options").addEventListener("click", () => browser.runtime.openOptionsPage());
 
-generalHelper.init().then(() => {
-  let popupFrontends = generalHelper.getPopupFrontends();
-  for (const frontend of generalHelper.allPopupFrontends)
-    if (!popupFrontends.includes(frontend))
-      document.getElementById(frontend).classList.add("hide")
-    else
-      document.getElementById(frontend).classList.remove("hide")
-});
+browser.storage.local.get(
+  'popupFrontends',
+  r => {
+    for (const frontend of generalHelper.allPopupFrontends)
+      if (!r.popupFrontends.includes(frontend))
+        document.getElementById(frontend).classList.add("hide")
+      else
+        document.getElementById(frontend).classList.remove("hide")
+  });

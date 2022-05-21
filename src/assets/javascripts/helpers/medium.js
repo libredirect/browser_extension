@@ -35,25 +35,18 @@ let redirects = {
   }
 };
 function setRedirects(val) {
-  redirects.scribe = val;
-  browser.storage.local.set({ mediumRedirects: redirects })
-  for (const item of scribeNormalRedirectsChecks) if (!redirects.scribe.normal.includes(item)) {
-    var index = scribeNormalRedirectsChecks.indexOf(item);
-    if (index !== -1) scribeNormalRedirectsChecks.splice(index, 1);
-  }
-  browser.storage.local.set({ scribeNormalRedirectsChecks })
-
-  for (const item of scribeNormalRedirectsChecks) if (!redirects.scribe.normal.includes(item)) {
-    var index = scribeNormalRedirectsChecks.indexOf(item);
-    if (index !== -1) scribeNormalRedirectsChecks.splice(index, 1);
-  }
-  browser.storage.local.set({ scribeNormalRedirectsChecks })
-
-  for (const item of scribeTorRedirectsChecks) if (!redirects.scribe.normal.includes(item)) {
-    var index = scribeTorRedirectsChecks.indexOf(item);
-    if (index !== -1) scribeTorRedirectsChecks.splice(index, 1);
-  }
-  browser.storage.local.set({ scribeTorRedirectsChecks })
+  browser.storage.local.get('cloudflareList', r => {
+    redirects.scribe = val;
+    scribeNormalRedirectsChecks = [...redirects.scribe.normal];
+    for (const instance of r.cloudflareList) {
+      const a = scribeNormalRedirectsChecks.indexOf(instance);
+      if (a > -1) scribeNormalRedirectsChecks.splice(a, 1);
+    }
+    browser.storage.local.set({
+      mediumRedirects: redirects,
+      scribeNormalRedirectsChecks
+    })
+  })
 }
 
 let scribeNormalRedirectsChecks;
@@ -133,27 +126,31 @@ function switchInstance(url) {
 }
 
 function initDefaults() {
-  fetch('/instances/data.json').then(response => response.text()).then(data => {
-    let dataJson = JSON.parse(data);
-    redirects.scribe = dataJson.scribe;
-    browser.storage.local.get('cloudflareList', r => {
-      scribeNormalRedirectsChecks = [...redirects.scribe.normal];
-      for (const instance of r.cloudflareList) {
-        let i = scribeNormalRedirectsChecks.indexOf(instance);
-        if (i > -1) scribeNormalRedirectsChecks.splice(i, 1);
-      }
-      browser.storage.local.set({
-        disableMedium: false,
-        mediumRedirects: redirects,
+  return new Promise(resolve => {
+    fetch('/instances/data.json').then(response => response.text()).then(data => {
+      let dataJson = JSON.parse(data);
+      redirects.scribe = dataJson.scribe;
+      browser.storage.local.get('cloudflareList',
+        async r => {
+          scribeNormalRedirectsChecks = [...redirects.scribe.normal];
+          for (const instance of r.cloudflareList) {
+            let i = scribeNormalRedirectsChecks.indexOf(instance);
+            if (i > -1) scribeNormalRedirectsChecks.splice(i, 1);
+          }
+          await browser.storage.local.set({
+            disableMedium: false,
+            mediumRedirects: redirects,
 
-        scribeNormalRedirectsChecks: scribeNormalRedirectsChecks,
-        scribeNormalCustomRedirects: [],
+            scribeNormalRedirectsChecks: scribeNormalRedirectsChecks,
+            scribeNormalCustomRedirects: [],
 
-        scribeTorRedirectsChecks: [...redirects.scribe.tor],
-        scribeTorCustomRedirects: [],
+            scribeTorRedirectsChecks: [...redirects.scribe.tor],
+            scribeTorCustomRedirects: [],
 
-        mediumProtocol: "normal",
-      })
+            mediumProtocol: "normal",
+          })
+          resolve();
+        })
     })
   })
 }

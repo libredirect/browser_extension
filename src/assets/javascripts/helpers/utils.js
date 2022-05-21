@@ -28,60 +28,31 @@ async function initCloudflareList() {
   });
 }
 
-async function wholeInit() {
-  await sendTargetsHelper.init();
-  await tiktokHelper.init();
-  await initCloudflareList();
-}
+function updateInstances() {
+  return new Promise(async resolve => {
+    let http = new XMLHttpRequest();
+    http.open('GET', 'https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json', false);
+    http.send(null);
+    if (http.status === 200) {
+      await initCloudflareList();
+      const instances = JSON.parse(http.responseText);
 
-async function updateInstances() {
-  let http = new XMLHttpRequest();
-  http.open('GET', 'https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json', false);
-  http.send(null);
+      youtubeHelper.setRedirects({ 'invidious': instances.invidious, 'piped': instances.piped, })
+      twitterHelper.setRedirects(instances.nitter);
+      instagramHelper.setRedirects(instances.bibliogram);
+      redditHelper.setRedirects({ 'libreddit': instances.libreddit, 'teddit': instances.teddit });
+      translateHelper.setRedirects({ "simplyTranslate": instances.simplyTranslate, "lingva": instances.lingva });
+      searchHelper.setRedirects({ 'searx': instances.searx, 'searxng': instances.searxng, 'whoogle': instances.whoogle });
+      wikipediaHelper.setRedirects(instances.wikiless);
+      mediumHelper.setRedirects(instances.scribe);
+      sendTargetsHelper.setRedirects(instances.send);
+      tiktokHelper.setRedirects(instances.proxiTok);
 
-  if (http.status === 200) {
-    await wholeInit();
-    const instances = JSON.parse(http.responseText);
-
-    browser.storage.local.get(
-      [
-        'youtubeRedirects'
-      ],
-      r =>
-        brwoser.storage.local.set({
-          youtubeRedirects: {
-            'invidious': instances.invidious,
-            'piped': r.youtubeRedirects.piped,
-            'pipedMaterial': r.youtubeRedirects.pipedMaterial
-          },
-        })
-    )
-
-    twitterHelper.setRedirects(instances.nitter);
-
-    instagramHelper.setRedirects(instances.bibliogram);
-
-    redditHelper.setTedditRedirects(instances.teddit);
-    redditHelper.setLibredditRedirects(instances.libreddit);
-
-    translateHelper.setRedirects({ "simplyTranslate": instances.simplyTranslate, "lingva": instances.lingva });
-
-    searchHelper.setSearxRedirects(instances.searx);
-    searchHelper.setSearxngRedirects(instances.searxng);
-    searchHelper.setWhoogleRedirects(instances.whoogle);
-
-    wikipediaHelper.setRedirects(instances.wikiless);
-
-    mediumHelper.setRedirects(instances.scribe);
-
-    sendTargetsHelper.setRedirects(instances.send);
-
-    tiktokHelper.setRedirects(instances.proxiTok);
-
-    console.info("Successfully updated Instances");
-    return true;
-  }
-  return false;
+      console.info("Successfully updated Instances");
+      resolve(true); return;
+    }
+    resolve()
+  })
 }
 
 function protocolHost(url) {
@@ -436,8 +407,6 @@ function switchInstance(test) {
         if (!newUrl) newUrl = await imgurHelper.switchInstance(url);
         if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url);
 
-        console.log('newUrl', newUrl);
-        console.log('test');
         if (newUrl) {
           if (!test)
             browser.tabs.update({ url: newUrl });
@@ -446,7 +415,6 @@ function switchInstance(test) {
       }
     })
   })
-  return false;
 }
 
 function latency(name, frontend, document, location, splitNames) {

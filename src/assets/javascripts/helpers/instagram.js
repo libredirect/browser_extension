@@ -12,15 +12,18 @@ let redirects = {
   }
 };
 function setRedirects(val) {
-  redirects.bibliogram = val;
-  browser.storage.local.set({ instagramRedirects: redirects })
-  console.log("instagramRedirects: ", val)
-  for (const item of bibliogramNormalRedirectsChecks)
-    if (!redirects.bibliogram.normal.includes(item)) {
-      var index = bibliogramNormalRedirectsChecks.indexOf(item);
-      if (index !== -1) bibliogramNormalRedirectsChecks.splice(index, 1);
+  browser.storage.local.get('cloudflareList', async r => {
+    redirects.bibliogram = val;
+    bibliogramNormalRedirectsChecks = [...redirects.bibliogram.normal];
+    for (const instance of r.cloudflareList) {
+      const a = bibliogramNormalRedirectsChecks.indexOf(instance);
+      if (a > -1) bibliogramNormalRedirectsChecks.splice(a, 1);
     }
-  browser.storage.local.set({ bibliogramNormalRedirectsChecks });
+    browser.storage.local.set({
+      instagramRedirects: redirects,
+      bibliogramNormalRedirectsChecks
+    })
+  })
 }
 
 let bibliogramNormalRedirectsChecks;
@@ -49,7 +52,7 @@ function redirect(url, type, initiator) {
             ...r.instagramRedirects.bibliogram.tor,
             ...r.bibliogramNormalCustomRedirects,
             ...r.bibliogramTorCustomRedirects,
-          ].includes(initiator.origin) || targets.includes(initiator.host))
+          ].includes(initiator.origin))
         ) { resolve('BYPASSTAB'); return; }
 
         if (!targets.includes(url.host)) { resolve(); return; }

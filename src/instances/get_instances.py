@@ -349,7 +349,7 @@ def peertube():
         myList.append('https://'+k['host'])
 
     mightyList['peertube'] = myList
-    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Peertube')
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'PeerTube')
 
 
 def isValid(url):  # This code is contributed by avanitrachhadiya2155

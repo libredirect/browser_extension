@@ -22,12 +22,11 @@ let
   lingvaNormalRedirectsChecks;
 
 function setRedirects(val) {
-  browser.storage.local.get('cloudflareList', async r => {
+  browser.storage.local.get('cloudflareList', r => {
     redirects = val;
     simplyTranslateNormalRedirectsChecks = [...redirects.simplyTranslate.normal];
     lingvaNormalRedirectsChecks = [...redirects.lingva.normal]
     for (const instance of r.cloudflareList) {
-      let i;
       const a = simplyTranslateNormalRedirectsChecks.indexOf(instance);
       if (a > -1) simplyTranslateNormalRedirectsChecks.splice(a, 1);
 
@@ -149,29 +148,32 @@ function initSimplyTranslateCookies(test, from) {
 }
 
 function setSimplyTranslateCookies() {
-  browser.storage.local.get(
-    [
-      "translateProtocol",
-      "translateDisable",
-      "translateFrontend",
-      "simplyTranslateNormalRedirectsChecks",
-      "simplyTranslateNormalCustomRedirects",
-      "simplyTranslateTorRedirectsChecks",
-      "simplyTranslateTorCustomRedirects",
-    ],
-    r => {
-      if (r.translateDisable || r.translateFrontend != 'simplyTranslate') return;
-      let checkedInstances;
-      if (r.translateProtocol == 'normal') checkedInstances = [...r.simplyTranslateNormalRedirectsChecks, ...r.simplyTranslateNormalCustomRedirects]
-      else if (r.translateProtocol == 'tor') checkedInstances = [...r.simplyTranslateTorRedirectsChecks, ...r.simplyTranslateTorCustomRedirects]
-      for (const to of checkedInstances) {
-        utils.getCookiesFromStorage('simplyTranslate', to, 'from_lang');
-        utils.getCookiesFromStorage('simplyTranslate', to, 'to_lang');
-        utils.getCookiesFromStorage('simplyTranslate', to, 'tts_enabled');
-        utils.getCookiesFromStorage('simplyTranslate', to, 'use_text_fields');
+  return new Promise(resolve => {
+    browser.storage.local.get(
+      [
+        "translateProtocol",
+        "translateDisable",
+        "translateFrontend",
+        "simplyTranslateNormalRedirectsChecks",
+        "simplyTranslateNormalCustomRedirects",
+        "simplyTranslateTorRedirectsChecks",
+        "simplyTranslateTorCustomRedirects",
+      ],
+      r => {
+        if (r.translateDisable || r.translateFrontend != 'simplyTranslate') { resolve(); return; }
+        let checkedInstances;
+        if (r.translateProtocol == 'normal') checkedInstances = [...r.simplyTranslateNormalRedirectsChecks, ...r.simplyTranslateNormalCustomRedirects]
+        else if (r.translateProtocol == 'tor') checkedInstances = [...r.simplyTranslateTorRedirectsChecks, ...r.simplyTranslateTorCustomRedirects]
+        for (const to of checkedInstances) {
+          utils.getCookiesFromStorage('simplyTranslate', to, 'from_lang');
+          utils.getCookiesFromStorage('simplyTranslate', to, 'to_lang');
+          utils.getCookiesFromStorage('simplyTranslate', to, 'tts_enabled');
+          utils.getCookiesFromStorage('simplyTranslate', to, 'use_text_fields');
+        }
+        resolve();
       }
-    }
-  )
+    )
+  })
 }
 
 function redirect(url) {
@@ -285,39 +287,41 @@ function switchInstance(url) {
 }
 
 function initDefaults() {
-  fetch('/instances/data.json').then(response => response.text()).then(data => {
-    let dataJson = JSON.parse(data);
-    redirects.simplyTranslate = dataJson.simplyTranslate;
-    redirects.lingva = dataJson.lingva;
-    browser.storage.local.get(
-      'cloudflareList',
-      r => {
-        simplyTranslateNormalRedirectsChecks = [...redirects.simplyTranslate.normal];
-        lingvaNormalRedirectsChecks = [...redirects.lingva.normal]
-        for (const instance of r.cloudflareList) {
-          const a = simplyTranslateNormalRedirectsChecks.indexOf(instance);
-          if (a > -1) simplyTranslateNormalRedirectsChecks.splice(a, 1);
+  return new Promise(async resolve => {
+    fetch('/instances/data.json').then(response => response.text()).then(data => {
+      let dataJson = JSON.parse(data);
+      redirects.simplyTranslate = dataJson.simplyTranslate;
+      redirects.lingva = dataJson.lingva;
+      browser.storage.local.get('cloudflareList',
+        async r => {
+          simplyTranslateNormalRedirectsChecks = [...redirects.simplyTranslate.normal];
+          lingvaNormalRedirectsChecks = [...redirects.lingva.normal]
+          for (const instance of r.cloudflareList) {
+            const a = simplyTranslateNormalRedirectsChecks.indexOf(instance);
+            if (a > -1) simplyTranslateNormalRedirectsChecks.splice(a, 1);
 
-          const b = lingvaNormalRedirectsChecks.indexOf(instance);
-          if (b > -1) lingvaNormalRedirectsChecks.splice(b, 1);
-        }
-        browser.storage.local.set({
-          translateDisable: false,
-          translateFrontend: "simplyTranslate",
-          translateProtocol: 'normal',
-          translateRedirects: redirects,
+            const b = lingvaNormalRedirectsChecks.indexOf(instance);
+            if (b > -1) lingvaNormalRedirectsChecks.splice(b, 1);
+          }
+          await browser.storage.local.set({
+            translateDisable: false,
+            translateFrontend: "simplyTranslate",
+            translateProtocol: 'normal',
+            translateRedirects: redirects,
 
-          simplyTranslateNormalRedirectsChecks: simplyTranslateNormalRedirectsChecks,
-          simplyTranslateNormalCustomRedirects: [],
-          simplyTranslateTorRedirectsChecks: [...redirects.simplyTranslate.tor],
-          simplyTranslateTorCustomRedirects: [],
+            simplyTranslateNormalRedirectsChecks: simplyTranslateNormalRedirectsChecks,
+            simplyTranslateNormalCustomRedirects: [],
+            simplyTranslateTorRedirectsChecks: [...redirects.simplyTranslate.tor],
+            simplyTranslateTorCustomRedirects: [],
 
-          lingvaNormalRedirectsChecks: lingvaNormalRedirectsChecks,
-          lingvaNormalCustomRedirects: [],
-          lingvaTorRedirectsChecks: [...redirects.lingva.tor],
-          lingvaTorCustomRedirects: [],
+            lingvaNormalRedirectsChecks: lingvaNormalRedirectsChecks,
+            lingvaNormalCustomRedirects: [],
+            lingvaTorRedirectsChecks: [...redirects.lingva.tor],
+            lingvaTorCustomRedirects: [],
+          })
+          resolve();
         })
-      })
+    })
   })
 }
 

@@ -1,6 +1,8 @@
 "use strict";
 
 import generalHelper from "../../assets/javascripts/helpers/general.js";
+import utils from "../../assets/javascripts/helpers/utils.js";
+
 import youtubeHelper from "../../assets/javascripts/helpers/youtube/youtube.js";
 import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
 import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
@@ -16,7 +18,7 @@ import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
-import utils from "../../assets/javascripts/helpers/utils.js";
+
 
 window.browser = window.browser || window.chrome;
 
@@ -35,6 +37,7 @@ browser.runtime.onInstalled.addListener(
     if (details.reason == 'install') {
       fetch('/instances/blocklist.json').then(response => response.text()).then(async data => {
         await browser.storage.local.set({ cloudflareList: JSON.parse(data) })
+        generalHelper.initDefaults();
         youtubeHelper.initDefaults();
         youtubeMusicHelper.initDefaults();
         twitterHelper.initDefaults();
@@ -56,10 +59,6 @@ browser.runtime.onInstalled.addListener(
 )
 
 async function wholeInit() {
-  await mapsHelper.init();
-  await sendTargetsHelper.init();
-  await peertubeHelper.init();
-  await generalHelper.init();
 }
 
 let incognitoInit = false;
@@ -104,10 +103,10 @@ browser.webRequest.onBeforeRequest.addListener(
 
     if (
       details.frameAncestors && details.frameAncestors.length > 0 &&
-      generalHelper.isException(new URL(details.frameAncestors[0].url))
+      await generalHelper.isException(new URL(details.frameAncestors[0].url))
     ) newUrl = null;
 
-    if (generalHelper.isException(url)) newUrl = 'BYPASSTAB';
+    if (await generalHelper.isException(url)) newUrl = 'BYPASSTAB';
 
     if (BYPASSTABs.includes(details.tabId)) newUrl = null;
 
@@ -117,7 +116,7 @@ browser.webRequest.onBeforeRequest.addListener(
         return { cancel: true };
       }
       else if (newUrl === 'BYPASSTAB') {
-        console.log(`Bybassed ${details.tabId} ${url}`);
+        console.log(`Bypassed ${details.tabId} ${url}`);
         if (!BYPASSTABs.includes(details.tabId)) BYPASSTABs.push(details.tabId);
         return null;
       }
@@ -180,9 +179,21 @@ async function redirectOfflineInstance(url, tabId) {
   }
 }
 let counter = 0;
+
+function isAutoRedirect() {
+  return new Promise(resolve => {
+    browser.storage.local.get('autoRedirect',
+      r => {
+        if (r.autoRedirect == true) resolve(true)
+        else resolve(false)
+      }
+    )
+  })
+}
+
 browser.webRequest.onResponseStarted.addListener(
-  details => {
-    if (!generalHelper.getAutoRedirect()) return null;
+  async details => {
+    if (!await isAutoRedirect()) return null;
 
     if (details.type == 'main_frame' && (details.statusCode == 502 || details.statusCode == 503 || details.statusCode == 504)) {
       // if (details.type == 'main_frame' && details.statusCode >= 200) {
@@ -195,8 +206,8 @@ browser.webRequest.onResponseStarted.addListener(
 )
 
 browser.webRequest.onErrorOccurred.addListener(
-  details => {
-    if (!generalHelper.getAutoRedirect()) return;
+  async details => {
+    if (!await isAutoRedirect()) return;
     if (details.type == 'main_frame') {
       const url = new URL(details.url);
       redirectOfflineInstance(url, details.tabId);

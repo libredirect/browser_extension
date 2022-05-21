@@ -3,7 +3,7 @@ window.browser = window.browser || window.chrome;
 import utils from './utils.js'
 
 const targets = [
-    /^https?:\/{2}send.invalid\/$/,
+    /^https?:\/{2}send\.libredirect\.invalid\/$/,
     /^ https ?: \/\/send\.firefox\.com\/$/,
     /^https?:\/{2}sendfiles\.online\/$/
 ];
@@ -15,33 +15,23 @@ let redirects = {
     }
 }
 function setRedirects(val) {
-    redirects.send = val;
-    browser.storage.local.set({ sendTargetsRedirects: redirects })
-    console.log("sendTargetsRedirects: ", val)
-    for (const item of sendNormalRedirectsChecks)
-        if (!redirects.send.normal.includes(item)) {
-            var index = sendNormalRedirectsChecks.indexOf(item);
-            if (index !== -1) sendNormalRedirectsChecks.splice(index, 1);
+    browser.storage.local.get('cloudflareList', r => {
+        redirects.send = val;
+        sendNormalRedirectsChecks = [...redirects.send.normal];
+        for (const instance of r.cloudflareList) {
+            const a = sendNormalRedirectsChecks.indexOf(instance);
+            if (a > -1) sendNormalRedirectsChecks.splice(a, 1);
         }
-    browser.storage.local.set({ sendNormalRedirectsChecks })
-
-    for (const item of sendTorRedirectsChecks)
-        if (!redirects.send.normal.includes(item)) {
-            var index = sendTorRedirectsChecks.indexOf(item);
-            if (index !== -1) sendTorRedirectsChecks.splice(index, 1);
-        }
-    browser.storage.local.set({ sendTorRedirectsChecks })
+        browser.storage.local.set({
+            sendTargetsRedirects: redirects,
+            sendNormalRedirectsChecks,
+        })
+    })
 }
 
 let sendNormalRedirectsChecks;
-let sendTorRedirectsChecks;
-let sendNormalCustomRedirects = [];
-let sendTorCustomRedirects = [];
 
-let disable; // disableSendTarget
-let protocol; // sendTargetsProtocol
-
-async function switchInstance(url) {
+function switchInstance(url) {
     return new Promise(resolve => {
         browser.storage.local.get(
             [
@@ -82,85 +72,80 @@ async function switchInstance(url) {
 }
 
 function redirect(url, type, initiator) {
-    if (disable) return null;
-    if (type != "main_frame") return null;
-    if (initiator && (
-        [...redirects.send.normal,
-        ...sendNormalCustomRedirects
-        ].includes(initiator.origin) ||
-        targets.includes(initiator.host)
-    )) return null;
-    if (!targets.some(rx => rx.test(url.href))) return null;
+    return new Promise(resolve => {
+        browser.storage.local.get(
+            [
+                "disableSendTarget",
+                "sendTargetsRedirects",
 
-    let instancesList;
-    if (protocol == 'normal') instancesList = [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects];
-    if (protocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
-    if (instancesList.length === 0) return null;
-    let randomInstance = utils.getRandomInstance(instancesList);
+                "sendNormalRedirectsChecks",
+                "sendNormalCustomRedirects",
 
-    return randomInstance;
+                "sendTorRedirectsChecks",
+                "sendTorCustomRedirects",
+
+                "sendTargetsProtocol"
+            ],
+            r => {
+                if (r.disableSendTarget) { resolve(); return; }
+                if (type != "main_frame") { resolve(); return; }
+                if (
+                    initiator && (
+                        [
+                            ...r.sendTargetsRedirects.send.normal,
+                            ...r.sendTargetsRedirects.send.tor,
+                            ...r.sendNormalCustomRedirects,
+                            ...r.sendTorRedirectsChecks
+                        ].includes(initiator.origin) ||
+                        targets.includes(initiator.host)
+                    )
+                ) { resolve(); return; }
+                if (!targets.some(rx => rx.test(url.href))) { resolve(); return; }
+
+                let instancesList;
+                if (r.sendTargetsProtocol == 'normal') instancesList = [...r.sendNormalRedirectsChecks, ...r.sendNormalCustomRedirects];
+                if (r.sendTargetsProtocol == 'tor') instancesList = [...r.sendTorRedirectsChecks, ...r.sendTorCustomRedirects];
+                if (instancesList.length === 0) { resolve(); return; }
+
+                let randomInstance = utils.getRandomInstance(instancesList);
+                resolve(randomInstance);
+            }
+        )
+    })
 }
 
-async function initDefaults() {
-    fetch('/instances/data.json').then(response => response.text()).then(async data => {
-        let dataJson = JSON.parse(data);
-        redirects.send = dataJson.send;
-        browser.storage.local.get('cloudflareList', async r => {
-            sendNormalRedirectsChecks = [...redirects.send.normal];
-            for (const instance of r.cloudflareList) {
-                let i = sendNormalRedirectsChecks.indexOf(instance);
-                if (i > -1) sendNormalRedirectsChecks.splice(i, 1);
-            }
-            await browser.storage.local.set({
-                disableSendTarget: false,
-                sendTargetsRedirects: redirects,
+function initDefaults() {
+    return new Promise(resolve => {
+        fetch('/instances/data.json').then(response => response.text()).then(async data => {
+            let dataJson = JSON.parse(data);
+            redirects.send = dataJson.send;
+            browser.storage.local.get('cloudflareList', async r => {
+                sendNormalRedirectsChecks = [...redirects.send.normal];
+                for (const instance of r.cloudflareList) {
+                    let i = sendNormalRedirectsChecks.indexOf(instance);
+                    if (i > -1) sendNormalRedirectsChecks.splice(i, 1);
+                }
+                await browser.storage.local.set({
+                    disableSendTarget: false,
+                    sendTargetsRedirects: redirects,
 
-                sendNormalRedirectsChecks: sendNormalRedirectsChecks,
-                sendNormalCustomRedirects: [],
+                    sendNormalRedirectsChecks: sendNormalRedirectsChecks,
+                    sendNormalCustomRedirects: [],
 
-                sendTorRedirectsChecks: [...redirects.send.tor],
-                sendTorCustomRedirects: [],
+                    sendTorRedirectsChecks: [...redirects.send.tor],
+                    sendTorCustomRedirects: [],
 
-                sendTargetsProtocol: "normal",
+                    sendTargetsProtocol: "normal",
+                })
+                resolve();
             })
         })
     })
 }
 
-async function init() {
-    browser.storage.local.get(
-        [
-            "disableSendTarget",
-            "sendTargetsRedirects",
-
-            "sendNormalRedirectsChecks",
-            "sendNormalCustomRedirects",
-
-            "sendTorRedirectsChecks",
-            "sendTorCustomRedirects",
-
-            "sendTargetsProtocol"
-        ],
-        r => {
-            disable = r.disableSendTarget;
-            protocol = r.sendTargetsProtocol;
-            redirects = r.sendTargetsRedirects;
-
-            sendNormalRedirectsChecks = r.sendNormalRedirectsChecks;
-            sendNormalCustomRedirects = r.sendNormalCustomRedirects;
-
-            sendTorRedirectsChecks = r.sendTorRedirectsChecks;
-            sendTorCustomRedirects = r.sendTorCustomRedirects;
-        }
-    )
-}
-
 export default {
     setRedirects,
-
     redirect,
     switchInstance,
-
     initDefaults,
-    init,
 };

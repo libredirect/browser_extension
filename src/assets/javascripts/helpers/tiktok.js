@@ -13,22 +13,18 @@ let redirects = {
     }
 }
 function setRedirects(val) {
-    redirects.proxiTok = val;
-    browser.storage.local.set({ tiktokRedirects: redirects })
-    console.log("tiktokRedirects: ", val)
-    for (const item of proxiTokNormalRedirectsChecks)
-        if (!redirects.proxiTok.normal.includes(item)) {
-            var index = proxiTokNormalRedirectsChecks.indexOf(item);
-            if (index !== -1) proxiTokNormalRedirectsChecks.splice(index, 1);
+    browser.storage.local.get('cloudflareList', r => {
+        redirects.proxiTok = val;
+        proxiTokNormalRedirectsChecks = [...redirects.proxiTok.normal];
+        for (const instance of r.cloudflareList) {
+            const a = proxiTokNormalRedirectsChecks.indexOf(instance);
+            if (a > -1) proxiTokNormalRedirectsChecks.splice(a, 1);
         }
-    browser.storage.local.set({ proxiTokNormalRedirectsChecks })
-
-    for (const item of proxiTokTorRedirectsChecks)
-        if (!redirects.proxiTok.normal.includes(item)) {
-            var index = proxiTokTorRedirectsChecks.indexOf(item);
-            if (index !== -1) proxiTokTorRedirectsChecks.splice(index, 1);
-        }
-    browser.storage.local.set({ proxiTokTorRedirectsChecks })
+        browser.storage.local.set({
+            tiktokRedirects: redirects,
+            proxiTokNormalRedirectsChecks
+        })
+    })
 }
 
 let proxiTokNormalRedirectsChecks;
@@ -57,7 +53,7 @@ function initProxiTokCookies(test, from) {
                     ...r.proxiTokTorRedirectsChecks,
                     ...r.proxiTokTorCustomRedirects,
                 ].includes(protocolHost)) resolve();
-                
+
                 if (!test) {
                     let checkedInstances;
                     if (r.tiktokProtocol == 'normal') checkedInstances = [...r.proxiTokNormalRedirectsChecks, ...r.proxiTokNormalCustomRedirects]
@@ -74,26 +70,29 @@ function initProxiTokCookies(test, from) {
 }
 
 function setProxiTokCookies() {
-    browser.storage.local.get(
-        [
-            "tiktokProtocol",
-            "disableTiktok",
-            "proxiTokNormalRedirectsChecks",
-            "proxiTokNormalCustomRedirects",
-            "proxiTokTorRedirectsChecks",
-            "proxiTokTorCustomRedirects",
-        ],
-        r => {
-            if (r.disableTiktok || r.tiktokProtocol === undefined) return;
-            let checkedInstances;
-            if (r.tiktokProtocol == 'normal') checkedInstances = [...r.proxiTokNormalRedirectsChecks, ...r.proxiTokNormalCustomRedirects]
-            else if (r.tiktokProtocol == 'tor') checkedInstances = [...r.proxiTokTorRedirectsChecks, ...r.proxiTokTorCustomRedirects]
-            for (const to of checkedInstances) {
-                utils.getCookiesFromStorage('proxitok', to, 'theme');
-                utils.getCookiesFromStorage('proxitok', to, 'api-legacy');
+    return new Promise(resolve => {
+        browser.storage.local.get(
+            [
+                "tiktokProtocol",
+                "disableTiktok",
+                "proxiTokNormalRedirectsChecks",
+                "proxiTokNormalCustomRedirects",
+                "proxiTokTorRedirectsChecks",
+                "proxiTokTorCustomRedirects",
+            ],
+            r => {
+                if (r.disableTiktok || r.tiktokProtocol === undefined) { resolve(); return; }
+                let checkedInstances;
+                if (r.tiktokProtocol == 'normal') checkedInstances = [...r.proxiTokNormalRedirectsChecks, ...r.proxiTokNormalCustomRedirects]
+                else if (r.tiktokProtocol == 'tor') checkedInstances = [...r.proxiTokTorRedirectsChecks, ...r.proxiTokTorCustomRedirects]
+                for (const to of checkedInstances) {
+                    utils.getCookiesFromStorage('proxitok', to, 'theme');
+                    utils.getCookiesFromStorage('proxitok', to, 'api-legacy');
+                }
+                resolve();
             }
-        }
-    )
+        )
+    })
 }
 
 function redirect(url, type, initiator) {
@@ -163,7 +162,7 @@ async function reverse(url) {
     })
 }
 
-async function initDefaults() {
+function initDefaults() {
     return new Promise(async resolve => {
         fetch('/instances/data.json').then(response => response.text()).then(async data => {
             let dataJson = JSON.parse(data);

@@ -120,28 +120,31 @@ function redirect(url, type, initiator) {
     })
 }
 
-async function initDefaults() {
-    browser.storage.local.get('cloudflareList', async r => {
-        librarianNormalRedirectsChecks = [...redirects.librarian.normal];
-        for (const instance of r.cloudflareList) {
-            let i;
+function initDefaults() {
+    return new Promise(resolve => {
+        browser.storage.local.get('cloudflareList', async r => {
+            librarianNormalRedirectsChecks = [...redirects.librarian.normal];
+            for (const instance of r.cloudflareList) {
+                let i;
 
-            i = librarianNormalRedirectsChecks.indexOf(instance);
-            if (i > -1) librarianNormalRedirectsChecks.splice(i, 1);
-        }
-        await browser.storage.local.set({
-            disableLbryTargets: true,
-            lbryTargetsRedirects: {
-                'librarian': redirects.librarian
-            },
+                i = librarianNormalRedirectsChecks.indexOf(instance);
+                if (i > -1) librarianNormalRedirectsChecks.splice(i, 1);
+            }
+            await browser.storage.local.set({
+                disableLbryTargets: true,
+                lbryTargetsRedirects: {
+                    'librarian': redirects.librarian
+                },
 
-            librarianNormalRedirectsChecks: librarianNormalRedirectsChecks,
-            librarianNormalCustomRedirects: [],
+                librarianNormalRedirectsChecks: librarianNormalRedirectsChecks,
+                librarianNormalCustomRedirects: [],
 
-            librarianTorRedirectsChecks: [...redirects.librarian.tor],
-            librarianTorCustomRedirects: [],
+                librarianTorRedirectsChecks: [...redirects.librarian.tor],
+                librarianTorCustomRedirects: [],
 
-            lbryTargetsProtocol: "normal",
+                lbryTargetsProtocol: "normal",
+            })
+            resolve();
         })
     })
 }
