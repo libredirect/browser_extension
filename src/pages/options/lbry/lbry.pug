@@ -1,13 +1,16 @@
 doctype html
 html(lang="en")
     include ../../widgets/head.pug
-        title General
+        title LBRY/Odysee
 script(type="module" src="../../../assets/javascripts/localise.js")
 body.option(dir="auto")
     include ../../widgets/links.pug
     +links('lbry')
 
     section.option-block
+        .some-block.option-block
+            h1 LBRY/Odysee
+        hr
         .some-block.option-block
             h4(data-localise="__MSG_enable__") Enable
             input#disable-lbry(type="checkbox")

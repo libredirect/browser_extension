@@ -1,13 +1,16 @@
 doctype html
 html(lang="en")
     include ../../widgets/head.pug
-        title Document
+        title YouTube Music
 script(type="module" src="../../../assets/javascripts/localise.js")
 body.option(dir="auto")
     include ../../widgets/links.pug
     +links('youtubeMusic')
 
     section.option-block
+        .some-block.option-block
+            h1 YouTube Music
+        hr
         .some-block.option-block
             h4(data-localise="__MSG_enable__") Enable
             input#disable-beatbump(type="checkbox")

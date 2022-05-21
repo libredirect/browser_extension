@@ -126,14 +126,11 @@ function initSimplyTranslateCookies(test, from) {
           ...r.simplyTranslateNormalCustomRedirects,
           ...r.simplyTranslateTorRedirectsChecks,
           ...r.simplyTranslateTorCustomRedirects,
-          ...r.simplyTranslateI2pRedirectsChecks,
-          ...r.simplyTranslateI2pCustomRedirects,
         ].includes(protocolHost)) { resolve(); return; }
         if (!test) {
           let checkedInstances;
           if (r.translateProtocol == 'normal') checkedInstances = [...r.simplyTranslateNormalRedirectsChecks, ...r.simplyTranslateNormalCustomRedirects]
           else if (r.translateProtocol == 'tor') checkedInstances = [...r.simplyTranslateTorRedirectsChecks, ...r.simplyTranslateTorCustomRedirects]
-          else if (r.translateProtocol == 'i2p') checkedInstances = [...r.simplyTranslateI2pRedirectsChecks, ...r.simplyTranslateI2pCustomRedirects]
           for (const to of checkedInstances) {
             utils.copyCookie('simplyTranslate', from, to, 'from_lang');
             utils.copyCookie('simplyTranslate', from, to, 'to_lang');

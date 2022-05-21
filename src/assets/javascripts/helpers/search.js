@@ -79,7 +79,7 @@ function initSearxCookies(test, from) {
           ...r.searxTorCustomRedirects,
           ...r.searxI2pRedirectsChecks,
           ...r.searxI2pCustomRedirects,
-        ].includes(protocolHost)) return;
+        ].includes(protocolHost)) { resolve(); return; }
 
         if (!test) {
           let checkedInstances;
@@ -125,7 +125,7 @@ function setSearxCookies() {
         "searxTorCustomRedirects",
       ],
       r => {
-        if (r.disableSearch || r.searchFrontend != 'searx', r.searchProtocol === undefined) { resolve(); return; }
+        if (r.disableSearch || r.searchFrontend != 'searx') { resolve(); return; }
         let checkedInstances;
         if (r.searchProtocol == 'normal') checkedInstances = [...r.searxNormalRedirectsChecks, ...r.searxNormalCustomRedirects]
         else if (r.searchProtocol == 'tor') checkedInstances = [...r.searxTorRedirectsChecks, ...r.searxTorCustomRedirects]
@@ -175,7 +175,7 @@ function initSearxngCookies(test, from) {
           ...r.searxngTorCustomRedirects,
           ...r.searxngI2pRedirectsChecks,
           ...r.searxngI2pCustomRedirects,
-        ].includes(protocolHost)) return;
+        ].includes(protocolHost)) { resolve(); return; }
 
         if (!test) {
           let checkedInstances;

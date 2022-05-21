@@ -211,7 +211,7 @@ div.option-block h4 {
 div.option-block h1 {
   margin: 0;
   font-size: 28px;
-  color: var(--active);
+  color: var(--text);
 }
 
 div.option-block div {

@@ -1,13 +1,17 @@
 doctype html
 html(lang="en")
     include ../../widgets/head.pug
-        title General
+        title Instagram
 script(type="module" src="../../../assets/javascripts/localise.js")
 body.option(dir="auto")
     include ../../widgets/links.pug
     +links('instagram')
 
     section.option-block
+        .some-block.option-block
+            h1 Instagram
+        hr
+
         .some-block.option-block
             h4(data-localise="__MSG_enable__") Enable
             input#disable-bibliogram(type="checkbox")

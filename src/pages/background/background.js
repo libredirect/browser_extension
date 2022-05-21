@@ -85,8 +85,8 @@ browser.webRequest.onBeforeRequest.addListener(
     else if (details.initiator)
       initiator = new URL(details.initiator);
 
-    let newUrl = await youtubeHelper.redirect(url, details, initiator)
-    if (!newUrl) newUrl = await youtubeMusicHelper.redirect(url, details.type)
+    let newUrl = await youtubeMusicHelper.redirect(url, details.type)
+    if (!newUrl) newUrl = await youtubeHelper.redirect(url, details, initiator)
     if (!newUrl) newUrl = await twitterHelper.redirect(url, initiator);
     if (!newUrl) newUrl = await instagramHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = await mapsHelper.redirect(url, initiator);
