@@ -170,7 +170,7 @@
   },
 
   "enable": {
-    "message": "有効",
+    "message": "有効化",
     "description": "used in imgur.html"
   },
 
