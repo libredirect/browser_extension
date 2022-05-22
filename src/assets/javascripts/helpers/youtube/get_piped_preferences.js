@@ -1,12 +1,16 @@
 window.browser = window.browser || window.chrome;
 
+console.log('unifying piped');
+
 browser.storage.local.set(
     {
         'piped_bufferGoal': localStorage.getItem("bufferGoal"),
         'piped_comments': localStorage.getItem("comments"),
         'piped_disableLBRY': localStorage.getItem("disableLBRY"),
         'piped_enabledCodecs': localStorage.getItem("enabledCodecs"),
+        'piped_hl': localStorage.getItem("hl"),
         'piped_homepage': localStorage.getItem("homepage"),
+        'piped_instance': localStorage.getItem("instance"),
         'piped_listen': localStorage.getItem("listen"),
         'piped_minimizeDescription': localStorage.getItem("minimizeDescription"),
         'piped_playerAutoPlay': localStorage.getItem("playerAutoPlay"),

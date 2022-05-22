@@ -23,8 +23,10 @@ browser.storage.local.get(
         if (r.piped_bufferGoal !== undefined) localStorage.setItem("bufferGoal", r.piped_bufferGoal);
         if (r.piped_comments !== undefined) localStorage.setItem("comments", r.piped_comments);
         if (r.piped_disableLBRY !== undefined) localStorage.setItem("disableLBRY", r.piped_disableLBRY);
+        if (r.piped_hl !== undefined) localStorage.setItem("hl", r.piped_hl);
         if (r.piped_enabledCodecs !== undefined) localStorage.setItem("enabledCodecs", r.piped_enabledCodecs);
         if (r.piped_homepage !== undefined) localStorage.setItem("homepage", r.piped_homepage);
+        if (r.piped_instance !== undefined) localStorage.setItem("instance", r.piped_instance);
         if (r.piped_listen !== undefined) localStorage.setItem("listen", r.piped_listen);
         if (r.piped_minimizeDescription !== undefined) localStorage.setItem("minimizeDescription", r.piped_minimizeDescription);
         if (r.piped_playerAutoPlay !== undefined) localStorage.setItem("playerAutoPlay", r.piped_playerAutoPlay);

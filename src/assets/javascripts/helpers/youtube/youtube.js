@@ -442,7 +442,7 @@ function initPipedLocalStorage(test, url, tabId) {
           browser.tabs.executeScript(
             tabId,
             {
-              file: "/assets/javascripts/helpers/youtube/get_piped_settings.js",
+              file: "/assets/javascripts/helpers/youtube/get_piped_preferences.js",
               runAt: "document_start"
             }
           );
