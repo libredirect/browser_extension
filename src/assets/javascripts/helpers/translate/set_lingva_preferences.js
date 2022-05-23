@@ -12,5 +12,7 @@ browser.storage.local.get(
         if (r.lingva_isauto !== undefined) localStorage.setItem('isauto', r.lingva_isauto);
         if (r.lingva_source !== undefined) localStorage.setItem('source', r.lingva_source);
         if (r.lingva_target !== undefined) localStorage.setItem('target', r.lingva_target);
+
+        window.close();
     }
 )

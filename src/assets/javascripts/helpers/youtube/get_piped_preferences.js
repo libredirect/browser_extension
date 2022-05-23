@@ -1,7 +1,5 @@
 window.browser = window.browser || window.chrome;
 
-console.log('unifying piped');
-
 browser.storage.local.set(
     {
         'piped_bufferGoal': localStorage.getItem("bufferGoal"),

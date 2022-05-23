@@ -80,10 +80,8 @@ function importError() {
   setTimeout(() => importSettingsElementText.innerHTML = oldHTML, 1000);
 }
 
-let resetSettingsElement = document.getElementById("reset-settings");
-resetSettingsElement.addEventListener("click",
+document.getElementById("reset-settings").addEventListener("click",
   async () => {
-    console.log("reset");
     await browser.storage.local.clear();
     fetch('/instances/blocklist.json').then(response => response.text()).then(async data => {
       await browser.storage.local.set({ cloudflareList: JSON.parse(data) })

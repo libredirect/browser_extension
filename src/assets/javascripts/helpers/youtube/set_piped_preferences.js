@@ -38,5 +38,7 @@ browser.storage.local.get(
         if (r.piped_theme !== undefined) localStorage.setItem("theme", r.piped_theme);
         if (r.piped_volume !== undefined) localStorage.setItem("volume", r.piped_volume);
         if (r.piped_watchHistory !== undefined) localStorage.setItem("watchHistory", r.piped_watchHistory);
+
+        window.close();
     }
 )

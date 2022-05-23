@@ -216,20 +216,6 @@ browser.webRequest.onErrorOccurred.addListener(
   { urls: ["<all_urls>"], }
 )
 
-browser.tabs.onUpdated.addListener(
-  async (tabId, changeInfo, _) => {
-    await wholeInit();
-    let url;
-    try { url = new URL(changeInfo.url); }
-    catch (_) { return }
-    let result = await youtubeHelper.setPipedLocalStorage(url, tabId);
-    if (!result) result = await youtubeHelper.setPipedMaterialLocalStorage(url, tabId);
-    if (!result) result = await translateHelper.initLingvaLocalStorage(url, tabId);
-  }
-);
-
-
-
 browser.commands.onCommand.addListener(
   command => {
     if (command === 'switchInstance') utils.switchInstance();

@@ -368,14 +368,17 @@ function initInvidiousCookies(test, from) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [
+        "disableYoutube",
         "youtubeProtocol",
+        "youtubeFrontend",
         "invidiousNormalRedirectsChecks",
         "invidiousNormalCustomRedirects",
         "invidiousTorRedirectsChecks",
         "invidiousTorCustomRedirects",
       ],
       r => {
-        let protocolHost = utils.protocolHost(from);
+        if (r.disableYoutube || r.youtubeFrontend != 'invidious') { resolve(); return; }
+        const protocolHost = utils.protocolHost(from);
         if (![
           ...r.invidiousNormalRedirectsChecks,
           ...r.invidiousTorRedirectsChecks,
@@ -386,6 +389,8 @@ function initInvidiousCookies(test, from) {
           let checkedInstances;
           if (r.youtubeProtocol == 'normal') checkedInstances = [...r.invidiousNormalRedirectsChecks, ...r.invidiousNormalCustomRedirects]
           else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.invidiousTorRedirectsChecks, ...r.invidiousTorCustomRedirects]
+          const i = checkedInstances.indexOf(protocolHost);
+          if (i !== -1) checkedInstances.splice(i, 1);
           for (const to of checkedInstances)
             utils.copyCookie('invidious', from, to, 'PREFS');
         }
@@ -408,7 +413,7 @@ function setInvidiousCookies() {
         "invidiousTorCustomRedirects",
       ],
       r => {
-        if (r.disableYoutube || r.youtubeFrontend != 'invidious' || r.youtubeProtocol === undefined) { resolve(); return; }
+        if (r.disableYoutube || r.youtubeFrontend != 'invidious') { resolve(); return; }
         let checkedInstances;
         if (r.youtubeProtocol == 'normal') checkedInstances = [...r.invidiousNormalRedirectsChecks, ...r.invidiousNormalCustomRedirects]
         else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.invidiousTorRedirectsChecks, ...r.invidiousTorCustomRedirects]
@@ -424,39 +429,8 @@ function initPipedLocalStorage(test, url, tabId) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [
-        "pipedNormalRedirectsChecks",
-        "pipedNormalCustomRedirects",
-        "pipedTorRedirectsChecks",
-        "pipedTorCustomRedirects",
-      ],
-      r => {
-        let protocolHost = utils.protocolHost(url);
-        if (![
-          ...r.pipedNormalCustomRedirects,
-          ...r.pipedNormalRedirectsChecks,
-          ...r.pipedTorRedirectsChecks,
-          ...r.pipedTorCustomRedirects,
-        ].includes(protocolHost)) { resolve(); return; }
-
-        if (!test)
-          browser.tabs.executeScript(
-            tabId,
-            {
-              file: "/assets/javascripts/helpers/youtube/get_piped_preferences.js",
-              runAt: "document_start"
-            }
-          );
-        resolve(true);
-      }
-    )
-  })
-}
-
-function setPipedLocalStorage(url, tabId) {
-  return new Promise(resolve => {
-    browser.storage.local.get(
-      [
         "disableYoutube",
+        "youtubeProtocol",
         "youtubeFrontend",
         "pipedNormalRedirectsChecks",
         "pipedNormalCustomRedirects",
@@ -464,21 +438,29 @@ function setPipedLocalStorage(url, tabId) {
         "pipedTorCustomRedirects",
       ],
       r => {
-        if (!r.disableYoutube && r.youtubeFrontend == 'pipedMaterial') { resolve(); return; }
-        let protocolHost = utils.protocolHost(url);
+        if (r.disableYoutube || r.youtubeFrontend != 'piped') { resolve(); return; }
+        const protocolHost = utils.protocolHost(url);
         if (![
+          ...r.pipedNormalCustomRedirects,
           ...r.pipedNormalRedirectsChecks,
           ...r.pipedTorRedirectsChecks,
-          ...r.pipedNormalCustomRedirects,
           ...r.pipedTorCustomRedirects,
         ].includes(protocolHost)) { resolve(); return; }
-        browser.tabs.executeScript(
-          tabId,
-          {
-            file: "/assets/javascripts/helpers/youtube/set_piped_preferences.js",
-            runAt: "document_start"
-          }
-        );
+
+        if (!test) {
+          browser.tabs.executeScript(tabId, { file: "/assets/javascripts/helpers/youtube/get_piped_preferences.js", runAt: "document_start" });
+
+          let checkedInstances;
+          if (r.youtubeProtocol == 'normal') checkedInstances = [...r.pipedNormalCustomRedirects, ...r.pipedNormalRedirectsChecks]
+          else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.pipedTorRedirectsChecks, ...r.pipedTorCustomRedirects]
+          const i = checkedInstances.indexOf(protocolHost);
+          if (i !== -1) checkedInstances.splice(i, 1);
+          for (const to of checkedInstances)
+            browser.tabs.create(
+              { url: to },
+              tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/helpers/youtube/set_piped_preferences.js", runAt: "document_start" })
+            );
+        }
         resolve(true);
       }
     )
@@ -489,43 +471,12 @@ function initPipedMaterialLocalStorage(test, url, tabId,) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [
-        "pipedMaterialNormalRedirectsChecks",
-        "pipedMaterialNormalCustomRedirects",
-        "pipedMaterialTorRedirectsChecks",
-        "pipedMaterialTorCustomRedirects",
-      ],
-      r => {
-        const protocolHost = utils.protocolHost(url);
-        if (![
-          ...r.pipedMaterialNormalCustomRedirects,
-          ...r.pipedMaterialNormalRedirectsChecks,
-          ...r.pipedMaterialTorRedirectsChecks,
-          ...r.pipedMaterialTorCustomRedirects,
-        ].includes(protocolHost)) { resolve(); return; }
-
-        if (!test)
-          browser.tabs.executeScript(
-            tabId,
-            {
-              file: "/assets/javascripts/helpers/youtube/get_pipedMaterial_preferences.js",
-              runAt: "document_start"
-            }
-          );
-        resolve(true);
-      }
-    )
-  })
-}
-
-function setPipedMaterialLocalStorage(url, tabId) {
-  return new Promise(resolve => {
-    browser.storage.local.get(
-      [
         "disableYoutube",
+        "youtubeProtocol",
         "youtubeFrontend",
         "pipedMaterialNormalRedirectsChecks",
-        "pipedMaterialTorRedirectsChecks",
         "pipedMaterialNormalCustomRedirects",
+        "pipedMaterialTorRedirectsChecks",
         "pipedMaterialTorCustomRedirects",
       ],
       r => {
@@ -533,17 +484,25 @@ function setPipedMaterialLocalStorage(url, tabId) {
         const protocolHost = utils.protocolHost(url);
         if (![
           ...r.pipedMaterialNormalRedirectsChecks,
-          ...r.pipedMaterialTorRedirectsChecks,
           ...r.pipedMaterialNormalCustomRedirects,
+          ...r.pipedMaterialTorRedirectsChecks,
           ...r.pipedMaterialTorCustomRedirects,
         ].includes(protocolHost)) { resolve(); return; }
-        browser.tabs.executeScript(
-          tabId,
-          {
-            file: "/assets/javascripts/helpers/youtube/set_pipedMaterial_preferences.js",
-            runAt: "document_start"
-          }
-        );
+
+        if (!test) {
+          browser.tabs.executeScript(tabId, { file: "/assets/javascripts/helpers/youtube/get_pipedMaterial_preferences.js", runAt: "document_start" });
+
+          let checkedInstances;
+          if (r.youtubeProtocol == 'normal') checkedInstances = [...r.pipedMaterialNormalRedirectsChecks, ...r.pipedMaterialNormalCustomRedirects]
+          else if (r.youtubeProtocol == 'tor') checkedInstances = [...r.pipedMaterialTorRedirectsChecks, ...r.pipedMaterialTorCustomRedirects]
+          const i = checkedInstances.indexOf(protocolHost);
+          if (i !== -1) checkedInstances.splice(i, 1);
+          for (const to of checkedInstances)
+            browser.tabs.create(
+              { url: to },
+              tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/helpers/youtube/set_pipedMaterial_preferences.js", runAt: "document_start" })
+            );
+        }
         resolve(true);
       }
     )
@@ -555,15 +514,19 @@ function removeXFrameOptions(e) {
     browser.storage.local.get(
       [
         "youtubeRedirects",
-        "pipedMaterialNormalRedirectsChecks",
-        "pipedMaterialTorRedirectsChecks",
         "invidiousNormalCustomRedirects",
         "invidiousTorCustomRedirects",
+
+        "pipedNormalCustomRedirects",
+        "pipedTorCustomRedirects",
+
+        "pipedMaterialNormalCustomRedirects",
+        "pipedMaterialTorCustomRedirects",
       ],
       r => {
         const url = new URL(e.url);
         let protocolHost = utils.protocolHost(url);
-        const list = [
+        if (![
           ...r.youtubeRedirects.invidious.normal,
           ...r.youtubeRedirects.invidious.tor,
           ...r.youtubeRedirects.piped.normal,
@@ -573,14 +536,17 @@ function removeXFrameOptions(e) {
           ...r.invidiousTorCustomRedirects,
 
           ...r.pipedNormalCustomRedirects,
-          ...r.pipedTorCustomRedirects
-        ];
-        if (!list.includes(protocolHost) || e.type != 'sub_frame') { resolve(); return; }
+          ...r.pipedTorCustomRedirects,
+
+          ...r.pipedMaterialNormalCustomRedirects,
+          ...r.pipedMaterialTorCustomRedirects,
+        ].includes(protocolHost) || e.type != 'sub_frame') { resolve(); return; }
         let isChanged = false;
-        for (const i in e.responseHeaders) if (e.responseHeaders[i].name == 'x-frame-options') {
-          e.responseHeaders.splice(i, 1);
-          isChanged = true;
-        }
+        for (const i in e.responseHeaders)
+          if (e.responseHeaders[i].name == 'x-frame-options') {
+            e.responseHeaders.splice(i, 1);
+            isChanged = true;
+          }
         if (isChanged) resolve({ responseHeaders: e.responseHeaders });
       })
   })
@@ -589,8 +555,6 @@ function removeXFrameOptions(e) {
 export default {
   setRedirects,
   initPipedMaterialLocalStorage,
-  setPipedLocalStorage,
-  setPipedMaterialLocalStorage,
   initInvidiousCookies,
   setInvidiousCookies,
 

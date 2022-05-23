@@ -47,63 +47,45 @@ function initLingvaLocalStorage(test, url, tabId) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [
+        "translateDisable",
+        "translateProtocol",
+        "translateFrontend",
         "lingvaNormalRedirectsChecks",
         "lingvaNormalCustomRedirects",
         "lingvaTorRedirectsChecks",
         "lingvaTorCustomRedirects",
       ],
       r => {
-        let protocolHost = utils.protocolHost(url);
+        if (r.translateDisable || r.translateFrontend != 'lingva') { resolve(); return; }
+        const protocolHost = utils.protocolHost(url);
         if (![
           ...r.lingvaNormalRedirectsChecks,
-          ...r.lingvaTorRedirectsChecks,
           ...r.lingvaNormalCustomRedirects,
+          ...r.lingvaTorRedirectsChecks,
           ...r.lingvaTorCustomRedirects,
         ].includes(protocolHost)) { resolve(); return; }
 
-        if (!test)
+        if (!test) {
           browser.tabs.executeScript(
             tabId,
-            {
-              file: "/assets/javascripts/helpers/translate/get_lingva_preferences.js",
-              runAt: "document_start"
-            }
+            { file: "/assets/javascripts/helpers/translate/get_lingva_preferences.js", runAt: "document_start" }
           );
+
+          let checkedInstances;
+          if (r.translateProtocol == 'normal') checkedInstances = [...r.lingvaNormalRedirectsChecks, ...r.lingvaNormalCustomRedirects];
+          if (r.translateProtocol == 'tor') checkedInstances = [...r.lingvaTorRedirectsChecks, ...r.lingvaTorCustomRedirects];
+          const i = checkedInstances.indexOf(protocolHost);
+          if (i !== -1) checkedInstances.splice(i, 1);
+          if (checkedInstances.length === 0) { resolve(); return; }
+          for (const to of checkedInstances)
+            browser.tabs.create(
+              { url: to },
+              tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/helpers/translate/set_lingva_preferences.js", runAt: "document_start" })
+            );
+        }
         resolve(true);
       }
     )
-  })
-}
-
-function setLingvaLocalStorage(url, tabId) {
-  return new Promise(resolve => {
-    browser.storage.local.get(
-      [
-        "disableYoutube",
-        "youtubeFrontend",
-        "lingvaNormalRedirectsChecks",
-        "lingvaNormalCustomRedirects",
-        "lingvaTorRedirectsChecks",
-        "lingvaTorCustomRedirects",
-      ],
-      r => {
-        if (r.disableYoutube || r.youtubeFrontend != 'lingva') { resolve(); return; }
-        let protocolHost = utils.protocolHost(url);
-        if (![
-          ...r.lingvaNormalRedirectsChecks,
-          ...r.lingvaTorRedirectsChecks,
-          ...r.lingvaNormalCustomRedirects,
-          ...r.lingvaTorCustomRedirects,
-        ].includes(protocolHost)) { resolve(); return; }
-        browser.tabs.executeScript(
-          tabId,
-          {
-            file: "/assets/javascripts/helpers/youtube/set_lingva_preferences.js",
-            runAt: "document_start"
-          }
-        );
-        resolve(true);
-      })
   })
 }
 
@@ -233,6 +215,7 @@ function switchInstance(url) {
   return new Promise(resolve => {
     browser.storage.local.get(
       [
+        "translateDisable",
         "translateFrontend",
         "translateProtocol",
         "translateRedirects",
@@ -248,6 +231,7 @@ function switchInstance(url) {
         "lingvaTorCustomRedirects",
       ],
       r => {
+        if (r.translateDisable) { resolve(); return; };
         const protocolHost = utils.protocolHost(url);
         if (![
           ...r.translateRedirects.simplyTranslate.normal,
@@ -266,14 +250,14 @@ function switchInstance(url) {
         let instancesList;
         if (r.translateProtocol == 'normal') {
           if (r.translateFrontend == 'simplyTranslate') instancesList = [...r.simplyTranslateNormalRedirectsChecks, ...r.simplyTranslateNormalCustomRedirects];
-          else if (r.translateFrontend == 'lingva') [...r.lingvaNormalRedirectsChecks, ...r.lingvaNormalCustomRedirects];
+          else if (r.translateFrontend == 'lingva') instancesList = [...r.lingvaNormalRedirectsChecks, ...r.lingvaNormalCustomRedirects];
         }
         else if (r.translateProtocol == 'tor') {
           if (r.translateFrontend == 'simplyTranslate') instancesList = [...r.simplyTranslateTorRedirectsChecks, ...r.simplyTranslateTorCustomRedirects];
           else if (r.translateFrontend == 'lingva') instancesList = [...r.lingvaTorRedirectsChecks, ...r.lingvaTorCustomRedirects];
         }
 
-        let index = instancesList.indexOf(protocolHost);
+        const index = instancesList.indexOf(protocolHost);
         if (index > -1) instancesList.splice(index, 1);
         if (instancesList.length === 0) { resolve(); return; }
 
@@ -326,7 +310,6 @@ export default {
   initSimplyTranslateCookies,
   setSimplyTranslateCookies,
   initLingvaLocalStorage,
-  setLingvaLocalStorage,
 
   setRedirects,
 

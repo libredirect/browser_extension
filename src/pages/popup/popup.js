@@ -94,7 +94,6 @@ utils.unify(true).then(r => {
   if (!r) document.getElementById('unify_div').style.display = 'none';
   else {
     const unify = document.getElementById('unify');
-    console.log('addlistner');
     unify.addEventListener("click", () => utils.unify(false, unify));
   }
 })
