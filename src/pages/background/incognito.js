@@ -9,7 +9,10 @@ import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
 window.browser = window.browser || window.chrome;
 
 await youtubeHelper.setInvidiousCookies();
+await youtubeHelper.initPipedLocalStorage();
+await youtubeHelper.initPipedMaterialLocalStorage();
 await translateHelper.setSimplyTranslateCookies();
+await translateHelper.initLingvaLocalStorage();
 await twitterHelper.setNitterCookies();
 await wikipediaHelper.setWikilessCookies();
 await searchHelper.setSearxCookies();

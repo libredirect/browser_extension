@@ -26,126 +26,105 @@ function setRedirects(val) {
   })
 }
 
-let bibliogramNormalRedirectsChecks;
+let
+  disableInstagram,
+  instagramProtocol,
+  instagramRedirects,
+  bibliogramNormalRedirectsChecks,
+  bibliogramTorRedirectsChecks,
+  bibliogramNormalCustomRedirects,
+  bibliogramTorCustomRedirects;
 
-function redirect(url, type, initiator) {
-  return new Promise(resolve => {
+function init() {
+  return new Promise(async resolve => {
     browser.storage.local.get(
       [
         "disableInstagram",
         "instagramProtocol",
-
         "instagramRedirects",
-
         "bibliogramNormalRedirectsChecks",
         "bibliogramTorRedirectsChecks",
-
         "bibliogramNormalCustomRedirects",
         "bibliogramTorCustomRedirects",
       ],
       r => {
-        if (r.disableInstagram) { resolve(); return; }
-        if (
-          initiator &&
-          ([
-            ...r.instagramRedirects.bibliogram.normal,
-            ...r.instagramRedirects.bibliogram.tor,
-            ...r.bibliogramNormalCustomRedirects,
-            ...r.bibliogramTorCustomRedirects,
-          ].includes(initiator.origin))
-        ) { resolve('BYPASSTAB'); return; }
-
-        if (!targets.includes(url.host)) { resolve(); return; }
-        if (!["main_frame", "sub_frame", "xmlhttprequest", "other", "image", "media"].includes(type)) { resolve(); return; }
-
-        const bypassPaths = [/about/, /explore/, /support/, /press/, /api/, /privacy/, /safety/, /admin/, /\/(accounts\/|embeds?.js)/];
-        if (bypassPaths.some(rx => rx.test(url.pathname))) { resolve(); return; }
-
-        let instancesList;
-        if (r.instagramProtocol == 'normal') instancesList = [...r.bibliogramNormalRedirectsChecks, ...r.bibliogramNormalCustomRedirects];
-        else if (r.instagramProtocol == 'tor') instancesList = [...r.bibliogramTorRedirectsChecks, ...r.bibliogramTorCustomRedirects];
-        if (instancesList.length === 0) { resolve(); return; }
-        let randomInstance = utils.getRandomInstance(instancesList)
-
-        const reservedPaths = ["u", "p", "privacy",];
-        if (url.pathname === "/" || reservedPaths.includes(url.pathname.split("/")[1]))
-          resolve(`${randomInstance}${url.pathname}${url.search}`);
-        if (url.pathname.startsWith("/reel") || url.pathname.startsWith("/tv"))
-          resolve(`${randomInstance}/p${url.pathname.replace(/\/reel|\/tv/i, '')}${url.search}`);
-        else
-          resolve(`${randomInstance}/u${url.pathname}${url.search}`); // Likely a user profile, redirect to '/u/...'
+        disableInstagram = r.disableInstagram;
+        instagramProtocol = r.instagramProtocol;
+        instagramRedirects = r.instagramRedirects;
+        bibliogramNormalRedirectsChecks = r.bibliogramNormalRedirectsChecks;
+        bibliogramTorRedirectsChecks = r.bibliogramTorRedirectsChecks;
+        bibliogramNormalCustomRedirects = r.bibliogramNormalCustomRedirects;
+        bibliogramTorCustomRedirects = r.bibliogramTorCustomRedirects;
+        resolve();
       }
     )
   })
 }
+
+init();
+browser.storage.onChanged.addListener(init)
+
+function all() {
+  return [
+    ...instagramRedirects.bibliogram.normal,
+    ...instagramRedirects.bibliogram.tor,
+    ...bibliogramNormalCustomRedirects,
+    ...bibliogramTorCustomRedirects,
+  ]
+}
+
+function redirect(url, type, initiator) {
+  if (disableInstagram) return;
+  if (initiator && all().includes(initiator.origin)) return 'BYPASSTAB';
+  if (!targets.includes(url.host)) return;
+  if (!["main_frame", "sub_frame", "xmlhttprequest", "other", "image", "media"].includes(type)) return;
+
+  const bypassPaths = [/about/, /explore/, /support/, /press/, /api/, /privacy/, /safety/, /admin/, /\/(accounts\/|embeds?.js)/];
+  if (bypassPaths.some(rx => rx.test(url.pathname))) return;
+
+  let instancesList;
+  if (instagramProtocol == 'normal') instancesList = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects];
+  else if (instagramProtocol == 'tor') instancesList = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects];
+  if (instancesList.length === 0) return;
+  let randomInstance = utils.getRandomInstance(instancesList)
+
+  const reservedPaths = ["u", "p", "privacy",];
+  if (url.pathname === "/" || reservedPaths.includes(url.pathname.split("/")[1]))
+    return `${randomInstance}${url.pathname}${url.search}`;
+  if (url.pathname.startsWith("/reel") || url.pathname.startsWith("/tv"))
+    return `${randomInstance}/p${url.pathname.replace(/\/reel|\/tv/i, '')}${url.search}`;
+  else
+    return `${randomInstance}/u${url.pathname}${url.search}`; // Likely a user profile, redirect to '/u/...'
+}
+
 function reverse(url) {
-  return new Promise(resolve => {
-    browser.storage.local.get(
-      [
-        "instagramRedirects",
-        "bibliogramNormalCustomRedirects",
-        "bibliogramTorCustomRedirects",
-      ],
-      r => {
-        let protocolHost = utils.protocolHost(url);
-        if (
-          ![
-            ...r.instagramRedirects.bibliogram.normal,
-            ...r.instagramRedirects.bibliogram.tor,
-            ...r.bibliogramNormalCustomRedirects,
-            ...r.bibliogramTorCustomRedirects
-          ].includes(protocolHost)
-        ) { resolve(); return; }
+  return new Promise(async resolve => {
+    await init();
+    const protocolHost = utils.protocolHost(url);
+    if (!all().includes(protocolHost)) { resolve(); return; }
 
-        if (url.pathname.startsWith('/p')) {
-          resolve(`https://instagram.com${url.pathname.replace('/p', '')}${url.search}`); return;
-        }
-
-        if (url.pathname.startsWith('/u')) {
-          resolve(`https://instagram.com${url.pathname.replace('/u', '')}${url.search}`); return;
-        }
-
-        resolve(`https://instagram.com${url.pathname}${url.search}`);
-      }
-    )
+    if (url.pathname.startsWith('/p')) resolve(`https://instagram.com${url.pathname.replace('/p', '')}${url.search}`);
+    if (url.pathname.startsWith('/u')) resolve(`https://instagram.com${url.pathname.replace('/u', '')}${url.search}`);
+    resolve(`https://instagram.com${url.pathname}${url.search}`);
   })
 }
 
 function switchInstance(url) {
-  return new Promise(resolve => {
-    browser.storage.local.get(
-      [
-        "instagramRedirects",
-        "instagramProtocol",
+  return new Promise(async resolve => {
+    await init();
+    let protocolHost = utils.protocolHost(url);
+    if (!all().includes(protocolHost)) { resolve(); return; }
 
-        "bibliogramNormalRedirectsChecks",
-        "bibliogramTorRedirectsChecks",
+    let instancesList;
+    if (instagramProtocol == 'normal') instancesList = [...bibliogramNormalCustomRedirects, ...bibliogramNormalRedirectsChecks];
+    else if (instagramProtocol == 'tor') instancesList = [...bibliogramTorCustomRedirects, ...bibliogramTorRedirectsChecks];
 
-        "bibliogramNormalCustomRedirects",
-        "bibliogramTorCustomRedirects",
-      ],
-      r => {
-        let protocolHost = utils.protocolHost(url);
+    const i = instancesList.indexOf(protocolHost);
+    if (i > -1) instancesList.splice(i, 1);
+    if (instancesList.length === 0) { resolve(); return; }
 
-        if (![
-          ...r.instagramRedirects.bibliogram.normal,
-          ...r.instagramRedirects.bibliogram.tor,
-          ...r.bibliogramNormalCustomRedirects,
-          ...r.bibliogramTorCustomRedirects,
-        ].includes(protocolHost)) { resolve(); return; }
-
-        let instancesList;
-        if (r.instagramProtocol == 'normal') instancesList = [...r.bibliogramNormalCustomRedirects, ...r.bibliogramNormalRedirectsChecks];
-        else if (r.instagramProtocol == 'tor') instancesList = [...r.bibliogramTorCustomRedirects, ...r.bibliogramTorRedirectsChecks];
-
-        let index = instancesList.indexOf(protocolHost);
-        if (index > -1) instancesList.splice(index, 1);
-        if (instancesList.length === 0) { resolve(); return; }
-
-        let randomInstance = utils.getRandomInstance(instancesList);
-        resolve(`${randomInstance}${url.pathname}${url.search}`);
-      }
-    )
+    const randomInstance = utils.getRandomInstance(instancesList);
+    resolve(`${randomInstance}${url.pathname}${url.search}`);
   })
 }
 
@@ -157,7 +136,7 @@ function initDefaults() {
       browser.storage.local.get('cloudflareList', r => {
         bibliogramNormalRedirectsChecks = [...redirects.bibliogram.normal];
         for (const instance of r.cloudflareList) {
-          let i = bibliogramNormalRedirectsChecks.indexOf(instance);
+          const i = bibliogramNormalRedirectsChecks.indexOf(instance);
           if (i > -1) bibliogramNormalRedirectsChecks.splice(i, 1);
         }
         browser.storage.local.set({
@@ -180,9 +159,7 @@ function initDefaults() {
 
 export default {
   setRedirects,
-
   reverse,
-
   redirect,
   initDefaults,
   switchInstance,

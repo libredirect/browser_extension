@@ -313,16 +313,13 @@ function copyRaw(test, copyRawElement) {
         let currTab = tabs[0];
         if (currTab) {
           let url;
-          try {
-            url = new URL(currTab.url);
-          } catch { resolve(); return; }
-          let newUrl;
-          newUrl = await youtubeHelper.reverse(url);
-
-          if (!newUrl) newUrl = await twitterHelper.reverse(url);
-          if (!newUrl) newUrl = await instagramHelper.reverse(url);
-          if (!newUrl) newUrl = await tiktokHelper.reverse(url);
-          if (!newUrl) newUrl = await imgurHelper.reverse(url);
+          try { url = new URL(currTab.url); }
+          catch { resolve(); return; }
+          let newUrl = await youtubeHelper.reverse(url);
+          if (!newUrl) newUrl = twitterHelper.reverse(url);
+          if (!newUrl) newUrl = instagramHelper.reverse(url);
+          if (!newUrl) newUrl = tiktokHelper.reverse(url);
+          if (!newUrl) newUrl = imgurHelper.reverse(url);
 
           if (newUrl) {
             resolve(true);
@@ -372,7 +369,7 @@ function unify(test, unifyElement) {
           if (!result) result = await translateHelper.initLingvaLocalStorage(test, url);
 
           if (result) {
-            if (!test) {
+            if (!test && unifyElement) {
               const textElement = unifyElement.getElementsByTagName('h4')[0]
               const oldHtml = textElement.innerHTML;
               textElement.innerHTML = 'Unified';
@@ -395,17 +392,17 @@ function switchInstance(test) {
         try { url = new URL(currTab.url); }
         catch { resolve(); return };
         let newUrl = await youtubeHelper.switchInstance(url);
-        if (!newUrl) newUrl = await twitterHelper.switchInstance(url);
-        if (!newUrl) newUrl = await instagramHelper.switchInstance(url);
-        if (!newUrl) newUrl = await redditHelper.switchInstance(url);
-        if (!newUrl) newUrl = await searchHelper.switchInstance(url);
+        // if (!newUrl) newUrl = twitterHelper.switchInstance(url);
+        // if (!newUrl) newUrl = instagramHelper.switchInstance(url);
+        // if (!newUrl) newUrl = redditHelper.switchInstance(url);
+        // if (!newUrl) newUrl = searchHelper.switchInstance(url);
         if (!newUrl) newUrl = await translateHelper.switchInstance(url);
-        if (!newUrl) newUrl = await mediumHelper.switchInstance(url);
-        if (!newUrl) newUrl = await sendTargetsHelper.switchInstance(url);
-        if (!newUrl) newUrl = await peertubeHelper.switchInstance(url);
-        if (!newUrl) newUrl = await lbryHelper.switchInstance(url);
-        if (!newUrl) newUrl = await imgurHelper.switchInstance(url);
-        if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url);
+        // if (!newUrl) newUrl = mediumHelper.switchInstance(url);
+        // if (!newUrl) newUrl = sendTargetsHelper.switchInstance(url);
+        // if (!newUrl) newUrl = peertubeHelper.switchInstance(url);
+        // if (!newUrl) newUrl = lbryHelper.switchInstance(url);
+        // if (!newUrl) newUrl = imgurHelper.switchInstance(url);
+        // if (!newUrl) newUrl = wikipediaHelper.switchInstance(url);
 
         if (newUrl) {
           if (!test)

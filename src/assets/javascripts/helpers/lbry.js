@@ -24,7 +24,6 @@ let redirects = {
 function setRedirects(val) {
     redirects.librarian = val;
     browser.storage.local.set({ lbryTargetsRedirects: redirects })
-    console.log("lbryTargetsRedirects: ", val)
     for (const item of librarianNormalRedirectsChecks)
         if (!redirects.librarian.normal.includes(item)) {
             var index = librarianNormalRedirectsChecks.indexOf(item);
@@ -40,84 +39,84 @@ function setRedirects(val) {
     browser.storage.local.set(librarianTorRedirectsChecks)
 }
 
-let librarianNormalRedirectsChecks;
-let librarianTorRedirectsChecks;
+let
+    disableLbryTargets,
+    lbryTargetsProtocol,
+    lbryTargetsRedirects,
+    librarianNormalRedirectsChecks,
+    librarianNormalCustomRedirects,
+    librarianTorRedirectsChecks,
+    librarianTorCustomRedirects;
 
-async function switchInstance(url) {
-    return new Promise(resolve => {
-        browser.storage.local.get(
-            [
-                "lbryTargetsRedirects",
-                "lbryTargetsProtocol",
-
-                "librarianNormalRedirectsChecks",
-                "librarianNormalCustomRedirects",
-
-                "librarianTorRedirectsChecks",
-                "librarianTorCustomRedirects",
-            ],
-            r => {
-                let protocolHost = utils.protocolHost(url);
-                if (![
-                    ...redirects.librarian.normal,
-                    ...redirects.librarian.tor,
-                    ...r.librarianNormalCustomRedirects,
-                    ...r.librarianTorCustomRedirects,
-                ].includes(protocolHost)) resolve();
-
-                let instancesList;
-                if (r.lbryTargetsProtocol == 'normal') instancesList = [...r.librarianNormalRedirectsChecks, ...r.librarianNormalCustomRedirects];
-                else if (r.lbryTargetsProtocol == 'tor') instancesList = [...r.librarianTorRedirectsChecks, ...r.librarianTorCustomRedirects];
-
-                let index = instancesList.indexOf(protocolHost);
-                if (index > -1) instancesList.splice(index, 1);
-                if (instancesList.length === 0) resolve();
-
-                let randomInstance = utils.getRandomInstance(instancesList);
-                resolve(`${randomInstance}${url.pathname}${url.search}`);
-            }
-        )
-    })
-}
-
-function redirect(url, type, initiator) {
+function init() {
     return new Promise(resolve => {
         browser.storage.local.get(
             [
                 "disableLbryTargets",
                 "lbryTargetsProtocol",
-
                 "lbryTargetsRedirects",
-
                 "librarianNormalRedirectsChecks",
                 "librarianNormalCustomRedirects",
-
                 "librarianTorRedirectsChecks",
                 "librarianTorCustomRedirects",
             ],
             r => {
-                if (r.disableLbryTargets) { resolve(); return; }
-                if (initiator && (
-                    [
-                        ...r.lbryTargetsRedirects.librarian.normal,
-                        ...r.librarianNormalCustomRedirects,
-                        ...r.librarianTorCustomRedirects,
-                    ].includes(initiator.origin) ||
-                    targets.includes(initiator.host))
-                ) { resolve(); return; }
-                if (!targets.includes(url.host)) { resolve(); return; }
-                if (type != "main_frame") { resolve(); return; }
-
-                let instancesList;
-                if (r.lbryTargetsProtocol == 'normal') instancesList = [...r.librarianNormalRedirectsChecks, ...r.librarianNormalCustomRedirects];
-                if (r.lbryTargetsProtocol == 'tor') instancesList = [...r.librarianTorRedirectsChecks, ...r.librarianTorCustomRedirects];
-                if (instancesList.length === 0) { resolve(); return; }
-
-                let randomInstance = utils.getRandomInstance(instancesList);
-                resolve(`${randomInstance}${url.pathname}${url.search}`);
+                disableLbryTargets = r.disableLbryTargets;
+                lbryTargetsProtocol = r.lbryTargetsProtocol;
+                lbryTargetsRedirects = r.lbryTargetsRedirects;
+                librarianNormalRedirectsChecks = r.librarianNormalRedirectsChecks;
+                librarianNormalCustomRedirects = r.librarianNormalCustomRedirects;
+                librarianTorRedirectsChecks = r.librarianTorRedirectsChecks;
+                librarianTorCustomRedirects = r.librarianTorCustomRedirects;
+                resolve();
             }
         )
     })
+}
+init();
+browser.storage.onChanged.addListener(init)
+
+function all() {
+    return [
+        ...redirects.librarian.normal,
+        ...redirects.librarian.tor,
+        ...librarianNormalCustomRedirects,
+        ...librarianTorCustomRedirects,
+    ];
+}
+
+function switchInstance(url) {
+    return new Promise(async resolve => {
+        await init();
+        const protocolHost = utils.protocolHost(url);
+        if (!all().includes(protocolHost)) { resolve(); return; }
+
+        let instancesList;
+        if (lbryTargetsProtocol == 'normal') instancesList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects];
+        else if (lbryTargetsProtocol == 'tor') instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects];
+
+        const i = instancesList.indexOf(protocolHost);
+        if (i > -1) instancesList.splice(i, 1);
+        if (instancesList.length === 0) { resolve(); return; }
+
+        const randomInstance = utils.getRandomInstance(instancesList);
+        resolve(`${randomInstance}${url.pathname}${url.search}`);
+    })
+}
+
+function redirect(url, type, initiator) {
+    if (disableLbryTargets) return;
+    if (initiator && (all().includes(initiator.origin) || targets.includes(initiator.host))) return;
+    if (!targets.includes(url.host)) return;
+    if (type != "main_frame") return;
+
+    let instancesList;
+    if (lbryTargetsProtocol == 'normal') instancesList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects];
+    if (lbryTargetsProtocol == 'tor') instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects];
+    if (instancesList.length === 0) return;
+
+    const randomInstance = utils.getRandomInstance(instancesList);
+    return `${randomInstance}${url.pathname}${url.search}`;
 }
 
 function initDefaults() {
@@ -152,7 +151,6 @@ function initDefaults() {
 export default {
     setRedirects,
     switchInstance,
-
     redirect,
     initDefaults,
 };

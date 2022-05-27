@@ -29,89 +29,86 @@ function setRedirects(val) {
     })
 }
 
-let sendNormalRedirectsChecks;
+let
+    disableSendTarget,
+    sendTargetsRedirects,
+    sendNormalRedirectsChecks,
+    sendNormalCustomRedirects,
+    sendTorRedirectsChecks,
+    sendTorCustomRedirects,
+    sendTargetsProtocol;
 
-function switchInstance(url) {
+function init() {
     return new Promise(resolve => {
         browser.storage.local.get(
             [
                 "disableSendTarget",
                 "sendTargetsRedirects",
                 "sendTargetsProtocol",
-
                 "sendNormalRedirectsChecks",
                 "sendNormalCustomRedirects",
-
                 "sendTorRedirectsChecks",
                 "sendTorCustomRedirects",
             ],
             r => {
-                let protocolHost = utils.protocolHost(url);
-                if (![
-                    ...r.sendTargetsRedirects.send.normal,
-                    ...r.sendTargetsRedirects.send.tor,
-                    ...r.sendNormalCustomRedirects,
-                    ...r.sendTorCustomRedirects,
-                ].includes(protocolHost)) resolve();
-
-                if (url.pathname != '/') resolve();
-
-                let instancesList;
-                if (r.sendTargetsProtocol == 'normal') instancesList = [...r.sendNormalRedirectsChecks, ...r.sendNormalCustomRedirects];
-                else if (r.sendTargetsProtocol == 'tor') instancesList = [...r.sendTorRedirectsChecks, ...r.sendTorCustomRedirects];
-
-                let index = instancesList.indexOf(protocolHost);
-                if (index > -1) instancesList.splice(index, 1);
-                if (instancesList.length === 0) resolve();
-
-                let randomInstance = utils.getRandomInstance(instancesList);
-                resolve(`${randomInstance}${url.pathname}${url.search}`);
+                disableSendTarget = r.disableSendTarget;
+                sendTargetsRedirects = r.sendTargetsRedirects;
+                sendNormalRedirectsChecks = r.sendNormalRedirectsChecks;
+                sendNormalCustomRedirects = r.sendNormalCustomRedirects;
+                sendTorRedirectsChecks = r.sendTorRedirectsChecks;
+                sendTorCustomRedirects = r.sendTorCustomRedirects;
+                sendTargetsProtocol = r.sendTargetsProtocol;
+                resolve();
             }
         )
     })
 }
 
-function redirect(url, type, initiator) {
+init();
+browser.storage.onChanged.addListener(init)
+
+function all() {
+    return [
+        ...sendTargetsRedirects.send.normal,
+        ...sendTargetsRedirects.send.tor,
+        ...sendNormalCustomRedirects,
+        ...sendTorRedirectsChecks,
+        ...sendTorCustomRedirects,
+    ];
+}
+
+function switchInstance(url) {
     return new Promise(resolve => {
-        browser.storage.local.get(
-            [
-                "disableSendTarget",
-                "sendTargetsRedirects",
+        const protocolHost = utils.protocolHost(url);
+        if (!all().includes(protocolHost)) { resolve(); return; }
+        if (url.pathname != '/') { resolve(); return; }
 
-                "sendNormalRedirectsChecks",
-                "sendNormalCustomRedirects",
+        let instancesList;
+        if (sendTargetsProtocol == 'normal') instancesList = [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects];
+        else if (sendTargetsProtocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
 
-                "sendTorRedirectsChecks",
-                "sendTorCustomRedirects",
+        const i = instancesList.indexOf(protocolHost);
+        if (i > -1) instancesList.splice(i, 1);
+        if (instancesList.length === 0) { resolve(); return; }
 
-                "sendTargetsProtocol"
-            ],
-            r => {
-                if (r.disableSendTarget) { resolve(); return; }
-                if (type != "main_frame") { resolve(); return; }
-                if (
-                    initiator && (
-                        [
-                            ...r.sendTargetsRedirects.send.normal,
-                            ...r.sendTargetsRedirects.send.tor,
-                            ...r.sendNormalCustomRedirects,
-                            ...r.sendTorRedirectsChecks
-                        ].includes(initiator.origin) ||
-                        targets.includes(initiator.host)
-                    )
-                ) { resolve(); return; }
-                if (!targets.some(rx => rx.test(url.href))) { resolve(); return; }
-
-                let instancesList;
-                if (r.sendTargetsProtocol == 'normal') instancesList = [...r.sendNormalRedirectsChecks, ...r.sendNormalCustomRedirects];
-                if (r.sendTargetsProtocol == 'tor') instancesList = [...r.sendTorRedirectsChecks, ...r.sendTorCustomRedirects];
-                if (instancesList.length === 0) { resolve(); return; }
-
-                let randomInstance = utils.getRandomInstance(instancesList);
-                resolve(randomInstance);
-            }
-        )
+        const randomInstance = utils.getRandomInstance(instancesList);
+        resolve(`${randomInstance}${url.pathname}${url.search}`);
     })
+}
+
+function redirect(url, type, initiator) {
+    if (disableSendTarget) return;
+    if (type != "main_frame") return;
+    if (initiator && (all().includes(initiator.origin) || targets.includes(initiator.host))) return;
+    if (!targets.some(rx => rx.test(url.href))) return;
+
+    let instancesList;
+    if (sendTargetsProtocol == 'normal') instancesList = [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects];
+    if (sendTargetsProtocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
+    if (instancesList.length === 0) return;
+
+    const randomInstance = utils.getRandomInstance(instancesList);
+    return randomInstance;
 }
 
 function initDefaults() {

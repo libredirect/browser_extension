@@ -2,46 +2,49 @@
 window.browser = window.browser || window.chrome;
 
 function isException(url) {
-    return new Promise(resolve => {
-        browser.storage.local.get(
-            'exceptions',
-            r => {
-                for (const item of r.exceptions.url)
-                    if (item == `${url.protocol}//${url.host}`) { resolve(true); return; }
-                for (const item of r.exceptions.regex)
-                    if (new RegExp(item).test(url.href)) { resolve(true); return; }
-                resolve(false); return;
-            }
-        )
-    })
+    for (const item of exceptions.url)
+        if (item == `${url.protocol}//${url.host}`) return true;
+    for (const item of exceptions.regex)
+        if (new RegExp(item).test(url.href)) return true;
+    return false;
 }
 
-function initDefaults() {
-    return new Promise(async resolve => {
-        await browser.storage.local.set({
-            exceptions: {
-                "url": [],
-                "regex": [],
-            },
-            theme: "DEFAULT",
-            popupFrontends: [
-                "youtube",
-                "twitter",
-                "instagram",
-                "tikTok",
-                "imgur",
-                "reddit",
-                "search",
-                "medium",
-                "translate",
-                "maps",
-            ],
-            autoRedirect: false,
-        })
-        resolve();
-    })
+let exceptions;
+
+function init() {
+    browser.storage.local.get(
+        'exceptions',
+        r => {
+            exceptions = r.exceptions;
+        }
+    )
 }
 
+init();
+browser.storage.onChanged.addListener(init)
+
+async function initDefaults() {
+    await browser.storage.local.set({
+        exceptions: {
+            "url": [],
+            "regex": [],
+        },
+        theme: "DEFAULT",
+        popupFrontends: [
+            "youtube",
+            "twitter",
+            "instagram",
+            "tikTok",
+            "imgur",
+            "reddit",
+            "search",
+            "medium",
+            "translate",
+            "maps",
+        ],
+        autoRedirect: false,
+    })
+}
 
 const allPopupFrontends = [
     "youtube",
@@ -60,7 +63,6 @@ const allPopupFrontends = [
     "lbry",
     "sendTargets"
 ];
-
 
 export default {
     isException,

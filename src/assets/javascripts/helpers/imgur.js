@@ -11,50 +11,57 @@ let redirects = {
         "i2p": []
     }
 }
-function setRedirects(val) {
-    redirects.rimgo = val;
-    browser.storage.local.set({ imgurRedirects: redirects })
-    console.log("imgurRedirects: ", val)
-    for (const item of rimgoNormalRedirectsChecks)
-        if (!redirects.rimgo.normal.includes(item)) {
-            var index = rimgoNormalRedirectsChecks.indexOf(item);
-            if (index !== -1) rimgoNormalRedirectsChecks.splice(index, 1);
-        }
-    browser.storage.local.set({ rimgoNormalRedirectsChecks });
+function setRedirects() {
+    return new Promise(resolve => {
+        fetch('/instances/data.json').then(response => response.text()).then(async data => {
+            let dataJson = JSON.parse(data);
+            redirects.rimgo = dataJson.rimgo;
 
-    for (const item of rimgoTorRedirectsChecks)
-        if (!redirects.rimgo.tor.includes(item)) {
-            var index = rimgoTorRedirectsChecks.indexOf(item);
-            if (index !== -1) rimgoTorRedirectsChecks.splice(index, 1);
-        }
-    browser.storage.local.set({ rimgoTorRedirectsChecks });
+            rimgoNormalRedirectsChecks = [...redirects.rimgo.normal];
+            rimgoTorRedirectsChecks = [...redirects.rimgo.tor];
+            rimgoI2pRedirectsChecks = [...redirects.rimgo.i2p];
 
-    for (const item of rimgoI2pRedirectsChecks)
-        if (!redirects.rimgo.i2p.includes(item)) {
-            var index = rimgoI2pRedirectsChecks.indexOf(item);
-            if (index !== -1) rimgoI2pRedirectsChecks.splice(index, 1);
-        }
-    browser.storage.local.set({ rimgoI2pRedirectsChecks });
+            for (const instance of r.cloudflareList) {
+                const a = rimgoNormalRedirectsChecks.indexOf(instance);
+                if (a > -1) rimgoNormalRedirectsChecks.splice(a, 1);
 
+                const b = rimgoTorRedirectsChecks.indexOf(instance);
+                if (b > -1) rimgoTorRedirectsChecks.splice(b, 1);
+
+                const c = rimgoI2pRedirectsChecks.indexOf(instance);
+                if (c > -1) rimgoI2pRedirectsChecks.splice(c, 1);
+            }
+
+            await browser.storage.local.set({
+                imgurRedirects: redirects,
+                rimgoNormalRedirectsChecks,
+                rimgoTorRedirectsChecks,
+                rimgoI2pRedirectsChecks,
+            });
+
+            resolve();
+        })
+    })
 }
 
 let
-    disable,
-    protocol;
-
-let
+    disableImgur,
+    imgurRedirects,
+    imgurProtocol,
     rimgoNormalRedirectsChecks,
+    rimgoNormalCustomRedirects,
     rimgoTorRedirectsChecks,
-    rimgoI2pRedirectsChecks;
+    rimgoTorCustomRedirects,
+    rimgoI2pRedirectsChecks,
+    rimgoI2pCustomRedirects;
 
-function redirect(url, type, initiator) {
-    return new Promise(resolve => {
+function init() {
+    return new Promise(async resolve => {
         browser.storage.local.get(
             [
                 "disableImgur",
                 "imgurRedirects",
                 "imgurProtocol",
-
                 "rimgoNormalRedirectsChecks",
                 "rimgoNormalCustomRedirects",
                 "rimgoTorRedirectsChecks",
@@ -63,107 +70,84 @@ function redirect(url, type, initiator) {
                 "rimgoI2pCustomRedirects",
             ],
             r => {
-                if (r.disableImgur) { resolve(); return; }
-                if (url.pathname == "/") { resolve(); return; }
-                if (!["main_frame", "sub_frame", "xmlhttprequest", "other", "image", "media",].includes(type)) { resolve(); return; }
-                if (
-                    initiator &&
-                    (
-                        [
-                            ...r.imgurRedirects.rimgo.normal,
-                            ...r.rimgoNormalCustomRedirects,
-                            ...r.rimgoTorCustomRedirects,
-                            ...r.rimgoI2pCustomRedirects,
-                        ].includes(initiator.origin) || targets.test(initiator.host))
-                ) { resolve(); return; }
-                if (!targets.test(url.href)) { resolve(); return; }
-                if (url.pathname.includes("delete/")) { resolve(); return; }
-                // https://imgur.com/gallery/s4WXQmn
-                // https://imgur.com/a/H8M4rcp
-                // https://imgur.com/gallery/gYiQLWy
-                // https://imgur.com/gallery/cTRwaJU
-                // https://i.imgur.com/CFSQArP.jpeg
-                let instancesList;
-                if (r.imgurProtocol == 'normal') instancesList = [...r.rimgoNormalRedirectsChecks, ...r.rimgoNormalCustomRedirects];
-                if (r.imgurProtocol == 'tor') instancesList = [...r.rimgoTorRedirectsChecks, ...r.rimgoTorCustomRedirects];
-                if (r.imgurProtocol == 'i2p') instancesList = [...r.rimgoI2pRedirectsChecks, ...r.rimgoI2pCustomRedirects];
-                if (instancesList.length === 0) { resolve(); return; }
-
-                let randomInstance = utils.getRandomInstance(instancesList)
-                resolve(`${randomInstance}${url.pathname}${url.search}`);
+                disableImgur = r.disableImgur;
+                imgurRedirects = r.imgurRedirects;
+                imgurProtocol = r.imgurProtocol;
+                rimgoNormalRedirectsChecks = r.rimgoNormalRedirectsChecks;
+                rimgoNormalCustomRedirects = r.rimgoNormalCustomRedirects;
+                rimgoTorRedirectsChecks = r.rimgoTorRedirectsChecks;
+                rimgoTorCustomRedirects = r.rimgoTorCustomRedirects;
+                rimgoI2pRedirectsChecks = r.rimgoI2pRedirectsChecks;
+                rimgoI2pCustomRedirects = r.rimgoI2pCustomRedirects;
+                resolve();
             }
         )
     })
 }
 
-async function reverse(url) {
-    return new Promise(resolve => {
-        browser.storage.local.get(
-            [
-                "imgurRedirects",
-                "rimgoNormalCustomRedirects",
-                "rimgoTorCustomRedirects",
-                "rimgoI2pCustomRedirects",
-            ],
-            r => {
-                let protocolHost = utils.protocolHost(url);
-                if (
-                    ![
-                        ...r.imgurRedirects.rimgo.normal,
-                        ...r.imgurRedirects.rimgo.tor,
-                        ...r.imgurRedirects.rimgo.i2p,
-                        ...r.rimgoNormalCustomRedirects,
-                        ...r.rimgoTorCustomRedirects,
-                        ...r.rimgoI2pCustomRedirects
-                    ].includes(protocolHost)
-                ) { resolve(); return; }
-                resolve(`https://imgur.com${url.pathname}${url.search}`);
-            }
-        )
+init();
+browser.storage.onChanged.addListener(init)
+
+// https://imgur.com/gallery/s4WXQmn
+// https://imgur.com/a/H8M4rcp
+// https://imgur.com/gallery/gYiQLWy
+// https://imgur.com/gallery/cTRwaJU
+// https://i.imgur.com/CFSQArP.jpeg
+
+function all() {
+    return [
+        ...imgurRedirects.rimgo.normal,
+        ...imgurRedirects.rimgo.tor,
+        ...imgurRedirects.rimgo.i2p,
+        ...rimgoNormalCustomRedirects,
+        ...rimgoTorCustomRedirects,
+        ...rimgoI2pCustomRedirects,
+    ];
+}
+
+function redirect(url, type, initiator) {
+    if (disableImgur) return;
+    if (url.pathname == "/") return;
+    if (!["main_frame", "sub_frame", "xmlhttprequest", "other", "image", "media",].includes(type)) return;
+    if (initiator && (all().includes(initiator.origin) || targets.test(initiator.host))) return;
+    if (!targets.test(url.href)) return;
+    if (url.pathname.includes("delete/")) return;
+
+    let instancesList;
+    if (imgurProtocol == 'normal') instancesList = [...rimgoNormalRedirectsChecks, ...rimgoNormalCustomRedirects];
+    if (imgurProtocol == 'tor') instancesList = [...rimgoTorRedirectsChecks, ...rimgoTorCustomRedirects];
+    if (imgurProtocol == 'i2p') instancesList = [...rimgoI2pRedirectsChecks, ...rimgoI2pCustomRedirects];
+    if (instancesList.length === 0) return;
+
+    const randomInstance = utils.getRandomInstance(instancesList);
+    return `${randomInstance}${url.pathname}${url.search}`;
+}
+
+function reverse(url) {
+    return new Promise(async resolve => {
+        await init();
+        const protocolHost = utils.protocolHost(url);
+        if (!all().includes(protocolHost)) { resolve(); return; }
+        resolve(`https://imgur.com${url.pathname}${url.search}`);
     })
 }
 
 function switchInstance(url) {
-    return new Promise(resolve => {
-        browser.storage.local.get(
-            [
-                "imgurRedirects",
-                "imgurProtocol",
+    return new Promise(async resolve => {
+        await init();
+        let protocolHost = utils.protocolHost(url);
+        if (!all().includes(protocolHost)) { resolve(); return; }
+        let instancesList;
+        if (imgurProtocol == 'normal') instancesList = [...rimgoNormalCustomRedirects, ...rimgoNormalRedirectsChecks];
+        else if (imgurProtocol == 'tor') instancesList = [...rimgoTorCustomRedirects, ...rimgoTorRedirectsChecks];
+        else if (imgurProtocol == 'i2p') instancesList = [...rimgoI2pCustomRedirects, ...rimgoI2pRedirectsChecks];
 
-                "rimgoNormalRedirectsChecks",
-                "rimgoNormalCustomRedirects",
+        const i = instancesList.indexOf(protocolHost);
+        if (i > -1) instancesList.splice(i, 1);
+        if (instancesList.length === 0) { resolve(); return; }
 
-                "rimgoTorRedirectsChecks",
-                "rimgoTorCustomRedirects",
-
-                "rimgoI2pRedirectsChecks",
-                "rimgoI2pCustomRedirects",
-            ],
-            r => {
-                let protocolHost = utils.protocolHost(url);
-                if (![
-                    ...r.imgurRedirects.rimgo.normal,
-                    ...r.imgurRedirects.rimgo.tor,
-                    ...r.imgurRedirects.rimgo.i2p,
-
-                    ...r.rimgoNormalCustomRedirects,
-                    ...r.rimgoTorCustomRedirects,
-                    ...r.rimgoI2pCustomRedirects,
-                ].includes(protocolHost)) resolve();
-
-                let instancesList;
-                if (r.imgurProtocol == 'normal') instancesList = [...r.rimgoNormalCustomRedirects, ...r.rimgoNormalRedirectsChecks];
-                else if (r.imgurProtocol == 'tor') instancesList = [...r.rimgoTorCustomRedirects, ...r.rimgoTorRedirectsChecks];
-                else if (r.imgurProtocol == 'i2p') instancesList = [...r.rimgoI2pCustomRedirects, ...r.rimgoI2pRedirectsChecks];
-
-                let index = instancesList.indexOf(protocolHost);
-                if (index > -1) instancesList.splice(index, 1);
-                if (instancesList.length === 0) resolve();
-
-                let randomInstance = utils.getRandomInstance(instancesList);
-                resolve(`${randomInstance}${url.pathname}${url.search}`);
-            }
-        )
+        const randomInstance = utils.getRandomInstance(instancesList);
+        resolve(`${randomInstance}${url.pathname}${url.search}`);
     })
 }
 
@@ -175,7 +159,7 @@ function initDefaults() {
             browser.storage.local.get('cloudflareList', async r => {
                 rimgoNormalRedirectsChecks = [...redirects.rimgo.normal];
                 for (const instance of r.cloudflareList) {
-                    let i = rimgoNormalRedirectsChecks.indexOf(instance);
+                    const i = rimgoNormalRedirectsChecks.indexOf(instance);
                     if (i > -1) rimgoNormalRedirectsChecks.splice(i, 1);
                 }
                 await browser.storage.local.set({
@@ -200,7 +184,6 @@ function initDefaults() {
 
 export default {
     setRedirects,
-
     redirect,
     reverse,
     initDefaults,

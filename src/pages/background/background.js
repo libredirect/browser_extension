@@ -19,18 +19,7 @@ import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
 import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
 
-
 window.browser = window.browser || window.chrome;
-
-youtubeHelper.setInvidiousCookies();
-translateHelper.setSimplyTranslateCookies();
-twitterHelper.setNitterCookies();
-wikipediaHelper.setWikilessCookies();
-searchHelper.setSearxCookies();
-searchHelper.setSearxngCookies();
-redditHelper.setLibredditCookies();
-redditHelper.setTedditCookies();
-tiktokHelper.setProxiTokCookies();
 
 browser.runtime.onInstalled.addListener(
   async details => {
@@ -58,8 +47,15 @@ browser.runtime.onInstalled.addListener(
   }
 )
 
-async function wholeInit() {
-}
+youtubeHelper.setInvidiousCookies();
+translateHelper.setSimplyTranslateCookies();
+twitterHelper.setNitterCookies();
+wikipediaHelper.setWikilessCookies();
+searchHelper.setSearxCookies();
+searchHelper.setSearxngCookies();
+redditHelper.setLibredditCookies();
+redditHelper.setTedditCookies();
+tiktokHelper.setProxiTokCookies();
 
 let incognitoInit = false;
 browser.tabs.onCreated.addListener(
@@ -75,39 +71,39 @@ browser.tabs.onCreated.addListener(
 
 let BYPASSTABs = [];
 browser.webRequest.onBeforeRequest.addListener(
-  async details => {
+  details => {
     const url = new URL(details.url);
     if (new RegExp(/^chrome-extension:\/{2}.*\/instances\/(blocklist|data).json$/).test(url.href) && details.type == 'xmlhttprequest') return;
-    await wholeInit();
     let initiator;
-    if (details.originUrl)
-      initiator = new URL(details.originUrl);
-    else if (details.initiator)
-      initiator = new URL(details.initiator);
+    try {
+      if (details.originUrl) initiator = new URL(details.originUrl);
+      else if (details.initiator) initiator = new URL(details.initiator);
+    }
+    catch { return null; }
 
-    let newUrl = await youtubeMusicHelper.redirect(url, details.type)
-    if (!newUrl) newUrl = await youtubeHelper.redirect(url, details, initiator)
-    if (!newUrl) newUrl = await twitterHelper.redirect(url, initiator);
-    if (!newUrl) newUrl = await instagramHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = await mapsHelper.redirect(url, initiator);
-    if (!newUrl) newUrl = await redditHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = await mediumHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = await imgurHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = await tiktokHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = await sendTargetsHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = await peertubeHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = await lbryHelper.redirect(url, details.type, initiator);
-    if (!newUrl) newUrl = await translateHelper.redirect(url);
-    if (!newUrl) newUrl = await searchHelper.redirect(url)
-    if (!newUrl) newUrl = await wikipediaHelper.redirect(url);
+
+    let newUrl = youtubeMusicHelper.redirect(url, details.type)
+    if (!newUrl) newUrl = youtubeHelper.redirect(url, details, initiator)
+    if (!newUrl) newUrl = twitterHelper.redirect(url, initiator);
+    if (!newUrl) newUrl = instagramHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = mapsHelper.redirect(url, initiator);
+    if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = mediumHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = imgurHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = tiktokHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = sendTargetsHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = peertubeHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = lbryHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = translateHelper.redirect(url);
+    if (!newUrl) newUrl = searchHelper.redirect(url)
+    if (!newUrl) newUrl = wikipediaHelper.redirect(url);
 
     if (
       details.frameAncestors && details.frameAncestors.length > 0 &&
-      await generalHelper.isException(new URL(details.frameAncestors[0].url))
+      generalHelper.isException(new URL(details.frameAncestors[0].url))
     ) newUrl = null;
 
-    if (await generalHelper.isException(url)) newUrl = 'BYPASSTAB';
-
+    if (generalHelper.isException(url)) newUrl = 'BYPASSTAB';
     if (BYPASSTABs.includes(details.tabId)) newUrl = null;
 
     if (newUrl) {
@@ -115,15 +111,13 @@ browser.webRequest.onBeforeRequest.addListener(
         console.log(`Canceled ${url}`);
         return { cancel: true };
       }
-      else if (newUrl === 'BYPASSTAB') {
+      if (newUrl === 'BYPASSTAB') {
         console.log(`Bypassed ${details.tabId} ${url}`);
         if (!BYPASSTABs.includes(details.tabId)) BYPASSTABs.push(details.tabId);
         return null;
       }
-      else {
-        console.info("Redirecting", url.href, "=>", newUrl);
-        return { redirectUrl: newUrl };
-      }
+      console.info("Redirecting", url.href, "=>", newUrl);
+      return { redirectUrl: newUrl };
     }
     return null;
   },
@@ -133,7 +127,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
 browser.tabs.onRemoved.addListener(
   tabId => {
-    let i = BYPASSTABs.indexOf(tabId);
+    const i = BYPASSTABs.indexOf(tabId);
     if (i > -1) {
       BYPASSTABs.splice(i, 1);
       console.log("Removed BYPASSTABs", tabId);
@@ -143,7 +137,6 @@ browser.tabs.onRemoved.addListener(
 
 browser.webRequest.onHeadersReceived.addListener(
   async e => {
-    await wholeInit();
     let response = twitterHelper.removeXFrameOptions(e)
     if (!response) youtubeHelper.removeXFrameOptions(e)
     return response;
@@ -153,20 +146,17 @@ browser.webRequest.onHeadersReceived.addListener(
 );
 
 async function redirectOfflineInstance(url, tabId) {
-  await wholeInit();
-  let newUrl;
-
-  newUrl = youtubeHelper.switchInstance(url);
-  if (!newUrl) newUrl = twitterHelper.switchInstance(url);
-  if (!newUrl) newUrl = instagramHelper.switchInstance(url);
-  if (!newUrl) newUrl = redditHelper.switchInstance(url);
-  if (!newUrl) newUrl = searchHelper.switchInstance(url);
-  if (!newUrl) newUrl = translateHelper.switchInstance(url);
-  if (!newUrl) newUrl = mediumHelper.switchInstance(url);
-  if (!newUrl) newUrl = imgurHelper.switchInstance(url);
-  if (!newUrl) newUrl = wikipediaHelper.switchInstance(url);
-  if (!newUrl) newUrl = peertubeHelper.switchInstance(url);
-  if (!newUrl) newUrl = lbryHelper.switchInstance(url);
+  let newUrl = await youtubeHelper.switchInstance(url);
+  if (!newUrl) newUrl = await twitterHelper.switchInstance(url);
+  if (!newUrl) newUrl = await instagramHelper.switchInstance(url);
+  if (!newUrl) newUrl = await redditHelper.switchInstance(url);
+  if (!newUrl) newUrl = await searchHelper.switchInstance(url);
+  if (!newUrl) newUrl = await translateHelper.switchInstance(url);
+  if (!newUrl) newUrl = await mediumHelper.switchInstance(url);
+  if (!newUrl) newUrl = await imgurHelper.switchInstance(url);
+  if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url);
+  if (!newUrl) newUrl = await peertubeHelper.switchInstance(url);
+  if (!newUrl) newUrl = await lbryHelper.switchInstance(url);
 
   if (newUrl) {
     if (counter >= 5) {
@@ -194,13 +184,7 @@ function isAutoRedirect() {
 browser.webRequest.onResponseStarted.addListener(
   async details => {
     if (!await isAutoRedirect()) return null;
-
-    if (details.type == 'main_frame' && (details.statusCode == 502 || details.statusCode == 503 || details.statusCode == 504)) {
-      // if (details.type == 'main_frame' && details.statusCode >= 200) {
-      // console.log("statusCode", details.statusCode);
-      const url = new URL(details.url);
-      redirectOfflineInstance(url, details.tabId);
-    }
+    if (details.type == 'main_frame' && details.statusCode >= 500) redirectOfflineInstance(new URL(details.url), details.tabId);
   },
   { urls: ["<all_urls>"], }
 )
@@ -208,10 +192,7 @@ browser.webRequest.onResponseStarted.addListener(
 browser.webRequest.onErrorOccurred.addListener(
   async details => {
     if (!await isAutoRedirect()) return;
-    if (details.type == 'main_frame') {
-      const url = new URL(details.url);
-      redirectOfflineInstance(url, details.tabId);
-    }
+    if (details.type == 'main_frame') redirectOfflineInstance(new URL(details.url), details.tabId);
   },
   { urls: ["<all_urls>"], }
 )
@@ -232,7 +213,7 @@ browser.contextMenus.create({
 
 browser.contextMenus.create({
   id: "switchInstance",
-  title: chrome.i18n.getMessage("switchInstance"),
+  title: browser.i18n.getMessage("switchInstance"),
   contexts: ["browser_action"]
 });
 
@@ -257,3 +238,7 @@ browser.contextMenus.onClicked.addListener(
     else if (info.menuItemId == 'unify') utils.unify();
   }
 );
+
+browser.runtime.onMessage.addListener(message => {
+  if (message.function === 'unify') utils.unify();
+});
