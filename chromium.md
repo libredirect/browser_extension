@@ -1,5 +1,5 @@
 ## Linux
-- Download the lastest `.crx` file: [libredirect-2.0.0.crx](https://github.com/libredirect/libredirect/releases/download/v2.0.0/libredirect-2.0.0.crx)
+- Download the latest `.crx` file: [libredirect-2.0.0.crx](https://github.com/libredirect/libredirect/releases/download/v2.0.0/libredirect-2.0.0.crx)
 - Open `chrome://extensions`
 - Enable `dev mode`
 - Rerfesh the page
@@ -8,7 +8,7 @@
 Updates are automatic
 
 ## Windows, MacOS
-- Download the lastest release [libredirect-2.0.0.zip](https://github.com/libredirect/libredirect/releases/download/v2.0.0/libredirect-2.0.0.zip)
+- Download the latest release [libredirect-2.0.0.zip](https://github.com/libredirect/libredirect/releases/download/v2.0.0/libredirect-2.0.0.zip)
 - Unzip it with `Auto detect subfolder`
 - Open `chrome://extensions`
 - Enable `dev mode`
