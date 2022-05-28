@@ -316,10 +316,10 @@ function copyRaw(test, copyRawElement) {
           try { url = new URL(currTab.url); }
           catch { resolve(); return; }
           let newUrl = await youtubeHelper.reverse(url);
-          if (!newUrl) newUrl = twitterHelper.reverse(url);
-          if (!newUrl) newUrl = instagramHelper.reverse(url);
-          if (!newUrl) newUrl = tiktokHelper.reverse(url);
-          if (!newUrl) newUrl = imgurHelper.reverse(url);
+          if (!newUrl) newUrl = await twitterHelper.reverse(url);
+          if (!newUrl) newUrl = await instagramHelper.reverse(url);
+          if (!newUrl) newUrl = await tiktokHelper.reverse(url);
+          if (!newUrl) newUrl = await imgurHelper.reverse(url);
 
           if (newUrl) {
             resolve(true);

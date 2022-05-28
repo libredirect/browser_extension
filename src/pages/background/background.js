@@ -61,9 +61,7 @@ let incognitoInit = false;
 browser.tabs.onCreated.addListener(
   tab => {
     if (!incognitoInit && tab.incognito) {
-      browser.tabs.create({
-        url: browser.extension.getURL("/pages/background/incognito.html"),
-      });
+      browser.tabs.create({ url: browser.extension.getURL("/pages/background/incognito.html") });
       incognitoInit = true;
     }
   }
