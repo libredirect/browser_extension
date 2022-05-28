@@ -348,8 +348,7 @@ function initInvidiousCookies(test, from) {
         utils.copyCookie('invidious', from, to, 'PREFS');
     }
     resolve(true);
-  }
-  )
+  })
 }
 
 function setInvidiousCookies() {
@@ -368,7 +367,6 @@ function setInvidiousCookies() {
 function initPipedLocalStorage(test, url, tabId) {
   return new Promise(async resolve => {
     await init();
-    console.log('initPipedLocalStorage');
     if (disableYoutube || youtubeFrontend != 'piped') { resolve(); return; }
     const protocolHost = utils.protocolHost(url);
     if (![
@@ -380,7 +378,7 @@ function initPipedLocalStorage(test, url, tabId) {
 
     if (!test) {
 
-      browser.tabs.executeScript(tabId, { file: "/assets/javascripts/helpers/youtube/get_piped_preferences.js", runAt: "document_start" });
+      browser.tabs.executeScript(tabId, { file: "/assets/javascripts/helpers/youtube/get_piped_preferences.js" });
 
       let checkedInstances;
       if (youtubeProtocol == 'normal') checkedInstances = [...pipedNormalCustomRedirects, ...pipedNormalRedirectsChecks]
@@ -390,7 +388,7 @@ function initPipedLocalStorage(test, url, tabId) {
       for (const to of checkedInstances) {
         browser.tabs.create(
           { url: checkedInstances[0] },
-          tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/helpers/youtube/set_piped_preferences.js", runAt: "document_start" })
+          tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/helpers/youtube/set_piped_preferences.js" })
         );
       }
     }
@@ -411,7 +409,7 @@ function initPipedMaterialLocalStorage(test, url, tabId,) {
     ].includes(protocolHost)) { resolve(); return; }
 
     if (!test) {
-      browser.tabs.executeScript(tabId, { file: "/assets/javascripts/helpers/youtube/get_pipedMaterial_preferences.js", runAt: "document_start" });
+      browser.tabs.executeScript(tabId, { file: "/assets/javascripts/helpers/youtube/get_pipedMaterial_preferences.js" });
 
       let checkedInstances;
       if (youtubeProtocol == 'normal') checkedInstances = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects]
@@ -421,7 +419,7 @@ function initPipedMaterialLocalStorage(test, url, tabId,) {
       for (const to of checkedInstances)
         browser.tabs.create(
           { url: to },
-          tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/helpers/youtube/set_pipedMaterial_preferences.js", runAt: "document_start" })
+          tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/helpers/youtube/set_pipedMaterial_preferences.js" })
         );
     }
     resolve(true);

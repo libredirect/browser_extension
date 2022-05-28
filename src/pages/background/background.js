@@ -239,6 +239,7 @@ browser.contextMenus.onClicked.addListener(
   }
 );
 
-browser.runtime.onMessage.addListener(message => {
-  if (message.function === 'unify') utils.unify();
+browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.function === 'unify') utils.unify(false).then(r => sendResponse({ response: r }))
+  return true;
 });

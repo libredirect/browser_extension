@@ -90,11 +90,22 @@ utils.copyRaw(true).then(r => {
   }
 })
 
+
 utils.unify(true).then(r => {
   if (!r) document.getElementById('unify_div').style.display = 'none';
   else {
     const unify = document.getElementById('unify');
-    unify.addEventListener("click", () => browser.runtime.sendMessage({ function: 'unify' }));
+    unify.addEventListener("click", () =>
+      browser.runtime.sendMessage({ function: 'unify' },
+        response => {
+          if (response && response.response) {
+            const textElement = document.getElementById('unify').getElementsByTagName('h4')[0]
+            const oldHtml = textElement.innerHTML;
+            textElement.innerHTML = 'Unified';
+            setTimeout(() => textElement.innerHTML = oldHtml, 1000);
+          }
+        })
+    );
   }
 })
 
@@ -113,7 +124,7 @@ browser.storage.local.get(
 
 for (const a of document.getElementsByTagName('a')) {
   a.addEventListener('click', e => {
-    if (!a.classList.includes('button')) {
+    if (!a.classList.contains('button')) {
       browser.tabs.create({ url: a.getAttribute('href') });
       e.preventDefault();
     }

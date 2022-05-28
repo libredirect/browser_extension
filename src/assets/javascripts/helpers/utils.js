@@ -338,7 +338,7 @@ function copyRaw(test, copyRawElement) {
   })
 }
 
-function unify(test, unifyElement) {
+function unify(test) {
   return new Promise(resolve => {
     browser.tabs.query(
       { active: true, currentWindow: true },
@@ -369,12 +369,6 @@ function unify(test, unifyElement) {
           if (!result) result = await translateHelper.initLingvaLocalStorage(test, url);
 
           if (result) {
-            if (!test && unifyElement) {
-              const textElement = unifyElement.getElementsByTagName('h4')[0]
-              const oldHtml = textElement.innerHTML;
-              textElement.innerHTML = 'Unified';
-              setTimeout(() => textElement.innerHTML = oldHtml, 1000);
-            }
             resolve(true);
           } else resolve()
         }
