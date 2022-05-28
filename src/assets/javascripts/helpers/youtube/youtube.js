@@ -378,7 +378,7 @@ function initPipedLocalStorage(test, url, tabId) {
 
     if (!test) {
 
-      browser.tabs.executeScript(tabId, { file: "/assets/javascripts/helpers/youtube/get_piped_preferences.js" });
+      browser.tabs.executeScript(tabId, { file: "/assets/javascripts/helpers/youtube/get_piped_preferences.js", runAt: "document_start" });
 
       let checkedInstances;
       if (youtubeProtocol == 'normal') checkedInstances = [...pipedNormalCustomRedirects, ...pipedNormalRedirectsChecks]
@@ -386,10 +386,8 @@ function initPipedLocalStorage(test, url, tabId) {
       const i = checkedInstances.indexOf(protocolHost);
       if (i !== -1) checkedInstances.splice(i, 1);
       for (const to of checkedInstances) {
-        browser.tabs.create(
-          { url: checkedInstances[0] },
-          tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/helpers/youtube/set_piped_preferences.js" })
-        );
+        browser.tabs.create({ url: to },
+          tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/helpers/youtube/set_piped_preferences.js", runAt: "document_start" }))
       }
     }
     resolve(true);
@@ -409,7 +407,7 @@ function initPipedMaterialLocalStorage(test, url, tabId,) {
     ].includes(protocolHost)) { resolve(); return; }
 
     if (!test) {
-      browser.tabs.executeScript(tabId, { file: "/assets/javascripts/helpers/youtube/get_pipedMaterial_preferences.js" });
+      browser.tabs.executeScript(tabId, { file: "/assets/javascripts/helpers/youtube/get_pipedMaterial_preferences.js", runAt: "document_start" });
 
       let checkedInstances;
       if (youtubeProtocol == 'normal') checkedInstances = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects]
@@ -419,7 +417,7 @@ function initPipedMaterialLocalStorage(test, url, tabId,) {
       for (const to of checkedInstances)
         browser.tabs.create(
           { url: to },
-          tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/helpers/youtube/set_pipedMaterial_preferences.js" })
+          tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/helpers/youtube/set_pipedMaterial_preferences.js", runAt: "document_start" })
         );
     }
     resolve(true);
