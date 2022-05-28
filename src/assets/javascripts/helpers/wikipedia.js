@@ -163,8 +163,8 @@ function switchInstance(url) {
       ...wikilessNormalCustomRedirects,
       ...wikilessTorCustomRedirects,
       ...wikilessI2pCustomRedirects
-    ]
-    if (!wikipediaList.includes(protocolHost)) return;
+    ];
+    if (!wikipediaList.includes(protocolHost)) { resolve(); return; }
 
     let instancesList;
     if (wikipediaProtocol == 'normal') instancesList = [...wikilessNormalCustomRedirects, ...wikilessNormalRedirectsChecks];
@@ -173,10 +173,10 @@ function switchInstance(url) {
 
     let index = instancesList.indexOf(protocolHost);
     if (index > -1) instancesList.splice(index, 1);
-    if (instancesList.length === 0) return;
+    if (instancesList.length === 0) { resolve(); return; }
 
     const randomInstance = utils.getRandomInstance(instancesList);
-    return `${randomInstance}${url.pathname}${url.search}`;
+    resolve(`${randomInstance}${url.pathname}${url.search}`);
   })
 }
 

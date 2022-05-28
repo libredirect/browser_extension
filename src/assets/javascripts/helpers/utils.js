@@ -386,17 +386,17 @@ function switchInstance(test) {
         try { url = new URL(currTab.url); }
         catch { resolve(); return };
         let newUrl = await youtubeHelper.switchInstance(url);
-        // if (!newUrl) newUrl = twitterHelper.switchInstance(url);
-        // if (!newUrl) newUrl = instagramHelper.switchInstance(url);
-        // if (!newUrl) newUrl = redditHelper.switchInstance(url);
-        // if (!newUrl) newUrl = searchHelper.switchInstance(url);
+        if (!newUrl) newUrl = await twitterHelper.switchInstance(url);
+        if (!newUrl) newUrl = await instagramHelper.switchInstance(url);
+        if (!newUrl) newUrl = await redditHelper.switchInstance(url);
+        if (!newUrl) newUrl = await searchHelper.switchInstance(url);
         if (!newUrl) newUrl = await translateHelper.switchInstance(url);
-        // if (!newUrl) newUrl = mediumHelper.switchInstance(url);
-        // if (!newUrl) newUrl = sendTargetsHelper.switchInstance(url);
-        // if (!newUrl) newUrl = peertubeHelper.switchInstance(url);
-        // if (!newUrl) newUrl = lbryHelper.switchInstance(url);
-        // if (!newUrl) newUrl = imgurHelper.switchInstance(url);
-        // if (!newUrl) newUrl = wikipediaHelper.switchInstance(url);
+        if (!newUrl) newUrl = await mediumHelper.switchInstance(url);
+        if (!newUrl) newUrl = await sendTargetsHelper.switchInstance(url);
+        if (!newUrl) newUrl = await peertubeHelper.switchInstance(url);
+        if (!newUrl) newUrl = await lbryHelper.switchInstance(url);
+        if (!newUrl) newUrl = await imgurHelper.switchInstance(url);
+        if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url);
 
         if (newUrl) {
           if (!test)

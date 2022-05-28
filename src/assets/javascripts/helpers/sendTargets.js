@@ -78,7 +78,8 @@ function all() {
 }
 
 function switchInstance(url) {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
+        await init();
         const protocolHost = utils.protocolHost(url);
         if (!all().includes(protocolHost)) { resolve(); return; }
         if (url.pathname != '/') { resolve(); return; }

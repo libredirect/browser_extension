@@ -100,7 +100,8 @@ function redirect(url, type, initiator) {
 }
 
 function switchInstance(url) {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
+        await init();
         const protocolHost = utils.protocolHost(url);
         if (!all().includes(protocolHost)) { resolve(); return; }
 

@@ -113,15 +113,16 @@ function reverse(url) {
 
 function switchInstance(url) {
   return new Promise(async resolve => {
+    await init();
     const protocolHost = utils.protocolHost(url);
-    if (!all().includes(protocolHost)) { resolve; return; }
+    if (!all().includes(protocolHost)) { resolve(); return; }
     let instancesList;
     if (twitterProtocol == 'normal') instancesList = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
     else if (twitterProtocol == 'tor') instancesList = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
 
     let index = instancesList.indexOf(protocolHost);
     if (index > -1) instancesList.splice(index, 1);
-    if (instancesList.length === 0) { resolve; return; }
+    if (instancesList.length === 0) { resolve(); return; }
 
     const randomInstance = utils.getRandomInstance(instancesList);
     resolve(`${randomInstance}${url.pathname}${url.search}`);

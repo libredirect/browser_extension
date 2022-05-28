@@ -111,7 +111,8 @@ function redirect(url, type, initiator) {
 }
 
 function switchInstance(url) {
-  return new Promise(resolve => {
+  return new Promise(async resolve => {
+    await init();
     let protocolHost = utils.protocolHost(url);
     const all = [
       ...mediumRedirects.scribe.tor,
