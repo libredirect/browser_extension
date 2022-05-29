@@ -1,0 +1,26 @@
+section#twitter_page.option-block
+    .some-block.option-block
+        h1(data-localise="__MSG_twitter__") Twitter
+    hr
+    .some-block.option-block
+        h4(data-localise="__MSG_enable__") Enable
+        input#disable-nitter(type="checkbox")
+
+    .some-block.option-block
+        h4(data-localise="__MSG_protocol__") Protocol
+        select#protocol
+            option(value="normal" data-localise="__MSG_normal__") Normal
+            option(value="tor" data-localise="__MSG_tor__") Tor
+
+    #nitter
+        hr
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://nitter.com')
+            include ../../widgets/latency.pug
+            +latency()
+        .tor
+            include ../../widgets/instances.pug
+            +instances('https://nitter.onion')
+
+    script(type="module" src="./widgets/twitter.js")

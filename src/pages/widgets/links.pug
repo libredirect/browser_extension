@@ -1,67 +1,67 @@
 include ../widgets/icons.pug
 
 mixin links(service)
-    section.links
+    section#links.links
         .title
             +general
-            a(href="../general/general.html" data-localise="__MSG_general__" class=service == "general" ? "selected" : "") General
+            a(href="#general" data-localise="__MSG_general__") General
 
         .title 
             img(src="../../../assets/images/youtube-icon.png")
-            a(href="../youtube/youtube.html" data-localise="__MSG_youtube__" class=service == "youtube" ? "selected" : "") YouTube 
+            a(href="#youtube" data-localise="__MSG_youtube__") YouTube 
 
         .title 
             img(src="../../../assets/images/youtube-music-icon.png")
-            a(href="../youtubeMusic/youtubeMusic.html" data-localise="__MSG_ytmusic__" class=service == "youtubeMusic" ? "selected" : "") YT Music
+            a(href="#youtubeMusic" data-localise="__MSG_ytmusic__") YT Music
 
         .title 
             img(src="../../../assets/images/twitter-icon.png")
-            a(href="../twitter/twitter.html" class=service == "twitter" ? "selected" : "" data-localise="__MSG_twitter__") Twitter
+            a(href="#twitter" data-localise="__MSG_twitter__") Twitter
 
         .title 
             img(src="../../../assets/images/instagram-icon.png")
-            a(href="../instagram/instagram.html" data-localise="__MSG_instagram__" class=service == "instagram" ? "selected" : "") Instagram
+            a(href="#instagram" data-localise="__MSG_instagram__") Instagram
 
         .title 
             img(src="../../../assets/images/tiktok-icon.png")
-            a(href="../tiktok/tiktok.html" data-localise="__MSG_tiktok__" class=service == "tiktok" ? "selected" : "") TikTok
+            a(href="#tiktok" data-localise="__MSG_tiktok__") TikTok
 
         .title 
             img(src="../../../assets/images/reddit-icon.png")
-            a(href="../reddit/reddit.html" data-localise="__MSG_reddit__" class=service == "reddit" ? "selected" : "") Reddit
+            a(href="#reddit" data-localise="__MSG_reddit__") Reddit
 
         .title 
             img(src="../../../assets/images/imgur-icon.png")
-            a(href="../imgur/imgur.html" data-localise="__MSG_imgur__" class=service == "imgur" ? "selected" : "") Imgur
+            a(href="#imgur" data-localise="__MSG_imgur__") Imgur
 
         .title 
             img(src="../../../assets/images/wikipedia-icon.svg")
-            a(href="../wikipedia/wikipedia.html" data-localise="__MSG_wikipedia__" class=service == "wikipedia" ? "selected" : "") Wikipedia
+            a(href="#wikipedia" data-localise="__MSG_wikipedia__") Wikipedia
 
         .title 
             +medium
-            a(href="../medium/medium.html" data-localise="__MSG_medium__" class=service == "medium" ? "selected" : "") Medium
+            a(href="#medium" data-localise="__MSG_medium__") Medium
 
         .title 
             img(src="../../../assets/images/peertube-icon.svg")
-            a(href="../peertube/peertube.html" data-localise="__MSG_peertube__" class=service == "peertube" ? "selected" : "") PeerTube
+            a(href="#peertube" data-localise="__MSG_peertube__") PeerTube
 
         .title 
             img(src="../../../assets/images/lbry-icon.png")
-            a(href="../lbry/lbry.html" data-localise="__MSG_lbry__" class=service == "lbry" ? "selected" : "") LBRY/Odysee
+            a(href="#lbry" data-localise="__MSG_lbry__") LBRY/Odysee
 
         .title 
             +search
-            a(href="../search/search.html" data-localise="__MSG_search__" class=service == "search" ? "selected" : "") Search
+            a(href="#search" data-localise="__MSG_search__") Search
 
         .title 
             +translate
-            a(href="../translate/translate.html" data-localise="__MSG_translate__" class=service == "translate" ? "selected" : "") Translate
+            a(href="#translate" data-localise="__MSG_translate__") Translate
 
         .title 
             +maps
-            a(href="../maps/maps.html" data-localise="__MSG_maps__" class=service == "maps" ? "selected" : "") Maps
+            a(href="#maps" data-localise="__MSG_maps__") Maps
 
         .title 
             +send
-            a(href="../sendTargets/sendTargets.html" data-localise="__MSG_sendFiles__" class=service == "sendTargets" ? "selected" : "") Send Files
+            a(href="#sendTargets" data-localise="__MSG_sendFiles__") Send Files

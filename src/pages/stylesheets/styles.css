@@ -112,6 +112,7 @@ body.option {
 
 section.links div {
   margin: 20px 0;
+  width: max-content;
 }
 
 a {
@@ -297,11 +298,6 @@ div.buttons-popup {
   margin-right: 5px;
 }
 
-body.rtl {
-  margin-right: 0;
-  margin-left: 5px;
-}
-
 .button:hover svg {
   color: var(--active);
 }
@@ -449,4 +445,8 @@ button {
   display: inline-block;
   cursor: pointer;
   border-radius: 5px;
+}
+
+body div section {
+  display: none;
 }

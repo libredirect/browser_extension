@@ -1,23 +1,23 @@
 "use strict";
 
-import generalHelper from "../../assets/javascripts/helpers/general.js";
-import utils from "../../assets/javascripts/helpers/utils.js";
+import generalHelper from "../../assets/javascripts/general.js";
+import utils from "../../assets/javascripts/utils.js";
 
-import youtubeHelper from "../../assets/javascripts/helpers/youtube/youtube.js";
-import youtubeMusicHelper from "../../assets/javascripts/helpers/youtubeMusic.js";
-import twitterHelper from "../../assets/javascripts/helpers/twitter.js";
-import instagramHelper from "../../assets/javascripts/helpers/instagram.js";
-import redditHelper from "../../assets/javascripts/helpers/reddit.js";
-import searchHelper from "../../assets/javascripts/helpers/search.js";
-import translateHelper from "../../assets/javascripts/helpers/translate/translate.js";
-import mapsHelper from "../../assets/javascripts/helpers/maps.js";
-import wikipediaHelper from "../../assets/javascripts/helpers/wikipedia.js";
-import mediumHelper from "../../assets/javascripts/helpers/medium.js";
-import imgurHelper from "../../assets/javascripts/helpers/imgur.js";
-import tiktokHelper from "../../assets/javascripts/helpers/tiktok.js";
-import sendTargetsHelper from "../../assets/javascripts/helpers/sendTargets.js";
-import peertubeHelper from "../../assets/javascripts/helpers/peertube.js";
-import lbryHelper from "../../assets/javascripts/helpers/lbry.js";
+import youtubeHelper from "../../assets/javascripts/youtube/youtube.js";
+import youtubeMusicHelper from "../../assets/javascripts/youtubeMusic.js";
+import twitterHelper from "../../assets/javascripts/twitter.js";
+import instagramHelper from "../../assets/javascripts/instagram.js";
+import redditHelper from "../../assets/javascripts/reddit.js";
+import searchHelper from "../../assets/javascripts/search.js";
+import translateHelper from "../../assets/javascripts/translate/translate.js";
+import mapsHelper from "../../assets/javascripts/maps.js";
+import wikipediaHelper from "../../assets/javascripts/wikipedia.js";
+import mediumHelper from "../../assets/javascripts/medium.js";
+import imgurHelper from "../../assets/javascripts/imgur.js";
+import tiktokHelper from "../../assets/javascripts/tiktok.js";
+import sendTargetsHelper from "../../assets/javascripts/sendTargets.js";
+import peertubeHelper from "../../assets/javascripts/peertube.js";
+import lbryHelper from "../../assets/javascripts/lbry.js";
 
 window.browser = window.browser || window.chrome;
 

@@ -1,0 +1,69 @@
+
+section#search_page.option-block
+    .some-block.option-block
+        h1(data-localise="__MSG_search__") Search
+    hr
+    .some-block.option-block
+        h4(data-localise="__MSG_enable__") Enable
+        input#disable-search(type="checkbox")
+
+    .some-block.option-block
+        h4(data-localise="__MSG_frontend__") Frontend
+        select#search-frontend
+            option(value="searxng") SearXNG
+            option(value="searx") SearX
+            option(value="whoogle") Whoogle
+
+
+    #searx-whoogle
+        .some-block.option-block
+            h4(data-localise="__MSG_protocol__") Protocol
+            select#protocol
+                option(value="normal" data-localise="__MSG_normal__") Normal
+                option(value="tor" data-localise="__MSG_tor__") Tor
+                option(value="i2p" data-localise="__MSG_i2p__") I2P
+
+    .some-block
+        h4(data-localise="__MSG_searchNote__") Note: To use Search to its full potential, make LibRedirect as the Default Search Engine
+
+    #searx
+        hr
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://searx.com')
+            include ../../widgets/latency.pug
+            +latency('searx')
+        .tor
+            include ../../widgets/instances.pug
+            +instances('https://searx.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('https://searx.i2p')
+
+    #searxng
+        hr
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://searxng.com')
+            +latency('searxng')
+        .tor
+            include ../../widgets/instances.pug
+            +instances('https://searxng.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('https://searxng.i2p')
+
+    #whoogle
+        hr
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://whoogle.com')
+            +latency('whoogle')
+        .tor
+            include ../../widgets/instances.pug
+            +instances('https://whoogle.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('https://whoogle.i2p')
+
+    script(type="module" src="./widgets/search.js")

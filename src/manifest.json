@@ -40,7 +40,7 @@
     }
   },
   "options_ui": {
-    "page": "pages/options/general/general.html",
+    "page": "pages/options/index.html",
     "browser_style": false,
     "open_in_tab": true
   },

@@ -1,0 +1,17 @@
+section#youtubeMusic_page.option-block
+    .some-block.option-block
+        h1(data-localise="__MSG_ytmusic__") YouTube Music
+    hr
+    .some-block.option-block
+        h4(data-localise="__MSG_enable__") Enable
+        input#disable-beatbump(type="checkbox")
+
+    #beatbump
+        hr
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://beatbump.wewe')
+            include ../../widgets/latency.pug
+            +latency()
+
+    script(type="module" src="./widgets/youtubeMusic.js")

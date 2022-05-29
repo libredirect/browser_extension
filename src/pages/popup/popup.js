@@ -1,8 +1,42 @@
 "use strict";
 window.browser = window.browser || window.chrome;
 
-import utils from "../../assets/javascripts/helpers/utils.js";
-import generalHelper from "../../assets/javascripts/helpers/general.js";
+import utils from "../../assets/javascripts/utils.js";
+import generalHelper from "../../assets/javascripts/general.js";
+
+utils.unify(true).then(r => {
+  if (!r) document.getElementById('unify_div').style.display = 'none';
+  else {
+    const unify = document.getElementById('unify');
+    unify.addEventListener("click", () =>
+      browser.runtime.sendMessage({ function: 'unify' },
+        response => {
+          if (response && response.response) {
+            const textElement = document.getElementById('unify').getElementsByTagName('h4')[0]
+            const oldHtml = textElement.innerHTML;
+            textElement.innerHTML = browser.i18n.getMessage('unified');
+            setTimeout(() => textElement.innerHTML = oldHtml, 1000);
+          }
+        })
+    );
+  }
+})
+
+utils.switchInstance(true).then(r => {
+  if (!r) document.getElementById("change_instance_div").style.display = 'none';
+  else document.getElementById("change_instance").addEventListener("click", () => utils.switchInstance(false));
+});
+
+utils.copyRaw(true).then(r => {
+  if (!r) document.getElementById('copy_raw_div').style.display = 'none';
+  else {
+    const copy_raw = document.getElementById('copy_raw');
+    copy_raw.addEventListener("click", () => utils.copyRaw(false, copy_raw));
+  }
+})
+
+document.getElementById("more-options").addEventListener("click", () => browser.runtime.openOptionsPage());
+
 
 let disableTwitterElement = document.getElementById("disable-nitter");
 let disableYoutubeElement = document.getElementById("disable-youtube");
@@ -37,6 +71,8 @@ browser.storage.local.get(
     "disablePeertubeTargets",
     "disableLbryTargets",
     "disableSendTarget",
+
+    'popupFrontends',
   ],
   r => {
     disableTwitterElement.checked = !r.disableTwitter;
@@ -53,7 +89,13 @@ browser.storage.local.get(
     disableMediumElement.checked = !r.disableMedium;
     disablePeertubeElement.checked = !r.disablePeertubeTargets;
     disableLbryElement.checked = !r.disableLbryTargets;
-    disableSendTargetsElement.checked = r.disableSendTarget;
+    disableSendTargetsElement.checked = !r.disableSendTarget;
+
+    for (const frontend of generalHelper.allPopupFrontends)
+      if (!r.popupFrontends.includes(frontend))
+        document.getElementById(frontend).classList.add("hide")
+      else
+        document.getElementById(frontend).classList.remove("hide")
   }
 )
 
@@ -76,51 +118,6 @@ document.addEventListener("change", () => {
     disableSendTarget: !disableSendTargetsElement.checked,
   });
 })
-
-utils.switchInstance(true).then(r => {
-  if (!r) document.getElementById("change_instance_div").style.display = 'none';
-  else document.getElementById("change_instance").addEventListener("click", () => utils.switchInstance(false));
-});
-
-utils.copyRaw(true).then(r => {
-  if (!r) document.getElementById('copy_raw_div').style.display = 'none';
-  else {
-    const copy_raw = document.getElementById('copy_raw');
-    copy_raw.addEventListener("click", () => utils.copyRaw(false, copy_raw));
-  }
-})
-
-
-utils.unify(true).then(r => {
-  if (!r) document.getElementById('unify_div').style.display = 'none';
-  else {
-    const unify = document.getElementById('unify');
-    unify.addEventListener("click", () =>
-      browser.runtime.sendMessage({ function: 'unify' },
-        response => {
-          if (response && response.response) {
-            const textElement = document.getElementById('unify').getElementsByTagName('h4')[0]
-            const oldHtml = textElement.innerHTML;
-            textElement.innerHTML = 'Unified';
-            setTimeout(() => textElement.innerHTML = oldHtml, 1000);
-          }
-        })
-    );
-  }
-})
-
-document.getElementById("more-options").addEventListener("click", () => browser.runtime.openOptionsPage());
-
-browser.storage.local.get(
-  'popupFrontends',
-  r => {
-    for (const frontend of generalHelper.allPopupFrontends)
-      if (!r.popupFrontends.includes(frontend))
-        document.getElementById(frontend).classList.add("hide")
-      else
-        document.getElementById(frontend).classList.remove("hide")
-  }
-);
 
 for (const a of document.getElementsByTagName('a')) {
   a.addEventListener('click', e => {

@@ -1,0 +1,40 @@
+section#translate_page.option-block
+    .some-block.option-block
+        h1(data-localise="__MSG_translate__") Translate
+    hr
+    .some-block.option-block
+        h4(data-localise="__MSG_enable__") Enable
+        input#disable-simplyTranslate(type="checkbox")
+
+    .some-block.option-block
+        h4(data-localise="__MSG_frontend__") Frontend
+        select#translate-frontend
+            option(value="simplyTranslate") SimplyTranslate
+            option(value="lingva") Lingva
+
+    .some-block.option-block
+        h4(data-localise="__MSG_protocol__") Protocol
+        select#protocol
+            option(value="normal" data-localise="__MSG_normal__") Normal
+            option(value="tor" data-localise="__MSG_tor__") Tor
+
+    hr
+    #simplyTranslate
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://simplytranslate.org')
+            include ../../widgets/latency.pug
+            +latency('simplyTranslate')
+        .tor
+            include ../../widgets/instances.pug
+            +instances('http://hxecvvetgrznmprg.onion')
+    #lingva
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://lingvatranslate.com')
+            +latency('lingva')
+        .tor
+            include ../../widgets/instances.pug
+            +instances('http://tyzxppdeoojdnaux.onion')
+
+    script(type="module" src="./widgets/translate.js")

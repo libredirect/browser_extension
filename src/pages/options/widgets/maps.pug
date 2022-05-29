@@ -1,0 +1,23 @@
+section#maps_page.option-block
+    .some-block.option-block
+        h1(data-localise="__MSG_maps__") Maps
+    hr
+    .some-block.option-block
+        h4(data-localise="__MSG_enable__") Enable
+        input#disable-osm(type="checkbox")
+
+    .some-block.option-block
+        h4(data-localise="__MSG_frontend__") Frontend
+        select#maps-frontend
+            option(value="osm") OpenStreetMap
+            option(value="facil") Facil Map
+
+    #facil
+        hr
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://facilmap.com')
+            include ../../widgets/latency.pug
+            +latency()
+
+    script(type="module" src="./widgets/maps.js")

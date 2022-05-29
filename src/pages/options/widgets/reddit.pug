@@ -1,0 +1,42 @@
+section#reddit_page.option-block
+    .some-block.option-block
+        h1(data-localise="__MSG_reddit__") Reddit
+    hr
+    .some-block.option-block
+        h4(data-localise="__MSG_enable__") Enable
+        input#disable-reddit(type="checkbox")
+
+    .some-block.option-block
+        h4#frontend(data-localise="__MSG_frontend__") Frontend
+        select#reddit-frontend
+            option(value="libreddit") Libreddit
+            option(value="teddit") Teddit
+
+    .some-block.option-block
+        h4(data-localise="__MSG_protocol__") Protocol
+        select#protocol
+            option(value="normal" data-localise="__MSG_normal__") Normal
+            option(value="tor" data-localise="__MSG_tor__") Tor
+
+    #libreddit
+        hr
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://libreddit.com')
+            include ../../widgets/latency.pug
+            +latency('libreddit')
+        .tor
+            include ../../widgets/instances.pug
+            +instances('https://libreddit.onion')
+
+    #teddit
+        hr
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://teddit.com')
+            +latency('teddit')
+        .tor
+            include ../../widgets/instances.pug
+            +instances('https://teddit.onion')
+
+    script(type="module" src="./widgets/reddit.js")

@@ -3,554 +3,220 @@
     "message": "LibRedirect",
     "description": "name of the extension"
   },
-
   "extensionDescription": {
     "message": "A web extension that redirects popular sites to alternative privacy-friendly frontends and backends",
     "description": "description of the extension"
   },
-
   "switchInstance": {
     "message": "Switch Instance",
     "description": "used in manifest.json as shortcut description"
   },
-
-  "instance": {
-    "message": "Instance",
-    "description": "used in popup.html"
-  },
-
   "settings": {
     "message": "Settings",
     "description": "used in popup.html"
   },
-
-  "libOptions": {
-    "message": "LibRedirect Options",
-    "description": "used in general.html"
-  },
-
   "general": {
     "message": "General",
     "description": "used in general.html"
   },
-
   "search": {
     "message": "Search",
     "description": "used in general.html"
   },
-
   "translate": {
     "message": "Translate",
     "description": "used in general.html"
   },
-
   "maps": {
     "message": "Maps",
     "description": "used in general.html"
   },
-
   "sendFiles": {
     "message": "Send Files",
     "description": "used in general.html"
   },
-
   "youtube": {
     "message": "YouTube",
     "description": "used in general.html"
   },
-
   "instagram": {
     "message": "Instagram",
     "description": "used in general.html"
   },
-
   "twitter": {
     "message": "Twitter",
     "description": "used in general.html"
   },
-
   "reddit": {
     "message": "Reddit",
     "description": "used in general.html"
   },
-
   "tiktok": {
     "message": "TikTok",
     "description": "used in general.html"
   },
-
   "ytmusic": {
     "message": "YT Music",
     "description": "used in general.html"
   },
-
   "imgur": {
     "message": "Imgur",
     "description": "used in general.html"
   },
-
   "wikipedia": {
     "message": "Wikipedia",
     "description": "used in general.html"
   },
-
   "peertube": {
     "message": "PeerTube",
     "description": "used in general.html"
   },
-
   "medium": {
     "message": "Medium",
     "description": "used in general.html"
   },
-
   "tor": {
     "message": "Tor",
     "description": "used in imgur.html"
   },
-
   "theme": {
     "message": "Theme",
     "description": "used in general.html"
   },
-
   "system": {
     "message": "System",
     "description": "used in general.html"
   },
-
   "light": {
     "message": "Light",
     "description": "used in general.html"
   },
-
   "dark": {
     "message": "Dark",
     "description": "used in general.html"
   },
-
-  "alwaysPref": {
-    "message": "Always use Preferred Instances",
-    "description": "used in general.html"
-  },
-
   "autoRedirect": {
     "message": "Auto Redirect of offline instances",
     "description": "used in general.html"
   },
-
   "exceptions": {
     "message": "Exceptions",
     "description": "used in general.html"
   },
-
   "updateInstances": {
     "message": "Update Instances",
     "description": "used in general.html"
   },
-
   "importSettings": {
     "message": "Import Settings",
     "description": "used in general.html"
   },
-
   "exportSettings": {
     "message": "Export Settings",
     "description": "used in general.html"
   },
-
   "resetSettings": {
     "message": "Reset Settings",
     "description": "used in general.html"
   },
-
   "customPopup": {
     "message": "Customize Popup",
     "description": "used in general.html"
   },
-
   "enable": {
     "message": "Enable",
     "description": "used in imgur.html"
   },
-
   "protocol": {
     "message": "Protocol",
     "description": "used in imgur.html"
   },
-
   "normal": {
     "message": "Normal",
     "description": "used in imgur.html"
   },
-
   "defaultInstances": {
     "message": "Default Instances",
     "description": "used in imgur.html"
   },
-
   "customInstances": {
     "message": "Custom Instances",
     "description": "used in imgur.html"
   },
-
   "toggleAll": {
     "message": "Toggle all",
     "description": "used in utils.js"
   },
-
   "frontend": {
     "message": "Frontend",
     "description": "used in maps.html"
   },
-
   "notFullyPrivate": {
     "message": "This isn't a fully private frontend.",
     "description": ""
   },
-
-  "oldReddit": {
-    "message": "Old Reddit",
-    "description": "used in reddit.html"
-  },
-
   "searchNote": {
     "message": "Note: To use Search to its full potential, make LibRedirect as the Default Search Engine",
     "description": "used in search.html"
   },
-
-  "libSendFiles": {
-    "message": "LibRedirect: Send Files",
-    "description": "used in sendTargets.html"
-  },
-
-  "from": {
-    "message": "From",
-    "description": "used in translate.html"
-  },
-
-  "to": {
-    "message": "To",
-    "description": "used in translate.html"
-  },
-
-  "default": {
-    "message": "Default",
-    "description": "used in translate.html"
-  },
-
-  "auto": {
-    "message": "Auto",
-    "description": "used in translate.html"
-  },
-
-  "engine": {
-    "message": "Engine",
-    "description": "used in translate.html"
-  },
-
-  "libTranslate": {
-    "message": "LibRedirect: Translate",
-    "description": "used in translate.html"
-  },
-
-  "invidious": {
-    "message": "Invidious",
-    "description": "used in youtube.html"
-  },
-
-  "embeddedVids": {
-    "message": "Embedded Videos Frontend",
-    "description": "used in youtube.html"
-  },
-
   "redirectType": {
     "message": "Redirect Type",
     "description": "used in youtube.html"
   },
-
   "both": {
     "message": "both",
     "description": "used in youtube.html"
   },
-
   "onlyEmbedded": {
     "message": "only embedded",
     "description": "used in youtube.html"
   },
-
   "onlyNotEmbedded": {
     "message": "only not embedded",
     "description": "used in youtube.html"
   },
-
-  "enableCustom": {
-    "message": "Enable Custom Settings (will use cookies and localStorage)",
-    "description": "used in youtube.html"
-  },
-
-  "autoplayVid": {
-    "message": "Autoplay Video",
-    "description": "used in youtube.html"
-  },
-
-  "volume": {
-    "message": "Volume: ",
-    "description": "used in youtube.html"
-  },
-
-  "playerStyle": {
-    "message": "Player Style",
-    "description": "used in youtube.html"
-  },
-
-  "alwaysLoop": {
-    "message": "Always loop",
-    "description": "used in youtube.html"
-  },
-
-  "playNext": {
-    "message": "Play next by default",
-    "description": "used in youtube.html"
-  },
-
-  "autoplayNext": {
-    "message": "Autoplay next video",
-    "description": "used in youtube.html"
-  },
-
-  "alwaysProxy": {
-    "message": "Always proxy videos",
-    "description": "used in youtube.html"
-  },
-
-  "listenByDefault": {
-    "message": "Listen by default",
-    "description": "used in youtube.html"
-  },
-
-  "defaultSpeed": {
-    "message": "Default speed",
-    "description": "used in youtube.html"
-  },
-
-  "prefQuality": {
-    "message": "Preferred video quality",
-    "description": "used in youtube.html"
-  },
-
-  "dash": {
-    "message": "DASH (adaptive quality)",
-    "description": "used in youtube.html"
-  },
-
-  "prefDashQuality": {
-    "message": "Preferred DASH video quality",
-    "description": "used in youtube.html"
-  },
-
-  "best": {
-    "message": "Best",
-    "description": "used in youtube.html"
-  },
-
-  "worst": {
-    "message": "Worst",
-    "description": "used in youtube.html"
-  },
-
-  "defaultComments": {
-    "message": "Default comments",
-    "description": "used in youtube.html"
-  },
-
-  "none": {
-    "message": "None",
-    "description": "used in youtube.html"
-  },
-
-  "defaultCaptions": {
-    "message": "Default captions",
-    "description": "used in youtube.html"
-  },
-
-  "showRelated": {
-    "message": "Show related videos",
-    "description": "used in youtube.html"
-  },
-
-  "showAnnotations": {
-    "message": "Show annotations by default",
-    "description": "used in youtube.html"
-  },
-
-  "autoExtendDesc": {
-    "message": "Automatically extend video description",
-    "description": "used in youtube.html"
-  },
-
-  "interactive360": {
-    "message": "Interactive 360 degree videos (requires WebGL)",
-    "description": "used in youtube.html"
-  },
-
-  "savePlaybackPos": {
-    "message": "Save playback position",
-    "description": "used in youtube.html"
-  },
-
-  "enableSponsorBlock": {
-    "message": "Enable SponsorBlock",
-    "description": "used in youtube.html"
-  },
-
-  "skipSponsors": {
-    "message": "Skip sponsors",
-    "description": "used in youtube.html"
-  },
-
-  "skipIntermission": {
-    "message": "Skip Intermission/Intro Animation",
-    "description": "used in youtube.html"
-  },
-
-  "skipEndcards": {
-    "message": "Skip Endcards/Credits",
-    "description": "used in youtube.html"
-  },
-
-  "skipPreview": {
-    "message": "Skip Preview/Recap",
-    "description": "used in youtube.html"
-  },
-
-  "skipReminder": {
-    "message": "Skip interaction reminder (subscribe)",
-    "description": "used in youtube.html"
-  },
-
-  "skipUnpaidPromo": {
-    "message": "Skip Unpaid/Self Promotion",
-    "description": "used in youtube.html"
-  },
-
-  "skipMusic": {
-    "message": "Skip Music: Non-Music Section",
-    "description": "used in youtube.html"
-  },
-
-  "skipHighlight": {
-    "message": "Skip Highlight",
-    "description": "used in youtube.html"
-  },
-
-  "skipFiller": {
-    "message": "Skip Filler Tangent",
-    "description": "used in youtube.html"
-  },
-
-  "audioOnly": {
-    "message": "Audio only",
-    "description": "used in youtube.html"
-  },
-
-  "defaultQuality": {
-    "message": "Default quality",
-    "description": "used in youtube.html"
-  },
-
-  "bufferingGoal": {
-    "message": "Buffering Goal (in seconds)",
-    "description": "used in youtube.html"
-  },
-
-  "countrySelection": {
-    "message": "Country selection",
-    "description": "used in youtube.html"
-  },
-
-  "defaultHomepage": {
-    "message": "Default homepage",
-    "description": "used in youtube.html"
-  },
-
-  "trending": {
-    "message": "Trending",
-    "description": "used in youtube.html"
-  },
-
-  "feed": {
-    "message": "Feed",
-    "description": "used in youtube.html"
-  },
-
-  "showComments": {
-    "message": "Show comments",
-    "description": "used in youtube.html"
-  },
-
-  "minimizeDesc": {
-    "message": "Minimize description by default",
-    "description": "used in youtube.html"
-  },
-
-  "storeHistory": {
-    "message": "Store watch history",
-    "description": "used in youtube.html"
-  },
-
-  "enabledCodecs": {
-    "message": "Enabled codecs (multiple)",
-    "description": "used in youtube.html"
-  },
-
-  "disableLBRY": {
-    "message": "Disable LBRY for streaming",
-    "description": "used in youtube.html"
-  },
-
-  "enableProxyLBRY": {
-    "message": "Enable proxy for LBRY",
-    "description": "used in youtube.html"
-  },
-
-  "proxyLBRY": {
-    "message": "Proxy LBRY videos",
-    "description": "used in youtube.html"
-  },
-
-  "skipNote": {
-    "message": "Skip to the last watched point when encountering a video already seen",
-    "description": "used in youtube.html"
-  },
-
-  "embedExceptions": {
-    "message": "Embed exceptions",
-    "description": "used in youtube.html"
-  },
-
   "instanceOffline": {
     "message": "This instance is offline, you'll be redirected after&nbsp;",
     "description": "used in instance_offline.html"
   },
-
-  "sec": {
-    "message": "seconds",
-    "description": "used in instance_offline.html"
-  },
-
   "cancel": {
     "message": "Cancel",
     "description": "used in instance_offline.html"
   },
-
   "instanceIsOff": {
     "message": "Instance is offline",
     "description": "used in instance_offline.html"
   },
-
   "redirectionCanceled": {
     "message": "Redirection canceled",
     "description": "used in instance_offline.js"
+  },
+  "copyRaw": {
+    "message": "Copy Raw",
+    "description": ""
+  },
+  "copied": {
+    "message": "Copied",
+    "description": ""
+  },
+  "unifySettings": {
+    "message": "Unify Settings",
+    "description": ""
+  },
+  "unified": {
+    "message": "Unified",
+    "description": ""
+  },
+  "lbry": {
+    "message": "LBRY",
+    "description": ""
+  },
+  "i2p": {
+    "message": "I2P",
+    "description": ""
+  },
+  "testInstancesLatency": {
+    "message": "Test Instances Latency",
+    "description": ""
   }
 }
