@@ -23,8 +23,11 @@ window.browser = window.browser || window.chrome;
 
 browser.runtime.onInstalled.addListener(
   async details => {
-    if (details.reason == 'install') {
+    // if (details.reason == 'install') {
+    if (details.reason == 'install' || details.reason == "update") {
+      browser.tabs.create({ url: browser.extension.getURL("/pages/background/reset_warning.html") });
       fetch('/instances/blocklist.json').then(response => response.text()).then(async data => {
+        await browser.storage.local.clear();
         await browser.storage.local.set({ cloudflareList: JSON.parse(data) })
         generalHelper.initDefaults();
         youtubeHelper.initDefaults();
