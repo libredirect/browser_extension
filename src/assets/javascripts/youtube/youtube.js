@@ -177,7 +177,7 @@ function redirect(url, details, initiator) {
     return url.href.replace(/^https?:\/{2}/, 'yattee://');
 
   else if (isFreetube && is_main_frame)
-    return `freetube://https:${url.pathname}${url.search}`;
+    return `freetube://https:/${url.pathname}${url.search}`;
 
   else if (isFreetube && params && isFrontendYoutube)
     return;
