@@ -58,7 +58,7 @@ function setRedirects(val) {
 
 let
   disableYoutube,
-  OnlyEmbeddedVideo,
+  onlyEmbeddedVideo,
   youtubeFrontend,
   youtubeProtocol,
   youtubeEmbedFrontend,
@@ -81,7 +81,7 @@ function init() {
     browser.storage.local.get(
       [
         "disableYoutube",
-        "OnlyEmbeddedVideo",
+        "onlyEmbeddedVideo",
         "youtubeFrontend",
         "youtubeProtocol",
         "youtubeEmbedFrontend",
@@ -101,7 +101,7 @@ function init() {
       ],
       r => {
         disableYoutube = r.disableYoutube;
-        OnlyEmbeddedVideo = r.OnlyEmbeddedVideo;
+        onlyEmbeddedVideo = r.onlyEmbeddedVideo;
         youtubeFrontend = r.youtubeFrontend;
         youtubeProtocol = r.youtubeProtocol;
         youtubeEmbedFrontend = r.youtubeEmbedFrontend;
@@ -165,66 +165,46 @@ function redirect(url, details, initiator) {
   const isFrontendPiped = youtubeEmbedFrontend == 'piped';
   const isFrontendPipedMaterial = youtubeEmbedFrontend == 'pipedMaterial';
 
-  const isOnlyEmbeddedVideo = OnlyEmbeddedVideo == 'onlyNotEmbedded';
-  const isOnlyNotEmbedded = OnlyEmbeddedVideo == 'onlyNotEmbedded'
+  const isOnlyEmbeddedVideo = onlyEmbeddedVideo == 'onlyEmbedded';
+  const isOnlyNotEmbedded = onlyEmbeddedVideo == 'onlyNotEmbedded'
 
-  const is_main_frame = details.type === "main_frame";
-  const is_sub_frame = details.type === "sub_frame";
+  const main_frame = details.type === "main_frame";
+  const sub_frame = details.type === "sub_frame";
 
   if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return; // Don't redirect YouTube Player API.
 
-  if (youtubeFrontend == 'yatte' && is_main_frame)
-    return url.href.replace(/^https?:\/{2}/, 'yattee://');
+  if (isOnlyEmbeddedVideo && !sub_frame) return;
+  if (isOnlyNotEmbedded && sub_frame) return;
 
-  else if (isFreetube && is_main_frame)
-    return `freetube://https:${url.pathname}${url.search}`;
+  if ((isFreetube || isYatte) && sub_frame && isFrontendYoutube) return;
 
-  else if (isFreetube && params && isFrontendYoutube)
-    return;
+  if (isYatte && main_frame) return url.href.replace(/^https?:\/{2}/, 'yattee://');
+  if (isFreetube && main_frame) return `freetube://https://${url.pathname}${url.search}`;
 
-  else if (isInvidious || ((isFreetube || isYatte) && isFrontendInvidious && is_sub_frame)) {
-
-    if (isOnlyEmbeddedVideo && !is_sub_frame) return;
-    if (isOnlyNotEmbedded && params && !((isFreetube || isYatte) && isFrontendInvidious && is_sub_frame)) return;
-
+  if (isInvidious || ((isFreetube || isYatte) && sub_frame && isFrontendInvidious)) {
     let instancesList;
     if (youtubeProtocol == 'normal') instancesList = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
     else if (youtubeProtocol == 'tor') instancesList = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
     if (instancesList.length === 0) return;
-    let randomInstance = utils.getRandomInstance(instancesList);
-
+    const randomInstance = utils.getRandomInstance(instancesList);
     return `${randomInstance}${url.pathname}${url.search}`;
-  } else if (isPiped || ((isFreetube || isYatte) && isFrontendPiped && is_sub_frame)) {
-
-    if (isOnlyEmbeddedVideo && !is_sub_frame) return;
-    if (
-      isOnlyNotEmbedded && params &&
-      !((isFreetube || isYatte) && isFrontendPiped && is_sub_frame)
-    ) return;
-
+  }
+  if (isPiped || ((isFreetube || isYatte) && sub_frame && isFrontendPiped)) {
     let instancesList;
     if (youtubeProtocol == 'normal') instancesList = [...pipedNormalRedirectsChecks, ...pipedNormalCustomRedirects];
     else if (youtubeProtocol == 'tor') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
     if (instancesList.length === 0) return;
-
     const randomInstance = utils.getRandomInstance(instancesList);
     return `${randomInstance}${url.pathname}${url.search}`;
   }
-  else if (isPipedMaterial || ((isFreetube || isYatte) && isFrontendPipedMaterial && is_sub_frame)) {
-    if (isOnlyEmbeddedVideo && details.type !== "sub_frame") return;
-    if (
-      isOnlyNotEmbedded && params &&
-      !((isFreetube || isYatte) && isFrontendPipedMaterial && is_sub_frame)
-    ) return;
-
+  if (isPipedMaterial || ((isFreetube || isYatte) && sub_frame && isFrontendPipedMaterial)) {
     let instancesList;
     if (youtubeProtocol == 'normal') instancesList = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects];
     else if (youtubeProtocol == 'tor') instancesList = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects];
-
     const randomInstance = utils.getRandomInstance(instancesList);
     return `${randomInstance}${url.pathname}${url.search}`;
   }
-  else return 'CANCEL';
+  return 'CANCEL';
 }
 
 function reverse(url) {
@@ -292,7 +272,7 @@ function initDefaults() {
         await browser.storage.local.set({
           disableYoutube: false,
           enableYoutubeCustomSettings: false,
-          OnlyEmbeddedVideo: 'both',
+          onlyEmbeddedVideo: 'both',
 
           youtubeRedirects: redirects,
 

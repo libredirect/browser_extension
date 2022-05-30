@@ -8,7 +8,7 @@ let pipedDiv = document.getElementById("piped");
 let pipedMaterialDiv = document.getElementById("pipedMaterial");
 let freetubeYatteeDiv = document.getElementById("freetube-yatte");
 let youtubeEmbedFrontend = document.getElementById("youtube-embed-frontend");
-let OnlyEmbeddedVideo = document.getElementById("only-embed");
+let onlyEmbeddedVideo = document.getElementById("only-embed");
 let protoco = document.getElementById("protocol");
 
 function changeFrontendsSettings() {
@@ -101,7 +101,7 @@ document.addEventListener("change", async () => {
         disableYoutube: !disableYoutube.checked,
         youtubeFrontend: youtubeFrontend.value,
         youtubeEmbedFrontend: youtubeEmbedFrontend.value,
-        OnlyEmbeddedVideo: OnlyEmbeddedVideo.value,
+        onlyEmbeddedVideo: onlyEmbeddedVideo.value,
         youtubeProtocol: protoco.value,
     })
     changeProtocolSettings();
@@ -112,7 +112,7 @@ document.addEventListener("change", async () => {
 browser.storage.local.get(
     [
         "disableYoutube",
-        "OnlyEmbeddedVideo",
+        "onlyEmbeddedVideo",
         "youtubeRedirects",
         "youtubeFrontend",
 
@@ -121,7 +121,7 @@ browser.storage.local.get(
     ],
     r => {
         disableYoutube.checked = !r.disableYoutube;
-        OnlyEmbeddedVideo.value = r.OnlyEmbeddedVideo;
+        onlyEmbeddedVideo.value = r.onlyEmbeddedVideo;
         youtubeFrontend.value = r.youtubeFrontend;
         protoco.value = r.youtubeProtocol;
 

@@ -66,19 +66,17 @@ https://beatbump.ml/release?id=MPREb_QygdC0wEoLe
 
 https://music.youtube.com/watch?v=R6gSMSYKhKU&list=OLAK5uy_n-9HVh3cryV2gREZM9Sc0JwEKYjjfi0dU
 */
-function redirect(url, type, initiator) {
+function redirect(url) {
     if (disableYoutubeMusic) return;
     if (!targets.some(rx => rx.test(url.href))) return;
 
     let instancesList = [...beatbumpNormalRedirectsChecks, ...beatbumpNormalCustomRedirects];
     if (instancesList.length === 0) return;
     const randomInstance = utils.getRandomInstance(instancesList);
-    resolve(
-        `${randomInstance}${url.pathname}${url.search}`
-            .replace("/watch?v=", "/listen?id=")
-            .replace("/channel/", "/artist/")
-            .replace("/playlist?list=", "/playlist/VL")
-    );
+    return `${randomInstance}${url.pathname}${url.search}`
+        .replace("/watch?v=", "/listen?id=")
+        .replace("/channel/", "/artist/")
+        .replace("/playlist?list=", "/playlist/VL");
 }
 
 async function initDefaults() {
