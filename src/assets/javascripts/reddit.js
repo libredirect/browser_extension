@@ -230,8 +230,9 @@ function redirect(url, type, initiator) {
   if (disableReddit) return;
   if (!targets.some(rx => rx.test(url.href))) return;
   if (initiator && all().includes(initiator.origin)) return 'BYPASSTAB';
+  if (!["main_frame", "xmlhttprequest", "other", "image", "media"].includes(type)) return;
   const bypassPaths = /\/(gallery\/poll\/rpan\/settings\/topics)/;
-  if (type !== "main_frame" || url.pathname.match(bypassPaths)) return;
+  if (url.pathname.match(bypassPaths)) return;
 
   let libredditInstancesList;
   let tedditInstancesList;

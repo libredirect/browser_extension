@@ -165,16 +165,12 @@ function redirect(url, details, initiator) {
   const isFrontendPiped = youtubeEmbedFrontend == 'piped';
   const isFrontendPipedMaterial = youtubeEmbedFrontend == 'pipedMaterial';
 
-  const isOnlyEmbeddedVideo = onlyEmbeddedVideo == 'onlyEmbedded';
-  const isOnlyNotEmbedded = onlyEmbeddedVideo == 'onlyNotEmbedded'
-
   const main_frame = details.type === "main_frame";
   const sub_frame = details.type === "sub_frame";
 
   if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return; // Don't redirect YouTube Player API.
-
-  if (isOnlyEmbeddedVideo && !sub_frame) return;
-  if (isOnlyNotEmbedded && sub_frame) return;
+  if (onlyEmbeddedVideo == 'onlyEmbedded' && !sub_frame) return;
+  if (onlyEmbeddedVideo == 'onlyNotEmbedded' && sub_frame) return;
 
   if ((isFreetube || isYatte) && sub_frame && isFrontendYoutube) return;
 
@@ -220,8 +216,7 @@ function switchInstance(url) {
   return new Promise(async resolve => {
     await init();
     const protocolHost = utils.protocolHost(url);
-    const instances = all();
-    if (!instances.includes(protocolHost)) { resolve(); return; }
+    if (!all().includes(protocolHost)) { resolve(); return; }
 
     let instancesList;
     if (youtubeProtocol == 'normal') {
@@ -257,16 +252,14 @@ function initDefaults() {
         pipedMaterialNormalRedirectsChecks = [...redirects.pipedMaterial.normal];
 
         for (const instance of r.cloudflareList) {
-          let i;
+          const a = invidiousNormalRedirectsChecks.indexOf(instance);
+          if (a > -1) invidiousNormalRedirectsChecks.splice(a, 1);
 
-          i = invidiousNormalRedirectsChecks.indexOf(instance);
-          if (i > -1) invidiousNormalRedirectsChecks.splice(i, 1);
+          const b = pipedNormalRedirectsChecks.indexOf(instance);
+          if (b > -1) pipedNormalRedirectsChecks.splice(b, 1);
 
-          i = pipedNormalRedirectsChecks.indexOf(instance);
-          if (i > -1) pipedNormalRedirectsChecks.splice(i, 1);
-
-          i = pipedMaterialNormalRedirectsChecks.indexOf(instance);
-          if (i > -1) pipedMaterialNormalRedirectsChecks.splice(i, 1);
+          const c = pipedMaterialNormalRedirectsChecks.indexOf(instance);
+          if (c > -1) pipedMaterialNormalRedirectsChecks.splice(c, 1);
         }
 
         await browser.storage.local.set({
@@ -355,7 +348,6 @@ function initPipedLocalStorage(test, url, tabId) {
     ].includes(protocolHost)) { resolve(); return; }
 
     if (!test) {
-
       browser.tabs.executeScript(tabId, { file: "/assets/javascripts/youtube/get_piped_preferences.js", runAt: "document_start" });
 
       let checkedInstances;
@@ -403,10 +395,10 @@ function initPipedMaterialLocalStorage(test, url, tabId,) {
 }
 
 function removeXFrameOptions(e) {
+  if (e.type != 'sub_frame') return;
   const url = new URL(e.url);
-  let protocolHost = utils.protocolHost(url);
-  const instances = all();
-  if (!instances.includes(protocolHost) || e.type != 'sub_frame') return;
+  const protocolHost = utils.protocolHost(url);
+  if (!all().includes(protocolHost)) return;
 
   let isChanged = false;
   for (const i in e.responseHeaders)
