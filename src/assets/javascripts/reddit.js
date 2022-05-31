@@ -319,7 +319,7 @@ function switchInstance(url) {
     if (instancesList.length === 0) { resolve(); return; }
 
     const randomInstance = utils.getRandomInstance(instancesList);
-    resolve(`${randomInstance}${url.pathname}${url.reddit}`);
+    resolve(`${randomInstance}${url.pathname}${url.search}`);
   })
 }
 
