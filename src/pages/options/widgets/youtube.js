@@ -1,38 +1,38 @@
 import youtubeHelper from "../../../assets/javascripts/youtube/youtube.js";
 import utils from "../../../assets/javascripts/utils.js";
 
-let disableYoutube = document.getElementById("disable-invidious");
-let youtubeFrontend = document.getElementById("youtube-frontend");
-let invidiousDiv = document.getElementById("invidious");
-let pipedDiv = document.getElementById("piped");
-let pipedMaterialDiv = document.getElementById("pipedMaterial");
-let freetubeYatteeDiv = document.getElementById("freetube-yatte");
-let youtubeEmbedFrontend = document.getElementById("youtube-embed-frontend");
-let onlyEmbeddedVideo = document.getElementById("only-embed");
-let protoco = document.getElementById("protocol");
+const enable = document.getElementById("youtube-enable");
+const frontend = document.getElementById("youtube-frontend");
+const youtubeEmbedFrontend = document.getElementById("youtube-embed_frontend");
+const onlyEmbeddedVideo = document.getElementById("youtube-redirect_type");
+const protocol = document.getElementById("youtube-protocol");
+const youtube = document.getElementById('youtube_page');
+
+const invidiousDiv = document.getElementById("invidious");
+const pipedDiv = document.getElementById("piped");
+const pipedMaterialDiv = document.getElementById("pipedMaterial");
+const freetubeYatteeDiv = document.getElementById("freetube-yatte");
 
 function changeFrontendsSettings() {
-    let frontend = youtubeFrontend.value;
-
-    if (frontend == 'invidious') {
+    if (frontend.value == 'invidious') {
         invidiousDiv.style.display = 'block';
         pipedDiv.style.display = 'none';
         pipedMaterialDiv.style.display = 'none';
         freetubeYatteeDiv.style.display = 'none';
     }
-    else if (frontend == 'piped') {
+    else if (frontend.value == 'piped') {
         invidiousDiv.style.display = 'none';
         pipedDiv.style.display = 'block';
         pipedMaterialDiv.style.display = 'none';
         freetubeYatteeDiv.style.display = 'none';
     }
-    else if (frontend == 'pipedMaterial') {
+    else if (frontend.value == 'pipedMaterial') {
         invidiousDiv.style.display = 'none';
         pipedDiv.style.display = 'none';
         pipedMaterialDiv.style.display = 'block';
         freetubeYatteeDiv.style.display = 'none';
     }
-    else if (frontend == 'freetube' || frontend == 'yatte') {
+    else if (frontend.value == 'freetube' || frontend.value == 'yatte') {
         invidiousDiv.style.display = 'none';
         pipedDiv.style.display = 'none';
         pipedMaterialDiv.style.display = 'none';
@@ -74,7 +74,7 @@ function changeProtocolSettings() {
     const normalInvidiousDiv = document.getElementById('invidious').getElementsByClassName("normal")[0];
     const torInvidiousDiv = document.getElementById('invidious').getElementsByClassName("tor")[0];
 
-    if (protoco.value == 'normal') {
+    if (protocol.value == 'normal') {
         normalInvidiousDiv.style.display = 'block';
         torInvidiousDiv.style.display = 'none';
 
@@ -84,7 +84,7 @@ function changeProtocolSettings() {
         normalPipedMaterialDiv.style.display = 'block';
         torPipedMaterialDiv.style.display = 'none';
     }
-    else if (protoco.value == 'tor') {
+    else if (protocol.value == 'tor') {
         normalInvidiousDiv.style.display = 'none';
         torInvidiousDiv.style.display = 'block';
 
@@ -96,13 +96,13 @@ function changeProtocolSettings() {
     }
 }
 
-document.addEventListener("change", async () => {
-    await browser.storage.local.set({
-        disableYoutube: !disableYoutube.checked,
-        youtubeFrontend: youtubeFrontend.value,
+youtube.addEventListener("change", () => {
+    browser.storage.local.set({
+        disableYoutube: !enable.checked,
+        youtubeFrontend: frontend.value,
         youtubeEmbedFrontend: youtubeEmbedFrontend.value,
         onlyEmbeddedVideo: onlyEmbeddedVideo.value,
-        youtubeProtocol: protoco.value,
+        youtubeProtocol: protocol.value,
     })
     changeProtocolSettings();
     changeYoutubeEmbedFrontendsSettings();
@@ -120,34 +120,18 @@ browser.storage.local.get(
         "youtubeProtocol",
     ],
     r => {
-        disableYoutube.checked = !r.disableYoutube;
+        enable.checked = !r.disableYoutube;
         onlyEmbeddedVideo.value = r.onlyEmbeddedVideo;
-        youtubeFrontend.value = r.youtubeFrontend;
-        protoco.value = r.youtubeProtocol;
+        frontend.value = r.youtubeFrontend;
+        protocol.value = r.youtubeProtocol;
 
         changeFrontendsSettings();
         changeProtocolSettings();
 
         youtubeEmbedFrontend.value = youtubeEmbedFrontend.value
-        if (r.youtubeFrontend == "freetube" || r.youtubeFrontend == "yatte") changeYoutubeEmbedFrontendsSettings()
+        if (r.frontend == "freetube" || r.frontend == "yatte") changeYoutubeEmbedFrontendsSettings()
     }
 );
-
-const invidiousForm = invidiousDiv.getElementsByTagName('form')[0];
-const invidiousCookies = invidiousForm.getElementsByTagName('input')[0];
-invidiousForm.addEventListener('submit', async event => {
-    event.preventDefault();
-    const url = new URL(invidiousCookies.value);
-    youtubeHelper.initInvidiousCookies(url);
-});
-
-// const pipedForm = pipedDiv.getElementsByTagName('form')[0];
-// const pipedCookies = pipedForm.getElementsByTagName('input')[0];
-// pipedForm.addEventListener('submit', async event => {
-//     event.preventDefault();
-//     const url = new URL(pipedCookies.value);
-//     youtubeHelper.applyPipedLocalStorage(url);
-// });
 
 utils.processDefaultCustomInstances('youtube', 'invidious', 'normal', document);
 utils.processDefaultCustomInstances('youtube', 'invidious', 'tor', document);

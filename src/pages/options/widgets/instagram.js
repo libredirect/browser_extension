@@ -1,20 +1,13 @@
-import instagramHelper from "../../../assets/javascripts/instagram.js";
 import utils from "../../../assets/javascripts/utils.js";
 
-const disable = document.getElementById("disable-bibliogram");
-const protocol = document.getElementById("protocol");
+const enable = document.getElementById("instagram-enable");
+const protocol = document.getElementById("instagram-protocol");
 
-document.addEventListener("change", async () => {
-    await browser.storage.local.set({
-        disableInstagram: disable.checked,
-        instagramProtocol: protocol.value,
-    })
-    changeProtocolSettings();
-})
+const instagram = document.getElementById('instagram_page')
+const normalDiv = instagram.getElementsByClassName("normal")[0];
+const torDiv = instagram.getElementsByClassName("tor")[0];
 
 function changeProtocolSettings() {
-    let normalDiv = document.getElementsByClassName("normal")[0];
-    let torDiv = document.getElementsByClassName("tor")[0];
     if (protocol.value == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';
@@ -31,10 +24,20 @@ browser.storage.local.get(
         "instagramProtocol"
     ],
     r => {
-        disable.checked = !r.disableInstagram;
+        enable.checked = !r.disableInstagram;
         protocol.value = r.instagramProtocol;
         changeProtocolSettings();
+    }
+)
+
+instagram.addEventListener("change", () => {
+    changeProtocolSettings();
+    browser.storage.local.set({
+        disableInstagram: enable.checked,
+        instagramProtocol: protocol.value,
     })
+})
+
 
 utils.processDefaultCustomInstances('instagram', 'bibliogram', 'normal', document);
 utils.processDefaultCustomInstances('instagram', 'bibliogram', 'tor', document);

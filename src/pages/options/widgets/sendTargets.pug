@@ -4,11 +4,11 @@ section#sendTargets_page.option-block
     hr
     .some-block.option-block
         h4(data-localise="__MSG_enable__") Enable
-        input#disable-sendTargets(type="checkbox")
+        input#sendTargets-enable(type="checkbox")
 
     .some-block.option-block
         h4(data-localise="__MSG_protocol__") Protocol
-        select#protocol
+        select#sendTargets-protocol
             option(value="normal" data-localise="__MSG_normal__") Normal
             option(value="tor" data-localise="__MSG_tor__") Tor
 
@@ -18,7 +18,7 @@ section#sendTargets_page.option-block
             include ../../widgets/instances.pug
             +instances('https://send.com')
             include ../../widgets/latency.pug
-            +latency()
+            +latency('send')
         .tor
             include ../../widgets/instances.pug
             +instances('https://send.onion')

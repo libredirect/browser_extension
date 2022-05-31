@@ -15,7 +15,7 @@ with open('ar/messages.json') as data:
 
 
 en_json = {}
-with open('en/messages.json') as data:
+with open('ja/messages.json') as data:
     en_json = json.load(data)
 
 
@@ -39,5 +39,5 @@ for item in add_keys:
         "description": ""
     }
 
-with open('en/messages.json', 'w') as outfile:
+with open('ja/messages.json', 'w') as outfile:
     outfile.write(json.dumps(en_json, ensure_ascii=False, indent=2))

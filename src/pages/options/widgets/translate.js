@@ -1,12 +1,12 @@
-import translateHelper from "../../../assets/javascripts/translate/translate.js";
 import utils from "../../../assets/javascripts/utils.js";
 
-let disable = document.getElementById("disable-simplyTranslate");
-let simplyTranslateDiv = document.getElementById("simplyTranslate");
-let lingvaDiv = document.getElementById("lingva");
-let frontend = document.getElementById("translate-frontend");
-let protocol = document.getElementById("protocol");
+const enable = document.getElementById("translate-enable");
+const frontend = document.getElementById("translate-frontend");
+const protocol = document.getElementById("translate-protocol");
+const simplyTranslateDiv = document.getElementById("simplyTranslate");
+const lingvaDiv = document.getElementById("lingva");
 
+const translate = document.getElementById('translate_page');
 
 function changeFrontendsSettings() {
     if (frontend.value == 'simplyTranslate') {
@@ -20,11 +20,11 @@ function changeFrontendsSettings() {
 }
 
 function changeProtocolSettings() {
-    let normalSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("normal")[0];
-    let torSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("tor")[0];
+    const normalSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("normal")[0];
+    const torSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("tor")[0];
 
-    let normalLingvaDiv = document.getElementById("lingva").getElementsByClassName("normal")[0];
-    let torLingvaDiv = document.getElementById("lingva").getElementsByClassName("tor")[0];
+    const normalLingvaDiv = document.getElementById("lingva").getElementsByClassName("normal")[0];
+    const torLingvaDiv = document.getElementById("lingva").getElementsByClassName("tor")[0];
 
     if (protocol.value == 'normal') {
         normalSimplyTranslateDiv.style.display = 'block';
@@ -47,7 +47,7 @@ browser.storage.local.get(
         "translateProtocol",
     ],
     r => {
-        disable.checked = !r.translateDisable;
+        enable.checked = !r.translateDisable;
         frontend.value = r.translateFrontend;
         protocol.value = r.translateProtocol;
         changeFrontendsSettings();
@@ -55,9 +55,9 @@ browser.storage.local.get(
     }
 );
 
-document.addEventListener("change", () => {
+translate.addEventListener("change", () => {
     browser.storage.local.set({
-        translateDisable: !disable.checked,
+        translateDisable: !enable.checked,
         translateFrontend: frontend.value,
         translateProtocol: protocol.value,
     })

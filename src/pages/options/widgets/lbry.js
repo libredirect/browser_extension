@@ -1,20 +1,13 @@
-import lbryHelper from "../../../assets/javascripts/lbry.js";
 import utils from "../../../assets/javascripts/utils.js";
 
-let disable = document.getElementById("disable-lbry");
-let protocol = document.getElementById("protocol")
+const enable = document.getElementById("lbry-enable");
+const protocol = document.getElementById("lbry-protocol")
 
-document.addEventListener("change", async () => {
-    await browser.storage.local.set({
-        disableLbryTargets: !lbryHelper.checked,
-        lbryTargetsProtocol: protocol.value,
-    });
-    changeProtocolSettings()
-})
+const lbry = document.getElementById('lbry_page');
+const normalDiv = lbry.getElementsByClassName("normal")[0];
+const torDiv = lbry.getElementsByClassName("tor")[0];
 
 function changeProtocolSettings() {
-    let normalDiv = document.getElementsByClassName("normal")[0];
-    let torDiv = document.getElementsByClassName("tor")[0];
     if (protocol.value == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';
@@ -31,11 +24,19 @@ browser.storage.local.get(
         "lbryTargetsProtocol"
     ],
     r => {
-        disable.checked = !r.disableLbryTargets;
+        enable.checked = !r.disableLbryTargets;
         protocol.value = r.lbryTargetsProtocol;
         changeProtocolSettings();
     }
 )
+
+lbry.addEventListener("change", () => {
+    changeProtocolSettings()
+    browser.storage.local.set({
+        disableLbryTargets: !enable.checked,
+        lbryTargetsProtocol: protocol.value,
+    });
+})
 
 utils.processDefaultCustomInstances('lbryTargets', 'librarian', 'normal', document);
 utils.processDefaultCustomInstances('lbryTargets', 'librarian', 'tor', document);

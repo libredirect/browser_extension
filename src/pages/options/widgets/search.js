@@ -1,55 +1,15 @@
-import searchHelper from "../../../assets/javascripts/search.js";
 import utils from "../../../assets/javascripts/utils.js";
 
-let searxDiv = document.getElementById("searx");
-let searxngDiv = document.getElementById("searxng");
-let whoogleDiv = document.getElementById("whoogle");
+const searxDiv = document.getElementById("searx");
+const searxngDiv = document.getElementById("searxng");
+const whoogleDiv = document.getElementById("whoogle");
 
-let disable = document.getElementById("disable-search");
-let frontend = document.getElementById("search-frontend");
-let protocol = document.getElementById("protocol")
+const enable = document.getElementById("search-enable");
+const frontend = document.getElementById("search-frontend");
+const protocol = document.getElementById("search-protocol");
 
-const searxngForm = searxngDiv.getElementsByTagName('form')[0];
-const searxngCookies = searxngForm.getElementsByTagName('input')[0];
-searxngForm.addEventListener('submit', async event => {
-  event.preventDefault();
-  const url = new URL(searxngCookies.value);
-  searchHelper.initSearxngCookies(url);
-});
+const search = document.getElementById('search_page');
 
-const searxForm = searxDiv.getElementsByTagName('form')[0];
-const searxCookies = searxForm.getElementsByTagName('input')[0];
-searxForm.addEventListener('submit', async event => {
-  event.preventDefault();
-  const url = new URL(searxCookies.value);
-  searchHelper.initSearxCookies(url);
-});
-
-browser.storage.local.get(
-  [
-    "disableSearch",
-    "searchFrontend",
-    "searchProtocol",
-  ],
-  r => {
-    disable.checked = !r.disableSearch;
-    frontend.value = r.searchFrontend;
-    protocol.value = r.searchProtocol;
-
-    changeFrontendsSettings();
-    changeProtocolSettings();
-  }
-);
-
-document.addEventListener("change", async () => {
-  await browser.storage.local.set({
-    disableSearch: !disable.checked,
-    searchFrontend: frontend.value,
-    searchProtocol: protocol.value,
-  });
-  changeFrontendsSettings(frontend.value);
-  changeProtocolSettings(protocol.value);
-})
 
 function changeFrontendsSettings() {
   let SearxWhoogleElement = document.getElementById("searx-whoogle");
@@ -74,17 +34,17 @@ function changeFrontendsSettings() {
 }
 
 function changeProtocolSettings() {
-  let normalsearxDiv = searxDiv.getElementsByClassName("normal")[0];
-  let torsearxDiv = searxDiv.getElementsByClassName("tor")[0];
-  let i2psearxDiv = searxDiv.getElementsByClassName("i2p")[0];
+  const normalsearxDiv = searxDiv.getElementsByClassName("normal")[0];
+  const torsearxDiv = searxDiv.getElementsByClassName("tor")[0];
+  const i2psearxDiv = searxDiv.getElementsByClassName("i2p")[0];
 
-  let normalsearxngDiv = searxngDiv.getElementsByClassName("normal")[0];
-  let torsearxngDiv = searxngDiv.getElementsByClassName("tor")[0];
-  let i2psearxngDiv = searxngDiv.getElementsByClassName("i2p")[0];
+  const normalsearxngDiv = searxngDiv.getElementsByClassName("normal")[0];
+  const torsearxngDiv = searxngDiv.getElementsByClassName("tor")[0];
+  const i2psearxngDiv = searxngDiv.getElementsByClassName("i2p")[0];
 
-  let normalwhoogleDiv = whoogleDiv.getElementsByClassName("normal")[0];
-  let torwhoogleDiv = whoogleDiv.getElementsByClassName("tor")[0];
-  let i2pwhoogleDiv = whoogleDiv.getElementsByClassName("i2p")[0];
+  const normalwhoogleDiv = whoogleDiv.getElementsByClassName("normal")[0];
+  const torwhoogleDiv = whoogleDiv.getElementsByClassName("tor")[0];
+  const i2pwhoogleDiv = whoogleDiv.getElementsByClassName("i2p")[0];
 
   if (protocol.value == 'normal') {
     normalsearxDiv.style.display = 'block';
@@ -126,6 +86,32 @@ function changeProtocolSettings() {
     i2pwhoogleDiv.style.display = 'block';
   }
 }
+
+browser.storage.local.get(
+  [
+    "disableSearch",
+    "searchFrontend",
+    "searchProtocol",
+  ],
+  r => {
+    enable.checked = !r.disableSearch;
+    frontend.value = r.searchFrontend;
+    protocol.value = r.searchProtocol;
+
+    changeFrontendsSettings();
+    changeProtocolSettings();
+  }
+);
+
+search.addEventListener("change", () => {
+  browser.storage.local.set({
+    disableSearch: !enable.checked,
+    searchFrontend: frontend.value,
+    searchProtocol: protocol.value,
+  });
+  changeFrontendsSettings(frontend.value);
+  changeProtocolSettings(protocol.value);
+})
 
 utils.processDefaultCustomInstances('search', 'searx', 'normal', document);
 utils.processDefaultCustomInstances('search', 'searx', 'tor', document);

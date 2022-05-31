@@ -1,23 +1,23 @@
-import youtubeMusicHelper from "../../../assets/javascripts/youtubeMusic.js";
 import utils from "../../../assets/javascripts/utils.js";
 
-let disableYoutubeMusicElement = document.getElementById("disable-beatbump");
+let enable = document.getElementById("youtubeMusic-enable");
+const youtubeMusic = document.getElementById('youtubeMusic_page');
 
 browser.storage.local.get(
     [
         "disableYoutubeMusic",
     ],
     r => {
-        disableYoutubeMusicElement.checked = !r.disableYoutubeMusic;
+        enable.checked = !r.disableYoutubeMusic;
     }
 );
 
-document.addEventListener("change", async () => {
-    await browser.storage.local.set({
-        disableYoutubeMusic: !disableYoutubeMusicElement.checked,
+youtubeMusic.addEventListener("change", () => {
+    browser.storage.local.set({
+        disableYoutubeMusic: !enable.checked,
     })
 })
 
 utils.processDefaultCustomInstances('youtubeMusic', 'beatbump', 'normal', document);
 
-utils.latency('youtubeMusic', 'beatbump', document, location)
+utils.latency('youtubeMusic', 'beatbump', document, location, true)

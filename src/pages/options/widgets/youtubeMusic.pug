@@ -4,7 +4,7 @@ section#youtubeMusic_page.option-block
     hr
     .some-block.option-block
         h4(data-localise="__MSG_enable__") Enable
-        input#disable-beatbump(type="checkbox")
+        input#youtubeMusic-enable(type="checkbox")
 
     #beatbump
         hr
@@ -12,6 +12,6 @@ section#youtubeMusic_page.option-block
             include ../../widgets/instances.pug
             +instances('https://beatbump.wewe')
             include ../../widgets/latency.pug
-            +latency()
+            +latency('beatbump')
 
     script(type="module" src="./widgets/youtubeMusic.js")

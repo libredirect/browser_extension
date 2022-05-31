@@ -203,6 +203,10 @@
     "message": "نوع التوجيه",
     "description": "used in the settings page"
   },
+  "embeddedVids": {
+    "message": "الواجهة الأمامية للفيديوهات المضمنة",
+    "description": "used in the settings page"
+  },
   "both": {
     "message": "الإثنين",
     "description": "used in the settings page"

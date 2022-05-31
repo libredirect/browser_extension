@@ -25,7 +25,7 @@ browser.runtime.onInstalled.addListener(
   async details => {
     // if (details.reason == 'install') {
     if (details.reason == 'install' || details.reason == "update") {
-      if (details.reason == "update") browser.tabs.create({ url: browser.extension.getURL("/pages/background/reset_warning.html") });
+      if (details.reason == "update") browser.tabs.create({ url: browser.runtime.getURL("/pages/background/reset_warning.html") });
       fetch('/instances/blocklist.json').then(response => response.text()).then(async data => {
         await browser.storage.local.clear();
         await browser.storage.local.set({ cloudflareList: JSON.parse(data) })
@@ -64,7 +64,7 @@ let incognitoInit = false;
 browser.tabs.onCreated.addListener(
   tab => {
     if (!incognitoInit && tab.incognito) {
-      browser.tabs.create({ url: browser.extension.getURL("/pages/background/incognito.html") });
+      browser.tabs.create({ url: browser.runtime.getURL("/pages/background/incognito.html") });
       incognitoInit = true;
     }
   }

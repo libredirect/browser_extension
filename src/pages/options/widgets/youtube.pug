@@ -4,7 +4,7 @@ section#youtube_page.option-block
     hr
     .some-block.option-block
         h4(data-localise="__MSG_enable__") Enable
-        input#disable-invidious(type="checkbox")
+        input#youtube-enable(type="checkbox")
 
     .some-block.option-block
         h4(data-localise="__MSG_frontend__") Frontend
@@ -18,7 +18,7 @@ section#youtube_page.option-block
     #freetube-yatte
         .some-block.option-block
             h4(data-localise="__MSG_embeddedVids__") Embedded Videos Frontend
-            select#youtube-embed-frontend
+            select#youtube-embed_frontend
                 option(value="invidious") Invidious
                 option(value="piped") Piped
                 option(value="pipedMaterial") Piped-Material
@@ -27,13 +27,13 @@ section#youtube_page.option-block
     #invidious-piped-pipedMaterial
         .some-block.option-block
             h4(data-localise="__MSG_protocol__") Protocol
-            select#protocol
+            select#youtube-protocol
                 option(value="normal" data-localise="__MSG_normal__") Normal
                 option(value="tor" data-localise="__MSG_tor__") Tor
 
         .some-block.option-block
             h4(data-localise="__MSG_redirectType__") Redirect Type
-            select#only-embed
+            select#youtube-redirect_type
                 option(value="both" data-localise="__MSG_both__") both
                 option(value="onlyEmbedded" data-localise="__MSG_onlyEmbedded__") Only Embedded
                 option(value="onlyNotEmbedded" data-localise="__MSG_onlyNotEmbedded__") Only Not Embedded
@@ -46,27 +46,22 @@ section#youtube_page.option-block
             include ../../widgets/latency.pug
             +latency('invidious')
         .tor
-            include ../../widgets/instances.pug
             +instances('https://invidious.onion')
 
     #piped
         hr
         .normal
-            include ../../widgets/instances.pug
             +instances('https://piped.com')
             +latency('piped')
         .tor
-            include ../../widgets/instances.pug
             +instances('https://piped.onion')
 
     #pipedMaterial
         hr
         .normal
-            include ../../widgets/instances.pug
             +instances('https://piped-material.com')
             +latency('pipedMaterial')
         .tor
-            include ../../widgets/instances.pug
             +instances('https://piped-material.onion')
 
 

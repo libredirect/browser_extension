@@ -5,7 +5,7 @@ section#search_page.option-block
     hr
     .some-block.option-block
         h4(data-localise="__MSG_enable__") Enable
-        input#disable-search(type="checkbox")
+        input#search-enable(type="checkbox")
 
     .some-block.option-block
         h4(data-localise="__MSG_frontend__") Frontend
@@ -14,11 +14,10 @@ section#search_page.option-block
             option(value="searx") SearX
             option(value="whoogle") Whoogle
 
-
     #searx-whoogle
         .some-block.option-block
             h4(data-localise="__MSG_protocol__") Protocol
-            select#protocol
+            select#search-protocol
                 option(value="normal" data-localise="__MSG_normal__") Normal
                 option(value="tor" data-localise="__MSG_tor__") Tor
                 option(value="i2p" data-localise="__MSG_i2p__") I2P

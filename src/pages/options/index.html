@@ -235,7 +235,7 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-invidious" type="checkbox">
+          <input id="youtube-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_frontend__">Frontend</h4>
@@ -250,7 +250,7 @@
         <div id="freetube-yatte">
           <div class="some-block option-block">
             <h4 data-localise="__MSG_embeddedVids__">Embedded Videos Frontend</h4>
-            <select id="youtube-embed-frontend">
+            <select id="youtube-embed_frontend">
               <option value="invidious">Invidious</option>
               <option value="piped">Piped</option>
               <option value="pipedMaterial">Piped-Material</option>
@@ -261,14 +261,14 @@
         <div id="invidious-piped-pipedMaterial">
           <div class="some-block option-block">
             <h4 data-localise="__MSG_protocol__">Protocol</h4>
-            <select id="protocol">
+            <select id="youtube-protocol">
               <option value="normal" data-localise="__MSG_normal__">Normal</option>
               <option value="tor" data-localise="__MSG_tor__">Tor</option>
             </select>
           </div>
           <div class="some-block option-block">
             <h4 data-localise="__MSG_redirectType__">Redirect Type</h4>
-            <select id="only-embed">
+            <select id="youtube-redirect_type">
               <option value="both" data-localise="__MSG_both__">both</option>
               <option value="onlyEmbedded" data-localise="__MSG_onlyEmbedded__">Only Embedded</option>
               <option value="onlyNotEmbedded" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
@@ -297,13 +297,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-invidious-label" for="latency-invidious"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency-invidious" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-invidious-label" for="latency-invidious"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-invidious" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -349,13 +351,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-piped-label" for="latency-piped"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency-piped" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-piped-label" for="latency-piped"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-piped" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -401,13 +405,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-pipedMaterial-label" for="latency-pipedMaterial"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency-pipedMaterial" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-pipedMaterial-label" for="latency-pipedMaterial"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-pipedMaterial" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -440,7 +446,7 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-beatbump" type="checkbox">
+          <input id="youtubeMusic-enable" type="checkbox">
         </div>
         <div id="beatbump">
           <hr>
@@ -464,13 +470,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-label" for="latency"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-beatbump-label" for="latency-beatbump"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-beatbump" style="display:none;">
+                        </div>
           </div>
         </div>
         <script type="module" src="./widgets/youtubeMusic.js"></script>
@@ -482,11 +490,11 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-nitter" type="checkbox">
+          <input id="twitter-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="protocol">
+          <select id="twitter-protocol">
             <option value="normal" data-localise="__MSG_normal__">Normal</option>
             <option value="tor" data-localise="__MSG_tor__">Tor</option>
           </select>
@@ -513,13 +521,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-label" for="latency"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-nitter-label" for="latency-nitter"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-nitter" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -552,11 +562,11 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-bibliogram" type="checkbox">
+          <input id="instagram-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="protocol">
+          <select id="instagram-protocol">
             <option value="normal" data-localise="__MSG_normal__">Normal</option>
             <option value="tor" data-localise="__MSG_tor__">Tor</option>
           </select>
@@ -583,13 +593,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-label" for="latency"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-bibliogram-label" for="latency-bibliogram"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-bibliogram" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -622,11 +634,11 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-tiktok" type="checkbox">
+          <input id="tiktok-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="protocol">
+          <select id="tiktok-protocol">
             <option value="normal" data-localise="__MSG_normal__">Normal</option>
             <option value="tor" data-localise="__MSG_tor__">Tor</option>
           </select>
@@ -653,13 +665,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-label" for="latency"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-proxiTok-label" for="latency-proxiTok"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-proxiTok" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -692,7 +706,7 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-reddit" type="checkbox">
+          <input id="reddit-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 id="frontend" data-localise="__MSG_frontend__">Frontend</h4>
@@ -703,7 +717,7 @@
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="protocol">
+          <select id="reddit-protocol">
             <option value="normal" data-localise="__MSG_normal__">Normal</option>
             <option value="tor" data-localise="__MSG_tor__">Tor</option>
           </select>
@@ -730,13 +744,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-libreddit-label" for="latency-libreddit"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency-libreddit" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-libreddit-label" for="latency-libreddit"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-libreddit" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -782,13 +798,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-teddit-label" for="latency-teddit"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency-teddit" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-teddit-label" for="latency-teddit"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-teddit" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -821,11 +839,11 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-imgur" type="checkbox">
+          <input id="imgur-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="protocol">
+          <select id="imgur-protocol">
             <option value="normal" data-localise="__MSG_normal__">Normal</option>
             <option value="tor" data-localise="__MSG_tor__">Tor</option>
             <option value="i2p" data-localise="__MSG_i2p__">I2P</option>
@@ -853,13 +871,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-label" for="latency"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-rimgo-label" for="latency-rimgo"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-rimgo" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -913,11 +933,11 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-wikipedia" type="checkbox">
+          <input id="wikipedia-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="protocol">
+          <select id="wikipedia-protocol">
             <option value="normal" data-localise="__MSG_normal__">Normal</option>
             <option value="tor" data-localise="__MSG_tor__">Tor</option>
             <option value="i2p" data-localise="__MSG_i2p__">I2P</option>
@@ -945,13 +965,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-label" for="latency"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-wikiless-label" for="latency-wikiless"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-wikiless" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -1005,11 +1027,11 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-medium" type="checkbox">
+          <input id="medium-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="protocol">
+          <select id="medium-protocol">
             <option value="normal" data-localise="__MSG_normal__">Normal</option>
             <option value="tor" data-localise="__MSG_tor__">Tor</option>
           </select>
@@ -1036,13 +1058,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-label" for="latency"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-scribe-label" for="latency-scribe"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-scribe" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -1075,11 +1099,11 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-peertube" type="checkbox">
+          <input id="peertube-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="protocol">
+          <select id="peertube-protocol">
             <option value="normal" data-localise="__MSG_normal__">Normal</option>
             <option value="tor" data-localise="__MSG_tor__">Tor</option>
           </select>
@@ -1106,13 +1130,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-label" for="latency"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-simpleertube-label" for="latency-simpleertube"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-simpleertube" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -1145,11 +1171,11 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-lbry" type="checkbox">
+          <input id="lbry-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="protocol">
+          <select id="lbry-protocol">
             <option value="normal" data-localise="__MSG_normal__">Normal</option>
             <option value="tor" data-localise="__MSG_tor__">Tor</option>
           </select>
@@ -1176,13 +1202,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-label" for="latency"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-librarian-label" for="latency-librarian"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-librarian" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -1215,7 +1243,7 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-search" type="checkbox">
+          <input id="search-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_frontend__">Frontend</h4>
@@ -1228,7 +1256,7 @@
         <div id="searx-whoogle">
           <div class="some-block option-block">
             <h4 data-localise="__MSG_protocol__">Protocol</h4>
-            <select id="protocol">
+            <select id="search-protocol">
               <option value="normal" data-localise="__MSG_normal__">Normal</option>
               <option value="tor" data-localise="__MSG_tor__">Tor</option>
               <option value="i2p" data-localise="__MSG_i2p__">I2P</option>
@@ -1260,13 +1288,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-searx-label" for="latency-searx"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency-searx" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-searx-label" for="latency-searx"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-searx" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -1333,13 +1363,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-searxng-label" for="latency-searxng"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency-searxng" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-searxng-label" for="latency-searxng"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-searxng" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -1406,13 +1438,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-whoogle-label" for="latency-whoogle"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency-whoogle" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-whoogle-label" for="latency-whoogle"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-whoogle" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -1466,7 +1500,7 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-simplyTranslate" type="checkbox">
+          <input id="translate-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_frontend__">Frontend</h4>
@@ -1477,7 +1511,7 @@
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="protocol">
+          <select id="translate-protocol">
             <option value="normal" data-localise="__MSG_normal__">Normal</option>
             <option value="tor" data-localise="__MSG_tor__">Tor</option>
           </select>
@@ -1504,13 +1538,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-simplyTranslate-label" for="latency-simplyTranslate"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency-simplyTranslate" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-simplyTranslate-label" for="latency-simplyTranslate"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-simplyTranslate" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -1555,13 +1591,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-lingva-label" for="latency-lingva"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency-lingva" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-lingva-label" for="latency-lingva"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-lingva" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">
@@ -1594,7 +1632,7 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-osm" type="checkbox">
+          <input id="maps-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_frontend__">Frontend</h4>
@@ -1625,13 +1663,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-label" for="latency"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-facilmap-label" for="latency-facilmap"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-facilmap" style="display:none;">
+                        </div>
           </div>
         </div>
         <script type="module" src="./widgets/maps.js"></script>
@@ -1643,11 +1683,11 @@
         <hr>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
-          <input id="disable-sendTargets" type="checkbox">
+          <input id="sendTargets-enable" type="checkbox">
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="protocol">
+          <select id="sendTargets-protocol">
             <option value="normal" data-localise="__MSG_normal__">Normal</option>
             <option value="tor" data-localise="__MSG_tor__">Tor</option>
           </select>
@@ -1674,13 +1714,15 @@
                           </div>
                         </form>
                         <div class="checklist custom-checklist"></div>
-                        <label class="button button-inline" id="latency-label" for="latency"> 
-                          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
-                            <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
-                          </svg>&nbsp;
-                          <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
-                        </label>
-                        <input class="button button-inline" id="latency" style="display:none;">
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-send-label" for="latency-send"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-send" style="display:none;">
+                        </div>
           </div>
           <div class="tor">
                         <div class="some-block option-block">

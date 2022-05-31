@@ -1,33 +1,13 @@
-import wikipediaHelper from "../../../assets/javascripts/wikipedia.js";
 import utils from "../../../assets/javascripts/utils.js";
 
-let disableWikipediaElement = document.getElementById("disable-wikipedia");
-let protocolElement = document.getElementById("protocol");
-
-browser.storage.local.get(
-    [
-        "disableWikipedia",
-        "wikipediaProtocol",
-    ],
-    r => {
-        disableWikipediaElement.checked = !r.disableWikipedia;
-        protocolElement.value = r.wikipediaProtocol;
-        changeProtocolSettings(r.wikipediaProtocol);
-    }
-)
-
-document.addEventListener("change", async () => {
-    await browser.storage.local.set({
-        disableWikipedia: !disableWikipediaElement.checked,
-        wikipediaProtocol: protocolElement.value,
-    })
-    changeProtocolSettings(protocolElement.value)
-})
+const enable = document.getElementById("wikipedia-enable");
+const protocolElement = document.getElementById("wikipedia-protocol");
+const wikipedia = document.getElementById('wikipedia_page');
 
 function changeProtocolSettings(protocol) {
-    let normalDiv = document.getElementsByClassName("normal")[0];
-    let torDiv = document.getElementsByClassName("tor")[0];
-    let i2pDiv = document.getElementsByClassName("i2p")[0];
+    const normalDiv = wikipedia.getElementsByClassName("normal")[0];
+    const torDiv = wikipedia.getElementsByClassName("tor")[0];
+    const i2pDiv = wikipedia.getElementsByClassName("i2p")[0];
     if (protocol == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';
@@ -44,6 +24,27 @@ function changeProtocolSettings(protocol) {
         i2pDiv.style.display = 'block';
     }
 }
+
+browser.storage.local.get(
+    [
+        "disableWikipedia",
+        "wikipediaProtocol",
+    ],
+    r => {
+        enable.checked = !r.disableWikipedia;
+        protocolElement.value = r.wikipediaProtocol;
+        changeProtocolSettings(r.wikipediaProtocol);
+    }
+)
+
+wikipedia.addEventListener("change", () => {
+    browser.storage.local.set({
+        disableWikipedia: !enable.checked,
+        wikipediaProtocol: protocolElement.value,
+    })
+    changeProtocolSettings(protocolElement.value)
+})
+
 utils.processDefaultCustomInstances('wikipedia', 'wikiless', 'normal', document);
 utils.processDefaultCustomInstances('wikipedia', 'wikiless', 'tor', document);
 utils.processDefaultCustomInstances('wikipedia', 'wikiless', 'i2p', document);

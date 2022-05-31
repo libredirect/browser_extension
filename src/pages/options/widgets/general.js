@@ -65,7 +65,7 @@ importSettingsElement.addEventListener("change",
         "cloudflareList" in data &&
         "imgurRedirects" in data
       ) {
-        console.log('importing a valid file...');
+        await browser.storage.local.clear();
         await browser.storage.local.set({ ...data })
         location.reload();
       } else

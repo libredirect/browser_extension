@@ -1,45 +1,18 @@
-import redditHelper from "../../../assets/javascripts/reddit.js";
 import utils from "../../../assets/javascripts/utils.js";
 
-let libredditDivElement = document.getElementById("libreddit")
-let tedditDivElement = document.getElementById("teddit")
+const libredditDivElement = document.getElementById("libreddit")
+const tedditDivElement = document.getElementById("teddit")
 
-let disableRedditElement = document.getElementById("disable-reddit");
-let frontend = document.getElementById("reddit-frontend");
-let protocol = document.getElementById("protocol")
-
-document.addEventListener("change", () => {
-    browser.storage.local.set({
-        disableReddit: !disableRedditElement.checked,
-        redditProtocol: protocol.value,
-        redditFrontend: frontend.value,
-    });
-    changeFrontendsSettings();
-    changeProtocolSettings();
-})
-
-const libredditForm = libredditDivElement.getElementsByTagName('form')[0];
-const libredditCookies = libredditForm.getElementsByTagName('input')[0];
-libredditForm.addEventListener('submit', async event => {
-    event.preventDefault();
-    const url = new URL(libredditCookies.value);
-    redditHelper.initLibredditCookies(url);
-});
-
-const tedditForm = tedditDivElement.getElementsByTagName('form')[0];
-const tedditCookies = tedditForm.getElementsByTagName('input')[0];
-tedditForm.addEventListener('submit', async event => {
-    event.preventDefault();
-    const url = new URL(tedditCookies.value);
-    redditHelper.initTedditCookies(url);
-});
+const enable = document.getElementById("reddit-enable");
+const frontend = document.getElementById("reddit-frontend");
+const protocol = document.getElementById("reddit-protocol");
+const reddit = document.getElementById('reddit_page');
 
 function changeProtocolSettings() {
-    let normalLibredditDiv = libredditDivElement.getElementsByClassName("normal")[0];
-    let torLibredditDiv = libredditDivElement.getElementsByClassName("tor")[0];
-
-    let normalTedditDiv = tedditDivElement.getElementsByClassName("normal")[0];
-    let torTedditDiv = tedditDivElement.getElementsByClassName("tor")[0];
+    const normalLibredditDiv = libredditDivElement.getElementsByClassName("normal")[0];
+    const torLibredditDiv = libredditDivElement.getElementsByClassName("tor")[0];
+    const normalTedditDiv = tedditDivElement.getElementsByClassName("normal")[0];
+    const torTedditDiv = tedditDivElement.getElementsByClassName("tor")[0];
     if (protocol.value == 'normal') {
         normalLibredditDiv.style.display = 'block';
         normalTedditDiv.style.display = 'block';
@@ -53,6 +26,7 @@ function changeProtocolSettings() {
         torLibredditDiv.style.display = 'block';
     }
 }
+
 function changeFrontendsSettings() {
     if (frontend.value == 'libreddit') {
         libredditDivElement.style.display = 'block';
@@ -69,17 +43,25 @@ browser.storage.local.get(
         "disableReddit",
         "redditProtocol",
         "redditFrontend",
-
-        "enableLibredditCustomSettings",
     ],
     r => {
-        disableRedditElement.checked = !r.disableReddit
+        enable.checked = !r.disableReddit
         protocol.value = r.redditProtocol
         frontend.value = r.redditFrontend
         changeFrontendsSettings();
         changeProtocolSettings();
     }
 )
+
+reddit.addEventListener("change", () => {
+    browser.storage.local.set({
+        disableReddit: !enable.checked,
+        redditProtocol: protocol.value,
+        redditFrontend: frontend.value,
+    });
+    changeFrontendsSettings();
+    changeProtocolSettings();
+})
 
 utils.processDefaultCustomInstances('reddit', 'libreddit', 'normal', document);
 utils.processDefaultCustomInstances('reddit', 'libreddit', 'tor', document);

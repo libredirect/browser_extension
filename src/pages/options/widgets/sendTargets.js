@@ -1,32 +1,12 @@
-import sendTargetsHelper from "../../../assets/javascripts/sendTargets.js";
 import utils from "../../../assets/javascripts/utils.js";
 
-let disable = document.getElementById("disable-sendTargets");
-let protocol = document.getElementById("protocol")
-
-browser.storage.local.get(
-    [
-        "disableSendTarget",
-        "sendTargetsProtocol",
-    ],
-    r => {
-        disable.checked = !r.disableSendTarget;
-        protocol.value = r.sendTargetsProtocol;
-        changeProtocolSettings();
-    }
-)
-
-document.addEventListener("change", async () => {
-    await browser.storage.local.set({
-        disableSendTarget: !disable.checked,
-        sendTargetsProtocol: protocol.value,
-    })
-    changeProtocolSettings();
-})
+const enable = document.getElementById("sendTargets-enable");
+const protocol = document.getElementById("sendTargets-protocol")
+const sendTargets = document.getElementById('sendTargets_page');
 
 function changeProtocolSettings() {
-    let normalDiv = document.getElementsByClassName("normal")[0];
-    let torDiv = document.getElementsByClassName("tor")[0];
+    let normalDiv = sendTargets.getElementsByClassName("normal")[0];
+    let torDiv = sendTargets.getElementsByClassName("tor")[0];
     if (protocol.value == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';
@@ -36,6 +16,26 @@ function changeProtocolSettings() {
         torDiv.style.display = 'block';
     }
 }
+
+browser.storage.local.get(
+    [
+        "disableSendTarget",
+        "sendTargetsProtocol",
+    ],
+    r => {
+        enable.checked = !r.disableSendTarget;
+        protocol.value = r.sendTargetsProtocol;
+        changeProtocolSettings();
+    }
+)
+
+sendTargets.addEventListener("change", () => {
+    changeProtocolSettings();
+    browser.storage.local.set({
+        disableSendTarget: !enable.checked,
+        sendTargetsProtocol: protocol.value,
+    })
+})
 
 utils.processDefaultCustomInstances('sendTargets', 'send', 'normal', document);
 utils.processDefaultCustomInstances('sendTargets', 'send', 'tor', document);

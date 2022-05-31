@@ -13,143 +13,143 @@
   },
   "settings": {
     "message": "Optionen",
-    "description": "used in popup.html"
+    "description": "used in the popup"
   },
   "general": {
     "message": "Allgemein",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "search": {
     "message": "Suche",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "translate": {
     "message": "Übersetzen",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "maps": {
     "message": "Karten",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "sendFiles": {
     "message": "Dateien senden",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "youtube": {
     "message": "YouTube",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "instagram": {
     "message": "Instagram",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "twitter": {
     "message": "Twitter",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "reddit": {
     "message": "Reddit",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "tiktok": {
     "message": "TikTok",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "ytmusic": {
     "message": "YT Music",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "imgur": {
     "message": "Imgur",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "wikipedia": {
     "message": "Wikipedia",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "peertube": {
     "message": "PeerTube",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "medium": {
     "message": "Medium",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "tor": {
     "message": "Tor",
-    "description": "used in imgur.html"
+    "description": "used in the settings page"
   },
   "theme": {
     "message": "Thema",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "system": {
     "message": "System",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "light": {
     "message": "Hell",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "dark": {
     "message": "Dunkel",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "autoRedirect": {
     "message": "Instanzen automatisch weiterleiten, die offline sind",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "exceptions": {
     "message": "Ausnahmen",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "updateInstances": {
     "message": "Instanzen aktualisieren",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "importSettings": {
     "message": "Einstellungen importieren",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "exportSettings": {
     "message": "Einstellungen exportieren",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "resetSettings": {
     "message": "Einstellungen zurücksetzen",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "customPopup": {
     "message": "Popup personalisieren",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
   "enable": {
     "message": "Aktivieren",
-    "description": "used in imgur.html"
+    "description": "used in the settings page"
   },
   "protocol": {
     "message": "Protokoll",
-    "description": "used in imgur.html"
+    "description": "used in the settings page"
   },
   "normal": {
     "message": "Normal",
-    "description": "used in imgur.html"
+    "description": "used in the settings page"
   },
   "defaultInstances": {
     "message": "Standard-Instanzen",
-    "description": "used in imgur.html"
+    "description": "used in the settings page"
   },
   "customInstances": {
     "message": "Eigene Instanzen",
-    "description": "used in imgur.html"
+    "description": "used in the settings page"
   },
   "toggleAll": {
     "message": "Alle umschalten",
-    "description": "used in utils.js"
+    "description": "used in the settings page"
   },
   "frontend": {
     "message": "Frontend",
-    "description": "used in maps.html"
+    "description": "used in the settings page"
   },
   "notFullyPrivate": {
     "message": "Das ist kein völlig privates Frontend.",
@@ -157,23 +157,27 @@
   },
   "searchNote": {
     "message": "Hinweis: Um das volle Potenzial der Suchweiterleitung auszunutzen, lege LibRedirect als Standardsuchmaschine fest.",
-    "description": "used in search.html"
+    "description": "used in the settings page"
   },
   "redirectType": {
     "message": "Art der Weiterleitung",
-    "description": "used in youtube.html"
+    "description": "used in the settings page"
+  },
+  "embeddedVids": {
+    "message": "Embedded Videos Frontend",
+    "description": "used in the settings page"
   },
   "both": {
     "message": "beides",
-    "description": "used in youtube.html"
+    "description": "used in the settings page"
   },
   "onlyEmbedded": {
     "message": "nur eingebettet",
-    "description": "used in youtube.html"
+    "description": "used in the settings page"
   },
   "onlyNotEmbedded": {
     "message": "nur nicht-eingebunden",
-    "description": "used in youtube.html"
+    "description": "used in the settings page"
   },
   "cancel": {
     "message": "Abbrechen",

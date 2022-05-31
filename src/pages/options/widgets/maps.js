@@ -1,18 +1,11 @@
-import mapsHelper from "../../../assets/javascripts/maps.js";
 import utils from "../../../assets/javascripts/utils.js";
 
-const disable = document.getElementById("disable-osm");
+const enable = document.getElementById("maps-enable");
 const frontend = document.getElementById("maps-frontend");
 
-document.addEventListener("change", async () => {
-    await browser.storage.local.set({
-        disableMaps: !disable.checked,
-        mapsFrontend: frontend.value,
-    })
-    changeFrontendsSettings();
-})
-
+const maps = document.getElementById('maps_page');
 const facilDiv = document.getElementById("facil")
+
 function changeFrontendsSettings() {
     if (frontend.value == 'facil') facilDiv.style.display = 'block';
     else if (frontend.value == 'osm') facilDiv.style.display = 'none';
@@ -24,9 +17,18 @@ browser.storage.local.get(
         "mapsFrontend",
     ],
     r => {
-        disable.checked = !r.disableMaps;
+        enable.checked = !r.disableMaps;
         frontend.value = r.mapsFrontend;
         changeFrontendsSettings();
     }
 )
+
+maps.addEventListener("change", () => {
+    changeFrontendsSettings();
+    browser.storage.local.set({
+        disableMaps: !enable.checked,
+        mapsFrontend: frontend.value,
+    })
+})
+
 utils.processDefaultCustomInstances('maps', 'facil', 'normal', document);

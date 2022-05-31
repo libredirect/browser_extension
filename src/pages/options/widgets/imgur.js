@@ -1,32 +1,25 @@
-import imgurHelper from "../../../assets/javascripts/imgur.js";
 import utils from "../../../assets/javascripts/utils.js";
 
-let disableImgurElement = document.getElementById("disable-imgur");
-let protocolElement = document.getElementById("protocol")
+const enable = document.getElementById("imgur-enable");
+const protocol = document.getElementById("imgur-protocol")
+const imgur = document.getElementById('imgur_page');
 
-document.addEventListener("change", async () => {
-    await browser.storage.local.set({
-        disableImgur: !disableImgurElement.checked,
-        imgurProtocol: protocolElement.value,
-    });
-    changeProtocolSettings(protocolElement.value);
-})
+const normalDiv = imgur.getElementsByClassName("normal")[0];
+const torDiv = imgur.getElementsByClassName("tor")[0];
+const i2pDiv = imgur.getElementsByClassName("i2p")[0];
 
-function changeProtocolSettings(protocol) {
-    let normalDiv = document.getElementsByClassName("normal")[0];
-    let torDiv = document.getElementsByClassName("tor")[0];
-    let i2pDiv = document.getElementsByClassName("i2p")[0];
-    if (protocol == 'normal') {
+function changeProtocolSettings() {
+    if (protocol.value == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';
         i2pDiv.style.display = 'none';
     }
-    else if (protocol == 'tor') {
+    else if (protocol.value == 'tor') {
         normalDiv.style.display = 'none';
         torDiv.style.display = 'block';
         i2pDiv.style.display = 'none';
     }
-    else if (protocol == 'i2p') {
+    else if (protocol.value == 'i2p') {
         normalDiv.style.display = 'none';
         torDiv.style.display = 'none';
         i2pDiv.style.display = 'block';
@@ -39,11 +32,19 @@ browser.storage.local.get(
         "imgurProtocol",
     ],
     r => {
-        disableImgurElement.checked = !r.disableImgur;
-        protocolElement.value = r.imgurProtocol;
-        changeProtocolSettings(r.imgurProtocol);
+        enable.checked = !r.disableImgur;
+        protocol.value = r.imgurProtocol;
+        changeProtocolSettings();
     }
 );
+
+imgur.addEventListener("change", () => {
+    changeProtocolSettings();
+    browser.storage.local.set({
+        disableImgur: !enable.checked,
+        imgurProtocol: protocol.value,
+    });
+})
 
 utils.processDefaultCustomInstances('imgur', 'rimgo', 'normal', document);
 utils.processDefaultCustomInstances('imgur', 'rimgo', 'tor', document);

@@ -5,11 +5,11 @@ section#imgur_page.option-block
 
     .some-block.option-block
         h4(data-localise="__MSG_enable__") Enable
-        input#disable-imgur(type="checkbox")
+        input#imgur-enable(type="checkbox")
 
     .some-block.option-block
         h4(data-localise="__MSG_protocol__") Protocol
-        select#protocol
+        select#imgur-protocol
             option(value="normal" data-localise="__MSG_normal__") Normal
             option(value="tor" data-localise="__MSG_tor__") Tor
             option(value="i2p" data-localise="__MSG_i2p__") I2P
@@ -20,7 +20,7 @@ section#imgur_page.option-block
             include ../../widgets/instances.pug
             +instances('https://rimgo.com')
             include ../../widgets/latency.pug
-            +latency()
+            +latency('rimgo')
         .tor
             include ../../widgets/instances.pug
             +instances('https://rimgo.onion')

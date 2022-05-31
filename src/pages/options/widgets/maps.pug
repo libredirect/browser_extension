@@ -4,7 +4,7 @@ section#maps_page.option-block
     hr
     .some-block.option-block
         h4(data-localise="__MSG_enable__") Enable
-        input#disable-osm(type="checkbox")
+        input#maps-enable(type="checkbox")
 
     .some-block.option-block
         h4(data-localise="__MSG_frontend__") Frontend
@@ -18,6 +18,6 @@ section#maps_page.option-block
             include ../../widgets/instances.pug
             +instances('https://facilmap.com')
             include ../../widgets/latency.pug
-            +latency()
+            +latency('facilmap')
 
     script(type="module" src="./widgets/maps.js")

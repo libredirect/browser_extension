@@ -261,18 +261,18 @@ async function ping(href) {
 async function testLatency(element, instances) {
   return new Promise(async resolve => {
     let myList = {};
-    for (const href of instances) await ping(href).then(m => {
-      if (m) {
-        myList[href] = m;
+    for (const href of instances) await ping(href).then(time => {
+      if (time) {
+        myList[href] = time;
         let color;
-        if (m <= 1000) color = "green"
-        else if (m <= 2000) color = "orange"
+        if (time <= 1000) color = "green"
+        else if (time <= 2000) color = "orange"
         else color = "red";
 
         let text;
-        if (m == 5000) text = '5000ms+'
-        else if (m > 5000) text = `ERROR: ${m - 5000}`;
-        else text = `${m}ms`;
+        if (time == 5000) text = '5000ms+'
+        else if (time > 5000) text = `ERROR: ${time - 5000}`;
+        else text = `${time}ms`;
         element.innerHTML = `${href}:&nbsp;<span style="color:${color};">${text}</span>`;
       }
     })
@@ -405,16 +405,9 @@ function switchInstance(test) {
   })
 }
 
-function latency(name, frontend, document, location, splitNames) {
-  let latencyElement;
-  let latencyLabel;
-  if (splitNames == true) {
-    latencyElement = document.getElementById(`latency-${frontend}`);
-    latencyLabel = document.getElementById(`latency-${frontend}-label`);
-  } else {
-    latencyElement = document.getElementById("latency");
-    latencyLabel = document.getElementById("latency-label");
-  }
+function latency(name, frontend, document, location) {
+  let latencyElement = document.getElementById(`latency-${frontend}`);
+  let latencyLabel = document.getElementById(`latency-${frontend}-label`);
   latencyElement.addEventListener("click",
     async () => {
       let reloadWindow = () => location.reload();
