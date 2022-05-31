@@ -50,7 +50,8 @@
   "proxiTok": {
     "normal": [
       "https://proxitok.herokuapp.com",
-      "https://proxitok.pussthecat.org/"
+      "https://proxitok.pussthecat.org/",
+      "https://proxitok.privacydev.net"
     ],
     "tor": []
   },
@@ -125,7 +126,11 @@
       "https://twitter.dr460nf1r3.org",
       "https://twitter.beparanoid.de",
       "https://n.ramle.be",
-      "https://nitter.cz"
+      "https://nitter.cz",
+      "https://nitter.privacydev.net",
+      "https://tweet.lambda.dance",
+      "https://nitter.ebnar.xyz",
+      "https://nitter.kylrth.com"
     ],
     "tor": [
       "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
@@ -147,7 +152,9 @@
       "http://ec5nvbycpfa5k6ro77blxgkyrzbkv7uy6r5cngcbkadtjj2733nm3uyd.onion",
       "http://twitter.ap3jtgssd7qn4vfoa62gi2ijddoblslbeuw5dan3xt7myvqpura5i4qd.onion",
       "http://twitter.prnoid54e44a4bduq5due64jkk7wcnkxcp5kv3juncm7veptjcqudgyd.onion",
-      "http://nitter.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion"
+      "http://nitter.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion",
+      "http://fbdi323aj3t6hdx4jtkuwxrnafzskquciowu2yu3jizfssaq35aow6ad.onion",
+      "http://nitterqdyumlovt7tjqpdjrluitgmtpa53qq3idlpgoe4kxo7gs3xvad.onion"
     ]
   },
   "bibliogram": {
@@ -371,6 +378,7 @@
       "https://search.snopyta.org",
       "https://search.stinpriza.org",
       "https://search.trom.tf",
+      "https://searx.albony.xyz",
       "https://searx.bissisoft.com",
       "https://searx.divided-by-zero.eu",
       "https://searx.dresden.network",
@@ -383,7 +391,6 @@
       "https://searx.mxchange.org",
       "https://searx.nakhan.net",
       "https://searx.netzspielplatz.de",
-      "https://searx.nevrlands.de",
       "https://searx.ninja",
       "https://searx.nixnet.services",
       "https://searx.openhoofd.nl",
@@ -444,7 +451,6 @@
       "https://search.roombob.cat",
       "https://search.vojkovic.xyz",
       "https://search.zzls.xyz",
-      "https://searx.albony.xyz",
       "https://searx.bardia.tech",
       "https://searx.be",
       "https://searx.ebnar.xyz",
@@ -456,6 +462,7 @@
       "https://searx.namejeff.xyz",
       "https://searx.orion-hub.fr",
       "https://searx.ppeb.me",
+      "https://searx.priv.pw",
       "https://searx.prvcy.eu",
       "https://searx.sev.monster",
       "https://searx.tiekoetter.com",
@@ -492,7 +499,8 @@
       "https://rimgo.bus-hit.me",
       "https://rimgo.esmailelbob.xyz",
       "https://rimgo.lunar.icu",
-      "https://i.actionsack.com"
+      "https://i.actionsack.com",
+      "https://rimgo.privacydev.net"
     ],
     "tor": [
       "http://l4d4owboqr6xcmd6lf64gbegel62kbudu3x3jnldz2mx6mhn3bsv3zyd.onion",
@@ -537,7 +545,6 @@
     "https://video.lycee-experimental.org",
     "https://peertube.elforcer.ru",
     "https://test.studypark.club",
-    "https://pire.artisanlogiciel.net",
     "https://tubocatodico.bida.im",
     "https://linhtran.eu",
     "https://torstenwitte.peertube-host.de",
@@ -621,7 +628,6 @@
     "https://tube.erzbistum-hamburg.de",
     "https://video.germanische-heilkunde.at",
     "https://tubulus.openlatin.org",
-    "https://shiotube.f5.si",
     "https://views.southfox.me",
     "https://vide.oxel.me",
     "https://video.mttv.it",
@@ -913,7 +919,6 @@
     "https://tube.kher.nl",
     "https://perceptiontravel.tv",
     "https://watch.ocaml.org",
-    "https://videos.yesil.club",
     "https://peertube.kleph.eu",
     "https://tube.missbanal.net",
     "https://pityu.flaki.hu",
@@ -1048,7 +1053,6 @@
     "https://tube.cms.garden",
     "https://a.metube.ch",
     "https://peertube.luckow.org",
-    "https://mani.tube",
     "https://video.linuxtrent.it",
     "https://video.demokratischer-sommer.de",
     "https://tube.bachaner.fr",
@@ -1359,7 +1363,6 @@
     "https://petitlutinartube.fr",
     "https://video.lundi.am",
     "https://tube.florimond.eu",
-    "https://peertube.it",
     "https://peertube.taxinachtegel.de",
     "https://peertube.scic-tetris.org",
     "https://peertube.lagvoid.com",
@@ -1447,7 +1450,6 @@
     "https://peertube.anon-kenkai.com",
     "https://tube.maiti.info",
     "https://video.lemediatv.fr",
-    "https://pt.laurentkruger.fr",
     "https://peertube.artica.center",
     "https://indymotion.fr",
     "https://video.farci.org",
