@@ -1,0 +1,226 @@
+{
+  "extensionName": {
+    "message": "LibRedirect",
+    "description": "name of the extension"
+  },
+  "extensionDescription": {
+    "message": "人気サイトをプライバシー・フレンドリーな代替のフロントエンドやバックエンドにリダイレクトする Web 拡張機能",
+    "description": "description of the extension"
+  },
+  "switchInstance": {
+    "message": "インスタンスを切り替え",
+    "description": "used in manifest.json as shortcut description"
+  },
+  "settings": {
+    "message": "設定",
+    "description": "used in the popup"
+  },
+  "general": {
+    "message": "一般",
+    "description": "used in the settings page"
+  },
+  "search": {
+    "message": "検索",
+    "description": "used in the settings page"
+  },
+  "translate": {
+    "message": "翻訳",
+    "description": "used in the settings page"
+  },
+  "maps": {
+    "message": "地図",
+    "description": "used in the settings page"
+  },
+  "sendFiles": {
+    "message": "ファイルの送信",
+    "description": "used in the settings page"
+  },
+  "youtube": {
+    "message": "YouTube",
+    "description": "used in the settings page"
+  },
+  "instagram": {
+    "message": "Instagram",
+    "description": "used in the settings page"
+  },
+  "twitter": {
+    "message": "Twitter",
+    "description": "used in the settings page"
+  },
+  "reddit": {
+    "message": "Reddit",
+    "description": "used in the settings page"
+  },
+  "tiktok": {
+    "message": "TikTok",
+    "description": "used in the settings page"
+  },
+  "ytmusic": {
+    "message": "YT Music",
+    "description": "used in the settings page"
+  },
+  "imgur": {
+    "message": "Imgur",
+    "description": "used in the settings page"
+  },
+  "wikipedia": {
+    "message": "Wikipedia",
+    "description": "used in the settings page"
+  },
+  "peertube": {
+    "message": "PeerTube",
+    "description": "used in the settings page"
+  },
+  "medium": {
+    "message": "Medium",
+    "description": "used in the settings page"
+  },
+  "tor": {
+    "message": "Tor",
+    "description": "used in the settings page"
+  },
+  "theme": {
+    "message": "テーマ",
+    "description": "used in the settings page"
+  },
+  "system": {
+    "message": "システムに従う",
+    "description": "used in the settings page"
+  },
+  "light": {
+    "message": "ライト",
+    "description": "used in the settings page"
+  },
+  "dark": {
+    "message": "ダーク",
+    "description": "used in the settings page"
+  },
+  "autoRedirect": {
+    "message": "インスタンスがオフラインの場合に自動的にリダイレクトする",
+    "description": "used in the settings page"
+  },
+  "exceptions": {
+    "message": "例外",
+    "description": "used in the settings page"
+  },
+  "updateInstances": {
+    "message": "インスタンスのリストを更新",
+    "description": "used in the settings page"
+  },
+  "importSettings": {
+    "message": "設定のインポート",
+    "description": "used in the settings page"
+  },
+  "exportSettings": {
+    "message": "設定のエクスポート",
+    "description": "used in the settings page"
+  },
+  "resetSettings": {
+    "message": "設定をリセット",
+    "description": "used in the settings page"
+  },
+  "customPopup": {
+    "message": "ポップアップのカスタマイズ",
+    "description": "used in the settings page"
+  },
+  "enable": {
+    "message": "有効化",
+    "description": "used in the settings page"
+  },
+  "protocol": {
+    "message": "プロトコル",
+    "description": "used in the settings page"
+  },
+  "normal": {
+    "message": "通常",
+    "description": "used in the settings page"
+  },
+  "defaultInstances": {
+    "message": "デフォルトのインスタンス",
+    "description": "used in the settings page"
+  },
+  "customInstances": {
+    "message": "カスタム インスタンス",
+    "description": "used in the settings page"
+  },
+  "toggleAll": {
+    "message": "すべて選択",
+    "description": "used in the settings page"
+  },
+  "frontend": {
+    "message": "フロントエンド",
+    "description": "used in the settings page"
+  },
+  "notFullyPrivate": {
+    "message": "これはあまりプライバシー・フレンドリーなフロントエンドではありません。",
+    "description": ""
+  },
+  "searchNote": {
+    "message": "注意: 「検索」を最大限に活用するために、LibRedirect をデフォルトの検索エンジンとして設定してください。",
+    "description": "used in the settings page"
+  },
+  "redirectType": {
+    "message": "リダイレクトタイプ",
+    "description": "used in the settings page"
+  },
+  "embeddedVids": {
+    "message": "埋め込み型動画のフロントエンド",
+    "description": "used in the settings page"
+  },
+  "both": {
+    "message": "両方",
+    "description": "used in the settings page"
+  },
+  "onlyEmbedded": {
+    "message": "埋め込み型のみ",
+    "description": "used in the settings page"
+  },
+  "onlyNotEmbedded": {
+    "message": "非埋め込み型のみ",
+    "description": "used in the settings page"
+  },
+  "instanceOffline": {
+    "message": "このインスタンスはオフラインです。&nbsp;",
+    "description": "used in instance_offline.html"
+  },
+  "cancel": {
+    "message": "キャンセル",
+    "description": "used in instance_offline.html"
+  },
+  "instanceIsOff": {
+    "message": "インスタンスがオフラインです",
+    "description": "used in instance_offline.html"
+  },
+  "redirectionCanceled": {
+    "message": "リダイレクトをキャンセル",
+    "description": "used in instance_offline.js"
+  },
+  "copyRaw": {
+    "message": "生データをコピー",
+    "description": ""
+  },
+  "copied": {
+    "message": "コピーしました",
+    "description": ""
+  },
+  "unifySettings": {
+    "message": "設定の統一",
+    "description": ""
+  },
+  "unified": {
+    "message": "統一されました",
+    "description": ""
+  },
+  "lbry": {
+    "message": "LBRY",
+    "description": ""
+  },
+  "i2p": {
+    "message": "I2P",
+    "description": ""
+  },
+  "testInstancesLatency": {
+    "message": "インスタンスのレイテンシをテストする",
+    "description": ""
+  }
+}
