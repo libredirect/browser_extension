@@ -315,8 +315,7 @@ function initInvidiousCookies(test, from) {
       else if (youtubeProtocol == 'tor') checkedInstances = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects]
       const i = checkedInstances.indexOf(protocolHost);
       if (i !== -1) checkedInstances.splice(i, 1);
-      for (const to of checkedInstances)
-        utils.copyCookie('invidious', from, to, 'PREFS');
+      await utils.copyCookie('invidious', from, checkedInstances, 'PREFS');
     }
     resolve(true);
   })

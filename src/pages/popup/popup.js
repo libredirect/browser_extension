@@ -8,16 +8,13 @@ utils.unify(true).then(r => {
   if (!r) document.getElementById('unify_div').style.display = 'none';
   else {
     const unify = document.getElementById('unify');
-    unify.addEventListener("click", () =>
+    const textElement = document.getElementById('unify').getElementsByTagName('h4')[0]
+    unify.addEventListener("click", () => {
+      const oldHtml = textElement.innerHTML;
+      textElement.innerHTML = '...';
       browser.runtime.sendMessage({ function: 'unify' },
-        response => {
-          if (response && response.response) {
-            const textElement = document.getElementById('unify').getElementsByTagName('h4')[0]
-            const oldHtml = textElement.innerHTML;
-            textElement.innerHTML = browser.i18n.getMessage('unified');
-            setTimeout(() => textElement.innerHTML = oldHtml, 1000);
-          }
-        })
+        response => { if (response && response.response) textElement.innerHTML = oldHtml })
+    }
     );
   }
 })

@@ -143,12 +143,10 @@ function initSimplyTranslateCookies(test, from) {
       let checkedInstances;
       if (translateProtocol == 'normal') checkedInstances = [...simplyTranslateNormalRedirectsChecks, ...simplyTranslateNormalCustomRedirects]
       else if (translateProtocol == 'tor') checkedInstances = [...simplyTranslateTorRedirectsChecks, ...simplyTranslateTorCustomRedirects]
-      for (const to of checkedInstances) {
-        utils.copyCookie('simplyTranslate', from, to, 'from_lang');
-        utils.copyCookie('simplyTranslate', from, to, 'to_lang');
-        utils.copyCookie('simplyTranslate', from, to, 'tts_enabled');
-        utils.copyCookie('simplyTranslate', from, to, 'use_text_fields');
-      }
+      await utils.copyCookie('simplyTranslate', from, checkedInstances, 'from_lang');
+      await utils.copyCookie('simplyTranslate', from, checkedInstances, 'to_lang');
+      await utils.copyCookie('simplyTranslate', from, checkedInstances, 'tts_enabled');
+      await utils.copyCookie('simplyTranslate', from, checkedInstances, 'use_text_fields');
     }
     resolve(true);
   }

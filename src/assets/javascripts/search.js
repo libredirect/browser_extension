@@ -153,25 +153,23 @@ function initSearxCookies(test, from) {
       if (searchProtocol == 'normal') checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
       else if (searchProtocol == 'tor') checkedInstances = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
       else if (searchProtocol == 'i2p') checkedInstances = [...searxI2pRedirectsChecks, ...searxI2pCustomRedirects];
-      for (const to of checkedInstances) {
-        utils.copyCookie('searx', from, to, 'advanced_search');
-        utils.copyCookie('searx', from, to, 'autocomplete');
-        utils.copyCookie('searx', from, to, 'categories');
-        utils.copyCookie('searx', from, to, 'disabled_engines');
-        utils.copyCookie('searx', from, to, 'disabled_plugins');
-        utils.copyCookie('searx', from, to, 'doi_resolver');
-        utils.copyCookie('searx', from, to, 'enabled_engines');
-        utils.copyCookie('searx', from, to, 'enabled_plugins');
-        utils.copyCookie('searx', from, to, 'image_proxy');
-        utils.copyCookie('searx', from, to, 'language');
-        utils.copyCookie('searx', from, to, 'locale');
-        utils.copyCookie('searx', from, to, 'method');
-        utils.copyCookie('searx', from, to, 'oscar-style');
-        utils.copyCookie('searx', from, to, 'results_on_new_tab');
-        utils.copyCookie('searx', from, to, 'safesearch');
-        utils.copyCookie('searx', from, to, 'theme');
-        utils.copyCookie('searx', from, to, 'tokens');
-      }
+      await utils.copyCookie('searx', from, checkedInstances, 'advanced_search');
+      await utils.copyCookie('searx', from, checkedInstances, 'autocomplete');
+      await utils.copyCookie('searx', from, checkedInstances, 'categories');
+      await utils.copyCookie('searx', from, checkedInstances, 'disabled_engines');
+      await utils.copyCookie('searx', from, checkedInstances, 'disabled_plugins');
+      await utils.copyCookie('searx', from, checkedInstances, 'doi_resolver');
+      await utils.copyCookie('searx', from, checkedInstances, 'enabled_engines');
+      await utils.copyCookie('searx', from, checkedInstances, 'enabled_plugins');
+      await utils.copyCookie('searx', from, checkedInstances, 'image_proxy');
+      await utils.copyCookie('searx', from, checkedInstances, 'language');
+      await utils.copyCookie('searx', from, checkedInstances, 'locale');
+      await utils.copyCookie('searx', from, checkedInstances, 'method');
+      await utils.copyCookie('searx', from, checkedInstances, 'oscar-style');
+      await utils.copyCookie('searx', from, checkedInstances, 'results_on_new_tab');
+      await utils.copyCookie('searx', from, checkedInstances, 'safesearch');
+      await utils.copyCookie('searx', from, checkedInstances, 'theme');
+      await utils.copyCookie('searx', from, checkedInstances, 'tokens');
     }
     resolve(true);
   })
@@ -225,27 +223,25 @@ function initSearxngCookies(test, from) {
       if (searchProtocol == 'normal') checkedInstances = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
       else if (searchProtocol == 'tor') checkedInstances = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
       else if (searchProtocol == 'i2p') checkedInstances = [...searxngI2pRedirectsChecks, ...searxngI2pCustomRedirects];
-      for (const to of checkedInstances) {
-        utils.copyCookie('searxng', from, to, 'autocomplete');
-        utils.copyCookie('searxng', from, to, 'categories');
-        utils.copyCookie('searxng', from, to, 'disabled_engines');
-        utils.copyCookie('searxng', from, to, 'disabled_plugins');
-        utils.copyCookie('searxng', from, to, 'doi_resolver');
-        utils.copyCookie('searxng', from, to, 'enabled_plugins');
-        utils.copyCookie('searxng', from, to, 'enabled_engines');
-        utils.copyCookie('searxng', from, to, 'image_proxy');
-        utils.copyCookie('searxng', from, to, 'infinite_scroll');
-        utils.copyCookie('searxng', from, to, 'language');
-        utils.copyCookie('searxng', from, to, 'locale');
-        utils.copyCookie('searxng', from, to, 'maintab');
-        utils.copyCookie('searxng', from, to, 'method');
-        utils.copyCookie('searxng', from, to, 'query_in_title');
-        utils.copyCookie('searxng', from, to, 'results_on_new_tab');
-        utils.copyCookie('searxng', from, to, 'safesearch');
-        utils.copyCookie('searxng', from, to, 'simple_style');
-        utils.copyCookie('searxng', from, to, 'theme');
-        utils.copyCookie('searxng', from, to, 'tokens');
-      }
+      await utils.copyCookie('searxng', from, checkedInstances, 'autocomplete');
+      await utils.copyCookie('searxng', from, checkedInstances, 'categories');
+      await utils.copyCookie('searxng', from, checkedInstances, 'disabled_engines');
+      await utils.copyCookie('searxng', from, checkedInstances, 'disabled_plugins');
+      await utils.copyCookie('searxng', from, checkedInstances, 'doi_resolver');
+      await utils.copyCookie('searxng', from, checkedInstances, 'enabled_plugins');
+      await utils.copyCookie('searxng', from, checkedInstances, 'enabled_engines');
+      await utils.copyCookie('searxng', from, checkedInstances, 'image_proxy');
+      await utils.copyCookie('searxng', from, checkedInstances, 'infinite_scroll');
+      await utils.copyCookie('searxng', from, checkedInstances, 'language');
+      await utils.copyCookie('searxng', from, checkedInstances, 'locale');
+      await utils.copyCookie('searxng', from, checkedInstances, 'maintab');
+      await utils.copyCookie('searxng', from, checkedInstances, 'method');
+      await utils.copyCookie('searxng', from, checkedInstances, 'query_in_title');
+      await utils.copyCookie('searxng', from, checkedInstances, 'results_on_new_tab');
+      await utils.copyCookie('searxng', from, checkedInstances, 'safesearch');
+      await utils.copyCookie('searxng', from, checkedInstances, 'simple_style');
+      await utils.copyCookie('searxng', from, checkedInstances, 'theme');
+      await utils.copyCookie('searxng', from, checkedInstances, 'tokens');
     }
     resolve(true);
   })

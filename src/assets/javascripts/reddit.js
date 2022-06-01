@@ -92,7 +92,7 @@ browser.storage.onChanged.addListener(init)
 function initLibredditCookies(test, from) {
   return new Promise(async resolve => {
     await init();
-    let protocolHost = utils.protocolHost(from);
+    const protocolHost = utils.protocolHost(from);
     if (![
       ...libredditNormalRedirectsChecks,
       ...libredditTorRedirectsChecks,
@@ -104,18 +104,16 @@ function initLibredditCookies(test, from) {
       let checkedInstances;
       if (redditProtocol == 'normal') checkedInstances = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects];
       else if (redditProtocol == 'tor') checkedInstances = [...libredditTorRedirectsChecks, ...libredditTorCustomRedirects];
-      for (const to of checkedInstances) {
-        utils.copyCookie('libreddit', from, to, "theme");
-        utils.copyCookie('libreddit', from, to, "front_page");
-        utils.copyCookie('libreddit', from, to, "layout");
-        utils.copyCookie('libreddit', from, to, "wide");
-        utils.copyCookie('libreddit', from, to, "post_sort");
-        utils.copyCookie('libreddit', from, to, "comment_sort");
-        utils.copyCookie('libreddit', from, to, "show_nsfw");
-        utils.copyCookie('libreddit', from, to, "autoplay_videos");
-        utils.copyCookie('libreddit', from, to, "use_hls");
-        utils.copyCookie('libreddit', from, to, "hide_hls_notification");
-      }
+      await utils.copyCookie('libreddit', from, checkedInstances, "theme");
+      await utils.copyCookie('libreddit', from, checkedInstances, "front_page");
+      await utils.copyCookie('libreddit', from, checkedInstances, "layout");
+      await utils.copyCookie('libreddit', from, checkedInstances, "wide");
+      await utils.copyCookie('libreddit', from, checkedInstances, "post_sort");
+      await utils.copyCookie('libreddit', from, checkedInstances, "comment_sort");
+      await utils.copyCookie('libreddit', from, checkedInstances, "show_nsfw");
+      await utils.copyCookie('libreddit', from, checkedInstances, "autoplay_videos");
+      await utils.copyCookie('libreddit', from, checkedInstances, "use_hls");
+      await utils.copyCookie('libreddit', from, checkedInstances, "hide_hls_notification");
     }
     resolve(true);
   })
@@ -159,20 +157,18 @@ function initTedditCookies(test, from) {
       let checkedInstances;
       if (redditProtocol == 'normal') checkedInstances = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects]
       else if (redditProtocol == 'tor') checkedInstances = [...tedditTorRedirectsChecks, ...tedditTorCustomRedirects]
-      for (const to of checkedInstances) {
-        utils.copyCookie('teddit', from, to, 'collapse_child_comments')
-        utils.copyCookie('teddit', from, to, 'domain_instagram')
-        utils.copyCookie('teddit', from, to, 'domain_twitter')
-        utils.copyCookie('teddit', from, to, 'domain_youtube')
-        utils.copyCookie('teddit', from, to, 'flairs')
-        utils.copyCookie('teddit', from, to, 'highlight_controversial')
-        utils.copyCookie('teddit', from, to, 'nsfw_enabled')
-        utils.copyCookie('teddit', from, to, 'post_media_max_height')
-        utils.copyCookie('teddit', from, to, 'show_upvoted_percentage')
-        utils.copyCookie('teddit', from, to, 'show_upvotes')
-        utils.copyCookie('teddit', from, to, 'theme')
-        utils.copyCookie('teddit', from, to, 'videos_muted')
-      }
+      await utils.copyCookie('teddit', from, checkedInstances, 'collapse_child_comments')
+      await utils.copyCookie('teddit', from, checkedInstances, 'domain_instagram')
+      await utils.copyCookie('teddit', from, checkedInstances, 'domain_twitter')
+      await utils.copyCookie('teddit', from, checkedInstances, 'domain_youtube')
+      await utils.copyCookie('teddit', from, checkedInstances, 'flairs')
+      await utils.copyCookie('teddit', from, checkedInstances, 'highlight_controversial')
+      await utils.copyCookie('teddit', from, checkedInstances, 'nsfw_enabled')
+      await utils.copyCookie('teddit', from, checkedInstances, 'post_media_max_height')
+      await utils.copyCookie('teddit', from, checkedInstances, 'show_upvoted_percentage')
+      await utils.copyCookie('teddit', from, checkedInstances, 'show_upvotes')
+      await utils.copyCookie('teddit', from, checkedInstances, 'theme')
+      await utils.copyCookie('teddit', from, checkedInstances, 'videos_muted')
     }
     resolve(true);
   })

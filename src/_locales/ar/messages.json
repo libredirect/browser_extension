@@ -27,10 +27,6 @@
     "message": "توحيد الإعدادات",
     "description": "used in the popup"
   },
-  "unified": {
-    "message": "تم التوحيد",
-    "description": "used in the popup"
-  },
   "general": {
     "message": "العامة",
     "description": "used in the settings page"

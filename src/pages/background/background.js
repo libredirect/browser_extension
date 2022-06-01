@@ -60,15 +60,7 @@ redditHelper.setLibredditCookies();
 redditHelper.setTedditCookies();
 tiktokHelper.setProxiTokCookies();
 
-let incognitoInit = false;
-browser.tabs.onCreated.addListener(
-  tab => {
-    if (!incognitoInit && tab.incognito) {
-      browser.tabs.create({ url: browser.runtime.getURL("/pages/background/incognito.html") });
-      incognitoInit = true;
-    }
-  }
-);
+
 
 let BYPASSTABs = [];
 browser.webRequest.onBeforeRequest.addListener(
@@ -81,7 +73,6 @@ browser.webRequest.onBeforeRequest.addListener(
       else if (details.initiator) initiator = new URL(details.initiator);
     }
     catch { return null; }
-
 
     let newUrl = youtubeMusicHelper.redirect(url, details.type)
     if (!newUrl) newUrl = youtubeHelper.redirect(url, details, initiator)
@@ -126,8 +117,21 @@ browser.webRequest.onBeforeRequest.addListener(
   ["blocking"]
 );
 
+
+let incognitoList = [];
+browser.tabs.onCreated.addListener(
+  tab => {
+    if (tab.incognito) {
+      incognitoList.push(tab.id);
+      if (incognitoList.length == 1) browser.tabs.create({ url: browser.runtime.getURL("/pages/background/incognito.html") });
+    }
+  }
+);
+
 browser.tabs.onRemoved.addListener(
   tabId => {
+    incognitoList.pop(tabId)
+
     const i = BYPASSTABs.indexOf(tabId);
     if (i > -1) {
       BYPASSTABs.splice(i, 1);

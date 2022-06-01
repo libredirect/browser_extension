@@ -42,17 +42,16 @@ function initProxiTokCookies(test, from) {
             let checkedInstances;
             if (tiktokProtocol == 'normal') checkedInstances = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects]
             else if (tiktokProtocol == 'tor') checkedInstances = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects]
-            for (const to of checkedInstances) {
-                utils.copyCookie('proxitok', from, to, 'theme');
-                utils.copyCookie('proxitok', from, to, 'api-legacy');
-            }
+            await utils.copyCookie('proxitok', from, checkedInstances, 'theme');
+            await utils.copyCookie('proxitok', from, checkedInstances, 'api-legacy');
         }
         resolve(true);
     })
 }
 
 function setProxiTokCookies() {
-    return new Promise(resolve => {
+    return new Promise(async resolve => {
+        await init();
         if (disableTiktok || tiktokProtocol === undefined) { resolve(); return; }
         let checkedInstances;
         if (tiktokProtocol == 'normal') checkedInstances = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects]

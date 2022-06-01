@@ -147,27 +147,24 @@ function initNitterCookies(test, from) {
     const protocolHost = utils.protocolHost(from);
     if (!all().includes(protocolHost)
     ) { resolve(); return; }
-
     if (!test) {
       let checkedInstances;
       if (twitterProtocol == 'normal') checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects]
       else if (twitterProtocol == 'tor') checkedInstances = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects]
-      for (const to of checkedInstances) {
-        utils.copyCookie('nitter', from, to, 'theme');
-        utils.copyCookie('nitter', from, to, 'infiniteScroll');
-        utils.copyCookie('nitter', from, to, 'stickyProfile');
-        utils.copyCookie('nitter', from, to, 'bidiSupport');
-        utils.copyCookie('nitter', from, to, 'hideTweetStats');
-        utils.copyCookie('nitter', from, to, 'hideBanner');
-        utils.copyCookie('nitter', from, to, 'hidePins');
-        utils.copyCookie('nitter', from, to, 'hideReplies');
-        utils.copyCookie('nitter', from, to, 'squareAvatars');
-        utils.copyCookie('nitter', from, to, 'mp4Playback');
-        utils.copyCookie('nitter', from, to, 'hlsPlayback');
-        utils.copyCookie('nitter', from, to, 'proxyVideos');
-        utils.copyCookie('nitter', from, to, 'muteVideos');
-        utils.copyCookie('nitter', from, to, 'autoplayGifs');
-      }
+      await utils.copyCookie('nitter', from, checkedInstances, 'theme');
+      await utils.copyCookie('nitter', from, checkedInstances, 'infiniteScroll');
+      await utils.copyCookie('nitter', from, checkedInstances, 'stickyProfile');
+      await utils.copyCookie('nitter', from, checkedInstances, 'bidiSupport');
+      await utils.copyCookie('nitter', from, checkedInstances, 'hideTweetStats');
+      await utils.copyCookie('nitter', from, checkedInstances, 'hideBanner');
+      await utils.copyCookie('nitter', from, checkedInstances, 'hidePins');
+      await utils.copyCookie('nitter', from, checkedInstances, 'hideReplies');
+      await utils.copyCookie('nitter', from, checkedInstances, 'squareAvatars');
+      await utils.copyCookie('nitter', from, checkedInstances, 'mp4Playback');
+      await utils.copyCookie('nitter', from, checkedInstances, 'hlsPlayback');
+      await utils.copyCookie('nitter', from, checkedInstances, 'proxyVideos');
+      await utils.copyCookie('nitter', from, checkedInstances, 'muteVideos');
+      await utils.copyCookie('nitter', from, checkedInstances, 'autoplayGifs');
     }
     resolve(true);
   })

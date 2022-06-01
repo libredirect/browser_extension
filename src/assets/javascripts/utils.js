@@ -280,16 +280,22 @@ async function testLatency(element, instances) {
   })
 }
 
-function copyCookie(frontend, targetUrl, url, name) {
-  browser.cookies.get(
-    { url: protocolHost(targetUrl), name: name },
-    r => {
-      if (r) {
-        browser.cookies.set({ url: url, name: name, value: r.value })
-        browser.storage.local.set({ [`${frontend}_${name}`]: r.value })
+function copyCookie(frontend, targetUrl, urls, name) {
+  return new Promise(resolve => {
+    browser.cookies.get(
+      { url: protocolHost(targetUrl), name: name },
+      async r => {
+        function setCookies(url, name, value) {
+          return new Promise(resolve => browser.cookies.set({ url: url, name: name, value: value }, () => resolve()))
+        }
+        if (r) {
+          console.log(name, r.value);
+          for (const url of urls) await setCookies(url, name, r.value)
+          browser.storage.local.set({ [`${frontend}_${name}`]: r.value }, () => resolve())
+        } else resolve();
       }
-    }
-  )
+    )
+  })
 }
 
 function getCookiesFromStorage(frontend, to, name) {

@@ -90,11 +90,8 @@ function initWikilessCookies(test, from) {
       if (wikipediaProtocol == 'normal') checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects]
       else if (wikipediaProtocol == 'tor') checkedInstances = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects]
       else if (wikipediaProtocol == 'i2p') checkedInstances = [...wikilessI2pRedirectsChecks, ...wikilessI2pCustomRedirects]
-
-      for (const to of checkedInstances) {
-        utils.copyCookie('wikiless', from, to, 'theme');
-        utils.copyCookie('wikiless', from, to, 'default_lang');
-      }
+      await utils.copyCookie('wikiless', from, checkedInstances, 'theme');
+      await utils.copyCookie('wikiless', from, checkedInstances, 'default_lang');
     }
     resolve(true);
   })
