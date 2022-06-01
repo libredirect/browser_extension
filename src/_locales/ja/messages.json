@@ -3,554 +3,224 @@
     "message": "LibRedirect",
     "description": "name of the extension"
   },
-
   "extensionDescription": {
-    "message": "人気サイトをプライバシー・フレンドリーな代替のフロントエンドやバックエンドにリダイレクトするWeb拡張機能",
+    "message": "人気サイトをプライバシー・フレンドリーな代替のフロントエンドやバックエンドにリダイレクトする Web 拡張機能",
     "description": "description of the extension"
   },
-
   "switchInstance": {
     "message": "インスタンスを切り替え",
     "description": "used in manifest.json as shortcut description"
   },
-
-  "instance": {
-    "message": "インスタンス",
-    "description": "used in popup.html"
-  },
-
   "settings": {
     "message": "設定",
-    "description": "used in popup.html"
+    "description": "used in the popup"
   },
-
-  "libOptions": {
-    "message": "LibRedirect の設定",
-    "description": "used in general.html"
-  },
-
   "general": {
     "message": "一般",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "search": {
     "message": "検索",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "translate": {
     "message": "翻訳",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "maps": {
     "message": "地図",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "sendFiles": {
     "message": "ファイルの送信",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "youtube": {
     "message": "YouTube",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "instagram": {
     "message": "Instagram",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "twitter": {
     "message": "Twitter",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "reddit": {
     "message": "Reddit",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "tiktok": {
     "message": "TikTok",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "ytmusic": {
     "message": "YT Music",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "imgur": {
     "message": "Imgur",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "wikipedia": {
     "message": "Wikipedia",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "peertube": {
     "message": "PeerTube",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "medium": {
     "message": "Medium",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "tor": {
     "message": "Tor",
-    "description": "used in imgur.html"
+    "description": "used in the settings page"
   },
-
   "theme": {
     "message": "テーマ",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "system": {
     "message": "システムに従う",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "light": {
     "message": "ライト",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "dark": {
     "message": "ダーク",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
-  "alwaysPref": {
-    "message": "常に優先インスタンスを使用する",
-    "description": "used in general.html"
-  },
-
   "autoRedirect": {
     "message": "インスタンスがオフラインの場合に自動的にリダイレクトする",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "exceptions": {
     "message": "例外",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "updateInstances": {
-    "message": "インスタンスリストを更新",
-    "description": "used in general.html"
+    "message": "インスタンスのリストを更新",
+    "description": "used in the settings page"
   },
-
   "importSettings": {
     "message": "設定のインポート",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "exportSettings": {
     "message": "設定のエクスポート",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "resetSettings": {
     "message": "設定をリセット",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "customPopup": {
     "message": "ポップアップのカスタマイズ",
-    "description": "used in general.html"
+    "description": "used in the settings page"
   },
-
   "enable": {
     "message": "有効化",
-    "description": "used in imgur.html"
+    "description": "used in the settings page"
   },
-
   "protocol": {
     "message": "プロトコル",
-    "description": "used in imgur.html"
+    "description": "used in the settings page"
   },
-
   "normal": {
     "message": "通常",
-    "description": "used in imgur.html"
+    "description": "used in the settings page"
   },
-
   "defaultInstances": {
     "message": "デフォルトのインスタンス",
-    "description": "used in imgur.html"
+    "description": "used in the settings page"
   },
-
   "customInstances": {
-    "message": "カスタムインスタンス",
-    "description": "used in imgur.html"
+    "message": "カスタム インスタンス",
+    "description": "used in the settings page"
   },
-
   "toggleAll": {
     "message": "すべて選択",
-    "description": "used in utils.js"
+    "description": "used in the settings page"
   },
-
   "frontend": {
     "message": "フロントエンド",
-    "description": "used in maps.html"
+    "description": "used in the settings page"
   },
-
   "notFullyPrivate": {
     "message": "これはあまりプライバシー・フレンドリーなフロントエンドではありません。",
     "description": ""
   },
-
-  "oldReddit": {
-    "message": "Old Reddit",
-    "description": "used in reddit.html"
-  },
-
   "searchNote": {
-    "message": "注意: 「検索」を最大限に活用するために、LibRedirectをデフォルトの検索エンジンとして設定してください。",
-    "description": "used in search.html"
+    "message": "注意: 「検索」を最大限に活用するために、LibRedirect をデフォルトの検索エンジンとして設定してください。",
+    "description": "used in the settings page"
   },
-
-  "libSendFiles": {
-    "message": "LibRedirect: ファイルの送信",
-    "description": "used in sendTargets.html"
-  },
-
-  "from": {
-    "message": "翻訳元の言語",
-    "description": "used in translate.html"
-  },
-
-  "to": {
-    "message": "翻訳先の言語",
-    "description": "used in translate.html"
-  },
-
-  "default": {
-    "message": "デフォルト",
-    "description": "used in translate.html"
-  },
-
-  "auto": {
-    "message": "自動検出",
-    "description": "used in translate.html"
-  },
-
-  "engine": {
-    "message": "エンジン",
-    "description": "used in translate.html"
-  },
-
-  "libTranslate": {
-    "message": "LibRedirect: 翻訳",
-    "description": "used in translate.html"
-  },
-
-  "invidious": {
-    "message": "Invidious",
-    "description": "used in youtube.html"
-  },
-
-  "embeddedVids": {
-    "message": "埋め込み動画のフロントエンド",
-    "description": "used in youtube.html"
-  },
-
   "redirectType": {
     "message": "リダイレクトタイプ",
-    "description": "used in youtube.html"
+    "description": "used in the settings page"
   },
-
+  "embeddedVids": {
+    "message": "埋め込み型動画のフロントエンド",
+    "description": "used in the settings page"
+  },
   "both": {
     "message": "両方",
-    "description": "used in youtube.html"
+    "description": "used in the settings page"
   },
-
   "onlyEmbedded": {
     "message": "埋め込み型のみ",
-    "description": "used in youtube.html"
+    "description": "used in the settings page"
   },
-
   "onlyNotEmbedded": {
     "message": "非埋め込み型のみ",
-    "description": "used in youtube.html"
+    "description": "used in the settings page"
   },
-
-  "enableCustom": {
-    "message": "カスタム設定を有効にする (Cookieとローカルストレージを使用します)",
-    "description": "used in youtube.html"
-  },
-
-  "autoplayVid": {
-    "message": "動画を自動再生する",
-    "description": "used in youtube.html"
-  },
-
-  "volume": {
-    "message": "音量: ",
-    "description": "used in youtube.html"
-  },
-
-  "playerStyle": {
-    "message": "プレイヤースタイル",
-    "description": "used in youtube.html"
-  },
-
-  "alwaysLoop": {
-    "message": "常にループ再生する",
-    "description": "used in youtube.html"
-  },
-
-  "playNext": {
-    "message": "デフォルトで次を再生する",
-    "description": "used in youtube.html"
-  },
-
-  "autoplayNext": {
-    "message": "次の動画を自動再生する",
-    "description": "used in youtube.html"
-  },
-
-  "alwaysProxy": {
-    "message": "動画を常にプロキシ経由にする",
-    "description": "used in youtube.html"
-  },
-
-  "listenByDefault": {
-    "message": "デフォルトで聴く",
-    "description": "used in youtube.html"
-  },
-
-  "defaultSpeed": {
-    "message": "デフォルトの速度",
-    "description": "used in youtube.html"
-  },
-
-  "prefQuality": {
-    "message": "デフォルトの映像品質",
-    "description": "used in youtube.html"
-  },
-
-  "dash": {
-    "message": "DASH (動的適応)",
-    "description": "used in youtube.html"
-  },
-
-  "prefDashQuality": {
-    "message": "デフォルトのDASHビデオ品質:",
-    "description": "used in youtube.html"
-  },
-
-  "best": {
-    "message": "最高品質",
-    "description": "used in youtube.html"
-  },
-
-  "worst": {
-    "message": "最小品質",
-    "description": "used in youtube.html"
-  },
-
-  "defaultComments": {
-    "message": "デフォルトのコメント",
-    "description": "used in youtube.html"
-  },
-
-  "none": {
-    "message": "なし",
-    "description": "used in youtube.html"
-  },
-
-  "defaultCaptions": {
-    "message": "デフォルトのキャプション",
-    "description": "used in youtube.html"
-  },
-
-  "showRelated": {
-    "message": "関連動画を表示",
-    "description": "used in youtube.html"
-  },
-
-  "showAnnotations": {
-    "message": "デフォルトでアノテーションを表示する",
-    "description": "used in youtube.html"
-  },
-
-  "autoExtendDesc": {
-    "message": "動画の説明文を自動的に展開する",
-    "description": "used in youtube.html"
-  },
-
-  "interactive360": {
-    "message": "対話型360° 動画 (WebGLが必要)",
-    "description": "used in youtube.html"
-  },
-
-  "savePlaybackPos": {
-    "message": "再生位置を保存する",
-    "description": "used in youtube.html"
-  },
-
-  "enableSponsorBlock": {
-    "message": "SponsorBlockを有効にする",
-    "description": "used in youtube.html"
-  },
-
-  "skipSponsors": {
-    "message": "スポンサーをスキップする",
-    "description": "used in youtube.html"
-  },
-
-  "skipIntermission": {
-    "message": "休止時間/イントロアニメーションをスキップする",
-    "description": "used in youtube.html"
-  },
-
-  "skipEndcards": {
-    "message": "エンドカード/クレジットをスキップする",
-    "description": "used in youtube.html"
-  },
-
-  "skipPreview": {
-    "message": "プレビュー/リキャップをスキップする",
-    "description": "used in youtube.html"
-  },
-
-  "skipReminder": {
-    "message": "インタラクションリマインダーをスキップする (チャンネル登録の要求など)",
-    "description": "used in youtube.html"
-  },
-
-  "skipUnpaidPromo": {
-    "message": "(YouTuberが利益を直接受け取らない)購入の呼びかけなどをスキップする",
-    "description": "used in youtube.html"
-  },
-
-  "skipMusic": {
-    "message": "音楽: 音楽のない部分をスキップする",
-    "description": "used in youtube.html"
-  },
-
-  "skipHighlight": {
-    "message": "ハイライトされた部分をスキップする",
-    "description": "used in youtube.html"
-  },
-
-  "skipFiller": {
-    "message": "メインの内容と無関係な部分をスキップする",
-    "description": "used in youtube.html"
-  },
-
-  "audioOnly": {
-    "message": "音声のみ",
-    "description": "used in youtube.html"
-  },
-
-  "defaultQuality": {
-    "message": "デフォルトの品質",
-    "description": "used in youtube.html"
-  },
-
-  "bufferingGoal": {
-    "message": "バッファリング目標 (秒)",
-    "description": "used in youtube.html"
-  },
-
-  "countrySelection": {
-    "message": "国の選択",
-    "description": "used in youtube.html"
-  },
-
-  "defaultHomepage": {
-    "message": "デフォルトのホームページ",
-    "description": "used in youtube.html"
-  },
-
-  "trending": {
-    "message": "トレンディング",
-    "description": "used in youtube.html"
-  },
-
-  "feed": {
-    "message": "フィード",
-    "description": "used in youtube.html"
-  },
-
-  "showComments": {
-    "message": "コメントを表示する",
-    "description": "used in youtube.html"
-  },
-
-  "minimizeDesc": {
-    "message": "デフォルトで説明文を最小化する",
-    "description": "used in youtube.html"
-  },
-
-  "storeHistory": {
-    "message": "視聴履歴を保存する",
-    "description": "used in youtube.html"
-  },
-
-  "enabledCodecs": {
-    "message": "使用可能なコーデック (複数)",
-    "description": "used in youtube.html"
-  },
-
-  "disableLBRY": {
-    "message": "ストリーミング用LBRYを無効化する",
-    "description": "used in youtube.html"
-  },
-
-  "enableProxyLBRY": {
-    "message": "LBRYのプロキシを有効にする",
-    "description": "used in youtube.html"
-  },
-
-  "proxyLBRY": {
-    "message": "LBRYの動画はプロキシを経由させる",
-    "description": "used in youtube.html"
-  },
-
-  "skipNote": {
-    "message": "すでに見たビデオの場合、最後に見たポイントにスキップする",
-    "description": "used in youtube.html"
-  },
-
-  "embedExceptions": {
-    "message": "埋め込みの例外",
-    "description": "used in youtube.html"
-  },
-
   "instanceOffline": {
     "message": "このインスタンスはオフラインです。&nbsp;",
     "description": "used in instance_offline.html"
   },
-
-  "sec": {
-    "message": "秒後にリダイレクトされます。",
-    "description": "used in instance_offline.html"
-  },
-
   "cancel": {
     "message": "キャンセル",
     "description": "used in instance_offline.html"
   },
-
   "instanceIsOff": {
     "message": "インスタンスがオフラインです",
     "description": "used in instance_offline.html"
   },
-
   "redirectionCanceled": {
     "message": "リダイレクトをキャンセル",
     "description": "used in instance_offline.js"
+  },
+  "copyRaw": {
+    "message": "生データをコピー",
+    "description": ""
+  },
+  "copied": {
+    "message": "コピーしました",
+    "description": ""
+  },
+  "unifySettings": {
+    "message": "設定の統一",
+    "description": ""
+  },
+  "unified": {
+    "message": "統一されました",
+    "description": ""
+  },
+  "lbry": {
+    "message": "LBRY",
+    "description": ""
+  },
+  "i2p": {
+    "message": "I2P",
+    "description": ""
+  },
+  "testInstancesLatency": {
+    "message": "インスタンスのレイテンシをテストする",
+    "description": ""
   }
 }
