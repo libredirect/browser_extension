@@ -196,27 +196,27 @@
     "description": ""
   },
   "copied": {
-    "message": "",
+    "message": "Kopiert",
     "description": ""
   },
   "unifySettings": {
-    "message": "",
+    "message": "Einstellungen vereinheitlichen",
     "description": ""
   },
   "lbry": {
-    "message": "",
+    "message": "LBRY",
     "description": ""
   },
   "i2p": {
-    "message": "",
+    "message": "I2P",
     "description": ""
   },
   "instanceOffline": {
-    "message": "",
+    "message": "Diese Instanz ist offline , du wirst weitergeleitet nach &nbsp;",
     "description": ""
   },
   "testInstancesLatency": {
-    "message": "",
+    "message": "Teste Latenz der Instanzen",
     "description": ""
   }
 }
