@@ -10,7 +10,6 @@ window.browser = window.browser || window.chrome;
 
 await youtubeHelper.setInvidiousCookies();
 await translateHelper.setSimplyTranslateCookies();
-await translateHelper.initLingvaLocalStorage();
 await twitterHelper.setNitterCookies();
 await wikipediaHelper.setWikilessCookies();
 await searchHelper.setSearxCookies();
