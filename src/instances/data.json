@@ -354,6 +354,7 @@
   "searx": {
     "tor": [
       "http://3afisqjw2rxm6z7mmstyt5rx75qfqrgxnkzftknbp2vhipr2nrmrjdyd.onion",
+      "http://w5rl6wsd7mzj4bdkbuqvzidet5osdsm5jhg2f7nvfidakfq5exda5wid.onion",
       "http://z34ambyi6makk6ta7ksog2sljly2ctt2sa3apekb7wkllk72sxecdtad.onion",
       "http://yra4tke2pwcnatxjkufpw6kvebu3h3ti2jca2lcdpgx3mpwol326lzid.onion",
       "http://z5vawdol25vrmorm4yydmohsd4u6rdoj2sylvoi3e3nqvxkvpqul7bqd.onion",
@@ -371,7 +372,6 @@
       "https://jsearch.pw",
       "https://nibblehole.com",
       "https://search.antonkling.se",
-      "https://search.asynchronousexchange.com",
       "https://search.disroot.org",
       "https://search.ethibox.fr",
       "https://search.jpope.org",
@@ -421,7 +421,6 @@
   },
   "searxng": {
     "tor": [
-      "http://w5rl6wsd7mzj4bdkbuqvzidet5osdsm5jhg2f7nvfidakfq5exda5wid.onion",
       "http://4n53nafyi77iplnbrpmxnp3x4exbswwxigujaxy3b37fvr7bvlopxeyd.onion",
       "http://fpamcnxokg4lzz6b2y7jdwoujmnixfxrh7ptddehctqzoptn4wpdvjid.onion",
       "http://searxdr3pqz4nydgnqocsia2xbywptxbkympa2emn7zlgggrir4bkfad.onion",
@@ -598,7 +597,6 @@
     "https://artefac-paris.tv",
     "https://peertube.ketchup.noho.st",
     "https://yt.x1337x.fr",
-    "https://videos.anhgelus.codes",
     "https://video.sonet.ws",
     "https://video.wsforum.net",
     "https://stream.caselibre.fr",
@@ -784,7 +782,6 @@
     "https://peertube.gcaillaut.fr",
     "https://peertube.hellsite.net",
     "https://peertube.hosnet.fr",
-    "https://live.people-world-life.de",
     "https://video.extremelycorporate.ca",
     "https://video.zarchbox.ovh",
     "https://video.sgiath.dev",
