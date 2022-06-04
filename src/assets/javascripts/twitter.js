@@ -92,8 +92,11 @@ function redirect(url, initiator) {
 
   const randomInstance = utils.getRandomInstance(instancesList);
   // https://pbs.twimg.com/profile_images/648888480974508032/66_cUYfj_400x400.jpg
-  if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video")
-    return `${randomInstance}/pic/${encodeURIComponent(`${url.host}${url.pathname}`)}`;
+  if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video") {
+    const [, id, format, extra] = url.search.match(/(.*)\?format=(.*)&(.*)/);
+    const query = encodeURIComponent(`${id}.${format}?${extra}`);
+    return `${randomInstance}/pic${url.pathname}${query}`;
+  }
   else if (url.pathname.split("/").includes("tweets"))
     return `${randomInstance}${url.pathname.replace("/tweets", "")}${url.search}`;
   else if (url.host == 't.co')
