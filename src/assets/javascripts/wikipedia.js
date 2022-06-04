@@ -12,10 +12,10 @@ let redirects = {
   }
 };
 function setRedirects(val) {
-  browser.storage.local.get('cloudflareList', r => {
+  browser.storage.local.get('cloudflareBlackList', r => {
     redirects.wikiless = val;
     wikilessNormalRedirectsChecks = [...redirects.wikiless.normal];
-    for (const instance of r.cloudflareList) {
+    for (const instance of r.cloudflareBlackList) {
       const a = wikilessNormalRedirectsChecks.indexOf(instance);
       if (a > -1) wikilessNormalRedirectsChecks.splice(a, 1);
     }
@@ -180,9 +180,9 @@ function initDefaults() {
     fetch('/instances/data.json').then(response => response.text()).then(async data => {
       let dataJson = JSON.parse(data);
       redirects.wikiless = dataJson.wikiless;
-      browser.storage.local.get('cloudflareList', async r => {
+      browser.storage.local.get('cloudflareBlackList', async r => {
         wikilessNormalRedirectsChecks = [...redirects.wikiless.normal];
-        for (const instance of r.cloudflareList) {
+        for (const instance of r.cloudflareBlackList) {
           let i = wikilessNormalRedirectsChecks.indexOf(instance);
           if (i > -1) wikilessNormalRedirectsChecks.splice(i, 1);
         }

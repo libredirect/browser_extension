@@ -18,11 +18,13 @@ function getRandomInstance(instances) {
   return instances[~~(instances.length * Math.random())];
 }
 
-let cloudflareList = [];
-async function initCloudflareList() {
+let cloudflareBlackList = [];
+let authenticateBlackList = [];
+async function initcloudflareBlackList() {
   return new Promise(resolve => {
-    fetch('/instances/blocklist.json').then(response => response.text()).then(data => {
-      cloudflareList = JSON.parse(data);
+    fetch('/instances/blacklist.json').then(response => response.text()).then(data => {
+      cloudflareBlackList = JSON.parse(data).cloudflare;
+      authenticateBlackList = JSON.parse(data).authenticate;
       resolve();
     })
   });
@@ -34,7 +36,7 @@ function updateInstances() {
     http.open('GET', 'https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json', false);
     http.send(null);
     if (http.status === 200) {
-      await initCloudflareList();
+      await initcloudflareBlackList();
       const instances = JSON.parse(http.responseText);
 
       youtubeHelper.setRedirects({ 'invidious': instances.invidious, 'piped': instances.piped, })
@@ -73,7 +75,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
   let nameCustomInstances = [];
   let nameCheckListElement = nameProtocolElement.getElementsByClassName('checklist')[0];
 
-  await initCloudflareList();
+  await initcloudflareBlackList();
 
 
   let nameDefaultRedirects;
@@ -123,7 +125,8 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
       </div>`,
       ...redirects[name][protocol].map(
         x => {
-          let cloudflare = cloudflareList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : '';
+          const cloudflare = cloudflareBlackList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : '';
+          const authenticate = authenticateBlackList.includes(x) ? ' <span style="color:orange;">authenticate</span>' : '';
 
           let ms = instancesLatency[x];
           let latencyColor = (ms <= 1000 ? "green" : ms <= 2000 ? "orange" : "red");
@@ -132,10 +135,11 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
           else if (ms > 5000) latencyLimit = `ERROR: ${ms - 5000}`;
           else latencyLimit = ms + 'ms';
 
-          let latency = x in instancesLatency ? '<span style="color:' + latencyColor + ';">' + latencyLimit + '</span>' : '';
+          const latency = x in instancesLatency ? '<span style="color:' + latencyColor + ';">' + latencyLimit + '</span>' : '';
 
+          let warnings = [cloudflare, authenticate, latency].join(' ');
           return `<div>
-                    <x><a href="${x}" target="_blank">${x}</a>${cloudflare} ${latency}</x>
+                    <x><a href="${x}" target="_blank">${x}</a>${warnings}</x>
                     <input type="checkbox" class="${x}"/>
                   </div>`;
         }

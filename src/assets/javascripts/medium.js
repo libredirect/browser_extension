@@ -35,10 +35,10 @@ let redirects = {
   }
 };
 function setRedirects(val) {
-  browser.storage.local.get('cloudflareList', r => {
+  browser.storage.local.get('cloudflareBlackList', r => {
     redirects.scribe = val;
     scribeNormalRedirectsChecks = [...redirects.scribe.normal];
-    for (const instance of r.cloudflareList) {
+    for (const instance of r.cloudflareBlackList) {
       const a = scribeNormalRedirectsChecks.indexOf(instance);
       if (a > -1) scribeNormalRedirectsChecks.splice(a, 1);
     }
@@ -141,10 +141,10 @@ function initDefaults() {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
       let dataJson = JSON.parse(data);
       redirects.scribe = dataJson.scribe;
-      browser.storage.local.get('cloudflareList',
+      browser.storage.local.get('cloudflareBlackList',
         async r => {
           scribeNormalRedirectsChecks = [...redirects.scribe.normal];
-          for (const instance of r.cloudflareList) {
+          for (const instance of r.cloudflareBlackList) {
             let i = scribeNormalRedirectsChecks.indexOf(instance);
             if (i > -1) scribeNormalRedirectsChecks.splice(i, 1);
           }

@@ -15,10 +15,10 @@ let redirects = {
     }
 }
 function setRedirects(val) {
-    browser.storage.local.get('cloudflareList', r => {
+    browser.storage.local.get('cloudflareBlackList', r => {
         redirects.send = val;
         sendNormalRedirectsChecks = [...redirects.send.normal];
-        for (const instance of r.cloudflareList) {
+        for (const instance of r.cloudflareBlackList) {
             const a = sendNormalRedirectsChecks.indexOf(instance);
             if (a > -1) sendNormalRedirectsChecks.splice(a, 1);
         }
@@ -117,9 +117,9 @@ function initDefaults() {
         fetch('/instances/data.json').then(response => response.text()).then(async data => {
             let dataJson = JSON.parse(data);
             redirects.send = dataJson.send;
-            browser.storage.local.get('cloudflareList', async r => {
+            browser.storage.local.get('cloudflareBlackList', async r => {
                 sendNormalRedirectsChecks = [...redirects.send.normal];
-                for (const instance of r.cloudflareList) {
+                for (const instance of r.cloudflareBlackList) {
                     let i = sendNormalRedirectsChecks.indexOf(instance);
                     if (i > -1) sendNormalRedirectsChecks.splice(i, 1);
                 }

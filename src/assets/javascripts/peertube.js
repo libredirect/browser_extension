@@ -122,9 +122,9 @@ function initDefaults() {
     return new Promise(resolve => {
         fetch('/instances/data.json').then(response => response.text()).then(async data => {
             let dataJson = JSON.parse(data);
-            browser.storage.local.get('cloudflareList', async r => {
+            browser.storage.local.get('cloudflareBlackList', async r => {
                 simpleertubeNormalRedirectsChecks = [...redirects.simpleertube.normal];
-                for (const instance of r.cloudflareList) {
+                for (const instance of r.cloudflareBlackList) {
                     let i = simpleertubeNormalRedirectsChecks.indexOf(instance);
                     if (i > -1) simpleertubeNormalRedirectsChecks.splice(i, 1);
                 }

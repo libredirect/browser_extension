@@ -121,9 +121,9 @@ function redirect(url, type, initiator) {
 
 function initDefaults() {
     return new Promise(resolve => {
-        browser.storage.local.get('cloudflareList', async r => {
+        browser.storage.local.get('cloudflareBlackList', async r => {
             librarianNormalRedirectsChecks = [...redirects.librarian.normal];
-            for (const instance of r.cloudflareList) {
+            for (const instance of r.cloudflareBlackList) {
                 let i;
 
                 i = librarianNormalRedirectsChecks.indexOf(instance);

@@ -26,9 +26,10 @@ browser.runtime.onInstalled.addListener(
     // if (details.reason == 'install') {
     if (details.reason == 'install' || details.reason == "update") {
       if (details.reason == "update") browser.tabs.create({ url: browser.runtime.getURL("/pages/background/reset_warning.html") });
-      fetch('/instances/blocklist.json').then(response => response.text()).then(async data => {
+      fetch('/instances/blacklist.json').then(response => response.text()).then(async data => {
         await browser.storage.local.clear();
-        await browser.storage.local.set({ cloudflareList: JSON.parse(data) })
+        await browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare })
+        await browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate })
         generalHelper.initDefaults();
         youtubeHelper.initDefaults();
         youtubeMusicHelper.initDefaults();
@@ -65,7 +66,7 @@ let BYPASSTABs = [];
 browser.webRequest.onBeforeRequest.addListener(
   details => {
     const url = new URL(details.url);
-    if (new RegExp(/^chrome-extension:\/{2}.*\/instances\/(blocklist|data).json$/).test(url.href) && details.type == 'xmlhttprequest') return;
+    if (new RegExp(/^chrome-extension:\/{2}.*\/instances\/.*.json$/).test(url.href) && details.type == 'xmlhttprequest') return;
     let initiator;
     try {
       if (details.originUrl) initiator = new URL(details.originUrl);

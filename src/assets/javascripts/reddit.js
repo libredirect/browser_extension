@@ -17,11 +17,11 @@ let redirects = {
   },
 };
 function setRedirects(val) {
-  browser.storage.local.get('cloudflareList', r => {
+  browser.storage.local.get('cloudflareBlackList', r => {
     redirects = val;
     libredditNormalRedirectsChecks = [...redirects.libreddit.normal];
     tedditNormalRedirectsChecks = [...redirects.teddit.normal]
-    for (const instance of r.cloudflareList) {
+    for (const instance of r.cloudflareBlackList) {
       const a = libredditNormalRedirectsChecks.indexOf(instance);
       if (a > -1) libredditNormalRedirectsChecks.splice(a, 1);
 
@@ -322,10 +322,10 @@ function initDefaults() {
       let dataJson = JSON.parse(data);
       redirects.teddit = dataJson.teddit;
       redirects.libreddit = dataJson.libreddit;
-      browser.storage.local.get('cloudflareList', async r => {
+      browser.storage.local.get('cloudflareBlackList', async r => {
         libredditNormalRedirectsChecks = [...redirects.libreddit.normal];
         tedditNormalRedirectsChecks = [...redirects.teddit.normal]
-        for (const instance of r.cloudflareList) {
+        for (const instance of r.cloudflareBlackList) {
           let i;
 
           i = libredditNormalRedirectsChecks.indexOf(instance);

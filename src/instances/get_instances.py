@@ -57,7 +57,6 @@ def is_cloudflare(url):
         cloudflare_bin = ip2bin(cloudflare_ip)
 
         mask = int(cloudflare_ip_mask.split('/')[1])
-
         cloudflare_bin_masked = cloudflare_bin[:mask]
         instance_bin_masked = instance_bin[:mask]
 
@@ -71,6 +70,7 @@ def is_authenticate(url):
     try:
         r = requests.get(url, timeout=5)
         if 'www-authenticate' in r.headers:
+            print(url + ' is ' + Fore.RED + 'authenticate' + Style.RESET_ALL)
             return True
     except:
         return False
@@ -376,7 +376,8 @@ searx_searxng()
 whoogle()
 rimgo()
 
-blocklist = []
+cloudflare = []
+authenticate = []
 for k1, v1 in mightyList.items():
     if type(mightyList[k1]) is dict:
         for k2, v2 in mightyList[k1].items():
@@ -386,12 +387,16 @@ for k1, v1 in mightyList.items():
                     print("removed " + instance)
                 else:
                     if not instance.endswith('.onion') and not instance.endswith('.i2p') and is_cloudflare(instance):
-                        blocklist.append(instance)
+                        cloudflare.append(instance)
                     if not instance.endswith('.onion') and not instance.endswith('.i2p') and is_authenticate(instance):
-                        blocklist.append(instance)
+                        authenticate.append(instance)
 
 peertube()
 
+blacklist = {
+    'cloudflare': cloudflare,
+    'authenticate': authenticate
+}
 
 # Writing to file
 json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
@@ -399,9 +404,9 @@ with open('./src/instances/data.json', 'w') as outfile:
     outfile.write(json_object)
 print(Fore.BLUE + 'wrote ' + Style.RESET_ALL + 'instances/data.json')
 
-json_object = json.dumps(blocklist, ensure_ascii=False, indent=2)
-with open('./src/instances/blocklist.json', 'w') as outfile:
+json_object = json.dumps(blacklist, ensure_ascii=False, indent=2)
+with open('./src/instances/blacklist.json', 'w') as outfile:
     outfile.write(json_object)
-print(Fore.BLUE + 'wrote ' + Style.RESET_ALL + 'instances/blocklist')
+print(Fore.BLUE + 'wrote ' + Style.RESET_ALL + 'instances/blacklist.json')
 
 # print(json_object)

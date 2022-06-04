@@ -28,12 +28,12 @@ let redirects = {
 };
 
 function setRedirects(val) {
-  browser.storage.local.get('cloudflareList', r => {
+  browser.storage.local.get('cloudflareBlackList', r => {
     redirects = val;
     searxNormalRedirectsChecks = [...redirects.searx.normal];
     searxngNormalRedirectsChecks = [...redirects.searxng.normal];
     whoogleNormalRedirectsChecks = [...redirects.whoogle.normal];
-    for (const instance of r.cloudflareList) {
+    for (const instance of r.cloudflareBlackList) {
       const a = searxNormalRedirectsChecks.indexOf(instance);
       if (a > -1) searxNormalRedirectsChecks.splice(a, 1);
 
@@ -394,11 +394,11 @@ function initDefaults() {
       redirects.searxng = dataJson.searxng;
       redirects.whoogle = dataJson.whoogle;
 
-      browser.storage.local.get('cloudflareList', async r => {
+      browser.storage.local.get('cloudflareBlackList', async r => {
         whoogleNormalRedirectsChecks = [...redirects.whoogle.normal];
         searxNormalRedirectsChecks = [...redirects.searx.normal];
         searxngNormalRedirectsChecks = [...redirects.searxng.normal];
-        for (const instance of r.cloudflareList) {
+        for (const instance of r.cloudflareBlackList) {
           let i;
 
           i = whoogleNormalRedirectsChecks.indexOf(instance);

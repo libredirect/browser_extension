@@ -34,12 +34,12 @@ let redirects = {
   }
 };
 function setRedirects(val) {
-  browser.storage.local.get('cloudflareList', r => {
+  browser.storage.local.get('cloudflareBlackList', r => {
     redirects.invidious = val.invidious;
     redirects.piped = val.piped;
     invidiousNormalRedirectsChecks = [...redirects.invidious.normal];
     pipedNormalRedirectsChecks = [...redirects.piped.normal];
-    for (const instance of r.cloudflareList) {
+    for (const instance of r.cloudflareBlackList) {
       const a = invidiousNormalRedirectsChecks.indexOf(instance);
       if (a > -1) invidiousNormalRedirectsChecks.splice(a, 1);
 
@@ -245,13 +245,13 @@ function initDefaults() {
       let dataJson = JSON.parse(data);
       redirects.invidious = dataJson.invidious;
       redirects.piped = dataJson.piped;
-      browser.storage.local.get('cloudflareList', async r => {
+      browser.storage.local.get('cloudflareBlackList', async r => {
 
         invidiousNormalRedirectsChecks = [...redirects.invidious.normal];
         pipedNormalRedirectsChecks = [...redirects.piped.normal];
         pipedMaterialNormalRedirectsChecks = [...redirects.pipedMaterial.normal];
 
-        for (const instance of r.cloudflareList) {
+        for (const instance of r.cloudflareBlackList) {
           const a = invidiousNormalRedirectsChecks.indexOf(instance);
           if (a > -1) invidiousNormalRedirectsChecks.splice(a, 1);
 

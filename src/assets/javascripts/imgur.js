@@ -21,7 +21,7 @@ function setRedirects() {
             rimgoTorRedirectsChecks = [...redirects.rimgo.tor];
             rimgoI2pRedirectsChecks = [...redirects.rimgo.i2p];
 
-            for (const instance of r.cloudflareList) {
+            for (const instance of r.cloudflareBlackList) {
                 const a = rimgoNormalRedirectsChecks.indexOf(instance);
                 if (a > -1) rimgoNormalRedirectsChecks.splice(a, 1);
 
@@ -156,9 +156,9 @@ function initDefaults() {
         fetch('/instances/data.json').then(response => response.text()).then(async data => {
             let dataJson = JSON.parse(data);
             redirects.rimgo = dataJson.rimgo;
-            browser.storage.local.get('cloudflareList', async r => {
+            browser.storage.local.get('cloudflareBlackList', async r => {
                 rimgoNormalRedirectsChecks = [...redirects.rimgo.normal];
-                for (const instance of r.cloudflareList) {
+                for (const instance of r.cloudflareBlackList) {
                     const i = rimgoNormalRedirectsChecks.indexOf(instance);
                     if (i > -1) rimgoNormalRedirectsChecks.splice(i, 1);
                 }

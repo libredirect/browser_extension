@@ -73,20 +73,16 @@ init();
 browser.storage.onChanged.addListener(init)
 
 function setRedirects(val) {
-  browser.storage.local.get('cloudflareList', r => {
+  browser.storage.local.get('cloudflareBlackList', r => {
     redirects = val;
-    simplyTranslateNormalRedirectsChecks = [...redirects.simplyTranslate.normal];
     lingvaNormalRedirectsChecks = [...redirects.lingva.normal]
-    for (const instance of r.cloudflareList) {
-      const a = simplyTranslateNormalRedirectsChecks.indexOf(instance);
-      if (a > -1) simplyTranslateNormalRedirectsChecks.splice(a, 1);
-
-      const b = lingvaNormalRedirectsChecks.indexOf(instance);
-      if (b > -1) lingvaNormalRedirectsChecks.splice(b, 1);
+    for (const instance of r.cloudflareBlackList) {
+      const i = lingvaNormalRedirectsChecks.indexOf(instance);
+      if (i > -1) lingvaNormalRedirectsChecks.splice(i, 1);
     }
     browser.storage.local.set({
       translateRedirects: redirects,
-      simplyTranslateNormalRedirectsChecks,
+      simplyTranslateNormalRedirectsChecks: redirects.simplyTranslate.normal,
       simplyTranslateTorRedirectsChecks: redirects.simplyTranslate.tor,
       lingvaNormalRedirectsChecks,
       lingvaTorRedirectsChecks: redirects.lingva.tor,
@@ -261,16 +257,12 @@ function initDefaults() {
       let dataJson = JSON.parse(data);
       redirects.simplyTranslate = dataJson.simplyTranslate;
       redirects.lingva = dataJson.lingva;
-      browser.storage.local.get('cloudflareList',
+      browser.storage.local.get('cloudflareBlackList',
         async r => {
-          simplyTranslateNormalRedirectsChecks = [...redirects.simplyTranslate.normal];
           lingvaNormalRedirectsChecks = [...redirects.lingva.normal]
-          for (const instance of r.cloudflareList) {
-            const a = simplyTranslateNormalRedirectsChecks.indexOf(instance);
-            if (a > -1) simplyTranslateNormalRedirectsChecks.splice(a, 1);
-
-            const b = lingvaNormalRedirectsChecks.indexOf(instance);
-            if (b > -1) lingvaNormalRedirectsChecks.splice(b, 1);
+          for (const instance of r.cloudflareBlackList) {
+            const i = lingvaNormalRedirectsChecks.indexOf(instance);
+            if (i > -1) lingvaNormalRedirectsChecks.splice(i, 1);
           }
           await browser.storage.local.set({
             translateDisable: false,
@@ -279,7 +271,7 @@ function initDefaults() {
             translateRedirects: redirects,
 
             simplyTranslateNormalRedirectsChecks: simplyTranslateNormalRedirectsChecks,
-            simplyTranslateNormalCustomRedirects: [],
+            simplyTranslateNormalCustomRedirects: [...redirects.simplyTranslate.normal],
             simplyTranslateTorRedirectsChecks: [...redirects.simplyTranslate.tor],
             simplyTranslateTorCustomRedirects: [],
 

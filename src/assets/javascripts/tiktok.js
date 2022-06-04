@@ -13,10 +13,10 @@ let redirects = {
     }
 }
 function setRedirects(val) {
-    browser.storage.local.get('cloudflareList', r => {
+    browser.storage.local.get('cloudflareBlackList', r => {
         redirects.proxiTok = val;
         proxiTokNormalRedirectsChecks = [...redirects.proxiTok.normal];
-        for (const instance of r.cloudflareList) {
+        for (const instance of r.cloudflareBlackList) {
             const a = proxiTokNormalRedirectsChecks.indexOf(instance);
             if (a > -1) proxiTokNormalRedirectsChecks.splice(a, 1);
         }

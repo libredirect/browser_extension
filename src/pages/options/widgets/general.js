@@ -63,7 +63,7 @@ importSettingsElement.addEventListener("change",
       if (
         "theme" in data &&
         "disableImgur" in data &&
-        "cloudflareList" in data &&
+        "cloudflareBlackList" in data &&
         "imgurRedirects" in data
       ) {
         await browser.storage.local.clear();
@@ -104,8 +104,9 @@ resetSettings.addEventListener("click",
   async () => {
     resetSettings.innerHTML = '...'
     await browser.storage.local.clear();
-    fetch('/instances/blocklist.json').then(response => response.text()).then(async data => {
-      await browser.storage.local.set({ cloudflareList: JSON.parse(data) })
+    fetch('/instances/blacklist.json').then(response => response.text()).then(async data => {
+      await browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare })
+      await browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate })
       await generalHelper.initDefaults();
       await youtubeHelper.initDefaults();
       await youtubeMusicHelper.initDefaults();
