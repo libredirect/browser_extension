@@ -51,22 +51,13 @@ browser.runtime.onInstalled.addListener(
 )
 
 youtubeHelper.pasteInvidiousCookies();
-youtubeHelper.pastePipedLocalStorage();
-youtubeHelper.pastePipedMaterialLocalStorage();
-
 translateHelper.pasteSimplyTranslateCookies();
-translateHelper.pasteLingvaLocalStorage();
-
 twitterHelper.pasteNitterCookies();
-
 wikipediaHelper.pasteWikilessCookies();
-
 searchHelper.pasteSearxCookies();
 searchHelper.pasteSearxngCookies();
-
 redditHelper.pasteLibredditCookies();
 redditHelper.pasteTedditCookies();
-
 tiktokHelper.pasteProxiTokCookies();
 
 

@@ -175,7 +175,7 @@ function redirect(url, details, initiator) {
   if ((isFreetube || isYatte) && sub_frame && isFrontendYoutube) return;
 
   if (isYatte && main_frame) return url.href.replace(/^https?:\/{2}/, 'yattee://');
-  if (isFreetube && main_frame) return `freetube://https://${url.pathname}${url.search}`;
+  if (isFreetube && main_frame) return `freetube://https://youtube.com${url.pathname}${url.search}`;
 
   if (isInvidious || ((isFreetube || isYatte) && sub_frame && isFrontendInvidious)) {
     let instancesList;
