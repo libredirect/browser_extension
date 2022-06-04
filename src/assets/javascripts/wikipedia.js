@@ -104,10 +104,8 @@ function setWikilessCookies() {
     let checkedInstances;
     if (wikipediaProtocol == 'normal') checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects]
     else if (wikipediaProtocol == 'tor') checkedInstances = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects]
-    for (const to of checkedInstances) {
-      utils.getCookiesFromStorage('wikiless', to, 'theme');
-      utils.getCookiesFromStorage('wikiless', to, 'default_lang');
-    }
+    utils.getCookiesFromStorage('wikiless', checkedInstances, 'theme');
+    utils.getCookiesFromStorage('wikiless', checkedInstances, 'default_lang');
     resolve();
   })
 }

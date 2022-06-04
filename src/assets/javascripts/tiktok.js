@@ -56,10 +56,8 @@ function setProxiTokCookies() {
         let checkedInstances;
         if (tiktokProtocol == 'normal') checkedInstances = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects]
         else if (tiktokProtocol == 'tor') checkedInstances = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects]
-        for (const to of checkedInstances) {
-            utils.getCookiesFromStorage('proxitok', to, 'theme');
-            utils.getCookiesFromStorage('proxitok', to, 'api-legacy');
-        }
+        utils.getCookiesFromStorage('proxitok', checkedInstances, 'theme');
+        utils.getCookiesFromStorage('proxitok', checkedInstances, 'api-legacy');
         resolve();
     })
 }

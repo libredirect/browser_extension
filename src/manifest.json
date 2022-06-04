@@ -25,6 +25,8 @@
     "storage",
     "unlimitedStorage",
     "cookies",
+    "browserSettings",
+    "privacy",
     "contextMenus",
     "<all_urls>"
   ],

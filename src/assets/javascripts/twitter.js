@@ -177,22 +177,20 @@ function setNitterCookies() {
     let checkedInstances;
     if (twitterProtocol == 'normal') checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects]
     else if (twitterProtocol == 'tor') checkedInstances = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects]
-    for (const to of checkedInstances) {
-      utils.getCookiesFromStorage('nitter', to, 'theme');
-      utils.getCookiesFromStorage('nitter', to, 'infiniteScroll');
-      utils.getCookiesFromStorage('nitter', to, 'stickyProfile');
-      utils.getCookiesFromStorage('nitter', to, 'bidiSupport');
-      utils.getCookiesFromStorage('nitter', to, 'hideTweetStats');
-      utils.getCookiesFromStorage('nitter', to, 'hideBanner');
-      utils.getCookiesFromStorage('nitter', to, 'hidePins');
-      utils.getCookiesFromStorage('nitter', to, 'hideReplies');
-      utils.getCookiesFromStorage('nitter', to, 'squareAvatars');
-      utils.getCookiesFromStorage('nitter', to, 'mp4Playback');
-      utils.getCookiesFromStorage('nitter', to, 'hlsPlayback');
-      utils.getCookiesFromStorage('nitter', to, 'proxyVideos');
-      utils.getCookiesFromStorage('nitter', to, 'muteVideos');
-      utils.getCookiesFromStorage('nitter', to, 'autoplayGifs');
-    }
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'theme');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'infiniteScroll');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'stickyProfile');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'bidiSupport');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'hideTweetStats');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'hideBanner');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'hidePins');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'hideReplies');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'squareAvatars');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'mp4Playback');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'hlsPlayback');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'proxyVideos');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'muteVideos');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'autoplayGifs');
     resolve();
   }
   )

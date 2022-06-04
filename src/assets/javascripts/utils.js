@@ -282,28 +282,58 @@ async function testLatency(element, instances) {
 
 function copyCookie(frontend, targetUrl, urls, name) {
   return new Promise(resolve => {
-    browser.cookies.get(
-      { url: protocolHost(targetUrl), name: name },
-      async r => {
-        function setCookies(url, name, value) {
-          return new Promise(resolve => browser.cookies.set({ url: url, name: name, value: value }, () => resolve()))
-        }
-        if (r) {
-          console.log(name, r.value);
-          for (const url of urls) await setCookies(url, name, r.value)
-          browser.storage.local.set({ [`${frontend}_${name}`]: r.value }, () => resolve())
-        } else resolve();
-      }
-    )
+    browser.cookies.getAll(
+      { url: protocolHost(targetUrl), name: name, firstPartyDomain: null },
+      cookies => {
+        browser.privacy.websites.firstPartyIsolate.get({},
+          async firstPartyIsolate => {
+            function setCookie(url, name, value, expirationDate) {
+              console.log('firstPartyDomain', firstPartyIsolate.value ? new URL(url).hostname : '')
+              return new Promise(resolve =>
+                browser.cookies.set(
+                  {
+                    url: url,
+                    name: name,
+                    value: value,
+                    firstPartyDomain: firstPartyIsolate.value ? new URL(url).hostname : '',
+                    expirationDate: expirationDate,
+                  },
+                  () => resolve()
+                )
+              )
+            }
+            for (const cookie of cookies)
+              if (cookie.name == name) {
+                console.log('cookie', cookie);
+                for (const url of urls) await setCookie(url, cookie.name, cookie.value, cookie.expirationDate)
+                browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve())
+                break;
+              }
+            resolve();
+          }
+        )
+      });
   })
 }
 
-function getCookiesFromStorage(frontend, to, name) {
+function getCookiesFromStorage(frontend, urls, name) {
   let key = `${frontend}_${name}`;
   browser.storage.local.get(
     key,
     r => {
-      if (r[key] !== undefined) browser.cookies.set({ url: to, name: name, value: r[key] })
+      const cookie = r[key];
+      if (cookie !== undefined)
+        browser.privacy.websites.firstPartyIsolate.get({},
+          firstPartyIsolate => {
+            for (const url of urls)
+              browser.cookies.set({
+                url: url,
+                name: cookie.name,
+                value: cookie.value,
+                expirationDate: cookie.expirationDate,
+                firstPartyDomain: firstPartyIsolate.value ? new URL(url).hostname : '',
+              })
+          })
     }
   )
 }

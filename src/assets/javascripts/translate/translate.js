@@ -160,12 +160,10 @@ function setSimplyTranslateCookies() {
     let checkedInstances;
     if (translateProtocol == 'normal') checkedInstances = [...simplyTranslateNormalRedirectsChecks, ...simplyTranslateNormalCustomRedirects]
     else if (translateProtocol == 'tor') checkedInstances = [...simplyTranslateTorRedirectsChecks, ...simplyTranslateTorCustomRedirects]
-    for (const to of checkedInstances) {
-      utils.getCookiesFromStorage('simplyTranslate', to, 'from_lang');
-      utils.getCookiesFromStorage('simplyTranslate', to, 'to_lang');
-      utils.getCookiesFromStorage('simplyTranslate', to, 'tts_enabled');
-      utils.getCookiesFromStorage('simplyTranslate', to, 'use_text_fields');
-    }
+    utils.getCookiesFromStorage('simplyTranslate', checkedInstances, 'from_lang');
+    utils.getCookiesFromStorage('simplyTranslate', checkedInstances, 'to_lang');
+    utils.getCookiesFromStorage('simplyTranslate', checkedInstances, 'tts_enabled');
+    utils.getCookiesFromStorage('simplyTranslate', checkedInstances, 'use_text_fields');
     resolve();
   }
   )

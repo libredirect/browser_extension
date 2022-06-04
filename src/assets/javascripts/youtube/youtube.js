@@ -328,8 +328,7 @@ function setInvidiousCookies() {
     let checkedInstances;
     if (youtubeProtocol == 'normal') checkedInstances = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects]
     else if (youtubeProtocol == 'tor') checkedInstances = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects]
-    for (const to of checkedInstances)
-      utils.getCookiesFromStorage('invidious', to, 'PREFS');
+    utils.getCookiesFromStorage('invidious', checkedInstances, 'PREFS');
     resolve();
   })
 }

@@ -126,18 +126,16 @@ function setLibredditCookies() {
     let checkedInstances;
     if (redditProtocol == 'normal') checkedInstances = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects]
     else if (redditProtocol == 'tor') checkedInstances = [...libredditTorRedirectsChecks, ...libredditTorCustomRedirects]
-    for (const to of checkedInstances) {
-      utils.getCookiesFromStorage('libreddit', to, "theme");
-      utils.getCookiesFromStorage('libreddit', to, "front_page");
-      utils.getCookiesFromStorage('libreddit', to, "layout");
-      utils.getCookiesFromStorage('libreddit', to, "wide");
-      utils.getCookiesFromStorage('libreddit', to, "post_sort");
-      utils.getCookiesFromStorage('libreddit', to, "comment_sort");
-      utils.getCookiesFromStorage('libreddit', to, "show_nsfw");
-      utils.getCookiesFromStorage('libreddit', to, "autoplay_videos");
-      utils.getCookiesFromStorage('libreddit', to, "use_hls");
-      utils.getCookiesFromStorage('libreddit', to, "hide_hls_notification");
-    }
+    utils.getCookiesFromStorage('libreddit', checkedInstances, "theme");
+    utils.getCookiesFromStorage('libreddit', checkedInstances, "front_page");
+    utils.getCookiesFromStorage('libreddit', checkedInstances, "layout");
+    utils.getCookiesFromStorage('libreddit', checkedInstances, "wide");
+    utils.getCookiesFromStorage('libreddit', checkedInstances, "post_sort");
+    utils.getCookiesFromStorage('libreddit', checkedInstances, "comment_sort");
+    utils.getCookiesFromStorage('libreddit', checkedInstances, "show_nsfw");
+    utils.getCookiesFromStorage('libreddit', checkedInstances, "autoplay_videos");
+    utils.getCookiesFromStorage('libreddit', checkedInstances, "use_hls");
+    utils.getCookiesFromStorage('libreddit', checkedInstances, "hide_hls_notification");
     resolve();
   })
 }
@@ -181,20 +179,18 @@ function setTedditCookies() {
     let checkedInstances;
     if (redditProtocol == 'normal') checkedInstances = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects]
     else if (redditProtocol == 'tor') checkedInstances = [...tedditTorRedirectsChecks, ...tedditTorCustomRedirects]
-    for (const to of checkedInstances) {
-      utils.getCookiesFromStorage('teddit', to, 'collapse_child_comments')
-      utils.getCookiesFromStorage('teddit', to, 'domain_instagram')
-      utils.getCookiesFromStorage('teddit', to, 'domain_twitter')
-      utils.getCookiesFromStorage('teddit', to, 'domain_youtube')
-      utils.getCookiesFromStorage('teddit', to, 'flairs')
-      utils.getCookiesFromStorage('teddit', to, 'highlight_controversial')
-      utils.getCookiesFromStorage('teddit', to, 'nsfw_enabled')
-      utils.getCookiesFromStorage('teddit', to, 'post_media_max_height')
-      utils.getCookiesFromStorage('teddit', to, 'show_upvoted_percentage')
-      utils.getCookiesFromStorage('teddit', to, 'show_upvotes')
-      utils.getCookiesFromStorage('teddit', to, 'theme')
-      utils.getCookiesFromStorage('teddit', to, 'videos_muted')
-    }
+    utils.getCookiesFromStorage('teddit', checkedInstances, 'collapse_child_comments')
+    utils.getCookiesFromStorage('teddit', checkedInstances, 'domain_instagram')
+    utils.getCookiesFromStorage('teddit', checkedInstances, 'domain_twitter')
+    utils.getCookiesFromStorage('teddit', checkedInstances, 'domain_youtube')
+    utils.getCookiesFromStorage('teddit', checkedInstances, 'flairs')
+    utils.getCookiesFromStorage('teddit', checkedInstances, 'highlight_controversial')
+    utils.getCookiesFromStorage('teddit', checkedInstances, 'nsfw_enabled')
+    utils.getCookiesFromStorage('teddit', checkedInstances, 'post_media_max_height')
+    utils.getCookiesFromStorage('teddit', checkedInstances, 'show_upvoted_percentage')
+    utils.getCookiesFromStorage('teddit', checkedInstances, 'show_upvotes')
+    utils.getCookiesFromStorage('teddit', checkedInstances, 'theme')
+    utils.getCookiesFromStorage('teddit', checkedInstances, 'videos_muted')
     resolve();
   })
 }

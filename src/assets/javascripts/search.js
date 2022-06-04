@@ -182,25 +182,23 @@ function setSearxCookies() {
     let checkedInstances;
     if (searchProtocol == 'normal') checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects]
     else if (searchProtocol == 'tor') checkedInstances = [...searxTorRedirectsChecks, ...searxTorCustomRedirects]
-    for (const to of checkedInstances) {
-      utils.getCookiesFromStorage('searx', to, 'advanced_search');
-      utils.getCookiesFromStorage('searx', to, 'autocomplete');
-      utils.getCookiesFromStorage('searx', to, 'categories');
-      utils.getCookiesFromStorage('searx', to, 'disabled_engines');
-      utils.getCookiesFromStorage('searx', to, 'disabled_plugins');
-      utils.getCookiesFromStorage('searx', to, 'doi_resolver');
-      utils.getCookiesFromStorage('searx', to, 'enabled_engines');
-      utils.getCookiesFromStorage('searx', to, 'enabled_plugins');
-      utils.getCookiesFromStorage('searx', to, 'image_proxy');
-      utils.getCookiesFromStorage('searx', to, 'language');
-      utils.getCookiesFromStorage('searx', to, 'locale');
-      utils.getCookiesFromStorage('searx', to, 'method');
-      utils.getCookiesFromStorage('searx', to, 'oscar-style');
-      utils.getCookiesFromStorage('searx', to, 'results_on_new_tab');
-      utils.getCookiesFromStorage('searx', to, 'safesearch');
-      utils.getCookiesFromStorage('searx', to, 'theme');
-      utils.getCookiesFromStorage('searx', to, 'tokens');
-    }
+    utils.getCookiesFromStorage('searx', checkedInstances, 'advanced_search');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'autocomplete');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'categories');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'disabled_engines');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'disabled_plugins');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'doi_resolver');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'enabled_engines');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'enabled_plugins');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'image_proxy');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'language');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'locale');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'method');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'oscar-style');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'results_on_new_tab');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'safesearch');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'theme');
+    utils.getCookiesFromStorage('searx', checkedInstances, 'tokens');
     resolve();
   })
 }
@@ -254,27 +252,25 @@ function setSearxngCookies() {
     let checkedInstances;
     if (searchProtocol == 'normal') checkedInstances = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects]
     else if (searchProtocol == 'tor') checkedInstances = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects]
-    for (const to of checkedInstances) {
-      utils.getCookiesFromStorage('searxng', to, 'autocomplete');
-      utils.getCookiesFromStorage('searxng', to, 'categories');
-      utils.getCookiesFromStorage('searxng', to, 'disabled_engines');
-      utils.getCookiesFromStorage('searxng', to, 'disabled_plugins');
-      utils.getCookiesFromStorage('searxng', to, 'doi_resolver');
-      utils.getCookiesFromStorage('searxng', to, 'enabled_plugins');
-      utils.getCookiesFromStorage('searxng', to, 'enabled_engines');
-      utils.getCookiesFromStorage('searxng', to, 'image_proxy');
-      utils.getCookiesFromStorage('searxng', to, 'infinite_scroll');
-      utils.getCookiesFromStorage('searxng', to, 'language');
-      utils.getCookiesFromStorage('searxng', to, 'locale');
-      utils.getCookiesFromStorage('searxng', to, 'maintab');
-      utils.getCookiesFromStorage('searxng', to, 'method');
-      utils.getCookiesFromStorage('searxng', to, 'query_in_title');
-      utils.getCookiesFromStorage('searxng', to, 'results_on_new_tab');
-      utils.getCookiesFromStorage('searxng', to, 'safesearch');
-      utils.getCookiesFromStorage('searxng', to, 'simple_style');
-      utils.getCookiesFromStorage('searxng', to, 'theme');
-      utils.getCookiesFromStorage('searxng', to, 'tokens');
-    }
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'autocomplete');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'categories');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'disabled_engines');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'disabled_plugins');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'doi_resolver');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'enabled_plugins');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'enabled_engines');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'image_proxy');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'infinite_scroll');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'language');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'locale');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'maintab');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'method');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'query_in_title');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'results_on_new_tab');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'safesearch');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'simple_style');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'theme');
+    utils.getCookiesFromStorage('searxng', checkedInstances, 'tokens');
     resolve();
   })
 }
