@@ -94,7 +94,7 @@ function setRedirects(val) {
   })
 }
 
-function initLingvaLocalStorage(test, url, tabId) {
+function copyPasteLingvaLocalStorage(test, url, tabId) {
   return new Promise(async resolve => {
     await init();
     if (translateDisable || translateFrontend != 'lingva') { resolve(); return; }
@@ -129,7 +129,21 @@ function initLingvaLocalStorage(test, url, tabId) {
   )
 }
 
-function initSimplyTranslateCookies(test, from) {
+function pasteLingvaLocalStorage() {
+  return new Promise(async resolve => {
+    await init();
+    if (translateDisable || translateFrontend != 'lingva') { resolve(); return; }
+    let checkedInstances;
+    if (translateProtocol == 'normal') checkedInstances = [...lingvaNormalRedirectsChecks, ...lingvaNormalCustomRedirects];
+    if (translateProtocol == 'tor') checkedInstances = [...lingvaTorRedirectsChecks, ...lingvaTorCustomRedirects];
+    for (const to of checkedInstances)
+      browser.tabs.create({ url: to },
+        tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/translate/set_lingva_preferences.js", runAt: "document_start" }))
+    resolve();
+  })
+}
+
+function copyPasteSimplyTranslateCookies(test, from) {
   return new Promise(async resolve => {
     await init();
     const protocolHost = utils.protocolHost(from);
@@ -153,7 +167,7 @@ function initSimplyTranslateCookies(test, from) {
   )
 }
 
-function setSimplyTranslateCookies() {
+function pasteSimplyTranslateCookies() {
   return new Promise(async resolve => {
     await init();
     if (translateDisable || translateFrontend != 'simplyTranslate') { resolve(); return; }
@@ -281,9 +295,10 @@ function initDefaults() {
 }
 
 export default {
-  initSimplyTranslateCookies,
-  setSimplyTranslateCookies,
-  initLingvaLocalStorage,
+  copyPasteSimplyTranslateCookies,
+  pasteSimplyTranslateCookies,
+  copyPasteLingvaLocalStorage,
+  pasteLingvaLocalStorage,
   setRedirects,
   redirect,
   initDefaults,

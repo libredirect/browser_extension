@@ -49,7 +49,7 @@ function initProxiTokCookies(test, from) {
     })
 }
 
-function setProxiTokCookies() {
+function pasteProxiTokCookies() {
     return new Promise(async resolve => {
         await init();
         if (disableTiktok || tiktokProtocol === undefined) { resolve(); return; }
@@ -166,7 +166,7 @@ export default {
     reverse,
 
     initProxiTokCookies,
-    setProxiTokCookies,
+    pasteProxiTokCookies,
 
     initDefaults
 };

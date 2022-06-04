@@ -175,7 +175,7 @@ function initSearxCookies(test, from) {
   })
 }
 
-function setSearxCookies() {
+function pasteSearxCookies() {
   return new Promise(async resolve => {
     await init();
     if (disableSearch || searchFrontend != 'searx') { resolve(); return; }
@@ -245,7 +245,7 @@ function initSearxngCookies(test, from) {
   })
 }
 
-function setSearxngCookies() {
+function pasteSearxngCookies() {
   return new Promise(async resolve => {
     await init();
     if (disableSearch || searchFrontend != 'searxng', searchProtocol === undefined) { resolve(); return; }
@@ -453,9 +453,9 @@ function initDefaults() {
 export default {
   setRedirects,
   initSearxCookies,
-  setSearxCookies,
+  pasteSearxCookies,
   initSearxngCookies,
-  setSearxngCookies,
+  pasteSearxngCookies,
   redirect,
   initDefaults,
   switchInstance,

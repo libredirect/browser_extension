@@ -298,7 +298,7 @@ function initDefaults() {
   })
 }
 
-function initInvidiousCookies(test, from) {
+function copyPasteInvidiousCookies(test, from) {
   return new Promise(async resolve => {
     await init();
     if (disableYoutube || youtubeFrontend != 'invidious') { resolve(); return; }
@@ -321,7 +321,7 @@ function initInvidiousCookies(test, from) {
   })
 }
 
-function setInvidiousCookies() {
+function pasteInvidiousCookies() {
   return new Promise(async resolve => {
     await init();
     if (disableYoutube || youtubeFrontend != 'invidious') { resolve(); return; }
@@ -333,7 +333,7 @@ function setInvidiousCookies() {
   })
 }
 
-function initPipedLocalStorage(test, url, tabId) {
+function copyPastePipedLocalStorage(test, url, tabId) {
   return new Promise(async resolve => {
     await init();
     if (disableYoutube || youtubeFrontend != 'piped') { resolve(); return; }
@@ -361,8 +361,22 @@ function initPipedLocalStorage(test, url, tabId) {
     resolve(true);
   })
 }
+function pastePipedLocalStorage() {
+  return new Promise(async resolve => {
+    await init();
+    if (disableYoutube || youtubeFrontend != 'piped') { resolve(); return; }
+    let checkedInstances;
+    if (youtubeProtocol == 'normal') checkedInstances = [...pipedNormalCustomRedirects, ...pipedNormalRedirectsChecks]
+    else if (youtubeProtocol == 'tor') checkedInstances = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects]
+    for (const to of checkedInstances) {
+      browser.tabs.create({ url: to },
+        tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/youtube/set_piped_preferences.js", runAt: "document_start" }))
+    }
+    resolve();
+  })
+}
 
-function initPipedMaterialLocalStorage(test, url, tabId,) {
+function copyPastePipedMaterialLocalStorage(test, url, tabId,) {
   return new Promise(async resolve => {
     await init();
     if (disableYoutube || youtubeFrontend != 'pipedMaterial') { resolve(); return; }
@@ -392,6 +406,22 @@ function initPipedMaterialLocalStorage(test, url, tabId,) {
   })
 }
 
+function pastePipedMaterialLocalStorage() {
+  return new Promise(async resolve => {
+    await init();
+    if (disableYoutube || youtubeFrontend != 'pipedMaterial') { resolve(); return; }
+    let checkedInstances;
+    if (youtubeProtocol == 'normal') checkedInstances = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects]
+    else if (youtubeProtocol == 'tor') checkedInstances = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects]
+    for (const to of checkedInstances) {
+      browser.tabs.create({ url: to },
+        tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/youtube/set_pipedMaterial_preferences.js", runAt: "document_start" }))
+    }
+    resolve();
+  })
+}
+
+
 function removeXFrameOptions(e) {
   if (e.type != 'sub_frame') return;
   const url = new URL(e.url);
@@ -409,10 +439,12 @@ function removeXFrameOptions(e) {
 
 export default {
   setRedirects,
-  initPipedLocalStorage,
-  initPipedMaterialLocalStorage,
-  initInvidiousCookies,
-  setInvidiousCookies,
+  copyPastePipedLocalStorage,
+  pastePipedLocalStorage,
+  copyPastePipedMaterialLocalStorage,
+  pastePipedMaterialLocalStorage,
+  copyPasteInvidiousCookies,
+  pasteInvidiousCookies,
   redirect,
   reverse,
   switchInstance,

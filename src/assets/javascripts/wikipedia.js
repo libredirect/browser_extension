@@ -97,7 +97,7 @@ function initWikilessCookies(test, from) {
   })
 }
 
-function setWikilessCookies() {
+function pasteWikilessCookies() {
   return new Promise(async resolve => {
     await init();
     if (disableWikipedia || wikipediaProtocol === undefined) { resolve(); return; }
@@ -207,7 +207,7 @@ export default {
   setRedirects,
 
   initWikilessCookies,
-  setWikilessCookies,
+  pasteWikilessCookies,
 
   redirect,
   initDefaults,

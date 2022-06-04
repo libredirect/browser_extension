@@ -8,14 +8,14 @@ import tiktokHelper from "../../assets/javascripts/tiktok.js";
 
 window.browser = window.browser || window.chrome;
 
-await youtubeHelper.setInvidiousCookies();
-await translateHelper.setSimplyTranslateCookies();
-await twitterHelper.setNitterCookies();
-await wikipediaHelper.setWikilessCookies();
-await searchHelper.setSearxCookies();
-await searchHelper.setSearxngCookies();
-await redditHelper.setLibredditCookies();
-await redditHelper.setTedditCookies();
-await tiktokHelper.setProxiTokCookies();
+await youtubeHelper.pasteInvidiousCookies();
+await translateHelper.pasteSimplyTranslateCookies();
+await twitterHelper.pasteNitterCookies();
+await wikipediaHelper.pasteWikilessCookies();
+await searchHelper.pasteSearxCookies();
+await searchHelper.pasteSearxngCookies();
+await redditHelper.pasteLibredditCookies();
+await redditHelper.pasteTedditCookies();
+await tiktokHelper.pasteProxiTokCookies();
 
 window.close()

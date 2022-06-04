@@ -54,6 +54,7 @@ let importSettingsElement = document.getElementById("import-settings");
 let importSettingsElementText = document.getElementById('import_settings_text');
 importSettingsElement.addEventListener("change",
   () => {
+    importSettingsElementText.innerHTML = '...';
     let file = importSettingsElement.files[0];
     const reader = new FileReader();
     reader.readAsText(file);
@@ -67,6 +68,24 @@ importSettingsElement.addEventListener("change",
       ) {
         await browser.storage.local.clear();
         await browser.storage.local.set({ ...data })
+        await youtubeHelper.pasteInvidiousCookies();
+        await youtubeHelper.pastePipedLocalStorage();
+        await youtubeHelper.pastePipedMaterialLocalStorage();
+
+        await translateHelper.pasteSimplyTranslateCookies();
+        await translateHelper.pasteLingvaLocalStorage();
+
+        await twitterHelper.pasteNitterCookies();
+
+        await wikipediaHelper.pasteWikilessCookies();
+
+        await searchHelper.pasteSearxCookies();
+        await searchHelper.pasteSearxngCookies();
+
+        await redditHelper.pasteLibredditCookies();
+        await redditHelper.pasteTedditCookies();
+
+        await tiktokHelper.pasteProxiTokCookies();
         location.reload();
       } else
         importError()
@@ -80,8 +99,10 @@ function importError() {
   setTimeout(() => importSettingsElementText.innerHTML = oldHTML, 1000);
 }
 
-document.getElementById("reset-settings").addEventListener("click",
+const resetSettings = document.getElementById("reset-settings");
+resetSettings.addEventListener("click",
   async () => {
+    resetSettings.innerHTML = '...'
     await browser.storage.local.clear();
     fetch('/instances/blocklist.json').then(response => response.text()).then(async data => {
       await browser.storage.local.set({ cloudflareList: JSON.parse(data) })

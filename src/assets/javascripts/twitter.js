@@ -170,7 +170,7 @@ function initNitterCookies(test, from) {
   })
 }
 
-function setNitterCookies() {
+function pasteNitterCookies() {
   return new Promise(async resolve => {
     await init();
     if (disableTwitter || twitterProtocol === undefined) { resolve(); return; }
@@ -231,6 +231,6 @@ export default {
   reverse,
   removeXFrameOptions,
   initNitterCookies,
-  setNitterCookies,
+  pasteNitterCookies,
   initDefaults,
 };

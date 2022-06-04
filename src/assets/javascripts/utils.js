@@ -382,9 +382,9 @@ function unify(test) {
           try { url = new URL(currTab.url); }
           catch { resolve(); return; }
 
-          let result = await youtubeHelper.initInvidiousCookies(test, url);
-          if (!result) result = await youtubeHelper.initPipedLocalStorage(test, url, currTab.id);
-          if (!result) result = await youtubeHelper.initPipedMaterialLocalStorage(test, url, currTab.id);
+          let result = await youtubeHelper.copyPasteInvidiousCookies(test, url);
+          if (!result) result = await youtubeHelper.copyPastePipedLocalStorage(test, url, currTab.id);
+          if (!result) result = await youtubeHelper.copyPastePipedMaterialLocalStorage(test, url, currTab.id);
 
           if (!result) result = await twitterHelper.initNitterCookies(test, url);
 
@@ -398,8 +398,8 @@ function unify(test) {
 
           if (!result) result = await wikipediaHelper.initWikilessCookies(test, url);
 
-          if (!result) result = await translateHelper.initSimplyTranslateCookies(test, url);
-          if (!result) result = await translateHelper.initLingvaLocalStorage(test, url);
+          if (!result) result = await translateHelper.copyPasteSimplyTranslateCookies(test, url);
+          if (!result) result = await translateHelper.copyPasteLingvaLocalStorage(test, url);
 
           if (result) {
             resolve(true);

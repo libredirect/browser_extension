@@ -119,7 +119,7 @@ function initLibredditCookies(test, from) {
   })
 }
 
-function setLibredditCookies() {
+function pasteLibredditCookies() {
   return new Promise(async resolve => {
     await init();
     if (disableReddit || redditFrontend != 'libreddit' || redditProtocol === undefined) { resolve(); return; }
@@ -172,7 +172,7 @@ function initTedditCookies(test, from) {
   })
 }
 
-function setTedditCookies() {
+function pasteTedditCookies() {
   return new Promise(async resolve => {
     await init();
     if (disableReddit || redditFrontend != 'teddit' || redditProtocol === undefined) { resolve(); return; }
@@ -361,9 +361,9 @@ function initDefaults() {
 export default {
   setRedirects,
   initLibredditCookies,
-  setLibredditCookies,
+  pasteLibredditCookies,
   initTedditCookies,
-  setTedditCookies,
+  pasteTedditCookies,
 
   redirect,
   initDefaults,

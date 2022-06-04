@@ -50,16 +50,24 @@ browser.runtime.onInstalled.addListener(
   }
 )
 
-youtubeHelper.setInvidiousCookies();
-translateHelper.setSimplyTranslateCookies();
-twitterHelper.setNitterCookies();
-wikipediaHelper.setWikilessCookies();
-searchHelper.setSearxCookies();
-searchHelper.setSearxngCookies();
-redditHelper.setLibredditCookies();
-redditHelper.setTedditCookies();
-tiktokHelper.setProxiTokCookies();
+youtubeHelper.pasteInvidiousCookies();
+youtubeHelper.pastePipedLocalStorage();
+youtubeHelper.pastePipedMaterialLocalStorage();
 
+translateHelper.pasteSimplyTranslateCookies();
+translateHelper.pasteLingvaLocalStorage();
+
+twitterHelper.pasteNitterCookies();
+
+wikipediaHelper.pasteWikilessCookies();
+
+searchHelper.pasteSearxCookies();
+searchHelper.pasteSearxngCookies();
+
+redditHelper.pasteLibredditCookies();
+redditHelper.pasteTedditCookies();
+
+tiktokHelper.pasteProxiTokCookies();
 
 
 let BYPASSTABs = [];
