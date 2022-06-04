@@ -164,7 +164,7 @@
     "description": "used in the settings page"
   },
   "embeddedVids": {
-    "message": "Embedded Videos Frontend",
+    "message": "Frontend für eingebettete Videos",
     "description": "used in the settings page"
   },
   "both": {
@@ -192,31 +192,31 @@
     "description": "used in instance_offline.js"
   },
   "copyRaw": {
-    "message": "",
+    "message": "Original-Link kopieren",
     "description": ""
   },
   "copied": {
-    "message": "",
+    "message": "Kopiert",
     "description": ""
   },
   "unifySettings": {
-    "message": "",
+    "message": "Einstellungen vereinheitlichen",
     "description": ""
   },
   "lbry": {
-    "message": "",
+    "message": "LBRY",
     "description": ""
   },
   "i2p": {
-    "message": "",
+    "message": "I2P",
     "description": ""
   },
   "instanceOffline": {
-    "message": "",
+    "message": "Diese Instanz ist offline , du wirst weitergeleitet nach &nbsp;",
     "description": ""
   },
   "testInstancesLatency": {
-    "message": "",
+    "message": "Teste Latenz der Instanzen",
     "description": ""
   }
 }
