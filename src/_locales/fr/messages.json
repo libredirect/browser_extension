@@ -187,5 +187,21 @@
     },
     "testInstancesLatency": {
         "message": "Tester la latence des instances"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "used in the settings page"
+    },
+    "tiktok": {
+        "message": "TikTok",
+        "description": "used in the settings page"
+    },
+    "imgur": {
+        "message": "Imgur",
+        "description": "used in the settings page"
+    },
+    "tor": {
+        "message": "Tor",
+        "description": "used in the settings page"
     }
 }
