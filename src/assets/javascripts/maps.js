@@ -197,13 +197,16 @@ function redirect(url, initiator) {
 }
 
 async function initDefaults() {
-  await browser.storage.local.set({
-    disableMaps: false,
-    mapsFrontend: 'osm',
-    mapsRedirects: redirects,
-    facilNormalRedirectsChecks: [...redirects.facil.normal],
-    facilNormalCustomRedirects: [],
-  })
+  return new Promise(resolve =>
+    browser.storage.local.set({
+      disableMaps: false,
+      mapsFrontend: 'osm',
+      mapsRedirects: redirects,
+      facilNormalRedirectsChecks: [...redirects.facil.normal],
+      facilNormalCustomRedirects: [],
+    }, () => resolve())
+  )
+
 }
 
 export default {

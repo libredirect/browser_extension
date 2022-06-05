@@ -34,7 +34,6 @@ utils.copyRaw(true).then(r => {
 
 document.getElementById("more-options").addEventListener("click", () => browser.runtime.openOptionsPage());
 
-
 let disableTwitterElement = document.getElementById("disable-nitter");
 let disableYoutubeElement = document.getElementById("disable-youtube");
 let disableYoutubeMusicElement = document.getElementById("disable-youtubeMusic");

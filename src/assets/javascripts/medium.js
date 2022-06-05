@@ -148,7 +148,7 @@ function initDefaults() {
             let i = scribeNormalRedirectsChecks.indexOf(instance);
             if (i > -1) scribeNormalRedirectsChecks.splice(i, 1);
           }
-          await browser.storage.local.set({
+          browser.storage.local.set({
             disableMedium: false,
             mediumRedirects: redirects,
 
@@ -159,8 +159,7 @@ function initDefaults() {
             scribeTorCustomRedirects: [],
 
             mediumProtocol: "normal",
-          })
-          resolve();
+          }, () => resolve())
         })
     })
   })

@@ -69,14 +69,12 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
   }
   let latencyKey = `${name}Latency`;
   let instancesLatency;
-  await browser.storage.local.get(latencyKey, r => instancesLatency = r[latencyKey] ?? []);
   let nameProtocolElement = document.getElementById(name).getElementsByClassName(protocol)[0];
 
   let nameCustomInstances = [];
   let nameCheckListElement = nameProtocolElement.getElementsByClassName('checklist')[0];
 
   await initcloudflareBlackList();
-
 
   let nameDefaultRedirects;
 
@@ -92,11 +90,13 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
         [
           redirectsChecks,
           customRedirects,
-          redirectsKey
+          redirectsKey,
+          latencyKey
         ],
         r => {
           nameDefaultRedirects = r[redirectsChecks];
           nameCustomInstances = r[customRedirects];
+          instancesLatency = r[latencyKey] ?? [];
           redirects = r[redirectsKey];
           resolve();
         }
@@ -155,7 +155,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
     else
       nameDefaultRedirects = [];
 
-    await browser.storage.local.set({ [redirectsChecks]: nameDefaultRedirects });
+    browser.storage.local.set({ [redirectsChecks]: nameDefaultRedirects });
     calcNameCheckBoxes();
   });
 
@@ -168,7 +168,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
           let index = nameDefaultRedirects.indexOf(element.className);
           if (index > -1) nameDefaultRedirects.splice(index, 1);
         }
-        await browser.storage.local.set({ [redirectsChecks]: nameDefaultRedirects });
+        browser.storage.local.set({ [redirectsChecks]: nameDefaultRedirects });
         calcNameCheckBoxes();
       });
   }
@@ -191,7 +191,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
       nameProtocolElement.getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
         let index = nameCustomInstances.indexOf(item);
         if (index > -1) nameCustomInstances.splice(index, 1);
-        await browser.storage.local.set({ [customRedirects]: nameCustomInstances });
+        browser.storage.local.set({ [customRedirects]: nameCustomInstances });
         calcNameCustomInstances();
       });
     }
@@ -205,7 +205,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
     if (nameCustomInstanceInput.validity.valid && !redirects[name][protocol].includes(protocolHostVar)) {
       if (!nameCustomInstances.includes(protocolHostVar)) {
         nameCustomInstances.push(protocolHostVar)
-        await browser.storage.local.set({ [customRedirects]: nameCustomInstances });
+        browser.storage.local.set({ [customRedirects]: nameCustomInstances });
         nameCustomInstanceInput.value = '';
       }
       calcNameCustomInstances();
@@ -292,7 +292,6 @@ function copyCookie(frontend, targetUrl, urls, name) {
         browser.privacy.websites.firstPartyIsolate.get({},
           async firstPartyIsolate => {
             function setCookie(url, name, value, expirationDate) {
-              console.log('firstPartyDomain', firstPartyIsolate.value ? new URL(url).hostname : '')
               return new Promise(resolve =>
                 browser.cookies.set(
                   {
@@ -300,7 +299,7 @@ function copyCookie(frontend, targetUrl, urls, name) {
                     name: name,
                     value: value,
                     firstPartyDomain: firstPartyIsolate.value ? new URL(url).hostname : '',
-                    expirationDate: expirationDate,
+                    expirationDate: firstPartyIsolate.value ? null : expirationDate,
                   },
                   () => resolve()
                 )
@@ -334,7 +333,7 @@ function getCookiesFromStorage(frontend, urls, name) {
                 url: url,
                 name: cookie.name,
                 value: cookie.value,
-                expirationDate: cookie.expirationDate,
+                expirationDate: firstPartyIsolate.value ? null : cookie.expirationDate,
                 firstPartyDomain: firstPartyIsolate.value ? new URL(url).hostname : '',
               })
           })

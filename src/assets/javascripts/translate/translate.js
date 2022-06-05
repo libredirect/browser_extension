@@ -264,14 +264,14 @@ function initDefaults() {
             const i = lingvaNormalRedirectsChecks.indexOf(instance);
             if (i > -1) lingvaNormalRedirectsChecks.splice(i, 1);
           }
-          await browser.storage.local.set({
+          browser.storage.local.set({
             translateDisable: false,
             translateFrontend: "simplyTranslate",
             translateProtocol: 'normal',
             translateRedirects: redirects,
 
-            simplyTranslateNormalRedirectsChecks: simplyTranslateNormalRedirectsChecks,
-            simplyTranslateNormalCustomRedirects: [...redirects.simplyTranslate.normal],
+            simplyTranslateNormalRedirectsChecks: [...redirects.simplyTranslate.normal],
+            simplyTranslateNormalCustomRedirects: [],
             simplyTranslateTorRedirectsChecks: [...redirects.simplyTranslate.tor],
             simplyTranslateTorCustomRedirects: [],
 
@@ -279,8 +279,7 @@ function initDefaults() {
             lingvaNormalCustomRedirects: [],
             lingvaTorRedirectsChecks: [...redirects.lingva.tor],
             lingvaTorCustomRedirects: [],
-          })
-          resolve();
+          }, () => resolve())
         })
     })
   })

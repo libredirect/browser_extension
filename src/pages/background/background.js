@@ -21,38 +21,59 @@ import lbryHelper from "../../assets/javascripts/lbry.js";
 
 window.browser = window.browser || window.chrome;
 
+function openResetWarning() {
+  return new Promise(resolve => {
+    browser.storage.local.get(null, r => {
+      const old = encodeURIComponent(JSON.stringify(r))
+      browser.tabs.create({ url: browser.runtime.getURL(`/pages/background/reset_warning.html?data=${old}`) });
+      resolve();
+    })
+  })
+}
+
+
 browser.runtime.onInstalled.addListener(
   async details => {
     // if (details.reason == 'install') {
-    if (details.reason == 'install' || details.reason == "update") {
-      if (details.reason == "update") browser.tabs.create({ url: browser.runtime.getURL("/pages/background/reset_warning.html") });
+    if (details.reason == 'install' || (details.reason == "update" && details.previousVersion != browser.runtime.getManifest().version)) {
+      if (details.reason == "update") await openResetWarning();
       fetch('/instances/blacklist.json').then(response => response.text()).then(async data => {
-        await browser.storage.local.clear();
-        await browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare })
-        await browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate })
-        generalHelper.initDefaults();
-        youtubeHelper.initDefaults();
-        youtubeMusicHelper.initDefaults();
-        twitterHelper.initDefaults();
-        instagramHelper.initDefaults();
-        mapsHelper.initDefaults();
-        searchHelper.initDefaults();
-        translateHelper.initDefaults();
-        mediumHelper.initDefaults();
-        redditHelper.initDefaults();
-        wikipediaHelper.initDefaults();
-        imgurHelper.initDefaults();
-        tiktokHelper.initDefaults();
-        sendTargetsHelper.initDefaults();
-        peertubeHelper.initDefaults();
-        lbryHelper.initDefaults();
+        browser.storage.local.clear(
+          () => {
+            browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare },
+              () => {
+                browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate },
+                  () => {
+                    generalHelper.initDefaults();
+                    youtubeHelper.initDefaults();
+                    youtubeMusicHelper.initDefaults();
+                    twitterHelper.initDefaults();
+                    instagramHelper.initDefaults();
+                    mapsHelper.initDefaults();
+                    searchHelper.initDefaults();
+                    translateHelper.initDefaults();
+                    mediumHelper.initDefaults();
+                    redditHelper.initDefaults();
+                    wikipediaHelper.initDefaults();
+                    imgurHelper.initDefaults();
+                    tiktokHelper.initDefaults();
+                    sendTargetsHelper.initDefaults();
+                    peertubeHelper.initDefaults();
+                    lbryHelper.initDefaults();
+                  })
+              })
+          });
+
       })
     }
   }
 )
 
 youtubeHelper.pasteInvidiousCookies();
+youtubeHelper.pastePipedLocalStorage();
+youtubeHelper.pastePipedMaterialLocalStorage();
 translateHelper.pasteSimplyTranslateCookies();
+translateHelper.pasteLingvaLocalStorage();
 twitterHelper.pasteNitterCookies();
 wikipediaHelper.pasteWikilessCookies();
 searchHelper.pasteSearxCookies();

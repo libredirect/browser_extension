@@ -142,7 +142,7 @@ function initDefaults() {
         fetch('/instances/data.json').then(response => response.text()).then(async data => {
             let dataJson = JSON.parse(data);
             redirects.proxiTok = dataJson.proxiTok;
-            await browser.storage.local.set({
+            browser.storage.local.set({
                 disableTiktok: false,
                 tiktokProtocol: "normal",
 
@@ -153,8 +153,7 @@ function initDefaults() {
 
                 proxiTokTorRedirectsChecks: [...redirects.proxiTok.tor],
                 proxiTokTorCustomRedirects: [],
-            });
-            resolve();
+            }, () => resolve());
         });
     })
 }

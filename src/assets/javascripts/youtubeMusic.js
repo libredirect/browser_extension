@@ -80,13 +80,15 @@ function redirect(url) {
 }
 
 async function initDefaults() {
-    await browser.storage.local.set({
-        disableYoutubeMusic: true,
-        youtubeMusicRedirects: redirects,
+    return new Promise(resolve =>
+        browser.storage.local.set({
+            disableYoutubeMusic: true,
+            youtubeMusicRedirects: redirects,
 
-        beatbumpNormalRedirectsChecks: [...redirects.beatbump.normal],
-        beatbumpNormalCustomRedirects: [],
-    })
+            beatbumpNormalRedirectsChecks: [...redirects.beatbump.normal],
+            beatbumpNormalCustomRedirects: [],
+        }, () => resolve())
+    )
 }
 
 export default {

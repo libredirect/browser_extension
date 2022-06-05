@@ -334,7 +334,7 @@ function initDefaults() {
           i = tedditNormalRedirectsChecks.indexOf(instance);
           if (i > -1) tedditNormalRedirectsChecks.splice(i, 1);
         }
-        await browser.storage.local.set({
+        browser.storage.local.set({
           disableReddit: false,
           redditProtocol: 'normal',
           redditFrontend: 'libreddit',
@@ -351,8 +351,7 @@ function initDefaults() {
 
           tedditTorRedirectsChecks: [...redirects.teddit.tor],
           tedditTorCustomRedirects: [],
-        });
-        resolve();
+        }, () => resolve());
       });
     });
   });

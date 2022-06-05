@@ -186,7 +186,7 @@ function initDefaults() {
           let i = wikilessNormalRedirectsChecks.indexOf(instance);
           if (i > -1) wikilessNormalRedirectsChecks.splice(i, 1);
         }
-        await browser.storage.local.set({
+        browser.storage.local.set({
           disableWikipedia: true,
           wikipediaRedirects: redirects,
           wikipediaProtocol: "normal",
@@ -196,8 +196,7 @@ function initDefaults() {
           wikilessNormalCustomRedirects: [],
           wikilessTorCustomRedirects: [],
           wikilessI2pCustomRedirects: [],
-        })
-        resolve();
+        }, () => resolve());
       })
     })
   })

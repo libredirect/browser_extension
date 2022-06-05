@@ -210,18 +210,17 @@ function initDefaults() {
           let i = nitterNormalRedirectsChecks.indexOf(instance);
           if (i > -1) nitterNormalRedirectsChecks.splice(i, 1);
         }
-        await browser.storage.local.set({
+        browser.storage.local.set({
           disableTwitter: false,
           twitterRedirects: redirects,
           twitterProtocol: "normal",
 
-          nitterNormalRedirectsChecks,
+          nitterNormalRedirectsChecks: nitterNormalRedirectsChecks,
           nitterNormalCustomRedirects: [],
 
           nitterTorRedirectsChecks: [...redirects.nitter.tor],
           nitterTorCustomRedirects: [],
-        })
-        resolve();
+        }, () => resolve());
       })
     })
   })

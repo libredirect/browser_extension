@@ -123,7 +123,7 @@ function initDefaults() {
                     let i = sendNormalRedirectsChecks.indexOf(instance);
                     if (i > -1) sendNormalRedirectsChecks.splice(i, 1);
                 }
-                await browser.storage.local.set({
+                browser.storage.local.set({
                     disableSendTarget: false,
                     sendTargetsRedirects: redirects,
 
@@ -134,8 +134,7 @@ function initDefaults() {
                     sendTorCustomRedirects: [],
 
                     sendTargetsProtocol: "normal",
-                })
-                resolve();
+                }, () => resolve())
             })
         })
     })

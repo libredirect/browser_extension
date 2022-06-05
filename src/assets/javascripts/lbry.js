@@ -129,7 +129,7 @@ function initDefaults() {
                 i = librarianNormalRedirectsChecks.indexOf(instance);
                 if (i > -1) librarianNormalRedirectsChecks.splice(i, 1);
             }
-            await browser.storage.local.set({
+            browser.storage.local.set({
                 disableLbryTargets: true,
                 lbryTargetsRedirects: {
                     'librarian': redirects.librarian
@@ -142,8 +142,8 @@ function initDefaults() {
                 librarianTorCustomRedirects: [],
 
                 lbryTargetsProtocol: "normal",
-            })
-            resolve();
+            }, () => resolve())
+
         })
     })
 }

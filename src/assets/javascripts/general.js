@@ -24,26 +24,28 @@ init();
 browser.storage.onChanged.addListener(init)
 
 async function initDefaults() {
-    await browser.storage.local.set({
-        exceptions: {
-            "url": [],
-            "regex": [],
-        },
-        theme: "DEFAULT",
-        popupFrontends: [
-            "youtube",
-            "twitter",
-            "instagram",
-            "tikTok",
-            "imgur",
-            "reddit",
-            "search",
-            "medium",
-            "translate",
-            "maps",
-        ],
-        autoRedirect: false,
-    })
+    return new Promise(resolve =>
+        browser.storage.local.set({
+            exceptions: {
+                "url": [],
+                "regex": [],
+            },
+            theme: "DEFAULT",
+            popupFrontends: [
+                "youtube",
+                "twitter",
+                "instagram",
+                "tikTok",
+                "imgur",
+                "reddit",
+                "search",
+                "medium",
+                "translate",
+                "maps",
+            ],
+            autoRedirect: false,
+        }, () => resolve())
+    )
 }
 
 const allPopupFrontends = [

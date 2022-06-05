@@ -63,30 +63,36 @@ importSettingsElement.addEventListener("change",
       if (
         "theme" in data &&
         "disableImgur" in data &&
-        "cloudflareBlackList" in data &&
         "imgurRedirects" in data
       ) {
-        await browser.storage.local.clear();
-        await browser.storage.local.set({ ...data })
-        await youtubeHelper.pasteInvidiousCookies();
-        await youtubeHelper.pastePipedLocalStorage();
-        await youtubeHelper.pastePipedMaterialLocalStorage();
+        browser.storage.local.clear(
+          () => {
+            browser.storage.local.set({ ...data },
+              async () => {
+                await youtubeHelper.pasteInvidiousCookies();
+                await youtubeHelper.pastePipedLocalStorage();
+                await youtubeHelper.pastePipedMaterialLocalStorage();
 
-        await translateHelper.pasteSimplyTranslateCookies();
-        await translateHelper.pasteLingvaLocalStorage();
+                await translateHelper.pasteSimplyTranslateCookies();
+                await translateHelper.pasteLingvaLocalStorage();
 
-        await twitterHelper.pasteNitterCookies();
+                await twitterHelper.pasteNitterCookies();
 
-        await wikipediaHelper.pasteWikilessCookies();
+                await wikipediaHelper.pasteWikilessCookies();
 
-        await searchHelper.pasteSearxCookies();
-        await searchHelper.pasteSearxngCookies();
+                await searchHelper.pasteSearxCookies();
+                await searchHelper.pasteSearxngCookies();
 
-        await redditHelper.pasteLibredditCookies();
-        await redditHelper.pasteTedditCookies();
+                await redditHelper.pasteLibredditCookies();
+                await redditHelper.pasteTedditCookies();
 
-        await tiktokHelper.pasteProxiTokCookies();
-        location.reload();
+                await tiktokHelper.pasteProxiTokCookies();
+                
+                location.reload();
+              })
+
+          });
+
       } else
         importError()
     }
@@ -103,28 +109,35 @@ const resetSettings = document.getElementById("reset-settings");
 resetSettings.addEventListener("click",
   async () => {
     resetSettings.innerHTML = '...'
-    await browser.storage.local.clear();
-    fetch('/instances/blacklist.json').then(response => response.text()).then(async data => {
-      await browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare })
-      await browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate })
-      await generalHelper.initDefaults();
-      await youtubeHelper.initDefaults();
-      await youtubeMusicHelper.initDefaults();
-      await twitterHelper.initDefaults();
-      await instagramHelper.initDefaults();
-      await mapsHelper.initDefaults();
-      await searchHelper.initDefaults();
-      await translateHelper.initDefaults();
-      await mediumHelper.initDefaults();
-      await redditHelper.initDefaults();
-      await wikipediaHelper.initDefaults();
-      await imgurHelper.initDefaults();
-      await tiktokHelper.initDefaults();
-      await sendTargetsHelper.initDefaults();
-      await peertubeHelper.initDefaults();
-      await lbryHelper.initDefaults();
-      location.reload();
-    })
+    browser.storage.local.clear(
+      () => {
+        fetch('/instances/blacklist.json').then(response => response.text()).then(async data => {
+          browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare },
+            () => {
+              browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate },
+                async () => {
+                  await generalHelper.initDefaults();
+                  await youtubeHelper.initDefaults();
+                  await youtubeMusicHelper.initDefaults();
+                  await twitterHelper.initDefaults();
+                  await instagramHelper.initDefaults();
+                  await mapsHelper.initDefaults();
+                  await searchHelper.initDefaults();
+                  await translateHelper.initDefaults();
+                  await mediumHelper.initDefaults();
+                  await redditHelper.initDefaults();
+                  await wikipediaHelper.initDefaults();
+                  await imgurHelper.initDefaults();
+                  await tiktokHelper.initDefaults();
+                  await sendTargetsHelper.initDefaults();
+                  await peertubeHelper.initDefaults();
+                  await lbryHelper.initDefaults();
+                  location.reload();
+                })
+            })
+        })
+      });
+
   }
 );
 

@@ -410,7 +410,7 @@ function initDefaults() {
           i = searxngNormalRedirectsChecks.indexOf(instance);
           if (i > -1) searxngNormalRedirectsChecks.splice(i, 1);
         }
-        await browser.storage.local.set({
+        browser.storage.local.set({
           disableSearch: false,
           searchFrontend: 'searxng',
           searchRedirects: redirects,
@@ -443,8 +443,7 @@ function initDefaults() {
 
           searxngI2pRedirectsChecks: [...redirects.searxng.i2p],
           searxngI2pCustomRedirects: [],
-        })
-        resolve();
+        }, () => resolve())
       })
     })
   })

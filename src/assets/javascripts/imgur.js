@@ -32,14 +32,12 @@ function setRedirects() {
                 if (c > -1) rimgoI2pRedirectsChecks.splice(c, 1);
             }
 
-            await browser.storage.local.set({
+            browser.storage.local.set({
                 imgurRedirects: redirects,
                 rimgoNormalRedirectsChecks,
                 rimgoTorRedirectsChecks,
                 rimgoI2pRedirectsChecks,
-            });
-
-            resolve();
+            }, () => resolve());
         })
     })
 }
@@ -162,7 +160,7 @@ function initDefaults() {
                     const i = rimgoNormalRedirectsChecks.indexOf(instance);
                     if (i > -1) rimgoNormalRedirectsChecks.splice(i, 1);
                 }
-                await browser.storage.local.set({
+                browser.storage.local.set({
                     disableImgur: false,
                     imgurProtocol: 'normal',
                     imgurRedirects: redirects,
@@ -175,8 +173,7 @@ function initDefaults() {
 
                     rimgoI2pRedirectsChecks: [...redirects.rimgo.i2p],
                     rimgoI2pCustomRedirects: [],
-                });
-                resolve();
+                }, () => resolve());
             });
         });
     });

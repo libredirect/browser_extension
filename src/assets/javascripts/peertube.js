@@ -128,7 +128,7 @@ function initDefaults() {
                     let i = simpleertubeNormalRedirectsChecks.indexOf(instance);
                     if (i > -1) simpleertubeNormalRedirectsChecks.splice(i, 1);
                 }
-                await browser.storage.local.set({
+                browser.storage.local.set({
                     peerTubeTargets: ['https://search.joinpeertube.org', ...dataJson.peertube],
                     disablePeertubeTargets: true,
                     peertubeRedirects: redirects,
@@ -140,8 +140,7 @@ function initDefaults() {
                     simpleertubeTorCustomRedirects: [],
 
                     peertubeTargetsProtocol: "normal",
-                })
-                resolve();
+                }, () => resolve());
             })
         })
     })

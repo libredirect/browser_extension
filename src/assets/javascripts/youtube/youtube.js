@@ -262,7 +262,7 @@ function initDefaults() {
           if (c > -1) pipedMaterialNormalRedirectsChecks.splice(c, 1);
         }
 
-        await browser.storage.local.set({
+        browser.storage.local.set({
           disableYoutube: false,
           enableYoutubeCustomSettings: false,
           onlyEmbeddedVideo: 'both',
@@ -291,8 +291,7 @@ function initDefaults() {
 
           youtubeEmbedFrontend: 'invidious',
           youtubeProtocol: 'normal',
-        })
-        resolve();
+        }, () => resolve())
       })
     })
   })
