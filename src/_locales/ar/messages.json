@@ -1,222 +1,207 @@
 {
-  "extensionName": {
-    "message": "LibRedirect",
-    "description": "extension name"
-  },
-  "extensionDescription": {
-    "message": "إضافة متصفح تعيد توجيه مواقع مشهورة إلى واجهات أمامية تحترم الخصوصية",
-    "description": "extension description"
-  },
-  "switchInstance": {
-    "message": "تبديل النظير",
-    "description": "used in the popup"
-  },
-  "settings": {
-    "message": "الإعدادات",
-    "description": "used in the popup"
-  },
-  "copyRaw": {
-    "message": "الرابط الأصلي",
-    "description": "used in the popup"
-  },
-  "copied": {
-    "message": "تم النسخ",
-    "description": "used in the popup"
-  },
-  "unifySettings": {
-    "message": "توحيد الإعدادات",
-    "description": "used in the popup"
-  },
-  "general": {
-    "message": "العامة",
-    "description": "used in the settings page"
-  },
-  "youtube": {
-    "message": "يوتيوب",
-    "description": ""
-  },
-  "ytmusic": {
-    "message": "يوتيوب ميوزيك",
-    "description": ""
-  },
-  "instagram": {
-    "message": "إنستغرام",
-    "description": ""
-  },
-  "twitter": {
-    "message": "تويتر",
-    "description": ""
-  },
-  "reddit": {
-    "message": "ريديت",
-    "description": ""
-  },
-  "tiktok": {
-    "message": "تيك توك",
-    "description": ""
-  },
-  "lbry": {
-    "message": "LBRY",
-    "description": ""
-  },
-  "imgur": {
-    "message": "إمجور",
-    "description": ""
-  },
-  "wikipedia": {
-    "message": "ويكيبيديا",
-    "description": ""
-  },
-  "peertube": {
-    "message": "PeerTube",
-    "description": ""
-  },
-  "medium": {
-    "message": "ميديام",
-    "description": ""
-  },
-  "search": {
-    "message": "البحث",
-    "description": ""
-  },
-  "translate": {
-    "message": "الترجمة",
-    "description": ""
-  },
-  "maps": {
-    "message": "الخرائط",
-    "description": ""
-  },
-  "sendFiles": {
-    "message": "إرسال الملفات",
-    "description": ""
-  },
-  "theme": {
-    "message": "السمة",
-    "description": "used in the settings page"
-  },
-  "system": {
-    "message": "النظام",
-    "description": "used in the settings page"
-  },
-  "light": {
-    "message": "فاتح",
-    "description": "used in the settings page"
-  },
-  "dark": {
-    "message": "داكن",
-    "description": "used in the settings page"
-  },
-  "autoRedirect": {
-    "message": "إعادة التوجيه تلقائياً من النظراء الذين لا يعملون",
-    "description": "used in the settings page"
-  },
-  "exceptions": {
-    "message": "الاستثناءات",
-    "description": "used in the settings page"
-  },
-  "updateInstances": {
-    "message": "تحديث قائمة النظراء",
-    "description": "used in the settings page"
-  },
-  "importSettings": {
-    "message": "استيراد الإعدادات",
-    "description": "used in the settings page"
-  },
-  "exportSettings": {
-    "message": "تصدير الإعدادات",
-    "description": "used in the settings page"
-  },
-  "resetSettings": {
-    "message": "إعادة تعيين الإعدادات",
-    "description": "used in the settings page"
-  },
-  "customPopup": {
-    "message": "تخصيص النافذة المنبثقة",
-    "description": "used in the settings page"
-  },
-  "enable": {
-    "message": "تفعيل",
-    "description": "used in the settings page"
-  },
-  "protocol": {
-    "message": "البروتوكول",
-    "description": "used in the settings page"
-  },
-  "normal": {
-    "message": "العادي",
-    "description": "used in the settings page"
-  },
-  "tor": {
-    "message": "تور",
-    "description": "used in the settings page"
-  },
-  "i2p": {
-    "message": "i2p",
-    "description": "used in the settings page"
-  },
-  "defaultInstances": {
-    "message": "النظراء الافتراضيين",
-    "description": "used in the settings page"
-  },
-  "customInstances": {
-    "message": "النظراء المخصصين",
-    "description": "used in the settings page"
-  },
-  "toggleAll": {
-    "message": "تبديل الكل",
-    "description": "used in the settings page"
-  },
-  "frontend": {
-    "message": "الواجهة الأمامية",
-    "description": "used in the settings page"
-  },
-  "notFullyPrivate": {
-    "message": "هذه الواجهة لا تحترم الخصوصية تماماً",
-    "description": "used in the settings page"
-  },
-  "instanceOffline": {
-    "message": "هذا النظير غير متصل بالإنترنت، سيتم إعادة توجيهك بعد&nbsp;",
-    "description": "used in instance_offline.html"
-  },
-  "cancel": {
-    "message": "إلغاء",
-    "description": "used in instance_offline.html"
-  },
-  "instanceIsOff": {
-    "message": "النظير غير متصل على النت",
-    "description": "used in instance_offline.html"
-  },
-  "redirectionCanceled": {
-    "message": "تم إلغاء إعادة التوجيه",
-    "description": "used in instance_offline.html"
-  },
-  "testInstancesLatency": {
-    "message": "تجربة سرعة استجابة النظراء",
-    "description": "used in the settings page"
-  },
-  "redirectType": {
-    "message": "نوع التوجيه",
-    "description": "used in the settings page"
-  },
-  "embeddedVids": {
-    "message": "الواجهة الأمامية للفيديوهات المضمنة",
-    "description": "used in the settings page"
-  },
-  "both": {
-    "message": "الإثنين",
-    "description": "used in the settings page"
-  },
-  "onlyEmbedded": {
-    "message": "فقط المضمنة",
-    "description": "used in the settings page"
-  },
-  "onlyNotEmbedded": {
-    "message": "فقط الغير مضمنة",
-    "description": "used in the settings page"
-  },
-  "searchNote": {
-    "message": "ملاحظة: لاستعمال خاصية البحث بإماكنيتها الكاملة، اجعل LibRedirect محرك البحث الافتراضي في إعدادات متصفحك.",
-    "description": "used in the settings page"
-  }
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "extension name"
+    },
+    "extensionDescription": {
+        "message": "إضافة متصفح تعيد توجيه مواقع مشهورة إلى واجهات أمامية تحترم الخصوصية",
+        "description": "extension description"
+    },
+    "switchInstance": {
+        "message": "تبديل النظير",
+        "description": "used in the popup"
+    },
+    "settings": {
+        "message": "الإعدادات",
+        "description": "used in the popup"
+    },
+    "copyRaw": {
+        "message": "الرابط الأصلي",
+        "description": "used in the popup"
+    },
+    "copied": {
+        "message": "تم النسخ",
+        "description": "used in the popup"
+    },
+    "unifySettings": {
+        "message": "توحيد الإعدادات",
+        "description": "used in the popup"
+    },
+    "general": {
+        "message": "العامة",
+        "description": "used in the settings page"
+    },
+    "youtube": {
+        "message": "يوتيوب"
+    },
+    "ytmusic": {
+        "message": "يوتيوب ميوزيك"
+    },
+    "instagram": {
+        "message": "إنستغرام"
+    },
+    "twitter": {
+        "message": "تويتر"
+    },
+    "reddit": {
+        "message": "ريديت"
+    },
+    "tiktok": {
+        "message": "تيك توك"
+    },
+    "lbry": {
+        "message": "LBRY"
+    },
+    "imgur": {
+        "message": "إمجور"
+    },
+    "wikipedia": {
+        "message": "ويكيبيديا"
+    },
+    "peertube": {
+        "message": "PeerTube"
+    },
+    "medium": {
+        "message": "ميديام"
+    },
+    "search": {
+        "message": "البحث"
+    },
+    "translate": {
+        "message": "الترجمة"
+    },
+    "maps": {
+        "message": "الخرائط"
+    },
+    "sendFiles": {
+        "message": "إرسال الملفات"
+    },
+    "theme": {
+        "message": "السمة",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "النظام",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "فاتح",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "داكن",
+        "description": "used in the settings page"
+    },
+    "autoRedirect": {
+        "message": "إعادة التوجيه التلقائي من النظراء الخربانين",
+        "description": "used in the settings page"
+    },
+    "exceptions": {
+        "message": "الاستثناءات",
+        "description": "used in the settings page"
+    },
+    "updateInstances": {
+        "message": "تحديث قائمة النظراء",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "استيراد الإعدادات",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "تصدير الإعدادات",
+        "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "إعادة تعيين الإعدادات",
+        "description": "used in the settings page"
+    },
+    "customPopup": {
+        "message": "تخصيص النافذة المنبثقة",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "تفعيل",
+        "description": "used in the settings page"
+    },
+    "protocol": {
+        "message": "البروتوكول",
+        "description": "used in the settings page"
+    },
+    "normal": {
+        "message": "العادي",
+        "description": "used in the settings page"
+    },
+    "tor": {
+        "message": "تور",
+        "description": "used in the settings page"
+    },
+    "i2p": {
+        "message": "i2p",
+        "description": "used in the settings page"
+    },
+    "defaultInstances": {
+        "message": "النظراء الافتراضيين",
+        "description": "used in the settings page"
+    },
+    "customInstances": {
+        "message": "النظراء المخصصين",
+        "description": "used in the settings page"
+    },
+    "toggleAll": {
+        "message": "تبديل الكل",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "الواجهة الأمامية",
+        "description": "used in the settings page"
+    },
+    "notFullyPrivate": {
+        "message": "هذه الواجهة لا تحترم الخصوصية تماماً.",
+        "description": "used in the settings page"
+    },
+    "instanceOffline": {
+        "message": "هذا النظير غير متصل بالإنترنت، سيتم إعادة توجيهك بعد&nbsp;",
+        "description": "used in instance_offline.html"
+    },
+    "cancel": {
+        "message": "إلغاء",
+        "description": "used in instance_offline.html"
+    },
+    "instanceIsOff": {
+        "message": "النظير غير متصل على النت",
+        "description": "used in instance_offline.html"
+    },
+    "redirectionCanceled": {
+        "message": "تم إلغاء إعادة التوجيه",
+        "description": "used in instance_offline.html"
+    },
+    "testInstancesLatency": {
+        "message": "تجربة سرعة استجابة النظراء",
+        "description": "used in the settings page"
+    },
+    "redirectType": {
+        "message": "نوع التوجيه",
+        "description": "used in the settings page"
+    },
+    "embeddedVids": {
+        "message": "الواجهة الأمامية للفيديوهات المضمنة",
+        "description": "used in the settings page"
+    },
+    "both": {
+        "message": "الإثنين",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "فقط المضمنة",
+        "description": "used in the settings page"
+    },
+    "onlyNotEmbedded": {
+        "message": "فقط الغير مضمنة",
+        "description": "used in the settings page"
+    },
+    "searchNote": {
+        "message": "ملاحظة: استعمل خاصية البحث بكامل إمكانيتها عبر وضع LibRedirect محرك البحث الافتراضي.",
+        "description": "used in the settings page"
+    }
 }
