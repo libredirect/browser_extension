@@ -24,8 +24,10 @@ window.browser = window.browser || window.chrome;
 function openResetWarning() {
   return new Promise(resolve => {
     browser.storage.local.get(null, r => {
-      const old = encodeURIComponent(JSON.stringify(r))
-      browser.tabs.create({ url: browser.runtime.getURL(`/pages/background/reset_warning.html?data=${old}`) });
+      if (r.theme) {
+        const old = encodeURIComponent(JSON.stringify(r))
+        browser.tabs.create({ url: browser.runtime.getURL(`/pages/background/reset_warning.html?data=${old}`) });
+      }
       resolve();
     })
   })

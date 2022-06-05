@@ -37,21 +37,24 @@ Send Files => [Send](https://github.com/timvisee/send)
 
 **Note**: The Extension will be using random instances by default. You can modify this and add custom instances too.
 
+[FAQ](https://libredirect.github.io/faq.html)
+
 ## Donate
 [![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)&nbsp;
 [![Patreon](./img/patreon.svg)](https://patreon.com/LibRedirect)&nbsp;
 [![Buy me a coffee](./img/bmc.svg)](https://www.buymeacoffee.com/libredirect)
 
-BTC: [bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q](bitcoin:bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q)\
-BCH: [qqz5vfnrngk0tjy73q2688qzw4wnllnuzqfndflhl8](bitcoincash:qqz5vfnrngk0tjy73q2688qzw4wnllnuzqfndflhl8)\
-ETH: [0x896E5796Da76E49A400A9186E1c459CD2C64b4E8](ethereum:0x896E5796Da76E49A400A9186E1c459CD2C64b4E8)\
-XMR: [4AM5CVfaGsnEXQQjZSzJvaWufe7pT86ubcZPr83fCjb2Hn3iwcForTWFy2Z3ugXcufUwHaGcucfPMFgPXBFSYGFvNrmV5XR](monero:4AM5CVfaGsnEXQQjZSzJvaWufe7pT86ubcZPr83fCjb2Hn3iwcForTWFy2Z3ugXcufUwHaGcucfPMFgPXBFSYGFvNrmV5XR)
-
-[FAQ](https://libredirect.github.io/faq.html)
+BTC: bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q\
+BCH: qqz5vfnrngk0tjy73q2688qzw4wnllnuzqfndflhl8\
+ETH: 0x896E5796Da76E49A400A9186E1c459CD2C64b4E8\
+XMR: 4AM5CVfaGsnEXQQjZSzJvaWufe7pT86ubcZPr83fCjb2Hn3iwcForTWFy2Z3ugXcufUwHaGcucfPMFgPXBFSYGFvNrmV5XR
 
 ## Mirror Repos
 [![GitHub](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/github.svg)](https://github.com/libredirect/libredirect/)&nbsp;&nbsp;
 [![Codeberg](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/codeberg.svg)](https://codeberg.org/LibRedirect/libredirect)&nbsp;&nbsp;
+
+## Translate
+[![Weblate](./img/weblate.svg)](https://hosted.weblate.org/projects/libredirect/extension)
 
 ## Development
 ### Install Dependencies

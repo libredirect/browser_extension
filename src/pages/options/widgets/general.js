@@ -87,16 +87,21 @@ importSettingsElement.addEventListener("change",
                 await redditHelper.pasteTedditCookies();
 
                 await tiktokHelper.pasteProxiTokCookies();
-                
+
                 location.reload();
               })
 
           });
 
-      } else
+      } else {
+        console.log('incompatible settings');
         importError()
+      }
     }
-    reader.onerror = error => importError();
+    reader.onerror = error => {
+      console.log('error', error);
+      importError()
+    };
   }
 );
 function importError() {
