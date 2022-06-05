@@ -203,5 +203,9 @@
     "tor": {
         "message": "Tor",
         "description": "used in the settings page"
+    },
+    "medium": {
+        "message": "Medium",
+        "description": "used in the settings page"
     }
 }
