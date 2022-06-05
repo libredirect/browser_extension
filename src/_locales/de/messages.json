@@ -4,7 +4,7 @@
         "description": "name of the extension"
     },
     "extensionDescription": {
-        "message": "Eine Erweiterung, die beliebte Websites zu alternativen datenschutzfreundlichen Frontends und Backends weiterleitet.",
+        "message": "Eine Erweiterung, die beliebte Websites zu alternativen datenschutzfreundlichen Frontends und Backends weiterleitet",
         "description": "description of the extension"
     },
     "switchInstance": {
