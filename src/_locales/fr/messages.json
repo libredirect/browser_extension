@@ -1,1 +1,191 @@
-{}
+{
+    "youtube": {
+        "message": "YouTube",
+        "description": "used in the settings page"
+    },
+    "switchInstance": {
+        "message": "Changer d'instance",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "general": {
+        "message": "Général",
+        "description": "used in the settings page"
+    },
+    "search": {
+        "message": "Recherche",
+        "description": "used in the settings page"
+    },
+    "translate": {
+        "message": "Traduire",
+        "description": "used in the settings page"
+    },
+    "sendFiles": {
+        "message": "Envoyer des fichiers",
+        "description": "used in the settings page"
+    },
+    "wikipedia": {
+        "message": "Wikipédia",
+        "description": "used in the settings page"
+    },
+    "peertube": {
+        "message": "PeerTube",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "Thème",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "Système",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "Clair",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Obscur",
+        "description": "used in the settings page"
+    },
+    "autoRedirect": {
+        "message": "Redirection automatique des instances hors ligne",
+        "description": "used in the settings page"
+    },
+    "updateInstances": {
+        "message": "Mettre à jour les instances",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "Paramètres d'importation",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "Paramètres d'exportation",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Activer",
+        "description": "used in the settings page"
+    },
+    "normal": {
+        "message": "Normal",
+        "description": "used in the settings page"
+    },
+    "protocol": {
+        "message": "Registre",
+        "description": "used in the settings page"
+    },
+    "defaultInstances": {
+        "message": "Instances par défaut",
+        "description": "used in the settings page"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "used in the settings page"
+    },
+    "reddit": {
+        "message": "Reddit",
+        "description": "used in the settings page"
+    },
+    "customPopup": {
+        "message": "Personnaliser la fenêtre contextuelle",
+        "description": "used in the settings page"
+    },
+    "customInstances": {
+        "message": "Instances personnalisées",
+        "description": "used in the settings page"
+    },
+    "toggleAll": {
+        "message": "Activer/désactiver tout",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Frontend",
+        "description": "used in the settings page"
+    },
+    "copied": {
+        "message": "Copié"
+    },
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "extensionDescription": {
+        "message": "Une extension web qui redirige les sites populaires vers des sites frontaux et dorsaux alternatifs respectueux de la vie privée",
+        "description": "description of the extension"
+    },
+    "maps": {
+        "message": "Cartes",
+        "description": "used in the settings page"
+    },
+    "exceptions": {
+        "message": "Exceptions",
+        "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "Réinitialiser les paramètres",
+        "description": "used in the settings page"
+    },
+    "searchNote": {
+        "message": "Note : pour utiliser pleinement le potentiel de la recherche, faites de LibRedirect le moteur de recherche par défaut",
+        "description": "used in the settings page"
+    },
+    "both": {
+        "message": "les deux",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "uniquement intégré",
+        "description": "used in the settings page"
+    },
+    "instanceOffline": {
+        "message": "Cette instance est hors ligne, vous serez redirigé après&nbsp;",
+        "description": "used in instance_offline.html"
+    },
+    "settings": {
+        "message": "Paramètres",
+        "description": "used in the popup"
+    },
+    "notFullyPrivate": {
+        "message": "Ceci n'est pas un frontend complètement privé."
+    },
+    "redirectType": {
+        "message": "Type de redirection",
+        "description": "used in the settings page"
+    },
+    "embeddedVids": {
+        "message": "Frontend pour les vidéos intégrées",
+        "description": "used in the settings page"
+    },
+    "cancel": {
+        "message": "Annuler",
+        "description": "used in instance_offline.html"
+    },
+    "redirectionCanceled": {
+        "message": "Redirection annulée",
+        "description": "used in instance_offline.js"
+    },
+    "copyRaw": {
+        "message": "Copier le lien original"
+    },
+    "onlyNotEmbedded": {
+        "message": "seulement non intégré",
+        "description": "used in the settings page"
+    },
+    "instanceIsOff": {
+        "message": "L'instance est hors ligne",
+        "description": "used in instance_offline.html"
+    },
+    "unifySettings": {
+        "message": "Unifier les paramètres"
+    },
+    "lbry": {
+        "message": "LBRY"
+    },
+    "i2p": {
+        "message": "I2P"
+    },
+    "testInstancesLatency": {
+        "message": "Tester la latence des instances"
+    }
+}
