@@ -133,13 +133,20 @@ function switchInstance(url) {
 }
 
 function removeXFrameOptions(e) {
+  if (e.type != 'sub_frame') return;
   let url = new URL(e.url);
   let protocolHost = utils.protocolHost(url);
-  if (!all().includes(protocolHost) || e.type != 'sub_frame') return;
+  if (!all().includes(protocolHost)) return;
   let isChanged = false;
-  for (const i in e.responseHeaders) if (e.responseHeaders[i].name == 'x-frame-options') {
-    e.responseHeaders.splice(i, 1);
-    isChanged = true;
+  for (const i in e.responseHeaders) {
+    if (e.responseHeaders[i].name == 'x-frame-options') {
+      e.responseHeaders.splice(i, 1);
+      isChanged = true;
+    }
+    else if (e.responseHeaders[i].name == 'content-security-policy') {
+      e.responseHeaders.splice(i, 1);
+      isChanged = true;
+    }
   }
   if (isChanged) return { responseHeaders: e.responseHeaders };
 }

@@ -33,7 +33,6 @@ function openResetWarning() {
   })
 }
 
-
 browser.runtime.onInstalled.addListener(
   async details => {
     // if (details.reason == 'install') {
@@ -140,7 +139,6 @@ browser.webRequest.onBeforeRequest.addListener(
   ["blocking"]
 );
 
-
 let incognitoList = [];
 browser.tabs.onCreated.addListener(
   tab => {
@@ -164,9 +162,9 @@ browser.tabs.onRemoved.addListener(
 );
 
 browser.webRequest.onHeadersReceived.addListener(
-  async e => {
-    let response = twitterHelper.removeXFrameOptions(e)
-    if (!response) youtubeHelper.removeXFrameOptions(e)
+  e => {
+    let response = twitterHelper.removeXFrameOptions(e);
+    if (!response) response = youtubeHelper.removeXFrameOptions(e);
     return response;
   },
   { urls: ["<all_urls>"], },
