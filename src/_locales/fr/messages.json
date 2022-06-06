@@ -207,5 +207,9 @@
     "medium": {
         "message": "Medium",
         "description": "used in the settings page"
+    },
+    "ytmusic": {
+        "message": "YT Music",
+        "description": "used in the settings page"
     }
 }
