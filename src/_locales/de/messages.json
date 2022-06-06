@@ -96,7 +96,7 @@
         "description": "used in the settings page"
     },
     "autoRedirect": {
-        "message": "Instanzen automatisch weiterleiten, die offline sind",
+        "message": "Automatisch Instanzen meiden, die offline sind",
         "description": "used in the settings page"
     },
     "exceptions": {
@@ -155,7 +155,7 @@
         "message": "Das ist kein völlig privates Frontend."
     },
     "searchNote": {
-        "message": "Hinweis: Um das volle Potenzial der Suchweiterleitung auszunutzen, lege LibRedirect als Standardsuchmaschine fest.",
+        "message": "Hinweis: Um das volle Potenzial der Suchweiterleitung zu nutzen, lege LibRedirect als Standardsuchmaschine fest.",
         "description": "used in the settings page"
     },
     "redirectType": {
