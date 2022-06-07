@@ -127,7 +127,7 @@
         "description": "used in the settings page"
     },
     "searchNote": {
-        "message": "Note : pour utiliser pleinement le potentiel de la recherche, faites de LibRedirect le moteur de recherche par défaut",
+        "message": "Remarque : utilisez tout le potentiel de la recherche en faisant de LibRedirect votre moteur de recherche par défaut.",
         "description": "used in the settings page"
     },
     "both": {
