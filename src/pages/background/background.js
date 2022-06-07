@@ -21,26 +21,13 @@ import lbryHelper from "../../assets/javascripts/lbry.js";
 
 window.browser = window.browser || window.chrome;
 
-function openResetWarning() {
-  return new Promise(resolve => {
-    browser.storage.local.get(null, r => {
-      if (r.theme) {
-        const old = encodeURIComponent(JSON.stringify(r))
-        browser.tabs.create({ url: browser.runtime.getURL(`/pages/background/reset_warning.html?data=${old}`) });
-      }
-      resolve();
-    })
-  })
-}
-
 browser.runtime.onInstalled.addListener(
-  async details => {
-    // if (details.reason == 'install') {
-    if (details.reason == 'install' || (details.reason == "update" && details.previousVersion != browser.runtime.getManifest().version)) {
-      if (details.reason == "update") await openResetWarning();
+  details => {
+    function initDefaults() {
       fetch('/instances/blacklist.json').then(response => response.text()).then(async data => {
         browser.storage.local.clear(
           () => {
+
             browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare },
               () => {
                 browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate },
@@ -64,8 +51,19 @@ browser.runtime.onInstalled.addListener(
                   })
               })
           });
-
       })
+    };
+    // if (details.reason == 'install') {
+    if (details.reason == 'install' || (details.reason == "update" && details.previousVersion != browser.runtime.getManifest().version)) {
+      if (details.reason == "update")
+        browser.storage.local.get(null, r => {
+          if (r.theme) {
+            const old = encodeURIComponent(JSON.stringify(r))
+            browser.tabs.create({ url: browser.runtime.getURL(`/pages/background/reset_warning.html?data=${old}`) });
+          }
+          initDefaults();
+        })
+      else initDefaults();
     }
   }
 )

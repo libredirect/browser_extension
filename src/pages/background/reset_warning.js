@@ -1,7 +1,7 @@
 let params = new URLSearchParams(location.search);
 
 const resultString = JSON.stringify(
-    JSON.parse(decodeURIComponent(params.get('data'))),
+    JSON.parse(params.get('data')),
     null,
     '  '
 );
