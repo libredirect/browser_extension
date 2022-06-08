@@ -72,7 +72,7 @@
         "description": "used in the settings page"
     },
     "protocol": {
-        "message": "Registre",
+        "message": "Protocole",
         "description": "used in the settings page"
     },
     "defaultInstances": {
