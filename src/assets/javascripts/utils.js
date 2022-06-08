@@ -298,6 +298,7 @@ function copyCookie(frontend, targetUrl, urls, name) {
                     url: url,
                     name: name,
                     value: value,
+                    secure: true,
                     firstPartyDomain: firstPartyIsolate.value ? new URL(url).hostname : '',
                     expirationDate: firstPartyIsolate.value ? null : expirationDate,
                   },
@@ -333,6 +334,7 @@ function getCookiesFromStorage(frontend, urls, name) {
                 url: url,
                 name: cookie.name,
                 value: cookie.value,
+                secure: true,
                 expirationDate: firstPartyIsolate.value ? null : cookie.expirationDate,
                 firstPartyDomain: firstPartyIsolate.value ? new URL(url).hostname : '',
               })

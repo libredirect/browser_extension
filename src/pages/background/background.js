@@ -195,14 +195,7 @@ async function redirectOfflineInstance(url, tabId) {
 let counter = 0;
 
 function isAutoRedirect() {
-  return new Promise(resolve => {
-    browser.storage.local.get('autoRedirect',
-      r => {
-        if (r.autoRedirect == true) resolve(true)
-        else resolve(false)
-      }
-    )
-  })
+  return new Promise(resolve => browser.storage.local.get('autoRedirect', r => resolve(r.autoRedirect == true)))
 }
 
 browser.webRequest.onResponseStarted.addListener(
@@ -243,13 +236,13 @@ browser.contextMenus.create({
 
 browser.contextMenus.create({
   id: "copyRaw",
-  title: "Copy Raw",
+  title: browser.i18n.getMessage("copyRaw"),
   contexts: ["browser_action"]
 });
 
 browser.contextMenus.create({
   id: "unify",
-  title: "Unify",
+  title: browser.i18n.getMessage("unifySettings"),
   contexts: ["browser_action"]
 });
 
