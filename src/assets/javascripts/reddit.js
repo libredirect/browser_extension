@@ -240,12 +240,12 @@ function redirect(url, type, initiator) {
     if (redditFrontend == 'teddit') {
       if (tedditInstancesList.length === 0) return;
       let tedditRandomInstance = utils.getRandomInstance(tedditInstancesList);
-      return `${tedditRandomInstance}/pics/w:null_${url.pathname.substring(1)}${url.reddit}`;
+      return `${tedditRandomInstance}/pics/w:null_${url.pathname.substring(1)}${url.search}`;
     }
     if (redditFrontend == 'libreddit') {
       if (libredditInstancesList.length === 0) return;
       let libredditRandomInstance = utils.getRandomInstance(libredditInstancesList);
-      return `${libredditRandomInstance}/img${url.pathname}${url.reddit}`
+      return `${libredditRandomInstance}/img${url.pathname}${url.search}`
     }
   }
   else if (url.host === "redd.it") {
@@ -253,13 +253,13 @@ function redirect(url, type, initiator) {
       if (libredditInstancesList.length === 0) return;
       let libredditRandomInstance = utils.getRandomInstance(libredditInstancesList);
       // https://redd.it/foo => https://libredd.it/comments/foo
-      return `${libredditRandomInstance}/comments${url.pathname}${url.reddit}`;
+      return `${libredditRandomInstance}/comments${url.pathname}${url.search}`;
     }
     if (redditFrontend == 'teddit' && !url.pathname.match(/^\/+[^\/]+\/+[^\/]/)) {
       if (tedditInstancesList.length === 0) return;
       let tedditRandomInstance = utils.getRandomInstance(tedditInstancesList);
       // https://redd.it/foo => https://teddit.net/comments/foo
-      return `${tedditRandomInstance}/comments${url.pathname}${url.reddit}`
+      return `${tedditRandomInstance}/comments${url.pathname}${url.search}`
     }
   }
   else if (url.host === 'preview.redd.it') {
@@ -267,7 +267,7 @@ function redirect(url, type, initiator) {
     if (redditFrontend == 'libreddit') {
       if (libredditInstancesList.length === 0) return;
       const libredditRandomInstance = utils.getRandomInstance(libredditInstancesList);
-      return `${libredditRandomInstance}/preview/pre${url.pathname}${url.reddit}`;
+      return `${libredditRandomInstance}/preview/pre${url.pathname}${url.search}`;
     }
   }
 

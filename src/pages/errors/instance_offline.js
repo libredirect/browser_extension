@@ -1,3 +1,6 @@
+import localise from "../../assets/javascripts/localise.js";
+
+
 const params = new Proxy(
     new URLSearchParams(window.location.search),
     { get: (searchParams, prop) => searchParams.get(prop) }
@@ -18,3 +21,5 @@ document.getElementById("cancel").addEventListener("click", () => {
     isCanceled = true;
     document.getElementById("message").innerHTML = browser.i18n.getMessage('redirectionCanceled');
 })
+
+localise.localisePage();

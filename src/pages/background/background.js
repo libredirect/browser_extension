@@ -139,7 +139,7 @@ browser.tabs.onCreated.addListener(
   tab => {
     if (tab.incognito) {
       incognitoList.push(tab.id);
-      if (incognitoList.length == 1) browser.tabs.create({ url: browser.runtime.getURL("/pages/background/incognito.html") });
+      if (incognitoList.length == 1) browser.tabs.create({ url: browser.runtime.getURL("/pages/background/incognito.html"), active: false });
     }
   }
 );
