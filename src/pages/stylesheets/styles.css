@@ -341,6 +341,10 @@ button svg {
   color: var(--text);
 }
 
+div.checklist{
+direction: ltr;
+}
+
 div.checklist div {
   justify-content: space-between;
   margin: 5px 15px;

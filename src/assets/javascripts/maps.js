@@ -127,9 +127,8 @@ function redirect(url, initiator) {
     prefs.marker = coords;
     prefs.layer = "mapnik";
     let prefsEncoded = new URLSearchParams(prefs).toString();
-    if (mapsFrontend == 'osm') { resolve(`${randomInstance}/export/embed.html?${prefsEncoded}`); return; }
-
-    if (mapsFrontend == 'facil') { resolve(`${randomInstance}/#q=${query}`); return; }
+    if (mapsFrontend == 'osm') return `${randomInstance}/export/embed.html?${prefsEncoded}`;
+    if (mapsFrontend == 'facil') return `${randomInstance}/#q=${query}`;
 
   } else if (url.pathname.includes("/dir")) {   // Handle Google Maps Directions
     // https://www.google.com/maps/dir/?api=1&origin=Space+Needle+Seattle+WA&destination=Pike+Place+Market+Seattle+WA&travelmode=bicycling
@@ -145,8 +144,8 @@ function redirect(url, initiator) {
     prefs.route = `${org};${dest}`;
 
     let prefsEncoded = new URLSearchParams(prefs).toString();
-    if (mapsFrontend == 'osm') { resolve(`${randomInstance}/directions?${prefsEncoded}${mapCentre}`); return; }
-    if (mapsFrontend == 'facil') { resolve(`${randomInstance}/#q=${orgVal}%20to%20${destVal}%20by%20${travelModesFacil[travMod]}`); return; }
+    if (mapsFrontend == 'osm') return `${randomInstance}/directions?${prefsEncoded}${mapCentre}`;
+    if (mapsFrontend == 'facil') return `${randomInstance}/#q=${orgVal}%20to%20${destVal}%20by%20${travelModesFacil[travMod]}`;
 
   } else if (url.pathname.includes("data=") && url.pathname.match(dataLatLngRegex)) {  // Get marker from data attribute
     // https://www.google.com/maps/place/41%C2%B001'58.2%22N+40%C2%B029'18.2%22E/@41.032833,40.4862063,17z/data=!3m1!4b1!4m6!3m5!1s0x0:0xf64286eaf72fc49d!7e2!8m2!3d41.0328329!4d40.4883948
@@ -154,8 +153,8 @@ function redirect(url, initiator) {
 
     let [, mlat, mlon] = url.pathname.match(dataLatLngRegex);
 
-    if (mapsFrontend == 'osm') { resolve(`${randomInstance}/search?query=${mlat}%2C${mlon}`); return; }
-    if (mapsFrontend == 'facil') { resolve(`${randomInstance}/#q=${mlat}%2C${mlon}`); return; }
+    if (mapsFrontend == 'osm') return `${randomInstance}/search?query=${mlat}%2C${mlon}`;
+    if (mapsFrontend == 'facil') return `${randomInstance}/#q=${mlat}%2C${mlon}`;
 
   } else if (url.searchParams.has("ll")) { // Get marker from ll param
     // https://maps.google.com/?ll=38.882147,-76.99017
@@ -163,16 +162,16 @@ function redirect(url, initiator) {
 
     const [mlat, mlon] = url.searchParams.get("ll").split(",");
 
-    if (mapsFrontend == 'osm') { resolve(`${randomInstance}/search?query=${mlat}%2C${mlon}`); return; }
-    if (mapsFrontend == 'facil') { resolve(`${randomInstance}/#q=${mlat}%2C${mlon}`); return; }
+    if (mapsFrontend == 'osm') return `${randomInstance}/search?query=${mlat}%2C${mlon}`;
+    if (mapsFrontend == 'facil') return `${randomInstance}/#q=${mlat}%2C${mlon}`
   } else if (url.searchParams.has("viewpoint")) { // Get marker from viewpoint param.
     // https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=48.857832,2.295226&heading=-45&pitch=38&fov=80
     console.log("viewpoint life");
 
     const [mlat, mlon] = url.searchParams.get("viewpoint").split(",");
 
-    if (mapsFrontend == 'osm') { resolve(`${randomInstance}/search?query=${mlat}%2C${mlon}`); return; }
-    if (mapsFrontend == 'facil') { resolve(`${randomInstance}/#q=${mlat}%2C${mlon}`); return; }
+    if (mapsFrontend == 'osm') return `${randomInstance}/search?query=${mlat}%2C${mlon}`;
+    if (mapsFrontend == 'facil') return `${randomInstance}/#q=${mlat}%2C${mlon}`;
   } else { // Use query as search if present.
     console.log("normal life");
 
@@ -183,8 +182,8 @@ function redirect(url, initiator) {
 
     let prefsEncoded = new URLSearchParams(prefs).toString();
     if (query) {
-      if (mapsFrontend == 'osm') { resolve(`${randomInstance}/search?query="${query}${mapCentre}&${prefsEncoded}`); return; }
-      if (mapsFrontend == 'facil') { resolve(`${randomInstance}/${mapCentre}/Mpnk/${query}`); return; }
+      if (mapsFrontend == 'osm') return `${randomInstance}/search?query="${query}${mapCentre}&${prefsEncoded}`;
+      if (mapsFrontend == 'facil') return `${randomInstance}/${mapCentre}/Mpnk/${query}`;
     }
   }
 
@@ -192,8 +191,8 @@ function redirect(url, initiator) {
   console.log("mapCentre", mapCentre);
   console.log("prefs", prefs);
   console.log("prefsEncoded", prefsEncoded);
-  if (mapsFrontend == 'osm') { resolve(`${randomInstance}/${mapCentre}&${prefsEncoded}`); return; }
-  if (mapsFrontend == 'facil') { resolve(`${randomInstance}/${mapCentre}/Mpnk`); return; }
+  if (mapsFrontend == 'osm') return `${randomInstance}/${mapCentre}&${prefsEncoded}`;
+  if (mapsFrontend == 'facil') return `${randomInstance}/${mapCentre}/Mpnk`;
 }
 
 async function initDefaults() {

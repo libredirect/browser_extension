@@ -286,36 +286,50 @@ async function testLatency(element, instances) {
 
 function copyCookie(frontend, targetUrl, urls, name) {
   return new Promise(resolve => {
+    let query;
+    if (window.chrome) query = { url: protocolHost(targetUrl), name: name }
+    else query = { url: protocolHost(targetUrl), name: name, firstPartyDomain: null }
     browser.cookies.getAll(
-      { url: protocolHost(targetUrl), name: name, firstPartyDomain: null },
-      cookies => {
-        browser.privacy.websites.firstPartyIsolate.get({},
-          async firstPartyIsolate => {
-            function setCookie(url, name, value, expirationDate) {
-              return new Promise(resolve =>
-                browser.cookies.set(
-                  {
-                    url: url,
-                    name: name,
-                    value: value,
-                    secure: true,
-                    firstPartyDomain: firstPartyIsolate.value ? new URL(url).hostname : '',
-                    expirationDate: firstPartyIsolate.value ? null : expirationDate,
-                  },
-                  () => resolve()
-                )
-              )
+      query,
+      async cookies => {
+        function setCookie(url, name, value, expirationDate, firstPartyIsolate) {
+          return new Promise(resolve => {
+            let query;
+            if (window.chrome) query = {
+              url: url, name: name, value: value, secure: true,
+              expirationDate: expirationDate,
+            };
+            else query = {
+              url: url, name: name, value: value, secure: true,
+              firstPartyDomain: firstPartyIsolate.value ? new URL(url).hostname : '',
+              expirationDate: firstPartyIsolate.value ? null : expirationDate,
+            };
+            browser.cookies.set(query, () => resolve())
+          })
+        }
+        if (window.chrome) {
+          for (const cookie of cookies)
+            if (cookie.name == name) {
+              console.log('cookie', cookie);
+              for (const url of urls) await setCookie(url, cookie.name, cookie.value, cookie.expirationDate)
+              browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve())
+              break;
             }
-            for (const cookie of cookies)
-              if (cookie.name == name) {
-                console.log('cookie', cookie);
-                for (const url of urls) await setCookie(url, cookie.name, cookie.value, cookie.expirationDate)
-                browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve())
-                break;
-              }
-            resolve();
-          }
-        )
+          resolve();
+        } else {
+          browser.privacy.websites.firstPartyIsolate.get({},
+            async firstPartyIsolate => {
+              for (const cookie of cookies)
+                if (cookie.name == name) {
+                  console.log('cookie', cookie);
+                  for (const url of urls) await setCookie(url, cookie.name, cookie.value, cookie.expirationDate, firstPartyIsolate)
+                  browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve())
+                  break;
+                }
+              resolve();
+            }
+          )
+        }
       });
   })
 }
@@ -363,14 +377,18 @@ function copyRaw(test, copyRawElement) {
             resolve(true);
             if (test) return;
             navigator.clipboard.writeText(newUrl);
+            console.log('newUrl', newUrl)
             if (copyRawElement) {
+              console.log('working')
               const textElement = copyRawElement.getElementsByTagName('h4')[0]
               const oldHtml = textElement.innerHTML;
               textElement.innerHTML = browser.i18n.getMessage('copied');
               setTimeout(() => textElement.innerHTML = oldHtml, 1000);
             }
-          } else resolve()
+            console.log('finished')
+          }
         }
+        resolve()
       }
     )
   })
@@ -406,9 +424,7 @@ function unify(test) {
           if (!result) result = await translateHelper.copyPasteSimplyTranslateCookies(test, url);
           if (!result) result = await translateHelper.copyPasteLingvaLocalStorage(test, url);
 
-          if (result) {
-            resolve(true);
-          } else resolve()
+          resolve(result);
         }
       }
     )

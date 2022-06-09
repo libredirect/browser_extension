@@ -69,10 +69,7 @@ browser.runtime.onInstalled.addListener(
 )
 
 youtubeHelper.pasteInvidiousCookies();
-youtubeHelper.pastePipedLocalStorage();
-youtubeHelper.pastePipedMaterialLocalStorage();
 translateHelper.pasteSimplyTranslateCookies();
-translateHelper.pasteLingvaLocalStorage();
 twitterHelper.pasteNitterCookies();
 wikipediaHelper.pasteWikilessCookies();
 searchHelper.pasteSearxCookies();
@@ -215,7 +212,7 @@ browser.webRequest.onErrorOccurred.addListener(
 )
 
 browser.commands.onCommand.addListener(
-  command => {
+  async command => {
     if (command === 'switchInstance') utils.switchInstance();
     else if (command == 'copyRaw') utils.copyRaw();
     else if (command == 'unify') utils.unify();
