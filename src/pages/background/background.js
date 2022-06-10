@@ -174,6 +174,7 @@ async function redirectOfflineInstance(url, tabId) {
   if (!newUrl) newUrl = await searchHelper.switchInstance(url);
   if (!newUrl) newUrl = await translateHelper.switchInstance(url);
   if (!newUrl) newUrl = await mediumHelper.switchInstance(url);
+  if (!newUrl) newUrl = await tiktokHelper.switchInstance(url);
   if (!newUrl) newUrl = await imgurHelper.switchInstance(url);
   if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url);
   if (!newUrl) newUrl = await peertubeHelper.switchInstance(url);

@@ -137,6 +137,32 @@ function reverse(url) {
     })
 }
 
+function switchInstance(url) {
+    return new Promise(async resolve => {
+      await init();
+      let protocolHost = utils.protocolHost(url);
+      const all = [
+        ...tiktokRedirects.proxiTok.tor,
+        ...tiktokRedirects.proxiTok.normal,
+  
+        ...proxiTokNormalCustomRedirects,
+        ...proxiTokTorCustomRedirects,
+      ];
+      if (!all.includes(protocolHost)) { resolve(); return; }
+
+      let instancesList;
+      if (tiktokProtocol == 'normal') instancesList = [...proxiTokNormalCustomRedirects, ...proxiTokNormalRedirectsChecks];
+      else if (tiktokProtocol == 'tor') instancesList = [...proxiTokTorCustomRedirects, ...proxiTokTorRedirectsChecks];
+  
+      const i = instancesList.indexOf(protocolHost);
+      if (i > -1) instancesList.splice(i, 1);
+      if (instancesList.length === 0) { resolve(); return; }
+  
+      const randomInstance = utils.getRandomInstance(instancesList);
+      resolve(`${randomInstance}${url.pathname}${url.search}`);
+    })
+  }
+
 function initDefaults() {
     return new Promise(async resolve => {
         fetch('/instances/data.json').then(response => response.text()).then(async data => {
@@ -163,6 +189,7 @@ export default {
 
     redirect,
     reverse,
+    switchInstance,
 
     initProxiTokCookies,
     pasteProxiTokCookies,

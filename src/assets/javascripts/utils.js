@@ -443,6 +443,7 @@ function switchInstance(test) {
         if (!newUrl) newUrl = await searchHelper.switchInstance(url);
         if (!newUrl) newUrl = await translateHelper.switchInstance(url);
         if (!newUrl) newUrl = await mediumHelper.switchInstance(url);
+        if (!newUrl) newUrl = await tiktokHelper.switchInstance(url);
         if (!newUrl) newUrl = await sendTargetsHelper.switchInstance(url);
         if (!newUrl) newUrl = await peertubeHelper.switchInstance(url);
         if (!newUrl) newUrl = await lbryHelper.switchInstance(url);

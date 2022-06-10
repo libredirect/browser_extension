@@ -109,7 +109,7 @@ def proxitok():
     proxiTokList['normal'] = []
     proxiTokList['tor'] = []
     for item in tmp:
-        proxiTokList['normal'].append(item)
+        proxiTokList['normal'].append(re.sub(r'/$', '', item))
     mightyList['proxiTok'] = proxiTokList
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'ProxiTok')
 
@@ -383,7 +383,7 @@ for k1, v1 in mightyList.items():
         for k2, v2 in mightyList[k1].items():
             for instance in mightyList[k1][k2]:
                 if (not isValid(instance)):
-                    mightyList[k1][k2].pop(instance)
+                    mightyList[k1][k2].remove(instance)
                     print("removed " + instance)
                 else:
                     if not instance.endswith('.onion') and not instance.endswith('.i2p') and is_cloudflare(instance):
