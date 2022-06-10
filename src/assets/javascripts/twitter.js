@@ -175,6 +175,11 @@ function initNitterCookies(test, from) {
       await utils.copyCookie('nitter', from, checkedInstances, 'proxyVideos');
       await utils.copyCookie('nitter', from, checkedInstances, 'muteVideos');
       await utils.copyCookie('nitter', from, checkedInstances, 'autoplayGifs');
+
+      await utils.copyCookie('nitter', from, checkedInstances, 'replaceInstagram');
+      await utils.copyCookie('nitter', from, checkedInstances, 'replaceReddit');
+      await utils.copyCookie('nitter', from, checkedInstances, 'replaceTwitter');
+      await utils.copyCookie('nitter', from, checkedInstances, 'replaceYouTube');
     }
     resolve(true);
   })
@@ -201,6 +206,11 @@ function pasteNitterCookies() {
     utils.getCookiesFromStorage('nitter', checkedInstances, 'proxyVideos');
     utils.getCookiesFromStorage('nitter', checkedInstances, 'muteVideos');
     utils.getCookiesFromStorage('nitter', checkedInstances, 'autoplayGifs');
+    
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'replaceInstagram');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'replaceReddit');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'replaceTwitter');
+    utils.getCookiesFromStorage('nitter', checkedInstances, 'replaceYouTube');
     resolve();
   }
   )
