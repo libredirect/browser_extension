@@ -324,7 +324,7 @@ function redirect(url) {
       url.hostname.includes('search.libredirect.invalid')
     ) &&
     url.searchParams.has('q')
-  ) searchQuery = `?q=${url.searchParams.get('q')}`;
+  ) searchQuery = `?q=${encodeURIComponent(url.searchParams.get('q'))}`;
   if (url.hostname.includes('yandex') && url.searchParams.has('text')) searchQuery = `?q=${url.searchParams.get('text')}`;
 
   return `${randomInstance}${path}${searchQuery}`;
