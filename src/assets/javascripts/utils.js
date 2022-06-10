@@ -374,18 +374,15 @@ function copyRaw(test, copyRawElement) {
           if (!newUrl) newUrl = await imgurHelper.reverse(url);
 
           if (newUrl) {
-            resolve(true);
+            resolve(newUrl);
             if (test) return;
             navigator.clipboard.writeText(newUrl);
-            console.log('newUrl', newUrl)
             if (copyRawElement) {
-              console.log('working')
               const textElement = copyRawElement.getElementsByTagName('h4')[0]
               const oldHtml = textElement.innerHTML;
               textElement.innerHTML = browser.i18n.getMessage('copied');
               setTimeout(() => textElement.innerHTML = oldHtml, 1000);
             }
-            console.log('finished')
           }
         }
         resolve()

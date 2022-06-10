@@ -212,7 +212,7 @@ browser.webRequest.onErrorOccurred.addListener(
 )
 
 browser.commands.onCommand.addListener(
-  async command => {
+  command => {
     if (command === 'switchInstance') utils.switchInstance();
     else if (command == 'copyRaw') utils.copyRaw();
     else if (command == 'unify') utils.unify();
