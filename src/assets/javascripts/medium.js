@@ -99,7 +99,7 @@ function redirect(url, type, initiator) {
     ].includes(initiator.origin))) return;
 
   if (!targets.some(rx => rx.test(url.host))) return;
-  if (/^\/($|@[a-zA-Z.]{0,}(\/|)$)/.test(url.pathname)) return;
+  if (/^\/(@[a-zA-Z.]{0,}(\/|)$)/.test(url.pathname)) return;
 
   let instancesList;
   if (mediumProtocol == 'normal') instancesList = [...scribeNormalRedirectsChecks, ...scribeNormalCustomRedirects];

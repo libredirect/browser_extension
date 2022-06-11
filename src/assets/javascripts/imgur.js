@@ -105,7 +105,6 @@ function all() {
 
 function redirect(url, type, initiator) {
     if (disableImgur) return;
-    if (url.pathname == "/") return;
     if (!["main_frame", "sub_frame", "xmlhttprequest", "other", "image", "media",].includes(type)) return;
     if (initiator && (all().includes(initiator.origin) || targets.test(initiator.host))) return;
     if (!targets.test(url.href)) return;
