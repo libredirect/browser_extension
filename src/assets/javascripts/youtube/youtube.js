@@ -445,8 +445,9 @@ function removeXFrameOptions(e) {
         let newSecurity = '';
         for (const item of securityPolicyList) {
           if (item.trim() == '') continue
-          console.log('item', item);
-          let [, key, vals] = item.match(/([a-z-]{0,}) (.*)/);
+          let regex = item.match(/([a-z-]{0,}) (.*)/)
+          if (regex == null) continue
+          let [, key, vals] = regex;
           if (key == 'frame-src') vals = vals + ' ' + instancesList.join(' ');
           newSecurity += key + ' ' + vals + '; ';
         }

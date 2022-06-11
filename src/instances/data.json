@@ -316,6 +316,14 @@
     ],
     "tor": []
   },
+  "quetre": {
+    "normal": [
+      "https://quetre.herokuapp.com",
+      "https://quora.vern.cc",
+      "https://quetre.pussthecat.org"
+    ],
+    "tor": []
+  },
   "simplyTranslate": {
     "normal": [
       "https://simplytranslate.org",
@@ -357,7 +365,6 @@
   "searx": {
     "tor": [
       "http://3afisqjw2rxm6z7mmstyt5rx75qfqrgxnkzftknbp2vhipr2nrmrjdyd.onion",
-      "http://4n53nafyi77iplnbrpmxnp3x4exbswwxigujaxy3b37fvr7bvlopxeyd.onion",
       "http://z34ambyi6makk6ta7ksog2sljly2ctt2sa3apekb7wkllk72sxecdtad.onion",
       "http://yra4tke2pwcnatxjkufpw6kvebu3h3ti2jca2lcdpgx3mpwol326lzid.onion",
       "http://z5vawdol25vrmorm4yydmohsd4u6rdoj2sylvoi3e3nqvxkvpqul7bqd.onion",
@@ -371,7 +378,6 @@
     ],
     "normal": [
       "https://anon.sx",
-      "https://asowneryt.cloudns.nz",
       "https://dynabyte.ca",
       "https://jsearch.pw",
       "https://nibblehole.com",
@@ -390,7 +396,6 @@
       "https://searx.josie.lol",
       "https://searx.kujonello.cf",
       "https://searx.mastodontech.de",
-      "https://searx.mha.fi",
       "https://searx.mxchange.org",
       "https://searx.nakhan.net",
       "https://searx.netzspielplatz.de",
@@ -427,7 +432,9 @@
   "searxng": {
     "tor": [
       "http://w5rl6wsd7mzj4bdkbuqvzidet5osdsm5jhg2f7nvfidakfq5exda5wid.onion",
+      "http://4n53nafyi77iplnbrpmxnp3x4exbswwxigujaxy3b37fvr7bvlopxeyd.onion",
       "http://fpamcnxokg4lzz6b2y7jdwoujmnixfxrh7ptddehctqzoptn4wpdvjid.onion",
+      "http://gbat2pbpg7ys3fi3pbp64667tt5x66mg45xok35bxdw7v55brm7a27yd.onion",
       "http://searxdr3pqz4nydgnqocsia2xbywptxbkympa2emn7zlgggrir4bkfad.onion",
       "http://searx.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion",
       "http://rq2w52kyrif3xpfihkgjnhqm3a5aqhoikpv72z3drpjglfzc2wr5z4yd.onion",
@@ -435,6 +442,7 @@
     ],
     "i2p": [],
     "normal": [
+      "https://asowneryt.cloudns.nz",
       "https://darmarit.org/searx",
       "https://etsi.me",
       "https://northboot.xyz",
@@ -449,6 +457,7 @@
       "https://search.privacyguides.net",
       "https://search.rabbit-company.com",
       "https://search.roombob.cat",
+      "https://search.sapti.me",
       "https://search.vojkovic.xyz",
       "https://search.zzls.xyz",
       "https://searx.albony.xyz",
@@ -458,6 +467,7 @@
       "https://searx.fmac.xyz",
       "https://searx.gnous.eu",
       "https://searx.loafland.xyz",
+      "https://searx.mha.fi",
       "https://searx.namejeff.xyz",
       "https://searx.orion-hub.fr",
       "https://searx.ppeb.me",
@@ -515,6 +525,7 @@
     ]
   },
   "peertube": [
+    "https://syop.tv",
     "https://watch.thelema.social",
     "https://tube.miegl.cz",
     "https://mov.clov.fr",
@@ -891,7 +902,6 @@
     "https://phoenixproject.group",
     "https://peertube.sebu77.com",
     "https://www.orion-hub.fr",
-    "https://quantube.win",
     "https://tv.orion-serv.fr",
     "https://video.interru.io",
     "https://tube.cnr.it",

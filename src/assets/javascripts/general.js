@@ -40,6 +40,7 @@ async function initDefaults() {
                 "reddit",
                 "search",
                 "medium",
+                "quora",
                 "translate",
                 "maps",
             ],
@@ -62,6 +63,7 @@ const allPopupFrontends = [
     "maps",
     "wikipedia",
     "medium",
+    "quora",
     "peertube",
     "lbry",
     "sendTargets"

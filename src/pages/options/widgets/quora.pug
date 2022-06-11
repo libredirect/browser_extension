@@ -1,0 +1,26 @@
+section#quora_page.option-block
+    .some-block.option-block
+        h1(data-localise="__MSG_quora__") Quora
+    hr
+    .some-block.option-block
+        h4(data-localise="__MSG_enable__") Enable
+        input#quora-enable(type="checkbox")
+
+    .some-block.option-block
+        h4(data-localise="__MSG_protocol__") Protocol
+        select#quora-protocol
+            option(value="normal" data-localise="__MSG_normal__") Normal
+            option(value="tor" data-localise="__MSG_tor__") Tor
+
+    #quetre
+        hr
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://quetre.com')
+            include ../../widgets/latency.pug
+            +latency('quetre')
+        .tor
+            include ../../widgets/instances.pug
+            +instances('https://quetre.onion')
+
+    script(type="module" src="./widgets/quora.js")

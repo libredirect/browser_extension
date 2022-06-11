@@ -11,6 +11,7 @@ import peertubeHelper from "./peertube.js";
 import lbryHelper from "./lbry.js";
 import sendTargetsHelper from "./sendTargets.js";
 import tiktokHelper from "./tiktok.js";
+import quoraHelper from "./quora.js"
 import imgurHelper from "./imgur.js";
 import localise from './localise.js'
 
@@ -47,6 +48,7 @@ function updateInstances() {
       searchHelper.setRedirects({ 'searx': instances.searx, 'searxng': instances.searxng, 'whoogle': instances.whoogle });
       wikipediaHelper.setRedirects(instances.wikiless);
       mediumHelper.setRedirects(instances.scribe);
+      quoraHelper.setRedirects(instances.query);
       sendTargetsHelper.setRedirects(instances.send);
       tiktokHelper.setRedirects(instances.proxiTok);
 
@@ -363,6 +365,7 @@ function copyRaw(test, copyRawElement) {
           if (!newUrl) newUrl = await twitterHelper.reverse(url);
           if (!newUrl) newUrl = await instagramHelper.reverse(url);
           if (!newUrl) newUrl = await tiktokHelper.reverse(url);
+          if (!newUrl) newUrl = await quoraHelper.reverse(url);
           if (!newUrl) newUrl = await imgurHelper.reverse(url);
 
           if (newUrl) {
@@ -435,6 +438,7 @@ function switchInstance(test) {
         if (!newUrl) newUrl = await searchHelper.switchInstance(url);
         if (!newUrl) newUrl = await translateHelper.switchInstance(url);
         if (!newUrl) newUrl = await mediumHelper.switchInstance(url);
+        if (!newUrl) newUrl = await quoraHelper.switchInstance(url);
         if (!newUrl) newUrl = await tiktokHelper.switchInstance(url);
         if (!newUrl) newUrl = await sendTargetsHelper.switchInstance(url);
         if (!newUrl) newUrl = await peertubeHelper.switchInstance(url);

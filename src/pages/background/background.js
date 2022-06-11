@@ -18,6 +18,7 @@ import tiktokHelper from "../../assets/javascripts/tiktok.js";
 import sendTargetsHelper from "../../assets/javascripts/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/peertube.js";
 import lbryHelper from "../../assets/javascripts/lbry.js";
+import quoraHelper from "../../assets/javascripts/quora.js";
 
 window.browser = window.browser || window.chrome;
 
@@ -41,6 +42,7 @@ browser.runtime.onInstalled.addListener(
                     searchHelper.initDefaults();
                     translateHelper.initDefaults();
                     mediumHelper.initDefaults();
+                    quoraHelper.initDefaults();
                     redditHelper.initDefaults();
                     wikipediaHelper.initDefaults();
                     imgurHelper.initDefaults();
@@ -98,6 +100,7 @@ browser.webRequest.onBeforeRequest.addListener(
     if (!newUrl) newUrl = mapsHelper.redirect(url, initiator);
     if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = mediumHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = quoraHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = imgurHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = tiktokHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = sendTargetsHelper.redirect(url, details.type, initiator);
@@ -174,6 +177,7 @@ async function redirectOfflineInstance(url, tabId) {
   if (!newUrl) newUrl = await searchHelper.switchInstance(url);
   if (!newUrl) newUrl = await translateHelper.switchInstance(url);
   if (!newUrl) newUrl = await mediumHelper.switchInstance(url);
+  if (!newUrl) newUrl = await quoraHelper.switchInstance(url);
   if (!newUrl) newUrl = await tiktokHelper.switchInstance(url);
   if (!newUrl) newUrl = await imgurHelper.switchInstance(url);
   if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url);
