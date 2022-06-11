@@ -287,7 +287,6 @@ async function testLatency(element, instances) {
 function copyCookie(frontend, targetUrl, urls, name) {
   return new Promise(resolve => {
     browser.storage.local.get('firstPartyIsolate', r => {
-      console.log('r.firstPartyIsolate', r.firstPartyIsolate);
       let query;
       if (!r.firstPartyIsolate) query = { url: protocolHost(targetUrl), name: name }
       else query = { url: protocolHost(targetUrl), name: name, firstPartyDomain: null }
@@ -313,10 +312,13 @@ function copyCookie(frontend, targetUrl, urls, name) {
                     firstPartyDomain: new URL(url).hostname,
                   };
                 }
-                browser.cookies.remove(removeQuery, () => {
-                  browser.cookies.set(setQuery, () => {
-                    browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve())
-                  })
+                function removeCookie() {
+                  return new Promise(resolve => browser.cookies.remove(removeQuery, resolve))
+                }
+
+                browser.cookies.set(setQuery, async () => {
+                  while (await removeCookie() != null) continue;
+                  browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve())
                 });
               }
               break;
