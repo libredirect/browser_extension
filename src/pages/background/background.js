@@ -162,7 +162,7 @@ browser.webRequest.onHeadersReceived.addListener(
     if (!response) response = youtubeHelper.removeXFrameOptions(e);
     return response;
   },
-  { urls: ["<all_urls>"], },
+  { urls: ["<all_urls>"] },
   ["blocking", "responseHeaders"]
 );
 
@@ -201,7 +201,7 @@ browser.webRequest.onResponseStarted.addListener(
     if (!await isAutoRedirect()) return null;
     if (details.type == 'main_frame' && details.statusCode >= 500) redirectOfflineInstance(new URL(details.url), details.tabId);
   },
-  { urls: ["<all_urls>"], }
+  { urls: ["<all_urls>"] }
 )
 
 browser.webRequest.onErrorOccurred.addListener(
@@ -209,7 +209,7 @@ browser.webRequest.onErrorOccurred.addListener(
     if (!await isAutoRedirect()) return;
     if (details.type == 'main_frame') redirectOfflineInstance(new URL(details.url), details.tabId);
   },
-  { urls: ["<all_urls>"], }
+  { urls: ["<all_urls>"] }
 )
 
 browser.commands.onCommand.addListener(

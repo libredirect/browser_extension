@@ -420,21 +420,56 @@ function pastePipedMaterialLocalStorage() {
   })
 }
 
-
 function removeXFrameOptions(e) {
-  if (e.type != 'sub_frame') return;
-  const url = new URL(e.url);
-  const protocolHost = utils.protocolHost(url);
-  if (!all().includes(protocolHost)) return;
   let isChanged = false;
-  for (const i in e.responseHeaders) {
-    if (e.responseHeaders[i].name == 'x-frame-options') {
-      e.responseHeaders.splice(i, 1);
-      isChanged = true;
+
+  if (e.type == 'main_frame') {
+    for (const i in e.responseHeaders) {
+      if (e.responseHeaders[i].name == 'content-security-policy') {
+        let instancesList;
+        if (youtubeFrontend == 'invidious') {
+          if (youtubeProtocol == 'normal') instancesList = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
+          else if (youtubeProtocol == 'tor') instancesList = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
+        }
+        else if (youtubeFrontend == 'piped') {
+          if (youtubeProtocol == 'normal') instancesList = [...pipedNormalRedirectsChecks, ...pipedNormalCustomRedirects];
+          else if (youtubeProtocol == 'tor') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
+        }
+        else if (youtubeFrontend == 'pipedMaterial') {
+          if (youtubeProtocol == 'normal') instancesList = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects];
+          else if (youtubeProtocol == 'tor') instancesList = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects];
+        }
+        let securityPolicyList = e.responseHeaders[i].value.split(';');
+        for (const i in securityPolicyList) securityPolicyList[i] = securityPolicyList[i].trim();
+
+        let newSecurity = '';
+        for (const item of securityPolicyList) {
+          if (item.trim() == '') continue
+          console.log('item', item);
+          let [, key, vals] = item.match(/([a-z-]{0,}) (.*)/);
+          if (key == 'frame-src') vals = vals + ' ' + instancesList.join(' ');
+          newSecurity += key + ' ' + vals + '; ';
+        }
+
+        e.responseHeaders[i].value = newSecurity;
+        isChanged = true;
+      }
     }
-    else if (e.responseHeaders[i].name == 'content-security-policy') {
-      e.responseHeaders.splice(i, 1);
-      isChanged = true;
+    if (isChanged) return { responseHeaders: e.responseHeaders };
+  }
+  else if (e.type == 'sub_frame') {
+    const url = new URL(e.url);
+    const protocolHost = utils.protocolHost(url);
+    if (!all().includes(protocolHost)) return;
+    for (const i in e.responseHeaders) {
+      if (e.responseHeaders[i].name == 'x-frame-options') {
+        e.responseHeaders.splice(i, 1);
+        isChanged = true;
+      }
+      else if (e.responseHeaders[i].name == 'content-security-policy') {
+        e.responseHeaders.splice(i, 1);
+        isChanged = true;
+      }
     }
   }
   if (isChanged) return { responseHeaders: e.responseHeaders };
