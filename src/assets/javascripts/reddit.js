@@ -114,6 +114,8 @@ function initLibredditCookies(test, from) {
       await utils.copyCookie('libreddit', from, checkedInstances, "autoplay_videos");
       await utils.copyCookie('libreddit', from, checkedInstances, "use_hls");
       await utils.copyCookie('libreddit', from, checkedInstances, "hide_hls_notification");
+      await utils.copyCookie('libreddit', from, checkedInstances, "subscriptions");
+      await utils.copyCookie('libreddit', from, checkedInstances, "filters");
     }
     resolve(true);
   })
@@ -136,6 +138,8 @@ function pasteLibredditCookies() {
     utils.getCookiesFromStorage('libreddit', checkedInstances, "autoplay_videos");
     utils.getCookiesFromStorage('libreddit', checkedInstances, "use_hls");
     utils.getCookiesFromStorage('libreddit', checkedInstances, "hide_hls_notification");
+    utils.getCookiesFromStorage('libreddit', checkedInstances, "subscriptions");
+    utils.getCookiesFromStorage('libreddit', checkedInstances, "filters");
     resolve();
   })
 }
