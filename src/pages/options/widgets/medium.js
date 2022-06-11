@@ -5,8 +5,8 @@ const protocol = document.getElementById("medium-protocol")
 const medium = document.getElementById('medium_page');
 
 function changeProtocolSettings() {
-    const normalDiv = document.getElementsByClassName("normal")[0];
-    const torDiv = document.getElementsByClassName("tor")[0];
+    const normalDiv = medium.getElementsByClassName("normal")[0];
+    const torDiv = medium.getElementsByClassName("tor")[0];
     if (protocol.value == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';

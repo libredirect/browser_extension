@@ -65,8 +65,6 @@ function init() {
 init();
 browser.storage.onChanged.addListener(init)
 
-// https://www.quora.com/@keysikaspol/video/7061265241887345946
-// https://www.quora.com/@keysikaspol
 function redirect(url, type, initiator) {
     if (disableQuora) return;
     if (type != "main_frame") return;

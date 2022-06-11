@@ -132,6 +132,7 @@ resetSettings.addEventListener("click",
                   await translateHelper.initDefaults();
                   await mediumHelper.initDefaults();
                   await quoraHelper.initDefaults();
+                  await reutersHelper.initDefaults();
                   await redditHelper.initDefaults();
                   await wikipediaHelper.initDefaults();
                   await imgurHelper.initDefaults();

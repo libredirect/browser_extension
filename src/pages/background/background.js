@@ -13,12 +13,14 @@ import translateHelper from "../../assets/javascripts/translate/translate.js";
 import mapsHelper from "../../assets/javascripts/maps.js";
 import wikipediaHelper from "../../assets/javascripts/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/medium.js";
+import quoraHelper from "../../assets/javascripts/quora.js";
+import reutersHelper from "../../assets/javascripts/reuters.js";
 import imgurHelper from "../../assets/javascripts/imgur.js";
 import tiktokHelper from "../../assets/javascripts/tiktok.js";
 import sendTargetsHelper from "../../assets/javascripts/sendTargets.js";
 import peertubeHelper from "../../assets/javascripts/peertube.js";
 import lbryHelper from "../../assets/javascripts/lbry.js";
-import quoraHelper from "../../assets/javascripts/quora.js";
+
 
 window.browser = window.browser || window.chrome;
 
@@ -43,6 +45,7 @@ browser.runtime.onInstalled.addListener(
                     translateHelper.initDefaults();
                     mediumHelper.initDefaults();
                     quoraHelper.initDefaults();
+                    reutersHelper.initDefaults();
                     redditHelper.initDefaults();
                     wikipediaHelper.initDefaults();
                     imgurHelper.initDefaults();
@@ -101,6 +104,7 @@ browser.webRequest.onBeforeRequest.addListener(
     if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = mediumHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = quoraHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = reutersHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = imgurHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = tiktokHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = sendTargetsHelper.redirect(url, details.type, initiator);

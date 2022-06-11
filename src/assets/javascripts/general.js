@@ -64,6 +64,7 @@ const allPopupFrontends = [
     "wikipedia",
     "medium",
     "quora",
+    "reuters",
     "peertube",
     "lbry",
     "sendTargets"

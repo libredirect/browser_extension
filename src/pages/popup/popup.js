@@ -45,6 +45,7 @@ let disableElement = document.getElementById("disable-simplyTranslate");
 let disableWikipediaElement = document.getElementById("disable-wikipedia");
 let disableMediumElement = document.getElementById("disable-medium");
 let disableQuoraElement = document.getElementById("disable-quora");
+let disableReutersElement = document.getElementById("disable-reuters");
 let disablePeertubeElement = document.getElementById("disable-peertube");
 let disableLbryElement = document.getElementById("disable-lbry");
 let disableSendTargetsElement = document.getElementById("disable-sendTargets");
@@ -66,6 +67,7 @@ browser.storage.local.get(
     "disableTiktok",
     "disableMedium",
     "disableQuora",
+    "disableReuters",
     "disablePeertubeTargets",
     "disableLbryTargets",
     "disableSendTarget",
@@ -86,6 +88,7 @@ browser.storage.local.get(
     disableTiktokElement.checked = !r.disableTiktok;
     disableMediumElement.checked = !r.disableMedium;
     disableQuoraElement.checked = !r.disableQuora;
+    disableReutersElement.checked = !r.disableReuters;
     disablePeertubeElement.checked = !r.disablePeertubeTargets;
     disableLbryElement.checked = !r.disableLbryTargets;
     disableSendTargetsElement.checked = !r.disableSendTarget;
@@ -113,6 +116,7 @@ document.addEventListener("change", () => {
     disableTiktok: !disableTiktokElement.checked,
     disableMedium: !disableMediumElement.checked,
     disableQuora: !disableQuoraElement.checked,
+    disableReuters: !disableReutersElement.checked,
     disablePeertubeTargets: !disablePeertubeElement.checked,
     disableLbryTargets: !disableLbryElement.checked,
     disableSendTarget: !disableSendTargetsElement.checked,

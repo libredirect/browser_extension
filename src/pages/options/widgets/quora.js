@@ -5,8 +5,8 @@ const protocol = document.getElementById("quora-protocol")
 const quora = document.getElementById('quora_page');
 
 function changeProtocolSettings() {
-    const normalDiv = document.getElementsByClassName("normal")[0];
-    const torDiv = document.getElementsByClassName("tor")[0];
+    const normalDiv = quora.getElementsByClassName("normal")[0];
+    const torDiv = quora.getElementsByClassName("tor")[0];
     if (protocol.value == 'normal') {
         normalDiv.style.display = 'block';
         torDiv.style.display = 'none';
