@@ -292,32 +292,32 @@ function copyCookie(frontend, targetUrl, urls, name) {
       else query = { url: protocolHost(targetUrl), name: name, firstPartyDomain: null }
       browser.cookies.getAll(
         query,
-        cookies => {
+        async cookies => {
           for (const cookie of cookies)
             if (cookie.name == name) {
               for (const url of urls) {
-                let setQuery;
-                let removeQuery;
-                if (!r.firstPartyIsolate) {
-                  removeQuery = { url: url, name: name };
-                  setQuery = {
-                    url: url, name: name, value: cookie.value, secure: true,
-                    expirationDate: cookie.expirationDate,
-                  };
-                }
-                else {
-                  removeQuery = { url: url, name: name, firstPartyDomain: new URL(url).hostname };
-                  setQuery = {
-                    url: url, name: name, value: cookie.value, secure: true,
-                    firstPartyDomain: new URL(url).hostname,
-                  };
-                }
+                const setQuery =
+                  r.firstPartyIsolate ?
+                    {
+                      url: url, name: name, value: cookie.value, secure: true,
+                      firstPartyDomain: new URL(url).hostname,
+                    }
+                    :
+                    {
+                      url: url, name: name, value: cookie.value, secure: true,
+                      expirationDate: cookie.expirationDate,
+                    };
                 function removeCookie() {
-                  return new Promise(resolve => browser.cookies.remove(removeQuery, resolve))
+                  return new Promise(resolve => {
+                    const removeQuery = r.firstPartyIsolate ?
+                      { url: url, name: name, firstPartyDomain: new URL(url).hostname }
+                      :
+                      { url: url, name: name };
+                    browser.cookies.remove(removeQuery, resolve)
+                  })
                 }
-
-                browser.cookies.set(setQuery, async () => {
-                  while (await removeCookie() != null) continue;
+                while (await removeCookie() != null) continue;
+                browser.cookies.set(setQuery, () => {
                   browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve())
                 });
               }
