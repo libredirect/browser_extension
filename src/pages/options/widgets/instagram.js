@@ -33,7 +33,7 @@ browser.storage.local.get(
 instagram.addEventListener("change", () => {
     changeProtocolSettings();
     browser.storage.local.set({
-        disableInstagram: enable.checked,
+        disableInstagram: !enable.checked,
         instagramProtocol: protocol.value,
     })
 })
