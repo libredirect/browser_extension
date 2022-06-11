@@ -44,6 +44,7 @@ async function initDefaults() {
                 "maps",
             ],
             autoRedirect: false,
+            firstPartyIsolate: false,
         }, () => resolve())
     )
 }

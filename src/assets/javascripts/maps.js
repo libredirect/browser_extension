@@ -46,6 +46,9 @@ init();
 browser.storage.onChanged.addListener(init)
 
 function redirect(url, initiator) {
+  if (disableMaps) return;
+  if (initiator && initiator.host === "earth.google.com") return;
+  if (!url.href.match(targets)) return;
   const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/;
   const dataLatLngRegex = /!3d(-?[0-9]{1,}.[0-9]{1,})!4d(-?[0-9]{1,}.[0-9]{1,})/;
   const placeRegex = /\/place\/(.*)\//;
@@ -67,7 +70,6 @@ function redirect(url, initiator) {
     traffic: "S", // not implemented on OSM, default to standard.
     bicycling: "C",
   };
-
   function addressToLatLng(address) {
     const xmlhttp = new XMLHttpRequest();
     xmlhttp.open("GET", `https://nominatim.openstreetmap.org/search/${address}?format=json&limit=1`, false);
@@ -84,10 +86,6 @@ function redirect(url, initiator) {
     }
     console.info("Error: Status is " + xmlhttp.status);
   }
-
-  if (disableMaps) return;
-  if (initiator && initiator.host === "earth.google.com") return;
-  if (!url.href.match(targets)) return;
 
   let randomInstance;
   if (mapsFrontend == 'osm') randomInstance = utils.getRandomInstance(redirects.osm.normal);

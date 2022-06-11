@@ -283,78 +283,68 @@ async function testLatency(element, instances) {
     resolve(myList);
   })
 }
-
+// Complete on getting cookies working in Tor, maybe delete all the other same name cookies to prevent overlapping, see ya :)
 function copyCookie(frontend, targetUrl, urls, name) {
   return new Promise(resolve => {
-    let query;
-    if (window.chrome) query = { url: protocolHost(targetUrl), name: name }
-    else query = { url: protocolHost(targetUrl), name: name, firstPartyDomain: null }
-    browser.cookies.getAll(
-      query,
-      async cookies => {
-        function setCookie(url, name, value, expirationDate, firstPartyIsolate) {
-          return new Promise(resolve => {
-            let query;
-            if (window.chrome) query = {
-              url: url, name: name, value: value, secure: true,
-              expirationDate: expirationDate,
-            };
-            else query = {
-              url: url, name: name, value: value, secure: true,
-              firstPartyDomain: firstPartyIsolate.value ? new URL(url).hostname : '',
-              expirationDate: firstPartyIsolate.value ? null : expirationDate,
-            };
-            browser.cookies.set(query, () => resolve())
-          })
-        }
-        if (window.chrome) {
+    browser.storage.local.get('firstPartyIsolate', r => {
+      console.log('r.firstPartyIsolate', r.firstPartyIsolate);
+      let query;
+      if (!r.firstPartyIsolate) query = { url: protocolHost(targetUrl), name: name }
+      else query = { url: protocolHost(targetUrl), name: name, firstPartyDomain: null }
+      browser.cookies.getAll(
+        query,
+        cookies => {
           for (const cookie of cookies)
             if (cookie.name == name) {
-              console.log('cookie', cookie);
-              for (const url of urls) await setCookie(url, cookie.name, cookie.value, cookie.expirationDate)
-              browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve())
+              for (const url of urls) {
+                let setQuery;
+                let removeQuery;
+                if (!r.firstPartyIsolate) {
+                  removeQuery = { url: url, name: name };
+                  setQuery = {
+                    url: url, name: name, value: cookie.value, secure: true,
+                    expirationDate: cookie.expirationDate,
+                  };
+                }
+                else {
+                  removeQuery = { url: url, name: name, firstPartyDomain: new URL(url).hostname };
+                  setQuery = {
+                    url: url, name: name, value: cookie.value, secure: true,
+                    firstPartyDomain: new URL(url).hostname,
+                  };
+                }
+                browser.cookies.remove(removeQuery, () => {
+                  browser.cookies.set(setQuery, () => {
+                    browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve())
+                  })
+                });
+              }
               break;
             }
           resolve();
-        } else {
-          browser.privacy.websites.firstPartyIsolate.get({},
-            async firstPartyIsolate => {
-              for (const cookie of cookies)
-                if (cookie.name == name) {
-                  console.log('cookie', cookie);
-                  for (const url of urls) await setCookie(url, cookie.name, cookie.value, cookie.expirationDate, firstPartyIsolate)
-                  browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve())
-                  break;
-                }
-              resolve();
-            }
-          )
         }
-      });
+      );
+    })
   })
 }
 
 function getCookiesFromStorage(frontend, urls, name) {
   let key = `${frontend}_${name}`;
-  browser.storage.local.get(
-    key,
-    r => {
-      const cookie = r[key];
-      if (cookie !== undefined)
-        browser.privacy.websites.firstPartyIsolate.get({},
-          firstPartyIsolate => {
-            for (const url of urls)
-              browser.cookies.set({
-                url: url,
-                name: cookie.name,
-                value: cookie.value,
-                secure: true,
-                expirationDate: firstPartyIsolate.value ? null : cookie.expirationDate,
-                firstPartyDomain: firstPartyIsolate.value ? new URL(url).hostname : '',
-              })
-          })
+  browser.storage.local.get([key, 'firstPartyIsolate'], r => {
+    const cookie = r[key];
+    if (cookie === undefined) return;
+    let query;
+    if (!r.firstPartyIsolate) query = {
+      url: url, name: cookie.name, value: cookie.value, secure: true,
+      expirationDate: cookie.expirationDate,
+    };
+    else query = {
+      url: url, name: cookie.name, value: cookie.value, secure: true,
+      expirationDate: null,
+      firstPartyDomain: new URL(url).hostname,
     }
-  )
+    for (const url of urls) browser.cookies.set(query)
+  })
 }
 
 function copyRaw(test, copyRawElement) {
