@@ -33,7 +33,9 @@ LBRY/Odysee => [Librarian](https://codeberg.org/librarian/librarian)\
 Search => [SearXNG](https://github.com/searxng/searxng), [SearX](https://searx.github.io/searx/), [Whoogle](https://benbusby.com/projects/whoogle-search/)\
 Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web), [LingvaTranslate](https://github.com/TheDavidDelta/lingva-translate)\
 Maps => [OpenStreetMap](https://www.openstreetmap.org/), [FacilMap](https://github.com/FacilMap/facilmap)\
-Send Files => [Send](https://github.com/timvisee/send)
+Send Files => [Send](https://github.com/timvisee/send)\
+Quora => [Quetre](https://github.com/zyachel/quetre)\
+IMDB => [Libremdb](https://github.com/zyachel/libremdb)
 
 **Note**: The Extension will be using random instances by default. You can modify this and add custom instances too.
 
