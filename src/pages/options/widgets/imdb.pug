@@ -1,0 +1,26 @@
+section#imdb_page.option-block
+    .some-block.option-block
+        h1(data-localise="__MSG_imdb__") IMDb
+    hr
+    .some-block.option-block
+        h4(data-localise="__MSG_enable__") Enable
+        input#imdb-enable(type="checkbox")
+
+    .some-block.option-block
+        h4(data-localise="__MSG_protocol__") Protocol
+        select#imdb-protocol
+            option(value="normal" data-localise="__MSG_normal__") Normal
+            option(value="tor" data-localise="__MSG_tor__") Tor
+
+    #libremdb
+        hr
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://libremdb.com')
+            include ../../widgets/latency.pug
+            +latency('libremdb')
+        .tor
+            include ../../widgets/instances.pug
+            +instances('https://libremdb.onion')
+
+    script(type="module" src="./widgets/imdb.js")

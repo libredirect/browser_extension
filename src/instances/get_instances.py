@@ -260,6 +260,29 @@ def quetre():
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Quetre')
 
 
+def libremdb():
+    r = requests.get(
+        'https://raw.githubusercontent.com/zyachel/libremdb/main/README.md')
+    _list = {}
+    _list['normal'] = []
+    _list['tor'] = []
+
+    tmp = re.findall(
+        r"\| ([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)*\|*[A-Z]{0,}.*\|.*\|", r.text)
+
+    tmp = filterLastSlash(tmp)
+
+    for item in tmp:
+        if item.strip() == "":
+            continue
+        if item.endswith('.onion'):
+            _list['tor'].append(item)
+        else:
+            _list['normal'].append(item)
+    mightyList['libremdb'] = _list
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Libremdb')
+
+
 def simplytranslate():
     r = requests.get('https://simple-web.org/instances/simplytranslate')
     simplyTranslateList = {}
@@ -392,6 +415,7 @@ teddit()
 wikiless()
 scribe()
 quetre()
+libremdb()
 simplytranslate()
 linvgatranslate()
 searx_searxng()

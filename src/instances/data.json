@@ -10,14 +10,14 @@
       "https://tube.cthd.icu",
       "https://yt.artemislena.eu",
       "https://invidious.flokinet.to",
-      "https://invidious.lunar.icu",
       "https://invidious.tiekoetter.com",
+      "https://invidious.lunar.icu",
       "https://invidious.sethforprivacy.com",
       "https://inv.bp.projectsegfau.lt",
       "https://invidious.projectsegfau.lt",
       "https://invidious.weblibre.org",
-      "https://youtube.076.ne.jp",
       "https://invidious.esmailelbob.xyz",
+      "https://youtube.076.ne.jp",
       "https://invidious.namazso.eu",
       "https://invidious.kavin.rocks"
     ],
@@ -233,7 +233,9 @@
       "https://reddit.beparanoid.de",
       "https://libreddit.dcs0.hu",
       "https://reddit.dr460nf1r3.org",
-      "https://rd.jae.su"
+      "https://rd.jae.su",
+      "https://libreddit.mha.fi",
+      "https://libreddit.foss.wtf"
     ],
     "tor": [
       "http://spjmllawtheisznfs7uryhxumin26ssv2draj7oope3ok3wuhy43eoyd.onion",
@@ -250,7 +252,8 @@
       "http://lbrdtjaj7567ptdd4rv74lv27qhxfkraabnyphgcvptl64ijx2tijwid.onion",
       "http://libreddit.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion",
       "http://reddit.prnoid54e44a4bduq5due64jkk7wcnkxcp5kv3juncm7veptjcqudgyd.onion",
-      "http://inz6tbezfwzexva6dize4cqraj2tjdhygxabmcgysccesvw2pybzhbyd.onion"
+      "http://inz6tbezfwzexva6dize4cqraj2tjdhygxabmcgysccesvw2pybzhbyd.onion",
+      "http://libreddit.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion"
     ]
   },
   "teddit": {
@@ -324,6 +327,13 @@
     ],
     "tor": []
   },
+  "libremdb": {
+    "normal": [
+      "https://libremdb.herokuapp.com",
+      "https://libremdb.pussthecat.org"
+    ],
+    "tor": []
+  },
   "simplyTranslate": {
     "normal": [
       "https://simplytranslate.org",
@@ -388,6 +398,7 @@
       "https://search.snopyta.org",
       "https://search.stinpriza.org",
       "https://search.trom.tf",
+      "https://search.zzls.xyz",
       "https://searx.bissisoft.com",
       "https://searx.divided-by-zero.eu",
       "https://searx.dresden.network",
@@ -408,7 +419,6 @@
       "https://searx.run",
       "https://searx.semipvt.com",
       "https://searx.sethforprivacy.com",
-      "https://searx.sev.monster",
       "https://searx.solusar.de",
       "https://searx.sp-codes.de",
       "https://searx.stuehieyr.com",
@@ -459,9 +469,9 @@
       "https://search.roombob.cat",
       "https://search.sapti.me",
       "https://search.vojkovic.xyz",
-      "https://search.zzls.xyz",
       "https://searx.albony.xyz",
       "https://searx.be",
+      "https://searx.becomesovran.com",
       "https://searx.ebnar.xyz",
       "https://searx.esmailelbob.xyz",
       "https://searx.fmac.xyz",
@@ -473,6 +483,7 @@
       "https://searx.ppeb.me",
       "https://searx.priv.pw",
       "https://searx.prvcy.eu",
+      "https://searx.sev.monster",
       "https://searx.tiekoetter.com",
       "https://searxng.ir",
       "https://searxng.zackptg5.com",
@@ -525,6 +536,8 @@
     ]
   },
   "peertube": [
+    "https://socpeertube.ru",
+    "https://seka.pona.la",
     "https://syop.tv",
     "https://watch.thelema.social",
     "https://tube.miegl.cz",
@@ -639,7 +652,6 @@
     "https://video.pthreat.co",
     "https://peertube.egroc.de",
     "https://pt.k2s.sk",
-    "https://gameplay.wtf",
     "https://video.cats-home.net",
     "https://peertube.narrativerry.xyz",
     "https://tube.9minuti.it",
@@ -797,7 +809,6 @@
     "https://film.node9.org",
     "https://peertube.mi-site.net",
     "https://tube.nowtech.io",
-    "https://videos.mattwilson.org",
     "https://raptube.antipub.org",
     "https://video.cm-en-transition.fr",
     "https://tube.koweb.fr",
@@ -906,7 +917,6 @@
     "https://video.interru.io",
     "https://tube.cnr.it",
     "https://peertube.dtmf.ca",
-    "https://peertube.dk",
     "https://tube.ponsonaille.fr",
     "https://peertube.ares.bioxis-server.fr",
     "https://tube.int5.net",
@@ -1301,7 +1311,6 @@
     "https://p.lu",
     "https://serv3.wiki-tube.de",
     "https://serv1.wiki-tube.de",
-    "https://tube.traydent.info",
     "https://video.lavolte.net",
     "https://peertube.public.cat",
     "https://peertube.anduin.net",
@@ -1569,6 +1578,8 @@
     "https://peertube.fr",
     "https://peertube.amicale.net",
     "https://aperi.tube",
-    "https://tube.ac-lyon.fr"
+    "https://tube.ac-lyon.fr",
+    "https://video.lw1.at",
+    "https://www.yiny.org"
   ]
 }

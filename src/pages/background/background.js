@@ -14,6 +14,7 @@ import mapsHelper from "../../assets/javascripts/maps.js";
 import wikipediaHelper from "../../assets/javascripts/wikipedia.js";
 import mediumHelper from "../../assets/javascripts/medium.js";
 import quoraHelper from "../../assets/javascripts/quora.js";
+import libremdbHelper from "../../assets/javascripts/imdb.js";
 import reutersHelper from "../../assets/javascripts/reuters.js";
 import imgurHelper from "../../assets/javascripts/imgur.js";
 import tiktokHelper from "../../assets/javascripts/tiktok.js";
@@ -45,6 +46,7 @@ browser.runtime.onInstalled.addListener(
                     translateHelper.initDefaults();
                     mediumHelper.initDefaults();
                     quoraHelper.initDefaults();
+                    libremdbHelper.initDefaults();
                     reutersHelper.initDefaults();
                     redditHelper.initDefaults();
                     wikipediaHelper.initDefaults();
@@ -104,6 +106,7 @@ browser.webRequest.onBeforeRequest.addListener(
     if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = mediumHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = quoraHelper.redirect(url, details.type, initiator);
+    if (!newUrl) newUrl = libremdbHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = reutersHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = imgurHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = tiktokHelper.redirect(url, details.type, initiator);
@@ -182,6 +185,7 @@ async function redirectOfflineInstance(url, tabId) {
   if (!newUrl) newUrl = await translateHelper.switchInstance(url);
   if (!newUrl) newUrl = await mediumHelper.switchInstance(url);
   if (!newUrl) newUrl = await quoraHelper.switchInstance(url);
+  if (!newUrl) newUrl = await libremdbHelper.switchInstance(url);
   if (!newUrl) newUrl = await tiktokHelper.switchInstance(url);
   if (!newUrl) newUrl = await imgurHelper.switchInstance(url);
   if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url);

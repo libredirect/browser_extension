@@ -15,6 +15,7 @@ import mapsHelper from "../../../assets/javascripts/maps.js";
 import wikipediaHelper from "../../../assets/javascripts/wikipedia.js";
 import mediumHelper from "../../../assets/javascripts/medium.js";
 import quoraHelper from "../../../assets/javascripts/quora.js";
+import libremdbHelper from "../../../assets/javascripts/imdb.js";
 import imgurHelper from "../../../assets/javascripts/imgur.js";
 import tiktokHelper from "../../../assets/javascripts/tiktok.js";
 import sendTargetsHelper from "../../../assets/javascripts/sendTargets.js";
@@ -132,6 +133,7 @@ resetSettings.addEventListener("click",
                   await translateHelper.initDefaults();
                   await mediumHelper.initDefaults();
                   await quoraHelper.initDefaults();
+                  await libremdbHelper.initDefaults();
                   await reutersHelper.initDefaults();
                   await redditHelper.initDefaults();
                   await wikipediaHelper.initDefaults();
