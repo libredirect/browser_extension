@@ -67,6 +67,7 @@ browser.storage.onChanged.addListener(init)
 
 function redirect(url, type, initiator) {
     if (disableQuora) return;
+    if (url.pathname == "/") return;
     if (type != "main_frame") return;
     const all = [
         ...quoraRedirects.quetre.normal,

@@ -89,6 +89,7 @@ browser.storage.onChanged.addListener(init)
 
 function redirect(url, type, initiator) {
   if (disableMedium) return;
+  if (url.pathname == "/") return;
   if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") return;
   if (initiator && (
     [
