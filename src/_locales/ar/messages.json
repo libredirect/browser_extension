@@ -93,7 +93,7 @@
         "description": "used in the settings page"
     },
     "autoRedirect": {
-        "message": "إعادة التوجيه التلقائي من النظراء الخربانين",
+        "message": "إعادة التوجيه التلقائي من النظراء الخربانين إلى النظراء الشغالين",
         "description": "used in the settings page"
     },
     "exceptions": {
