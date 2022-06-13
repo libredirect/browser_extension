@@ -28,14 +28,14 @@ Reddit => [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddi
 Imgur => [Rimgo](https://codeberg.org/video-prize-ranch/rimgo)\
 Wikipedia => [Wikiless](https://codeberg.org/orenom/wikiless)\
 Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)\
+Quora => [Quetre](https://github.com/zyachel/quetre)\
+IMDb => [Libremdb](https://github.com/zyachel/libremdb)\
 PeerTube => [SimpleerTube](https://git.sr.ht/~metalune/simpleweb_peertube)\
 LBRY/Odysee => [Librarian](https://codeberg.org/librarian/librarian)\
 Search => [SearXNG](https://github.com/searxng/searxng), [SearX](https://searx.github.io/searx/), [Whoogle](https://benbusby.com/projects/whoogle-search/)\
 Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web), [LingvaTranslate](https://github.com/TheDavidDelta/lingva-translate)\
 Maps => [OpenStreetMap](https://www.openstreetmap.org/), [FacilMap](https://github.com/FacilMap/facilmap)\
-Send Files => [Send](https://github.com/timvisee/send)\
-Quora => [Quetre](https://github.com/zyachel/quetre)\
-IMDb => [Libremdb](https://github.com/zyachel/libremdb)
+Send Files => [Send](https://github.com/timvisee/send)
 
 **Note**: The Extension will be using random instances by default. You can modify this and add custom instances too.
 
