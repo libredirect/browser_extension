@@ -109,7 +109,6 @@
       "https://nitter.mint.lgbt",
       "https://nitter.bus-hit.me",
       "https://fuckthesacklers.network",
-      "https://nitter.govt.land",
       "https://nitter.esmailelbob.xyz",
       "https://tw.artemislena.eu",
       "https://de.nttr.stream",
@@ -276,7 +275,8 @@
       "https://teddit.adminforge.de",
       "https://teddit.bus-hit.me",
       "https://teddit.froth.zone",
-      "https://trom.tf/"
+      "https://trom.tf/",
+      "https://teddit.encrypted-data.xyz"
     ],
     "tor": [
       "http://snoo.ioensistjs7wd746zluwixvojbbkxhr37lepdvwtdfeav673o64iflqd.onion",
@@ -378,6 +378,7 @@
       "http://z34ambyi6makk6ta7ksog2sljly2ctt2sa3apekb7wkllk72sxecdtad.onion",
       "http://yra4tke2pwcnatxjkufpw6kvebu3h3ti2jca2lcdpgx3mpwol326lzid.onion",
       "http://z5vawdol25vrmorm4yydmohsd4u6rdoj2sylvoi3e3nqvxkvpqul7bqd.onion",
+      "http://searxdr3pqz4nydgnqocsia2xbywptxbkympa2emn7zlgggrir4bkfad.onion",
       "http://zbuc3bbzbfdqqo2x46repx2ddajbha6fpsjeeptjhhhhzji3zopxdqyd.onion",
       "http://f4qfqajszpx5b7itzxt6mb7kj4ktpgbdq7lq6xaiqyqx6a7de3epptad.onion",
       "http://searx.bsbvtqi5oq2cqzn32zt4cr2f2z2rwots3dq7gmdcnlyqoxko2wx6reqd.onion"
@@ -395,6 +396,7 @@
       "https://search.disroot.org",
       "https://search.ethibox.fr",
       "https://search.jpope.org",
+      "https://search.neet.works",
       "https://search.snopyta.org",
       "https://search.stinpriza.org",
       "https://search.trom.tf",
@@ -422,7 +424,6 @@
       "https://searx.solusar.de",
       "https://searx.sp-codes.de",
       "https://searx.stuehieyr.com",
-      "https://searx.tux.land",
       "https://searx.tuxcloud.net",
       "https://searx.tyil.nl",
       "https://searx.webheberg.info",
@@ -443,9 +444,8 @@
     "tor": [
       "http://w5rl6wsd7mzj4bdkbuqvzidet5osdsm5jhg2f7nvfidakfq5exda5wid.onion",
       "http://4n53nafyi77iplnbrpmxnp3x4exbswwxigujaxy3b37fvr7bvlopxeyd.onion",
-      "http://fpamcnxokg4lzz6b2y7jdwoujmnixfxrh7ptddehctqzoptn4wpdvjid.onion",
+      "http://searchoorwalty5a2ailrboa2asqyts2u7bdoqwnjefpgjobpvtzn4qd.onion",
       "http://gbat2pbpg7ys3fi3pbp64667tt5x66mg45xok35bxdw7v55brm7a27yd.onion",
-      "http://searxdr3pqz4nydgnqocsia2xbywptxbkympa2emn7zlgggrir4bkfad.onion",
       "http://searx.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion",
       "http://rq2w52kyrif3xpfihkgjnhqm3a5aqhoikpv72z3drpjglfzc2wr5z4yd.onion",
       "http://searx3aolosaf3urwnhpynlhuokqsgz47si4pzz5hvb7uuzyjncl2tid.onion"
@@ -462,7 +462,6 @@
       "https://search.bus-hit.me",
       "https://search.chemicals-in-the-water.eu",
       "https://search.mdosch.de",
-      "https://search.neet.works",
       "https://search.ononoki.org",
       "https://search.privacyguides.net",
       "https://search.rabbit-company.com",
@@ -486,10 +485,12 @@
       "https://searx.sev.monster",
       "https://searx.tiekoetter.com",
       "https://searxng.ir",
+      "https://searxng.tordenskjold.de",
       "https://searxng.zackptg5.com",
       "https://serx.ml",
       "https://swag.pw",
-      "https://www.webrats.xyz"
+      "https://www.webrats.xyz",
+      "https://xcxc.ml"
     ]
   },
   "whoogle": {
@@ -707,7 +708,6 @@
     "https://video.mentality.rip",
     "https://tube.03281.fspfc.org",
     "https://tube.linc.systems",
-    "https://artefac-paris.tv",
     "https://peertube.ketchup.noho.st",
     "https://yt.x1337x.fr",
     "https://video.sonet.ws",
@@ -1097,7 +1097,6 @@
     "https://peertube.jensdiemer.de",
     "https://tube.futuretic.fr",
     "https://libra.syntazia.org",
-    "https://peertube.thenewoil.xyz",
     "https://peertube.beeldengeluid.nl",
     "https://tv.lumbung.space",
     "https://vid.dascoyote.xyz",
@@ -1205,7 +1204,6 @@
     "https://peertube.swrs.net",
     "https://tube.shanti.cafe",
     "https://videos.cloudron.io",
-    "https://vid.werefox.dev",
     "https://tube.seditio.fr",
     "https://video.p3x.de",
     "https://video.codingfield.com",
@@ -1580,6 +1578,9 @@
     "https://aperi.tube",
     "https://tube.ac-lyon.fr",
     "https://video.lw1.at",
-    "https://www.yiny.org"
+    "https://www.yiny.org",
+    "https://video.typica.us",
+    "https://videos.lescommuns.org",
+    "https://dialup.express"
   ]
 }
