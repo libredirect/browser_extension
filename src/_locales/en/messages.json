@@ -96,7 +96,7 @@
         "description": "used in the settings page"
     },
     "autoRedirect": {
-        "message": "Auto-redirect away from offline instances",
+        "message": "Auto-redirect offline instances to online ones",
         "description": "used in the settings page"
     },
     "exceptions": {
