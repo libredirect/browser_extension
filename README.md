@@ -35,7 +35,7 @@ Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web),
 Maps => [OpenStreetMap](https://www.openstreetmap.org/), [FacilMap](https://github.com/FacilMap/facilmap)\
 Send Files => [Send](https://github.com/timvisee/send)\
 Quora => [Quetre](https://github.com/zyachel/quetre)\
-IMDB => [Libremdb](https://github.com/zyachel/libremdb)
+IMDb => [Libremdb](https://github.com/zyachel/libremdb)
 
 **Note**: The Extension will be using random instances by default. You can modify this and add custom instances too.
 
