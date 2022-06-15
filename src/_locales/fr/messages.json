@@ -48,7 +48,7 @@
         "description": "used in the settings page"
     },
     "autoRedirect": {
-        "message": "Redirection automatique des instances hors ligne",
+        "message": "Redirection automatique des instances hors ligne vers les instances en ligne",
         "description": "used in the settings page"
     },
     "updateInstances": {
