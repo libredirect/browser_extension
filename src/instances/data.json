@@ -16,9 +16,9 @@
       "https://invidious.sethforprivacy.com",
       "https://inv.bp.projectsegfau.lt",
       "https://invidious.projectsegfau.lt",
-      "https://invidious.esmailelbob.xyz",
       "https://invidious.weblibre.org",
       "https://youtube.076.ne.jp",
+      "https://invidious.esmailelbob.xyz",
       "https://invidious.namazso.eu"
     ],
     "tor": [
@@ -396,6 +396,7 @@
       "https://search.disroot.org",
       "https://search.ethibox.fr",
       "https://search.jpope.org",
+      "https://search.rabbit-company.com",
       "https://search.snopyta.org",
       "https://search.stinpriza.org",
       "https://search.trom.tf",
@@ -466,7 +467,6 @@
       "https://search.neet.works",
       "https://search.ononoki.org",
       "https://search.privacyguides.net",
-      "https://search.rabbit-company.com",
       "https://search.roombob.cat",
       "https://search.sapti.me",
       "https://search.vojkovic.xyz",
@@ -539,6 +539,7 @@
     ]
   },
   "peertube": [
+    "https://shiotube.f5.si",
     "https://syop.xyz",
     "https://socpeertube.ru",
     "https://seka.pona.la",
@@ -1582,7 +1583,6 @@
     "https://dialup.express",
     "https://peertube.1312.media",
     "https://skeptikon.fr",
-    "https://video.blueline.mg",
-    "https://tube.homecomputing.fr"
+    "https://video.blueline.mg"
   ]
 }
