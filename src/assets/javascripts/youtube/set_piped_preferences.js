@@ -7,6 +7,7 @@ browser.storage.local.get(
         "piped_disableLBRY",
         "piped_enabledCodecs",
         "piped_homepage",
+        "piped_instance",
         "piped_listen",
         "piped_minimizeDescription",
         "piped_playerAutoPlay",
