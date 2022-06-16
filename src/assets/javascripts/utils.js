@@ -49,7 +49,7 @@ function updateInstances() {
       searchHelper.setRedirects({ 'searx': instances.searx, 'searxng': instances.searxng, 'whoogle': instances.whoogle });
       wikipediaHelper.setRedirects(instances.wikiless);
       mediumHelper.setRedirects(instances.scribe);
-      quoraHelper.setRedirects(instances.query);
+      quoraHelper.setRedirects(instances.quetre);
       libremdbHelper.setRedirects(instances.libremdb);
       sendTargetsHelper.setRedirects(instances.send);
       tiktokHelper.setRedirects(instances.proxiTok);

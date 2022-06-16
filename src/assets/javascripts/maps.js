@@ -8,7 +8,7 @@ const targets = /^https?:\/{2}(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google
 let redirects = {
   'osm': {
     "normal": [
-      "https://openstreetmap.org"
+      "https://www.openstreetmap.org"
     ]
   },
   'facil': {

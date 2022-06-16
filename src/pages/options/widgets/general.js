@@ -16,6 +16,7 @@ import wikipediaHelper from "../../../assets/javascripts/wikipedia.js";
 import mediumHelper from "../../../assets/javascripts/medium.js";
 import quoraHelper from "../../../assets/javascripts/quora.js";
 import libremdbHelper from "../../../assets/javascripts/imdb.js";
+import reutersHelper from "../../../assets/javascripts/reuters.js";
 import imgurHelper from "../../../assets/javascripts/imgur.js";
 import tiktokHelper from "../../../assets/javascripts/tiktok.js";
 import sendTargetsHelper from "../../../assets/javascripts/sendTargets.js";
@@ -23,14 +24,12 @@ import peertubeHelper from "../../../assets/javascripts/peertube.js";
 import lbryHelper from "../../../assets/javascripts/lbry.js";
 
 let updateInstancesElement = document.getElementById("update-instances");
-updateInstancesElement.addEventListener("click", () => {
+updateInstancesElement.addEventListener("click", async () => {
   let oldHtml = updateInstancesElement.innerHTML
   updateInstancesElement.innerHTML = '...';
-  if (utils.updateInstances()) {
-    updateInstancesElement.innerHTML = 'Done!';
-    new Promise(resolve => setTimeout(resolve, 1500)).then( // sleep 1500ms
-      () => updateInstancesElement.innerHTML = oldHtml
-    )
+  if (await utils.updateInstances()) {
+    updateInstancesElement.innerHTML = oldHtml;
+    location.reload();
   }
   else
     updateInstancesElement.innerHTML = 'Failed Miserabely';

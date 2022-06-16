@@ -31,7 +31,6 @@ browser.runtime.onInstalled.addListener(
       fetch('/instances/blacklist.json').then(response => response.text()).then(async data => {
         browser.storage.local.clear(
           () => {
-
             browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare },
               () => {
                 browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate },
@@ -60,6 +59,10 @@ browser.runtime.onInstalled.addListener(
           });
       })
     };
+    function initDefault(){
+
+    }
+
     // if (details.reason == 'install') {
     if (details.reason == 'install' || (details.reason == "update" && details.previousVersion != browser.runtime.getManifest().version)) {
       if (details.reason == "update")

@@ -133,7 +133,7 @@ function initDefaults() {
             let dataJson = JSON.parse(data);
             redirects.libremdb = dataJson.libremdb;
             browser.storage.local.set({
-                disableImdb: false,
+                disableImdb: true,
                 imdbProtocol: "normal",
 
                 imdbRedirects: redirects,

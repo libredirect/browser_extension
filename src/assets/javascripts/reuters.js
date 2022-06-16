@@ -86,7 +86,7 @@ function redirect(url, type, initiator) {
 function initDefaults() {
     return new Promise(resolve => {
         browser.storage.local.set({
-            disableReuters: false,
+            disableReuters: true,
             reutersProtocol: "normal",
 
             reutersRedirects: redirects,
