@@ -376,7 +376,7 @@ def rimgo():
         if 'url' in item:
             rimgoList['normal'].append(item['url'])
         if 'onion' in item:
-            rimgoList['onion'].append(item['onion'])
+            rimgoList['tor'].append(item['onion'])
         if 'i2p' in item:
             rimgoList['i2p'].append(item['i2p'])
     mightyList['rimgo'] = rimgoList
