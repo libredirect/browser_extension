@@ -3,36 +3,20 @@
         "message": "LibRedirect",
         "description": "name of the extension"
     },
-    "extensionDescription": {
-        "message": "A web extension that redirects popular sites to alternative privacy-friendly frontends and backends",
-        "description": "description of the extension"
-    },
     "switchInstance": {
-        "message": "Switch Instance",
+        "message": "Przełącz Instancję",
         "description": "used in manifest.json as shortcut description"
     },
     "settings": {
-        "message": "Settings",
+        "message": "Ustawienia",
         "description": "used in the popup"
     },
     "general": {
-        "message": "General",
-        "description": "used in the settings page"
-    },
-    "search": {
-        "message": "Search",
-        "description": "used in the settings page"
-    },
-    "translate": {
-        "message": "Translate",
-        "description": "used in the settings page"
-    },
-    "maps": {
-        "message": "Maps",
+        "message": "Ogólne",
         "description": "used in the settings page"
     },
     "sendFiles": {
-        "message": "Send Files",
+        "message": "Wyślij Pliki",
         "description": "used in the settings page"
     },
     "youtube": {
@@ -56,7 +40,7 @@
         "description": "used in the settings page"
     },
     "ytmusic": {
-        "message": "YT Music",
+        "message": "Muzyka YT",
         "description": "used in the settings page"
     },
     "imgur": {
@@ -80,71 +64,71 @@
         "description": "used in the settings page"
     },
     "theme": {
-        "message": "Theme",
-        "description": "used in the settings page"
-    },
-    "system": {
-        "message": "System",
+        "message": "Motyw",
         "description": "used in the settings page"
     },
     "light": {
-        "message": "Light",
+        "message": "Jasny",
         "description": "used in the settings page"
     },
     "dark": {
-        "message": "Dark",
+        "message": "Ciemny",
         "description": "used in the settings page"
     },
     "autoRedirect": {
-        "message": "Auto-redirect offline instances to online ones",
+        "message": "Automatycznie przekierowywuj instancje offline na online",
         "description": "used in the settings page"
     },
     "exceptions": {
-        "message": "Exceptions",
+        "message": "Wyjątki",
         "description": "used in the settings page"
     },
     "updateInstances": {
-        "message": "Update Instances",
+        "message": "Zaktualizuj Instancje",
         "description": "used in the settings page"
     },
     "importSettings": {
-        "message": "Import Settings",
+        "message": "Zaimportuj Ustawienia",
         "description": "used in the settings page"
     },
     "exportSettings": {
-        "message": "Export Settings",
+        "message": "Wyeksportuj Ustawienia",
         "description": "used in the settings page"
     },
-    "resetSettings": {
-        "message": "Reset Settings",
+    "onlyNotEmbedded": {
+        "message": "tylko nie osadzone",
         "description": "used in the settings page"
     },
-    "customPopup": {
-        "message": "Customize Popup",
-        "description": "used in the settings page"
+    "instanceOffline": {
+        "message": "Ta instancja jest offline, przekierowanie nastąpi po&nbsp;",
+        "description": "used in instance_offline.html"
     },
-    "enable": {
-        "message": "Enable",
-        "description": "used in the settings page"
+    "cancel": {
+        "message": "Anuluj",
+        "description": "used in instance_offline.html"
     },
-    "protocol": {
-        "message": "Protocol",
-        "description": "used in the settings page"
+    "instanceIsOff": {
+        "message": "Instancja jest offline",
+        "description": "used in instance_offline.html"
+    },
+    "redirectionCanceled": {
+        "message": "Przekierowanie anulowane",
+        "description": "used in instance_offline.js"
     },
     "normal": {
-        "message": "Normal",
+        "message": "Normalny",
         "description": "used in the settings page"
     },
     "defaultInstances": {
-        "message": "Default Instances",
+        "message": "Domyślne Instancje",
         "description": "used in the settings page"
     },
     "customInstances": {
-        "message": "Custom Instances",
+        "message": "Własne Instancje",
         "description": "used in the settings page"
     },
     "toggleAll": {
-        "message": "Toggle all",
+        "message": "Przełącz wszystkie",
         "description": "used in the settings page"
     },
     "frontend": {
@@ -152,56 +136,36 @@
         "description": "used in the settings page"
     },
     "notFullyPrivate": {
-        "message": "This isn't a fully private frontend."
+        "message": "To nie jest w pełni prywatny frontend."
     },
     "searchNote": {
-        "message": "Note: Use the search to its full potential by making LibRedirect your default search engine.",
+        "message": "Uwaga: Użyj pełnego potencjały wyszukiwania, ustawiając LibRedirect jako swoją domyślną wyszukiwarkę.",
         "description": "used in the settings page"
     },
     "redirectType": {
-        "message": "Redirect Type",
+        "message": "Typ Przekierowania",
         "description": "used in the settings page"
     },
     "embeddedVids": {
-        "message": "Embedded Videos Frontend",
+        "message": "Frontend Osadzonych Filmów",
         "description": "used in the settings page"
     },
     "both": {
-        "message": "both",
+        "message": "obie",
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
-        "message": "only embedded",
+        "message": "tylko osadzone",
         "description": "used in the settings page"
-    },
-    "onlyNotEmbedded": {
-        "message": "only not embedded",
-        "description": "used in the settings page"
-    },
-    "instanceOffline": {
-        "message": "This instance is offline, you'll be redirected after&nbsp;",
-        "description": "used in instance_offline.html"
-    },
-    "cancel": {
-        "message": "Cancel",
-        "description": "used in instance_offline.html"
-    },
-    "instanceIsOff": {
-        "message": "Instance is offline",
-        "description": "used in instance_offline.html"
-    },
-    "redirectionCanceled": {
-        "message": "Redirection canceled",
-        "description": "used in instance_offline.js"
     },
     "copyRaw": {
-        "message": "Copy Raw"
+        "message": "Skopiuj Nieprzetworzony"
     },
     "copied": {
-        "message": "Copied"
+        "message": "Skopiowano"
     },
     "unifySettings": {
-        "message": "Unify Settings"
+        "message": "Ujednolić Ustawienia"
     },
     "lbry": {
         "message": "LBRY"
@@ -210,6 +174,42 @@
         "message": "I2P"
     },
     "testInstancesLatency": {
-        "message": "Test Instances Latency"
+        "message": "Stestuj Opóźnienie Instancji"
+    },
+    "translate": {
+        "message": "Przetłumacz",
+        "description": "used in the settings page"
+    },
+    "maps": {
+        "message": "Mapy",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Włącz",
+        "description": "used in the settings page"
+    },
+    "extensionDescription": {
+        "message": "Rozszerzenie, które przekierowuje popularne strony do alternatywnych, przyjaznych dla prywatności frontendów i backendów",
+        "description": "description of the extension"
+    },
+    "resetSettings": {
+        "message": "Zresetuj Ustawienia",
+        "description": "used in the settings page"
+    },
+    "protocol": {
+        "message": "Protokół",
+        "description": "used in the settings page"
+    },
+    "search": {
+        "message": "Szukaj",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "System",
+        "description": "used in the settings page"
+    },
+    "customPopup": {
+        "message": "Dostosuj Wyskakujące Okienko",
+        "description": "used in the settings page"
     }
 }
