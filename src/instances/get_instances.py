@@ -373,12 +373,12 @@ def rimgo():
     rimgoList['tor'] = []
     rimgoList['i2p'] = []
     for item in rJson:
-        if item.endswith('.onion'):
-            rimgoList['tor'].append('http://' + item)
-        elif item.endswith('.i2p'):
-            rimgoList['i2p'].append('http://' + item)
-        else:
-            rimgoList['normal'].append('https://' + item)
+        if 'url' in item:
+            rimgoList['normal'].append(item['url'])
+        if 'onion' in item:
+            rimgoList['tor'].append(item['onion'])
+        if 'i2p' in item:
+            rimgoList['i2p'].append(item['i2p'])
     mightyList['rimgo'] = rimgoList
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Rimgo')
 
