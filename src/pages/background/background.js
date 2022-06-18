@@ -171,8 +171,8 @@ browser.tabs.onRemoved.addListener(
 
 browser.webRequest.onHeadersReceived.addListener(
   e => {
-    let response = twitterHelper.removeXFrameOptions(e);
-    if (!response) response = youtubeHelper.removeXFrameOptions(e);
+    let response = youtubeHelper.removeXFrameOptions(e);
+    if (!response)  response = twitterHelper.removeXFrameOptions(e);
     return response;
   },
   { urls: ["<all_urls>"] },

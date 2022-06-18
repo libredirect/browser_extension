@@ -217,28 +217,6 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
   })
 }
 
-function getIp(href) {
-  return new Promise(resolve => {
-    let host = new URL(href).hostname;
-    let http = new XMLHttpRequest();
-    http.open("GET", `https://dns.google/resolve?name=${host}`, /*async*/true);
-    http.onreadystatechange = () => {
-      if (http.readyState == 4 && http.status == 200) {
-        let r = JSON.parse(http.responseText);
-        resolve(r.Answer[0].data)
-      }
-    };
-    http.ontimeout = () => resolve()
-    http.onerror = () => resolve()
-    try {
-      http.send(null)
-    }
-    catch (exception) {
-      resolve()
-    }
-  })
-}
-
 async function ping(href) {
   return new Promise(async resolve => {
     let http = new XMLHttpRequest();
@@ -287,7 +265,7 @@ async function testLatency(element, instances) {
     resolve(myList);
   })
 }
-// Complete on getting cookies working in Tor, maybe delete all the other same name cookies to prevent overlapping, see ya :)
+
 function copyCookie(frontend, targetUrl, urls, name) {
   return new Promise(resolve => {
     browser.storage.local.get('firstPartyIsolate', r => {
@@ -311,19 +289,9 @@ function copyCookie(frontend, targetUrl, urls, name) {
                       url: url, name: name, value: cookie.value, secure: true,
                       expirationDate: cookie.expirationDate,
                     };
-                function removeCookie() {
-                  return new Promise(resolve => {
-                    const removeQuery = r.firstPartyIsolate ?
-                      { url: url, name: name, firstPartyDomain: new URL(url).hostname }
-                      :
-                      { url: url, name: name };
-                    browser.cookies.remove(removeQuery, resolve)
-                  })
-                }
-                while (await removeCookie() != null) continue;
-                browser.cookies.set(setQuery, () => {
+                browser.cookies.set(setQuery, () =>
                   browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve())
-                });
+                );
               }
               break;
             }

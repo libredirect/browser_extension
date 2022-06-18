@@ -66,7 +66,7 @@
       "suggested_key": {
         "default": "Alt+Shift+C"
       },
-      "description": "Copies the original link. Ex: Copies the original twitter link when in while nitter website"
+      "description": "Copies the original link. Ex: Copies the original twitter link while in the nitter website"
     },
     "unify": {
       "suggested_key": {

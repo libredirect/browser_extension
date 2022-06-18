@@ -456,20 +456,20 @@ function removeXFrameOptions(e) {
         isChanged = true;
       }
     }
-    if (isChanged) return { responseHeaders: e.responseHeaders };
   }
   else if (e.type == 'sub_frame') {
     const url = new URL(e.url);
     const protocolHost = utils.protocolHost(url);
-    if (!all().includes(protocolHost)) return;
-    for (const i in e.responseHeaders) {
-      if (e.responseHeaders[i].name == 'x-frame-options') {
-        e.responseHeaders.splice(i, 1);
-        isChanged = true;
-      }
-      else if (e.responseHeaders[i].name == 'content-security-policy') {
-        e.responseHeaders.splice(i, 1);
-        isChanged = true;
+    if (all().includes(protocolHost)) {
+      for (const i in e.responseHeaders) {
+        if (e.responseHeaders[i].name == 'x-frame-options') {
+          e.responseHeaders.splice(i, 1);
+          isChanged = true;
+        }
+        else if (e.responseHeaders[i].name == 'content-security-policy') {
+          e.responseHeaders.splice(i, 1);
+          isChanged = true;
+        }
       }
     }
   }
