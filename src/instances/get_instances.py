@@ -219,7 +219,7 @@ def wikiless():
         if 'url' in item:
             wikilessList['normal'].append(item['url'])
         if 'onion' in item:
-            wikilessList['onion'].append(item['onion'])
+            wikilessList['tor'].append(item['onion'])
         if 'i2p' in item:
             wikilessList['i2p'].append(item['i2p'])
     mightyList['wikiless'] = wikilessList
