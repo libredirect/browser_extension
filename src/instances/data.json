@@ -12,13 +12,13 @@
       "https://yt.artemislena.eu",
       "https://invidious.flokinet.to",
       "https://invidious.tiekoetter.com",
-      "https://invidious.lunar.icu",
       "https://invidious.sethforprivacy.com",
+      "https://invidious.lunar.icu",
       "https://inv.bp.projectsegfau.lt",
       "https://invidious.projectsegfau.lt",
+      "https://invidious.esmailelbob.xyz",
       "https://invidious.weblibre.org",
       "https://youtube.076.ne.jp",
-      "https://invidious.esmailelbob.xyz",
       "https://invidious.namazso.eu"
     ],
     "tor": [
@@ -301,17 +301,19 @@
       "https://wiki.froth.zone",
       "https://wikiless.northboot.xyz",
       "https://wikiless.tiekoetter.com",
-      "https://wikiless.esmailelbob.xyz/"
+      "https://wikiless.esmailelbob.xyz",
+      "",
+      "https://wiki.slipfox.xyz"
     ],
     "tor": [
       "http://dj2tbh2nqfxyfmvq33cjmhuw7nb6am7thzd3zsjvizeqf374fixbrxyd.onion",
-      "http://c2pesewpalbi6lbfc5hf53q4g3ovnxe4s7tfa6k2aqkf7jd7a7dlz5ad.onion",
-      "http://ybgg2evrcdz37y2qes23ff3wjqjdn33tthgoagi76vhxytu4mpxiz5qd.onion"
+      "http://ybgg2evrcdz37y2qes23ff3wjqjdn33tthgoagi76vhxytu4mpxiz5qd.onion",
+      "http://wikiless.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion",
+      "http://c2pesewpalbi6lbfc5hf53q4g3ovnxe4s7tfa6k2aqkf7jd7a7dlz5ad.onion"
     ],
     "i2p": [
-      "http://x33lx4h6d7h6xs4eiqwhvaxn3ea5gn2ifmu3jobnvuvn4k4aej7a.b32.i2p",
-      "http://wikiless.i2p",
-      "http://hflqp2ejxygpj6cdwo3ogfieqmxw3b56w7dblt7bor2ltwk6kcfa.b32.i2p"
+      "http://hflqp2ejxygpj6cdwo3ogfieqmxw3b56w7dblt7bor2ltwk6kcfa.b32.i2p",
+      "http://x33lx4h6d7h6xs4eiqwhvaxn3ea5gn2ifmu3jobnvuvn4k4aej7a.b32.i2p"
     ]
   },
   "scribe": {
@@ -379,8 +381,11 @@
       "http://z34ambyi6makk6ta7ksog2sljly2ctt2sa3apekb7wkllk72sxecdtad.onion",
       "http://yra4tke2pwcnatxjkufpw6kvebu3h3ti2jca2lcdpgx3mpwol326lzid.onion",
       "http://z5vawdol25vrmorm4yydmohsd4u6rdoj2sylvoi3e3nqvxkvpqul7bqd.onion",
+      "http://searxdr3pqz4nydgnqocsia2xbywptxbkympa2emn7zlgggrir4bkfad.onion",
       "http://zbuc3bbzbfdqqo2x46repx2ddajbha6fpsjeeptjhhhhzji3zopxdqyd.onion",
       "http://f4qfqajszpx5b7itzxt6mb7kj4ktpgbdq7lq6xaiqyqx6a7de3epptad.onion",
+      "http://rq2w52kyrif3xpfihkgjnhqm3a5aqhoikpv72z3drpjglfzc2wr5z4yd.onion",
+      "http://searx3aolosaf3urwnhpynlhuokqsgz47si4pzz5hvb7uuzyjncl2tid.onion",
       "http://searx.bsbvtqi5oq2cqzn32zt4cr2f2z2rwots3dq7gmdcnlyqoxko2wx6reqd.onion"
     ],
     "i2p": [
@@ -396,7 +401,6 @@
       "https://search.disroot.org",
       "https://search.ethibox.fr",
       "https://search.jpope.org",
-      "https://search.rabbit-company.com",
       "https://search.snopyta.org",
       "https://search.stinpriza.org",
       "https://search.trom.tf",
@@ -445,11 +449,8 @@
       "http://4n53nafyi77iplnbrpmxnp3x4exbswwxigujaxy3b37fvr7bvlopxeyd.onion",
       "http://searchoorwalty5a2ailrboa2asqyts2u7bdoqwnjefpgjobpvtzn4qd.onion",
       "http://gbat2pbpg7ys3fi3pbp64667tt5x66mg45xok35bxdw7v55brm7a27yd.onion",
-      "http://searxdr3pqz4nydgnqocsia2xbywptxbkympa2emn7zlgggrir4bkfad.onion",
       "http://searx.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion",
-      "http://searx.privpw3tndpkw6pnp3g727zfgfdzbu3k6a7chv226s3xymv2p4eiuqyd.onion",
-      "http://rq2w52kyrif3xpfihkgjnhqm3a5aqhoikpv72z3drpjglfzc2wr5z4yd.onion",
-      "http://searx3aolosaf3urwnhpynlhuokqsgz47si4pzz5hvb7uuzyjncl2tid.onion"
+      "http://searx.privpw3tndpkw6pnp3g727zfgfdzbu3k6a7chv226s3xymv2p4eiuqyd.onion"
     ],
     "i2p": [],
     "normal": [
@@ -467,6 +468,7 @@
       "https://search.neet.works",
       "https://search.ononoki.org",
       "https://search.privacyguides.net",
+      "https://search.rabbit-company.com",
       "https://search.roombob.cat",
       "https://search.sapti.me",
       "https://search.vojkovic.xyz",
@@ -475,6 +477,7 @@
       "https://searx.be",
       "https://searx.becomesovran.com",
       "https://searx.ebnar.xyz",
+      "https://searx.ericaftereric.top",
       "https://searx.esmailelbob.xyz",
       "https://searx.fmac.xyz",
       "https://searx.gnous.eu",
@@ -487,6 +490,7 @@
       "https://searx.prvcy.eu",
       "https://searx.sev.monster",
       "https://searx.tiekoetter.com",
+      "https://searx.youshitsune.me",
       "https://searxng.au/searx",
       "https://searxng.ir",
       "https://searxng.tordenskjold.de",
@@ -539,6 +543,8 @@
     ]
   },
   "peertube": [
+    "https://peervideo.top",
+    "https://dalek.zone",
     "https://shiotube.f5.si",
     "https://syop.xyz",
     "https://socpeertube.ru",
@@ -615,7 +621,6 @@
     "https://videos.tormentasolar.win",
     "https://tube.nestor.coop",
     "https://live.oldskool.fi",
-    "https://peertube.rural-it.org",
     "https://dytube.com",
     "https://videos.denshi.org",
     "https://video.toby3d.me",
@@ -624,7 +629,6 @@
     "https://peertube.informaction.info",
     "https://peertube.thele.me",
     "https://peertube.cf",
-    "https://peertube.onionstorm.net",
     "https://tube.ac-amiens.fr",
     "https://tube.alado.space",
     "https://v.bearvideo.win",
@@ -677,13 +681,11 @@
     "https://mirametube.fr",
     "https://tube.sanyi.nl",
     "https://vidz.dou.bet",
-    "https://dev.dollarvigilante.tv",
     "https://praxis.su",
     "https://videos.redeyes.site",
     "https://video.hostpath.de",
     "https://free-streams.com",
     "https://video.chadwaltercummings.me",
-    "https://tube.gravitation.me",
     "https://tube.pawelko.net",
     "https://video.livecchi.cloud",
     "https://anarchy.video",
@@ -764,7 +766,6 @@
     "https://tube.motuhake.xyz",
     "https://pt.mezzo.moe",
     "https://tube.dsocialize.net",
-    "https://tube.valinor.fr",
     "https://video.pourpenser.pro",
     "https://videos.npo.city",
     "https://live2.codinglab.ch",
@@ -1048,7 +1049,6 @@
     "https://videos.supertuxkart.net",
     "https://pt.borgcube.eu",
     "https://mp-tube.de",
-    "https://oldpcmuseum.ru",
     "https://socialwebtube.com",
     "https://kraut.zone",
     "https://www.birkeundnymphe.de",
@@ -1583,6 +1583,10 @@
     "https://dialup.express",
     "https://peertube.1312.media",
     "https://skeptikon.fr",
-    "https://video.blueline.mg"
+    "https://video.blueline.mg",
+    "https://tube.homecomputing.fr",
+    "https://video.tedomum.net",
+    "https://video.g3l.org",
+    "https://fontube.fr"
   ]
 }
