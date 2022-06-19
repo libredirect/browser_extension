@@ -3,9 +3,6 @@ window.browser = window.browser || window.chrome;
 import utils from './utils.js'
 
 const targets = [
-  /^https?:\/{2}(www\.|search\.|)google(\.[a-z]{2,3}){1,2}(\/search(\?.*|$)|\/$)/,
-  /^https?:\/{2}(www\.|www2\.|)bing\.com/,
-  /^https?:\/{2}yandex(\.[a-z]{2,3}){1,2}/,
   /^https?:\/{2}search\.libredirect\.invalid/,
 ];
 
