@@ -2,7 +2,7 @@ window.browser = window.browser || window.chrome;
 
 import utils from './utils.js'
 
-const targets = /^https?:\/{2}([im]\.)?imgur\.com(\/|$)/
+const targets = /^https?:\/{2}([im]\.)?imgur\.(com|io)(\/|$)/
 
 let redirects = {
     "rimgo": {

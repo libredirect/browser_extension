@@ -307,17 +307,21 @@ function getCookiesFromStorage(frontend, urls, name) {
   browser.storage.local.get([key, 'firstPartyIsolate'], r => {
     const cookie = r[key];
     if (cookie === undefined) return;
-    let query;
-    if (!r.firstPartyIsolate) query = {
-      url: url, name: cookie.name, value: cookie.value, secure: true,
-      expirationDate: cookie.expirationDate,
-    };
-    else query = {
-      url: url, name: cookie.name, value: cookie.value, secure: true,
-      expirationDate: null,
-      firstPartyDomain: new URL(url).hostname,
+    for (const url of urls) {
+      let query =
+        r.firstPartyIsolate ?
+          {
+            url: url, name: cookie.name, value: cookie.value, secure: true,
+            expirationDate: null,
+            firstPartyDomain: new URL(url).hostname,
+          }
+          :
+          {
+            url: url, name: cookie.name, value: cookie.value, secure: true,
+            expirationDate: cookie.expirationDate,
+          };
+      browser.cookies.set(query)
     }
-    for (const url of urls) browser.cookies.set(query)
   })
 }
 
