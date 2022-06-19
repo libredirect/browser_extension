@@ -68,7 +68,7 @@
         "description": "used in the settings page"
     },
     "autoRedirect": {
-        "message": "Reindirizzamento automatico per le istanze offline",
+        "message": "Reindirizza automaticamente le istanze offline verso quelle online",
         "description": "used in the settings page"
     },
     "exceptions": {
