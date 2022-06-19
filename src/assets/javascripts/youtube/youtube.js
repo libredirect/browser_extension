@@ -169,8 +169,8 @@ function redirect(url, details, initiator) {
   const sub_frame = details.type === "sub_frame";
 
   if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return; // Don't redirect YouTube Player API.
-  if (onlyEmbeddedVideo == 'onlyEmbedded' && !sub_frame) return;
-  if (onlyEmbeddedVideo == 'onlyNotEmbedded' && sub_frame) return;
+  if (onlyEmbeddedVideo == 'onlyEmbedded' && main_frame) return;
+  if (onlyEmbeddedVideo == 'onlyNotEmbedded' && !main_frame) return;
 
   if ((isFreetube || isYatte) && sub_frame && isFrontendYoutube) return;
 

@@ -36,6 +36,7 @@ let
   disableTwitter,
   twitterProtocol,
   twitterRedirects,
+  twitterRedirectType,
   nitterNormalRedirectsChecks,
   nitterNormalCustomRedirects,
   nitterTorRedirectsChecks,
@@ -48,6 +49,7 @@ function init() {
         "disableTwitter",
         "twitterProtocol",
         "twitterRedirects",
+        "twitterRedirectType",
         "nitterNormalRedirectsChecks",
         "nitterNormalCustomRedirects",
         "nitterTorRedirectsChecks",
@@ -57,6 +59,7 @@ function init() {
         disableTwitter = r.disableTwitter;
         twitterProtocol = r.twitterProtocol;
         twitterRedirects = r.twitterRedirects;
+        twitterRedirectType = r.twitterRedirectType;
         nitterNormalRedirectsChecks = r.nitterNormalRedirectsChecks;
         nitterNormalCustomRedirects = r.nitterNormalCustomRedirects;
         nitterTorRedirectsChecks = r.nitterTorRedirectsChecks;
@@ -79,11 +82,13 @@ function all() {
   ];
 }
 
-function redirect(url, initiator) {
+function redirect(url, type, initiator) {
   if (disableTwitter) return;
   if (!targets.some(rx => rx.test(url.href))) return;
   if (url.pathname.split("/").includes("home")) return;
   if (initiator && all().includes(initiator.origin)) return 'BYPASSTAB';
+  if (twitterRedirectType == 'sub_frame' && type == "main_frame") return;
+  if (twitterRedirectType == 'main_frame' && type != "main_frame") return;
 
   let instancesList;
   if (twitterProtocol == 'normal') instancesList = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
@@ -206,7 +211,7 @@ function pasteNitterCookies() {
     utils.getCookiesFromStorage('nitter', checkedInstances, 'proxyVideos');
     utils.getCookiesFromStorage('nitter', checkedInstances, 'muteVideos');
     utils.getCookiesFromStorage('nitter', checkedInstances, 'autoplayGifs');
-    
+
     utils.getCookiesFromStorage('nitter', checkedInstances, 'replaceInstagram');
     utils.getCookiesFromStorage('nitter', checkedInstances, 'replaceReddit');
     utils.getCookiesFromStorage('nitter', checkedInstances, 'replaceTwitter');
@@ -231,6 +236,7 @@ function initDefaults() {
           disableTwitter: false,
           twitterRedirects: redirects,
           twitterProtocol: "normal",
+          twitterRedirectType: "both",
 
           nitterNormalRedirectsChecks: nitterNormalRedirectsChecks,
           nitterNormalCustomRedirects: [],

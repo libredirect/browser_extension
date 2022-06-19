@@ -59,7 +59,7 @@ browser.runtime.onInstalled.addListener(
           });
       })
     };
-    function initDefault(){
+    function initDefault() {
 
     }
 
@@ -103,7 +103,7 @@ browser.webRequest.onBeforeRequest.addListener(
 
     let newUrl = youtubeMusicHelper.redirect(url, details.type)
     if (!newUrl) newUrl = youtubeHelper.redirect(url, details, initiator)
-    if (!newUrl) newUrl = twitterHelper.redirect(url, initiator);
+    if (!newUrl) newUrl = twitterHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = instagramHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = mapsHelper.redirect(url, initiator);
     if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator);
@@ -160,7 +160,7 @@ browser.tabs.onRemoved.addListener(
 browser.webRequest.onHeadersReceived.addListener(
   e => {
     let response = youtubeHelper.removeXFrameOptions(e);
-    if (!response)  response = twitterHelper.removeXFrameOptions(e);
+    if (!response) response = twitterHelper.removeXFrameOptions(e);
     return response;
   },
   { urls: ["<all_urls>"] },

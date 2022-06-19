@@ -180,20 +180,20 @@ for (const frontend of generalHelper.allPopupFrontends)
     }
   )
 
-const firstPartyIsolate = document.getElementById('firstPartyIsolate');
-firstPartyIsolate.addEventListener("change", () => browser.storage.local.set({ firstPartyIsolate: firstPartyIsolate.checked }))
+// const firstPartyIsolate = document.getElementById('firstPartyIsolate');
+// firstPartyIsolate.addEventListener("change", () => browser.storage.local.set({ firstPartyIsolate: firstPartyIsolate.checked }))
 
 browser.storage.local.get(
   [
     'theme',
     'autoRedirect',
     'exceptions',
-    'firstPartyIsolate'
+    // 'firstPartyIsolate'
   ],
   r => {
     autoRedirectElement.checked = r.autoRedirect;
     themeElement.value = r.theme;
-    firstPartyIsolate.checked = r.firstPartyIsolate;
+    // firstPartyIsolate.checked = r.firstPartyIsolate;
 
     instanceTypeElement.addEventListener("change",
       event => {

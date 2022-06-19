@@ -12,6 +12,13 @@ section#twitter_page.option-block
             option(value="normal" data-localise="__MSG_normal__") Normal
             option(value="tor" data-localise="__MSG_tor__") Tor
 
+    .some-block.option-block
+        h4(data-localise="__MSG_redirectType__") Redirect Type
+        select#twitter-redirect_type
+            option(value="both" data-localise="__MSG_both__") both
+            option(value="sub_frame" data-localise="__MSG_onlyEmbedded__") Only Embedded
+            option(value="main_frame" data-localise="__MSG_onlyNotEmbedded__") Only Not Embedded
+
     #nitter
         hr
         .normal

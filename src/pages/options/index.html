@@ -71,10 +71,6 @@
           </select>
         </div>
         <div class="some-block option-block">
-          <h4>Tor Browser</h4>
-          <input id="firstPartyIsolate" type="checkbox">
-        </div>
-        <div class="some-block option-block">
           <h4 data-localise="__MSG_autoRedirect__"></h4>
           <input id="auto-redirect" type="checkbox">
         </div>
@@ -523,6 +519,14 @@
           <select id="twitter-protocol">
             <option value="normal" data-localise="__MSG_normal__">Normal</option>
             <option value="tor" data-localise="__MSG_tor__">Tor</option>
+          </select>
+        </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_redirectType__">Redirect Type</h4>
+          <select id="twitter-redirect_type">
+            <option value="both" data-localise="__MSG_both__">both</option>
+            <option value="sub_frame" data-localise="__MSG_onlyEmbedded__">Only Embedded</option>
+            <option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
           </select>
         </div>
         <div id="nitter">

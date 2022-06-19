@@ -2,6 +2,7 @@ import utils from "../../../assets/javascripts/utils.js";
 
 const enable = document.getElementById("twitter-enable");
 const protocol = document.getElementById("twitter-protocol");
+const redirectType = document.getElementById("twitter-redirect_type");
 const twitter = document.getElementById('twitter_page');
 
 function changeProtocolSettings() {
@@ -21,10 +22,12 @@ browser.storage.local.get(
     [
         "disableTwitter",
         "twitterProtocol",
+        "twitterRedirectType",
     ],
     r => {
         enable.checked = !r.disableTwitter;
         protocol.value = r.twitterProtocol;
+        redirectType.value = r.twitterRedirectType;
         changeProtocolSettings();
     }
 )
@@ -33,6 +36,7 @@ twitter.addEventListener("change", () => {
     browser.storage.local.set({
         disableTwitter: !enable.checked,
         twitterProtocol: protocol.value,
+        twitterRedirectType: redirectType.value,
     });
     changeProtocolSettings();
 })
