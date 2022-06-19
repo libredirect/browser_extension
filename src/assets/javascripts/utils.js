@@ -371,6 +371,7 @@ function unify(test) {
           let url;
           try { url = new URL(currTab.url); }
           catch { resolve(); return; }
+          if (currTab.incognito) { resolve(); return; }
 
           let result = await youtubeHelper.copyPasteInvidiousCookies(test, url);
           if (!result) result = await youtubeHelper.copyPastePipedLocalStorage(test, url, currTab.id);

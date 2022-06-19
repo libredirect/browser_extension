@@ -147,20 +147,8 @@ browser.webRequest.onBeforeRequest.addListener(
   ["blocking"]
 );
 
-let incognitoList = [];
-browser.tabs.onCreated.addListener(
-  tab => {
-    if (tab.incognito) {
-      incognitoList.push(tab.id);
-      if (incognitoList.length == 1) browser.tabs.create({ url: browser.runtime.getURL("/pages/background/incognito.html"), active: false });
-    }
-  }
-);
-
 browser.tabs.onRemoved.addListener(
   tabId => {
-    incognitoList.pop(tabId)
-
     const i = BYPASSTABs.indexOf(tabId);
     if (i > -1) {
       BYPASSTABs.splice(i, 1);
