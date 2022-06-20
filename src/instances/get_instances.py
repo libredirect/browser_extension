@@ -216,12 +216,12 @@ def wikiless():
     wikilessList['tor'] = []
     wikilessList['i2p'] = []
     for item in rJson:
-        if item.endswith('.onion'):
-            wikilessList['tor'].append('http://' + item)
-        elif item.endswith('.i2p'):
-            wikilessList['i2p'].append('http://' + item)
-        else:
-            wikilessList['normal'].append('https://' + item)
+        if 'url' in item:
+            wikilessList['normal'].append(item['url'])
+        if 'onion' in item:
+            wikilessList['tor'].append(item['onion'])
+        if 'i2p' in item:
+            wikilessList['i2p'].append(item['i2p'])
     mightyList['wikiless'] = wikilessList
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Wikiless')
 
