@@ -49,7 +49,7 @@ function exportSettings() {
 }
 exportSettings();
 
-browser.storage.onChanged.addListener(exportSettings);
+document.getElementById('general_page').addEventListener('click', exportSettings)
 
 let importSettingsElement = document.getElementById("import-settings");
 let importSettingsElementText = document.getElementById('import_settings_text');
@@ -93,7 +93,6 @@ importSettingsElement.addEventListener("change",
               })
 
           });
-
       } else {
         console.log('incompatible settings');
         importError()

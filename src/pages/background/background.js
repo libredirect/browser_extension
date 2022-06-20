@@ -59,22 +59,19 @@ browser.runtime.onInstalled.addListener(
           });
       })
     };
-    function initDefault() {
+    if (details.reason == 'install') initDefaults();
 
-    }
-
-    // if (details.reason == 'install') {
-    if (details.reason == 'install' || (details.reason == "update" && details.previousVersion != browser.runtime.getManifest().version)) {
-      if (details.reason == "update")
-        browser.storage.local.get(null, r => {
-          if (r.theme) {
-            const old = encodeURIComponent(JSON.stringify(r))
-            browser.tabs.create({ url: browser.runtime.getURL(`/pages/background/reset_warning.html?data=${old}`) });
-          }
-          initDefaults();
-        })
-      else initDefaults();
-    }
+    // if (details.reason == 'install' || (details.reason == "update" && details.previousVersion != browser.runtime.getManifest().version)) {
+    //   if (details.reason == "update")
+    //     browser.storage.local.get(null, r => {
+    //       if (r.theme) {
+    //         const old = encodeURIComponent(JSON.stringify(r))
+    //         browser.tabs.create({ url: browser.runtime.getURL(`/pages/background/reset_warning.html?data=${old}`) });
+    //       }
+    //       initDefaults();
+    //     })
+    //   else initDefaults();
+    // }
   }
 )
 
