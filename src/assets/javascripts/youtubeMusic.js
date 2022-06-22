@@ -65,6 +65,11 @@ https://music.youtube.com/playlist?list=OLAK5uy_nBOTxAc3_RGB82-Z54jdARGxGaCYlpng
 https://beatbump.ml/release?id=MPREb_QygdC0wEoLe
 
 https://music.youtube.com/watch?v=R6gSMSYKhKU&list=OLAK5uy_n-9HVh3cryV2gREZM9Sc0JwEKYjjfi0dU
+
+Search
+https://music.youtube.com/search?q=test
+https://beatbump.ml/search/test?filter=EgWKAQIIAWoKEAMQBBAKEAkQBQ%3D%3D
+
 */
 function redirect(url) {
     if (disableYoutubeMusic) return;
@@ -76,7 +81,8 @@ function redirect(url) {
     return `${randomInstance}${url.pathname}${url.search}`
         .replace("/watch?v=", "/listen?id=")
         .replace("/channel/", "/artist/")
-        .replace("/playlist?list=", "/playlist/VL");
+        .replace("/playlist?list=", "/playlist/VL")
+        .replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/") + "?filter=EgWKAQIIAWoKEAMQBBAKEAkQBQ%3D%3D");
 }
 
 async function initDefaults() {
