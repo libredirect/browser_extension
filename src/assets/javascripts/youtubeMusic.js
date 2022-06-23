@@ -66,8 +66,8 @@ https://beatbump.ml/release?id=MPREb_QygdC0wEoLe
 
 https://music.youtube.com/watch?v=R6gSMSYKhKU&list=OLAK5uy_n-9HVh3cryV2gREZM9Sc0JwEKYjjfi0dU
 */
-function redirect(url) {
-    if (disableYoutubeMusic) return;
+function redirect(url, disableOverride) {
+    if (disableYoutubeMusic && !disableOverride) return;
     if (!targets.some(rx => rx.test(url.href))) return;
 
     let instancesList = [...beatbumpNormalRedirectsChecks, ...beatbumpNormalCustomRedirects];

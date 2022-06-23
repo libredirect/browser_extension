@@ -1,5 +1,114 @@
 include ../widgets/icons.pug
 
+mixin services
+    .youtube.some-block
+        a.title(href="https://youtube.com")
+            img(src="../../assets/images/youtube-icon.png")
+            h4(data-localise="__MSG_youtube__") YouTube
+        input.disable-youtube(type="checkbox")
+
+    .youtubeMusic.some-block
+        a.title(href="https://music.youtube.com")
+            img(src="../../assets/images/youtube-music-icon.png")
+            h4(data-localise="__MSG_ytmusic__") YT Music
+        input.disable-youtubeMusic(type="checkbox")
+
+    .twitter.some-block
+        a.title(href="https://twitter.com")
+            img(src="../../assets/images/twitter-icon.png")
+            h4(data-localise="__MSG_twitter__") Twitter
+        input.disable-nitter(type="checkbox")
+
+    .instagram.some-block
+        a.title(href="https://instagram.com")
+            img(src="../../assets/images/instagram-icon.png")
+            h4(data-localise="__MSG_instagram__") Instagram
+        input.disable-bibliogram(type="checkbox")
+
+    .tiktok.some-block
+        a.title(href="https://tiktok.com")
+            img(src="../../assets/images/tiktok-icon.png")
+            h4(data-localise="__MSG_tiktok__") TikTok
+        input.disable-tiktok(type="checkbox")
+
+    .imgur.some-block
+        a.title(href="https://imgur.com")
+            img(src="../../assets/images/imgur-icon.png")
+            h4(data-localise="__MSG_imgur__") Imgur
+        input.disable-imgur(type="checkbox")
+
+    .reddit.some-block
+        a.title(href="https://reddit.com")
+            img(src="../../assets/images/reddit-icon.png")
+            h4(data-localise="__MSG_reddit__") Reddit
+        input.disable-reddit(type="checkbox")
+
+    .wikipedia.some-block
+        a.title(href="https://wikipedia.com")
+            img(src="../../assets/images/wikipedia-icon.svg")
+            h4(data-localise="__MSG_wikipedia__") Wikipedia
+        input.disable-wikipedia(type="checkbox")
+
+    .medium.some-block
+        a.title(href="https://medium.com")
+            +medium
+            h4(data-localise="__MSG_medium__") Medium
+        input.disable-medium(type="checkbox")
+
+    .quora.some-block
+        a.title(href="https://quora.com")
+            img(src="../../assets/images/quora.png")
+            h4(data-localise="__MSG_quora__") Quora
+        input.disable-quora(type="checkbox")
+    
+    .imdb.some-block
+        a.title(href="https://imdb.com")
+            img(src="../../assets/images/imdb.svg")
+            h4(data-localise="__MSG_imdb__") IMDb
+        input.disable-imdb(type="checkbox")
+
+    .reuters.some-block
+        a.title(href="https://reuters.com")
+            img(src="../../assets/images/reuters.svg")
+            h4(data-localise="__MSG_reuters__") Reuters
+        input.disable-reuters(type="checkbox")
+
+    .peertube.some-block
+        a.title(href="https://search.joinpeertube.org")
+            img(src="../../assets/images/peertube-icon.svg")
+            h4(data-localise="__MSG_peertube__") PeerTube
+        input.disable-peertube(type="checkbox")
+
+    .lbry.some-block
+        a.title(href="https://odysee.com/")
+            img(src="../../assets/images/lbry-icon.png")
+            h4(data-localise="__MSG_lbry__") LBRY
+        input.disable-lbry(type="checkbox")
+
+    .search.some-block
+        a.title(href="https://search.libredirect.invalid")
+            +search
+            h4(data-localise="__MSG_search__") Search
+        input.disable-search(type="checkbox")
+
+    .translate.some-block
+        a.title(href="https://translate.google.com")
+            +translate
+            h4(data-localise="__MSG_translate__") Translate
+        input.disable-translate(type="checkbox")
+
+    .maps.some-block
+        a.title(href="https://www.openstreetmap.org")
+            +maps
+            h4(data-localise="__MSG_maps__") Maps
+        input.disable-osm(type="checkbox")
+
+    .sendTargets.some-block
+        a.title(href="https://send.libredirect.invalid")
+            +send
+            h4(data-localise="__MSG_sendFiles__") Send Files
+        input.disable-sendTargets(type="checkbox")
+
 doctype html
 html(lang="en")
     head
@@ -8,116 +117,12 @@ html(lang="en")
         link(href="../stylesheets/styles.css" rel="stylesheet")
         link(href="./style.css" rel="stylesheet")
     body(dir="auto")
-        #youtube.some-block
-            a.title(href="https://youtube.com")
-                img(src="../../assets/images/youtube-icon.png")
-                h4(data-localise="__MSG_youtube__") YouTube
-            input#disable-youtube(type="checkbox")
-
-        #youtubeMusic.some-block
-            a.title(href="https://music.youtube.com")
-                img(src="../../assets/images/youtube-music-icon.png")
-                h4(data-localise="__MSG_ytmusic__") YT Music
-            input#disable-youtubeMusic(type="checkbox")
-
-        #twitter.some-block
-            a.title(href="https://twitter.com")
-                img(src="../../assets/images/twitter-icon.png")
-                h4(data-localise="__MSG_twitter__") Twitter
-            input#disable-nitter(type="checkbox")
-
-        #instagram.some-block
-            a.title(href="https://instagram.com")
-                img(src="../../assets/images/instagram-icon.png")
-                h4(data-localise="__MSG_instagram__") Instagram
-            input#disable-bibliogram(type="checkbox")
-
-        #tikTok.some-block
-            a.title(href="https://tiktok.com")
-                img(src="../../assets/images/tiktok-icon.png")
-                h4(data-localise="__MSG_tiktok__") TikTok
-            input#disable-tiktok(type="checkbox")
-
-        #imgur.some-block
-            a.title(href="https://imgur.com")
-                img(src="../../assets/images/imgur-icon.png")
-                h4(data-localise="__MSG_imgur__") Imgur
-            input#disable-imgur(type="checkbox")
-
-        #reddit.some-block
-            a.title(href="https://reddit.com")
-                img(src="../../assets/images/reddit-icon.png")
-                h4(data-localise="__MSG_reddit__") Reddit
-            input#disable-reddit(type="checkbox")
-
-        #wikipedia.some-block
-            a.title(href="https://wikipedia.com")
-                img(src="../../assets/images/wikipedia-icon.svg")
-                h4(data-localise="__MSG_wikipedia__") Wikipedia
-            input#disable-wikipedia(type="checkbox")
-
-        #medium.some-block
-            a.title(href="https://medium.com")
-                +medium
-                h4(data-localise="__MSG_medium__") Medium
-            input#disable-medium(type="checkbox")
-
-        #quora.some-block
-            a.title(href="https://quora.com")
-                img(src="../../assets/images/quora.png")
-                h4(data-localise="__MSG_quora__") Quora
-            input#disable-quora(type="checkbox")
-        
-        #imdb.some-block
-            a.title(href="https://imdb.com")
-                img(src="../../assets/images/imdb.svg")
-                h4(data-localise="__MSG_imdb__") IMDb
-            input#disable-imdb(type="checkbox")
-
-        #reuters.some-block
-            a.title(href="https://reuters.com")
-                img(src="../../assets/images/reuters.svg")
-                h4(data-localise="__MSG_reuters__") Reuters
-            input#disable-reuters(type="checkbox")
-
-        #peertube.some-block
-            a.title(href="https://search.joinpeertube.org")
-                img(src="../../assets/images/peertube-icon.svg")
-                h4(data-localise="__MSG_peertube__") PeerTube
-            input#disable-peertube(type="checkbox")
-
-        #lbry.some-block
-            a.title(href="https://odysee.com/")
-                img(src="../../assets/images/lbry-icon.png")
-                h4(data-localise="__MSG_lbry__") LBRY
-            input#disable-lbry(type="checkbox")
-
-        #search.some-block
-            a.title(href="https://search.libredirect.invalid")
-                +search
-                h4(data-localise="__MSG_search__") Search
-            input#disable-search(type="checkbox")
-
-        #translate.some-block
-            a.title(href="https://translate.google.com")
-                +translate
-                h4(data-localise="__MSG_translate__") Translate
-            input#disable-simplyTranslate(type="checkbox")
-
-        #maps.some-block
-            a.title(href="https://www.openstreetmap.org")
-                +maps
-                h4(data-localise="__MSG_maps__") Maps
-            input#disable-osm(type="checkbox")
-
-        #sendTargets.some-block
-            a.title(href="https://send.libredirect.invalid")
-                +send
-                h4(data-localise="__MSG_sendFiles__") Send Files
-            input#disable-sendTargets(type="checkbox")
-
+        .current_site
+            +services
+            hr
+        .all_sites
+            +services
         hr
-
         #change_instance_div.some-block
             a#change_instance.title.button
                 h4(data-localise="__MSG_switchInstance__") Change Instance

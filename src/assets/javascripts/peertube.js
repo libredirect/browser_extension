@@ -82,8 +82,8 @@ function all() {
     ];
 }
 
-function redirect(url, type, initiator) {
-    if (disablePeertubeTargets) return;
+function redirect(url, type, initiator, disableOverride) {
+    if (disablePeertubeTargets && !disableOverride) return;
     if (initiator && (all().includes(initiator.origin) || peerTubeTargets.includes(initiator.host))) return;
     let protocolHost = utils.protocolHost(url);
     if (!peerTubeTargets.includes(protocolHost)) return;
@@ -99,9 +99,10 @@ function redirect(url, type, initiator) {
     return `${randomInstance}/${url.host}${url.pathname}${url.search}`;
 }
 
-function switchInstance(url) {
+function switchInstance(url, disableOverride) {
     return new Promise(async resolve => {
         await init();
+        if (disablePeertubeTargets && !disableOverride) { resolve(); return; }
         const protocolHost = utils.protocolHost(url);
         if (!all().includes(protocolHost)) { resolve(); return; }
 

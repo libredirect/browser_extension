@@ -273,8 +273,8 @@ function pasteSearxngCookies() {
 }
 
 
-function redirect(url) {
-  if (disableSearch) return;
+function redirect(url, disableOverride) {
+  if (disableSearch && !disableOverride) return;
   if (!targets.some(rx => rx.test(url.href))) return;
   if (url.searchParams.has('tbm')) return;
   if (url.hostname.includes('google') && !url.searchParams.has('q') && url.pathname != '/') return;
@@ -327,9 +327,10 @@ function redirect(url) {
   return `${randomInstance}${path}${searchQuery}`;
 }
 
-function switchInstance(url) {
+function switchInstance(url, disableOverride) {
   return new Promise(async resolve => {
     await init();
+    if (disableSearch && !disableOverride) { resolve(); return; }
     let protocolHost = utils.protocolHost(url);
     if (![
       ...searchRedirects.searx.normal,

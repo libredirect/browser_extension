@@ -110,8 +110,8 @@ function pasteWikilessCookies() {
   })
 }
 
-function redirect(url) {
-  if (disableWikipedia) return;
+function redirect(url, disableOverride) {
+  if (disableWikipedia && !disableOverride) return;
   if (!targets.test(url.href)) return;
 
   let GETArguments = [];
@@ -146,9 +146,10 @@ function redirect(url) {
   return link;
 }
 
-function switchInstance(url) {
+function switchInstance(url, disableOverride) {
   return new Promise(async resolve => {
     await init();
+    if (disableWikipedia && !disableOverride) { resolve(); return; }
     const protocolHost = utils.protocolHost(url);
     const wikipediaList = [
       ...wikipediaRedirects.wikiless.normal,

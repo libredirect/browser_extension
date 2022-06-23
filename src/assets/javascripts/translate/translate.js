@@ -179,8 +179,8 @@ function pasteSimplyTranslateCookies() {
   )
 }
 
-function redirect(url) {
-  if (translateDisable) return;
+function redirect(url, disableOverride) {
+  if (translateDisable && !disableOverride) return;
   if (!targets.some(rx => rx.test(url.href))) return;
 
   if (translateFrontend == 'simplyTranslate') {
@@ -213,10 +213,10 @@ function redirect(url) {
   }
 }
 
-function switchInstance(url) {
+function switchInstance(url, disableOverride) {
   return new Promise(async resolve => {
     await init();
-    if (translateDisable) { resolve(); return; }
+    if (translateDisable && !disableOverride) { resolve(); return; }
     const protocolHost = utils.protocolHost(url);
     if (![
       ...translateRedirects.simplyTranslate.normal,

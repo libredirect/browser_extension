@@ -99,7 +99,7 @@ browser.webRequest.onBeforeRequest.addListener(
     catch { return null; }
 
     let newUrl = youtubeMusicHelper.redirect(url, details.type)
-    if (!newUrl) newUrl = youtubeHelper.redirect(url, details, initiator)
+    if (!newUrl) newUrl = youtubeHelper.redirect(url, details.type, initiator)
     if (!newUrl) newUrl = twitterHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = instagramHelper.redirect(url, details.type, initiator);
     if (!newUrl) newUrl = mapsHelper.redirect(url, initiator);

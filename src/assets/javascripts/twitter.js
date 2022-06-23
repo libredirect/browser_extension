@@ -82,8 +82,8 @@ function all() {
   ];
 }
 
-function redirect(url, type, initiator) {
-  if (disableTwitter) return;
+function redirect(url, type, initiator, disableOverride) {
+  if (disableTwitter && !disableOverride) return;
   if (!targets.some(rx => rx.test(url.href))) return;
   if (url.pathname.split("/").includes("home")) return;
   if (initiator && all().includes(initiator.origin)) return 'BYPASSTAB';
@@ -119,9 +119,10 @@ function reverse(url) {
   })
 }
 
-function switchInstance(url) {
+function switchInstance(url, disableOverride) {
   return new Promise(async resolve => {
     await init();
+    if (disableTwitter && !disableOverride) { resolve(); return; }
     const protocolHost = utils.protocolHost(url);
     if (!all().includes(protocolHost)) { resolve(); return; }
     let instancesList;

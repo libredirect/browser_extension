@@ -87,9 +87,9 @@ function init() {
 init();
 browser.storage.onChanged.addListener(init)
 
-function redirect(url, type, initiator) {
-  if (disableMedium) return;
-  if (url.pathname == "/") return;
+function redirect(url, type, initiator, disableOverride) {
+  if (disableMedium && !disableOverride) return;
+  if (url.pathname == "/" && !disableOverride) return;
   if (type != "main_frame" && "sub_frame" && "xmlhttprequest" && "other") return;
   if (initiator && (
     [
@@ -111,9 +111,10 @@ function redirect(url, type, initiator) {
   return `${randomInstance}${url.pathname}${url.search}`;
 }
 
-function switchInstance(url) {
+function switchInstance(url, disableOverride) {
   return new Promise(async resolve => {
     await init();
+    if (disableMedium && !disableOverride) { resolve(); return; }
     let protocolHost = utils.protocolHost(url);
     const all = [
       ...mediumRedirects.scribe.tor,

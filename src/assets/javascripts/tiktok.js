@@ -102,8 +102,8 @@ browser.storage.onChanged.addListener(init)
 
 // https://www.tiktok.com/@keysikaspol/video/7061265241887345946
 // https://www.tiktok.com/@keysikaspol
-function redirect(url, type, initiator) {
-    if (disableTiktok) return;
+function redirect(url, type, initiator, disableOverride) {
+    if (disableTiktok && !disableOverride) return;
     if (type != "main_frame") return;
     const all = [
         ...tiktokRedirects.proxiTok.normal,
@@ -137,31 +137,32 @@ function reverse(url) {
     })
 }
 
-function switchInstance(url) {
+function switchInstance(url, disableOverride) {
     return new Promise(async resolve => {
-      await init();
-      let protocolHost = utils.protocolHost(url);
-      const all = [
-        ...tiktokRedirects.proxiTok.tor,
-        ...tiktokRedirects.proxiTok.normal,
-  
-        ...proxiTokNormalCustomRedirects,
-        ...proxiTokTorCustomRedirects,
-      ];
-      if (!all.includes(protocolHost)) { resolve(); return; }
+        await init();
+        if (disableTiktok && !disableOverride) { resolve(); return; }
+        let protocolHost = utils.protocolHost(url);
+        const all = [
+            ...tiktokRedirects.proxiTok.tor,
+            ...tiktokRedirects.proxiTok.normal,
 
-      let instancesList;
-      if (tiktokProtocol == 'normal') instancesList = [...proxiTokNormalCustomRedirects, ...proxiTokNormalRedirectsChecks];
-      else if (tiktokProtocol == 'tor') instancesList = [...proxiTokTorCustomRedirects, ...proxiTokTorRedirectsChecks];
-  
-      const i = instancesList.indexOf(protocolHost);
-      if (i > -1) instancesList.splice(i, 1);
-      if (instancesList.length === 0) { resolve(); return; }
-  
-      const randomInstance = utils.getRandomInstance(instancesList);
-      resolve(`${randomInstance}${url.pathname}${url.search}`);
+            ...proxiTokNormalCustomRedirects,
+            ...proxiTokTorCustomRedirects,
+        ];
+        if (!all.includes(protocolHost)) { resolve(); return; }
+
+        let instancesList;
+        if (tiktokProtocol == 'normal') instancesList = [...proxiTokNormalCustomRedirects, ...proxiTokNormalRedirectsChecks];
+        else if (tiktokProtocol == 'tor') instancesList = [...proxiTokTorCustomRedirects, ...proxiTokTorRedirectsChecks];
+
+        const i = instancesList.indexOf(protocolHost);
+        if (i > -1) instancesList.splice(i, 1);
+        if (instancesList.length === 0) { resolve(); return; }
+
+        const randomInstance = utils.getRandomInstance(instancesList);
+        resolve(`${randomInstance}${url.pathname}${url.search}`);
     })
-  }
+}
 
 function initDefaults() {
     return new Promise(async resolve => {

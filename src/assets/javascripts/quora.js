@@ -65,9 +65,9 @@ function init() {
 init();
 browser.storage.onChanged.addListener(init)
 
-function redirect(url, type, initiator) {
-    if (disableQuora) return;
-    if (url.pathname == "/") return;
+function redirect(url, type, initiator, disableOverride) {
+    if (disableQuora && !disableOverride) return;
+    if (url.pathname == "/" && !disableOverride) return;
     if (type != "main_frame") return;
     const all = [
         ...quoraRedirects.quetre.normal,
@@ -101,9 +101,10 @@ function reverse(url) {
     })
 }
 
-function switchInstance(url) {
+function switchInstance(url, disableOverride) {
     return new Promise(async resolve => {
         await init();
+        if (disableQuora && !disableOverride) { resolve(); return; }
         let protocolHost = utils.protocolHost(url);
         const all = [
             ...quoraRedirects.quetre.tor,

@@ -53,8 +53,8 @@ function init() {
 init();
 browser.storage.onChanged.addListener(init)
 
-function redirect(url, type, initiator) {
-    if (disableReuters) return;
+function redirect(url, type, initiator, disableOverride) {
+    if (disableReuters && !disableOverride) return;
     if (type != "main_frame") return;
     const all = [
         ...reutersRedirects.neuters.normal,

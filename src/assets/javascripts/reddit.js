@@ -222,8 +222,8 @@ function all() {
 // redd.it/t5379n
 // https://v.redd.it/z08avb339n801/DASH_1_2_M
 // https://i.redd.it/bfkhs659tzk81.jpg
-function redirect(url, type, initiator) {
-  if (disableReddit) return;
+function redirect(url, type, initiator, disableOverride) {
+  if (disableReddit && !disableOverride) return;
   if (!targets.some(rx => rx.test(url.href))) return;
   if (initiator && all().includes(initiator.origin)) return 'BYPASSTAB';
   if (!["main_frame", "xmlhttprequest", "other", "image", "media"].includes(type)) return;
@@ -287,9 +287,10 @@ function redirect(url, type, initiator) {
   return `${randomInstance}${url.pathname}${url.search}`;
 }
 
-function switchInstance(url) {
+function switchInstance(url, disableOverride) {
   return new Promise(async resolve => {
     await init();
+    if (disableReddit && !disableOverride) { resolve(); return; }
     const protocolHost = utils.protocolHost(url);
     if (!all().includes(protocolHost)) { resolve(); return; }
     let instancesList;

@@ -65,8 +65,8 @@ function init() {
 init();
 browser.storage.onChanged.addListener(init)
 
-function redirect(url, type, initiator) {
-    if (disableImdb) return;
+function redirect(url, type, initiator, disableOverride) {
+    if (disableImdb && !disableOverride) return;
     if (url.pathname == "/") return;
     if (type != "main_frame") return;
     const all = [
@@ -101,9 +101,10 @@ function reverse(url) {
     })
 }
 
-function switchInstance(url) {
+function switchInstance(url, disableOverride) {
     return new Promise(async resolve => {
         await init();
+        if (disableImdb && !disableOverride) { resolve(); return; }
         let protocolHost = utils.protocolHost(url);
         const all = [
             ...imdbRedirects.libremdb.tor,

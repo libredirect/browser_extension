@@ -77,9 +77,10 @@ function all() {
     ];
 }
 
-function switchInstance(url) {
+function switchInstance(url, disableOverride) {
     return new Promise(async resolve => {
         await init();
+        if (disableSendTarget && !disableOverride) { resolve(); return; }
         const protocolHost = utils.protocolHost(url);
         if (!all().includes(protocolHost)) { resolve(); return; }
         if (url.pathname != '/') { resolve(); return; }
@@ -97,8 +98,8 @@ function switchInstance(url) {
     })
 }
 
-function redirect(url, type, initiator) {
-    if (disableSendTarget) return;
+function redirect(url, type, initiator, disableOverride) {
+    if (disableSendTarget && !disableOverride) return;
     if (type != "main_frame") return;
     if (initiator && (all().includes(initiator.origin) || targets.includes(initiator.host))) return;
     if (!targets.some(rx => rx.test(url.href))) return;

@@ -103,9 +103,9 @@ function all() {
     ];
 }
 
-function redirect(url, type, initiator) {
-    if (disableImgur) return;
-    if (url.pathname == "/") return;
+function redirect(url, type, initiator, disableOverride) {
+    if (disableImgur && !disableOverride) return;
+    if (url.pathname == "/" && !disableOverride) return;
     if (!["main_frame", "sub_frame", "xmlhttprequest", "other", "image", "media",].includes(type)) return;
     if (initiator && (all().includes(initiator.origin) || targets.test(initiator.host))) return;
     if (!targets.test(url.href)) return;
@@ -130,9 +130,10 @@ function reverse(url) {
     })
 }
 
-function switchInstance(url) {
+function switchInstance(url, disableOverride) {
     return new Promise(async resolve => {
         await init();
+        if (disableImgur && !disableOverride) { resolve(); return; }
         let protocolHost = utils.protocolHost(url);
         if (!all().includes(protocolHost)) { resolve(); return; }
         let instancesList;

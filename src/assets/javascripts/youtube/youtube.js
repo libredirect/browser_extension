@@ -149,8 +149,8 @@ function all() {
   ];
 }
 
-function redirect(url, details, initiator) {
-  if (disableYoutube) return;
+function redirect(url, type, initiator, disableOverride) {
+  if (disableYoutube && !disableOverride) return;
   if (!targets.some(rx => rx.test(url.href))) return;
   if (initiator && all().includes(initiator.origin)) return 'BYPASSTAB';
 
@@ -165,8 +165,8 @@ function redirect(url, details, initiator) {
   const isFrontendPiped = youtubeEmbedFrontend == 'piped';
   const isFrontendPipedMaterial = youtubeEmbedFrontend == 'pipedMaterial';
 
-  const main_frame = details.type === "main_frame";
-  const sub_frame = details.type === "sub_frame";
+  const main_frame = type === "main_frame";
+  const sub_frame = type === "sub_frame";
 
   if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return; // Don't redirect YouTube Player API.
   if (onlyEmbeddedVideo == 'onlyEmbedded' && main_frame) return;
@@ -212,9 +212,10 @@ function reverse(url) {
   })
 }
 
-function switchInstance(url) {
+function switchInstance(url, disableOverride) {
   return new Promise(async resolve => {
     await init();
+    if (disableYoutube && !disableOverride) { resolve(); return; }
     const protocolHost = utils.protocolHost(url);
     if (!all().includes(protocolHost)) { resolve(); return; }
 
