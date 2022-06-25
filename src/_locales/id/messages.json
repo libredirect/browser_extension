@@ -1,0 +1,178 @@
+{
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "switchInstance": {
+        "message": "Tukar Instansi",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "settings": {
+        "message": "Pengaturan",
+        "description": "used in the popup"
+    },
+    "general": {
+        "message": "Umum",
+        "description": "used in the settings page"
+    },
+    "search": {
+        "message": "Penelusuran",
+        "description": "used in the settings page"
+    },
+    "translate": {
+        "message": "Penerjemahan",
+        "description": "used in the settings page"
+    },
+    "maps": {
+        "message": "Peta",
+        "description": "used in the settings page"
+    },
+    "sendFiles": {
+        "message": "Pengiriman Berkas",
+        "description": "used in the settings page"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "used in the settings page"
+    },
+    "reddit": {
+        "message": "Reddit",
+        "description": "used in the settings page"
+    },
+    "tiktok": {
+        "message": "TikTok",
+        "description": "used in the settings page"
+    },
+    "imgur": {
+        "message": "Imgur",
+        "description": "used in the settings page"
+    },
+    "ytmusic": {
+        "message": "YT Musik",
+        "description": "used in the settings page"
+    },
+    "wikipedia": {
+        "message": "Wikipedia",
+        "description": "used in the settings page"
+    },
+    "peertube": {
+        "message": "PeerTube",
+        "description": "used in the settings page"
+    },
+    "medium": {
+        "message": "Medium",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "Tema",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "Sistem",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "Cerah",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Gelap",
+        "description": "used in the settings page"
+    },
+    "autoRedirect": {
+        "message": "Tukar instansi luring ke instansi yang daring secara otomatis",
+        "description": "used in the settings page"
+    },
+    "exceptions": {
+        "message": "Pengecualian",
+        "description": "used in the settings page"
+    },
+    "updateInstances": {
+        "message": "Perbarui Instansi-Instansi",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "Impor Pengaturan",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "Ekspor Pengaturan",
+        "description": "used in the settings page"
+    },
+    "customPopup": {
+        "message": "Sesuaikan Popup",
+        "description": "used in the settings page"
+    },
+    "tor": {
+        "message": "Tor",
+        "description": "used in the settings page"
+    },
+    "defaultInstances": {
+        "message": "Instansi Bawaan",
+        "description": "used in the settings page"
+    },
+    "customInstances": {
+        "message": "Instansi Khusus",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Frontend",
+        "description": "used in the settings page"
+    },
+    "notFullyPrivate": {
+        "message": "Ini bukan frontend yang sepenuhnya menghargai privasi."
+    },
+    "redirectType": {
+        "message": "Jenis Pengalihan",
+        "description": "used in the settings page"
+    },
+    "instanceOffline": {
+        "message": "Instansi ini luring, Anda akan dialihkan setelah&nbsp;",
+        "description": "used in instance_offline.html"
+    },
+    "cancel": {
+        "message": "Batal",
+        "description": "used in instance_offline.html"
+    },
+    "extensionDescription": {
+        "message": "Ekstensi web yang mengalihkan situs-situs terkenal ke frontend dan backend alternatif yang menghargai privasi",
+        "description": "description of the extension"
+    },
+    "instanceIsOff": {
+        "message": "Instansi luring",
+        "description": "used in instance_offline.html"
+    },
+    "redirectionCanceled": {
+        "message": "Pengalihan dibatalkan",
+        "description": "used in instance_offline.js"
+    },
+    "copied": {
+        "message": "Disalin"
+    },
+    "lbry": {
+        "message": "LBRY"
+    },
+    "i2p": {
+        "message": "I2P"
+    },
+    "youtube": {
+        "message": "YouTube",
+        "description": "used in the settings page"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Aktifkan",
+        "description": "used in the settings page"
+    },
+    "normal": {
+        "message": "Biasa",
+        "description": "used in the settings page"
+    },
+    "protocol": {
+        "message": "Protokol",
+        "description": "used in the settings page"
+    }
+}

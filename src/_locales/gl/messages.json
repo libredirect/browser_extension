@@ -1,0 +1,212 @@
+{
+    "ytmusic": {
+        "message": "YT Music",
+        "description": "used in the settings page"
+    },
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "settings": {
+        "message": "Axustes",
+        "description": "used in the popup"
+    },
+    "maps": {
+        "message": "Mapas",
+        "description": "used in the settings page"
+    },
+    "sendFiles": {
+        "message": "Enviar Ficheiros",
+        "description": "used in the settings page"
+    },
+    "youtube": {
+        "message": "YouTube",
+        "description": "used in the settings page"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "used in the settings page"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "used in the settings page"
+    },
+    "imgur": {
+        "message": "Imgur",
+        "description": "used in the settings page"
+    },
+    "wikipedia": {
+        "message": "Wikipedia",
+        "description": "used in the settings page"
+    },
+    "peertube": {
+        "message": "PeerTube",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "Sistema",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "Claro",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Escuro",
+        "description": "used in the settings page"
+    },
+    "autoRedirect": {
+        "message": "Auto-redirixir cando unha instancia está caída",
+        "description": "used in the settings page"
+    },
+    "exceptions": {
+        "message": "Excepcións",
+        "description": "used in the settings page"
+    },
+    "updateInstances": {
+        "message": "Actualizar Instancias",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "Importar Axustes",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "Exportar Axustes",
+        "description": "used in the settings page"
+    },
+    "customPopup": {
+        "message": "Personalizar Emerxente",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Activar",
+        "description": "used in the settings page"
+    },
+    "protocol": {
+        "message": "Protocolo",
+        "description": "used in the settings page"
+    },
+    "normal": {
+        "message": "Normal",
+        "description": "used in the settings page"
+    },
+    "defaultInstances": {
+        "message": "Instancias por defecto",
+        "description": "used in the settings page"
+    },
+    "toggleAll": {
+        "message": "Activar todo",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Interface",
+        "description": "used in the settings page"
+    },
+    "searchNote": {
+        "message": "Nota: usa a busca con todo o seu potencial facendo que LibRedirect sexa o teu buscador por defecto.",
+        "description": "used in the settings page"
+    },
+    "embeddedVids": {
+        "message": "Interface para Vídeos incrustados",
+        "description": "used in the settings page"
+    },
+    "both": {
+        "message": "ambos",
+        "description": "used in the settings page"
+    },
+    "instanceIsOff": {
+        "message": "Instancia caída",
+        "description": "used in instance_offline.html"
+    },
+    "redirectionCanceled": {
+        "message": "Redirección cancelada",
+        "description": "used in instance_offline.js"
+    },
+    "copyRaw": {
+        "message": "Copiar en crú"
+    },
+    "copied": {
+        "message": "Copiado"
+    },
+    "extensionDescription": {
+        "message": "Un complemento do navegador que redirixe o tráfico cara alternativas amigables e respetuosas",
+        "description": "description of the extension"
+    },
+    "general": {
+        "message": "Xeral",
+        "description": "used in the settings page"
+    },
+    "search": {
+        "message": "Buscar",
+        "description": "used in the settings page"
+    },
+    "translate": {
+        "message": "Traducir",
+        "description": "used in the settings page"
+    },
+    "tiktok": {
+        "message": "TikTok",
+        "description": "used in the settings page"
+    },
+    "lbry": {
+        "message": "LBRY"
+    },
+    "switchInstance": {
+        "message": "Cambiar de Instancia",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "reddit": {
+        "message": "Reddit",
+        "description": "used in the settings page"
+    },
+    "medium": {
+        "message": "Medium",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "Decorado",
+        "description": "used in the settings page"
+    },
+    "redirectType": {
+        "message": "Tipo de Redirección",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "só incrustados",
+        "description": "used in the settings page"
+    },
+    "onlyNotEmbedded": {
+        "message": "non só incrustados",
+        "description": "used in the settings page"
+    },
+    "tor": {
+        "message": "Tor",
+        "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "Restablecer Axustes",
+        "description": "used in the settings page"
+    },
+    "customInstances": {
+        "message": "Instancias personalizadas",
+        "description": "used in the settings page"
+    },
+    "notFullyPrivate": {
+        "message": "Esta interface non é totalmente privada."
+    },
+    "instanceOffline": {
+        "message": "Esta instancia está caída, ímoste redirixir após&nbsp;",
+        "description": "used in instance_offline.html"
+    },
+    "cancel": {
+        "message": "Cancelar",
+        "description": "used in instance_offline.html"
+    },
+    "testInstancesLatency": {
+        "message": "Comprobar Latencia das instancias"
+    },
+    "i2p": {
+        "message": "I2P"
+    }
+}
