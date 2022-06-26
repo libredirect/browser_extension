@@ -1,1 +1,6 @@
-{}
+{
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    }
+}
