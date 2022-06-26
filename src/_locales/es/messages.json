@@ -2,5 +2,214 @@
     "extensionName": {
         "message": "LibRedirect",
         "description": "name of the extension"
+    },
+    "switchInstance": {
+        "message": "Cambiar instancia",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "settings": {
+        "message": "Ajustes",
+        "description": "used in the popup"
+    },
+    "general": {
+        "message": "General",
+        "description": "used in the settings page"
+    },
+    "translate": {
+        "message": "Traductor",
+        "description": "used in the settings page"
+    },
+    "search": {
+        "message": "Búsqueda",
+        "description": "used in the settings page"
+    },
+    "ytmusic": {
+        "message": "YT Music",
+        "description": "used in the settings page"
+    },
+    "wikipedia": {
+        "message": "Wikipedia",
+        "description": "used in the settings page"
+    },
+    "medium": {
+        "message": "Medium",
+        "description": "used in the settings page"
+    },
+    "tor": {
+        "message": "Tor",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "Tema",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "Claro",
+        "description": "used in the settings page"
+    },
+    "autoRedirect": {
+        "message": "Redirigir automáticamente las instancias offline a las online",
+        "description": "used in the settings page"
+    },
+    "exceptions": {
+        "message": "Excepciones",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "Importar Ajustes",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "Exportar Ajustes",
+        "description": "used in the settings page"
+    },
+    "customPopup": {
+        "message": "Personalizar Ventana Emergente",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Activar",
+        "description": "used in the settings page"
+    },
+    "protocol": {
+        "message": "Protocolo",
+        "description": "used in the settings page"
+    },
+    "normal": {
+        "message": "Normal",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Frontend",
+        "description": "used in the settings page"
+    },
+    "embeddedVids": {
+        "message": "Frontend para Videos Incrustados",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "solo incrustados",
+        "description": "used in the settings page"
+    },
+    "copyRaw": {
+        "message": "Copiar Original"
+    },
+    "copied": {
+        "message": "Copiado"
+    },
+    "unifySettings": {
+        "message": "Unificar Ajustes"
+    },
+    "lbry": {
+        "message": "LBRY"
+    },
+    "i2p": {
+        "message": "I2P"
+    },
+    "instanceOffline": {
+        "message": "Esta instancia está offline, serás redirigido/a luego de&nbsp;",
+        "description": "used in instance_offline.html"
+    },
+    "testInstancesLatency": {
+        "message": "Probar Latencia de las Instancias"
+    },
+    "youtube": {
+        "message": "YouTube",
+        "description": "used in the settings page"
+    },
+    "extensionDescription": {
+        "message": "Una extensión web que redirige sitios populares a frontends y backends alternativos que respetan la privacidad",
+        "description": "description of the extension"
+    },
+    "maps": {
+        "message": "Mapas",
+        "description": "used in the settings page"
+    },
+    "sendFiles": {
+        "message": "Enviar Archivos",
+        "description": "used in the settings page"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "used in the settings page"
+    },
+    "reddit": {
+        "message": "Reddit",
+        "description": "used in the settings page"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "used in the settings page"
+    },
+    "tiktok": {
+        "message": "TikTok",
+        "description": "used in the settings page"
+    },
+    "imgur": {
+        "message": "Imgur",
+        "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "Restablecer Ajustes",
+        "description": "used in the settings page"
+    },
+    "updateInstances": {
+        "message": "Actualizar Instancias",
+        "description": "used in the settings page"
+    },
+    "defaultInstances": {
+        "message": "Instancias Predeterminadas",
+        "description": "used in the settings page"
+    },
+    "peertube": {
+        "message": "PeerTube",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "Sistema",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Oscuro",
+        "description": "used in the settings page"
+    },
+    "customInstances": {
+        "message": "Instancias Personalizadas",
+        "description": "used in the settings page"
+    },
+    "notFullyPrivate": {
+        "message": "Este no es un frontend completamente privado."
+    },
+    "toggleAll": {
+        "message": "Alternar todo",
+        "description": "used in the settings page"
+    },
+    "onlyNotEmbedded": {
+        "message": "solo los no incrustados",
+        "description": "used in the settings page"
+    },
+    "instanceIsOff": {
+        "message": "La instancia está offline",
+        "description": "used in instance_offline.html"
+    },
+    "searchNote": {
+        "message": "Nota: Utilice la búsqueda en todo su potencial haciendo de LibRedirect su motor de búsqueda predeterminado.",
+        "description": "used in the settings page"
+    },
+    "redirectType": {
+        "message": "Tipo de Redirección",
+        "description": "used in the settings page"
+    },
+    "both": {
+        "message": "ambos",
+        "description": "used in the settings page"
+    },
+    "cancel": {
+        "message": "Cancelar",
+        "description": "used in instance_offline.html"
+    },
+    "redirectionCanceled": {
+        "message": "Redirección cancelada",
+        "description": "used in instance_offline.js"
     }
 }
