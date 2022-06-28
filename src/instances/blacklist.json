@@ -1,7 +1,6 @@
 {
   "cloudflare": [
     "https://invidious.kavin.rocks",
-    "https://invidious.lunar.icu",
     "https://piped.kavin.rocks",
     "https://piped.tokhmi.xyz",
     "https://piped.moomoo.me",
@@ -15,7 +14,6 @@
     "https://fuckthesacklers.network",
     "https://nitter.winscloud.net",
     "https://twtr.bch.bar",
-    "https://nitter.lunar.icu",
     "https://twitter.dr460nf1r3.org",
     "https://bib.actionsack.com",
     "https://libreddit.domain.glass",
@@ -28,7 +26,6 @@
     "https://r.walkx.org",
     "https://libreddit.yonalee.eu",
     "https://libreddit.winscloud.net",
-    "https://libreddit.lunar.icu",
     "https://r.ahwx.org",
     "https://reddit.dr460nf1r3.org",
     "https://libreddit.encrypted-data.xyz",
@@ -37,17 +34,13 @@
     "https://teddit.httpjames.space",
     "https://teddit.encrypted-data.xyz",
     "https://wiki.604kph.xyz",
-    "https://wikiless.lunar.icu",
-    "https://lingva.lunar.icu",
-    "https://searx.albony.xyz",
     "https://searx.josie.lol",
     "https://searx.org",
     "https://searx.run",
+    "https://searx.kujonello.cf",
     "https://search.albony.xyz",
     "https://search.garudalinux.org",
     "https://search.dr460nf1r3.org",
-    "https://whoogle.lunar.icu",
-    "https://rimgo.lunar.icu",
     "https://i.actionsack.com"
   ],
   "authenticate": [
