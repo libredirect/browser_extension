@@ -1,4 +1,4 @@
-include ../widgets/icons.pug
+include ./icons.pug
 
 mixin links(service)
     section#links.links
@@ -77,6 +77,7 @@ mixin links(service)
         .title
             +send
             a(href="#sendTargets" data-localise="__MSG_sendFiles__") Send Files
+        
         .title
-            img(src="about", alt="")
-            a(href="about" data-localise="__MSG_about") About
+            +about
+            a(href="#about" data-localise="__MSG_about") About
