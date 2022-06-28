@@ -1,4 +1,4 @@
-include ../widgets/icons.pug
+include ./icons.pug
 
 mixin links(service)
     section#links.links
@@ -74,6 +74,10 @@ mixin links(service)
             +maps
             a(href="#maps" data-localise="__MSG_maps__") Maps
 
-        .title 
+        .title
             +send
             a(href="#sendTargets" data-localise="__MSG_sendFiles__") Send Files
+        
+        .title
+            +about
+            a(href="#about" data-localise="__MSG_about") About

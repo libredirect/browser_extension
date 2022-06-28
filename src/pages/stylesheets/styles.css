@@ -454,3 +454,12 @@ button {
 body div section {
   display: none;
 }
+
+div.about > div{
+  justify-content: start;
+  width: 520px;
+}
+
+div.about h4 {
+  width: auto;
+}

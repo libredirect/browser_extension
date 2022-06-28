@@ -51,7 +51,6 @@ utils.copyRaw(true).then(r => {
     copy_raw.addEventListener("click", () => utils.copyRaw(false, copy_raw));
   }
 })
-
 document.getElementById("more-options").addEventListener("click", () => browser.runtime.openOptionsPage());
 
 const allSites = document.getElementsByClassName('all_sites')[0];
@@ -323,7 +322,7 @@ document.addEventListener("change", () => {
 
 for (const a of document.getElementsByTagName('a')) {
   a.addEventListener('click', e => {
-    if (!a.classList.contains('button')) {
+    if (!a.classList.contains('prevent')) {
       browser.tabs.create({ url: a.getAttribute('href') });
       e.preventDefault();
     }
