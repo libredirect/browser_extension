@@ -66,6 +66,12 @@ npm update
 npm install
 ```
 
+If you are modifying any files ending with .pug, the pug cli needs to be installed with the following command (with root privileges):
+```
+npm install -g pug-cli
+```
+and then run `./script.sh` to generate pages in the background.
+
 ### Build
 ```
 npm run build

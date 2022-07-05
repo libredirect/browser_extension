@@ -17,6 +17,8 @@ section#translate_page.option-block
         select#translate-protocol
             option(value="normal" data-localise="__MSG_normal__") Normal
             option(value="tor" data-localise="__MSG_tor__") Tor
+            option(value="i2p" data-localise="__MSG_i2p__") I2P
+            option(value="loki" data-localise="__MSG_loki__") Lokinet
 
     hr
     #simplyTranslate
@@ -28,6 +30,13 @@ section#translate_page.option-block
         .tor
             include ../../widgets/instances.pug
             +instances('http://hxecvvetgrznmprg.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://simplytranslate.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://simplytranslate.loki')
+            
     #lingva
         .normal
             include ../../widgets/instances.pug

@@ -209,6 +209,9 @@
     "i2p": {
         "message": "I2P"
     },
+    "loki": {
+        "message": "Lokinet"
+    },
     "testInstancesLatency": {
         "message": "Test Instances Latency"
     }

@@ -22,6 +22,8 @@ function changeFrontendsSettings() {
 function changeProtocolSettings() {
     const normalSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("normal")[0];
     const torSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("tor")[0];
+    const i2pSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("i2p")[0];
+    const lokiSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("loki")[0];
 
     const normalLingvaDiv = document.getElementById("lingva").getElementsByClassName("normal")[0];
     const torLingvaDiv = document.getElementById("lingva").getElementsByClassName("tor")[0];
@@ -29,14 +31,34 @@ function changeProtocolSettings() {
     if (protocol.value == 'normal') {
         normalSimplyTranslateDiv.style.display = 'block';
         normalLingvaDiv.style.display = 'block';
-        torLingvaDiv.style.display = 'none';
         torSimplyTranslateDiv.style.display = 'none';
+        torLingvaDiv.style.display = 'none';
+        i2pSimplyTranslateDiv.style.display = 'none';
+        lokiSimplyTranslateDiv.style.display = 'none';
     }
     else if (protocol.value == 'tor') {
         normalSimplyTranslateDiv.style.display = 'none';
         normalLingvaDiv.style.display = 'none';
-        torLingvaDiv.style.display = 'block';
         torSimplyTranslateDiv.style.display = 'block';
+        torLingvaDiv.style.display = 'block';
+        i2pSimplyTranslateDiv.style.display = 'none';
+        lokiSimplyTranslateDiv.style.display = 'none';
+    }
+    else if (protocol.value == 'i2p') {
+        normalSimplyTranslateDiv.style.display = 'none';
+        normalLingvaDiv.style.display = 'none';
+        torSimplyTranslateDiv.style.display = 'none';
+        torLingvaDiv.style.display = 'none';
+        i2pSimplyTranslateDiv.style.display = 'block';
+        lokiSimplyTranslateDiv.style.display = 'none';
+    }
+    else if (protocol.value == 'loki') {
+        normalSimplyTranslateDiv.style.display = 'none';
+        normalLingvaDiv.style.display = 'none';
+        torSimplyTranslateDiv.style.display = 'none';
+        torLingvaDiv.style.display = 'none';
+        i2pSimplyTranslateDiv.style.display = 'none';
+        lokiSimplyTranslateDiv.style.display = 'block';
     }
 }
 
@@ -66,8 +88,10 @@ translate.addEventListener("change", () => {
 })
 
 
-utils.processDefaultCustomInstances('translate', 'simplyTranslate', 'normal', document)
+utils.processDefaultCustomInstances('translate', 'simplyTranslate', 'normal', document);
 utils.processDefaultCustomInstances('translate', 'simplyTranslate', 'tor', document);
+utils.processDefaultCustomInstances('translate', 'simplyTranslate', 'i2p', document);
+utils.processDefaultCustomInstances('translate', 'simplyTranslate', 'loki', document);
 utils.processDefaultCustomInstances('translate', 'lingva', 'normal', document);
 utils.processDefaultCustomInstances('translate', 'lingva', 'tor', document);
 

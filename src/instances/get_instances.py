@@ -279,6 +279,7 @@ def libremdb():
             _list['tor'].append(item)
         else:
             _list['normal'].append(item)
+
     mightyList['libremdb'] = _list
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Libremdb')
 
@@ -295,6 +296,16 @@ def simplytranslate():
     for item in r.text.strip().split('\n'):
         simplyTranslateList['tor'].append('http://' + item)
 
+    r = requests.get('https://simple-web.org/instances/simplytranslate_i2p')
+    simplyTranslateList['i2p'] = []
+    for item in r.text.strip().split('\n'):
+        simplyTranslateList['i2p'].append('http://' + item)
+
+    r = requests.get('https://simple-web.org/instances/simplytranslate_loki')
+    simplyTranslateList['loki'] = []
+    for item in r.text.strip().split('\n'):
+        simplyTranslateList['loki'].append('http://' + item)
+
     mightyList['simplyTranslate'] = simplyTranslateList
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'SimplyTranslate')
 
@@ -308,6 +319,7 @@ def linvgatranslate():
     lingvaList['tor'] = []
     for item in rJson:
         lingvaList['normal'].append(item)
+
     mightyList['lingva'] = lingvaList
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'LinvgaTranslate')
 
@@ -432,9 +444,9 @@ for k1, v1 in mightyList.items():
                     mightyList[k1][k2].remove(instance)
                     print("removed " + instance)
                 else:
-                    if not instance.endswith('.onion') and not instance.endswith('.i2p') and is_cloudflare(instance):
+                    if not instance.endswith('.onion') and not instance.endswith('.i2p') and not instance.endswith('.loki') and is_cloudflare(instance):
                         cloudflare.append(instance)
-                    if not instance.endswith('.onion') and not instance.endswith('.i2p') and is_authenticate(instance):
+                    if not instance.endswith('.onion') and not instance.endswith('.i2p') and not instance.endswith('.loki') and is_authenticate(instance):
                         authenticate.append(instance)
 
 peertube()

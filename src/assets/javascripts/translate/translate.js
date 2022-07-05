@@ -9,7 +9,9 @@ const targets = [
 let redirects = {
   "simplyTranslate": {
     "normal": [],
-    "tor": []
+    "tor": [],
+    "i2p": [],
+    "loki": []
   },
   "lingva": {
     "normal": [],
@@ -26,6 +28,10 @@ let
   simplyTranslateNormalCustomRedirects,
   simplyTranslateTorRedirectsChecks,
   simplyTranslateTorCustomRedirects,
+  simplyTranslateI2PRedirectsChecks,
+  simplyTranslateI2PCustomRedirects,
+  simplyTranslateLokiRedirectsChecks,
+  simplyTranslateLokiCustomReidrects,
   lingvaNormalRedirectsChecks,
   lingvaNormalCustomRedirects,
   lingvaTorRedirectsChecks,
@@ -44,6 +50,10 @@ function init() {
         "simplyTranslateNormalCustomRedirects",
         "simplyTranslateTorRedirectsChecks",
         "simplyTranslateTorCustomRedirects",
+        "simplyTranslateI2PRedirectsChecks",
+        "simplyTranslateI2PCustomRedirects",
+        "simplyTranslateLokiRedirectsChecks",
+        "simplyTranslateLokiCustomReidrects",
 
         "lingvaNormalRedirectsChecks",
         "lingvaNormalCustomRedirects",
@@ -59,6 +69,10 @@ function init() {
         simplyTranslateNormalCustomRedirects = r.simplyTranslateNormalCustomRedirects;
         simplyTranslateTorRedirectsChecks = r.simplyTranslateTorRedirectsChecks;
         simplyTranslateTorCustomRedirects = r.simplyTranslateTorCustomRedirects;
+        simplyTranslateI2PRedirectsChecks = r.simplyTranslateI2PRedirectsChecks;
+        simplyTranslateI2PCustomRedirects = r.simplyTranslateI2PCustomRedirects;
+        simplyTranslateLokiRedirectsChecks = r.simplyTranslateLokiRedirectsChecks;
+        simplyTranslateLokiCustomReidrects = r.simplyTranslateLokiCustomReidrects;
         lingvaNormalRedirectsChecks = r.lingvaNormalRedirectsChecks;
         lingvaNormalCustomRedirects = r.lingvaNormalCustomRedirects;
         lingvaTorRedirectsChecks = r.lingvaTorRedirectsChecks;
@@ -84,6 +98,8 @@ function setRedirects(val) {
       translateRedirects: redirects,
       simplyTranslateNormalRedirectsChecks: redirects.simplyTranslate.normal,
       simplyTranslateTorRedirectsChecks: redirects.simplyTranslate.tor,
+      simplyTranslateI2PRedirectsChecks: redirects.simplyTranslate.i2p,
+      simplyTranslateLokiRedirectsChecks: redirects.simplyTranslate.loki,
       lingvaNormalRedirectsChecks,
       lingvaTorRedirectsChecks: redirects.lingva.tor,
     })
@@ -148,11 +164,17 @@ function copyPasteSimplyTranslateCookies(test, from) {
       ...simplyTranslateNormalCustomRedirects,
       ...simplyTranslateTorRedirectsChecks,
       ...simplyTranslateTorCustomRedirects,
+      ...simplyTranslateI2PRedirectsChecks,
+      ...simplyTranslateI2PCustomRedirects,
+      ...simplyTranslateLokiRedirectsChecks,
+      ...simplyTranslateLokiCustomReidrects,
     ].includes(protocolHost)) { resolve(); return; }
     if (!test) {
       let checkedInstances;
       if (translateProtocol == 'normal') checkedInstances = [...simplyTranslateNormalRedirectsChecks, ...simplyTranslateNormalCustomRedirects]
       else if (translateProtocol == 'tor') checkedInstances = [...simplyTranslateTorRedirectsChecks, ...simplyTranslateTorCustomRedirects]
+      else if (translateProtocol == 'i2p') checkedInstances = [...simplyTranslateI2PRedirectsChecks, ...simplyTranslateI2PCustomRedirects]
+      else if (translateProtocol == 'loki') checkedInstances = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomReidrects]
       await utils.copyCookie('simplyTranslate', from, checkedInstances, 'from_lang');
       await utils.copyCookie('simplyTranslate', from, checkedInstances, 'to_lang');
       await utils.copyCookie('simplyTranslate', from, checkedInstances, 'tts_enabled');
@@ -170,6 +192,8 @@ function pasteSimplyTranslateCookies() {
     let checkedInstances;
     if (translateProtocol == 'normal') checkedInstances = [...simplyTranslateNormalRedirectsChecks, ...simplyTranslateNormalCustomRedirects]
     else if (translateProtocol == 'tor') checkedInstances = [...simplyTranslateTorRedirectsChecks, ...simplyTranslateTorCustomRedirects]
+    else if (translateProtocol == 'i2p') checkedInstances = [...simplyTranslateI2PRedirectsChecks, ...simplyTranslateI2PCustomRedirects]
+    else if (translateProtocol == 'loki') checkedInstances = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomReidrects]
     utils.getCookiesFromStorage('simplyTranslate', checkedInstances, 'from_lang');
     utils.getCookiesFromStorage('simplyTranslate', checkedInstances, 'to_lang');
     utils.getCookiesFromStorage('simplyTranslate', checkedInstances, 'tts_enabled');
@@ -187,6 +211,8 @@ function redirect(url, disableOverride) {
     let instancesList;
     if (translateProtocol == 'normal') instancesList = [...simplyTranslateNormalRedirectsChecks, ...simplyTranslateNormalCustomRedirects];
     if (translateProtocol == 'tor') instancesList = [...simplyTranslateTorRedirectsChecks, ...simplyTranslateTorCustomRedirects];
+    if (translateProtocol == 'i2p') instancesList = [...simplyTranslateI2PRedirectsChecks, ...simplyTranslateI2PCustomRedirects];
+    if (translateProtocol == 'loki') instancesList = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomReidrects];
     if (instancesList.length === 0) return;
 
     const randomInstance = utils.getRandomInstance(instancesList)
@@ -221,9 +247,13 @@ function switchInstance(url, disableOverride) {
     if (![
       ...translateRedirects.simplyTranslate.normal,
       ...translateRedirects.simplyTranslate.tor,
+      ...translateRedirects.simplyTranslate.i2p,
+      ...translateRedirects.simplyTranslate.loki,
 
       ...simplyTranslateNormalCustomRedirects,
       ...simplyTranslateTorCustomRedirects,
+      ...simplyTranslateI2PCustomRedirects,
+      ...simplyTranslateLokiCustomReidrects,
 
       ...translateRedirects.lingva.normal,
       ...translateRedirects.lingva.tor,
@@ -240,6 +270,14 @@ function switchInstance(url, disableOverride) {
     else if (translateProtocol == 'tor') {
       if (translateFrontend == 'simplyTranslate') instancesList = [...simplyTranslateTorRedirectsChecks, ...simplyTranslateTorCustomRedirects];
       else if (translateFrontend == 'lingva') instancesList = [...lingvaTorRedirectsChecks, ...lingvaTorCustomRedirects];
+    }
+    else if (translateProtocol == 'i2p') {
+       if (translateFrontend == 'simplyTranslate') instancesList = [...simplyTranslateI2PRedirectsChecks, ...simplyTranslateI2PCustomRedirects];
+       //else if (translateFrontend == 'lingva') instancesList = [...lingvaI2PRedirectsChecks, ...lingvaI2PCustomRedirects];   
+    }
+    else if (translateProtocol == 'loki') {
+      if (translateFrontend == 'simplyTranslate') instancesList = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomReidrects];
+      //else if (translateFrontend == 'lingva') instancesList = [...lingvaLokiRedirectsChecks, ...lingvaLokiCustomRedirects];
     }
 
     const i = instancesList.indexOf(protocolHost);
@@ -274,6 +312,10 @@ function initDefaults() {
             simplyTranslateNormalCustomRedirects: [],
             simplyTranslateTorRedirectsChecks: [...redirects.simplyTranslate.tor],
             simplyTranslateTorCustomRedirects: [],
+            simplyTranslateI2PRedirectsChecks: [...redirects.simplyTranslate.i2p],
+            simplyTranslateI2PCustomRedirects: [],
+            simplyTranslateLokiRedirectsChecks: [...redirects.simplyTranslate.loki],
+            simplyTranslateLokiCustomReidrects: [],
 
             lingvaNormalRedirectsChecks: lingvaNormalRedirectsChecks,
             lingvaNormalCustomRedirects: [],
