@@ -208,5 +208,8 @@
     },
     "i2p": {
         "message": "I2P"
+    },
+    "unifySettings": {
+        "message": "Unificar Axustes"
     }
 }
