@@ -16,6 +16,7 @@
     "https://nitter.winscloud.net",
     "https://twtr.bch.bar",
     "https://twitter.dr460nf1r3.org",
+    "https://nitter.garudalinux.org",
     "https://nitter.wef.lol",
     "https://nitter.catalyst.sx",
     "https://bib.actionsack.com",
@@ -24,7 +25,6 @@
     "https://libreddit.flux.industries",
     "https://lr.oversold.host",
     "https://libreddit.hu",
-    "https://lr.stilic.ml",
     "https://reddi.tk",
     "https://r.walkx.org",
     "https://libreddit.yonalee.eu",
@@ -37,18 +37,15 @@
     "https://teddit.httpjames.space",
     "https://teddit.encrypted-data.xyz",
     "https://wiki.604kph.xyz",
-    "https://wikiless.lunar.icu",
-    "https://lingva.lunar.icu",
-    "https://searx.josie.lol",
     "https://searx.org",
     "https://searx.run",
-    "https://searx.albony.xyz",
     "https://searx.kujonello.cf",
     "https://search.albony.xyz",
     "https://search.garudalinux.org",
     "https://search.dr460nf1r3.org",
     "https://search.wef.lol",
-    "https://i.actionsack.com"
+    "https://i.actionsack.com",
+    "https://rimgo.encrypted-data.xyz"
   ],
   "authenticate": [
     "https://nitter.nixnet.services"
