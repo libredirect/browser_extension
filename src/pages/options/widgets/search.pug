@@ -13,17 +13,17 @@ section#search_page.option-block
             option(value="searxng") SearXNG
             option(value="searx") SearX
             option(value="whoogle") Whoogle
+            option(value="librex") LibreX
 
-    #searx-whoogle
-        .some-block.option-block
-            h4(data-localise="__MSG_protocol__") Protocol
-            select#search-protocol
-                option(value="normal" data-localise="__MSG_normal__") Normal
-                option(value="tor" data-localise="__MSG_tor__") Tor
-                option(value="i2p" data-localise="__MSG_i2p__") I2P
+    .some-block.option-block
+        h4(data-localise="__MSG_protocol__") Protocol
+        select#search-protocol
+            option(value="normal" data-localise="__MSG_normal__") Normal
+            option(value="tor" data-localise="__MSG_tor__") Tor
+            option(value="i2p" data-localise="__MSG_i2p__") I2P
 
     .some-block
-        h4(data-localise="__MSG_searchNote__") Note: To use Search to its full potential, make LibRedirect as the Default Search Engine
+        h4(data-localise="__MSG_searchNote__") Note: To use Search, make LibRedirect the Default Search Engine
 
     #searx
         hr
@@ -34,10 +34,10 @@ section#search_page.option-block
             +latency('searx')
         .tor
             include ../../widgets/instances.pug
-            +instances('https://searx.onion')
+            +instances('http://searx.onion')
         .i2p
             include ../../widgets/instances.pug
-            +instances('https://searx.i2p')
+            +instances('http://searx.i2p')
 
     #searxng
         hr
@@ -47,10 +47,10 @@ section#search_page.option-block
             +latency('searxng')
         .tor
             include ../../widgets/instances.pug
-            +instances('https://searxng.onion')
+            +instances('http://searxng.onion')
         .i2p
             include ../../widgets/instances.pug
-            +instances('https://searxng.i2p')
+            +instances('http://searxng.i2p')
 
     #whoogle
         hr
@@ -60,9 +60,22 @@ section#search_page.option-block
             +latency('whoogle')
         .tor
             include ../../widgets/instances.pug
-            +instances('https://whoogle.onion')
+            +instances('http://whoogle.onion')
         .i2p
             include ../../widgets/instances.pug
-            +instances('https://whoogle.i2p')
+            +instances('http://whoogle.i2p')
+
+    #librex
+        hr
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://librex.com')
+            +latency('librex')
+        .tor
+            include ../../widgets/instances.pug
+            +instances('http://librex.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://librex.i2p')
 
     script(type="module" src="./widgets/search.js")

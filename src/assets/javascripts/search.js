@@ -5,8 +5,12 @@ import utils from './utils.js'
 const targets = [
   /^https?:\/{2}search\.libredirect\.invalid/,
 ];
+// Ill optimise all of assets/javascripts at a later date. For now, I'll just add librex and optimse options javascript
+const frontends = new Array("searx", "searxng", "whoogle", "librex")
+const protocols = new Array("normal", "tor", "i2p")
 
-let redirects = {
+const redirects = {}
+  /*
   "searx": {
     "normal": [],
     "tor": [],
@@ -22,7 +26,27 @@ let redirects = {
     "tor": [],
     "i2p": []
   }
-};
+  */
+//};
+
+//let tmp = "{"
+
+for (let i = 0; i < frontends.length; i++) {
+  //redirects.frontends[i] = {}
+  //redirects.push(frontends[i])
+  //tmp = frontends[i]
+  //tmp = tmp + '\n"' + frontends[i] + '": {'
+  redirects[frontends[i]] = {}
+  for (let x = 0; x < protocols.length; x++) {
+    //redirects.frontends[i].protocols = []
+    //tmp = tmp + '\n"' + protocols[x] + '": [],'
+    redirects[frontends[i]][protocols[x]] = []
+  }
+  //tmp = tmp + "\n},"
+}
+//tmp = tmp + "\n}"
+
+//const redirects = JSON.parse(tmp)
 
 function setRedirects(val) {
   browser.storage.local.get('cloudflareBlackList', r => {
@@ -30,6 +54,7 @@ function setRedirects(val) {
     searxNormalRedirectsChecks = [...redirects.searx.normal];
     searxngNormalRedirectsChecks = [...redirects.searxng.normal];
     whoogleNormalRedirectsChecks = [...redirects.whoogle.normal];
+    librexNormalRedirectsChecks = [...redirects.librex.normal];
     for (const instance of r.cloudflareBlackList) {
       const a = searxNormalRedirectsChecks.indexOf(instance);
       if (a > -1) searxNormalRedirectsChecks.splice(a, 1);
@@ -39,12 +64,16 @@ function setRedirects(val) {
 
       const c = whoogleNormalRedirectsChecks.indexOf(instance);
       if (c > -1) whoogleNormalRedirectsChecks.splice(c, 1);
+
+      const d = librexNormalRedirectsChecks.indexOf(instance);
+      if (c > -1) librexNormalRedirectsChecks.splice(d, 1);
     }
     browser.storage.local.set({
       searchRedirects: redirects,
       searxNormalRedirectsChecks,
       searxngNormalRedirectsChecks,
       whoogleNormalRedirectsChecks,
+      librexNormalRedirectsChecks,
     });
   })
 }
@@ -71,7 +100,13 @@ let
   searxngTorRedirectsChecks,
   searxngTorCustomRedirects,
   searxngI2pRedirectsChecks,
-  searxngI2pCustomRedirects;
+  searxngI2pCustomRedirects,
+  librexNormalRedirectsChecks,
+  librexNormalCustomRedirects,
+  librexTorRedirectsChecks,
+  librexTorCustomRedirects,
+  librexI2pRedirectsChecks,
+  librexI2pCustomRedirects;
 
 function init() {
   return new Promise(async resolve => {
@@ -99,6 +134,12 @@ function init() {
         "searxngTorCustomRedirects",
         "searxngI2pRedirectsChecks",
         "searxngI2pCustomRedirects",
+        "librexNormalRedirectsChecks",
+        "librexNormalCustomRedirects",
+        "librexTorRedirectsChecks",
+        "librexTorCustomRedirects",
+        "librexI2pRedirectsChecks",
+        "librexI2pCustomRedirects"
       ],
       r => {
         disableSearch = r.disableSearch;
@@ -123,6 +164,12 @@ function init() {
         searxngTorCustomRedirects = r.searxngTorCustomRedirects;
         searxngI2pRedirectsChecks = r.searxngI2pRedirectsChecks;
         searxngI2pCustomRedirects = r.searxngI2pCustomRedirects;
+        librexNormalRedirectsChecks = r.librexNormalRedirectsChecks;
+        librexNormalCustomRedirects = r.librexNormalCustomRedirects;
+        librexTorRedirectsChecks = r.librexTorRedirectsChecks;
+        librexTorCustomRedirects = r.librexTorCustomRedirects;
+        librexI2pRedirectsChecks = r.librexI2pRedirectsChecks;
+        librexI2pCustomRedirects = r.librexI2pCustomRedirects;
         resolve();
       }
     )
@@ -307,6 +354,14 @@ function redirect(url, disableOverride) {
     randomInstance = utils.getRandomInstance(instancesList)
     path = "/search";
   }
+  else if (searchFrontend == 'librex') {
+    let instancesList;
+    if (searchProtocol == 'normal') instancesList = [...librexNormalRedirectsChecks, ...librexNormalCustomRedirects];
+    if (searchProtocol == 'tor') instancesList = [...librexTorRedirectsChecks, ...librexTorCustomRedirects];
+    if (searchProtocol == 'i2p') instancesList = [...librexI2pRedirectsChecks, ...librexI2pCustomRedirects];
+    randomInstance = utils.getRandomInstance(instancesList)
+    path = "/search.php";
+  }
 
   if (
     ((url.hostname.includes('google') || url.hostname.includes('bing')) && !url.searchParams.has('q')) ||
@@ -345,6 +400,10 @@ function switchInstance(url, disableOverride) {
       ...searchRedirects.whoogle.tor,
       ...searchRedirects.whoogle.i2p,
 
+      ...searchRedirects.librex.normal,
+      ...searchRedirects.librex.tor,
+      ...searchRedirects.librex.i2p,
+
       ...searxNormalCustomRedirects,
       ...searxTorCustomRedirects,
       ...searxI2pCustomRedirects,
@@ -356,6 +415,10 @@ function switchInstance(url, disableOverride) {
       ...whoogleNormalCustomRedirects,
       ...whoogleTorCustomRedirects,
       ...whoogleI2pCustomRedirects,
+
+      ...librexNormalCustomRedirects,
+      ...librexTorCustomRedirects,
+      ...librexI2pCustomRedirects,
     ].includes(protocolHost)) { resolve(); return; }
 
     let instancesList;
@@ -363,16 +426,19 @@ function switchInstance(url, disableOverride) {
       if (searchFrontend == 'searx') instancesList = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
       else if (searchFrontend == 'searxng') instancesList = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
       else if (searchFrontend == 'whoogle') instancesList = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects];
+      else if (searchFrontend == 'librex') instancesList = [...librexNormalRedirectsChecks, ...librexNormalCustomRedirects];
     }
     else if (searchProtocol == 'tor') {
       if (searchFrontend == 'searx') instancesList = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
       else if (searchFrontend == 'searxng') instancesList = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
       else if (searchFrontend == 'whoogle') instancesList = [...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects];
+      else if (searchFrontend == 'librex') instancesList = [...librexTorRedirectsChecks, ...librexTorCustomRedirects];
     }
     else if (searchProtocol == 'i2p') {
       if (searchFrontend == 'searx') instancesList = [...searxI2pRedirectsChecks, ...searxI2pCustomRedirects];
       else if (searchFrontend == 'searxng') instancesList = [...searxngI2pRedirectsChecks, ...searxngI2pCustomRedirects];
       else if (searchFrontend == 'whoogle') instancesList = [...whoogleI2pRedirectsChecks, ...whoogleI2pCustomRedirects];
+      else if (searchFrontend == 'librex') instancesList = [...librexI2pRedirectsChecks, ...librexI2pCustomRedirects];
     }
 
     const i = instancesList.indexOf(protocolHost);
@@ -388,14 +454,20 @@ function initDefaults() {
   return new Promise(async resolve => {
     fetch('/instances/data.json').then(response => response.text()).then(async data => {
       let dataJson = JSON.parse(data);
+      /*
       redirects.searx = dataJson.searx;
       redirects.searxng = dataJson.searxng;
       redirects.whoogle = dataJson.whoogle;
+      */
+      for (let i = 0; i < frontends.length; i++) {
+        redirects[frontends[i]] = dataJson[frontends[i]]
+      }
 
       browser.storage.local.get('cloudflareBlackList', async r => {
         whoogleNormalRedirectsChecks = [...redirects.whoogle.normal];
         searxNormalRedirectsChecks = [...redirects.searx.normal];
         searxngNormalRedirectsChecks = [...redirects.searxng.normal];
+        librexNormalRedirectsChecks = [...redirects.librex.normal];
         for (const instance of r.cloudflareBlackList) {
           let i;
 
@@ -407,6 +479,9 @@ function initDefaults() {
 
           i = searxngNormalRedirectsChecks.indexOf(instance);
           if (i > -1) searxngNormalRedirectsChecks.splice(i, 1);
+
+          i = librexNormalRedirectsChecks.indexOf(instance);
+          if (i > -1) librexNormalRedirectsChecks.splice(i, 1)
         }
         browser.storage.local.set({
           disableSearch: false,
@@ -424,6 +499,7 @@ function initDefaults() {
           whoogleI2pRedirectsChecks: [...redirects.whoogle.i2p],
           whoogleI2pCustomRedirects: [],
 
+
           searxNormalRedirectsChecks: searxNormalRedirectsChecks,
           searxNormalCustomRedirects: [],
 
@@ -433,6 +509,7 @@ function initDefaults() {
           searxI2pRedirectsChecks: [...redirects.searx.i2p],
           searxI2pCustomRedirects: [],
 
+
           searxngNormalRedirectsChecks: searxngNormalRedirectsChecks,
           searxngNormalCustomRedirects: [],
 
@@ -441,6 +518,16 @@ function initDefaults() {
 
           searxngI2pRedirectsChecks: [...redirects.searxng.i2p],
           searxngI2pCustomRedirects: [],
+
+
+          librexNormalRedirectsChecks: librexNormalRedirectsChecks,
+          librexNormalCustomRedirects: [],
+
+          librexTorRedirectsChecks: librexTorRedirectsChecks,
+          librexTorCustomRedirects: [],
+
+          librexI2pRedirectsChecks: librexI2pRedirectsChecks,
+          librexI2pCustomRedirects: []
         }, () => resolve())
       })
     })

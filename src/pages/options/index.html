@@ -1502,20 +1502,19 @@
             <option value="searxng">SearXNG</option>
             <option value="searx">SearX</option>
             <option value="whoogle">Whoogle</option>
+            <option value="librex">LibreX</option>
           </select>
         </div>
-        <div id="searx-whoogle">
-          <div class="some-block option-block">
-            <h4 data-localise="__MSG_protocol__">Protocol</h4>
-            <select id="search-protocol">
-              <option value="normal" data-localise="__MSG_normal__">Normal</option>
-              <option value="tor" data-localise="__MSG_tor__">Tor</option>
-              <option value="i2p" data-localise="__MSG_i2p__">I2P</option>
-            </select>
-          </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_protocol__">Protocol</h4>
+          <select id="search-protocol">
+            <option value="normal" data-localise="__MSG_normal__">Normal</option>
+            <option value="tor" data-localise="__MSG_tor__">Tor</option>
+            <option value="i2p" data-localise="__MSG_i2p__">I2P</option>
+          </select>
         </div>
         <div class="some-block">
-          <h4 data-localise="__MSG_searchNote__">Note: To use Search to its full potential, make LibRedirect as the Default Search Engine</h4>
+          <h4 data-localise="__MSG_searchNote__">Note: To use Search, make LibRedirect the Default Search Engine</h4>
         </div>
         <div id="searx">
           <hr>
@@ -1560,7 +1559,7 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://searx.onion" type="url">
+                            <input class="custom-instance" placeholder="http://searx.onion" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1581,7 +1580,7 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://searx.i2p" type="url">
+                            <input class="custom-instance" placeholder="http://searx.i2p" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1635,7 +1634,7 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://searxng.onion" type="url">
+                            <input class="custom-instance" placeholder="http://searxng.onion" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1656,7 +1655,7 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://searxng.i2p" type="url">
+                            <input class="custom-instance" placeholder="http://searxng.i2p" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1710,7 +1709,7 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://whoogle.onion" type="url">
+                            <input class="custom-instance" placeholder="http://whoogle.onion" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1731,7 +1730,82 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://whoogle.i2p" type="url">
+                            <input class="custom-instance" placeholder="http://whoogle.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+        </div>
+        <div id="librex">
+          <hr>
+          <div class="normal">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="https://librex.com" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-librex-label" for="latency-librex"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-librex" style="display:none;">
+                        </div>
+          </div>
+          <div class="tor">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://librex.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://librex.i2p" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
