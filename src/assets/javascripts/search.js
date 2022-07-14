@@ -66,7 +66,7 @@ function setRedirects(val) {
       if (c > -1) whoogleNormalRedirectsChecks.splice(c, 1);
 
       const d = librexNormalRedirectsChecks.indexOf(instance);
-      if (c > -1) librexNormalRedirectsChecks.splice(d, 1);
+      if (d > -1) librexNormalRedirectsChecks.splice(d, 1);
     }
     browser.storage.local.set({
       searchRedirects: redirects,
@@ -224,8 +224,9 @@ function pasteSearxCookies() {
     await init();
     if (disableSearch || searchFrontend != 'searx') { resolve(); return; }
     let checkedInstances;
-    if (searchProtocol == 'normal') checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects]
-    else if (searchProtocol == 'tor') checkedInstances = [...searxTorRedirectsChecks, ...searxTorCustomRedirects]
+    if (searchProtocol == 'normal') checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
+    else if (searchProtocol == 'tor') checkedInstances = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
+    else if (searchProtocol == 'i2p') checkedInstances = [...searxI2pRedirectsChecks, ...searxI2pCustomRedirects];
     utils.getCookiesFromStorage('searx', checkedInstances, 'advanced_search');
     utils.getCookiesFromStorage('searx', checkedInstances, 'autocomplete');
     utils.getCookiesFromStorage('searx', checkedInstances, 'categories');
@@ -294,8 +295,9 @@ function pasteSearxngCookies() {
     await init();
     if (disableSearch || searchFrontend != 'searxng', searchProtocol === undefined) { resolve(); return; }
     let checkedInstances;
-    if (searchProtocol == 'normal') checkedInstances = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects]
-    else if (searchProtocol == 'tor') checkedInstances = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects]
+    if (searchProtocol == 'normal') checkedInstances = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
+    else if (searchProtocol == 'tor') checkedInstances = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
+    else if (searchProtocol == 'i2p') checkedInstances = [...searxngI2pRedirectsChecks, ...searxngI2pCustomRedirects];
     utils.getCookiesFromStorage('searxng', checkedInstances, 'autocomplete');
     utils.getCookiesFromStorage('searxng', checkedInstances, 'categories');
     utils.getCookiesFromStorage('searxng', checkedInstances, 'disabled_engines');
@@ -319,6 +321,56 @@ function pasteSearxngCookies() {
   })
 }
 
+function initLibrexCookies(test, from) {
+  return new Promise(async resolve => {
+    await init();
+    let protocolHost = utils.protocolHost(from);
+    if (![
+      ...librexNormalRedirectsChecks,
+      ...librexNormalCustomRedirects,
+      ...librexTorRedirectsChecks,
+      ...librexTorCustomRedirects,
+      ...librexI2pRedirectsChecks,
+      ...librexI2pCustomRedirects,
+    ].includes(protocolHost)) { resolve(); return; }
+
+    if(!test) {
+      let checkedInstances;
+      if (searchProtocol == 'normal') checkedInstances = [...librexNormalRedirectsChecks, ...librexNormalCustomRedirects];
+      else if (searchProtocol == 'tor') checkedInstances = [...librexTorRedirectsChecks, ...librexTorCustomRedirects];
+      else if (searchProtocol == 'i2p') checkedInstances = [...librexI2pRedirectsChecks, ...librexI2pCustomRedirects];
+      await utils.copyCookie('librex', from, checkedInstances, 'bibliogram');
+      await utils.copyCookie('librex', from, checkedInstances, 'disable_special');
+      await utils.copyCookie('librex', from, checkedInstances, 'invidious');
+      await utils.copyCookie('librex', from, checkedInstances, 'libreddit');
+      await utils.copyCookie('librex', from, checkedInstances, 'nitter');
+      await utils.copyCookie('librex', from, checkedInstances, 'proxitok');
+      await utils.copyCookie('librex', from, checkedInstances, 'theme');
+      await utils.copyCookie('librex', from, checkedInstances, 'wikiless');
+    }
+    resolve(true);
+  })
+}
+
+function pasteLibrexCookies() {
+  return new Promise(async resolve => {
+    await init();
+    if (disableSearch || searchFrontend != 'librex', searchProtocol === undefined) { resolve(); return; }
+    let checkedInstances;
+    if (searchProtocol == 'normal') checkedInstances = [...librexNormalRedirectsChecks, ...librexNormalCustomRedirects];
+    else if (searchProtocol == 'tor') checkedInstances = [...librexTorRedirectsChecks, ...librexTorCustomRedirects];
+    else if (searchProtocol == 'i2p') checkedInstances = [...librexI2pRedirectsChecks, ...librexI2pCustomRedirects];
+    utils.getCookiesFromStorage('librex', checkedInstances, 'bibliogram');
+    utils.getCookiesFromStorage('librex', checkedInstances, 'disable_special');
+    utils.getCookiesFromStorage('librex', checkedInstances, 'invidious');
+    utils.getCookiesFromStorage('librex', checkedInstances, 'libreddit');
+    utils.getCookiesFromStorage('librex', checkedInstances, 'nitter');
+    utils.getCookiesFromStorage('librex', checkedInstances, 'proxitok');
+    utils.getCookiesFromStorage('librex', checkedInstances, 'theme');
+    utils.getCookiesFromStorage('librex', checkedInstances, 'wikiless');
+    resolve();
+  })
+}
 
 function redirect(url, disableOverride) {
   if (disableSearch && !disableOverride) return;
@@ -523,10 +575,10 @@ function initDefaults() {
           librexNormalRedirectsChecks: librexNormalRedirectsChecks,
           librexNormalCustomRedirects: [],
 
-          librexTorRedirectsChecks: librexTorRedirectsChecks,
+          librexTorRedirectsChecks: [...redirects.librex.tor],
           librexTorCustomRedirects: [],
 
-          librexI2pRedirectsChecks: librexI2pRedirectsChecks,
+          librexI2pRedirectsChecks: [...redirects.librex.i2p],
           librexI2pCustomRedirects: []
         }, () => resolve())
       })
@@ -540,6 +592,8 @@ export default {
   pasteSearxCookies,
   initSearxngCookies,
   pasteSearxngCookies,
+  initLibrexCookies,
+  pasteLibrexCookies,
   redirect,
   initDefaults,
   switchInstance,

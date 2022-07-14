@@ -81,6 +81,7 @@ twitterHelper.pasteNitterCookies();
 wikipediaHelper.pasteWikilessCookies();
 searchHelper.pasteSearxCookies();
 searchHelper.pasteSearxngCookies();
+searchHelper.pasteLibrexCookies();
 redditHelper.pasteLibredditCookies();
 redditHelper.pasteTedditCookies();
 tiktokHelper.pasteProxiTokCookies();

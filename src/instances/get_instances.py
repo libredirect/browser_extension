@@ -385,7 +385,7 @@ def librex():
     _list['i2p'] = []
 
     tmp = re.findall(
-            r"\| \[(?:(?:[a-zA-Z0-9]+\.)+[a-zA-Z]{2,}|✅)\]\((https?:\/{2}(?:[a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,})", r.text)
+            r"\| {1,2}\[(?:(?:[a-zA-Z0-9]+\.)+[a-zA-Z]{2,}|✅)\]\((https?:\/{2}(?:[a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,})", r.text)
     tmp = filterLastSlash(tmp)
 
     for item in tmp:

@@ -83,6 +83,7 @@ importSettingsElement.addEventListener("change",
 
                 await searchHelper.pasteSearxCookies();
                 await searchHelper.pasteSearxngCookies();
+                await searchHelper.pasteLibrexCookies();
 
                 await redditHelper.pasteLibredditCookies();
                 await redditHelper.pasteTedditCookies();

@@ -46,7 +46,7 @@ function updateInstances() {
       instagramHelper.setRedirects(instances.bibliogram);
       redditHelper.setRedirects({ 'libreddit': instances.libreddit, 'teddit': instances.teddit });
       translateHelper.setRedirects({ "simplyTranslate": instances.simplyTranslate, "lingva": instances.lingva });
-      searchHelper.setRedirects({ 'searx': instances.searx, 'searxng': instances.searxng, 'whoogle': instances.whoogle });
+      searchHelper.setRedirects({ 'searx': instances.searx, 'searxng': instances.searxng, 'whoogle': instances.whoogle, 'librex': instances.librex });
       wikipediaHelper.setRedirects(instances.wikiless);
       mediumHelper.setRedirects(instances.scribe);
       quoraHelper.setRedirects(instances.quetre);
@@ -384,6 +384,7 @@ function unify(test) {
 
           if (!result) result = await searchHelper.initSearxCookies(test, url);
           if (!result) result = await searchHelper.initSearxngCookies(test, url);
+          if (!result) result = await searchHelper.initLibrexCookies(test, url);
 
           if (!result) result = await tiktokHelper.initProxiTokCookies(test, url);
 
