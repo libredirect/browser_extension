@@ -376,6 +376,31 @@ def whoogle():
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Whoogle')
 
 
+def librex():
+    r = requests.get(
+        'https://raw.githubusercontent.com/hnhx/librex/main/README.md')
+    _list = {}
+    _list['normal'] = []
+    _list['tor'] = []
+    _list['i2p'] = []
+
+    tmp = re.findall(
+            r"\| \[(?:(?:[a-zA-Z0-9]+\.)+[a-zA-Z]{2,}|✅)\]\((https?:\/{2}(?:[a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,})", r.text)
+    tmp = filterLastSlash(tmp)
+
+    for item in tmp:
+        if item.strip() == "":
+            continue
+        elif item.endswith('.onion'):
+            _list['tor'].append(item)
+        elif item.endswith('.i2p'):
+            _list['i2p'].append(item)
+        else:
+            _list['normal'].append(item)
+    mightyList['librex'] = _list
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Librex')
+
+
 def rimgo():
     r = requests.get(
         'https://codeberg.org/video-prize-ranch/rimgo/raw/branch/main/instances.json')
@@ -432,6 +457,7 @@ simplytranslate()
 linvgatranslate()
 searx_searxng()
 whoogle()
+librex()
 rimgo()
 
 cloudflare = []
