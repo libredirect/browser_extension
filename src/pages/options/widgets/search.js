@@ -45,7 +45,7 @@ const search = document.getElementById('search_page');
 function changeFrontendsSettings() {
   for (let i = 0; i < frontends.length; i++) {
     const frontendDiv = document.getElementById(frontends[i])
-    if (frontends[i] == frontends.value) {
+    if (frontends[i] == frontend.value) {
       frontendDiv.style.display = 'block'
     } else {
       frontendDiv.style.display = 'none'
