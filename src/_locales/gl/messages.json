@@ -211,5 +211,8 @@
     },
     "unifySettings": {
         "message": "Unificar Axustes"
+    },
+    "loki": {
+        "message": "Lokinet"
     }
 }
