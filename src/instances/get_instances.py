@@ -14,13 +14,17 @@ mightyList = {}
 
 
 def filterLastSlash(urlList):
-    tmp = []
-    for i in urlList:
-        if i.endswith('/'):
-            tmp.append(i[:-1])
-            print(Fore.YELLOW + "Fixed " + Style.RESET_ALL + i)
-        else:
-            tmp.append(i)
+    tmp = {}
+    for x in urlList:
+        tmp[x] = {}
+        for y in urlList[x]:
+            tmp[x][y] = []
+            for z in urlList[x][y]:
+                if z.endswith('/'):
+                    tmp[x][y].append(z[:-1])
+                    print(Fore.YELLOW + "Fixed " + Style.RESET_ALL + z)
+                else:
+                    tmp[x][y].append(z)
     return tmp
 
 
@@ -177,7 +181,6 @@ def libreddit():
     tmp = re.findall(
         r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|", r.text)
 
-    tmp = filterLastSlash(tmp)
 
     for item in tmp:
         if item.endswith('.onion'):
@@ -249,7 +252,6 @@ def quetre():
     tmp = re.findall(
         r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|", r.text)
 
-    tmp = filterLastSlash(tmp)
 
     for item in tmp:
         if item.endswith('.onion'):
@@ -270,7 +272,6 @@ def libremdb():
     tmp = re.findall(
         r"\| ([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)*\|*[A-Z]{0,}.*\|.*\|", r.text)
 
-    tmp = filterLastSlash(tmp)
 
     for item in tmp:
         if item.strip() == "":
@@ -433,6 +434,7 @@ linvgatranslate()
 searx_searxng()
 whoogle()
 rimgo()
+mightyList = filterLastSlash(mightyList)
 
 cloudflare = []
 authenticate = []
