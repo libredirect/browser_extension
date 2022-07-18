@@ -211,5 +211,8 @@
     "ytmusic": {
         "message": "YT Music",
         "description": "used in the settings page"
+    },
+    "loki": {
+        "message": "Lokinet"
     }
 }
