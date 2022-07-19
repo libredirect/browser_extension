@@ -211,5 +211,8 @@
     "customPopup": {
         "message": "Dostosuj Wyskakujące Okienko",
         "description": "used in the settings page"
+    },
+    "loki": {
+        "message": "Lokinet"
     }
 }
