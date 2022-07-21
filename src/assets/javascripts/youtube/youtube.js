@@ -175,7 +175,10 @@ function redirect(url, type, initiator, disableOverride) {
   if ((isFreetube || isYatte) && sub_frame && isFrontendYoutube) return;
 
   if (isYatte && main_frame) return url.href.replace(/^https?:\/{2}/, 'yattee://');
-  if (isFreetube && main_frame) return `freetube://https://youtube.com${url.pathname}${url.search}`;
+  if (isFreetube && main_frame) {
+      if (url.host === "youtu.be") return `freetube://https://youtube.com/watch?v=${url.pathname.slice(1)}&${url.search.slice(1)}`
+      return `freetube://https://youtube.com${url.pathname}${url.search}`;
+  }
 
   if (isInvidious || ((isFreetube || isYatte) && sub_frame && isFrontendInvidious)) {
     let instancesList;
