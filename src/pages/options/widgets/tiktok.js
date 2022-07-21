@@ -1,53 +1,61 @@
 import utils from "../../../assets/javascripts/utils.js";
 
-const enable = document.getElementById("tiktok-enable");
-const protocol = document.getElementById("tiktok-protocol")
-const tiktok = document.getElementById('tiktok_page');
+// UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
 
-function changeProtocolSettings() {
-    let normalDiv = tiktok.getElementsByClassName("normal")[0];
-    let torDiv = tiktok.getElementsByClassName("tor")[0];
-    if (protocol.value == 'normal') {
-        normalDiv.style.display = 'block';
-        torDiv.style.display = 'none';
-    }
-    else if (protocol.value == 'tor') {
-        normalDiv.style.display = 'none';
-        torDiv.style.display = 'block';
+const frontends = new Array("proxiTok")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+const enable = document.getElementById("tiktok-enable");
+const tiktok = document.getElementById('tiktok_page');
+//const frontend = document.getElementById("tiktok-frontend");
+let protocol
+
+/*
+function changeFrontendsSettings() {
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        if (frontends[i] == frontend.value) {
+            frontendDiv.style.display = 'block'
+        } else {
+            frontendDiv.style.display = 'none'
+        }
     }
 }
+*/
 
-tiktok.addEventListener("change", () => {
-    browser.storage.local.set({
-        disableTiktok: !enable.checked,
-        tiktokProtocol: protocol.value,
-    });
-    changeProtocolSettings();
-})
+function changeProtocolSettings() {
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        for (let x = 0; x < protocols.length; x++) {
+            const protocolDiv = frontendDiv.getElementsByClassName(protocols[x])[0]
+            if (protocols[x] == protocol) {
+                protocolDiv.style.display = 'block'
+            } else {
+                protocolDiv.style.display = 'none'
+            }
+        }
+    }
+}
 
 browser.storage.local.get(
     [
         "disableTiktok",
-        "tiktokProtocol",
+        "protocol"
     ],
     r => {
         enable.checked = !r.disableTiktok;
-        protocol.value = r.tiktokProtocol;
+        protocol = r.protocol;
         changeProtocolSettings();
-        let normalDiv = document.getElementsByClassName("normal")[0];
-        let torDiv = document.getElementsByClassName("tor")[0];
-        if (r.tiktokProtocol == 'normal') {
-            normalDiv.style.display = 'block';
-            torDiv.style.display = 'none';
-        }
-        else if (r.tiktokProtocol == 'tor') {
-            normalDiv.style.display = 'none';
-            torDiv.style.display = 'block';
-        }
-    }
+      }
 )
 
-utils.processDefaultCustomInstances('tiktok', 'proxiTok', 'normal', document);
-utils.processDefaultCustomInstances('tiktok', 'proxiTok', 'tor', document);
+tiktok.addEventListener("change", () => {
+    browser.storage.local.set({ disableTiktok: !enable.checked });
+})
 
-utils.latency('tiktok', 'proxiTok', document, location)
+for (let i = 0; i < frontends.length; i++) {
+    for (let x = 0; x < protocols.length; x++){
+        utils.processDefaultCustomInstances('tiktok', frontends[i], protocols[x], document)
+    }
+    utils.latency('tiktok', frontends[i], document, location)
+}

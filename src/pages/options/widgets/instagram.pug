@@ -7,12 +7,6 @@ section#instagram_page.option-block
         h4(data-localise="__MSG_enable__") Enable
         input#instagram-enable(type="checkbox")
 
-    .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#instagram-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-
     #bibliogram
         hr
         .normal
@@ -21,6 +15,13 @@ section#instagram_page.option-block
             include ../../widgets/latency.pug
             +latency('bibliogram')
         .tor
+            include ../../widgets/instances.pug
             +instances('https://bibliogram.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://bibliogram.onion')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://bibliogram.loki')
 
     script(type="module" src="./widgets/instagram.js")

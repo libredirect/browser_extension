@@ -103,6 +103,20 @@ def piped():
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Piped')
 
 
+def pipedMaterial():
+    r = requests.get(
+        'https://raw.githubusercontent.com/mmjee/Piped-Material/master/README.md')
+
+    tmp = re.findall(
+            r"\| (https?:\/{2}(?:.+\.)+[a-zA-Z0-9]*) +\|", r.text)
+    pipedMaterialList = {}
+    pipedMaterialList['normal'] = []
+    for item in tmp:
+        pipedMaterialList['normal'].append(item)
+    mightyList['pipedMaterial'] = pipedMaterialList
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'pipedMaterial')
+
+
 def proxitok():
     r = requests.get(
         'https://raw.githubusercontent.com/wiki/pablouser1/ProxiTok/Public-instances.md')
@@ -181,9 +195,8 @@ def libreddit():
     tmp = re.findall(
         r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|", r.text)
 
-
     for item in tmp:
-        if item.endswith('.onion'):
+        if re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item):
             libredditList['tor'].append(item)
         else:
             libredditList['normal'].append(item)
@@ -220,11 +233,14 @@ def wikiless():
     wikilessList['i2p'] = []
     for item in rJson:
         if 'url' in item:
-            wikilessList['normal'].append(item['url'])
+            if item['url'].strip() != "":
+                wikilessList['normal'].append(item['url'])
         if 'onion' in item:
-            wikilessList['tor'].append(item['onion'])
+            if item['onion'].strip() != "":
+                wikilessList['tor'].append(item['onion'])
         if 'i2p' in item:
-            wikilessList['i2p'].append(item['i2p'])
+            if item['i2p'].strip() != "":
+                wikilessList['i2p'].append(item['i2p'])
     mightyList['wikiless'] = wikilessList
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Wikiless')
 
@@ -254,7 +270,7 @@ def quetre():
 
 
     for item in tmp:
-        if item.endswith('.onion'):
+        if re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item):
             _list['tor'].append(item)
         else:
             _list['normal'].append(item)
@@ -276,7 +292,7 @@ def libremdb():
     for item in tmp:
         if item.strip() == "":
             continue
-        if item.endswith('.onion'):
+        if re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item):
             _list['tor'].append(item)
         else:
             _list['normal'].append(item)
@@ -337,12 +353,12 @@ def searx_searxng():
     searxngList['i2p'] = []
     searxngList['normal'] = []
     for item in rJson['instances']:
-        if item[:-1].endswith('.onion'):
+        if re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item[:-1]):
             if (rJson['instances'][item].get('generator') == 'searxng'):
                 searxngList['tor'].append(item[:-1])
             else:
                 searxList['tor'].append(item[:-1])
-        elif item[:-1].endswith('.i2p'):
+        elif re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+i2p(?:\/[a-zA-Z0-9]+)*\/?", item[:-1]):
             if (rJson['instances'][item].get('generator') == 'searxng'):
                 searxngList['i2p'].append(item[:-1])
             else:
@@ -367,9 +383,9 @@ def whoogle():
     whoogleList['tor'] = []
     whoogleList['i2p'] = []
     for item in tmpList:
-        if item.endswith('.onion'):
+        if re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item):
             whoogleList['tor'].append(item)
-        elif item.endswith('.i2p'):
+        elif re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+i2p(?:\/[a-zA-Z0-9]+)*\/?", item):
             whoogleList['i2p'].append(item)
         else:
             whoogleList['normal'].append(item)
@@ -387,14 +403,13 @@ def librex():
 
     tmp = re.findall(
             r"\| {1,2}\[(?:(?:[a-zA-Z0-9]+\.)+[a-zA-Z]{2,}|✅)\]\((https?:\/{2}(?:[a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,})", r.text)
-    tmp = filterLastSlash(tmp)
 
     for item in tmp:
         if item.strip() == "":
             continue
-        elif item.endswith('.onion'):
+        elif re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item):
             _list['tor'].append(item)
-        elif item.endswith('.i2p'):
+        elif re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+i2p(?:\/[a-zA-Z0-9]+)*\/?", item):
             _list['i2p'].append(item)
         else:
             _list['normal'].append(item)
@@ -421,6 +436,29 @@ def rimgo():
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Rimgo')
 
 
+def librarian():
+    r = requests.get(
+        'https://codeberg.org/librarian/librarian/raw/branch/main/instances.json')
+    rJson = json.loads(r.text)
+    librarianList = {}
+    librarianList['normal'] = []
+    librarianList['tor'] = []
+    librarianList['i2p'] = []
+    instances = rJson['instances']
+    for item in instances:
+        url = item['url']
+        if url.strip() == "":
+            continue
+        elif re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", url):
+            librarianList['tor'].append(url)
+        elif re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+i2p(?:\/[a-zA-Z0-9]+)*\/?", url):
+            librarianList['i2p'].append(url)
+        else:
+            librarianList['normal'].append(url)
+    mightyList['librarian'] = librarianList
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Librarian')
+
+
 def peertube():
     r = requests.get(
         'https://instances.joinpeertube.org/api/v1/instances?start=0&count=1045&sort=-createdAt')
@@ -444,6 +482,7 @@ def isValid(url):  # This code is contributed by avanitrachhadiya2155
 
 invidious()
 piped()
+pipedMaterial()
 proxitok()
 send()
 nitter()
@@ -460,6 +499,7 @@ searx_searxng()
 whoogle()
 librex()
 rimgo()
+librarian()
 mightyList = filterLastSlash(mightyList)
 
 cloudflare = []

@@ -6,18 +6,22 @@ const targets = [
     /^https?:\/{2}(www\.|)reuters\.com.*/
 ];
 
-let redirects = {
-    "neuters": {
-        "normal": [
-            'https://neuters.de',
-        ],
-        "tor": []
+let redirects = {}
+
+const frontends = new Array("neuters")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+for (let i = 0; i < frontends.length; i++) {
+    redirects[frontends[i]] = {}
+    for (let x = 0; x < protocols.length; x++) {
+        redirects[frontends[i]][protocols[x]] = []
     }
 }
 
 let
     disableReuters,
-    reutersProtocol,
+    protocol,
+    protocolFallback,
     reutersRedirects,
     neutersNormalRedirectsChecks,
     neutersNormalCustomRedirects,
@@ -29,7 +33,8 @@ function init() {
         browser.storage.local.get(
             [
                 "disableReuters",
-                "reutersProtocol",
+                "protocol",
+                "protocolFallback",
                 "reutersRedirects",
                 "neutersNormalRedirectsChecks",
                 "neutersNormalCustomRedirects",
@@ -38,7 +43,8 @@ function init() {
             ],
             r => {
                 disableReuters = r.disableReuters;
-                reutersProtocol = r.reutersProtocol;
+                protocol = r.protocol;
+                protocolFallback = r.protocolFallback;
                 reutersRedirects = r.reutersRedirects;
                 neutersNormalRedirectsChecks = r.neutersNormalRedirectsChecks;
                 neutersNormalCustomRedirects = r.neutersNormalCustomRedirects;
@@ -63,9 +69,11 @@ function redirect(url, type, initiator, disableOverride) {
     if (initiator && (all.includes(initiator.origin) || targets.includes(initiator.host))) return;
     if (!targets.some(rx => rx.test(url.href))) return;
 
-    let instancesList;
-    if (reutersProtocol == 'normal') instancesList = [...neutersNormalRedirectsChecks, ...neutersNormalCustomRedirects];
-    if (reutersProtocol == 'tor') instancesList = [...neutersTorRedirectsChecks, ...neutersTorCustomRedirects];
+    let instancesList = [];
+    if (protocol == 'tor') instancesList = [...neutersTorRedirectsChecks, ...neutersTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...neutersNormalRedirectsChecks, ...neutersNormalCustomRedirects];
+    }
     if (instancesList.length === 0) return;
 
     const randomInstance = utils.getRandomInstance(instancesList);
@@ -87,7 +95,6 @@ function initDefaults() {
     return new Promise(resolve => {
         browser.storage.local.set({
             disableReuters: true,
-            reutersProtocol: "normal",
 
             reutersRedirects: redirects,
 

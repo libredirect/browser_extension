@@ -1,53 +1,61 @@
 import utils from "../../../assets/javascripts/utils.js";
 
-const enable = document.getElementById("imgur-enable");
-const protocol = document.getElementById("imgur-protocol")
-const imgur = document.getElementById('imgur_page');
+// UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
 
-const normalDiv = imgur.getElementsByClassName("normal")[0];
-const torDiv = imgur.getElementsByClassName("tor")[0];
-const i2pDiv = imgur.getElementsByClassName("i2p")[0];
+const frontends = new Array("rimgo")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+const enable = document.getElementById("imgur-enable");
+const imgur = document.getElementById('imgur_page');
+//const frontend = document.getElementById("imgur-frontend");
+let protocol
+
+/*
+function changeFrontendsSettings() {
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        if (frontends[i] == frontend.value) {
+            frontendDiv.style.display = 'block'
+        } else {
+            frontendDiv.style.display = 'none'
+        }
+    }
+}
+*/
 
 function changeProtocolSettings() {
-    if (protocol.value == 'normal') {
-        normalDiv.style.display = 'block';
-        torDiv.style.display = 'none';
-        i2pDiv.style.display = 'none';
-    }
-    else if (protocol.value == 'tor') {
-        normalDiv.style.display = 'none';
-        torDiv.style.display = 'block';
-        i2pDiv.style.display = 'none';
-    }
-    else if (protocol.value == 'i2p') {
-        normalDiv.style.display = 'none';
-        torDiv.style.display = 'none';
-        i2pDiv.style.display = 'block';
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        for (let x = 0; x < protocols.length; x++) {
+            const protocolDiv = frontendDiv.getElementsByClassName(protocols[x])[0]
+            if (protocols[x] == protocol) {
+                protocolDiv.style.display = 'block'
+            } else {
+                protocolDiv.style.display = 'none'
+            }
+        }
     }
 }
 
 browser.storage.local.get(
     [
         "disableImgur",
-        "imgurProtocol",
+        "protocol"
     ],
     r => {
         enable.checked = !r.disableImgur;
-        protocol.value = r.imgurProtocol;
+        protocol = r.protocol;
         changeProtocolSettings();
     }
 );
 
 imgur.addEventListener("change", () => {
-    changeProtocolSettings();
-    browser.storage.local.set({
-        disableImgur: !enable.checked,
-        imgurProtocol: protocol.value,
-    });
+    browser.storage.local.set({ disableImgur: !enable.checked });
 })
 
-utils.processDefaultCustomInstances('imgur', 'rimgo', 'normal', document);
-utils.processDefaultCustomInstances('imgur', 'rimgo', 'tor', document);
-utils.processDefaultCustomInstances('imgur', 'rimgo', 'i2p', document);
-
-utils.latency('imgur', 'rimgo', document, location)
+for (let i = 0; i < frontends.length; i++) {
+    for (let x = 0; x < protocols.length; x++){
+        utils.processDefaultCustomInstances('imgur', frontends[i], protocols[x], document)
+    }
+    utils.latency('imgur', frontends[i], document, location)
+}

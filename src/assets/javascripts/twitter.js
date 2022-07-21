@@ -9,12 +9,17 @@ const targets = [
   /^https?:\/{2}t\.co/
 ];
 
-let redirects = {
-  "nitter": {
-    "normal": [],
-    "tor": []
-  },
-};
+const frontends = new Array("nitter")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+let redirects = {}
+
+for (let i = 0; i < frontends.length; i++) {
+    redirects[frontends[i]] = {}
+    for (let x = 0; x < protocols.length; x++) {
+        redirects[frontends[i]][protocols[x]] = []
+    }
+}
 
 function setRedirects(val) {
   browser.storage.local.get(['cloudflareBlackList', 'authenticateBlackList'], r => {
@@ -34,7 +39,8 @@ function setRedirects(val) {
 
 let
   disableTwitter,
-  twitterProtocol,
+  protocol,
+  protocolFallback,
   twitterRedirects,
   twitterRedirectType,
   nitterNormalRedirectsChecks,
@@ -47,7 +53,8 @@ function init() {
     browser.storage.local.get(
       [
         "disableTwitter",
-        "twitterProtocol",
+        "protocol",
+        "protocolFallback",
         "twitterRedirects",
         "twitterRedirectType",
         "nitterNormalRedirectsChecks",
@@ -57,7 +64,8 @@ function init() {
       ],
       r => {
         disableTwitter = r.disableTwitter;
-        twitterProtocol = r.twitterProtocol;
+        protocol = r.protocol;
+        protocolFallback = r.protocolFallback;
         twitterRedirects = r.twitterRedirects;
         twitterRedirectType = r.twitterRedirectType;
         nitterNormalRedirectsChecks = r.nitterNormalRedirectsChecks;
@@ -90,9 +98,11 @@ function redirect(url, type, initiator, disableOverride) {
   if (twitterRedirectType == 'sub_frame' && type == "main_frame") return;
   if (twitterRedirectType == 'main_frame' && type != "main_frame") return;
 
-  let instancesList;
-  if (twitterProtocol == 'normal') instancesList = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
-  else if (twitterProtocol == 'tor') instancesList = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+  let instancesList = [];
+  if (protocol == 'tor') instancesList = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+  if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+    instancesList = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
+  }
   if (instancesList.length === 0) return;
 
   const randomInstance = utils.getRandomInstance(instancesList);
@@ -125,9 +135,11 @@ function switchInstance(url, disableOverride) {
     if (disableTwitter && !disableOverride) { resolve(); return; }
     const protocolHost = utils.protocolHost(url);
     if (!all().includes(protocolHost)) { resolve(); return; }
-    let instancesList;
-    if (twitterProtocol == 'normal') instancesList = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
-    else if (twitterProtocol == 'tor') instancesList = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+    let instancesList = [];
+    if (protocol == 'tor') instancesList = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+      instancesList = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
+    }
 
     let index = instancesList.indexOf(protocolHost);
     if (index > -1) instancesList.splice(index, 1);
@@ -164,9 +176,11 @@ function initNitterCookies(test, from) {
     if (!all().includes(protocolHost)
     ) { resolve(); return; }
     if (!test) {
-      let checkedInstances;
-      if (twitterProtocol == 'normal') checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects]
-      else if (twitterProtocol == 'tor') checkedInstances = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects]
+      let checkedInstances = [];
+      if (protocol == 'tor') checkedInstances = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+      if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+        checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
+      }
       await utils.copyCookie('nitter', from, checkedInstances, 'theme');
       await utils.copyCookie('nitter', from, checkedInstances, 'infiniteScroll');
       await utils.copyCookie('nitter', from, checkedInstances, 'stickyProfile');
@@ -194,10 +208,12 @@ function initNitterCookies(test, from) {
 function pasteNitterCookies() {
   return new Promise(async resolve => {
     await init();
-    if (disableTwitter || twitterProtocol === undefined) { resolve(); return; }
-    let checkedInstances;
-    if (twitterProtocol == 'normal') checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects]
-    else if (twitterProtocol == 'tor') checkedInstances = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects]
+    if (disableTwitter || protocol === undefined) { resolve(); return; }
+    let checkedInstances = [];
+    if (protocol == 'tor') checkedInstances = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+    if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+      checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
+    }
     utils.getCookiesFromStorage('nitter', checkedInstances, 'theme');
     utils.getCookiesFromStorage('nitter', checkedInstances, 'infiniteScroll');
     utils.getCookiesFromStorage('nitter', checkedInstances, 'stickyProfile');
@@ -226,7 +242,9 @@ function initDefaults() {
   return new Promise(resolve => {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
       let dataJson = JSON.parse(data);
-      redirects.nitter = dataJson.nitter;
+      for (let i = 0; i < frontends.length; i++) {
+        redirects[frontends[i]] = dataJson[frontends[i]]
+      }
       browser.storage.local.get(['cloudflareBlackList', 'authenticateBlackList'], async r => {
         nitterNormalRedirectsChecks = [...redirects.nitter.normal];
         for (const instance of [...r.cloudflareBlackList, ...r.authenticateBlackList]) {
@@ -236,7 +254,6 @@ function initDefaults() {
         browser.storage.local.set({
           disableTwitter: false,
           twitterRedirects: redirects,
-          twitterProtocol: "normal",
           twitterRedirectType: "both",
 
           nitterNormalRedirectsChecks: nitterNormalRedirectsChecks,

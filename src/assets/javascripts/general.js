@@ -44,6 +44,8 @@ async function initDefaults() {
             ],
             autoRedirect: false,
             firstPartyIsolate: false,
+            protocol: "normal",
+            protocolFallback: true
         }, () => resolve())
     )
 }

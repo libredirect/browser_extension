@@ -12,12 +12,6 @@ section#reddit_page.option-block
             option(value="libreddit") Libreddit
             option(value="teddit") Teddit
 
-    .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#reddit-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-
     #libreddit
         hr
         .normal
@@ -27,7 +21,13 @@ section#reddit_page.option-block
             +latency('libreddit')
         .tor
             include ../../widgets/instances.pug
-            +instances('https://libreddit.onion')
+            +instances('http://libreddit.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://libreddit.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://libreddit.loki')
 
     #teddit
         hr
@@ -37,6 +37,12 @@ section#reddit_page.option-block
             +latency('teddit')
         .tor
             include ../../widgets/instances.pug
-            +instances('https://teddit.onion')
+            +instances('http://teddit.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://teddit.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://teddit.loki')
 
     script(type="module" src="./widgets/reddit.js")

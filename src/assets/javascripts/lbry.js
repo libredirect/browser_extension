@@ -4,44 +4,36 @@ import utils from './utils.js'
 
 let targets = ["odysee.com"];
 
-let redirects = {
-    "librarian": {
-        "normal": [
-            "https://lbry.bcow.xyz",
-            "https://odysee.076.ne.jp",
-            "https://lbry.ix.tc",
-            "https://librarian.pussthecat.org",
-            "https://lbry.mutahar.rocks",
-            "https://librarian.esmailelbob.xyz",
-        ],
-        "tor": [
-            "http://ecc5mi5ncdw6mxhjz6re6g2uevtpbzxjvxgrxia2gyvrlnil3srbnhyd.onion",
-            "http://vrmbc4brkgkaysmi3fenbzkayobxjh24slmhtocambn3ewe62iuqt3yd.onion",
-        ]
+const frontends = new Array("librarian")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+let redirects = {}
+
+for (let i = 0; i < frontends.length; i++) {
+    redirects[frontends[i]] = {}
+    for (let x = 0; x < protocols.length; x++) {
+        redirects[frontends[i]][protocols[x]] = []
     }
 }
 
 function setRedirects(val) {
-    redirects.librarian = val;
-    browser.storage.local.set({ lbryTargetsRedirects: redirects })
-    for (const item of librarianNormalRedirectsChecks)
-        if (!redirects.librarian.normal.includes(item)) {
-            var index = librarianNormalRedirectsChecks.indexOf(item);
-            if (index !== -1) librarianNormalRedirectsChecks.splice(index, 1);
+    browser.storage.local.get('cloudflareBlackList', r => {
+        redirects.librarian = val;
+        librarianNormalRedirectsChecks = [...redirects.librarian.normal];
+        for (const instance of r.cloudflareBlackList) {
+            const a = librarianNormalRedirectsChecks.indexOf(instance);
+            if (a > -1) librarianNormalRedirectsChecks.splice(a, 1);
         }
-    browser.storage.local.set(librarianNormalRedirectsChecks);
-
-    for (const item of librarianTorRedirectsChecks)
-        if (!redirects.librarian.normal.includes(item)) {
-            var index = librarianTorRedirectsChecks.indexOf(item);
-            if (index !== -1) librarianTorRedirectsChecks.splice(index, 1);
-        }
-    browser.storage.local.set(librarianTorRedirectsChecks)
+        browser.storage.local.set({
+            lbryTargetsRedirects: redirects,
+            librarianNormalRedirectsChecks
+        })
+    })
 }
 
 let
     disableLbryTargets,
-    lbryTargetsProtocol,
+    protocol,
     lbryTargetsRedirects,
     librarianNormalRedirectsChecks,
     librarianNormalCustomRedirects,
@@ -53,7 +45,7 @@ function init() {
         browser.storage.local.get(
             [
                 "disableLbryTargets",
-                "lbryTargetsProtocol",
+                "protocol",
                 "lbryTargetsRedirects",
                 "librarianNormalRedirectsChecks",
                 "librarianNormalCustomRedirects",
@@ -62,7 +54,7 @@ function init() {
             ],
             r => {
                 disableLbryTargets = r.disableLbryTargets;
-                lbryTargetsProtocol = r.lbryTargetsProtocol;
+                protocol = r.protocol;
                 lbryTargetsRedirects = r.lbryTargetsRedirects;
                 librarianNormalRedirectsChecks = r.librarianNormalRedirectsChecks;
                 librarianNormalCustomRedirects = r.librarianNormalCustomRedirects;
@@ -92,9 +84,11 @@ function switchInstance(url, disableOverride) {
         const protocolHost = utils.protocolHost(url);
         if (!all().includes(protocolHost)) { resolve(); return; }
 
-        let instancesList;
-        if (lbryTargetsProtocol == 'normal') instancesList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects];
-        else if (lbryTargetsProtocol == 'tor') instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects];
+        let instancesList = [];
+        if (protocol == 'tor') instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects];
+        if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+            instancesList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects];
+        }
 
         const i = instancesList.indexOf(protocolHost);
         if (i > -1) instancesList.splice(i, 1);
@@ -111,9 +105,11 @@ function redirect(url, type, initiator, disableOverride) {
     if (!targets.includes(url.host)) return;
     if (type != "main_frame") return;
 
-    let instancesList;
-    if (lbryTargetsProtocol == 'normal') instancesList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects];
-    if (lbryTargetsProtocol == 'tor') instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects];
+    let instancesList = [];
+    if (protocol == 'tor') instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects];
+    }
     if (instancesList.length === 0) return;
 
     const randomInstance = utils.getRandomInstance(instancesList);
@@ -121,31 +117,24 @@ function redirect(url, type, initiator, disableOverride) {
 }
 
 function initDefaults() {
-    return new Promise(resolve => {
-        browser.storage.local.get('cloudflareBlackList', async r => {
-            librarianNormalRedirectsChecks = [...redirects.librarian.normal];
-            for (const instance of r.cloudflareBlackList) {
-                let i;
-
-                i = librarianNormalRedirectsChecks.indexOf(instance);
-                if (i > -1) librarianNormalRedirectsChecks.splice(i, 1);
+    return new Promise(async resolve => {
+        fetch('/instances/data.json').then(response => response.text()).then(async data => {
+            let dataJson = JSON.parse(data);
+            for (let i = 0; i < frontends.length; i++) {
+                redirects[frontends[i]] = dataJson[frontends[i]]
             }
             browser.storage.local.set({
                 disableLbryTargets: true,
-                lbryTargetsRedirects: {
-                    'librarian': redirects.librarian
-                },
+
+                lbryTargetsRedirects: redirects,
 
                 librarianNormalRedirectsChecks: librarianNormalRedirectsChecks,
                 librarianNormalCustomRedirects: [],
 
                 librarianTorRedirectsChecks: [...redirects.librarian.tor],
                 librarianTorCustomRedirects: [],
-
-                lbryTargetsProtocol: "normal",
-            }, () => resolve())
-
-        })
+            }, () => resolve());
+        });
     })
 }
 

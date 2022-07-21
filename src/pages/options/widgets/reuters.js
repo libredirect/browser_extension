@@ -1,43 +1,61 @@
 import utils from "../../../assets/javascripts/utils.js";
 
-const enable = document.getElementById("reuters-enable");
-const protocol = document.getElementById("reuters-protocol")
-const reuters = document.getElementById('reuters_page');
+// UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
 
-function changeProtocolSettings() {
-    const normalDiv = reuters.getElementsByClassName("normal")[0];
-    const torDiv = reuters.getElementsByClassName("tor")[0];
-    if (protocol.value == 'normal') {
-        
-        normalDiv.style.display = 'block';
-        torDiv.style.display = 'none';
-    }
-    else if (protocol.value == 'tor') {
-        normalDiv.style.display = 'none';
-        torDiv.style.display = 'block';
+const frontends = new Array("neuters")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+const enable = document.getElementById("reuters-enable");
+const reuters = document.getElementById('reuters_page');
+//const frontend = document.getElementById("reuters-frontend");
+let protocol
+
+/*
+function changeFrontendsSettings() {
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        if (frontends[i] == frontend.value) {
+            frontendDiv.style.display = 'block'
+        } else {
+            frontendDiv.style.display = 'none'
+        }
     }
 }
+*/
 
-reuters.addEventListener("change", () => {
-    changeProtocolSettings();
-    browser.storage.local.set({
-        disableReuters: !enable.checked,
-        reutersProtocol: protocol.value,
-    })
-})
+function changeProtocolSettings() {
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        for (let x = 0; x < protocols.length; x++) {
+            const protocolDiv = frontendDiv.getElementsByClassName(protocols[x])[0]
+            if (protocols[x] == protocol) {
+                protocolDiv.style.display = 'block'
+            } else {
+                protocolDiv.style.display = 'none'
+            }
+        }
+    }
+}
 
 browser.storage.local.get(
     [
         "disableReuters",
-        "reutersProtocol"
+        "protocol"
     ],
     r => {
         enable.checked = !r.disableReuters;
-        protocol.value = r.reutersProtocol;
+        protocol = r.protocol;
         changeProtocolSettings();
     }
 )
 
-utils.processDefaultCustomInstances('reuters', 'neuters', 'normal', document);
-utils.processDefaultCustomInstances('reuters', 'neuters', 'tor', document);
-utils.latency('reuters', 'neuters', document, location)
+reuters.addEventListener("change", () => {
+    browser.storage.local.set({ disableReuters: !enable.checked })
+})
+
+for (let i = 0; i < frontends.length; i++) {
+    for (let x = 0; x < protocols.length; x++){
+        utils.processDefaultCustomInstances('reuters', frontends[i], protocols[x], document)
+    }
+    utils.latency('reuters', frontends[i], document, location)
+}

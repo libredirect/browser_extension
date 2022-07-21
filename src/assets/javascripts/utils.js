@@ -53,6 +53,7 @@ function updateInstances() {
       libremdbHelper.setRedirects(instances.libremdb);
       sendTargetsHelper.setRedirects(instances.send);
       tiktokHelper.setRedirects(instances.proxiTok);
+      lbryHelper.setRedirects(instances.librarian);
 
       console.info("Successfully updated Instances");
       resolve(true); return;
@@ -119,13 +120,13 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
     for (const element of nameCheckListElement.getElementsByTagName('input'))
       element.checked = nameDefaultRedirects.includes(element.className)
     if (nameDefaultRedirects.length == 0) isTrue = false;
-    nameProtocolElement.getElementsByClassName('toogle-all')[0].checked = isTrue;
+    nameProtocolElement.getElementsByClassName('toggle-all')[0].checked = isTrue;
   }
   nameCheckListElement.innerHTML =
     [
       `<div>
         <x data-localise="__MSG_toggleAll__">Toggle All</x>
-        <input type="checkbox" class="toogle-all"/>
+        <input type="checkbox" class="toggle-all"/>
       </div>`,
       ...redirects[name][protocol].map(
         x => {
@@ -153,7 +154,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
   localise.localisePage();
 
   calcNameCheckBoxes();
-  nameProtocolElement.getElementsByClassName('toogle-all')[0].addEventListener("change", async event => {
+  nameProtocolElement.getElementsByClassName('toggle-all')[0].addEventListener("change", async event => {
     if (event.target.checked)
       nameDefaultRedirects = [...redirects[name][protocol]];
     else
@@ -164,7 +165,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
   });
 
   for (let element of nameCheckListElement.getElementsByTagName('input')) {
-    if (element.className != 'toogle-all')
+    if (element.className != 'toggle-all')
       nameProtocolElement.getElementsByClassName(element.className)[0].addEventListener("change", async event => {
         if (event.target.checked)
           nameDefaultRedirects.push(element.className)

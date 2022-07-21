@@ -1,7 +1,6 @@
 window.browser = window.browser || window.chrome;
 import utils from './utils.js'
 
-
 const targets = [
   // /(?:.*\.)*(?<!(link\.|cdn\-images\-\d+\.))medium\.com(\/.*)?$/,
   /^medium\.com/,
@@ -28,12 +27,18 @@ const targets = [
   /^ writingcooperative\.com /,
 ];
 
-let redirects = {
-  "scribe": {
-    "normal": [],
-    "tor": []
-  }
-};
+const frontends = new Array("scribe")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+let redirects = {};
+
+for (let i = 0; i < frontends.length; i++) {
+    redirects[frontends[i]] = {}
+    for (let x = 0; x < protocols.length; x++) {
+        redirects[frontends[i]][protocols[x]] = []
+    }
+}
+
 function setRedirects(val) {
   browser.storage.local.get('cloudflareBlackList', r => {
     redirects.scribe = val;
@@ -56,7 +61,8 @@ let
   scribeNormalCustomRedirects,
   scribeTorRedirectsChecks,
   scribeTorCustomRedirects,
-  mediumProtocol;
+  protocol,
+  protocolFallback;
 
 function init() {
   return new Promise(resolve => {
@@ -68,7 +74,8 @@ function init() {
         "scribeNormalCustomRedirects",
         "scribeTorRedirectsChecks",
         "scribeTorCustomRedirects",
-        "mediumProtocol"
+        "protocol",
+        "protocolFallback"
       ],
       r => {
         disableMedium = r.disableMedium;
@@ -77,7 +84,8 @@ function init() {
         scribeNormalCustomRedirects = r.scribeNormalCustomRedirects;
         scribeTorRedirectsChecks = r.scribeTorRedirectsChecks;
         scribeTorCustomRedirects = r.scribeTorCustomRedirects;
-        mediumProtocol = r.mediumProtocol;
+        protocol = r.protocol;
+        protocolFallback = r.protocolFallback;
         resolve();
       }
     )
@@ -102,10 +110,12 @@ function redirect(url, type, initiator, disableOverride) {
   if (!targets.some(rx => rx.test(url.host))) return;
   if (/^\/(@[a-zA-Z.]{0,}(\/|)$)/.test(url.pathname)) return;
 
-  let instancesList;
-  if (mediumProtocol == 'normal') instancesList = [...scribeNormalRedirectsChecks, ...scribeNormalCustomRedirects];
-  else if (mediumProtocol == 'tor') instancesList = [...scribeTorRedirectsChecks, ...scribeTorCustomRedirects];
-  if (instancesList.length === 0) return;
+  let instancesList = [];
+  if (protocol == 'tor') instancesList = [...scribeTorRedirectsChecks, ...scribeTorCustomRedirects];
+  if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+    instancesList = [...scribeNormalRedirectsChecks, ...scribeNormalCustomRedirects];
+  }
+  if (instancesList.length === 0) { return; }
 
   const randomInstance = utils.getRandomInstance(instancesList)
   return `${randomInstance}${url.pathname}${url.search}`;
@@ -125,9 +135,11 @@ function switchInstance(url, disableOverride) {
     ];
     if (!all.includes(protocolHost)) { resolve(); return; }
 
-    let instancesList;
-    if (mediumProtocol == 'normal') instancesList = [...scribeNormalCustomRedirects, ...scribeNormalRedirectsChecks];
-    else if (mediumProtocol == 'tor') instancesList = [...scribeTorCustomRedirects, ...scribeTorRedirectsChecks];
+    let instancesList = [];
+    if (protocol == 'tor') instancesList = [...scribeTorRedirectsChecks, ...scribeTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+      instancesList = [...scribeNormalRedirectsChecks, ...scribeNormalCustomRedirects];
+    }
 
     const i = instancesList.indexOf(protocolHost);
     if (i > -1) instancesList.splice(i, 1);
@@ -142,7 +154,9 @@ function initDefaults() {
   return new Promise(resolve => {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
       let dataJson = JSON.parse(data);
-      redirects.scribe = dataJson.scribe;
+      for (let i = 0; i < frontends.length; i++) {
+        redirects[frontends[i]] = dataJson[frontends[i]]
+      }
       browser.storage.local.get('cloudflareBlackList',
         async r => {
           scribeNormalRedirectsChecks = [...redirects.scribe.normal];
@@ -159,8 +173,6 @@ function initDefaults() {
 
             scribeTorRedirectsChecks: [...redirects.scribe.tor],
             scribeTorCustomRedirects: [],
-
-            mediumProtocol: "normal",
           }, () => resolve())
         })
     })

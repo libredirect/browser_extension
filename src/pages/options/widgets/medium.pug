@@ -6,12 +6,6 @@ section#medium_page.option-block
         h4(data-localise="__MSG_enable__") Enable
         input#medium-enable(type="checkbox")
 
-    .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#medium-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-
     #scribe
         hr
         .normal
@@ -21,6 +15,12 @@ section#medium_page.option-block
             +latency('scribe')
         .tor
             include ../../widgets/instances.pug
-            +instances('https://scribe.onion')
+            +instances('http://scribe.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://scribe.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://scribe.loki')
 
     script(type="module" src="./widgets/medium.js")

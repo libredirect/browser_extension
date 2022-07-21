@@ -1,64 +1,35 @@
 import utils from "../../../assets/javascripts/utils.js";
 
-const enable = document.getElementById("translate-enable");
-const frontend = document.getElementById("translate-frontend");
-const protocol = document.getElementById("translate-protocol");
-const simplyTranslateDiv = document.getElementById("simplyTranslate");
-const lingvaDiv = document.getElementById("lingva");
+const frontends = new Array("simplyTranslate", "lingva")
+const protocols = new Array("normal", "tor", "i2p", "loki")
 
+const enable = document.getElementById("translate-enable");
 const translate = document.getElementById('translate_page');
+const frontend = document.getElementById("translate-frontend");
+let protocol
 
 function changeFrontendsSettings() {
-    if (frontend.value == 'simplyTranslate') {
-        simplyTranslateDiv.style.display = 'block';
-        lingvaDiv.style.display = 'none';
-    }
-    else if (frontend.value == 'lingva') {
-        simplyTranslateDiv.style.display = 'none';
-        lingvaDiv.style.display = 'block';
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        if (frontends[i] == frontend.value) {
+            frontendDiv.style.display = 'block'
+        } else {
+            frontendDiv.style.display = 'none'
+        }
     }
 }
 
 function changeProtocolSettings() {
-    const normalSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("normal")[0];
-    const torSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("tor")[0];
-    const i2pSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("i2p")[0];
-    const lokiSimplyTranslateDiv = document.getElementById("simplyTranslate").getElementsByClassName("loki")[0];
-
-    const normalLingvaDiv = document.getElementById("lingva").getElementsByClassName("normal")[0];
-    const torLingvaDiv = document.getElementById("lingva").getElementsByClassName("tor")[0];
-
-    if (protocol.value == 'normal') {
-        normalSimplyTranslateDiv.style.display = 'block';
-        normalLingvaDiv.style.display = 'block';
-        torSimplyTranslateDiv.style.display = 'none';
-        torLingvaDiv.style.display = 'none';
-        i2pSimplyTranslateDiv.style.display = 'none';
-        lokiSimplyTranslateDiv.style.display = 'none';
-    }
-    else if (protocol.value == 'tor') {
-        normalSimplyTranslateDiv.style.display = 'none';
-        normalLingvaDiv.style.display = 'none';
-        torSimplyTranslateDiv.style.display = 'block';
-        torLingvaDiv.style.display = 'block';
-        i2pSimplyTranslateDiv.style.display = 'none';
-        lokiSimplyTranslateDiv.style.display = 'none';
-    }
-    else if (protocol.value == 'i2p') {
-        normalSimplyTranslateDiv.style.display = 'none';
-        normalLingvaDiv.style.display = 'none';
-        torSimplyTranslateDiv.style.display = 'none';
-        torLingvaDiv.style.display = 'none';
-        i2pSimplyTranslateDiv.style.display = 'block';
-        lokiSimplyTranslateDiv.style.display = 'none';
-    }
-    else if (protocol.value == 'loki') {
-        normalSimplyTranslateDiv.style.display = 'none';
-        normalLingvaDiv.style.display = 'none';
-        torSimplyTranslateDiv.style.display = 'none';
-        torLingvaDiv.style.display = 'none';
-        i2pSimplyTranslateDiv.style.display = 'none';
-        lokiSimplyTranslateDiv.style.display = 'block';
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        for (let x = 0; x < protocols.length; x++) {
+            const protocolDiv = frontendDiv.getElementsByClassName(protocols[x])[0]
+            if (protocols[x] == protocol) {
+                protocolDiv.style.display = 'block'
+            } else {
+                protocolDiv.style.display = 'none'
+            }
+        }
     }
 }
 
@@ -66,12 +37,12 @@ browser.storage.local.get(
     [
         "translateDisable",
         "translateFrontend",
-        "translateProtocol",
+        "protocol"
     ],
     r => {
         enable.checked = !r.translateDisable;
         frontend.value = r.translateFrontend;
-        protocol.value = r.translateProtocol;
+        protocol = r.protocol;
         changeFrontendsSettings();
         changeProtocolSettings();
     }
@@ -81,19 +52,13 @@ translate.addEventListener("change", () => {
     browser.storage.local.set({
         translateDisable: !enable.checked,
         translateFrontend: frontend.value,
-        translateProtocol: protocol.value,
     })
-    changeProtocolSettings();
     changeFrontendsSettings();
 })
 
-
-utils.processDefaultCustomInstances('translate', 'simplyTranslate', 'normal', document);
-utils.processDefaultCustomInstances('translate', 'simplyTranslate', 'tor', document);
-utils.processDefaultCustomInstances('translate', 'simplyTranslate', 'i2p', document);
-utils.processDefaultCustomInstances('translate', 'simplyTranslate', 'loki', document);
-utils.processDefaultCustomInstances('translate', 'lingva', 'normal', document);
-utils.processDefaultCustomInstances('translate', 'lingva', 'tor', document);
-
-utils.latency('translate', 'simplyTranslate', document, location, true)
-utils.latency('translate', 'lingva', document, location, true)
+for (let i = 0; i < frontends.length; i++) {
+    for (let x = 0; x < protocols.length; x++){
+        utils.processDefaultCustomInstances('translate', frontends[i], protocols[x], document)
+    }
+    utils.latency('translate', frontends[i], document, location)
+}

@@ -6,12 +6,18 @@ const targets = [
     /^https?:\/{2}(www\.|)quora\.com.*/
 ];
 
-let redirects = {
-    "quetre": {
-        "normal": [],
-        "tor": []
+let redirects = {}
+
+const frontends = new Array("quetre")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+for (let i = 0; i < frontends.length; i++) {
+    redirects[frontends[i]] = {}
+    for (let x = 0; x < protocols.length; x++) {
+        redirects[frontends[i]][protocols[x]] = []
     }
 }
+
 function setRedirects(val) {
     browser.storage.local.get('cloudflareBlackList', r => {
         redirects.quetre = val;
@@ -29,7 +35,8 @@ function setRedirects(val) {
 
 let
     disableQuora,
-    quoraProtocol,
+    protocol,
+    protocolFallback,
     quoraRedirects,
     quetreNormalRedirectsChecks,
     quetreNormalCustomRedirects,
@@ -41,7 +48,8 @@ function init() {
         browser.storage.local.get(
             [
                 "disableQuora",
-                "quoraProtocol",
+                "protocol",
+                "protocolFallback",
                 "quoraRedirects",
                 "quetreNormalRedirectsChecks",
                 "quetreNormalCustomRedirects",
@@ -50,7 +58,8 @@ function init() {
             ],
             r => {
                 disableQuora = r.disableQuora;
-                quoraProtocol = r.quoraProtocol;
+                protocol = r.protocol;
+                protocolFallback = r.protocolFallback;
                 quoraRedirects = r.quoraRedirects;
                 quetreNormalRedirectsChecks = r.quetreNormalRedirectsChecks;
                 quetreNormalCustomRedirects = r.quetreNormalCustomRedirects;
@@ -76,10 +85,12 @@ function redirect(url, type, initiator, disableOverride) {
     if (initiator && (all.includes(initiator.origin) || targets.includes(initiator.host))) return;
     if (!targets.some(rx => rx.test(url.href))) return;
 
-    let instancesList;
-    if (quoraProtocol == 'normal') instancesList = [...quetreNormalRedirectsChecks, ...quetreNormalCustomRedirects];
-    if (quoraProtocol == 'tor') instancesList = [...quetreTorRedirectsChecks, ...quetreTorCustomRedirects];
-    if (instancesList.length === 0) return;
+    let instancesList = [];
+    if (protocol == 'tor') instancesList = [...quetreTorRedirectsChecks, ...quetreTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...quetreNormalRedirectsChecks, ...quetreNormalCustomRedirects];
+    }
+    if (instancesList.length === 0) { return; }
 
     const randomInstance = utils.getRandomInstance(instancesList);
     return `${randomInstance}${url.pathname}`;
@@ -115,9 +126,11 @@ function switchInstance(url, disableOverride) {
         ];
         if (!all.includes(protocolHost)) { resolve(); return; }
 
-        let instancesList;
-        if (quoraProtocol == 'normal') instancesList = [...quetreNormalCustomRedirects, ...quetreNormalRedirectsChecks];
-        else if (quoraProtocol == 'tor') instancesList = [...quetreTorCustomRedirects, ...quetreTorRedirectsChecks];
+    let instancesList = [];
+    if (protocol == 'tor') instancesList = [...quetreTorRedirectsChecks, ...quetreTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...quetreNormalRedirectsChecks, ...quetreNormalCustomRedirects];
+    }
 
         const i = instancesList.indexOf(protocolHost);
         if (i > -1) instancesList.splice(i, 1);
@@ -132,10 +145,11 @@ function initDefaults() {
     return new Promise(async resolve => {
         fetch('/instances/data.json').then(response => response.text()).then(async data => {
             let dataJson = JSON.parse(data);
-            redirects.quetre = dataJson.quetre;
+            for (let i = 0; i < frontends.length; i++) {
+                redirects[frontends[i]] = dataJson[frontends[i]]
+            }
             browser.storage.local.set({
                 disableQuora: false,
-                quoraProtocol: "normal",
 
                 quoraRedirects: redirects,
 

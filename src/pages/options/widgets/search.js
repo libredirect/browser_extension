@@ -5,7 +5,7 @@ import utils from "../../../assets/javascripts/utils.js";
 
 // ONCE FINISHED: add librex and see if it works
 const frontends = new Array("searx", "searxng", "whoogle", "librex") // Add librex once /javascripts/search.js is made agnostic
-const protocols = new Array("normal", "tor", "i2p")
+const protocols = new Array("normal", "tor", "i2p", "loki")
 //let frontendProtocols = (frontends.length)
 
 // I will leave comments of my privious attemps so that people can learn from my mistakes. :)
@@ -36,11 +36,9 @@ const whoogleDiv = document.getElementById("whoogle");
 */
 
 const enable = document.getElementById("search-enable");
-const frontend = document.getElementById("search-frontend");
-const protocol = document.getElementById("search-protocol");
-
 const search = document.getElementById('search_page');
-
+const frontend = document.getElementById("search-frontend");
+let protocol
 
 function changeFrontendsSettings() {
   for (let i = 0; i < frontends.length; i++) {
@@ -88,18 +86,20 @@ function changeProtocolSettings() {
 
   for (let i = 0; i < frontends.length; i++) {
     const frontendDiv = document.getElementById(frontends[i])
-    if (frontends[i] == frontend.value) {       // Here we are checking if the frontend matches the current one. This skips the protocol checking for that frontend, speeding things up.
+    //if (frontends[i] == frontend.value) {       // Here we are checking if the frontend matches the current one. This skips the protocol checking for that frontend, speeding things up. I no longer do this as protocol setting is only set once in the ui so every frontend needs to get their protocols setup immidiately.
       for (let x = 0; x < protocols.length; x++) {
         const protocolDiv = frontendDiv.getElementsByClassName(protocols[x])[0]
-        if (protocols[x] == protocol.value) { //if the frontend value equals the selected one, it will show. Otherwise, it will be hidden
+        if (protocols[x] == protocol) { //if the frontend value equals the selected one, it will show. Otherwise, it will be hidden
           protocolDiv.style.display = 'block'
         } else {
           protocolDiv.style.display = 'none'
         }
       }
+      /*
     } else {
       continue
     }
+    */
   }
 
 
@@ -172,12 +172,12 @@ browser.storage.local.get(
   [
     "disableSearch",
     "searchFrontend",
-    "searchProtocol",
+    "protocol",
   ],
   r => {
     enable.checked = !r.disableSearch;
     frontend.value = r.searchFrontend;
-    protocol.value = r.searchProtocol;
+    protocol = r.protocol;
 
     changeFrontendsSettings();
     changeProtocolSettings();
@@ -188,17 +188,15 @@ for (let i = 0; i < frontends.length; i++) {
   for (let x = 0; x < protocols.length; x++){
     utils.processDefaultCustomInstances('search', frontends[i], protocols[x], document)
   }
-  utils.latency('search', frontends[i], document, location, true)
+  utils.latency('search', frontends[i], document, location)
 }
 
 search.addEventListener("change", () => {
   browser.storage.local.set({
     disableSearch: !enable.checked,
     searchFrontend: frontend.value,
-    searchProtocol: protocol.value,
   });
-  changeFrontendsSettings(frontend.value);
-  changeProtocolSettings(protocol.value);
+  changeFrontendsSettings();
 })
 
 /*

@@ -1,4 +1,3 @@
-
 section#search_page.option-block
     .some-block.option-block
         h1(data-localise="__MSG_search__") Search
@@ -14,13 +13,6 @@ section#search_page.option-block
             option(value="searx") SearX
             option(value="whoogle") Whoogle
             option(value="librex") LibreX
-
-    .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#search-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-            option(value="i2p" data-localise="__MSG_i2p__") I2P
 
     .some-block
         h4(data-localise="__MSG_searchNote__") Note: To use Search, make LibRedirect the Default Search Engine
@@ -38,6 +30,9 @@ section#search_page.option-block
         .i2p
             include ../../widgets/instances.pug
             +instances('http://searx.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://searx.loki')
 
     #searxng
         hr
@@ -51,6 +46,9 @@ section#search_page.option-block
         .i2p
             include ../../widgets/instances.pug
             +instances('http://searxng.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://searxng.loki')
 
     #whoogle
         hr
@@ -64,6 +62,9 @@ section#search_page.option-block
         .i2p
             include ../../widgets/instances.pug
             +instances('http://whoogle.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://whoogle.loki')
 
     #librex
         hr
@@ -77,5 +78,8 @@ section#search_page.option-block
         .i2p
             include ../../widgets/instances.pug
             +instances('http://librex.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://librex.loki')
 
     script(type="module" src="./widgets/search.js")

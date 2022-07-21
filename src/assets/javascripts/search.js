@@ -7,7 +7,7 @@ const targets = [
 ];
 // Ill optimise all of assets/javascripts at a later date. For now, I'll just add librex and optimse options javascript
 const frontends = new Array("searx", "searxng", "whoogle", "librex")
-const protocols = new Array("normal", "tor", "i2p")
+const protocols = new Array("normal", "tor", "i2p", "loki")
 
 const redirects = {}
   /*
@@ -82,7 +82,8 @@ let
   disableSearch,
   searchFrontend,
   searchRedirects,
-  searchProtocol,
+  protocol,
+  protocolFallback,
   whoogleNormalRedirectsChecks,
   whoogleNormalCustomRedirects,
   whoogleTorRedirectsChecks,
@@ -115,7 +116,8 @@ function init() {
         "disableSearch",
         "searchFrontend",
         "searchRedirects",
-        "searchProtocol",
+        "protocol",
+        "protocolFallback",
         "whoogleNormalRedirectsChecks",
         "whoogleNormalCustomRedirects",
         "whoogleTorRedirectsChecks",
@@ -145,7 +147,8 @@ function init() {
         disableSearch = r.disableSearch;
         searchFrontend = r.searchFrontend;
         searchRedirects = r.searchRedirects;
-        searchProtocol = r.searchProtocol;
+        protocol = r.protocol;
+        protocolFallback = r.protocolFallback;
         whoogleNormalRedirectsChecks = r.whoogleNormalRedirectsChecks;
         whoogleNormalCustomRedirects = r.whoogleNormalCustomRedirects;
         whoogleTorRedirectsChecks = r.whoogleTorRedirectsChecks;
@@ -193,10 +196,12 @@ function initSearxCookies(test, from) {
     ].includes(protocolHost)) { resolve(); return; }
 
     if (!test) {
-      let checkedInstances;
-      if (searchProtocol == 'normal') checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
-      else if (searchProtocol == 'tor') checkedInstances = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
-      else if (searchProtocol == 'i2p') checkedInstances = [...searxI2pRedirectsChecks, ...searxI2pCustomRedirects];
+      let checkedInstances = [];
+      if (protocol == 'i2p') checkedInstances = [...searxI2pCustomRedirects, ...searxI2pRedirectsChecks];
+      if (protocol == 'tor') checkedInstances = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
+      if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+        checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
+      }
       await utils.copyCookie('searx', from, checkedInstances, 'advanced_search');
       await utils.copyCookie('searx', from, checkedInstances, 'autocomplete');
       await utils.copyCookie('searx', from, checkedInstances, 'categories');
@@ -223,10 +228,12 @@ function pasteSearxCookies() {
   return new Promise(async resolve => {
     await init();
     if (disableSearch || searchFrontend != 'searx') { resolve(); return; }
-    let checkedInstances;
-    if (searchProtocol == 'normal') checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
-    else if (searchProtocol == 'tor') checkedInstances = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
-    else if (searchProtocol == 'i2p') checkedInstances = [...searxI2pRedirectsChecks, ...searxI2pCustomRedirects];
+    let checkedInstances = [];
+    if (protocol == 'i2p') checkedInstances = [...searxI2pCustomRedirects, ...searxI2pRedirectsChecks];
+    if (protocol == 'tor') checkedInstances = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
+    if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+      checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
+    }
     utils.getCookiesFromStorage('searx', checkedInstances, 'advanced_search');
     utils.getCookiesFromStorage('searx', checkedInstances, 'autocomplete');
     utils.getCookiesFromStorage('searx', checkedInstances, 'categories');
@@ -262,10 +269,12 @@ function initSearxngCookies(test, from) {
     ].includes(protocolHost)) { resolve(); return; }
 
     if (!test) {
-      let checkedInstances;
-      if (searchProtocol == 'normal') checkedInstances = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
-      else if (searchProtocol == 'tor') checkedInstances = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
-      else if (searchProtocol == 'i2p') checkedInstances = [...searxngI2pRedirectsChecks, ...searxngI2pCustomRedirects];
+      let checkedInstances = [];
+      if (protocol == 'i2p') checkedInstances = [...searxngI2pCustomRedirects, ...searxngI2pRedirectsChecks];
+      if (protocol == 'tor') checkedInstances = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
+      if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+        checkedInstances = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
+      }
       await utils.copyCookie('searxng', from, checkedInstances, 'autocomplete');
       await utils.copyCookie('searxng', from, checkedInstances, 'categories');
       await utils.copyCookie('searxng', from, checkedInstances, 'disabled_engines');
@@ -293,11 +302,13 @@ function initSearxngCookies(test, from) {
 function pasteSearxngCookies() {
   return new Promise(async resolve => {
     await init();
-    if (disableSearch || searchFrontend != 'searxng', searchProtocol === undefined) { resolve(); return; }
-    let checkedInstances;
-    if (searchProtocol == 'normal') checkedInstances = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
-    else if (searchProtocol == 'tor') checkedInstances = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
-    else if (searchProtocol == 'i2p') checkedInstances = [...searxngI2pRedirectsChecks, ...searxngI2pCustomRedirects];
+    if (disableSearch || searchFrontend != 'searxng', protocol === undefined) { resolve(); return; }
+    let checkedInstances = [];
+    if (protocol == 'i2p') checkedInstances = [...searxngI2pCustomRedirects, ...searxngI2pRedirectsChecks];
+    if (protocol == 'tor') checkedInstances = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
+    if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+      checkedInstances = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
+    }
     utils.getCookiesFromStorage('searxng', checkedInstances, 'autocomplete');
     utils.getCookiesFromStorage('searxng', checkedInstances, 'categories');
     utils.getCookiesFromStorage('searxng', checkedInstances, 'disabled_engines');
@@ -335,10 +346,12 @@ function initLibrexCookies(test, from) {
     ].includes(protocolHost)) { resolve(); return; }
 
     if(!test) {
-      let checkedInstances;
-      if (searchProtocol == 'normal') checkedInstances = [...librexNormalRedirectsChecks, ...librexNormalCustomRedirects];
-      else if (searchProtocol == 'tor') checkedInstances = [...librexTorRedirectsChecks, ...librexTorCustomRedirects];
-      else if (searchProtocol == 'i2p') checkedInstances = [...librexI2pRedirectsChecks, ...librexI2pCustomRedirects];
+      let checkedInstances = [];
+      if (protocol == 'i2p') checkedInstances = [...librexI2pCustomRedirects, ...librexI2pRedirectsChecks];
+      if (protocol == 'tor') checkedInstances = [...librexTorRedirectsChecks, ...librexTorCustomRedirects];
+      if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+        checkedInstances = [...librexNormalRedirectsChecks, ...librexNormalCustomRedirects];
+      }
       await utils.copyCookie('librex', from, checkedInstances, 'bibliogram');
       await utils.copyCookie('librex', from, checkedInstances, 'disable_special');
       await utils.copyCookie('librex', from, checkedInstances, 'invidious');
@@ -355,11 +368,13 @@ function initLibrexCookies(test, from) {
 function pasteLibrexCookies() {
   return new Promise(async resolve => {
     await init();
-    if (disableSearch || searchFrontend != 'librex', searchProtocol === undefined) { resolve(); return; }
-    let checkedInstances;
-    if (searchProtocol == 'normal') checkedInstances = [...librexNormalRedirectsChecks, ...librexNormalCustomRedirects];
-    else if (searchProtocol == 'tor') checkedInstances = [...librexTorRedirectsChecks, ...librexTorCustomRedirects];
-    else if (searchProtocol == 'i2p') checkedInstances = [...librexI2pRedirectsChecks, ...librexI2pCustomRedirects];
+    if (disableSearch || searchFrontend != 'librex', protocol === undefined) { resolve(); return; }
+    let checkedInstances = [];
+    if (protocol == 'i2p') checkedInstances = [...librexI2pCustomRedirects, ...librexI2pRedirectsChecks];
+    if (protocol == 'tor') checkedInstances = [...librexTorRedirectsChecks, ...librexTorCustomRedirects];
+    if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+      checkedInstances = [...librexNormalRedirectsChecks, ...librexNormalCustomRedirects];
+    }
     utils.getCookiesFromStorage('librex', checkedInstances, 'bibliogram');
     utils.getCookiesFromStorage('librex', checkedInstances, 'disable_special');
     utils.getCookiesFromStorage('librex', checkedInstances, 'invidious');
@@ -380,37 +395,50 @@ function redirect(url, disableOverride) {
   let randomInstance;
   let path;
   if (searchFrontend == 'searx') {
-    let instancesList;
-    if (searchProtocol == 'normal') instancesList = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
-    else if (searchProtocol == 'tor') instancesList = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
-    else if (searchProtocol == 'i2p') instancesList = [...searxI2pRedirectsChecks, ...searxI2pCustomRedirects];
-    if (instancesList.length === 0) return;
+    let instancesList = [];
+    if (protocol == 'i2p') instancesList = [...searxI2pCustomRedirects, ...searxI2pRedirectsChecks];
+    if (protocol == 'tor') instancesList = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
+    }
+    if (instancesList.length === 0) { return; }
+
     randomInstance = utils.getRandomInstance(instancesList)
     path = "/";
   }
   else if (searchFrontend == 'searxng') {
-    let instancesList;
-    if (searchProtocol == 'normal') instancesList = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
-    else if (searchProtocol == 'tor') instancesList = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
-    else if (searchProtocol == 'i2p') instancesList = [...searxngI2pRedirectsChecks, ...searxngI2pCustomRedirects];
-    if (instancesList.length === 0) return;
+    let instancesList = [];
+    if (protocol == 'i2p') instancesList = [...searxngI2pCustomRedirects, ...searxngI2pRedirectsChecks];
+    if (protocol == 'tor') instancesList = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
+    }
+    if (instancesList.length === 0) { return; }
+
     randomInstance = utils.getRandomInstance(instancesList)
     path = "/";
   }
   else if (searchFrontend == 'whoogle') {
-    let instancesList;
-    if (searchProtocol == 'normal') instancesList = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects];
-    if (searchProtocol == 'tor') instancesList = [...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects];
-    if (searchProtocol == 'i2p') instancesList = [...whoogleI2pRedirectsChecks, ...whoogleI2pCustomRedirects];
-    if (instancesList.length === 0) return;
+    let instancesList = [];
+    if (protocol == 'i2p') instancesList = [...whoogleI2pCustomRedirects, ...whoogleI2pRedirectsChecks];
+    if (protocol == 'tor') instancesList = [...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects];
+    }
+    if (instancesList.length === 0) { return; }
+
     randomInstance = utils.getRandomInstance(instancesList)
     path = "/search";
   }
   else if (searchFrontend == 'librex') {
-    let instancesList;
-    if (searchProtocol == 'normal') instancesList = [...librexNormalRedirectsChecks, ...librexNormalCustomRedirects];
-    if (searchProtocol == 'tor') instancesList = [...librexTorRedirectsChecks, ...librexTorCustomRedirects];
-    if (searchProtocol == 'i2p') instancesList = [...librexI2pRedirectsChecks, ...librexI2pCustomRedirects];
+    let instancesList = [];
+    if (protocol == 'i2p') instancesList = [...librexI2pCustomRedirects, ...librexI2pRedirectsChecks];
+    if (protocol == 'tor') instancesList = [...librexTorRedirectsChecks, ...librexTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...librexNormalRedirectsChecks, ...librexNormalCustomRedirects];
+    }
+    if (instancesList.length === 0) { return; }
+
     randomInstance = utils.getRandomInstance(instancesList)
     path = "/search.php";
   }
@@ -474,25 +502,25 @@ function switchInstance(url, disableOverride) {
     ].includes(protocolHost)) { resolve(); return; }
 
     let instancesList;
-    if (searchProtocol == 'normal') {
-      if (searchFrontend == 'searx') instancesList = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
-      else if (searchFrontend == 'searxng') instancesList = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
-      else if (searchFrontend == 'whoogle') instancesList = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects];
-      else if (searchFrontend == 'librex') instancesList = [...librexNormalRedirectsChecks, ...librexNormalCustomRedirects];
-    }
-    else if (searchProtocol == 'tor') {
+    
+    if (protocol == 'tor') {
       if (searchFrontend == 'searx') instancesList = [...searxTorRedirectsChecks, ...searxTorCustomRedirects];
       else if (searchFrontend == 'searxng') instancesList = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects];
       else if (searchFrontend == 'whoogle') instancesList = [...whoogleTorRedirectsChecks, ...whoogleTorCustomRedirects];
       else if (searchFrontend == 'librex') instancesList = [...librexTorRedirectsChecks, ...librexTorCustomRedirects];
     }
-    else if (searchProtocol == 'i2p') {
+    else if (protocol == 'i2p') {
       if (searchFrontend == 'searx') instancesList = [...searxI2pRedirectsChecks, ...searxI2pCustomRedirects];
       else if (searchFrontend == 'searxng') instancesList = [...searxngI2pRedirectsChecks, ...searxngI2pCustomRedirects];
       else if (searchFrontend == 'whoogle') instancesList = [...whoogleI2pRedirectsChecks, ...whoogleI2pCustomRedirects];
       else if (searchFrontend == 'librex') instancesList = [...librexI2pRedirectsChecks, ...librexI2pCustomRedirects];
     }
-
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+      if (searchFrontend == 'searx') instancesList = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects];
+      else if (searchFrontend == 'searxng') instancesList = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects];
+      else if (searchFrontend == 'whoogle') instancesList = [...whoogleNormalRedirectsChecks, ...whoogleNormalCustomRedirects];
+      else if (searchFrontend == 'librex') instancesList = [...librexNormalRedirectsChecks, ...librexNormalCustomRedirects];
+    }
     const i = instancesList.indexOf(protocolHost);
     if (i > -1) instancesList.splice(i, 1);
     if (instancesList.length === 0) { resolve(); return; }
@@ -540,7 +568,6 @@ function initDefaults() {
           searchFrontend: 'searxng',
           searchRedirects: redirects,
           searxngCustomSettings: false,
-          searchProtocol: 'normal',
 
           whoogleNormalRedirectsChecks: whoogleNormalRedirectsChecks,
           whoogleNormalCustomRedirects: [],

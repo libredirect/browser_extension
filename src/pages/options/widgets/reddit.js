@@ -1,52 +1,47 @@
 import utils from "../../../assets/javascripts/utils.js";
 
-const libredditDivElement = document.getElementById("libreddit")
-const tedditDivElement = document.getElementById("teddit")
+const frontends = new Array("libreddit", "teddit")
+const protocols = new Array("normal", "tor", "i2p", "loki")
 
 const enable = document.getElementById("reddit-enable");
-const frontend = document.getElementById("reddit-frontend");
-const protocol = document.getElementById("reddit-protocol");
 const reddit = document.getElementById('reddit_page');
+const frontend = document.getElementById("reddit-frontend");
+let protocol
 
-function changeProtocolSettings() {
-    const normalLibredditDiv = libredditDivElement.getElementsByClassName("normal")[0];
-    const torLibredditDiv = libredditDivElement.getElementsByClassName("tor")[0];
-    const normalTedditDiv = tedditDivElement.getElementsByClassName("normal")[0];
-    const torTedditDiv = tedditDivElement.getElementsByClassName("tor")[0];
-    if (protocol.value == 'normal') {
-        normalLibredditDiv.style.display = 'block';
-        normalTedditDiv.style.display = 'block';
-        torTedditDiv.style.display = 'none';
-        torLibredditDiv.style.display = 'none';
-    }
-    else if (protocol.value == 'tor') {
-        normalLibredditDiv.style.display = 'none';
-        normalTedditDiv.style.display = 'none';
-        torTedditDiv.style.display = 'block';
-        torLibredditDiv.style.display = 'block';
+function changeFrontendsSettings() {
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        if (frontends[i] == frontend.value) {
+            frontendDiv.style.display = 'block'
+        } else {
+            frontendDiv.style.display = 'none'
+        }
     }
 }
 
-function changeFrontendsSettings() {
-    if (frontend.value == 'libreddit') {
-        libredditDivElement.style.display = 'block';
-        tedditDivElement.style.display = 'none';
-    }
-    else if (frontend.value == 'teddit') {
-        libredditDivElement.style.display = 'none';
-        tedditDivElement.style.display = 'block';
+function changeProtocolSettings() {
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        for (let x = 0; x < protocols.length; x++) {
+            const protocolDiv = frontendDiv.getElementsByClassName(protocols[x])[0]
+            if (protocols[x] == protocol) {
+                protocolDiv.style.display = 'block'
+            } else {
+                protocolDiv.style.display = 'none'
+            }
+        }
     }
 }
 
 browser.storage.local.get(
     [
         "disableReddit",
-        "redditProtocol",
+        "protocol",
         "redditFrontend",
     ],
     r => {
         enable.checked = !r.disableReddit
-        protocol.value = r.redditProtocol
+        protocol = r.protocol
         frontend.value = r.redditFrontend
         changeFrontendsSettings();
         changeProtocolSettings();
@@ -56,17 +51,14 @@ browser.storage.local.get(
 reddit.addEventListener("change", () => {
     browser.storage.local.set({
         disableReddit: !enable.checked,
-        redditProtocol: protocol.value,
-        redditFrontend: frontend.value,
+        redditFrontend: frontend.value
     });
     changeFrontendsSettings();
-    changeProtocolSettings();
 })
 
-utils.processDefaultCustomInstances('reddit', 'libreddit', 'normal', document);
-utils.processDefaultCustomInstances('reddit', 'libreddit', 'tor', document);
-utils.processDefaultCustomInstances('reddit', 'teddit', 'normal', document);
-utils.processDefaultCustomInstances('reddit', 'teddit', 'tor', document);
-
-utils.latency('reddit', 'libreddit', document, location, true)
-utils.latency('reddit', 'teddit', document, location, true)
+for (let i = 0; i < frontends.length; i++) {
+    for (let x = 0; x < protocols.length; x++){
+        utils.processDefaultCustomInstances('reddit', frontends[i], protocols[x], document)
+    }
+    utils.latency('reddit', frontends[i], document, location)
+}

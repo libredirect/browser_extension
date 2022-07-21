@@ -1,32 +1,52 @@
 import utils from "../../../assets/javascripts/utils.js";
 
+// UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
+
+const frontends = new Array("nitter")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
 const enable = document.getElementById("twitter-enable");
-const protocol = document.getElementById("twitter-protocol");
-const redirectType = document.getElementById("twitter-redirect_type");
 const twitter = document.getElementById('twitter_page');
+const redirectType = document.getElementById("twitter-redirect_type");
+//const frontend = document.getElementById("twitter-frontend");
+let protocol
+
+/*
+function changeFrontendsSettings() {
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        if (frontends[i] == frontend.value) {
+            frontendDiv.style.display = 'block'
+        } else {
+            frontendDiv.style.display = 'none'
+        }
+    }
+}
+*/
 
 function changeProtocolSettings() {
-    let normalDiv = twitter.getElementsByClassName("normal")[0];
-    let torDiv = twitter.getElementsByClassName("tor")[0];
-    if (protocol.value == 'normal') {
-        normalDiv.style.display = 'block';
-        torDiv.style.display = 'none';
-    }
-    else if (protocol.value == 'tor') {
-        normalDiv.style.display = 'none';
-        torDiv.style.display = 'block';
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        for (let x = 0; x < protocols.length; x++) {
+            const protocolDiv = frontendDiv.getElementsByClassName(protocols[x])[0]
+            if (protocols[x] == protocol) {
+                protocolDiv.style.display = 'block'
+            } else {
+                protocolDiv.style.display = 'none'
+            }
+        }
     }
 }
 
 browser.storage.local.get(
     [
         "disableTwitter",
-        "twitterProtocol",
-        "twitterRedirectType",
+        "protocol",
+        "twitterRedirectType"
     ],
     r => {
         enable.checked = !r.disableTwitter;
-        protocol.value = r.twitterProtocol;
+        protocol = r.protocol;
         redirectType.value = r.twitterRedirectType;
         changeProtocolSettings();
     }
@@ -35,13 +55,13 @@ browser.storage.local.get(
 twitter.addEventListener("change", () => {
     browser.storage.local.set({
         disableTwitter: !enable.checked,
-        twitterProtocol: protocol.value,
         twitterRedirectType: redirectType.value,
     });
-    changeProtocolSettings();
 })
 
-utils.processDefaultCustomInstances('twitter', 'nitter', 'normal', document);
-utils.processDefaultCustomInstances('twitter', 'nitter', 'tor', document)
-
-utils.latency('twitter', 'nitter', document, location, true)
+for (let i = 0; i < frontends.length; i++) {
+    for (let x = 0; x < protocols.length; x++){
+        utils.processDefaultCustomInstances('twitter', frontends[i], protocols[x], document)
+    }
+    utils.latency('twitter', frontends[i], document, location)
+}

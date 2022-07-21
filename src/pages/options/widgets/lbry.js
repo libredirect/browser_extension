@@ -1,44 +1,61 @@
 import utils from "../../../assets/javascripts/utils.js";
 
-const enable = document.getElementById("lbry-enable");
-const protocol = document.getElementById("lbry-protocol")
+// UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
 
+const frontends = new Array("librarian")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+const enable = document.getElementById("lbry-enable");
 const lbry = document.getElementById('lbry_page');
-const normalDiv = lbry.getElementsByClassName("normal")[0];
-const torDiv = lbry.getElementsByClassName("tor")[0];
+//const frontend = document.getElementById("lbry-frontend");
+let protocol
+
+/*
+function changeFrontendsSettings() {
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        if (frontends[i] == frontend.value) {
+            frontendDiv.style.display = 'block'
+        } else {
+            frontendDiv.style.display = 'none'
+        }
+    }
+}
+*/
 
 function changeProtocolSettings() {
-    if (protocol.value == 'normal') {
-        normalDiv.style.display = 'block';
-        torDiv.style.display = 'none';
-    }
-    else if (protocol.value == 'tor') {
-        normalDiv.style.display = 'none';
-        torDiv.style.display = 'block';
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        for (let x = 0; x < protocols.length; x++) {
+            const protocolDiv = frontendDiv.getElementsByClassName(protocols[x])[0]
+            if (protocols[x] == protocol) {
+                protocolDiv.style.display = 'block'
+            } else {
+                protocolDiv.style.display = 'none'
+            }
+        }
     }
 }
 
 browser.storage.local.get(
     [
         "disableLbryTargets",
-        "lbryTargetsProtocol"
+        "protocol"
     ],
     r => {
         enable.checked = !r.disableLbryTargets;
-        protocol.value = r.lbryTargetsProtocol;
+        protocol = r.protocol;
         changeProtocolSettings();
     }
 )
 
 lbry.addEventListener("change", () => {
-    changeProtocolSettings()
-    browser.storage.local.set({
-        disableLbryTargets: !enable.checked,
-        lbryTargetsProtocol: protocol.value,
-    });
+    browser.storage.local.set({ disableLbryTargets: !enable.checked });
 })
 
-utils.processDefaultCustomInstances('lbryTargets', 'librarian', 'normal', document);
-utils.processDefaultCustomInstances('lbryTargets', 'librarian', 'tor', document);
-
-utils.latency('lbryTargets', 'librarian', document, location)
+for (let i = 0; i < frontends.length; i++) {
+    for (let x = 0; x < protocols.length; x++){
+        utils.processDefaultCustomInstances('lbryTargets', frontends[i], protocols[x], document)
+    }
+    utils.latency('lbryTargets', frontends[i], document, location)
+}

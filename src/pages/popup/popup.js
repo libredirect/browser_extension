@@ -130,7 +130,7 @@ browser.storage.local.get(
     "disablePeertubeTargets",
     "disableLbryTargets",
     "disableSendTarget",
-    'popupFrontends',
+    "popupFrontends",
   ],
   r => {
     disableTwitterCurrentSite.checked = !r.disableTwitter; disableTwitterAllSites.checked = !r.disableTwitter;

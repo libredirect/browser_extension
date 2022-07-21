@@ -4,13 +4,18 @@ import utils from './utils.js'
 
 const targets = /^https?:\/{2}(([a-z]{1,}\.){0,})wikipedia\.org/
 
-let redirects = {
-  "wikiless": {
-    "normal": [],
-    "tor": [],
-    "i2p": []
-  }
-};
+const frontends = new Array("wikiless")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+let redirects = {};
+
+for (let i = 0; i < frontends.length; i++) {
+    redirects[frontends[i]] = {}
+    for (let x = 0; x < protocols.length; x++) {
+        redirects[frontends[i]][protocols[x]] = []
+    }
+}
+
 function setRedirects(val) {
   browser.storage.local.get('cloudflareBlackList', r => {
     redirects.wikiless = val;
@@ -29,7 +34,8 @@ function setRedirects(val) {
 let
   disableWikipedia,
   wikipediaRedirects,
-  wikipediaProtocol,
+  protocol,
+  protocolFallback,
   wikilessNormalRedirectsChecks,
   wikilessTorRedirectsChecks,
   wikilessI2pRedirectsChecks,
@@ -43,8 +49,8 @@ function init() {
       [
         "disableWikipedia",
         "wikipediaRedirects",
-        "wikipediaProtocol",
-
+        "protocol",
+        "protocolFallback",
         "wikilessNormalRedirectsChecks",
         "wikilessTorRedirectsChecks",
         "wikilessI2pRedirectsChecks",
@@ -55,7 +61,8 @@ function init() {
       r => {
         disableWikipedia = r.disableWikipedia;
         wikipediaRedirects = r.wikipediaRedirects;
-        wikipediaProtocol = r.wikipediaProtocol;
+        protocol = r.protocol;
+        protocolFallback = r.protocolFallback;
         wikilessNormalRedirectsChecks = r.wikilessNormalRedirectsChecks;
         wikilessTorRedirectsChecks = r.wikilessTorRedirectsChecks;
         wikilessI2pRedirectsChecks = r.wikilessI2pRedirectsChecks;
@@ -86,10 +93,12 @@ function initWikilessCookies(test, from) {
     if (!all.includes(protocolHost)) { resolve(); return; }
 
     if (!test) {
-      let checkedInstances;
-      if (wikipediaProtocol == 'normal') checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects]
-      else if (wikipediaProtocol == 'tor') checkedInstances = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects]
-      else if (wikipediaProtocol == 'i2p') checkedInstances = [...wikilessI2pRedirectsChecks, ...wikilessI2pCustomRedirects]
+      let checkedInstances = [];
+      if (protocol == 'i2p') checkedInstances = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
+      if (protocol == 'tor') checkedInstances = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects];
+      if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+        checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
+      }
       await utils.copyCookie('wikiless', from, checkedInstances, 'theme');
       await utils.copyCookie('wikiless', from, checkedInstances, 'default_lang');
     }
@@ -100,10 +109,13 @@ function initWikilessCookies(test, from) {
 function pasteWikilessCookies() {
   return new Promise(async resolve => {
     await init();
-    if (disableWikipedia || wikipediaProtocol === undefined) { resolve(); return; }
-    let checkedInstances;
-    if (wikipediaProtocol == 'normal') checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects]
-    else if (wikipediaProtocol == 'tor') checkedInstances = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects]
+    if (disableWikipedia || protocol === undefined) { resolve(); return; }
+    let checkedInstances = [];
+    if (protocol == 'i2p') checkedInstances = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
+    else if (protocol == 'tor') checkedInstances = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects];
+    if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+      checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
+    }
     utils.getCookiesFromStorage('wikiless', checkedInstances, 'theme');
     utils.getCookiesFromStorage('wikiless', checkedInstances, 'default_lang');
     resolve();
@@ -123,10 +135,12 @@ function redirect(url, disableOverride) {
       GETArguments.push([args[0], args[1]]);
     }
   }
-  let instancesList;
-  if (wikipediaProtocol == 'normal') instancesList = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
-  else if (wikipediaProtocol == 'tor') instancesList = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects];
-  else if (wikipediaProtocol == 'i2p') instancesList = [...wikilessI2pRedirectsChecks, ...wikilessI2pCustomRedirects];
+  let instancesList = [];
+  if (protocol == 'i2p') instancesList = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
+  else if (protocol == 'tor') instancesList = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects];
+  if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+    instancesList = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
+  }
   if (instancesList.length === 0) return;
   const randomInstance = utils.getRandomInstance(instancesList)
 
@@ -162,10 +176,12 @@ function switchInstance(url, disableOverride) {
     ];
     if (!wikipediaList.includes(protocolHost)) { resolve(); return; }
 
-    let instancesList;
-    if (wikipediaProtocol == 'normal') instancesList = [...wikilessNormalCustomRedirects, ...wikilessNormalRedirectsChecks];
-    else if (wikipediaProtocol == 'tor') instancesList = [...wikilessTorCustomRedirects, ...wikilessTorRedirectsChecks];
-    else if (wikipediaProtocol == 'i2p') instancesList = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
+    let instancesList = [];
+    if (protocol == 'i2p') instancesList = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
+    else if (protocol == 'tor') instancesList = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+      instancesList = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
+    }
 
     let index = instancesList.indexOf(protocolHost);
     if (index > -1) instancesList.splice(index, 1);
@@ -180,7 +196,9 @@ function initDefaults() {
   return new Promise(resolve => {
     fetch('/instances/data.json').then(response => response.text()).then(async data => {
       let dataJson = JSON.parse(data);
-      redirects.wikiless = dataJson.wikiless;
+      for (let i = 0; i < frontends.length; i++) {
+        redirects[frontends[i]] = dataJson[frontends[i]]
+      }
       browser.storage.local.get('cloudflareBlackList', async r => {
         wikilessNormalRedirectsChecks = [...redirects.wikiless.normal];
         for (const instance of r.cloudflareBlackList) {
@@ -190,7 +208,6 @@ function initDefaults() {
         browser.storage.local.set({
           disableWikipedia: true,
           wikipediaRedirects: redirects,
-          wikipediaProtocol: "normal",
           wikilessNormalRedirectsChecks: wikilessNormalRedirectsChecks,
           wikilessTorRedirectsChecks: [...redirects.wikiless.tor],
           wikilessI2pRedirectsChecks: [...redirects.wikiless.i2p],
