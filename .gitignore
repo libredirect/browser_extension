@@ -3,5 +3,3 @@ web-ext-artifacts/
 nod
 node_modules
 package-lock.json
-src/instances/blacklist.json
-src/instances/data.json

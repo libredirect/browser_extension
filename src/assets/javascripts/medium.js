@@ -61,6 +61,8 @@ let
   scribeNormalCustomRedirects,
   scribeTorRedirectsChecks,
   scribeTorCustomRedirects,
+  scribeI2pCustomRedirects,
+  scribeLokiCustomRedirects,
   protocol,
   protocolFallback;
 
@@ -74,6 +76,8 @@ function init() {
         "scribeNormalCustomRedirects",
         "scribeTorRedirectsChecks",
         "scribeTorCustomRedirects",
+        "scribeI2pCustomRedirects",
+        "scribeLokiCustomRedirects",
         "protocol",
         "protocolFallback"
       ],
@@ -84,6 +88,8 @@ function init() {
         scribeNormalCustomRedirects = r.scribeNormalCustomRedirects;
         scribeTorRedirectsChecks = r.scribeTorRedirectsChecks;
         scribeTorCustomRedirects = r.scribeTorCustomRedirects;
+        scribeI2pCustomRedirects = r.scribeI2pCustomRedirects;
+        scribeLokiCustomRedirects = r.scribeLokiCustomRedirects;
         protocol = r.protocol;
         protocolFallback = r.protocolFallback;
         resolve();
@@ -105,13 +111,17 @@ function redirect(url, type, initiator, disableOverride) {
       ...mediumRedirects.scribe.tor,
       ...scribeNormalCustomRedirects,
       ...scribeTorCustomRedirects,
+      ...scribeI2pCustomRedirects,
+      ...scribeLokiCustomRedirects
     ].includes(initiator.origin))) return;
 
   if (!targets.some(rx => rx.test(url.host))) return;
   if (/^\/(@[a-zA-Z.]{0,}(\/|)$)/.test(url.pathname)) return;
 
   let instancesList = [];
-  if (protocol == 'tor') instancesList = [...scribeTorRedirectsChecks, ...scribeTorCustomRedirects];
+  if (protocol == 'loki') instancesList = [...scribeLokiCustomRedirects];
+  else if (protocol == 'i2p') instancesList = [...scribeI2pCustomRedirects];
+  else if (protocol == 'tor') instancesList = [...scribeTorRedirectsChecks, ...scribeTorCustomRedirects];
   if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
     instancesList = [...scribeNormalRedirectsChecks, ...scribeNormalCustomRedirects];
   }
@@ -132,11 +142,15 @@ function switchInstance(url, disableOverride) {
 
       ...scribeNormalCustomRedirects,
       ...scribeTorCustomRedirects,
+      ...scribeI2pCustomRedirects,
+      ...scribeLokiCustomRedirects
     ];
     if (!all.includes(protocolHost)) { resolve(); return; }
 
     let instancesList = [];
-    if (protocol == 'tor') instancesList = [...scribeTorRedirectsChecks, ...scribeTorCustomRedirects];
+    if (protocol == 'loki') instancesList = [...scribeLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...scribeI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...scribeTorRedirectsChecks, ...scribeTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
       instancesList = [...scribeNormalRedirectsChecks, ...scribeNormalCustomRedirects];
     }
@@ -173,6 +187,10 @@ function initDefaults() {
 
             scribeTorRedirectsChecks: [...redirects.scribe.tor],
             scribeTorCustomRedirects: [],
+
+            scribeI2pCustomRedirects: [],
+
+            scribeLokiCustomRedirects: []
           }, () => resolve())
         })
     })

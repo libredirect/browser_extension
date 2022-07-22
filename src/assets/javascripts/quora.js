@@ -41,7 +41,9 @@ let
     quetreNormalRedirectsChecks,
     quetreNormalCustomRedirects,
     quetreTorRedirectsChecks,
-    quetreTorCustomRedirects;
+    quetreTorCustomRedirects,
+    quetreI2pCustomRedirects,
+    quetreLokiCustomRedirects;
 
 function init() {
     return new Promise(async resolve => {
@@ -55,6 +57,8 @@ function init() {
                 "quetreNormalCustomRedirects",
                 "quetreTorRedirectsChecks",
                 "quetreTorCustomRedirects",
+                "quetreI2pCustomRedirects",
+                "quetreLokiCustomRedirects"
             ],
             r => {
                 disableQuora = r.disableQuora;
@@ -65,6 +69,8 @@ function init() {
                 quetreNormalCustomRedirects = r.quetreNormalCustomRedirects;
                 quetreTorRedirectsChecks = r.quetreTorRedirectsChecks;
                 quetreTorCustomRedirects = r.quetreTorCustomRedirects;
+                quetreI2pCustomRedirects = r.quetreI2pCustomRedirects;
+                quetreLokiCustomRedirects = r.quetreLokiCustomRedirects;
                 resolve();
             }
         )
@@ -86,7 +92,9 @@ function redirect(url, type, initiator, disableOverride) {
     if (!targets.some(rx => rx.test(url.href))) return;
 
     let instancesList = [];
-    if (protocol == 'tor') instancesList = [...quetreTorRedirectsChecks, ...quetreTorCustomRedirects];
+    if (protocol == 'loki') instancesList = [...quetreLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...quetreI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...quetreTorRedirectsChecks, ...quetreTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
         instancesList = [...quetreNormalRedirectsChecks, ...quetreNormalCustomRedirects];
     }
@@ -104,7 +112,9 @@ function reverse(url) {
             ...quoraRedirects.quetre.normal,
             ...quoraRedirects.quetre.tor,
             ...quetreNormalCustomRedirects,
-            ...quetreTorCustomRedirects
+            ...quetreTorCustomRedirects,
+            ...quetreI2pCustomRedirects,
+            ...quetreLokiCustomRedirects
         ];
         if (!all.includes(protocolHost)) { resolve(); return; }
 
@@ -123,11 +133,15 @@ function switchInstance(url, disableOverride) {
 
             ...quetreNormalCustomRedirects,
             ...quetreTorCustomRedirects,
+            ...quetreI2pCustomRedirects,
+            ...quetreLokiCustomRedirects
         ];
         if (!all.includes(protocolHost)) { resolve(); return; }
 
     let instancesList = [];
-    if (protocol == 'tor') instancesList = [...quetreTorRedirectsChecks, ...quetreTorCustomRedirects];
+    if (protocol == 'loki') instancesList = [...quetreLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...quetreI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...quetreTorRedirectsChecks, ...quetreTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
         instancesList = [...quetreNormalRedirectsChecks, ...quetreNormalCustomRedirects];
     }
@@ -158,6 +172,10 @@ function initDefaults() {
 
                 quetreTorRedirectsChecks: [...redirects.quetre.tor],
                 quetreTorCustomRedirects: [],
+
+                quetreI2pCustomRedirects: [],
+
+                quetreLokiCustomRedirects: []
             }, () => resolve());
         });
     })

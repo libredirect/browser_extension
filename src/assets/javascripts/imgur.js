@@ -57,7 +57,8 @@ let
     rimgoTorRedirectsChecks,
     rimgoTorCustomRedirects,
     rimgoI2pRedirectsChecks,
-    rimgoI2pCustomRedirects;
+    rimgoI2pCustomRedirects,
+    rimgoLokiCustomRedirects;
 
 function init() {
     return new Promise(async resolve => {
@@ -73,6 +74,7 @@ function init() {
                 "rimgoTorCustomRedirects",
                 "rimgoI2pRedirectsChecks",
                 "rimgoI2pCustomRedirects",
+                "rimgoLokiCustomRedirects"
             ],
             r => {
                 disableImgur = r.disableImgur;
@@ -85,6 +87,7 @@ function init() {
                 rimgoTorCustomRedirects = r.rimgoTorCustomRedirects;
                 rimgoI2pRedirectsChecks = r.rimgoI2pRedirectsChecks;
                 rimgoI2pCustomRedirects = r.rimgoI2pCustomRedirects;
+                rimgoLokiCustomRedirects = r.rimgoLokiCustomRedirects;
                 resolve();
             }
         )
@@ -108,6 +111,7 @@ function all() {
         ...rimgoNormalCustomRedirects,
         ...rimgoTorCustomRedirects,
         ...rimgoI2pCustomRedirects,
+        ...rimgoLokiCustomRedirects
     ];
 }
 
@@ -120,8 +124,9 @@ function redirect(url, type, initiator, disableOverride) {
     if (url.pathname.includes("delete/")) return;
 
     let instancesList = [];
-    if (protocol == 'i2p') instancesList = [...rimgoI2pCustomRedirects, ...rimgoI2pRedirectsChecks];
-    if (protocol == 'tor') instancesList = [...rimgoTorRedirectsChecks, ...rimgoTorCustomRedirects];
+    if (protocol == 'loki') instancesList = [...rimgoLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...rimgoI2pCustomRedirects, ...rimgoI2pRedirectsChecks];
+    else if (protocol == 'tor') instancesList = [...rimgoTorRedirectsChecks, ...rimgoTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
         instancesList = [...rimgoNormalRedirectsChecks, ...rimgoNormalCustomRedirects];
     }
@@ -147,8 +152,9 @@ function switchInstance(url, disableOverride) {
         let protocolHost = utils.protocolHost(url);
         if (!all().includes(protocolHost)) { resolve(); return; }
         let instancesList = [];
-        if (protocol == 'i2p') instancesList = [...rimgoI2pCustomRedirects, ...rimgoI2pRedirectsChecks];
-        if (protocol == 'tor') instancesList = [...rimgoTorRedirectsChecks, ...rimgoTorCustomRedirects];
+        if (protocol == 'loki') instancesList = [...rimgoLokiCustomRedirects];
+        else if (protocol == 'i2p') instancesList = [...rimgoI2pCustomRedirects, ...rimgoI2pRedirectsChecks];
+        else if (protocol == 'tor') instancesList = [...rimgoTorRedirectsChecks, ...rimgoTorCustomRedirects];
         if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
             instancesList = [...rimgoNormalRedirectsChecks, ...rimgoNormalCustomRedirects];
         }
@@ -187,6 +193,8 @@ function initDefaults() {
 
                     rimgoI2pRedirectsChecks: [...redirects.rimgo.i2p],
                     rimgoI2pCustomRedirects: [],
+
+                    rimgoLokiCustomRedirects: []
                 }, () => resolve());
             });
         });

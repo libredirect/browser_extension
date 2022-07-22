@@ -31,11 +31,13 @@ let
   simplyTranslateI2pRedirectsChecks,
   simplyTranslateI2pCustomRedirects,
   simplyTranslateLokiRedirectsChecks,
-  simplyTranslateLokiCustomReidrects,
+  simplyTranslateLokiCustomRedirects,
   lingvaNormalRedirectsChecks,
   lingvaNormalCustomRedirects,
   lingvaTorRedirectsChecks,
-  lingvaTorCustomRedirects;
+  lingvaTorCustomRedirects,
+  lingvaI2pCustomRedirects,
+  lingvaLokiCustomRedirects
 
 function init() {
   return new Promise(resolve => {
@@ -53,12 +55,14 @@ function init() {
         "simplyTranslateI2pRedirectsChecks",
         "simplyTranslateI2pCustomRedirects",
         "simplyTranslateLokiRedirectsChecks",
-        "simplyTranslateLokiCustomReidrects",
+        "simplyTranslateLokiCustomRedirects",
 
         "lingvaNormalRedirectsChecks",
         "lingvaNormalCustomRedirects",
         "lingvaTorRedirectsChecks",
         "lingvaTorCustomRedirects",
+        "lingvaI2pCustomRedirects",
+        "lingvaLokiCustomRedirects"
       ],
       r => {
         translateDisable = r.translateDisable;
@@ -73,11 +77,13 @@ function init() {
         simplyTranslateI2pRedirectsChecks = r.simplyTranslateI2pRedirectsChecks;
         simplyTranslateI2pCustomRedirects = r.simplyTranslateI2pCustomRedirects;
         simplyTranslateLokiRedirectsChecks = r.simplyTranslateLokiRedirectsChecks;
-        simplyTranslateLokiCustomReidrects = r.simplyTranslateLokiCustomReidrects;
+        simplyTranslateLokiCustomRedirects = r.simplyTranslateLokiCustomRedirects;
         lingvaNormalRedirectsChecks = r.lingvaNormalRedirectsChecks;
         lingvaNormalCustomRedirects = r.lingvaNormalCustomRedirects;
         lingvaTorRedirectsChecks = r.lingvaTorRedirectsChecks;
         lingvaTorCustomRedirects = r.lingvaTorCustomRedirects;
+        lingvaI2pCustomRedirects = r.lingvaI2pCustomRedirects;
+        lingvaLokiCustomRedirects = r.lingvaLokiCustomRedirects;
         resolve();
       }
     )
@@ -117,6 +123,8 @@ function copyPasteLingvaLocalStorage(test, url, tabId) {
       ...lingvaNormalCustomRedirects,
       ...lingvaTorRedirectsChecks,
       ...lingvaTorCustomRedirects,
+      ...lingvaI2pCustomRedirects,
+      ...lingvaLokiCustomRedirects
     ].includes(protocolHost)) { resolve(); return; }
 
     if (!test) {
@@ -126,7 +134,9 @@ function copyPasteLingvaLocalStorage(test, url, tabId) {
       );
 
       let checkedInstances = [];
-      if (protocol == 'tor') checkedInstances = [...lingvaTorRedirectsChecks, ...lingvaTorCustomRedirects];
+      if (protocol == 'loki') checkedInstances = [...lingvaLokiCustomRedirects]; //...lingvaLokiRedirectsChecks, 
+      else if (protocol == 'i2p') checkedInstances = [...lingvaI2pCustomRedirects]; //...lingvaI2pRedirectsChecks, 
+      else if (protocol == 'tor') checkedInstances = [...lingvaTorRedirectsChecks, ...lingvaTorCustomRedirects];
       if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
         checkedInstances = [...lingvaNormalRedirectsChecks, ...lingvaNormalCustomRedirects];
       }
@@ -149,7 +159,9 @@ function pasteLingvaLocalStorage() {
     await init();
     if (translateDisable || translateFrontend != 'lingva') { resolve(); return; }
     let checkedInstances = [];
-    if (protocol == 'tor') checkedInstances = [...lingvaTorRedirectsChecks, ...lingvaTorCustomRedirects];
+    if (protocol == 'loki') checkedInstances = [...lingvaLokiCustomRedirects]; //...lingvaLokiRedirectsChecks, 
+    else if (protocol == 'i2p') checkedInstances = [...lingvaI2pCustomRedirects]; //...lingvaI2pRedirectsChecks, 
+    else if (protocol == 'tor') checkedInstances = [...lingvaTorRedirectsChecks, ...lingvaTorCustomRedirects];
     if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
       checkedInstances = [...lingvaNormalRedirectsChecks, ...lingvaNormalCustomRedirects];
     }
@@ -172,11 +184,11 @@ function copyPasteSimplyTranslateCookies(test, from) {
       ...simplyTranslateI2pRedirectsChecks,
       ...simplyTranslateI2pCustomRedirects,
       ...simplyTranslateLokiRedirectsChecks,
-      ...simplyTranslateLokiCustomReidrects,
+      ...simplyTranslateLokiCustomRedirects,
     ].includes(protocolHost)) { resolve(); return; }
     if (!test) {
       let checkedInstances = [];
-      if (protocol == 'loki') checkedInstances = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomReidrects]
+      if (protocol == 'loki') checkedInstances = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomRedirects]
       else if (protocol == 'i2p') checkedInstances = [...simplyTranslateI2pCustomRedirects, ...simplyTranslateI2pRedirectsChecks];
       else if (protocol == 'tor') checkedInstances = [...simplyTranslateTorRedirectsChecks, ...simplyTranslateTorCustomRedirects];
       if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
@@ -197,7 +209,7 @@ function pasteSimplyTranslateCookies() {
     await init();
     if (translateDisable || translateFrontend != 'simplyTranslate') { resolve(); return; }
     let checkedInstances = [];
-    if (protocol == 'loki') checkedInstances = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomReidrects]
+    if (protocol == 'loki') checkedInstances = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomRedirects]
     else if (protocol == 'i2p') checkedInstances = [...simplyTranslateI2pCustomRedirects, ...simplyTranslateI2pRedirectsChecks];
     else if (protocol == 'tor') checkedInstances = [...simplyTranslateTorRedirectsChecks, ...simplyTranslateTorCustomRedirects];
     if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
@@ -218,7 +230,7 @@ function redirect(url, disableOverride) {
 
   if (translateFrontend == 'simplyTranslate') {
     let instancesList = [];
-    if (protocol == 'loki') instancesList = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomReidrects];
+    if (protocol == 'loki') instancesList = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomRedirects];
     else if (protocol == 'i2p') instancesList = [...simplyTranslateI2pRedirectsChecks, ...simplyTranslateI2pCustomRedirects];
     else if (protocol == 'tor') instancesList = [...simplyTranslateTorRedirectsChecks, ...simplyTranslateTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
@@ -238,6 +250,8 @@ function redirect(url, disableOverride) {
       params[pair[0]] = pair[1];
     }
     let instancesList = [];
+    if (protocol == 'loki') instancesList = [...lingvaLokiCustomRedirects]; //...lingvaLokiRedirectsChecks, 
+    else if (protocol == 'i2p') instancesList = [...lingvaI2pCustomRedirects]; //...lingvaI2pRedirectsChecks, 
     if (protocol == 'tor') instancesList = [...lingvaTorRedirectsChecks, ...lingvaTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
       instancesList = [...lingvaNormalRedirectsChecks, ...lingvaNormalCustomRedirects];
@@ -266,24 +280,26 @@ function switchInstance(url, disableOverride) {
       ...simplyTranslateNormalCustomRedirects,
       ...simplyTranslateTorCustomRedirects,
       ...simplyTranslateI2pCustomRedirects,
-      ...simplyTranslateLokiCustomReidrects,
+      ...simplyTranslateLokiCustomRedirects,
 
       ...translateRedirects.lingva.normal,
       ...translateRedirects.lingva.tor,
 
       ...lingvaNormalCustomRedirects,
       ...lingvaTorCustomRedirects,
+      ...lingvaI2pCustomRedirects,
+      ...lingvaLokiCustomRedirects
     ].includes(protocolHost)) { resolve(); return; }
 
     let instancesList;
 
     if (protocol == 'loki') {
-      if (translateFrontend == 'simplyTranslate') instancesList = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomReidrects];
-      //else if (translateFrontend == 'lingva') instancesList = [...lingvaLokiRedirectsChecks, ...lingvaLokiCustomRedirects];
+      if (translateFrontend == 'simplyTranslate') instancesList = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomRedirects];
+      else if (translateFrontend == 'lingva') instancesList = [...lingvaLokiCustomRedirects]; //...lingvaLokiRedirectsChecks, 
     }
     else if (protocol == 'i2p') {
        if (translateFrontend == 'simplyTranslate') instancesList = [...simplyTranslateI2pRedirectsChecks, ...simplyTranslateI2pCustomRedirects];
-       //else if (translateFrontend == 'lingva') instancesList = [...lingvaI2PRedirectsChecks, ...lingvaI2PCustomRedirects];   
+       else if (translateFrontend == 'lingva') instancesList = [...lingvaI2pCustomRedirects]; //...lingvaI2pRedirectsChecks, 
     }
     else if (protocol == 'tor') {
       if (translateFrontend == 'simplyTranslate') instancesList = [...simplyTranslateTorRedirectsChecks, ...simplyTranslateTorCustomRedirects];
@@ -329,12 +345,14 @@ function initDefaults() {
             simplyTranslateI2pRedirectsChecks: [...redirects.simplyTranslate.i2p],
             simplyTranslateI2pCustomRedirects: [],
             simplyTranslateLokiRedirectsChecks: [...redirects.simplyTranslate.loki],
-            simplyTranslateLokiCustomReidrects: [],
+            simplyTranslateLokiCustomRedirects: [],
 
             lingvaNormalRedirectsChecks: lingvaNormalRedirectsChecks,
             lingvaNormalCustomRedirects: [],
             lingvaTorRedirectsChecks: [...redirects.lingva.tor],
             lingvaTorCustomRedirects: [],
+            lingvaI2pCustomRedirects: [],
+            lingvaLokiCustomRedirects: []
           }, () => resolve())
         })
     })

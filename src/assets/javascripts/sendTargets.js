@@ -42,6 +42,8 @@ let
     sendNormalCustomRedirects,
     sendTorRedirectsChecks,
     sendTorCustomRedirects,
+    sendI2pCustomRedirects,
+    sendLokiCustomRedirects,
     protocol,
     protocolFallback;
 
@@ -57,6 +59,8 @@ function init() {
                 "sendNormalCustomRedirects",
                 "sendTorRedirectsChecks",
                 "sendTorCustomRedirects",
+                "sendI2pCustomRedirects",
+                "sendLokiCustomRedirects"
             ],
             r => {
                 disableSendTarget = r.disableSendTarget;
@@ -65,6 +69,8 @@ function init() {
                 sendNormalCustomRedirects = r.sendNormalCustomRedirects;
                 sendTorRedirectsChecks = r.sendTorRedirectsChecks;
                 sendTorCustomRedirects = r.sendTorCustomRedirects;
+                sendI2pCustomRedirects = r.sendI2pCustomRedirects;
+                sendLokiCustomRedirects = r.sendLokiCustomRedirects;
                 protocol = r.protocol;
                 protocolFallback = r.protocolFallback;
                 resolve();
@@ -83,6 +89,8 @@ function all() {
         ...sendNormalCustomRedirects,
         ...sendTorRedirectsChecks,
         ...sendTorCustomRedirects,
+        ...sendI2pCustomRedirects,
+        ...sendLokiCustomRedirects
     ];
 }
 
@@ -95,7 +103,9 @@ function switchInstance(url, disableOverride) {
         if (url.pathname != '/') { resolve(); return; }
 
         let instancesList = [];
-        if (protocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
+        if (protocol == 'loki') instancesList = [...sendLokiCustomRedirects];
+        else if (protocol == 'i2p') instancesList = [...sendI2pCustomRedirects];
+        else if (protocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
         if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
             instancesList = [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects];
         }
@@ -116,7 +126,9 @@ function redirect(url, type, initiator, disableOverride) {
     if (!targets.some(rx => rx.test(url.href))) return;
 
     let instancesList = [];
-    if (protocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
+    if (protocol == 'loki') instancesList = [...sendLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...sendI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
         instancesList = [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects];
     }
@@ -147,7 +159,11 @@ function initDefaults() {
                     sendNormalCustomRedirects: [],
 
                     sendTorRedirectsChecks: [...redirects.send.tor],
-                    sendTorCustomRedirects: []
+                    sendTorCustomRedirects: [],
+
+                    sendI2pCustomRedirects: [],
+
+                    sendLokiCustomRedirects: []
                 }, () => resolve())
             })
         })

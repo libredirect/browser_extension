@@ -41,7 +41,9 @@ let
     libremdbNormalRedirectsChecks,
     libremdbNormalCustomRedirects,
     libremdbTorRedirectsChecks,
-    libremdbTorCustomRedirects;
+    libremdbTorCustomRedirects,
+    libremdbI2pCustomRedirects,
+    libremdbLokiCustomRedirects;
 
 function init() {
     return new Promise(async resolve => {
@@ -55,6 +57,8 @@ function init() {
                 "libremdbNormalCustomRedirects",
                 "libremdbTorRedirectsChecks",
                 "libremdbTorCustomRedirects",
+                "libremdbI2pCustomRedirects",
+                "libremdbLokiCustomRedirects"
             ],
             r => {
                 disableImdb = r.disableImdb;
@@ -65,6 +69,8 @@ function init() {
                 libremdbNormalCustomRedirects = r.libremdbNormalCustomRedirects;
                 libremdbTorRedirectsChecks = r.libremdbTorRedirectsChecks;
                 libremdbTorCustomRedirects = r.libremdbTorCustomRedirects;
+                libremdbI2pCustomRedirects = r.libremdbI2pCustomRedirects;
+                libremdbLokiCustomRedirects = r.libremdbLokiCustomRedirects;
                 resolve();
             }
         )
@@ -86,7 +92,9 @@ function redirect(url, type, initiator, disableOverride) {
     if (!targets.some(rx => rx.test(url.href))) return;
 
     let instancesList = [];
-    if (protocol == 'tor') instancesList = [...libremdbTorRedirectsChecks, ...libremdbTorCustomRedirects];
+    if (protocol == 'loki') instancesList = [...libremdbLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...libremdbI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...libremdbTorRedirectsChecks, ...libremdbTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
         instancesList = [...libremdbNormalRedirectsChecks, ...libremdbNormalCustomRedirects];
     }
@@ -104,7 +112,9 @@ function reverse(url) {
             ...imdbRedirects.libremdb.normal,
             ...imdbRedirects.libremdb.tor,
             ...libremdbNormalCustomRedirects,
-            ...libremdbTorCustomRedirects
+            ...libremdbTorCustomRedirects,
+            ...libremdbI2pCustomRedirects,
+            ...libremdbLokiCustomRedirects
         ];
         if (!all.includes(protocolHost)) { resolve(); return; }
 
@@ -123,11 +133,15 @@ function switchInstance(url, disableOverride) {
 
             ...libremdbNormalCustomRedirects,
             ...libremdbTorCustomRedirects,
+            ...libremdbI2pCustomRedirects,
+            ...libremdbLokiCustomRedirects
         ];
         if (!all.includes(protocolHost)) { resolve(); return; }
 
         let instancesList = [];
-        if (protocol == 'tor') instancesList = [...libremdbTorRedirectsChecks, ...libremdbTorCustomRedirects];
+        if (protocol == 'loki') instancesList = [...libremdbLokiCustomRedirects];
+        else if (protocol == 'i2p') instancesList = [...libremdbI2pCustomRedirects];
+        else if (protocol == 'tor') instancesList = [...libremdbTorRedirectsChecks, ...libremdbTorCustomRedirects];
         if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
             instancesList = [...libremdbNormalRedirectsChecks, ...libremdbNormalCustomRedirects];
         }
@@ -157,6 +171,10 @@ function initDefaults() {
 
                 libremdbTorRedirectsChecks: [...redirects.libremdb.tor],
                 libremdbTorCustomRedirects: [],
+
+                libremdbI2pCustomRedirects: [],
+
+                libremdbLokiCustomRedirects: []
             }, () => resolve());
         });
     })

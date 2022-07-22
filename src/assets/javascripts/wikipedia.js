@@ -41,7 +41,8 @@ let
   wikilessI2pRedirectsChecks,
   wikilessNormalCustomRedirects,
   wikilessTorCustomRedirects,
-  wikilessI2pCustomRedirects;
+  wikilessI2pCustomRedirects,
+  wikilessLokiCustomRedirects;
 
 function init() {
   return new Promise(async resolve => {
@@ -57,6 +58,7 @@ function init() {
         "wikilessNormalCustomRedirects",
         "wikilessTorCustomRedirects",
         "wikilessI2pCustomRedirects",
+        "wikilessLokiCustomRedirects"
       ],
       r => {
         disableWikipedia = r.disableWikipedia;
@@ -69,6 +71,7 @@ function init() {
         wikilessNormalCustomRedirects = r.wikilessNormalCustomRedirects;
         wikilessTorCustomRedirects = r.wikilessTorCustomRedirects;
         wikilessI2pCustomRedirects = r.wikilessI2pCustomRedirects;
+        wikilessLokiCustomRedirects = r.wikilessLokiCustomRedirects;
         resolve();
       }
     )
@@ -89,13 +92,15 @@ function initWikilessCookies(test, from) {
       ...wikilessTorCustomRedirects,
       ...wikilessI2pRedirectsChecks,
       ...wikilessI2pCustomRedirects,
+      ...wikilessLokiCustomRedirects
     ];
     if (!all.includes(protocolHost)) { resolve(); return; }
 
     if (!test) {
       let checkedInstances = [];
-      if (protocol == 'i2p') checkedInstances = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
-      if (protocol == 'tor') checkedInstances = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects];
+      if (protocol == 'loki') checkedInstances = [...wikilessLokiCustomRedirects];
+      else if (protocol == 'i2p') checkedInstances = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
+      else if (protocol == 'tor') checkedInstances = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects];
       if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
         checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
       }
@@ -111,7 +116,8 @@ function pasteWikilessCookies() {
     await init();
     if (disableWikipedia || protocol === undefined) { resolve(); return; }
     let checkedInstances = [];
-    if (protocol == 'i2p') checkedInstances = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
+    if (protocol == 'loki') checkedInstances = [...wikilessLokiCustomRedirects];
+    else if (protocol == 'i2p') checkedInstances = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
     else if (protocol == 'tor') checkedInstances = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects];
     if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
       checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
@@ -136,7 +142,8 @@ function redirect(url, disableOverride) {
     }
   }
   let instancesList = [];
-  if (protocol == 'i2p') instancesList = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
+  if (protocol == 'loki') instancesList = [...wikilessLokiCustomRedirects];
+  else if (protocol == 'i2p') instancesList = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
   else if (protocol == 'tor') instancesList = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects];
   if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
     instancesList = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
@@ -172,12 +179,14 @@ function switchInstance(url, disableOverride) {
 
       ...wikilessNormalCustomRedirects,
       ...wikilessTorCustomRedirects,
-      ...wikilessI2pCustomRedirects
+      ...wikilessI2pCustomRedirects,
+      ...wikilessLokiCustomRedirects
     ];
     if (!wikipediaList.includes(protocolHost)) { resolve(); return; }
 
     let instancesList = [];
-    if (protocol == 'i2p') instancesList = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
+    if (protocol == 'loki') instancesList = [...wikilessLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks];
     else if (protocol == 'tor') instancesList = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
       instancesList = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects];
@@ -214,6 +223,7 @@ function initDefaults() {
           wikilessNormalCustomRedirects: [],
           wikilessTorCustomRedirects: [],
           wikilessI2pCustomRedirects: [],
+          wikilessLokiCustomRedirects: []
         }, () => resolve());
       })
     })

@@ -18,6 +18,21 @@ for (let i = 0; i < frontends.length; i++) {
     }
 }
 
+function setRedirects(val) {
+    browser.storage.local.get('cloudflareBlackList', r => {
+        redirects.neuters = val;
+        neutersNormalRedirectsChecks = [...redirects.neuters.normal];
+        for (const instance of r.cloudflareBlackList) {
+            const a = neutersNormalRedirectsChecks.indexOf(instance);
+            if (a > -1) neutersNormalRedirectsChecks.splice(a, 1);
+        }
+        browser.storage.local.set({
+            neutersRedirects: redirects,
+            neutersNormalRedirectsChecks
+        })
+    })
+}
+
 let
     disableReuters,
     protocol,
@@ -26,7 +41,9 @@ let
     neutersNormalRedirectsChecks,
     neutersNormalCustomRedirects,
     neutersTorRedirectsChecks,
-    neutersTorCustomRedirects;
+    neutersTorCustomRedirects,
+    neutersI2pCustomRedirects,
+    neutersLokiCustomRedirects;
 
 function init() {
     return new Promise(async resolve => {
@@ -40,6 +57,8 @@ function init() {
                 "neutersNormalCustomRedirects",
                 "neutersTorRedirectsChecks",
                 "neutersTorCustomRedirects",
+                "neutersI2pCustomRedirects",
+                "neutersLokiCustomRedirects"
             ],
             r => {
                 disableReuters = r.disableReuters;
@@ -50,6 +69,8 @@ function init() {
                 neutersNormalCustomRedirects = r.neutersNormalCustomRedirects;
                 neutersTorRedirectsChecks = r.neutersTorRedirectsChecks;
                 neutersTorCustomRedirects = r.neutersTorCustomRedirects;
+                neutersI2pCustomRedirects = r.neutersI2pCustomRedirects;
+                neutersLokiCustomRedirects = r.neutersLokiCustomRedirects;
                 resolve();
             }
         )
@@ -70,7 +91,9 @@ function redirect(url, type, initiator, disableOverride) {
     if (!targets.some(rx => rx.test(url.href))) return;
 
     let instancesList = [];
-    if (protocol == 'tor') instancesList = [...neutersTorRedirectsChecks, ...neutersTorCustomRedirects];
+    if (protocol == 'loki') instancesList = [...neutersLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...neutersI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...neutersTorRedirectsChecks, ...neutersTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
         instancesList = [...neutersNormalRedirectsChecks, ...neutersNormalCustomRedirects];
     }
@@ -103,11 +126,16 @@ function initDefaults() {
 
             neutersTorRedirectsChecks: [...redirects.neuters.tor],
             neutersTorCustomRedirects: [],
+
+            neutersI2pCustomRedirects: [],
+
+            neutersLokiCustomRedirects: []
         }, () => resolve());
     });
 }
 
 export default {
+    setRedirects,
     redirect,
     initDefaults
 };

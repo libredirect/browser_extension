@@ -34,11 +34,14 @@ function setRedirects(val) {
 let
     disableLbryTargets,
     protocol,
+    protocolFallback,
     lbryTargetsRedirects,
     librarianNormalRedirectsChecks,
     librarianNormalCustomRedirects,
     librarianTorRedirectsChecks,
-    librarianTorCustomRedirects;
+    librarianTorCustomRedirects,
+    librarianI2pCustomRedirects,
+    librarianLokiCustomRedirects;
 
 function init() {
     return new Promise(resolve => {
@@ -46,20 +49,26 @@ function init() {
             [
                 "disableLbryTargets",
                 "protocol",
+                "protocolFallback",
                 "lbryTargetsRedirects",
                 "librarianNormalRedirectsChecks",
                 "librarianNormalCustomRedirects",
                 "librarianTorRedirectsChecks",
                 "librarianTorCustomRedirects",
+                "librarianI2pCustomRedirects",
+                "librarianLokiCustomRedirects"
             ],
             r => {
                 disableLbryTargets = r.disableLbryTargets;
                 protocol = r.protocol;
+                protocolFallback = r.protocolFallback;
                 lbryTargetsRedirects = r.lbryTargetsRedirects;
                 librarianNormalRedirectsChecks = r.librarianNormalRedirectsChecks;
                 librarianNormalCustomRedirects = r.librarianNormalCustomRedirects;
                 librarianTorRedirectsChecks = r.librarianTorRedirectsChecks;
                 librarianTorCustomRedirects = r.librarianTorCustomRedirects;
+                librarianI2pCustomRedirects = r.librarianI2pCustomRedirects;
+                librarianLokiCustomRedirects = r.librarianLokiCustomRedirects;
                 resolve();
             }
         )
@@ -74,6 +83,8 @@ function all() {
         ...redirects.librarian.tor,
         ...librarianNormalCustomRedirects,
         ...librarianTorCustomRedirects,
+        ...librarianI2pCustomRedirects,
+        ...librarianLokiCustomRedirects
     ];
 }
 
@@ -85,7 +96,9 @@ function switchInstance(url, disableOverride) {
         if (!all().includes(protocolHost)) { resolve(); return; }
 
         let instancesList = [];
-        if (protocol == 'tor') instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects];
+        if (protocol == 'loki') instancesList = [...librarianLokiCustomRedirects];
+        else if (protocol == 'i2p') instancesList = [...librarianI2pCustomRedirects];
+        else if (protocol == 'tor') instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects];
         if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
             instancesList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects];
         }
@@ -106,7 +119,9 @@ function redirect(url, type, initiator, disableOverride) {
     if (type != "main_frame") return;
 
     let instancesList = [];
-    if (protocol == 'tor') instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects];
+    if (protocol == 'loki') instancesList = [...librarianLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...librarianI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
         instancesList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects];
     }
@@ -133,6 +148,10 @@ function initDefaults() {
 
                 librarianTorRedirectsChecks: [...redirects.librarian.tor],
                 librarianTorCustomRedirects: [],
+
+                librarianI2pCustomRedirects: [],
+
+                librarianLokiCustomRedirects: []
             }, () => resolve());
         });
     })

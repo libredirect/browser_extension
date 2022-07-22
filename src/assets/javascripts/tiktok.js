@@ -42,13 +42,17 @@ function initProxiTokCookies(test, from) {
             ...proxiTokNormalCustomRedirects,
             ...proxiTokTorRedirectsChecks,
             ...proxiTokTorCustomRedirects,
+            ...proxiTokI2pCustomRedirects,
+            ...proxiTokLokiCustomRedirects,
         ].includes(protocolHost)) resolve();
 
         if (!test) {
-            let instancesList = [];
-            if (protocol == 'tor') instancesList = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
-            if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
-                instancesList = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];
+            let checkedInstances = [];
+            if (protocol == 'loki') checkedInstances = [...proxiTokI2pCustomRedirects];
+            else if (protocol == 'i2p') checkedInstances = [...proxiTokLokiCustomRedirects];
+            else if (protocol == 'tor') checkedInstances = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
+            if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+                checkedInstances = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];
             }
             await utils.copyCookie('proxitok', from, checkedInstances, 'theme');
             await utils.copyCookie('proxitok', from, checkedInstances, 'api-legacy');
@@ -61,10 +65,12 @@ function pasteProxiTokCookies() {
     return new Promise(async resolve => {
         await init();
         if (disableTiktok || protocol === undefined) { resolve(); return; }
-        let instancesList = [];
-        if (protocol == 'tor') instancesList = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
-        if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
-            instancesList = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];
+        let checkedInstances = [];
+        if (protocol == 'loki') checkedInstances = [...proxiTokI2pCustomRedirects];
+        else if (protocol == 'i2p') checkedInstances = [...proxiTokLokiCustomRedirects];
+        else if (protocol == 'tor') checkedInstances = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
+        if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+            checkedInstances = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];
         }
         utils.getCookiesFromStorage('proxitok', checkedInstances, 'theme');
         utils.getCookiesFromStorage('proxitok', checkedInstances, 'api-legacy');
@@ -80,7 +86,9 @@ let
     proxiTokNormalRedirectsChecks,
     proxiTokNormalCustomRedirects,
     proxiTokTorRedirectsChecks,
-    proxiTokTorCustomRedirects;
+    proxiTokTorCustomRedirects,
+    proxiTokI2pCustomRedirects,
+    proxiTokLokiCustomRedirects;
 
 function init() {
     return new Promise(async resolve => {
@@ -94,6 +102,8 @@ function init() {
                 "proxiTokNormalCustomRedirects",
                 "proxiTokTorRedirectsChecks",
                 "proxiTokTorCustomRedirects",
+                "proxiTokI2pCustomRedirects",
+                "proxiTokLokiCustomRedirects"
             ],
             r => {
                 disableTiktok = r.disableTiktok;
@@ -104,6 +114,8 @@ function init() {
                 proxiTokNormalCustomRedirects = r.proxiTokNormalCustomRedirects;
                 proxiTokTorRedirectsChecks = r.proxiTokTorRedirectsChecks;
                 proxiTokTorCustomRedirects = r.proxiTokTorCustomRedirects;
+                proxiTokI2pCustomRedirects = r.proxiTokI2pCustomRedirects;
+                proxiTokLokiCustomRedirects = r.proxiTokLokiCustomRedirects;
                 resolve();
             }
         )
@@ -126,7 +138,9 @@ function redirect(url, type, initiator, disableOverride) {
     if (!targets.some(rx => rx.test(url.href))) return;
 
     let instancesList = [];
-    if (protocol == 'tor') instancesList = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
+    if (protocol == 'loki') instancesList = [...proxiTokI2pCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...proxiTokLokiCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
         instancesList = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];
     }
@@ -144,7 +158,9 @@ function reverse(url) {
             ...tiktokRedirects.proxiTok.normal,
             ...tiktokRedirects.proxiTok.tor,
             ...proxiTokNormalCustomRedirects,
-            ...proxiTokTorCustomRedirects
+            ...proxiTokTorCustomRedirects,
+            ...proxiTokI2pCustomRedirects,
+            ...proxiTokLokiCustomRedirects
         ];
         if (!all.includes(protocolHost)) { resolve(); return; }
 
@@ -163,11 +179,15 @@ function switchInstance(url, disableOverride) {
 
             ...proxiTokNormalCustomRedirects,
             ...proxiTokTorCustomRedirects,
+            ...proxiTokI2pCustomRedirects,
+            ...proxiTokLokiCustomRedirects
         ];
         if (!all.includes(protocolHost)) { resolve(); return; }
 
         let instancesList = [];
-        if (protocol == 'tor') instancesList = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
+        if (protocol == 'loki') instancesList = [...proxiTokI2pCustomRedirects];
+        else if (protocol == 'i2p') instancesList = [...proxiTokLokiCustomRedirects];
+        else if (protocol == 'tor') instancesList = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
         if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
             instancesList = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];
         }
@@ -198,6 +218,10 @@ function initDefaults() {
 
                 proxiTokTorRedirectsChecks: [...redirects.proxiTok.tor],
                 proxiTokTorCustomRedirects: [],
+
+                proxiTokI2pCustomRedirects: [],
+
+                proxiTokLokiCustomRedirects: []
             }, () => resolve());
         });
     })

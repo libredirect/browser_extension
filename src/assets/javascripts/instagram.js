@@ -41,7 +41,9 @@ let
   bibliogramNormalRedirectsChecks,
   bibliogramTorRedirectsChecks,
   bibliogramNormalCustomRedirects,
-  bibliogramTorCustomRedirects;
+  bibliogramTorCustomRedirects,
+  bibliogramI2pCustomRedirects,
+  bibliogramLokiCustomRedirects;
 
 function init() {
   return new Promise(async resolve => {
@@ -55,6 +57,8 @@ function init() {
         "bibliogramTorRedirectsChecks",
         "bibliogramNormalCustomRedirects",
         "bibliogramTorCustomRedirects",
+        "bibliogramI2pCustomRedirects",
+        "bibliogramLokiCustomRedirects"
       ],
       r => {
         disableInstagram = r.disableInstagram;
@@ -65,6 +69,8 @@ function init() {
         bibliogramTorRedirectsChecks = r.bibliogramTorRedirectsChecks;
         bibliogramNormalCustomRedirects = r.bibliogramNormalCustomRedirects;
         bibliogramTorCustomRedirects = r.bibliogramTorCustomRedirects;
+        bibliogramI2pCustomRedirects = r.bibliogramI2pCustomRedirects;
+        bibliogramLokiCustomRedirects = r.bibliogramLokiCustomRedirects
         resolve();
       }
     )
@@ -80,6 +86,8 @@ function all() {
     ...instagramRedirects.bibliogram.tor,
     ...bibliogramNormalCustomRedirects,
     ...bibliogramTorCustomRedirects,
+    ...bibliogramI2pCustomRedirects,
+    ...bibliogramLokiCustomRedirects
   ]
 }
 
@@ -93,7 +101,9 @@ function redirect(url, type, initiator, disableOverride) {
   if (bypassPaths.some(rx => rx.test(url.pathname))) return;
 
   let instancesList = [];
-  if (protocol == 'tor') instancesList = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects];
+  if (protocol == 'loki') instancesList = [...bibliogramLokiCustomRedirects];
+  else if (protocol == 'i2p') instancesList = [...bibliogramI2pCustomRedirects];
+  else if (protocol == 'tor') instancesList = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects];
   if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
     instancesList = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects];
   }
@@ -129,7 +139,9 @@ function switchInstance(url, disableOverride) {
     if (!all().includes(protocolHost)) { resolve(); return; }
 
     let instancesList = [];
-    if (protocol == 'tor') instancesList = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects];
+    if (protocol == 'loki') instancesList = [...bibliogramLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...bibliogramI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
         instancesList = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects];
     }
@@ -164,7 +176,11 @@ function initDefaults() {
           bibliogramTorRedirectsChecks: [],
 
           bibliogramNormalCustomRedirects: [...redirects.bibliogram.tor],
-          bibliogramTorCustomRedirects: []
+          bibliogramTorCustomRedirects: [],
+
+          bibliogramI2pCustomRedirects: [],
+
+          bibliogramLokiCustomRedirects: []
         })
         resolve();
       }

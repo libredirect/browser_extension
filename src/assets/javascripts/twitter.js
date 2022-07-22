@@ -46,7 +46,9 @@ let
   nitterNormalRedirectsChecks,
   nitterNormalCustomRedirects,
   nitterTorRedirectsChecks,
-  nitterTorCustomRedirects;
+  nitterTorCustomRedirects,
+  nitterI2pCustomRedirects,
+  nitterLokiCustomRedirects;
 
 function init() {
   return new Promise(async resolve => {
@@ -61,6 +63,8 @@ function init() {
         "nitterNormalCustomRedirects",
         "nitterTorRedirectsChecks",
         "nitterTorCustomRedirects",
+        "nitterI2pCustomRedirects",
+        "nitterLokiCustomRedirects"
       ],
       r => {
         disableTwitter = r.disableTwitter;
@@ -72,6 +76,8 @@ function init() {
         nitterNormalCustomRedirects = r.nitterNormalCustomRedirects;
         nitterTorRedirectsChecks = r.nitterTorRedirectsChecks;
         nitterTorCustomRedirects = r.nitterTorCustomRedirects;
+        nitterI2pCustomRedirects = r.nitterI2pCustomRedirects;
+        nitterLokiCustomRedirects = r.nitterLokiCustomRedirects;
         resolve();
       }
     )
@@ -87,6 +93,8 @@ function all() {
     ...nitterTorRedirectsChecks,
     ...nitterNormalCustomRedirects,
     ...nitterTorCustomRedirects,
+    ...nitterI2pCustomRedirects,
+    ...nitterLokiCustomRedirects
   ];
 }
 
@@ -99,7 +107,9 @@ function redirect(url, type, initiator, disableOverride) {
   if (twitterRedirectType == 'main_frame' && type != "main_frame") return;
 
   let instancesList = [];
-  if (protocol == 'tor') instancesList = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+  if (protocol == 'loki') instancesList = [...nitterI2pCustomRedirects];
+  else if (protocol == 'i2p') instancesList = [...nitterLokiCustomRedirects];
+  else if (protocol == 'tor') instancesList = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
   if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
     instancesList = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
   }
@@ -136,7 +146,9 @@ function switchInstance(url, disableOverride) {
     const protocolHost = utils.protocolHost(url);
     if (!all().includes(protocolHost)) { resolve(); return; }
     let instancesList = [];
-    if (protocol == 'tor') instancesList = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+    if (protocol == 'loki') instancesList = [...nitterI2pCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...nitterLokiCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
       instancesList = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
     }
@@ -177,7 +189,9 @@ function initNitterCookies(test, from) {
     ) { resolve(); return; }
     if (!test) {
       let checkedInstances = [];
-      if (protocol == 'tor') checkedInstances = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+      if (protocol == 'loki') checkedInstances = [...nitterI2pCustomRedirects];
+      else if (protocol == 'i2p') checkedInstances = [...nitterLokiCustomRedirects];
+      else if (protocol == 'tor') checkedInstances = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
       if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
         checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
       }
@@ -210,7 +224,9 @@ function pasteNitterCookies() {
     await init();
     if (disableTwitter || protocol === undefined) { resolve(); return; }
     let checkedInstances = [];
-    if (protocol == 'tor') checkedInstances = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
+    if (protocol == 'loki') checkedInstances = [...nitterI2pCustomRedirects];
+    else if (protocol == 'i2p') checkedInstances = [...nitterLokiCustomRedirects];
+    else if (protocol == 'tor') checkedInstances = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects];
     if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
       checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects];
     }
@@ -261,6 +277,10 @@ function initDefaults() {
 
           nitterTorRedirectsChecks: [...redirects.nitter.tor],
           nitterTorCustomRedirects: [],
+
+          nitterI2pCustomRedirects: [],
+
+          nitterLokiCustomRedirects: []
         }, () => resolve());
       })
     })

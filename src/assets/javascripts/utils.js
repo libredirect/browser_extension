@@ -14,6 +14,7 @@ import tiktokHelper from "./tiktok.js";
 import quoraHelper from "./quora.js"
 import libremdbHelper from "./imdb.js";
 import imgurHelper from "./imgur.js";
+import reutersHelper from './reuters.js';
 import localise from './localise.js'
 
 function getRandomInstance(instances) {
@@ -41,7 +42,7 @@ function updateInstances() {
       await initcloudflareBlackList();
       const instances = JSON.parse(http.responseText);
 
-      youtubeHelper.setRedirects({ 'invidious': instances.invidious, 'piped': instances.piped, })
+      youtubeHelper.setRedirects({ 'invidious': instances.invidious, 'piped': instances.piped, 'pipedMaterial': instances.pipedMaterial })
       twitterHelper.setRedirects(instances.nitter);
       instagramHelper.setRedirects(instances.bibliogram);
       redditHelper.setRedirects({ 'libreddit': instances.libreddit, 'teddit': instances.teddit });
@@ -54,6 +55,7 @@ function updateInstances() {
       sendTargetsHelper.setRedirects(instances.send);
       tiktokHelper.setRedirects(instances.proxiTok);
       lbryHelper.setRedirects(instances.librarian);
+      reutersHelper.setRedirects(instances.neuters);
 
       console.info("Successfully updated Instances");
       resolve(true); return;
