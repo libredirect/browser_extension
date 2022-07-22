@@ -29,7 +29,8 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -Am "update instances" || :
+          git add -f src/instances
+          git commit -am "update instances" || :
       - name: push changes
         uses: ad-m/github-push-action@v0.6.0
         with:
