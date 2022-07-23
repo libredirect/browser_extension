@@ -160,7 +160,7 @@ function all() {
     ...youtubeRedirects.piped.tor,
 
     ...youtubeRedirects.pipedMaterial.normal,
-    ...youtubeRedirects.pipedMaterial.tor,
+    //...youtubeRedirects.pipedMaterial.tor,
 
     ...invidiousNormalCustomRedirects,
     ...invidiousTorCustomRedirects,
@@ -380,9 +380,9 @@ function copyPasteInvidiousCookies(test, from) {
 
       if (protocol == 'loki') checkedInstances = [...invidiousLokiCustomRedirects];
       else if (protocol == 'i2p') checkedInstances = [...invidiousI2pCustomRedirects];
-      else if (protocol == 'tor') checkedInstances = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects]
-      if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
-        checkedInstances = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects]
+      else if (protocol == 'tor') checkedInstances = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
+      if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+        checkedInstances = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
       }
       const i = checkedInstances.indexOf(protocolHost);
       if (i !== -1) checkedInstances.splice(i, 1);
@@ -400,7 +400,7 @@ function pasteInvidiousCookies() {
     if (protocol == 'loki') checkedInstances = [...invidiousLokiCustomRedirects];
     else if (protocol == 'i2p') checkedInstances = [...invidiousI2pCustomRedirects];
     else if (protocol == 'tor') checkedInstances = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects]
-    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+    if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
       checkedInstances = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects]
     }
     utils.getCookiesFromStorage('invidious', checkedInstances, 'PREFS');

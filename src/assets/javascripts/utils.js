@@ -114,13 +114,15 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
 
   function calcNameCheckBoxes() {
     let isTrue = true;
-    for (const item of redirects[name][protocol])
+    for (const item of redirects[name][protocol]) {
       if (!nameDefaultRedirects.includes(item)) {
         isTrue = false;
         break;
       }
-    for (const element of nameCheckListElement.getElementsByTagName('input'))
+    }
+    for (const element of nameCheckListElement.getElementsByTagName('input')) {
       element.checked = nameDefaultRedirects.includes(element.className)
+    }
     if (nameDefaultRedirects.length == 0) isTrue = false;
     nameProtocolElement.getElementsByClassName('toggle-all')[0].checked = isTrue;
   }
