@@ -206,6 +206,6 @@
         "message": "Test Instances Latency"
     },
     "protocolFallback": {
-        "message": "Fallback to normal if no frontends are available for the current protocol"
+        "message": "Fallback to normal if no instances are available for the current protocol"
     }
 }

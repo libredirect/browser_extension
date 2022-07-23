@@ -111,6 +111,7 @@ def pipedMaterial():
             r"\| (https?:\/{2}(?:.+\.)+[a-zA-Z0-9]*) +\|", r.text)
     pipedMaterialList = {}
     pipedMaterialList['normal'] = []
+    pipedMaterialList['tor'] = []
     for item in tmp:
         pipedMaterialList['normal'].append(item)
     mightyList['pipedMaterial'] = pipedMaterialList
@@ -174,7 +175,7 @@ def nitter():
 
 
 def bibliogram():
-    r = requests.get('https://bibliogram.pussthecat.org/api/instances')
+    r = requests.get('https://bibliogram.art/api/instances')
     rJson = json.loads(r.text)
     bibliogramList = {}
     bibliogramList['normal'] = []

@@ -6,17 +6,26 @@ const targets = [
     /^https?:\/{2}(www\.|)reuters\.com.*/
 ];
 
-let redirects = {}
-
-const frontends = new Array("neuters")
-const protocols = new Array("normal", "tor", "i2p", "loki")
-
-for (let i = 0; i < frontends.length; i++) {
-    redirects[frontends[i]] = {}
-    for (let x = 0; x < protocols.length; x++) {
-        redirects[frontends[i]][protocols[x]] = []
+let redirects = {
+    "neuters": {
+        "normal": [
+            "https://neuters.de"
+        ],
+        "tor": [],
+        "i2p": [],
+        "loki": []
     }
 }
+
+// const frontends = new Array("neuters")
+// const protocols = new Array("normal", "tor", "i2p", "loki")
+
+// for (let i = 0; i < frontends.length; i++) {
+//     redirects[frontends[i]] = {}
+//     for (let x = 0; x < protocols.length; x++) {
+//         redirects[frontends[i]][protocols[x]] = []
+//     }
+// }
 
 function setRedirects(val) {
     browser.storage.local.get('cloudflareBlackList', r => {

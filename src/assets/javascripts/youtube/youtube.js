@@ -54,7 +54,7 @@ function setRedirects(val) {
       pipedNormalRedirectsChecks,
       pipedTorRedirectsChecks: redirects.piped.tor,
       pipedMaterialNormalRedirectsChecks,
-      pipedMaterialTorRedirectsChecks: redirects.pipedMaterial.tor
+      // pipedMaterialTorRedirectsChecks: redirects.pipedMaterial.tor
     })
   })
 }
@@ -81,7 +81,7 @@ let
   pipedLokiCustomRedirects,
   pipedMaterialNormalRedirectsChecks,
   pipedMaterialNormalCustomRedirects,
-  pipedMaterialTorRedirectsChecks,
+  // pipedMaterialTorRedirectsChecks,
   pipedMaterialTorCustomRedirects,
   pipedMaterialI2pCustomRedirects,
   pipedMaterialLokiCustomRedirects;
@@ -111,7 +111,7 @@ function init() {
         "pipedLokiCustomRedirects",
         "pipedMaterialNormalRedirectsChecks",
         "pipedMaterialNormalCustomRedirects",
-        "pipedMaterialTorRedirectsChecks",
+        // "pipedMaterialTorRedirectsChecks",
         "pipedMaterialTorCustomRedirects",
         "pipedMaterialI2pCustomRedirects",
         "pipedMaterialLokiCustomRedirects"
@@ -138,7 +138,7 @@ function init() {
         pipedLokiCustomRedirects = r.pipedLokiCustomRedirects;
         pipedMaterialNormalRedirectsChecks = r.pipedMaterialNormalRedirectsChecks;
         pipedMaterialNormalCustomRedirects = r.pipedMaterialNormalCustomRedirects;
-        pipedMaterialTorRedirectsChecks = r.pipedMaterialTorRedirectsChecks;
+        // pipedMaterialTorRedirectsChecks = r.pipedMaterialTorRedirectsChecks;
         pipedMaterialTorCustomRedirects = r.pipedMaterialTorCustomRedirects;
         pipedMaterialI2pCustomRedirects - r.pipedMaterialI2pCustomRedirects;
         pipedMaterialLokiCustomRedirects = r.pipedMaterialLokiCustomRedirects;
@@ -235,7 +235,7 @@ function redirect(url, type, initiator, disableOverride) {
     let instancesList = [];
     if (protocol == 'loki') instancesList = [...pipedMaterialLokiCustomRedirects];
     else if (protocol == 'i2p') instancesList = [...pipedMaterialI2pCustomRedirects];
-    else if (protocol == 'tor') instancesList = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...pipedMaterialTorCustomRedirects]; //...pipedMaterialTorRedirectsChecks, 
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
       instancesList = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects];
     }
@@ -275,7 +275,7 @@ function switchInstance(url, disableOverride) {
     else if (protocol == 'tor') {
       if (youtubeFrontend == 'invidious') instancesList = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
       else if (youtubeFrontend == 'piped') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
-      else if (youtubeFrontend == 'pipedMaterial') instancesList = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects];
+      else if (youtubeFrontend == 'pipedMaterial') instancesList = [...pipedMaterialTorCustomRedirects]; //...pipedMaterialTorRedirectsChecks, 
     }
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
       if (youtubeFrontend == 'invidious') instancesList = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
@@ -348,7 +348,7 @@ function initDefaults() {
           pipedMaterialNormalRedirectsChecks: pipedMaterialNormalRedirectsChecks,
           pipedMaterialNormalCustomRedirects: [],
 
-          pipedMaterialTorRedirectsChecks: [...redirects.pipedMaterial.tor],
+          //pipedMaterialTorRedirectsChecks: [...redirects.pipedMaterial.tor],
           pipedMaterialTorCustomRedirects: [],
 
           pipedMaterialI2pCustomRedirects: [],
@@ -469,7 +469,7 @@ function copyPastePipedMaterialLocalStorage(test, url, tabId,) {
     if (![
       ...pipedMaterialNormalRedirectsChecks,
       ...pipedMaterialNormalCustomRedirects,
-      ...pipedMaterialTorRedirectsChecks,
+      //...pipedMaterialTorRedirectsChecks,
       ...pipedMaterialTorCustomRedirects,
       ...pipedMaterialI2pCustomRedirects,
       ...pipedMaterialLokiCustomRedirects
@@ -481,7 +481,7 @@ function copyPastePipedMaterialLocalStorage(test, url, tabId,) {
       let checkedInstances = [];
       if (protocol == 'loki') checkedInstances = [...pipedMaterialLokiCustomRedirects];
       else if (protocol == 'i2p') checkedInstances = [...pipedMaterialI2pCustomRedirects];
-      else if (protocol == 'tor') checkedInstances = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects]
+      else if (protocol == 'tor') checkedInstances = [...pipedMaterialTorCustomRedirects]; //...pipedMaterialTorRedirectsChecks, 
       if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
         checkedInstances = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects]
       }
@@ -504,7 +504,7 @@ function pastePipedMaterialLocalStorage() {
     let checkedInstances = [];
     if (protocol == 'loki') checkedInstances = [...pipedMaterialLokiCustomRedirects];
     else if (protocol == 'i2p') checkedInstances = [...pipedMaterialI2pCustomRedirects];
-    else if (protocol == 'tor') checkedInstances = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects]
+    else if (protocol == 'tor') checkedInstances = [...pipedMaterialTorCustomRedirects]; //...pipedMaterialTorRedirectsChecks, 
     if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
       checkedInstances = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects]
     }
@@ -536,7 +536,7 @@ function removeXFrameOptions(e) {
         else if (protocol == 'tor') {
           if (youtubeFrontend == 'invidious') instancesList = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
           if (youtubeFrontend == 'piped') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
-          if (youtubeFrontend == 'pipedMaterial') instancesList = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects];
+          if (youtubeFrontend == 'pipedMaterial') instancesList = [...pipedMaterialTorCustomRedirects]; //...pipedMaterialTorRedirectsChecks, 
         }
         if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
           if (youtubeFrontend == 'invidious') instancesList = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
