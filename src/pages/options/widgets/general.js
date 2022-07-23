@@ -169,8 +169,8 @@ protocolElement.addEventListener("change", event => {
   location.reload();
 })
 
-let protocolFallbackElement = document.getElementById("protocol-fallback")
-protocolFallbackElement.addEventListener("change", event => {
+let protocolFallbackCheckbox = document.getElementById("protocol-fallback-checkbox")
+protocolFallbackCheckbox.addEventListener("change", event => {
   browser.storage.local.set({ protocolFallback: event.target.checked});
 })
 
@@ -208,9 +208,10 @@ browser.storage.local.get(
     autoRedirectElement.checked = r.autoRedirect;
     themeElement.value = r.theme;
     protocolElement.value = r.protocol;
-    protocolFallbackElement.checked = r.protocolFallback;
+    protocolFallbackCheckbox.checked = r.protocolFallback;
     // firstPartyIsolate.checked = r.firstPartyIsolate;
-    
+     
+    let protocolFallbackElement = document.getElementById('protocol-fallback')
     if (protocolElement.value == "normal") {
       protocolFallbackElement.style.display = 'none';
     } else {
