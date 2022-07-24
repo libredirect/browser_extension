@@ -44,7 +44,7 @@
         "description": "used in the settings page"
     },
     "dark": {
-        "message": "Obscur",
+        "message": "Sombre",
         "description": "used in the settings page"
     },
     "autoRedirect": {
@@ -56,11 +56,11 @@
         "description": "used in the settings page"
     },
     "importSettings": {
-        "message": "Paramètres d'importation",
+        "message": "Importation de paramètres",
         "description": "used in the settings page"
     },
     "exportSettings": {
-        "message": "Paramètres d'exportation",
+        "message": "Exportation de paramètres",
         "description": "used in the settings page"
     },
     "enable": {
@@ -214,5 +214,8 @@
     },
     "loki": {
         "message": "Lokinet"
+    },
+    "protocolFallback": {
+        "message": "Retour au mode normal si aucune instance n’est disponible pour le protocole sélectionné"
     }
 }
