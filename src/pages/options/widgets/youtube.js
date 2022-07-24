@@ -74,6 +74,7 @@ browser.storage.local.get(
     r => {
         enable.checked = !r.disableYoutube;
         onlyEmbeddedVideo.value = r.onlyEmbeddedVideo;
+        youtubeEmbedFrontend.value = r.youtubeEmbedFrontend;
         frontend.value = r.youtubeFrontend;
         protocol = r.protocol;
 
