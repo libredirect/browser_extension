@@ -6,12 +6,6 @@ section#quora_page.option-block
         h4(data-localise="__MSG_enable__") Enable
         input#quora-enable(type="checkbox")
 
-    .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#quora-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-
     #quetre
         hr
         .normal
@@ -21,6 +15,12 @@ section#quora_page.option-block
             +latency('quetre')
         .tor
             include ../../widgets/instances.pug
-            +instances('https://quetre.onion')
+            +instances('http://quetre.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://quetre.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://quetre.loki')
 
     script(type="module" src="./widgets/quora.js")

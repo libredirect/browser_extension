@@ -75,10 +75,6 @@
         "message": "Medium",
         "description": "used in the settings page"
     },
-    "tor": {
-        "message": "Tor",
-        "description": "used in the settings page"
-    },
     "theme": {
         "message": "Theme",
         "description": "used in the settings page"
@@ -206,13 +202,10 @@
     "lbry": {
         "message": "LBRY"
     },
-    "i2p": {
-        "message": "I2P"
-    },
-    "loki": {
-        "message": "Lokinet"
-    },
     "testInstancesLatency": {
         "message": "Test Instances Latency"
+    },
+    "protocolFallback": {
+        "message": "Fallback to normal if no instances are available for the current protocol"
     }
 }

@@ -6,12 +6,18 @@ const targets = [
     /^https?:\/{2}(www\.|)tiktok\.com.*/
 ];
 
-let redirects = {
-    "proxiTok": {
-        "normal": [],
-        "tor": []
+const frontends = new Array("proxiTok")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+let redirects = {}
+
+for (let i = 0; i < frontends.length; i++) {
+    redirects[frontends[i]] = {}
+    for (let x = 0; x < protocols.length; x++) {
+        redirects[frontends[i]][protocols[x]] = []
     }
 }
+
 function setRedirects(val) {
     browser.storage.local.get('cloudflareBlackList', r => {
         redirects.proxiTok = val;
@@ -36,12 +42,18 @@ function initProxiTokCookies(test, from) {
             ...proxiTokNormalCustomRedirects,
             ...proxiTokTorRedirectsChecks,
             ...proxiTokTorCustomRedirects,
+            ...proxiTokI2pCustomRedirects,
+            ...proxiTokLokiCustomRedirects,
         ].includes(protocolHost)) resolve();
 
         if (!test) {
-            let checkedInstances;
-            if (tiktokProtocol == 'normal') checkedInstances = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects]
-            else if (tiktokProtocol == 'tor') checkedInstances = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects]
+            let checkedInstances = [];
+            if (protocol == 'loki') checkedInstances = [...proxiTokI2pCustomRedirects];
+            else if (protocol == 'i2p') checkedInstances = [...proxiTokLokiCustomRedirects];
+            else if (protocol == 'tor') checkedInstances = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
+            if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+                checkedInstances = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];
+            }
             await utils.copyCookie('proxitok', from, checkedInstances, 'theme');
             await utils.copyCookie('proxitok', from, checkedInstances, 'api-legacy');
         }
@@ -52,10 +64,14 @@ function initProxiTokCookies(test, from) {
 function pasteProxiTokCookies() {
     return new Promise(async resolve => {
         await init();
-        if (disableTiktok || tiktokProtocol === undefined) { resolve(); return; }
-        let checkedInstances;
-        if (tiktokProtocol == 'normal') checkedInstances = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects]
-        else if (tiktokProtocol == 'tor') checkedInstances = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects]
+        if (disableTiktok || protocol === undefined) { resolve(); return; }
+        let checkedInstances = [];
+        if (protocol == 'loki') checkedInstances = [...proxiTokI2pCustomRedirects];
+        else if (protocol == 'i2p') checkedInstances = [...proxiTokLokiCustomRedirects];
+        else if (protocol == 'tor') checkedInstances = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
+        if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+            checkedInstances = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];
+        }
         utils.getCookiesFromStorage('proxitok', checkedInstances, 'theme');
         utils.getCookiesFromStorage('proxitok', checkedInstances, 'api-legacy');
         resolve();
@@ -64,33 +80,42 @@ function pasteProxiTokCookies() {
 
 let
     disableTiktok,
-    tiktokProtocol,
+    protocol,
+    protocolFallback,
     tiktokRedirects,
     proxiTokNormalRedirectsChecks,
     proxiTokNormalCustomRedirects,
     proxiTokTorRedirectsChecks,
-    proxiTokTorCustomRedirects;
+    proxiTokTorCustomRedirects,
+    proxiTokI2pCustomRedirects,
+    proxiTokLokiCustomRedirects;
 
 function init() {
     return new Promise(async resolve => {
         browser.storage.local.get(
             [
                 "disableTiktok",
-                "tiktokProtocol",
+                "protocol",
+                "protocolFallback",
                 "tiktokRedirects",
                 "proxiTokNormalRedirectsChecks",
                 "proxiTokNormalCustomRedirects",
                 "proxiTokTorRedirectsChecks",
                 "proxiTokTorCustomRedirects",
+                "proxiTokI2pCustomRedirects",
+                "proxiTokLokiCustomRedirects"
             ],
             r => {
                 disableTiktok = r.disableTiktok;
-                tiktokProtocol = r.tiktokProtocol;
+                protocol = r.protocol;
+                protocolFallback = r.protocolFallback;
                 tiktokRedirects = r.tiktokRedirects;
                 proxiTokNormalRedirectsChecks = r.proxiTokNormalRedirectsChecks;
                 proxiTokNormalCustomRedirects = r.proxiTokNormalCustomRedirects;
                 proxiTokTorRedirectsChecks = r.proxiTokTorRedirectsChecks;
                 proxiTokTorCustomRedirects = r.proxiTokTorCustomRedirects;
+                proxiTokI2pCustomRedirects = r.proxiTokI2pCustomRedirects;
+                proxiTokLokiCustomRedirects = r.proxiTokLokiCustomRedirects;
                 resolve();
             }
         )
@@ -112,9 +137,13 @@ function redirect(url, type, initiator, disableOverride) {
     if (initiator && (all.includes(initiator.origin) || targets.includes(initiator.host))) return;
     if (!targets.some(rx => rx.test(url.href))) return;
 
-    let instancesList;
-    if (tiktokProtocol == 'normal') instancesList = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];
-    if (tiktokProtocol == 'tor') instancesList = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
+    let instancesList = [];
+    if (protocol == 'loki') instancesList = [...proxiTokI2pCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...proxiTokLokiCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];
+    }
     if (instancesList.length === 0) return;
 
     const randomInstance = utils.getRandomInstance(instancesList);
@@ -129,7 +158,9 @@ function reverse(url) {
             ...tiktokRedirects.proxiTok.normal,
             ...tiktokRedirects.proxiTok.tor,
             ...proxiTokNormalCustomRedirects,
-            ...proxiTokTorCustomRedirects
+            ...proxiTokTorCustomRedirects,
+            ...proxiTokI2pCustomRedirects,
+            ...proxiTokLokiCustomRedirects
         ];
         if (!all.includes(protocolHost)) { resolve(); return; }
 
@@ -148,12 +179,18 @@ function switchInstance(url, disableOverride) {
 
             ...proxiTokNormalCustomRedirects,
             ...proxiTokTorCustomRedirects,
+            ...proxiTokI2pCustomRedirects,
+            ...proxiTokLokiCustomRedirects
         ];
         if (!all.includes(protocolHost)) { resolve(); return; }
 
-        let instancesList;
-        if (tiktokProtocol == 'normal') instancesList = [...proxiTokNormalCustomRedirects, ...proxiTokNormalRedirectsChecks];
-        else if (tiktokProtocol == 'tor') instancesList = [...proxiTokTorCustomRedirects, ...proxiTokTorRedirectsChecks];
+        let instancesList = [];
+        if (protocol == 'loki') instancesList = [...proxiTokI2pCustomRedirects];
+        else if (protocol == 'i2p') instancesList = [...proxiTokLokiCustomRedirects];
+        else if (protocol == 'tor') instancesList = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects];
+        if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+            instancesList = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects];
+        }
 
         const i = instancesList.indexOf(protocolHost);
         if (i > -1) instancesList.splice(i, 1);
@@ -168,10 +205,11 @@ function initDefaults() {
     return new Promise(async resolve => {
         fetch('/instances/data.json').then(response => response.text()).then(async data => {
             let dataJson = JSON.parse(data);
-            redirects.proxiTok = dataJson.proxiTok;
+            for (let i = 0; i < frontends.length; i++) {
+            redirects[frontends[i]] = dataJson[frontends[i]]
+            }
             browser.storage.local.set({
                 disableTiktok: false,
-                tiktokProtocol: "normal",
 
                 tiktokRedirects: redirects,
 
@@ -180,6 +218,12 @@ function initDefaults() {
 
                 proxiTokTorRedirectsChecks: [...redirects.proxiTok.tor],
                 proxiTokTorCustomRedirects: [],
+
+                proxiTokI2pRedirectsChecks: [...redirects.proxiTok.i2p],
+                proxiTokI2pCustomRedirects: [],
+
+                proxiTokLokiRedirectsChecks: [...redirects.proxiTok.loki],
+                proxiTokLokiCustomRedirects: []
             }, () => resolve());
         });
     })

@@ -5,12 +5,19 @@ const targets = [
   "instagram.com",
   "www.instagram.com",
 ];
-let redirects = {
-  "bibliogram": {
-    "normal": [],
-    "tor": []
-  }
-};
+
+const frontends = new Array("bibliogram")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+let redirects = {};
+
+for (let i = 0; i < frontends.length; i++) {
+    redirects[frontends[i]] = {}
+    for (let x = 0; x < protocols.length; x++) {
+        redirects[frontends[i]][protocols[x]] = []
+    }
+}
+
 function setRedirects(val) {
   browser.storage.local.get('cloudflareBlackList', async r => {
     redirects.bibliogram = val;
@@ -28,33 +35,42 @@ function setRedirects(val) {
 
 let
   disableInstagram,
-  instagramProtocol,
+  protocol,
+  protocolFallback,
   instagramRedirects,
   bibliogramNormalRedirectsChecks,
   bibliogramTorRedirectsChecks,
   bibliogramNormalCustomRedirects,
-  bibliogramTorCustomRedirects;
+  bibliogramTorCustomRedirects,
+  bibliogramI2pCustomRedirects,
+  bibliogramLokiCustomRedirects;
 
 function init() {
   return new Promise(async resolve => {
     browser.storage.local.get(
       [
         "disableInstagram",
-        "instagramProtocol",
+        "protocol",
+        "protocolFallback",
         "instagramRedirects",
         "bibliogramNormalRedirectsChecks",
         "bibliogramTorRedirectsChecks",
         "bibliogramNormalCustomRedirects",
         "bibliogramTorCustomRedirects",
+        "bibliogramI2pCustomRedirects",
+        "bibliogramLokiCustomRedirects"
       ],
       r => {
         disableInstagram = r.disableInstagram;
-        instagramProtocol = r.instagramProtocol;
+        protocol = r.protocol;
+        protocolFallback = r.protocolFallback;
         instagramRedirects = r.instagramRedirects;
         bibliogramNormalRedirectsChecks = r.bibliogramNormalRedirectsChecks;
         bibliogramTorRedirectsChecks = r.bibliogramTorRedirectsChecks;
         bibliogramNormalCustomRedirects = r.bibliogramNormalCustomRedirects;
         bibliogramTorCustomRedirects = r.bibliogramTorCustomRedirects;
+        bibliogramI2pCustomRedirects = r.bibliogramI2pCustomRedirects;
+        bibliogramLokiCustomRedirects = r.bibliogramLokiCustomRedirects
         resolve();
       }
     )
@@ -70,6 +86,8 @@ function all() {
     ...instagramRedirects.bibliogram.tor,
     ...bibliogramNormalCustomRedirects,
     ...bibliogramTorCustomRedirects,
+    ...bibliogramI2pCustomRedirects,
+    ...bibliogramLokiCustomRedirects
   ]
 }
 
@@ -82,10 +100,14 @@ function redirect(url, type, initiator, disableOverride) {
   const bypassPaths = [/about/, /explore/, /support/, /press/, /api/, /privacy/, /safety/, /admin/, /\/(accounts\/|embeds?.js)/];
   if (bypassPaths.some(rx => rx.test(url.pathname))) return;
 
-  let instancesList;
-  if (instagramProtocol == 'normal') instancesList = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects];
-  else if (instagramProtocol == 'tor') instancesList = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects];
-  if (instancesList.length === 0) return;
+  let instancesList = [];
+  if (protocol == 'loki') instancesList = [...bibliogramLokiCustomRedirects];
+  else if (protocol == 'i2p') instancesList = [...bibliogramI2pCustomRedirects];
+  else if (protocol == 'tor') instancesList = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects];
+  if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+    instancesList = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects];
+  }
+  if (instancesList.length === 0) { return; }
   let randomInstance = utils.getRandomInstance(instancesList)
 
   const reservedPaths = ["u", "p", "privacy",];
@@ -116,9 +138,13 @@ function switchInstance(url, disableOverride) {
     let protocolHost = utils.protocolHost(url);
     if (!all().includes(protocolHost)) { resolve(); return; }
 
-    let instancesList;
-    if (instagramProtocol == 'normal') instancesList = [...bibliogramNormalCustomRedirects, ...bibliogramNormalRedirectsChecks];
-    else if (instagramProtocol == 'tor') instancesList = [...bibliogramTorCustomRedirects, ...bibliogramTorRedirectsChecks];
+    let instancesList = [];
+    if (protocol == 'loki') instancesList = [...bibliogramLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...bibliogramI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects];
+    }
 
     const i = instancesList.indexOf(protocolHost);
     if (i > -1) instancesList.splice(i, 1);
@@ -133,7 +159,9 @@ function initDefaults() {
   return new Promise(resolve => {
     fetch('/instances/data.json').then(response => response.text()).then(data => {
       let dataJson = JSON.parse(data);
-      redirects.bibliogram = dataJson.bibliogram;
+      for (let i = 0; i < frontends.length; i++) {
+        redirects[frontends[i]] = dataJson[frontends[i]]
+      }
       browser.storage.local.get('cloudflareBlackList', r => {
         bibliogramNormalRedirectsChecks = [...redirects.bibliogram.normal];
         for (const instance of r.cloudflareBlackList) {
@@ -145,11 +173,16 @@ function initDefaults() {
           instagramRedirects: redirects,
 
           bibliogramNormalRedirectsChecks: bibliogramNormalRedirectsChecks,
-          bibliogramTorRedirectsChecks: [],
+          bibliogramNormalCustomRedirects: [],
 
-          bibliogramNormalCustomRedirects: [...redirects.bibliogram.tor],
+          bibliogramTorRedirectsChecks: [...redirects.bibliogram.tor],
           bibliogramTorCustomRedirects: [],
-          instagramProtocol: "normal",
+
+          bibliogramI2pRedirectsChecks: [...redirects.bibliogram.i2p],
+          bibliogramI2pCustomRedirects: [],
+
+          bibliogramLokiRedirectsChecks: [...redirects.bibliogram.loki],
+          bibliogramLokiCustomRedirects: []
         })
         resolve();
       }

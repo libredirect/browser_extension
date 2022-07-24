@@ -6,16 +6,18 @@ const targets = [
   /^https?:\/{2}(www\.|old\.|np\.|new\.|amp\.|)reddit\.com/,
   /^https?:\/{2}(i\.|preview\.)redd\.it/,
 ];
-let redirects = {
-  "libreddit": {
-    "normal": [],
-    "tor": []
-  },
-  "teddit": {
-    "normal": [],
-    "tor": []
-  },
-};
+let redirects = {};
+
+const frontends = new Array("libreddit", "teddit")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+for (let i = 0; i < frontends.length; i++) {
+  redirects[frontends[i]] = {}
+  for (let x = 0; x < protocols.length; x++) {
+    redirects[frontends[i]][protocols[x]] = []
+  }
+}
+
 function setRedirects(val) {
   browser.storage.local.get('cloudflareBlackList', r => {
     redirects = val;
@@ -40,15 +42,27 @@ let
   disableReddit,
   redditFrontend,
   redditRedirects,
-  redditProtocol,
+  protocol,
+  protocolFallback,
+
   libredditNormalRedirectsChecks,
   libredditNormalCustomRedirects,
+
   libredditTorRedirectsChecks,
   libredditTorCustomRedirects,
+
+  libredditI2pCustomRedirects,
+
+  libredditLokiCustomRedirects,
+
   tedditNormalRedirectsChecks,
   tedditNormalCustomRedirects,
+
   tedditTorRedirectsChecks,
-  tedditTorCustomRedirects;
+  tedditTorCustomRedirects,
+
+  tedditI2pCustomRedirects,
+  tedditLokiCustomRedirects;
 
 function init() {
   return new Promise(resolve => {
@@ -57,29 +71,39 @@ function init() {
         "disableReddit",
         "redditFrontend",
         "redditRedirects",
-        "redditProtocol",
+        "protocol",
+        "protocolFallback",
         "libredditNormalRedirectsChecks",
         "libredditNormalCustomRedirects",
         "libredditTorRedirectsChecks",
         "libredditTorCustomRedirects",
+        "libredditI2pCustomRedirects",
+        "libredditLokiCustomRedirects",
         "tedditNormalRedirectsChecks",
         "tedditNormalCustomRedirects",
         "tedditTorRedirectsChecks",
         "tedditTorCustomRedirects",
+        "tedditI2pCustomRedirects",
+        "tedditLokiCustomRedirects"
       ],
       r => {
         disableReddit = r.disableReddit;
         redditFrontend = r.redditFrontend;
         redditRedirects = r.redditRedirects;
-        redditProtocol = r.redditProtocol;
+        protocol = r.protocol;
+        protocolFallback = r.protocolFallback;
         libredditNormalRedirectsChecks = r.libredditNormalRedirectsChecks;
         libredditNormalCustomRedirects = r.libredditNormalCustomRedirects;
         libredditTorRedirectsChecks = r.libredditTorRedirectsChecks;
         libredditTorCustomRedirects = r.libredditTorCustomRedirects;
+        libredditI2pCustomRedirects = r.libredditI2pCustomRedirects;
+        libredditLokiCustomRedirects = r.libredditLokiCustomRedirects;
         tedditNormalRedirectsChecks = r.tedditNormalRedirectsChecks;
         tedditNormalCustomRedirects = r.tedditNormalCustomRedirects;
         tedditTorRedirectsChecks = r.tedditTorRedirectsChecks;
         tedditTorCustomRedirects = r.tedditTorCustomRedirects;
+        tedditI2pCustomRedirects = r.tedditI2pCustomRedirects;
+        tedditLokiCustomRedirects = r.tedditLokiCustomRedirects;
         resolve();
       }
     )
@@ -98,12 +122,18 @@ function initLibredditCookies(test, from) {
       ...libredditTorRedirectsChecks,
       ...libredditNormalCustomRedirects,
       ...libredditTorCustomRedirects,
+      ...libredditI2pCustomRedirects,
+      ...libredditLokiCustomRedirects
     ].includes(protocolHost)) { resolve(); return; }
 
     if (!test) {
-      let checkedInstances;
-      if (redditProtocol == 'normal') checkedInstances = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects];
-      else if (redditProtocol == 'tor') checkedInstances = [...libredditTorRedirectsChecks, ...libredditTorCustomRedirects];
+      let checkedInstances = [];
+      if (protocol == 'loki') checkedInstances = [...libredditLokiCustomRedirects];
+      else if (protocol == 'i2p') checkedInstances = [...libredditI2pCustomRedirects];
+      else if (protocol == 'tor') checkedInstances = [...libredditTorRedirectsChecks, ...libredditTorCustomRedirects];
+      if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+        checkedInstances = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects];
+      }
       await utils.copyCookie('libreddit', from, checkedInstances, "theme");
       await utils.copyCookie('libreddit', from, checkedInstances, "front_page");
       await utils.copyCookie('libreddit', from, checkedInstances, "layout");
@@ -124,10 +154,14 @@ function initLibredditCookies(test, from) {
 function pasteLibredditCookies() {
   return new Promise(async resolve => {
     await init();
-    if (disableReddit || redditFrontend != 'libreddit' || redditProtocol === undefined) { resolve(); return; }
-    let checkedInstances;
-    if (redditProtocol == 'normal') checkedInstances = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects]
-    else if (redditProtocol == 'tor') checkedInstances = [...libredditTorRedirectsChecks, ...libredditTorCustomRedirects]
+    if (disableReddit || redditFrontend != 'libreddit' || protocol === undefined) { resolve(); return; }
+    let checkedInstances = [];
+    if (protocol == 'loki') checkedInstances = [...libredditLokiCustomRedirects];
+    else if (protocol == 'i2p') checkedInstances = [...libredditI2pCustomRedirects];
+    else if (protocol == 'tor') checkedInstances = [...libredditTorRedirectsChecks, ...libredditTorCustomRedirects];
+    if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+      checkedInstances = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects];
+    }
     utils.getCookiesFromStorage('libreddit', checkedInstances, "theme");
     utils.getCookiesFromStorage('libreddit', checkedInstances, "front_page");
     utils.getCookiesFromStorage('libreddit', checkedInstances, "layout");
@@ -153,12 +187,19 @@ function initTedditCookies(test, from) {
       ...tedditTorRedirectsChecks,
       ...tedditNormalCustomRedirects,
       ...tedditTorCustomRedirects,
+      ...tedditI2pCustomRedirects,
+      ...tedditI2pCustomRedirects
+
     ].includes(protocolHost)) resolve();
 
     if (!test) {
-      let checkedInstances;
-      if (redditProtocol == 'normal') checkedInstances = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects]
-      else if (redditProtocol == 'tor') checkedInstances = [...tedditTorRedirectsChecks, ...tedditTorCustomRedirects]
+      let checkedInstances = [];
+      if (protocol == 'loki') checkedInstances = [...tedditLokiCustomRedirects];
+      else if (protocol == 'i2p') checkedInstances = [...tedditI2pCustomRedirects];
+      else if (protocol == 'tor') checkedInstances = [...tedditTorRedirectsChecks, ...tedditTorCustomRedirects];
+      if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+        checkedInstances = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects];
+      }
       await utils.copyCookie('teddit', from, checkedInstances, 'collapse_child_comments')
       await utils.copyCookie('teddit', from, checkedInstances, 'domain_instagram')
       await utils.copyCookie('teddit', from, checkedInstances, 'domain_twitter')
@@ -179,10 +220,14 @@ function initTedditCookies(test, from) {
 function pasteTedditCookies() {
   return new Promise(async resolve => {
     await init();
-    if (disableReddit || redditFrontend != 'teddit' || redditProtocol === undefined) { resolve(); return; }
-    let checkedInstances;
-    if (redditProtocol == 'normal') checkedInstances = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects]
-    else if (redditProtocol == 'tor') checkedInstances = [...tedditTorRedirectsChecks, ...tedditTorCustomRedirects]
+    if (disableReddit || redditFrontend != 'teddit' || protocol === undefined) { resolve(); return; }
+    let checkedInstances = [];
+    if (protocol == 'loki') checkedInstances = [...tedditLokiCustomRedirects];
+    else if (protocol == 'i2p') checkedInstances = [...tedditI2pCustomRedirects];
+    else if (protocol == 'tor') checkedInstances = [...tedditTorRedirectsChecks, ...tedditTorCustomRedirects];
+    if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+      checkedInstances = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects];
+    }
     utils.getCookiesFromStorage('teddit', checkedInstances, 'collapse_child_comments')
     utils.getCookiesFromStorage('teddit', checkedInstances, 'domain_instagram')
     utils.getCookiesFromStorage('teddit', checkedInstances, 'domain_twitter')
@@ -207,8 +252,12 @@ function all() {
     ...redditRedirects.teddit.tor,
     ...libredditNormalCustomRedirects,
     ...libredditTorCustomRedirects,
+    ...libredditI2pCustomRedirects,
+    ...libredditLokiCustomRedirects,
     ...tedditNormalCustomRedirects,
     ...tedditTorCustomRedirects,
+    ...tedditI2pCustomRedirects,
+    ...tedditLokiCustomRedirects
   ];
 }
 
@@ -230,14 +279,24 @@ function redirect(url, type, initiator, disableOverride) {
   const bypassPaths = /\/(gallery\/poll\/rpan\/settings\/topics)/;
   if (url.pathname.match(bypassPaths)) return;
 
-  let libredditInstancesList;
-  let tedditInstancesList;
-  if (redditProtocol == 'normal') {
-    libredditInstancesList = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects];
-    tedditInstancesList = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects];
-  } else if (redditProtocol == 'tor') {
+  let libredditInstancesList = [];
+  let tedditInstancesList = [];
+
+  if (protocol == 'loki') {
+    libredditInstancesList = [...libredditLokiCustomRedirects];
+    tedditInstancesList = [...tedditLokiCustomRedirects];
+  }
+  else if (protocol == 'i2p') {
+    libredditInstancesList = [...libredditI2pCustomRedirects];
+    tedditInstancesList = [...tedditI2pCustomRedirects];
+  }
+  else if (protocol == 'tor') {
     libredditInstancesList = [...libredditTorRedirectsChecks, ...libredditTorCustomRedirects];
     tedditInstancesList = [...tedditTorRedirectsChecks, ...tedditTorCustomRedirects];
+  }
+  if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+    libredditInstancesList = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects];
+    tedditInstancesList = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects];
   }
 
   if (url.host === "i.redd.it") {
@@ -293,18 +352,26 @@ function switchInstance(url, disableOverride) {
     if (disableReddit && !disableOverride) { resolve(); return; }
     const protocolHost = utils.protocolHost(url);
     if (!all().includes(protocolHost)) { resolve(); return; }
-    let instancesList;
+    let instancesList = [];
     if (redditFrontend == 'libreddit') {
-      if (redditProtocol == 'normal') instancesList = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects];
-      else if (redditProtocol == 'tor') instancesList = [...libredditTorRedirectsChecks, ...libredditTorCustomRedirects];
+      if (protocol == 'loki') instancesList = [...libredditLokiCustomRedirects];
+      else if (protocol == 'i2p') instancesList = [...libredditI2pCustomRedirects];
+      else if (protocol == 'tor') instancesList = [...libredditTorRedirectsChecks, ...libredditTorCustomRedirects];
+      if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects];
+      }
       if ([
         ...redditRedirects.teddit.normal,
         ...redditRedirects.teddit.tor
       ].includes(protocolHost)) url.pathname = url.pathname.replace("/pics/w:null_", "/img/");
     }
     else if (redditFrontend == 'teddit') {
-      if (redditProtocol == 'normal') instancesList = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects];
-      else if (redditProtocol == 'tor') instancesList = [...tedditTorRedirectsChecks, ...tedditTorCustomRedirects];
+      if (protocol == 'loki') instancesList = [...tedditLokiCustomRedirects];
+      else if (protocol == 'i2p') instancesList = [...tedditI2pCustomRedirects];
+      else if (protocol == 'tor') instancesList = [...tedditTorRedirectsChecks, ...tedditTorCustomRedirects];
+      if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects];
+      }
       if ([
         ...redditRedirects.libreddit.normal,
         ...redditRedirects.libreddit.tor
@@ -325,8 +392,9 @@ function initDefaults() {
   return new Promise(resolve => {
     fetch('/instances/data.json').then(response => response.text()).then(async data => {
       let dataJson = JSON.parse(data);
-      redirects.teddit = dataJson.teddit;
-      redirects.libreddit = dataJson.libreddit;
+      for (let i = 0; i < frontends.length; i++) {
+        redirects[frontends[i]] = dataJson[frontends[i]]
+      }
       browser.storage.local.get('cloudflareBlackList', async r => {
         libredditNormalRedirectsChecks = [...redirects.libreddit.normal];
         tedditNormalRedirectsChecks = [...redirects.teddit.normal]
@@ -341,7 +409,6 @@ function initDefaults() {
         }
         browser.storage.local.set({
           disableReddit: false,
-          redditProtocol: 'normal',
           redditFrontend: 'libreddit',
           redditRedirects: redirects,
 
@@ -351,11 +418,23 @@ function initDefaults() {
           libredditTorRedirectsChecks: [...redirects.libreddit.tor],
           libredditTorCustomRedirects: [],
 
+          libredditI2pRedirectsChecks: [...redirects.libreddit.i2p],
+          libredditI2pCustomRedirects: [],
+
+          libredditLokiRedirectsChecks: [...redirects.libreddit.loki],
+          libredditLokiCustomRedirects: [],
+
           tedditNormalRedirectsChecks: tedditNormalRedirectsChecks,
           tedditNormalCustomRedirects: [],
 
           tedditTorRedirectsChecks: [...redirects.teddit.tor],
           tedditTorCustomRedirects: [],
+
+          tedditI2pRedirectsChecks: [...redirects.teddit.i2p],
+          tedditI2pCustomRedirects: [],
+
+          tedditLokiRedirectsChecks: [...redirects.teddit.loki],
+          tedditLokiCustomRedirects: []
         }, () => resolve());
       });
     });

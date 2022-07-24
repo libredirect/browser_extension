@@ -15,6 +15,19 @@ section#general_page.option-block
         input#firstPartyIsolate(type="checkbox")
 
     .some-block.option-block
+        h4(data-localise="__MSG_protocol__")
+        select#protocol
+            option(value="normal" data-localise="__MSG_normal__") Normal
+            option(value="tor") Tor
+            option(value="i2p") I2P
+            option(value="loki") Lokinet
+
+    #protocol-fallback
+        .some-block.option-block
+            h4(data-localise="__MSG_protocolFallback__") Fallback to normal if no instances are available for the current protocol
+            input#protocol-fallback-checkbox(type="checkbox")
+
+    .some-block.option-block
         h4(data-localise="__MSG_autoRedirect__")
         input#auto-redirect(type="checkbox")
 

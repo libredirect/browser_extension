@@ -76,6 +76,21 @@
           </select>
         </div>
         <div class="some-block option-block">
+          <h4 data-localise="__MSG_protocol__"></h4>
+          <select id="protocol">
+            <option value="normal" data-localise="__MSG_normal__">Normal</option>
+            <option value="tor">Tor</option>
+            <option value="i2p">I2P</option>
+            <option value="loki">Lokinet</option>
+          </select>
+        </div>
+        <div id="protocol-fallback">
+          <div class="some-block option-block">
+            <h4 data-localise="__MSG_protocolFallback__">Fallback to normal if no instances are available for the current protocol</h4>
+            <input id="protocol-fallback-checkbox" type="checkbox">
+          </div>
+        </div>
+        <div class="some-block option-block">
           <h4 data-localise="__MSG_autoRedirect__"></h4>
           <input id="auto-redirect" type="checkbox">
         </div>
@@ -274,33 +289,23 @@
             <option value="yatte">Yattee</option>
           </select>
         </div>
-        <div id="freetube-yatte">
+        <div id="youtube-embedded_frontend">
           <div class="some-block option-block">
             <h4 data-localise="__MSG_embeddedVids__">Embedded Videos Frontend</h4>
             <select id="youtube-embed_frontend">
               <option value="invidious">Invidious</option>
               <option value="piped">Piped</option>
               <option value="pipedMaterial">Piped-Material</option>
-              <option value="youtube">Youtube</option>
             </select>
           </div>
         </div>
-        <div id="invidious-piped-pipedMaterial">
-          <div class="some-block option-block">
-            <h4 data-localise="__MSG_protocol__">Protocol</h4>
-            <select id="youtube-protocol">
-              <option value="normal" data-localise="__MSG_normal__">Normal</option>
-              <option value="tor" data-localise="__MSG_tor__">Tor</option>
-            </select>
-          </div>
-          <div class="some-block option-block">
-            <h4 data-localise="__MSG_redirectType__">Redirect Type</h4>
-            <select id="youtube-redirect_type">
-              <option value="both" data-localise="__MSG_both__">both</option>
-              <option value="onlyEmbedded" data-localise="__MSG_onlyEmbedded__">Only Embedded</option>
-              <option value="onlyNotEmbedded" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
-            </select>
-          </div>
+        <div class="some-block option-block">
+          <h4 data-localise="__MSG_redirectType__">Redirect Type</h4>
+          <select id="youtube-redirect_type">
+            <option value="both" data-localise="__MSG_both__">both</option>
+            <option value="onlyEmbedded" data-localise="__MSG_onlyEmbedded__">Only Embedded</option>
+            <option value="onlyNotEmbedded" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
+          </select>
         </div>
         <div id="invidious">
           <hr>
@@ -315,7 +320,7 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://invidious.com" type="url">
+                            <input class="custom-instance" placeholder="http://invidious.com" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -345,7 +350,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://invidious.onion" type="url">
+                            <input class="custom-instance" placeholder="http://invidious.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://invidious.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://invidious.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -399,7 +446,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://piped.onion" type="url">
+                            <input class="custom-instance" placeholder="http://piped.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://piped.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://piped.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -453,7 +542,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://piped-material.onion" type="url">
+                            <input class="custom-instance" placeholder="http://piped-material.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://piped-material.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://piped-material.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -507,6 +638,69 @@
                           <input class="button button-inline" id="latency-beatbump" style="display:none;">
                         </div>
           </div>
+          <div class="tor">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://beatbump.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://beatbump.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://beatbump.loki" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
         </div>
         <script type="module" src="./widgets/youtubeMusic.js"></script>
       </section>
@@ -518,13 +712,6 @@
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
           <input id="twitter-enable" type="checkbox">
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="twitter-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
-          </select>
         </div>
         <div class="some-block option-block">
           <h4 data-localise="__MSG_redirectType__">Redirect Type</h4>
@@ -577,7 +764,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://nitter.onion" type="url">
+                            <input class="custom-instance" placeholder="http://nitter.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://nitter.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://nitter.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -598,13 +827,6 @@
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
           <input id="instagram-enable" type="checkbox">
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="instagram-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
-          </select>
         </div>
         <div id="bibliogram">
           <hr>
@@ -659,6 +881,48 @@
                         </form>
                         <div class="checklist custom-checklist"></div>
           </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://bibliogram.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://bibliogram.loki" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
         </div>
         <script type="module" src="./widgets/instagram.js"></script>
       </section>
@@ -670,13 +934,6 @@
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
           <input id="tiktok-enable" type="checkbox">
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="tiktok-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
-          </select>
         </div>
         <div id="proxiTok">
           <hr>
@@ -721,7 +978,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://proxitok.onion" type="url">
+                            <input class="custom-instance" placeholder="http://proxitok.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://proxitok.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://proxitok.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -748,13 +1047,6 @@
           <select id="reddit-frontend">
             <option value="libreddit">Libreddit</option>
             <option value="teddit">Teddit</option>
-          </select>
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="reddit-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
           </select>
         </div>
         <div id="libreddit">
@@ -800,7 +1092,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://libreddit.onion" type="url">
+                            <input class="custom-instance" placeholder="http://libreddit.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://libreddit.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://libreddit.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -854,7 +1188,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://teddit.onion" type="url">
+                            <input class="custom-instance" placeholder="http://teddit.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://teddit.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://teddit.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -875,14 +1251,6 @@
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
           <input id="imgur-enable" type="checkbox">
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="imgur-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
-            <option value="i2p" data-localise="__MSG_i2p__">I2P</option>
-          </select>
         </div>
         <div id="rimgo">
           <hr>
@@ -927,7 +1295,7 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://rimgo.onion" type="url">
+                            <input class="custom-instance" placeholder="http://rimgo.onion" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -948,7 +1316,28 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://rimgo.onion" type="url">
+                            <input class="custom-instance" placeholder="http://rimgo.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://rimgo.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -969,14 +1358,6 @@
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
           <input id="wikipedia-enable" type="checkbox">
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="wikipedia-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
-            <option value="i2p" data-localise="__MSG_i2p__">I2P</option>
-          </select>
         </div>
         <div id="wikiless">
           <hr>
@@ -1021,7 +1402,7 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://wikiless.onion" type="url">
+                            <input class="custom-instance" placeholder="http://wikiless.onion" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1052,6 +1433,27 @@
                         </form>
                         <div class="checklist custom-checklist"></div>
           </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://wikiless.loki" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
         </div>
         <script type="module" src="./widgets/wikipedia.js"></script>
       </section>
@@ -1063,13 +1465,6 @@
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
           <input id="medium-enable" type="checkbox">
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="medium-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
-          </select>
         </div>
         <div id="scribe">
           <hr>
@@ -1114,7 +1509,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://scribe.onion" type="url">
+                            <input class="custom-instance" placeholder="http://scribe.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://scribe.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://scribe.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1135,13 +1572,6 @@
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
           <input id="quora-enable" type="checkbox">
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="quora-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
-          </select>
         </div>
         <div id="quetre">
           <hr>
@@ -1186,7 +1616,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://quetre.onion" type="url">
+                            <input class="custom-instance" placeholder="http://quetre.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://quetre.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://quetre.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1207,13 +1679,6 @@
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
           <input id="imdb-enable" type="checkbox">
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="imdb-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
-          </select>
         </div>
         <div id="libremdb">
           <hr>
@@ -1258,7 +1723,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://libremdb.onion" type="url">
+                            <input class="custom-instance" placeholder="http://libremdb.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://libremdb.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://libremdb.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1279,13 +1786,6 @@
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
           <input id="reuters-enable" type="checkbox">
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="reuters-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
-          </select>
         </div>
         <div id="neuters">
           <hr>
@@ -1330,7 +1830,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://neuters.onion" type="url">
+                            <input class="custom-instance" placeholder="http://neuters.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://neuters.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://neuters.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1351,13 +1893,6 @@
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
           <input id="peertube-enable" type="checkbox">
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="peertube-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
-          </select>
         </div>
         <div id="simpleertube">
           <hr>
@@ -1402,7 +1937,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://simpleertube.onion" type="url">
+                            <input class="custom-instance" placeholder="http://simpleertube.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://simpleertube.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://simpleertube.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1423,13 +2000,6 @@
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
           <input id="lbry-enable" type="checkbox">
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="lbry-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
-          </select>
         </div>
         <div id="librarian">
           <hr>
@@ -1484,6 +2054,48 @@
                         </form>
                         <div class="checklist custom-checklist"></div>
           </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://librarian.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://librarian.loki" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
         </div>
         <script type="module" src="./widgets/lbry.js"></script>
       </section>
@@ -1502,20 +2114,11 @@
             <option value="searxng">SearXNG</option>
             <option value="searx">SearX</option>
             <option value="whoogle">Whoogle</option>
+            <option value="librex">LibreX</option>
           </select>
         </div>
-        <div id="searx-whoogle">
-          <div class="some-block option-block">
-            <h4 data-localise="__MSG_protocol__">Protocol</h4>
-            <select id="search-protocol">
-              <option value="normal" data-localise="__MSG_normal__">Normal</option>
-              <option value="tor" data-localise="__MSG_tor__">Tor</option>
-              <option value="i2p" data-localise="__MSG_i2p__">I2P</option>
-            </select>
-          </div>
-        </div>
         <div class="some-block">
-          <h4 data-localise="__MSG_searchNote__">Note: To use Search to its full potential, make LibRedirect as the Default Search Engine</h4>
+          <h4 data-localise="__MSG_searchNote__">Note: To use Search, make LibRedirect the Default Search Engine</h4>
         </div>
         <div id="searx">
           <hr>
@@ -1560,7 +2163,7 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://searx.onion" type="url">
+                            <input class="custom-instance" placeholder="http://searx.onion" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1581,7 +2184,28 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://searx.i2p" type="url">
+                            <input class="custom-instance" placeholder="http://searx.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://searx.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1635,7 +2259,7 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://searxng.onion" type="url">
+                            <input class="custom-instance" placeholder="http://searxng.onion" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1656,7 +2280,28 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://searxng.i2p" type="url">
+                            <input class="custom-instance" placeholder="http://searxng.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://searxng.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1710,7 +2355,7 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://whoogle.onion" type="url">
+                            <input class="custom-instance" placeholder="http://whoogle.onion" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1731,7 +2376,124 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://whoogle.i2p" type="url">
+                            <input class="custom-instance" placeholder="http://whoogle.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://whoogle.loki" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+        </div>
+        <div id="librex">
+          <hr>
+          <div class="normal">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="https://librex.com" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+                        <div class="buttons buttons-inline">
+                          <label class="button button-inline" id="latency-librex-label" for="latency-librex"> 
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+                              <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
+                            </svg>&nbsp;
+                            <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
+                          </label>
+                          <input class="button button-inline" id="latency-librex" style="display:none;">
+                        </div>
+          </div>
+          <div class="tor">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://librex.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://librex.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://librex.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1758,15 +2520,6 @@
           <select id="translate-frontend">
             <option value="simplyTranslate">SimplyTranslate</option>
             <option value="lingva">Lingva</option>
-          </select>
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="translate-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
-            <option value="i2p" data-localise="__MSG_i2p__">I2P</option>
-            <option value="loki" data-localise="__MSG_loki__">Lokinet</option>
           </select>
         </div>
         <hr>
@@ -1907,7 +2660,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="http://tyzxppdeoojdnaux.onion" type="url">
+                            <input class="custom-instance" placeholder="http://lingvatranslate.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://lingvatranslate.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://lingvatranslate.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -1959,14 +2754,77 @@
                         </form>
                         <div class="checklist custom-checklist"></div>
                         <div class="buttons buttons-inline">
-                          <label class="button button-inline" id="latency-facilmap-label" for="latency-facilmap"> 
+                          <label class="button button-inline" id="latency-facil-label" for="latency-facil"> 
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
                               <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
                             </svg>&nbsp;
                             <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
                           </label>
-                          <input class="button button-inline" id="latency-facilmap" style="display:none;">
+                          <input class="button button-inline" id="latency-facil" style="display:none;">
                         </div>
+          </div>
+          <div class="tor">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://facilmap.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://facilmap.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://facilmap.loki" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
           </div>
         </div>
         <script type="module" src="./widgets/maps.js"></script>
@@ -1979,13 +2837,6 @@
         <div class="some-block option-block">
           <h4 data-localise="__MSG_enable__">Enable</h4>
           <input id="sendTargets-enable" type="checkbox">
-        </div>
-        <div class="some-block option-block">
-          <h4 data-localise="__MSG_protocol__">Protocol</h4>
-          <select id="sendTargets-protocol">
-            <option value="normal" data-localise="__MSG_normal__">Normal</option>
-            <option value="tor" data-localise="__MSG_tor__">Tor</option>
-          </select>
         </div>
         <div id="send">
           <hr>
@@ -2030,7 +2881,49 @@
                         </div>
                         <form class="custom-instance-form">
                           <div class="some-block option-block">
-                            <input class="custom-instance" placeholder="https://send.onion" type="url">
+                            <input class="custom-instance" placeholder="http://send.onion" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="i2p">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://send.i2p" type="url">
+                            <button class="add add-instance" type="submit">
+                              <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+                              </svg>
+                            </button>
+                          </div>
+                        </form>
+                        <div class="checklist custom-checklist"></div>
+          </div>
+          <div class="loki">
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+                        </div>
+                        <div class="checklist"></div>
+                        <hr>
+                        <div class="some-block option-block">
+                          <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+                        </div>
+                        <form class="custom-instance-form">
+                          <div class="some-block option-block">
+                            <input class="custom-instance" placeholder="http://send.loki" type="url">
                             <button class="add add-instance" type="submit">
                               <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                                 <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>

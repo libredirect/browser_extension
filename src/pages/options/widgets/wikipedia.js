@@ -1,52 +1,61 @@
 import utils from "../../../assets/javascripts/utils.js";
 
-const enable = document.getElementById("wikipedia-enable");
-const protocolElement = document.getElementById("wikipedia-protocol");
-const wikipedia = document.getElementById('wikipedia_page');
+// UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
 
-function changeProtocolSettings(protocol) {
-    const normalDiv = wikipedia.getElementsByClassName("normal")[0];
-    const torDiv = wikipedia.getElementsByClassName("tor")[0];
-    const i2pDiv = wikipedia.getElementsByClassName("i2p")[0];
-    if (protocol == 'normal') {
-        normalDiv.style.display = 'block';
-        torDiv.style.display = 'none';
-        i2pDiv.style.display = 'none';
+const frontends = new Array("wikiless")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+const enable = document.getElementById("wikipedia-enable");
+const wikipedia = document.getElementById('wikipedia_page');
+//const frontend = document.getElementById("wikipedia-frontend");
+let protocol
+
+/*
+function changeFrontendsSettings() {
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        if (frontends[i] == frontend.value) {
+            frontendDiv.style.display = 'block'
+        } else {
+            frontendDiv.style.display = 'none'
+        }
     }
-    else if (protocol == 'tor') {
-        normalDiv.style.display = 'none';
-        torDiv.style.display = 'block';
-        i2pDiv.style.display = 'none';
-    }
-    else if (protocol == 'i2p') {
-        normalDiv.style.display = 'none';
-        torDiv.style.display = 'none';
-        i2pDiv.style.display = 'block';
+}
+*/
+
+function changeProtocolSettings() {
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        for (let x = 0; x < protocols.length; x++) {
+            const protocolDiv = frontendDiv.getElementsByClassName(protocols[x])[0]
+            if (protocols[x] == protocol) {
+                protocolDiv.style.display = 'block'
+            } else {
+                protocolDiv.style.display = 'none'
+            }
+        }
     }
 }
 
 browser.storage.local.get(
     [
         "disableWikipedia",
-        "wikipediaProtocol",
+        "protocol"
     ],
     r => {
         enable.checked = !r.disableWikipedia;
-        protocolElement.value = r.wikipediaProtocol;
-        changeProtocolSettings(r.wikipediaProtocol);
+        protocol = r.protocol;
+        changeProtocolSettings();
     }
 )
 
 wikipedia.addEventListener("change", () => {
-    browser.storage.local.set({
-        disableWikipedia: !enable.checked,
-        wikipediaProtocol: protocolElement.value,
-    })
-    changeProtocolSettings(protocolElement.value)
+    browser.storage.local.set({ disableWikipedia: !enable.checked })
 })
 
-utils.processDefaultCustomInstances('wikipedia', 'wikiless', 'normal', document);
-utils.processDefaultCustomInstances('wikipedia', 'wikiless', 'tor', document);
-utils.processDefaultCustomInstances('wikipedia', 'wikiless', 'i2p', document);
-
-utils.latency('wikipedia', 'wikiless', document, location)
+for (let i = 0; i < frontends.length; i++) {
+    for (let x = 0; x < protocols.length; x++) {
+        utils.processDefaultCustomInstances('wikipedia', frontends[i], protocols[x], document)
+    }
+    utils.latency('wikipedia', frontends[i], document, location)
+}

@@ -81,6 +81,7 @@ twitterHelper.pasteNitterCookies();
 wikipediaHelper.pasteWikilessCookies();
 searchHelper.pasteSearxCookies();
 searchHelper.pasteSearxngCookies();
+searchHelper.pasteLibrexCookies();
 redditHelper.pasteLibredditCookies();
 redditHelper.pasteTedditCookies();
 tiktokHelper.pasteProxiTokCookies();
@@ -258,3 +259,5 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.function === 'unify') utils.unify(false).then(r => sendResponse({ response: r }))
   return true;
 });
+
+browser.storage.local.set({"version": browser.runtime.getManifest().version})

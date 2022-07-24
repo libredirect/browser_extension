@@ -7,12 +7,6 @@ section#twitter_page.option-block
         input#twitter-enable(type="checkbox")
 
     .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#twitter-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-
-    .some-block.option-block
         h4(data-localise="__MSG_redirectType__") Redirect Type
         select#twitter-redirect_type
             option(value="both" data-localise="__MSG_both__") both
@@ -27,6 +21,13 @@ section#twitter_page.option-block
             include ../../widgets/latency.pug
             +latency('nitter')
         .tor
-            +instances('https://nitter.onion')
+            include ../../widgets/instances.pug
+            +instances('http://nitter.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://nitter.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://nitter.loki')
 
     script(type="module" src="./widgets/twitter.js")

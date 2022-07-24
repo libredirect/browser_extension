@@ -8,12 +8,18 @@ const targets = [
     /^https?:\/{2}sendfiles\.online\/$/
 ];
 
-let redirects = {
-    "send": {
-        "normal": [],
-        "tor": []
+const frontends = new Array("send")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+let redirects = {}
+
+for (let i = 0; i < frontends.length; i++) {
+    redirects[frontends[i]] = {}
+    for (let x = 0; x < protocols.length; x++) {
+        redirects[frontends[i]][protocols[x]] = []
     }
 }
+
 function setRedirects(val) {
     browser.storage.local.get('cloudflareBlackList', r => {
         redirects.send = val;
@@ -36,7 +42,10 @@ let
     sendNormalCustomRedirects,
     sendTorRedirectsChecks,
     sendTorCustomRedirects,
-    sendTargetsProtocol;
+    sendI2pCustomRedirects,
+    sendLokiCustomRedirects,
+    protocol,
+    protocolFallback;
 
 function init() {
     return new Promise(resolve => {
@@ -44,11 +53,14 @@ function init() {
             [
                 "disableSendTarget",
                 "sendTargetsRedirects",
-                "sendTargetsProtocol",
+                "protocol",
+                "protocolFallback",
                 "sendNormalRedirectsChecks",
                 "sendNormalCustomRedirects",
                 "sendTorRedirectsChecks",
                 "sendTorCustomRedirects",
+                "sendI2pCustomRedirects",
+                "sendLokiCustomRedirects"
             ],
             r => {
                 disableSendTarget = r.disableSendTarget;
@@ -57,7 +69,10 @@ function init() {
                 sendNormalCustomRedirects = r.sendNormalCustomRedirects;
                 sendTorRedirectsChecks = r.sendTorRedirectsChecks;
                 sendTorCustomRedirects = r.sendTorCustomRedirects;
-                sendTargetsProtocol = r.sendTargetsProtocol;
+                sendI2pCustomRedirects = r.sendI2pCustomRedirects;
+                sendLokiCustomRedirects = r.sendLokiCustomRedirects;
+                protocol = r.protocol;
+                protocolFallback = r.protocolFallback;
                 resolve();
             }
         )
@@ -74,6 +89,8 @@ function all() {
         ...sendNormalCustomRedirects,
         ...sendTorRedirectsChecks,
         ...sendTorCustomRedirects,
+        ...sendI2pCustomRedirects,
+        ...sendLokiCustomRedirects
     ];
 }
 
@@ -85,9 +102,13 @@ function switchInstance(url, disableOverride) {
         if (!all().includes(protocolHost)) { resolve(); return; }
         if (url.pathname != '/') { resolve(); return; }
 
-        let instancesList;
-        if (sendTargetsProtocol == 'normal') instancesList = [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects];
-        else if (sendTargetsProtocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
+        let instancesList = [];
+        if (protocol == 'loki') instancesList = [...sendLokiCustomRedirects];
+        else if (protocol == 'i2p') instancesList = [...sendI2pCustomRedirects];
+        else if (protocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
+        if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+            instancesList = [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects];
+        }
 
         const i = instancesList.indexOf(protocolHost);
         if (i > -1) instancesList.splice(i, 1);
@@ -104,9 +125,13 @@ function redirect(url, type, initiator, disableOverride) {
     if (initiator && (all().includes(initiator.origin) || targets.includes(initiator.host))) return;
     if (!targets.some(rx => rx.test(url.href))) return;
 
-    let instancesList;
-    if (sendTargetsProtocol == 'normal') instancesList = [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects];
-    if (sendTargetsProtocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
+    let instancesList = [];
+    if (protocol == 'loki') instancesList = [...sendLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...sendI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...sendTorRedirectsChecks, ...sendTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...sendNormalRedirectsChecks, ...sendNormalCustomRedirects];
+    }
     if (instancesList.length === 0) return;
 
     const randomInstance = utils.getRandomInstance(instancesList);
@@ -117,7 +142,9 @@ function initDefaults() {
     return new Promise(resolve => {
         fetch('/instances/data.json').then(response => response.text()).then(async data => {
             let dataJson = JSON.parse(data);
-            redirects.send = dataJson.send;
+            for (let i = 0; i < frontends.length; i++) {
+                redirects[frontends[i]] = dataJson[frontends[i]]
+            }
             browser.storage.local.get('cloudflareBlackList', async r => {
                 sendNormalRedirectsChecks = [...redirects.send.normal];
                 for (const instance of r.cloudflareBlackList) {
@@ -134,7 +161,11 @@ function initDefaults() {
                     sendTorRedirectsChecks: [...redirects.send.tor],
                     sendTorCustomRedirects: [],
 
-                    sendTargetsProtocol: "normal",
+                    sendI2pRedirectsChecks: [...redirects.send.i2p],
+                    sendI2pCustomRedirects: [],
+
+                    sendLokiRedirectsChecks: [...redirects.send.loki],
+                    sendLokiCustomRedirects: []
                 }, () => resolve())
             })
         })

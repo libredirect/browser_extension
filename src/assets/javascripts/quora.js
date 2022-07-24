@@ -6,12 +6,18 @@ const targets = [
     /^https?:\/{2}(www\.|)quora\.com.*/
 ];
 
-let redirects = {
-    "quetre": {
-        "normal": [],
-        "tor": []
+let redirects = {}
+
+const frontends = new Array("quetre")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+for (let i = 0; i < frontends.length; i++) {
+    redirects[frontends[i]] = {}
+    for (let x = 0; x < protocols.length; x++) {
+        redirects[frontends[i]][protocols[x]] = []
     }
 }
+
 function setRedirects(val) {
     browser.storage.local.get('cloudflareBlackList', r => {
         redirects.quetre = val;
@@ -29,33 +35,42 @@ function setRedirects(val) {
 
 let
     disableQuora,
-    quoraProtocol,
+    protocol,
+    protocolFallback,
     quoraRedirects,
     quetreNormalRedirectsChecks,
     quetreNormalCustomRedirects,
     quetreTorRedirectsChecks,
-    quetreTorCustomRedirects;
+    quetreTorCustomRedirects,
+    quetreI2pCustomRedirects,
+    quetreLokiCustomRedirects;
 
 function init() {
     return new Promise(async resolve => {
         browser.storage.local.get(
             [
                 "disableQuora",
-                "quoraProtocol",
+                "protocol",
+                "protocolFallback",
                 "quoraRedirects",
                 "quetreNormalRedirectsChecks",
                 "quetreNormalCustomRedirects",
                 "quetreTorRedirectsChecks",
                 "quetreTorCustomRedirects",
+                "quetreI2pCustomRedirects",
+                "quetreLokiCustomRedirects"
             ],
             r => {
                 disableQuora = r.disableQuora;
-                quoraProtocol = r.quoraProtocol;
+                protocol = r.protocol;
+                protocolFallback = r.protocolFallback;
                 quoraRedirects = r.quoraRedirects;
                 quetreNormalRedirectsChecks = r.quetreNormalRedirectsChecks;
                 quetreNormalCustomRedirects = r.quetreNormalCustomRedirects;
                 quetreTorRedirectsChecks = r.quetreTorRedirectsChecks;
                 quetreTorCustomRedirects = r.quetreTorCustomRedirects;
+                quetreI2pCustomRedirects = r.quetreI2pCustomRedirects;
+                quetreLokiCustomRedirects = r.quetreLokiCustomRedirects;
                 resolve();
             }
         )
@@ -76,10 +91,14 @@ function redirect(url, type, initiator, disableOverride) {
     if (initiator && (all.includes(initiator.origin) || targets.includes(initiator.host))) return;
     if (!targets.some(rx => rx.test(url.href))) return;
 
-    let instancesList;
-    if (quoraProtocol == 'normal') instancesList = [...quetreNormalRedirectsChecks, ...quetreNormalCustomRedirects];
-    if (quoraProtocol == 'tor') instancesList = [...quetreTorRedirectsChecks, ...quetreTorCustomRedirects];
-    if (instancesList.length === 0) return;
+    let instancesList = [];
+    if (protocol == 'loki') instancesList = [...quetreLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...quetreI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...quetreTorRedirectsChecks, ...quetreTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...quetreNormalRedirectsChecks, ...quetreNormalCustomRedirects];
+    }
+    if (instancesList.length === 0) { return; }
 
     const randomInstance = utils.getRandomInstance(instancesList);
     return `${randomInstance}${url.pathname}`;
@@ -93,7 +112,9 @@ function reverse(url) {
             ...quoraRedirects.quetre.normal,
             ...quoraRedirects.quetre.tor,
             ...quetreNormalCustomRedirects,
-            ...quetreTorCustomRedirects
+            ...quetreTorCustomRedirects,
+            ...quetreI2pCustomRedirects,
+            ...quetreLokiCustomRedirects
         ];
         if (!all.includes(protocolHost)) { resolve(); return; }
 
@@ -112,12 +133,18 @@ function switchInstance(url, disableOverride) {
 
             ...quetreNormalCustomRedirects,
             ...quetreTorCustomRedirects,
+            ...quetreI2pCustomRedirects,
+            ...quetreLokiCustomRedirects
         ];
         if (!all.includes(protocolHost)) { resolve(); return; }
 
-        let instancesList;
-        if (quoraProtocol == 'normal') instancesList = [...quetreNormalCustomRedirects, ...quetreNormalRedirectsChecks];
-        else if (quoraProtocol == 'tor') instancesList = [...quetreTorCustomRedirects, ...quetreTorRedirectsChecks];
+    let instancesList = [];
+    if (protocol == 'loki') instancesList = [...quetreLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...quetreI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...quetreTorRedirectsChecks, ...quetreTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...quetreNormalRedirectsChecks, ...quetreNormalCustomRedirects];
+    }
 
         const i = instancesList.indexOf(protocolHost);
         if (i > -1) instancesList.splice(i, 1);
@@ -132,10 +159,11 @@ function initDefaults() {
     return new Promise(async resolve => {
         fetch('/instances/data.json').then(response => response.text()).then(async data => {
             let dataJson = JSON.parse(data);
-            redirects.quetre = dataJson.quetre;
+            for (let i = 0; i < frontends.length; i++) {
+                redirects[frontends[i]] = dataJson[frontends[i]]
+            }
             browser.storage.local.set({
                 disableQuora: false,
-                quoraProtocol: "normal",
 
                 quoraRedirects: redirects,
 
@@ -144,6 +172,12 @@ function initDefaults() {
 
                 quetreTorRedirectsChecks: [...redirects.quetre.tor],
                 quetreTorCustomRedirects: [],
+
+                quetreI2pRedirectsChecks: [...redirects.quetre.i2p],
+                quetreI2pCustomRedirects: [],
+
+                quetreLokiRedirectsChecks: [...redirects.quetre.loki],
+                quetreLokiCustomRedirects: []
             }, () => resolve());
         });
     })

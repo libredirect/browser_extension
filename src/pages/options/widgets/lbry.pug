@@ -6,12 +6,6 @@ section#lbry_page.option-block
         h4(data-localise="__MSG_enable__") Enable
         input#lbry-enable(type="checkbox")
 
-    .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#lbry-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-
     #librarian
         hr
         .normal
@@ -22,5 +16,11 @@ section#lbry_page.option-block
         .tor
             include ../../widgets/instances.pug
             +instances('https://librarian.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://librarian.onion')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://librarian.loki')
 
     script(type="module" src="./widgets/lbry.js")

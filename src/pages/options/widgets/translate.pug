@@ -12,14 +12,6 @@ section#translate_page.option-block
             option(value="simplyTranslate") SimplyTranslate
             option(value="lingva") Lingva
 
-    .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#translate-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-            option(value="i2p" data-localise="__MSG_i2p__") I2P
-            option(value="loki" data-localise="__MSG_loki__") Lokinet
-
     hr
     #simplyTranslate
         .normal
@@ -44,6 +36,13 @@ section#translate_page.option-block
             +latency('lingva')
         .tor
             include ../../widgets/instances.pug
-            +instances('http://tyzxppdeoojdnaux.onion')
+            +instances('http://lingvatranslate.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://lingvatranslate.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://lingvatranslate.loki')
+       
 
     script(type="module" src="./widgets/translate.js")

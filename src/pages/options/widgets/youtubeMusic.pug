@@ -13,5 +13,14 @@ section#youtubeMusic_page.option-block
             +instances('https://beatbump.wewe')
             include ../../widgets/latency.pug
             +latency('beatbump')
+        .tor
+            +instances('http://beatbump.onion')
+            include ../../widgets/instances.pug
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://beatbump.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://beatbump.loki')
 
     script(type="module" src="./widgets/youtubeMusic.js")

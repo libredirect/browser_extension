@@ -42,7 +42,7 @@ function exportSettings() {
     null,
     result => {
       let resultString = JSON.stringify(result, null, '  ');
-      exportSettingsElement.href = 'data:application/json;base64,' + btoa(resultString);
+      exportSettingsElement.href = 'data:application/json;base64,' + btoa(encodeURI(resultString));
       exportSettingsElement.download = 'libredirect-settings.json';
     }
   );
@@ -83,6 +83,7 @@ importSettingsElement.addEventListener("change",
 
                 await searchHelper.pasteSearxCookies();
                 await searchHelper.pasteSearxngCookies();
+                await searchHelper.pasteLibrexCookies();
 
                 await redditHelper.pasteLibredditCookies();
                 await redditHelper.pasteTedditCookies();
@@ -150,15 +151,27 @@ resetSettings.addEventListener("click",
 );
 
 let autoRedirectElement = document.getElementById("auto-redirect")
-autoRedirectElement.addEventListener("change",
-  event => browser.storage.local.set({ autoRedirect: event.target.checked })
-);
+autoRedirectElement.addEventListener("change", event => {
+  browser.storage.local.set({ autoRedirect: event.target.checked })
+});
 
 let themeElement = document.getElementById("theme");
 themeElement.addEventListener("change", event => {
   const value = event.target.options[theme.selectedIndex].value;
   browser.storage.local.set({ theme: value });
   location.reload();
+})
+
+let protocolElement = document.getElementById("protocol");
+protocolElement.addEventListener("change", event => {
+  const value = event.target.options[protocol.selectedIndex].value;
+  browser.storage.local.set({ protocol: value });
+  location.reload();
+})
+
+let protocolFallbackCheckbox = document.getElementById("protocol-fallback-checkbox")
+protocolFallbackCheckbox.addEventListener("change", event => {
+  browser.storage.local.set({ protocolFallback: event.target.checked });
 })
 
 let nameCustomInstanceInput = document.getElementById("exceptions-custom-instance");
@@ -187,12 +200,24 @@ browser.storage.local.get(
     'theme',
     'autoRedirect',
     'exceptions',
+    'protocol',
+    'protocolFallback'
     // 'firstPartyIsolate'
   ],
   r => {
     autoRedirectElement.checked = r.autoRedirect;
     themeElement.value = r.theme;
+    protocolElement.value = r.protocol;
+    protocolFallbackCheckbox.checked = r.protocolFallback;
     // firstPartyIsolate.checked = r.firstPartyIsolate;
+
+    let protocolFallbackElement = document.getElementById('protocol-fallback')
+    if (protocolElement.value == "normal") {
+      protocolFallbackElement.style.display = 'none';
+    } else {
+      protocolFallbackElement.style.display = 'block';
+    }
+
 
     instanceTypeElement.addEventListener("change",
       event => {

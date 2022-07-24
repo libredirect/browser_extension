@@ -6,12 +6,6 @@ section#reuters_page.option-block
         h4(data-localise="__MSG_enable__") Enable
         input#reuters-enable(type="checkbox")
 
-    .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#reuters-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-
     #neuters
         hr
         .normal
@@ -21,6 +15,12 @@ section#reuters_page.option-block
             +latency('neuters')
         .tor
             include ../../widgets/instances.pug
-            +instances('https://neuters.onion')
+            +instances('http://neuters.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://neuters.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://neuters.loki')
 
     script(type="module" src="./widgets/reuters.js")

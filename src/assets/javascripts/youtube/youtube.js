@@ -16,35 +16,36 @@ const targets = [
 
   /^https?:\/{2}(www\.|)(youtube|youtube-nocookie)\.com\/embed\/..*/,
 ];
-let redirects = {
-  "invidious": {
-    "normal": [],
-    "tor": []
-  },
-  "piped": {
-    "normal": [],
-    "tor": []
-  },
-  "pipedMaterial": {
-    "normal": [
-      "https://piped-material.xn--17b.net",
-      "https://piped-material.ftp.sh",
-    ],
-    "tor": []
+
+const frontends = new Array("invidious", "piped", "pipedMaterial")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+let redirects = {};
+
+for (let i = 0; i < frontends.length; i++) {
+  redirects[frontends[i]] = {}
+  for (let x = 0; x < protocols.length; x++) {
+    redirects[frontends[i]][protocols[x]] = []
   }
-};
+}
+
 function setRedirects(val) {
   browser.storage.local.get('cloudflareBlackList', r => {
     redirects.invidious = val.invidious;
     redirects.piped = val.piped;
+    redirects.pipedMaterial = val.pipedMaterial
     invidiousNormalRedirectsChecks = [...redirects.invidious.normal];
     pipedNormalRedirectsChecks = [...redirects.piped.normal];
+    pipedMaterialNormalRedirectsChecks = [...redirects.pipedMaterial.normal]
     for (const instance of r.cloudflareBlackList) {
       const a = invidiousNormalRedirectsChecks.indexOf(instance);
       if (a > -1) invidiousNormalRedirectsChecks.splice(a, 1);
 
       const b = pipedNormalRedirectsChecks.indexOf(instance);
       if (b > -1) pipedNormalRedirectsChecks.splice(b, 1);
+
+      const c = pipedMaterialNormalRedirectsChecks.indexOf(instance);
+      if (c > -1) pipedMaterialNormalRedirectsChecks.splice(c, 1);
     }
     browser.storage.local.set({
       youtubeRedirects: redirects,
@@ -52,6 +53,8 @@ function setRedirects(val) {
       invidiousTorRedirectsChecks: redirects.invidious.tor,
       pipedNormalRedirectsChecks,
       pipedTorRedirectsChecks: redirects.piped.tor,
+      pipedMaterialNormalRedirectsChecks,
+      // pipedMaterialTorRedirectsChecks: redirects.pipedMaterial.tor
     })
   })
 }
@@ -60,21 +63,28 @@ let
   disableYoutube,
   onlyEmbeddedVideo,
   youtubeFrontend,
-  youtubeProtocol,
+  protocol,
+  protocolFallback,
   youtubeEmbedFrontend,
   youtubeRedirects,
   invidiousNormalRedirectsChecks,
   invidiousNormalCustomRedirects,
   invidiousTorRedirectsChecks,
   invidiousTorCustomRedirects,
+  invidiousI2pCustomRedirects,
+  invidiousLokiCustomRedirects,
   pipedNormalRedirectsChecks,
   pipedNormalCustomRedirects,
   pipedTorRedirectsChecks,
   pipedTorCustomRedirects,
+  pipedI2pCustomRedirects,
+  pipedLokiCustomRedirects,
   pipedMaterialNormalRedirectsChecks,
   pipedMaterialNormalCustomRedirects,
   pipedMaterialTorRedirectsChecks,
-  pipedMaterialTorCustomRedirects;
+  pipedMaterialTorCustomRedirects,
+  pipedMaterialI2pCustomRedirects,
+  pipedMaterialLokiCustomRedirects;
 
 function init() {
   return new Promise(resolve => {
@@ -83,41 +93,55 @@ function init() {
         "disableYoutube",
         "onlyEmbeddedVideo",
         "youtubeFrontend",
-        "youtubeProtocol",
+        "protocol",
+        "protocolFallback",
         "youtubeEmbedFrontend",
         "youtubeRedirects",
         "invidiousNormalRedirectsChecks",
         "invidiousNormalCustomRedirects",
         "invidiousTorRedirectsChecks",
         "invidiousTorCustomRedirects",
+        "invidiousI2pCustomRedirects",
+        "invidiousLokiCustomRedirects",
         "pipedNormalRedirectsChecks",
         "pipedNormalCustomRedirects",
         "pipedTorRedirectsChecks",
         "pipedTorCustomRedirects",
+        "pipedI2pCustomRedirects",
+        "pipedLokiCustomRedirects",
         "pipedMaterialNormalRedirectsChecks",
         "pipedMaterialNormalCustomRedirects",
         "pipedMaterialTorRedirectsChecks",
         "pipedMaterialTorCustomRedirects",
+        "pipedMaterialI2pCustomRedirects",
+        "pipedMaterialLokiCustomRedirects"
       ],
       r => {
         disableYoutube = r.disableYoutube;
         onlyEmbeddedVideo = r.onlyEmbeddedVideo;
         youtubeFrontend = r.youtubeFrontend;
-        youtubeProtocol = r.youtubeProtocol;
+        protocol = r.protocol;
+        protocolFallback = r.protocolFallback;
         youtubeEmbedFrontend = r.youtubeEmbedFrontend;
         youtubeRedirects = r.youtubeRedirects;
         invidiousNormalRedirectsChecks = r.invidiousNormalRedirectsChecks;
         invidiousNormalCustomRedirects = r.invidiousNormalCustomRedirects;
         invidiousTorRedirectsChecks = r.invidiousTorRedirectsChecks;
         invidiousTorCustomRedirects = r.invidiousTorCustomRedirects;
+        invidiousI2pCustomRedirects = r.invidiousI2pCustomRedirects;
+        invidiousLokiCustomRedirects = r.invidiousLokiCustomRedirects;
         pipedNormalRedirectsChecks = r.pipedNormalRedirectsChecks;
         pipedNormalCustomRedirects = r.pipedNormalCustomRedirects;
         pipedTorRedirectsChecks = r.pipedTorRedirectsChecks;
         pipedTorCustomRedirects = r.pipedTorCustomRedirects;
+        pipedI2pCustomRedirects = r.pipedI2pCustomRedirects;
+        pipedLokiCustomRedirects = r.pipedLokiCustomRedirects;
         pipedMaterialNormalRedirectsChecks = r.pipedMaterialNormalRedirectsChecks;
         pipedMaterialNormalCustomRedirects = r.pipedMaterialNormalCustomRedirects;
         pipedMaterialTorRedirectsChecks = r.pipedMaterialTorRedirectsChecks;
         pipedMaterialTorCustomRedirects = r.pipedMaterialTorCustomRedirects;
+        pipedMaterialI2pCustomRedirects - r.pipedMaterialI2pCustomRedirects;
+        pipedMaterialLokiCustomRedirects = r.pipedMaterialLokiCustomRedirects;
         resolve();
       }
     )
@@ -140,12 +164,18 @@ function all() {
 
     ...invidiousNormalCustomRedirects,
     ...invidiousTorCustomRedirects,
+    ...invidiousI2pCustomRedirects,
+    ...invidiousLokiCustomRedirects,
 
     ...pipedNormalCustomRedirects,
     ...pipedTorCustomRedirects,
+    ...pipedI2pCustomRedirects,
+    ...pipedLokiCustomRedirects,
 
     ...pipedMaterialNormalCustomRedirects,
     ...pipedMaterialTorCustomRedirects,
+    ...pipedMaterialI2pCustomRedirects,
+    ...pipedMaterialLokiCustomRedirects
   ];
 }
 
@@ -160,7 +190,7 @@ function redirect(url, type, initiator, disableOverride) {
   const isFreetube = youtubeFrontend == 'freetube';
   const isYatte = youtubeFrontend == 'yatte';
 
-  const isFrontendYoutube = youtubeEmbedFrontend == "youtube";
+  //const isFrontendYoutube = youtubeEmbedFrontend == "youtube";
   const isFrontendInvidious = youtubeEmbedFrontend == 'invidious';
   const isFrontendPiped = youtubeEmbedFrontend == 'piped';
   const isFrontendPipedMaterial = youtubeEmbedFrontend == 'pipedMaterial';
@@ -172,31 +202,43 @@ function redirect(url, type, initiator, disableOverride) {
   if (onlyEmbeddedVideo == 'onlyEmbedded' && main_frame) return;
   if (onlyEmbeddedVideo == 'onlyNotEmbedded' && !main_frame) return;
 
-  if ((isFreetube || isYatte) && sub_frame && isFrontendYoutube) return;
+  //if ((isFreetube || isYatte) && sub_frame && isFrontendYoutube) return;
 
   if (isYatte && main_frame) return url.href.replace(/^https?:\/{2}/, 'yattee://');
   if (isFreetube && main_frame) return `freetube://https://youtube.com${url.pathname}${url.search}`;
 
   if (isInvidious || ((isFreetube || isYatte) && sub_frame && isFrontendInvidious)) {
-    let instancesList;
-    if (youtubeProtocol == 'normal') instancesList = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
-    else if (youtubeProtocol == 'tor') instancesList = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
+    let instancesList = [];
+    if (protocol == 'loki') instancesList = [...invidiousLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...invidiousI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+      instancesList = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
+    }
     if (instancesList.length === 0) return;
     const randomInstance = utils.getRandomInstance(instancesList);
     return `${randomInstance}${url.pathname}${url.search}`;
   }
   if (isPiped || ((isFreetube || isYatte) && sub_frame && isFrontendPiped)) {
-    let instancesList;
-    if (youtubeProtocol == 'normal') instancesList = [...pipedNormalRedirectsChecks, ...pipedNormalCustomRedirects];
-    else if (youtubeProtocol == 'tor') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
+    let instancesList = [];
+    if (protocol == 'loki') instancesList = [...pipedLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...pipedI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+      instancesList = [...pipedNormalRedirectsChecks, ...pipedNormalCustomRedirects];
+    }
     if (instancesList.length === 0) return;
     const randomInstance = utils.getRandomInstance(instancesList);
     return `${randomInstance}${url.pathname}${url.search}`;
   }
   if (isPipedMaterial || ((isFreetube || isYatte) && sub_frame && isFrontendPipedMaterial)) {
-    let instancesList;
-    if (youtubeProtocol == 'normal') instancesList = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects];
-    else if (youtubeProtocol == 'tor') instancesList = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects];
+    let instancesList = [];
+    if (protocol == 'loki') instancesList = [...pipedMaterialLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...pipedMaterialI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...pipedMaterialTorCustomRedirects]; //...pipedMaterialTorRedirectsChecks, 
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+      instancesList = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects];
+    }
     const randomInstance = utils.getRandomInstance(instancesList);
     return `${randomInstance}${url.pathname}${url.search}`;
   }
@@ -219,16 +261,26 @@ function switchInstance(url, disableOverride) {
     const protocolHost = utils.protocolHost(url);
     if (!all().includes(protocolHost)) { resolve(); return; }
 
-    let instancesList;
-    if (youtubeProtocol == 'normal') {
+    let instancesList = [];
+    if (protocol == 'loki') {
+      if (youtubeFrontend == 'invidious') instancesList = [...invidiousLokiCustomRedirects]; //...invidiousLokiRedirectsChecks, 
+      else if (youtubeFrontend == 'piped') instancesList = [...pipedLokiCustomRedirects]; //...pipedLokiRedirectsChecks, 
+      else if (youtubeFrontend == 'pipedMaterial') instancesList = [...pipedMaterialLokiCustomRedirects]; //...pipedMaterialLokiRedirectsChecks, 
+    }
+    else if (protocol == 'i2p') {
+      if (youtubeFrontend == 'invidious') instancesList = [...invidiousI2pCustomRedirects]; //...invidiousI2pRedirectsChecks, 
+      else if (youtubeFrontend == 'piped') instancesList = [...pipedI2pCustomRedirects]; //...pipedI2pRedirectsChecks, 
+      else if (youtubeFrontend == 'pipedMaterial') instancesList = [...pipedMaterialI2pCustomRedirects]; //...pipedMaterialI2pRedirectsChecks, 
+    }
+    else if (protocol == 'tor') {
+      if (youtubeFrontend == 'invidious') instancesList = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
+      else if (youtubeFrontend == 'piped') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
+      else if (youtubeFrontend == 'pipedMaterial') instancesList = [...pipedMaterialTorCustomRedirects]; //...pipedMaterialTorRedirectsChecks, 
+    }
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
       if (youtubeFrontend == 'invidious') instancesList = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
       else if (youtubeFrontend == 'piped') instancesList = [...pipedNormalRedirectsChecks, ...pipedNormalCustomRedirects];
       else if (youtubeFrontend == 'pipedMaterial') instancesList = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects];
-    }
-    else if (youtubeProtocol == 'tor') {
-      if (youtubeFrontend == 'invidious') instancesList = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
-      else if (youtubeFrontend == 'piped') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
-      else if (youtubeFrontend == 'pipedMaterial') instancesList = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects];
     }
 
     const i = instancesList.indexOf(protocolHost);
@@ -244,8 +296,9 @@ function initDefaults() {
   return new Promise(async resolve => {
     fetch('/instances/data.json').then(response => response.text()).then(async data => {
       let dataJson = JSON.parse(data);
-      redirects.invidious = dataJson.invidious;
-      redirects.piped = dataJson.piped;
+      for (let i = 0; i < frontends.length; i++) {
+        redirects[frontends[i]] = dataJson[frontends[i]]
+      }
       browser.storage.local.get('cloudflareBlackList', async r => {
 
         invidiousNormalRedirectsChecks = [...redirects.invidious.normal];
@@ -267,9 +320,7 @@ function initDefaults() {
           disableYoutube: false,
           enableYoutubeCustomSettings: false,
           onlyEmbeddedVideo: 'both',
-
           youtubeRedirects: redirects,
-
           youtubeFrontend: 'invidious',
 
           invidiousNormalRedirectsChecks: invidiousNormalRedirectsChecks,
@@ -278,11 +329,23 @@ function initDefaults() {
           invidiousTorRedirectsChecks: [...redirects.invidious.tor],
           invidiousTorCustomRedirects: [],
 
+          invidiousI2pRedirectsChecks: [...redirects.invidious.i2p],
+          invidiousI2pCustomRedirects: [],
+
+          invidiousLokiRedirectsChecks: [...redirects.invidious.loki],
+          invidiousLokiCustomRedirects: [],
+
           pipedNormalRedirectsChecks: pipedNormalRedirectsChecks,
           pipedNormalCustomRedirects: [],
 
           pipedTorRedirectsChecks: [...redirects.piped.tor],
           pipedTorCustomRedirects: [],
+
+          pipedI2pRedirectsChecks: [...redirects.piped.i2p],
+          pipedI2pCustomRedirects: [],
+
+          pipedLokiRedirectsChecks: [...redirects.piped.loki],
+          pipedLokiCustomRedirects: [],
 
           pipedMaterialNormalRedirectsChecks: pipedMaterialNormalRedirectsChecks,
           pipedMaterialNormalCustomRedirects: [],
@@ -290,8 +353,13 @@ function initDefaults() {
           pipedMaterialTorRedirectsChecks: [...redirects.pipedMaterial.tor],
           pipedMaterialTorCustomRedirects: [],
 
-          youtubeEmbedFrontend: 'invidious',
-          youtubeProtocol: 'normal',
+          pipedMaterialI2pRedirectsChecks: [...redirects.pipedMaterial.i2p],
+          pipedMaterialI2pCustomRedirects: [],
+
+          pipedMaterialLokiRedirectsChecks: [...redirects.pipedMaterial.loki],
+          pipedMaterialLokiCustomRedirects: [],
+
+          youtubeEmbedFrontend: 'invidious'
         }, () => resolve())
       })
     })
@@ -308,11 +376,18 @@ function copyPasteInvidiousCookies(test, from) {
       ...invidiousTorRedirectsChecks,
       ...invidiousNormalCustomRedirects,
       ...invidiousTorCustomRedirects,
+      ...invidiousI2pCustomRedirects,
+      ...invidiousLokiCustomRedirects
     ].includes(protocolHost)) { resolve(); return; }
     if (!test) {
-      let checkedInstances;
-      if (youtubeProtocol == 'normal') checkedInstances = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects]
-      else if (youtubeProtocol == 'tor') checkedInstances = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects]
+      let checkedInstances = [];
+
+      if (protocol == 'loki') checkedInstances = [...invidiousLokiCustomRedirects];
+      else if (protocol == 'i2p') checkedInstances = [...invidiousI2pCustomRedirects];
+      else if (protocol == 'tor') checkedInstances = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
+      if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+        checkedInstances = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
+      }
       const i = checkedInstances.indexOf(protocolHost);
       if (i !== -1) checkedInstances.splice(i, 1);
       await utils.copyCookie('invidious', from, checkedInstances, 'PREFS');
@@ -325,9 +400,13 @@ function pasteInvidiousCookies() {
   return new Promise(async resolve => {
     await init();
     if (disableYoutube || youtubeFrontend != 'invidious') { resolve(); return; }
-    let checkedInstances;
-    if (youtubeProtocol == 'normal') checkedInstances = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects]
-    else if (youtubeProtocol == 'tor') checkedInstances = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects]
+    let checkedInstances = [];
+    if (protocol == 'loki') checkedInstances = [...invidiousLokiCustomRedirects];
+    else if (protocol == 'i2p') checkedInstances = [...invidiousI2pCustomRedirects];
+    else if (protocol == 'tor') checkedInstances = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects]
+    if ((checkedInstances.length === 0 && protocolFallback) || protocol == 'normal') {
+      checkedInstances = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects]
+    }
     utils.getCookiesFromStorage('invidious', checkedInstances, 'PREFS');
     resolve();
   })
@@ -343,14 +422,20 @@ function copyPastePipedLocalStorage(test, url, tabId) {
       ...pipedNormalRedirectsChecks,
       ...pipedTorRedirectsChecks,
       ...pipedTorCustomRedirects,
+      ...pipedI2pCustomRedirects,
+      ...pipedLokiCustomRedirects
     ].includes(protocolHost)) { resolve(); return; }
 
     if (!test) {
       browser.tabs.executeScript(tabId, { file: "/assets/javascripts/youtube/get_piped_preferences.js", runAt: "document_start" });
 
-      let checkedInstances;
-      if (youtubeProtocol == 'normal') checkedInstances = [...pipedNormalCustomRedirects, ...pipedNormalRedirectsChecks]
-      else if (youtubeProtocol == 'tor') checkedInstances = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects]
+      let checkedInstances = [];
+      if (protocol == 'loki') checkedInstances = [...pipedLokiCustomRedirects];
+      else if (protocol == 'i2p') checkedInstances = [...pipedI2pCustomRedirects];
+      else if (protocol == 'tor') checkedInstances = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects]
+      if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        checkedInstances = [...pipedNormalCustomRedirects, ...pipedNormalRedirectsChecks]
+      }
       const i = checkedInstances.indexOf(protocolHost);
       if (i !== -1) checkedInstances.splice(i, 1);
       for (const to of checkedInstances) {
@@ -365,9 +450,13 @@ function pastePipedLocalStorage() {
   return new Promise(async resolve => {
     await init();
     if (disableYoutube || youtubeFrontend != 'piped') { resolve(); return; }
-    let checkedInstances;
-    if (youtubeProtocol == 'normal') checkedInstances = [...pipedNormalCustomRedirects, ...pipedNormalRedirectsChecks]
-    else if (youtubeProtocol == 'tor') checkedInstances = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects]
+    let checkedInstances = [];
+    if (protocol == 'loki') checkedInstances = [...pipedLokiCustomRedirects];
+    else if (protocol == 'i2p') checkedInstances = [...pipedI2pCustomRedirects];
+    else if (protocol == 'tor') checkedInstances = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects]
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+      checkedInstances = [...pipedNormalCustomRedirects, ...pipedNormalRedirectsChecks]
+    }
     for (const to of checkedInstances) {
       browser.tabs.create({ url: to },
         tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/youtube/set_piped_preferences.js", runAt: "document_start" }))
@@ -384,16 +473,22 @@ function copyPastePipedMaterialLocalStorage(test, url, tabId,) {
     if (![
       ...pipedMaterialNormalRedirectsChecks,
       ...pipedMaterialNormalCustomRedirects,
-      ...pipedMaterialTorRedirectsChecks,
+      //...pipedMaterialTorRedirectsChecks,
       ...pipedMaterialTorCustomRedirects,
+      ...pipedMaterialI2pCustomRedirects,
+      ...pipedMaterialLokiCustomRedirects
     ].includes(protocolHost)) { resolve(); return; }
 
     if (!test) {
       browser.tabs.executeScript(tabId, { file: "/assets/javascripts/youtube/get_pipedMaterial_preferences.js", runAt: "document_start" });
 
-      let checkedInstances;
-      if (youtubeProtocol == 'normal') checkedInstances = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects]
-      else if (youtubeProtocol == 'tor') checkedInstances = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects]
+      let checkedInstances = [];
+      if (protocol == 'loki') checkedInstances = [...pipedMaterialLokiCustomRedirects];
+      else if (protocol == 'i2p') checkedInstances = [...pipedMaterialI2pCustomRedirects];
+      else if (protocol == 'tor') checkedInstances = [...pipedMaterialTorCustomRedirects]; //...pipedMaterialTorRedirectsChecks, 
+      if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        checkedInstances = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects]
+      }
       const i = checkedInstances.indexOf(protocolHost);
       if (i !== -1) checkedInstances.splice(i, 1);
       for (const to of checkedInstances)
@@ -410,9 +505,13 @@ function pastePipedMaterialLocalStorage() {
   return new Promise(async resolve => {
     await init();
     if (disableYoutube || youtubeFrontend != 'pipedMaterial') { resolve(); return; }
-    let checkedInstances;
-    if (youtubeProtocol == 'normal') checkedInstances = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects]
-    else if (youtubeProtocol == 'tor') checkedInstances = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects]
+    let checkedInstances = [];
+    if (protocol == 'loki') checkedInstances = [...pipedMaterialLokiCustomRedirects];
+    else if (protocol == 'i2p') checkedInstances = [...pipedMaterialI2pCustomRedirects];
+    else if (protocol == 'tor') checkedInstances = [...pipedMaterialTorCustomRedirects]; //...pipedMaterialTorRedirectsChecks, 
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+      checkedInstances = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects]
+    }
     for (const to of checkedInstances) {
       browser.tabs.create({ url: to },
         tab => browser.tabs.executeScript(tab.id, { file: "/assets/javascripts/youtube/set_pipedMaterial_preferences.js", runAt: "document_start" }))
@@ -427,18 +526,26 @@ function removeXFrameOptions(e) {
   if (e.type == 'main_frame') {
     for (const i in e.responseHeaders) {
       if (e.responseHeaders[i].name == 'content-security-policy') {
-        let instancesList;
-        if (youtubeFrontend == 'invidious') {
-          if (youtubeProtocol == 'normal') instancesList = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
-          else if (youtubeProtocol == 'tor') instancesList = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
+        let instancesList = [];
+        if (protocol == 'loki') {
+          if (youtubeFrontend == 'invidious') instancesList = [...invidiousLokiCustomRedirects]; //...invidiousLokiRedirectsChecks, 
+          if (youtubeFrontend == 'piped') instancesList = [...pipedLokiCustomRedirects]; //...pipedLokiRedirectsChecks, 
+          if (youtubeFrontend == 'pipedMaterial') instancesList = [...pipedMaterialLokiCustomRedirects]; //...pipedMaterialLokiRedirectsChecks, 
         }
-        else if (youtubeFrontend == 'piped') {
-          if (youtubeProtocol == 'normal') instancesList = [...pipedNormalRedirectsChecks, ...pipedNormalCustomRedirects];
-          else if (youtubeProtocol == 'tor') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
+        else if (protocol == 'i2p') {
+          if (youtubeFrontend == 'invidious') instancesList = [...invidiousI2pCustomRedirects]; //...invidiousI2pRedirectsChecks, 
+          if (youtubeFrontend == 'piped') instancesList = [...pipedI2pCustomRedirects]; //...pipedI2pRedirectsChecks, 
+          if (youtubeFrontend == 'pipedMaterial') instancesList = [...pipedMaterialI2pCustomRedirects]; //...pipedMaterialI2pRedirectsChecks, 
         }
-        else if (youtubeFrontend == 'pipedMaterial') {
-          if (youtubeProtocol == 'normal') instancesList = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects];
-          else if (youtubeProtocol == 'tor') instancesList = [...pipedMaterialTorRedirectsChecks, ...pipedMaterialTorCustomRedirects];
+        else if (protocol == 'tor') {
+          if (youtubeFrontend == 'invidious') instancesList = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects];
+          if (youtubeFrontend == 'piped') instancesList = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects];
+          if (youtubeFrontend == 'pipedMaterial') instancesList = [...pipedMaterialTorCustomRedirects]; //...pipedMaterialTorRedirectsChecks, 
+        }
+        if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+          if (youtubeFrontend == 'invidious') instancesList = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects];
+          if (youtubeFrontend == 'piped') instancesList = [...pipedNormalRedirectsChecks, ...pipedNormalCustomRedirects];
+          if (youtubeFrontend == 'pipedMaterial') instancesList = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects];
         }
         let securityPolicyList = e.responseHeaders[i].value.split(';');
         for (const i in securityPolicyList) securityPolicyList[i] = securityPolicyList[i].trim();

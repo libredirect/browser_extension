@@ -11,7 +11,9 @@ let redirects = {
             "https://st.phreedom.club",
             "https://simpleertube.esmailelbob.xyz",
         ],
-        "tor": []
+        "tor": [],
+        "i2p": [],
+        "loki": []
     }
 }
 function setRedirects(val) {
@@ -39,8 +41,11 @@ let
     simpleertubeNormalCustomRedirects,
     simpleertubeTorRedirectsChecks,
     simpleertubeTorCustomRedirects,
+    simpleertubeI2pCustomRedirects,
+    simpleertubeLokiCustomRedirects,
     peerTubeTargets,
-    peertubeTargetsProtocol;
+    protocol,
+    protocolFallback;
 
 function init() {
     return new Promise(resolve => {
@@ -52,8 +57,11 @@ function init() {
                 "simpleertubeNormalCustomRedirects",
                 "simpleertubeTorRedirectsChecks",
                 "simpleertubeTorCustomRedirects",
+                "simpleertubeI2pCustomRedirects",
+                "simpleertubeLokiCustomRedirects",
                 "peerTubeTargets",
-                "peertubeTargetsProtocol"
+                "protocol",
+                "protocolFallback"
             ],
             r => {
                 disablePeertubeTargets = r.disablePeertubeTargets;
@@ -62,8 +70,11 @@ function init() {
                 simpleertubeNormalCustomRedirects = r.simpleertubeNormalCustomRedirects;
                 simpleertubeTorRedirectsChecks = r.simpleertubeTorRedirectsChecks;
                 simpleertubeTorCustomRedirects = r.simpleertubeTorCustomRedirects;
+                simpleertubeI2pCustomRedirects = r.simpleertubeI2pCustomRedirects;
+                simpleertubeLokiCustomRedirects = r.simpleertubeLokiCustomRedirects;
                 peerTubeTargets = r.peerTubeTargets;
-                peertubeTargetsProtocol = r.peertubeTargetsProtocol;
+                protocol = r.protocol;
+                protocolFallback = r.protocolFallback;
                 resolve();
             }
         )
@@ -79,6 +90,8 @@ function all() {
         ...redirects.simpleertube.tor,
         ...simpleertubeNormalCustomRedirects,
         ...simpleertubeTorCustomRedirects,
+        ...simpleertubeI2pCustomRedirects,
+        ...simpleertubeLokiCustomRedirects
     ];
 }
 
@@ -89,10 +102,14 @@ function redirect(url, type, initiator, disableOverride) {
     if (!peerTubeTargets.includes(protocolHost)) return;
     if (type != "main_frame") return;
 
-    let instancesList;
-    if (peertubeTargetsProtocol == 'normal') instancesList = [...simpleertubeNormalRedirectsChecks, ...simpleertubeNormalCustomRedirects];
-    if (peertubeTargetsProtocol == 'tor') instancesList = [...simpleertubeTorRedirectsChecks, ...simpleertubeTorCustomRedirects];
-    if (instancesList.length === 0) return;
+    let instancesList = [];
+    if (protocol == 'loki') instancesList = [...simpleertubeLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...simpleertubeI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...simpleertubeTorRedirectsChecks, ...simpleertubeTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...simpleertubeNormalRedirectsChecks, ...simpleertubeNormalCustomRedirects];
+    }
+    if (instancesList.length === 0) { return; }
 
     const randomInstance = utils.getRandomInstance(instancesList);
     if (url.host == 'search.joinpeertube.org' || url.host == 'sepiasearch.org') return randomInstance;
@@ -106,9 +123,13 @@ function switchInstance(url, disableOverride) {
         const protocolHost = utils.protocolHost(url);
         if (!all().includes(protocolHost)) { resolve(); return; }
 
-        let instancesList;
-        if (peertubeTargetsProtocol == 'normal') instancesList = [...simpleertubeNormalRedirectsChecks, ...simpleertubeNormalCustomRedirects];
-        else if (peertubeTargetsProtocol == 'tor') instancesList = [...simpleertubeTorRedirectsChecks, ...simpleertubeTorCustomRedirects];
+        let instancesList = [];
+        if (protocol == 'loki') instancesList = [...simpleertubeLokiCustomRedirects];
+        else if (protocol == 'i2p') instancesList = [...simpleertubeI2pCustomRedirects];
+        else if (protocol == 'tor') instancesList = [...simpleertubeTorRedirectsChecks, ...simpleertubeTorCustomRedirects];
+        if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+            instancesList = [...simpleertubeNormalRedirectsChecks, ...simpleertubeNormalCustomRedirects];
+        }
 
         const i = instancesList.indexOf(protocolHost);
         if (i > -1) instancesList.splice(i, 1);
@@ -140,7 +161,11 @@ function initDefaults() {
                     simpleertubeTorRedirectsChecks: [...redirects.simpleertube.tor],
                     simpleertubeTorCustomRedirects: [],
 
-                    peertubeTargetsProtocol: "normal",
+                    simpleertubeI2pRedirectsChecks: [...redirects.simpleertube.i2p],
+                    simpleertubeI2pCustomRedirects: [],
+
+                    simpleertubeLokiRedirectsChecks: [...redirects.simpleertube.loki],
+                    simpleertubeLokiCustomRedirects: []
                 }, () => resolve());
             })
         })

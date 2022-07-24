@@ -12,26 +12,43 @@ let redirects = {
         "normal": [
             "https://beatbump.ml"
         ],
-        "tor": []
+        "tor": [],
+        "i2p": [],
+        "loki": []
     },
 };
 
 let
     disableYoutubeMusic,
+    protocol,
+    protocolFallback,
     beatbumpNormalRedirectsChecks,
-    beatbumpNormalCustomRedirects;
+    beatbumpNormalCustomRedirects,
+    beatbumpTorCustomRedirects,
+    beatbumpI2pCustomRedirects,
+    beatbumpLokiCustomRedirects;
 
 function init() {
     browser.storage.local.get(
         [
             "disableYoutubeMusic",
+            "protocol",
+            "protocolFallback",
             "beatbumpNormalRedirectsChecks",
             "beatbumpNormalCustomRedirects",
+            "beatbumpTorCustomRedirects",
+            "beatbumpI2pCustomRedirects",
+            "beatbumpLokiCustomRedirects"
         ],
         r => {
             disableYoutubeMusic = r.disableYoutubeMusic;
+            protocol = r.protocol;
+            protocolFallback = r.protocolFallback;
             beatbumpNormalRedirectsChecks = r.beatbumpNormalRedirectsChecks;
             beatbumpNormalCustomRedirects = r.beatbumpNormalCustomRedirects;
+            beatbumpTorCustomRedirects = r.beatbumpTorCustomRedirects;
+            beatbumpI2pCustomRedirects = r.beatbumpI2pCustomRedirects;
+            beatbumpLokiCustomRedirects = r.beatbumpLokiCustomRedirects;
         }
     )
 }
@@ -75,7 +92,13 @@ function redirect(url, disableOverride) {
     if (disableYoutubeMusic && !disableOverride) return;
     if (!targets.some(rx => rx.test(url.href))) return;
 
-    let instancesList = [...beatbumpNormalRedirectsChecks, ...beatbumpNormalCustomRedirects];
+    let instancesList = [];
+    if (protocol == 'loki') instancesList = [...beatbumpLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...beatbumpI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...beatbumpTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...beatbumpNormalRedirectsChecks, ...beatbumpNormalCustomRedirects];
+    }
     if (instancesList.length === 0) return;
     const randomInstance = utils.getRandomInstance(instancesList);
     return `${randomInstance}${url.pathname}${url.search}`
@@ -93,6 +116,15 @@ async function initDefaults() {
 
             beatbumpNormalRedirectsChecks: [...redirects.beatbump.normal],
             beatbumpNormalCustomRedirects: [],
+
+            beatbumpTorRedirectsChecks: [...redirects.beatbump.tor],
+            beatbumpTorCustomRedirects: [],
+
+            beatbumpI2pRedirectsChecks: [...redirects.beatbump.i2p],
+            beatbumpI2pCustomRedirects: [],
+
+            beatbumpLokiRedirectsChecks: [...redirects.beatbump.loki],
+            beatbumpLokiCustomRedirects: []
         }, () => resolve())
     )
 }

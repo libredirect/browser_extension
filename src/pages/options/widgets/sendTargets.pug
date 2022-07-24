@@ -6,12 +6,6 @@ section#sendTargets_page.option-block
         h4(data-localise="__MSG_enable__") Enable
         input#sendTargets-enable(type="checkbox")
 
-    .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#sendTargets-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-
     #send
         hr
         .normal
@@ -21,6 +15,12 @@ section#sendTargets_page.option-block
             +latency('send')
         .tor
             include ../../widgets/instances.pug
-            +instances('https://send.onion')
+            +instances('http://send.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://send.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://send.loki')
 
     script(type="module" src="./widgets/sendTargets.js")

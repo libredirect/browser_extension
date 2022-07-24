@@ -7,13 +7,6 @@ section#imgur_page.option-block
         h4(data-localise="__MSG_enable__") Enable
         input#imgur-enable(type="checkbox")
 
-    .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#imgur-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-            option(value="i2p" data-localise="__MSG_i2p__") I2P
-
     #rimgo
         hr
         .normal
@@ -23,10 +16,12 @@ section#imgur_page.option-block
             +latency('rimgo')
         .tor
             include ../../widgets/instances.pug
-            +instances('https://rimgo.onion')
-
+            +instances('http://rimgo.onion')
         .i2p
             include ../../widgets/instances.pug
-            +instances('https://rimgo.onion')
+            +instances('http://rimgo.onion')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://rimgo.loki')
 
     script(type="module" src="./widgets/imgur.js")

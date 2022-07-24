@@ -6,12 +6,6 @@ section#peertube_page.option-block
         h4(data-localise="__MSG_enable__") Enable
         input#peertube-enable(type="checkbox")
 
-    .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#peertube-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-
     #simpleertube
         hr
         .normal
@@ -21,6 +15,12 @@ section#peertube_page.option-block
             +latency('simpleertube')
         .tor
             include ../../widgets/instances.pug
-            +instances('https://simpleertube.onion')
+            +instances('http://simpleertube.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://simpleertube.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://simpleertube.loki')
 
     script(type="module" src="./widgets/peertube.js")

@@ -10,8 +10,8 @@
       "https://y.com.sb",
       "https://yt.artemislena.eu",
       "https://invidious.flokinet.to",
-      "https://invidious.tiekoetter.com",
       "https://invidious.sethforprivacy.com",
+      "https://invidious.tiekoetter.com",
       "https://inv.bp.projectsegfau.lt",
       "https://invidious.projectsegfau.lt",
       "https://inv.vern.cc",
@@ -26,12 +26,15 @@
       "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
       "http://w6ijuptxiku4xpnnaetxvnkc5vqcdu7mgns2u77qefoixi63vbvnpnqd.onion",
       "http://kbjggqkzv65ivcqj6bumvp337z6264huv5kpkwuv6gu5yjiskvan7fad.onion",
+      "http://grwp24hodrefzvjjuccrkw3mjq4tzhaaq32amf33dzpmuxe7ilepcmad.onion",
       "http://osbivz6guyeahrwp2lnwyjk2xos342h4ocsxyqrlaopqjuhwn2djiiyd.onion",
       "http://u2cvlit75owumwpy4dj2hsmvkq7nvrclkpht7xgyye2pyoxhpmclkrad.onion",
-      "http://euxxcnhsynwmfidvhjf6uzptsmh4dipkmgdmcmxxuo7tunp3ad2jrwyd.onion/",
+      "http://euxxcnhsynwmfidvhjf6uzptsmh4dipkmgdmcmxxuo7tunp3ad2jrwyd.onion",
       "http://invidious.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion",
-      "http://inv.vernccvbvyi5qhfzyqengccj7lkove6bjot2xhh5kajhwvidqafczrad.onion/"
-    ]
+      "http://inv.vernccvbvyi5qhfzyqengccj7lkove6bjot2xhh5kajhwvidqafczrad.onion"
+    ],
+    "i2p": [],
+    "loki": []
   },
   "piped": {
     "normal": [
@@ -42,7 +45,7 @@
       "https://piped.syncpundit.com",
       "https://piped.mha.fi",
       "https://piped.shimul.me",
-      "https://pipedus.palash.dev/",
+      "https://pipedus.palash.dev",
       "https://yt.jae.fi",
       "https://piped.mint.lgbt",
       "https://piped.privacy.com.de",
@@ -50,15 +53,31 @@
     ],
     "tor": [
       "http://piped2bbch4xslbl2ckr6k62q56kon56ffowxaqzy42ai22a4sash3ad.onion"
-    ]
+    ],
+    "i2p": [],
+    "loki": []
+  },
+  "pipedMaterial": {
+    "normal": [
+      "https://piped-material.১.net",
+      "https://piped-material.ftp.sh",
+      "https://piped-staging.ftp.sh",
+      "https://ui.piped.১.net"
+    ],
+    "tor": [],
+    "i2p": [],
+    "loki": []
   },
   "proxiTok": {
     "normal": [
       "https://proxitok.herokuapp.com",
       "https://proxitok.pussthecat.org",
-      "https://proxitok.privacydev.net"
+      "https://proxitok.privacydev.net",
+      "https://tok.habedieeh.re"
     ],
-    "tor": []
+    "tor": [],
+    "i2p": [],
+    "loki": []
   },
   "send": {
     "normal": [
@@ -68,7 +87,7 @@
       "https://send.ephemeral.land",
       "https://send.mni.li",
       "https://send.monks.tools",
-      "https://send.boblorange.net/",
+      "https://send.boblorange.net",
       "https://send.aurorabilisim.com",
       "https://nhanh.cloud",
       "https://send.datahoarder.dev",
@@ -80,7 +99,9 @@
       "https://bytefile.de",
       "https://transfer.acted.org"
     ],
-    "tor": []
+    "tor": [],
+    "i2p": [],
+    "loki": []
   },
   "nitter": {
     "normal": [
@@ -128,6 +149,7 @@
       "https://nitter.bird.froth.zone",
       "https://nitter.dcs0.hu",
       "https://twitter.dr460nf1r3.org",
+      "https://nitter.garudalinux.org",
       "https://twitter.beparanoid.de",
       "https://n.ramle.be",
       "https://nitter.cz",
@@ -135,15 +157,23 @@
       "https://tweet.lambda.dance",
       "https://nitter.ebnar.xyz",
       "https://nitter.kylrth.com",
-      "https://nitter.oishi-ra.men",
       "https://nitter.foss.wtf",
       "https://nitter.priv.pw",
-      "https://t.com.sb",
       "https://nt.vern.cc",
       "https://nitter.wef.lol",
       "https://nitter.tokhmi.xyz",
       "https://nitter.catalyst.sx",
-      "https://unofficialbird.com"
+      "https://unofficialbird.com",
+      "https://nitter.projectsegfau.lt",
+      "https://singapore.unofficialbird.com",
+      "https://twt.funami.tech",
+      "https://nitter.fprivacy.com",
+      "https://canada.unofficialbird.com",
+      "https://india.unofficialbird.com",
+      "https://nederland.unofficialbird.com",
+      "https://uk.unofficialbird.com",
+      "https://n.l5.ca",
+      "https://nitter.slipfox.xyz"
     ],
     "tor": [
       "http://3nzoldnxplag42gqjs23xvghtzf6t6yzssrtytnntc6ppc7xxuoneoad.onion",
@@ -169,8 +199,11 @@
       "http://fbdi323aj3t6hdx4jtkuwxrnafzskquciowu2yu3jizfssaq35aow6ad.onion",
       "http://nitterqdyumlovt7tjqpdjrluitgmtpa53qq3idlpgoe4kxo7gs3xvad.onion",
       "http://nitter.privpw3tndpkw6pnp3g727zfgfdzbu3k6a7chv226s3xymv2p4eiuqyd.onion",
-      "http://aaaaaxx74hbzeibageieowryhsqvimbdiitfkfe47tvgawkwkjh3coqd.onion"
-    ]
+      "http://aaaaaxx74hbzeibageieowryhsqvimbdiitfkfe47tvgawkwkjh3coqd.onion",
+      "http://wiio4sgs4247brk7hj6qck2jxnvldwfdbguigc5ivpxrsegnliyfvuqd.onion"
+    ],
+    "i2p": [],
+    "loki": []
   },
   "bibliogram": {
     "normal": [
@@ -181,12 +214,16 @@
       "https://bibliogram.froth.zone",
       "https://insta.trom.tf",
       "https://insta.tromdienste.de",
-      "https://biblio.alefvanoon.xyz",
+      "https://ig.tokhmi.xyz",
       "https://ig.beparanoid.de",
       "https://bibliogram.privacydev.net",
+      "https://bibliogram.priv.pw",
+      "https://ig.funami.tech",
       "https://bib.actionsack.com"
     ],
-    "tor": []
+    "tor": [],
+    "i2p": [],
+    "loki": []
   },
   "libreddit": {
     "normal": [
@@ -269,7 +306,9 @@
       "http://inz6tbezfwzexva6dize4cqraj2tjdhygxabmcgysccesvw2pybzhbyd.onion",
       "http://libreddit.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion",
       "http://lr.vernccvbvyi5qhfzyqengccj7lkove6bjot2xhh5kajhwvidqafczrad.onion"
-    ]
+    ],
+    "i2p": [],
+    "loki": []
   },
   "teddit": {
     "normal": [
@@ -290,10 +329,12 @@
       "https://teddit.adminforge.de",
       "https://teddit.bus-hit.me",
       "https://teddit.froth.zone",
-      "https://rdt.trom.tf/",
+      "https://rdt.trom.tf",
       "https://teddit.encrypted-data.xyz",
       "https://i.opnxng.com",
-      "https://teddit.tokhmi.xyz"
+      "https://teddit.tokhmi.xyz",
+      "https://teddit.garudalinux.org",
+      "https://tedd.it"
     ],
     "tor": [
       "http://snoo.ioensistjs7wd746zluwixvojbbkxhr37lepdvwtdfeav673o64iflqd.onion",
@@ -301,7 +342,9 @@
       "http://tedditfyn6idalzso5wam5qd3kdtxoljjhbrbbx34q2xkcisvshuytad.onion",
       "http://dawtyi5e2cfyfmoht4izmczi42aa2zwh6wi34zwvc6rzf2acpxhrcrad.onion",
       "http://qtpvyiaqhmwccxwzsqubd23xhmmrt75tdyw35kp43w4hvamsgl3x27ad.onion"
-    ]
+    ],
+    "i2p": [],
+    "loki": []
   },
   "wikiless": {
     "normal": [
@@ -313,8 +356,8 @@
       "https://wikiless.northboot.xyz",
       "https://wikiless.tiekoetter.com",
       "https://wikiless.esmailelbob.xyz",
-      "",
-      "https://wiki.slipfox.xyz"
+      "https://wiki.slipfox.xyz",
+      "https://wikiless.funami.tech"
     ],
     "tor": [
       "http://dj2tbh2nqfxyfmvq33cjmhuw7nb6am7thzd3zsjvizeqf374fixbrxyd.onion",
@@ -325,7 +368,8 @@
     "i2p": [
       "http://hflqp2ejxygpj6cdwo3ogfieqmxw3b56w7dblt7bor2ltwk6kcfa.b32.i2p",
       "http://x33lx4h6d7h6xs4eiqwhvaxn3ea5gn2ifmu3jobnvuvn4k4aej7a.b32.i2p"
-    ]
+    ],
+    "loki": []
   },
   "scribe": {
     "normal": [
@@ -335,7 +379,9 @@
       "https://scribe.bus-hit.me",
       "https://scribe.froth.zone"
     ],
-    "tor": []
+    "tor": [],
+    "i2p": [],
+    "loki": []
   },
   "quetre": {
     "normal": [
@@ -344,9 +390,12 @@
       "https://quetre.pussthecat.org",
       "https://wuetre.herokuapp.com",
       "https://quetreus.herokuapp.com",
-      "https://quetre.tokhmi.xyz"
+      "https://quetre.tokhmi.xyz",
+      "https://quetre.projectsegfau.lt"
     ],
-    "tor": []
+    "tor": [],
+    "i2p": [],
+    "loki": []
   },
   "libremdb": {
     "normal": [
@@ -355,7 +404,9 @@
       "https://libremdbeu.herokuapp.com",
       "https://lmdb.tokhmi.xyz"
     ],
-    "tor": []
+    "tor": [],
+    "i2p": [],
+    "loki": []
   },
   "simplyTranslate": {
     "normal": [
@@ -397,30 +448,16 @@
       "https://lingva.lunar.icu",
       "https://lingva.opnxng.com"
     ],
-    "tor": []
+    "tor": [],
+    "i2p": [],
+    "loki": []
   },
   "searx": {
-    "tor": [
-      "http://3afisqjw2rxm6z7mmstyt5rx75qfqrgxnkzftknbp2vhipr2nrmrjdyd.onion",
-      "http://w5rl6wsd7mzj4bdkbuqvzidet5osdsm5jhg2f7nvfidakfq5exda5wid.onion",
-      "http://yra4tke2pwcnatxjkufpw6kvebu3h3ti2jca2lcdpgx3mpwol326lzid.onion",
-      "http://z5vawdol25vrmorm4yydmohsd4u6rdoj2sylvoi3e3nqvxkvpqul7bqd.onion",
-      "http://zbuc3bbzbfdqqo2x46repx2ddajbha6fpsjeeptjhhhhzji3zopxdqyd.onion",
-      "http://f4qfqajszpx5b7itzxt6mb7kj4ktpgbdq7lq6xaiqyqx6a7de3epptad.onion",
-      "http://rq2w52kyrif3xpfihkgjnhqm3a5aqhoikpv72z3drpjglfzc2wr5z4yd.onion",
-      "http://searx.bsbvtqi5oq2cqzn32zt4cr2f2z2rwots3dq7gmdcnlyqoxko2wx6reqd.onion"
-    ],
-    "i2p": [
-      "http://ransack.i2p",
-      "http://mqamk4cfykdvhw5kjez2gnvse56gmnqxn7vkvvbuor4k4j2lbbnq.b32.i2p"
-    ],
     "normal": [
       "https://anon.sx",
       "https://dynabyte.ca",
       "https://jsearch.pw",
-      "https://nibblehole.com",
       "https://search.ethibox.fr",
-      "https://search.jpope.org",
       "https://search.snopyta.org",
       "https://search.stinpriza.org",
       "https://search.trom.tf",
@@ -429,15 +466,12 @@
       "https://searx.dresden.network",
       "https://searx.fossencdi.org",
       "https://searx.gnu.style",
-      "https://searx.josie.lol",
       "https://searx.mastodontech.de",
       "https://searx.mxchange.org",
       "https://searx.nakhan.net",
       "https://searx.netzspielplatz.de",
       "https://searx.nixnet.services",
-      "https://searx.openhoofd.nl",
       "https://searx.org",
-      "https://searx.ppeb.me",
       "https://searx.pwoss.org",
       "https://searx.rasp.fr",
       "https://searx.ru",
@@ -451,55 +485,63 @@
       "https://searx.webheberg.info",
       "https://searx.xyz",
       "https://searx.zapashcanon.fr",
+      "https://searxng.ir",
       "https://spot.ecloud.global",
       "https://suche.dasnetzundich.de",
       "https://suche.tromdienste.de",
       "https://suche.uferwerk.org",
       "https://sx.catgirl.cloud",
       "https://timdor.noip.me/searx",
-      "https://www.gruble.de",
       "https://searx.roflcopter.fr"
-    ]
+    ],
+    "tor": [
+      "http://3afisqjw2rxm6z7mmstyt5rx75qfqrgxnkzftknbp2vhipr2nrmrjdyd.onion",
+      "http://w5rl6wsd7mzj4bdkbuqvzidet5osdsm5jhg2f7nvfidakfq5exda5wid.onion",
+      "http://yra4tke2pwcnatxjkufpw6kvebu3h3ti2jca2lcdpgx3mpwol326lzid.onion",
+      "http://z5vawdol25vrmorm4yydmohsd4u6rdoj2sylvoi3e3nqvxkvpqul7bqd.onion",
+      "http://zbuc3bbzbfdqqo2x46repx2ddajbha6fpsjeeptjhhhhzji3zopxdqyd.onion",
+      "http://f4qfqajszpx5b7itzxt6mb7kj4ktpgbdq7lq6xaiqyqx6a7de3epptad.onion"
+    ],
+    "i2p": [
+      "http://ransack.i2p",
+      "http://mqamk4cfykdvhw5kjez2gnvse56gmnqxn7vkvvbuor4k4j2lbbnq.b32.i2p"
+    ],
+    "loki": []
   },
   "searxng": {
-    "tor": [
-      "http://4n53nafyi77iplnbrpmxnp3x4exbswwxigujaxy3b37fvr7bvlopxeyd.onion",
-      "http://search3q76rqpektbrchlf2rjq4fnbxzeov6rljdywg3nwbunpgd7bid.onion",
-      "http://searchoorwalty5a2ailrboa2asqyts2u7bdoqwnjefpgjobpvtzn4qd.onion",
-      "http://gbat2pbpg7ys3fi3pbp64667tt5x66mg45xok35bxdw7v55brm7a27yd.onion",
-      "http://searxdr3pqz4nydgnqocsia2xbywptxbkympa2emn7zlgggrir4bkfad.onion",
-      "http://searx.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion",
-      "http://searx.privpw3tndpkw6pnp3g727zfgfdzbu3k6a7chv226s3xymv2p4eiuqyd.onion",
-      "http://searx3aolosaf3urwnhpynlhuokqsgz47si4pzz5hvb7uuzyjncl2tid.onion",
-      "http://4tz2vlnwk2apf2rpinkqv6uxvfgo5xjx6vl5vp7lxgaiooumetjpstqd.onion"
-    ],
-    "i2p": [],
     "normal": [
       "https://darmarit.org/searx",
       "https://de.xcxc.ml",
       "https://etsi.me",
+      "https://icanfindit.online",
+      "https://jackgoss.xyz",
       "https://northboot.xyz",
-      "https://notgoogle.win",
       "https://opnxng.com",
       "https://paulgo.io",
+      "https://priv.au",
+      "https://private-searx.ml",
+      "https://privatus.live",
       "https://s.frlt.one",
       "https://s.zhaocloud.net",
+      "https://search.affusio.com",
       "https://search.ashs.club",
       "https://search.bingowaves.xyz",
       "https://search.bus-hit.me",
+      "https://search.chemicals-in-the-water.eu",
       "https://search.disroot.org",
+      "https://search.gcomm.ch",
       "https://search.kiwitalk.de",
       "https://search.mdosch.de",
       "https://search.neet.works",
       "https://search.ononoki.org",
       "https://search.privacyguides.net",
+      "https://search.projectsegfau.lt",
       "https://search.rabbit-company.com",
       "https://search.sapti.me",
       "https://search.teamriverbubbles.com",
       "https://search.unlocked.link",
-      "https://search.vojkovic.xyz",
+      "https://search.vidhukant.xyz",
       "https://search.zzls.xyz",
-      "https://searx.albony.xyz",
       "https://searx.be",
       "https://searx.becomesovran.com",
       "https://searx.chocoflan.net",
@@ -509,7 +551,6 @@
       "https://searx.fi",
       "https://searx.fmac.xyz",
       "https://searx.gnous.eu",
-      "https://searx.kujonello.cf",
       "https://searx.loafland.xyz",
       "https://searx.mha.fi",
       "https://searx.mistli.net",
@@ -517,24 +558,40 @@
       "https://searx.orion-hub.fr",
       "https://searx.priv.pw",
       "https://searx.prvcy.eu",
+      "https://searx.rimkus.it",
       "https://searx.sethforprivacy.com",
       "https://searx.sev.monster",
       "https://searx.slipfox.xyz/searx",
-      "http://fub6vgedgeadlu3ctskrpkcqjruh76tckwtj5swfhyblgml2tzgzckqd.onion/searx",
       "https://searx.tiekoetter.com",
       "https://searx.vimproved.me",
       "https://searx.youshitsune.me",
       "https://searx.zcyph.cc",
       "https://searxng.au/searx",
-      "https://searxng.ir",
       "https://searxng.tordenskjold.de",
       "https://searxng.zackptg5.com",
       "https://serx.ml",
       "https://srx.cosmohub.io",
       "https://swag.pw",
+      "https://www.gruble.de",
       "https://www.webrats.xyz",
       "https://xcxc.ml"
-    ]
+    ],
+    "tor": [
+      "http://4n53nafyi77iplnbrpmxnp3x4exbswwxigujaxy3b37fvr7bvlopxeyd.onion",
+      "http://x5gdjh6t7kb4yubpufhtc3l3df2acev3emxdasd5vyuyoon5rzf5zkyd.onion",
+      "http://search3q76rqpektbrchlf2rjq4fnbxzeov6rljdywg3nwbunpgd7bid.onion",
+      "http://searchoorwalty5a2ailrboa2asqyts2u7bdoqwnjefpgjobpvtzn4qd.onion",
+      "http://gbat2pbpg7ys3fi3pbp64667tt5x66mg45xok35bxdw7v55brm7a27yd.onion",
+      "http://searxdr3pqz4nydgnqocsia2xbywptxbkympa2emn7zlgggrir4bkfad.onion",
+      "http://searx.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion",
+      "http://searx.privpw3tndpkw6pnp3g727zfgfdzbu3k6a7chv226s3xymv2p4eiuqyd.onion",
+      "http://rq2w52kyrif3xpfihkgjnhqm3a5aqhoikpv72z3drpjglfzc2wr5z4yd.onion",
+      "http://fub6vgedgeadlu3ctskrpkcqjruh76tckwtj5swfhyblgml2tzgzckqd.onion/searx",
+      "http://searx3aolosaf3urwnhpynlhuokqsgz47si4pzz5hvb7uuzyjncl2tid.onion",
+      "http://4tz2vlnwk2apf2rpinkqv6uxvfgo5xjx6vl5vp7lxgaiooumetjpstqd.onion"
+    ],
+    "i2p": [],
+    "loki": []
   },
   "whoogle": {
     "normal": [
@@ -553,7 +610,24 @@
       "https://search.wef.lol"
     ],
     "tor": [],
-    "i2p": []
+    "i2p": [],
+    "loki": []
+  },
+  "librex": {
+    "normal": [
+      "https://librex.beparanoid.de",
+      "https://search.davidovski.xyz",
+      "https://search.funami.tech",
+      "https://librex.catalyst.sx"
+    ],
+    "tor": [
+      "http://librex.prnoid54e44a4bduq5due64jkk7wcnkxcp5kv3juncm7veptjcqudgyd.onion",
+      "http://librex.so2mpiyfo4cje7bof5v52y3cvjyo2haxpqfvut4sr6gj2ul4mddx2jid.onion"
+    ],
+    "i2p": [
+      "http://fboseyskrqpi6yjiifvz4ryuoiswjezkqsfxfkm2vmbuhehbpr7q.b32.i2p"
+    ],
+    "loki": []
   },
   "rimgo": {
     "normal": [
@@ -565,21 +639,138 @@
       "https://i.actionsack.com",
       "https://rimgo.privacydev.net",
       "https://imgur.artemislena.eu",
-      "https://rimgo.vern.cc"
+      "https://rimgo.vern.cc",
+      "https://rimgo.encrypted-data.xyz",
+      "https://rimgo.mha.fi"
     ],
     "tor": [
       "http://rimgo.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion",
-      "http://rimgo.vernccvbvyi5qhfzyqengccj7lkove6bjot2xhh5kajhwvidqafczrad.onion"
+      "http://rimgo.vernccvbvyi5qhfzyqengccj7lkove6bjot2xhh5kajhwvidqafczrad.onion",
+      "http://rimgo.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion"
     ],
-    "i2p": []
+    "i2p": [],
+    "loki": []
+  },
+  "librarian": {
+    "normal": [
+      "https://lbry.bcow.xyz",
+      "https://odysee.076.ne.jp",
+      "https://librarian.pussthecat.org",
+      "https://lbry.mutahar.rocks",
+      "https://librarian.esmailelbob.xyz",
+      "https://lbry.vern.cc"
+    ],
+    "tor": [
+      "http://librarian.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion",
+      "http://lbry.vernccvbvyi5qhfzyqengccj7lkove6bjot2xhh5kajhwvidqafczrad.onion"
+    ],
+    "i2p": [],
+    "loki": []
   },
   "peertube": [
+    "https://pire.artisanlogiciel.net",
+    "https://trutube.xyz",
+    "https://tube-test.apps.education.fr",
+    "https://tube-sciences-technologies.apps.education.fr",
+    "https://stream.conesphere.cloud",
+    "https://tube-institutionnel.apps.education.fr",
+    "https://trutube.online",
+    "https://tube-cycle-3.apps.education.fr",
+    "https://video.manicphase.me",
+    "https://tube.emy.plus",
+    "https://v.bearvideo.win",
+    "https://tubulus.openlatin.org",
+    "https://peertube.securetown.top",
+    "https://tv.datamol.org",
+    "https://video.graine-pdl.org",
+    "https://tube.zee.li",
+    "https://tube-cycle-2.apps.education.fr",
+    "https://mikeclips.net",
+    "https://tube.s1gm4.eu",
+    "https://videos.keyedlimepie.org",
+    "https://video.cpn.so",
+    "https://video.davduf.net",
+    "https://tube.oldkid.digital",
+    "https://tube.fofoca.eu",
+    "https://tube-langues-vivantes.apps.education.fr",
+    "https://tube-arts-lettres-sciences-humaines.apps.education.fr",
+    "https://videos.scanlines.xyz",
+    "https://video.kicik.fr",
+    "https://media.theplattform.net",
+    "https://peertube.offerman.com",
+    "https://v.lastorder.xyz",
+    "https://video.eradicatinglove.xyz",
+    "https://peertube.thele.me",
+    "https://video.schnitzler.one",
+    "https://tube.cybershock.life",
+    "https://tube.reseau-canope.fr",
+    "https://frentube.myyouniverse.observer",
+    "https://tube-maternelle.apps.education.fr",
+    "https://peertube.onionstorm.net",
+    "https://dev.dollarvigilante.tv",
+    "https://video.trankil.info",
+    "https://video.uriopss-pdl.fr",
+    "https://pt.bolapara.mywire.org",
+    "https://ptube.ranranhome.info",
+    "https://vidid.pl",
+    "https://video.3cmr.fr",
+    "https://tube.die-rote-front.de",
+    "https://peertube.miguelcr.me",
+    "https://video.thinkof.name",
+    "https://nekofans.tv",
+    "https://video.comun.al",
+    "https://peertube.nrsk.no",
+    "https://video.occm.cc",
+    "https://peertube.viviers-fibre.net",
+    "https://tube-action-educative.apps.education.fr",
+    "https://themadlads.live",
+    "https://jahve.pl",
+    "https://videos.yesil.club",
+    "https://peertube.adjutor.xyz",
+    "https://peertube.terranout.mine.nu",
+    "https://tube.hunterjozwiak.com",
+    "https://tube-numerique-educatif.apps.education.fr",
+    "https://tube.itsg.host",
+    "https://tube.valinor.fr",
+    "https://lucarne.balsamine.be",
+    "https://peertube.suranyami.com",
+    "https://video.ados.accoord.fr",
+    "https://t.0x0.st",
+    "https://tube-education-physique-et-sportive.apps.education.fr",
+    "https://videos.lemouvementassociatif-pdl.org",
+    "https://videos.casually.cat",
+    "https://playroom.kitsunes.world",
+    "https://tube2.nous.media",
+    "https://peertube.freenet.ru",
+    "https://peertube.0x5e.eu",
+    "https://tube.darknight-coffee.org",
+    "https://play.mittdata.se",
+    "https://peertube.lhc.net.br",
+    "https://see.vtopia.live",
+    "https://peertube.letoine.fr",
+    "https://tube-enseignement-professionnel.apps.education.fr",
+    "https://socpeertube.ru",
+    "https://videos.laliguepaysdelaloire.org",
+    "https://videotube.duckdns.org",
+    "https://quantube.win",
+    "https://twctube.twc-zone.eu",
+    "https://vhs.absturztau.be",
+    "https://video.espr.moe",
+    "https://peertube.social.my-wan.de",
+    "https://phijkchu.com",
+    "https://video.lycee-experimental.org",
+    "https://galileo.news",
+    "https://peertube.otakufarms.com",
+    "https://tube.motuhake.xyz",
+    "https://pt.m0r016.net",
+    "https://hitchtube.fr",
+    "https://video.fox-romka.ru",
+    "https://peertube.ctrl-c.liu.se",
+    "https://peertube.live",
     "https://video.slipfox.xyz",
     "https://pt.vern.cc",
-    "https://3.600900.su",
     "https://vnop.org",
     "https://videos.cassidypunchmachine.com",
-    "https://video.mullet.social",
     "https://tv1.gomntu.space",
     "https://dalek.zone",
     "https://seka.pona.la",
@@ -588,7 +779,6 @@
     "https://tube.miegl.cz",
     "https://mov.clov.fr",
     "https://videomensoif.ynh.fr",
-    "https://peertube.hainry.fr",
     "https://videos.neongarden.life",
     "https://video.vaku.org.ua",
     "https://videos.trom.lt",
@@ -626,7 +816,6 @@
     "https://turkum.me",
     "https://video.colibris-outilslibres.org",
     "https://invoice.peertube.biz",
-    "https://vnhup.com",
     "https://peertube.chantierlibre.org",
     "https://video.9wd.eu",
     "https://video.niboe.info",
@@ -638,10 +827,8 @@
     "https://tube.nestor.coop",
     "https://live.oldskool.fi",
     "https://dytube.com",
-    "https://video.toby3d.me",
     "https://tube.thierrytalbert.fr",
     "https://peertube.informaction.info",
-    "https://peertube.thele.me",
     "https://tube.ac-amiens.fr",
     "https://tube.alado.space",
     "https://tube.network.europa.eu",
@@ -653,7 +840,6 @@
     "https://cliptube.org",
     "https://tube.tr4sk.me",
     "https://videos.campdarling.com",
-    "https://peertube.live",
     "https://video.mikka.md",
     "https://www.aktion-nordost.tv",
     "https://tube.rooty.fr",
@@ -683,15 +869,12 @@
     "https://videopen.net",
     "https://demo.lioncast.org",
     "https://peertube.get-racing.de",
-    "https://tube-rennes.beta.education.fr",
     "https://pierre.tube",
     "https://mirametube.fr",
-    "https://tube.sanyi.nl",
     "https://vidz.dou.bet",
     "https://videos.redeyes.site",
     "https://video.hostpath.de",
     "https://free-streams.com",
-    "https://video.chadwaltercummings.me",
     "https://tube.pawelko.net",
     "https://video.livecchi.cloud",
     "https://anarchy.video",
@@ -716,7 +899,6 @@
     "https://tube.linc.systems",
     "https://peertube.ketchup.noho.st",
     "https://yt.x1337x.fr",
-    "https://video.wsforum.net",
     "https://videos.rabbit-company.com",
     "https://video.paradigmthreat.net",
     "https://video.lincolncyber.com",
@@ -751,8 +933,6 @@
     "https://tube.globalfrens.com",
     "https://peertube.hacknews.pmdcollab.org",
     "https://freetubes.nohost.me",
-    "https://video.simplex-software.ru",
-    "https://wwtube.net",
     "https://video.snug.moe",
     "https://video.avant-le-strike.buzz",
     "https://videos.ritimo.org",
@@ -760,7 +940,6 @@
     "https://video.cerclearistote.com",
     "https://computerstuff.mooo.com",
     "https://video.greenmycity.eu",
-    "https://peertubemirror.satoshishop.de",
     "https://przej.me",
     "https://pt.mezzo.moe",
     "https://tube.dsocialize.net",
@@ -773,19 +952,15 @@
     "https://tube.nx12.net",
     "https://redundant2.peertube.support",
     "https://peertube.ignifi.me",
-    "https://docker.videos.lecygnenoir.info",
     "https://tv.based.quest",
     "https://peertube.beardedtek.com",
-    "https://casnocensure.site",
     "https://creemoseducacioninclusiva.uma.es",
     "https://videos.yeswiki.net",
     "https://tube.lrk.sh",
-    "https://peertube.teneriffe.nohost.me",
     "https://peertube.autogestioncitoyenne.org",
     "https://stream.dynacloud.ynh.fr",
     "https://video.r3s.nrw",
     "https://peertube.semweb.pro",
-    "https://sneedtube.com",
     "https://poast.tv",
     "https://testube.distrilab.fr",
     "https://peertube.rse43.com",
@@ -793,7 +968,6 @@
     "https://vid.lelux.fi",
     "https://v.wolfskaempf.de",
     "https://peertube.chevro.fr",
-    "https://peertube.minecloud.ro",
     "https://media.econoalchemist.com",
     "https://video.qoto.org",
     "https://peertube.maxweiss.io",
@@ -818,7 +992,6 @@
     "https://swebbtube.se",
     "https://video.dnfi.no",
     "https://peertube.revelin.fr",
-    "https://video.wsf2021.info",
     "https://armstube.com",
     "https://peertube.ti-fr.com",
     "https://video.turbo.chat",
@@ -859,9 +1032,7 @@
     "https://tube.1o1.io",
     "https://peertube.aventer.biz",
     "https://videos.rights.ninja",
-    "https://pertur.be",
     "https://tube.pilgerweg-21.de",
-    "https://freediverse.com",
     "https://pocketnetpeertube2.nohost.me",
     "https://peertube.bubbletea.dev",
     "https://peertube.art3mis.de",
@@ -900,7 +1071,6 @@
     "https://dud-video.inf.tu-dresden.de",
     "https://media-test.interior.edu.uy",
     "https://media.interior.edu.uy",
-    "https://bitcast.online",
     "https://peertube.la-scic.fr",
     "https://phoenixproject.group",
     "https://peertube.sebu77.com",
@@ -938,7 +1108,6 @@
     "https://video.liveitlive.show",
     "https://vid.plantplotting.co.uk",
     "https://video.telemillevaches.net",
-    "https://p.nogafa.org",
     "https://tv.pirati.cz",
     "https://peertube.therealblue.de",
     "https://tube.nuxnik.com",
@@ -948,7 +1117,6 @@
     "https://tube.communia.org",
     "https://peertube.dragonborn.app",
     "https://ai-tube.ch",
-    "https://buddhist.tv",
     "https://video.citizen4.eu",
     "https://video.matomocamp.org",
     "https://media.fsfe.org",
@@ -984,7 +1152,6 @@
     "https://video.rubdos.be",
     "https://tube.tuxfriend.fr",
     "https://anarchy.tube",
-    "https://nsfw.vger.cloud",
     "https://tube.elemac.fr",
     "https://tube.nocturlab.fr",
     "https://videos.optoutpod.com",
@@ -1005,7 +1172,6 @@
     "https://peertube.tangentfox.com",
     "https://puffy.tube",
     "https://tube.kher.nl",
-    "https://perceptiontravel.tv",
     "https://watch.ocaml.org",
     "https://peertube.kleph.eu",
     "https://tube.missbanal.net",
@@ -1021,7 +1187,6 @@
     "https://video.ustim.ru",
     "https://merci-la-police.fr",
     "https://pocketnetpeertube7.nohost.me",
-    "https://tube.noise.rocks",
     "https://video.rhizome.org",
     "https://dnk.video",
     "https://video.medienzentrum-harburg.de",
@@ -1086,7 +1251,6 @@
     "https://libra.syntazia.org",
     "https://peertube.beeldengeluid.nl",
     "https://tv.lumbung.space",
-    "https://vid.dascoyote.xyz",
     "https://peertube.cuatrolibertades.org",
     "https://videos.hush.is",
     "https://tube.ebin.club",
@@ -1096,7 +1260,6 @@
     "https://video.migennes.net",
     "https://irrsinn.video",
     "https://pocketnetpeertube4.nohost.me",
-    "https://video.omniatv.com",
     "https://comf.tube",
     "https://pocketnetpeertube6.nohost.me",
     "https://pocketnetpeertube5.nohost.me",
@@ -1118,7 +1281,6 @@
     "https://video.shitposter.club",
     "https://tv.mattchristiansenmedia.com",
     "https://tube.hackerscop.org",
-    "https://videos.capas.se",
     "https://peertube.kx.studio",
     "https://videos.3d-wolf.com",
     "https://tube.octaplex.net",
@@ -1155,7 +1317,6 @@
     "https://videos.benjaminbrady.ie",
     "https://video.binarydad.com",
     "https://tube.pmj.rocks",
-    "https://gary.vger.cloud",
     "https://video.guerredeclasse.fr",
     "https://ptmir4.inter21.net",
     "https://ptmir3.inter21.net",
@@ -1172,7 +1333,6 @@
     "https://tube.kotur.org",
     "https://peertube.euskarabildua.eus",
     "https://video.veloma.org",
-    "https://vidcommons.org",
     "https://regarder.sans.pub",
     "https://tube.rhythms-of-resistance.org",
     "https://tube-bordeaux.beta.education.fr",
@@ -1218,7 +1378,6 @@
     "https://evangelisch.video",
     "https://tube.anufrij.de",
     "https://videos.mastodont.cat",
-    "https://flim.txmn.tk",
     "https://video.taboulisme.com",
     "https://media.undeadnetwork.de",
     "https://tube.dragonpsi.xyz",
@@ -1295,7 +1454,6 @@
     "https://www4.mir.inter21.net",
     "https://video.csc49.fr",
     "https://tube.wolfe.casa",
-    "https://tube.linkse.media",
     "https://video.dresden.network",
     "https://peertube.zapashcanon.fr",
     "https://40two.tube",
@@ -1304,7 +1462,6 @@
     "https://kino.schuerz.at",
     "https://peertube.tiennot.net",
     "https://tututu.tube",
-    "https://peertube.interhop.org",
     "https://tube.picasoft.net",
     "https://www.wiki-tube.de",
     "https://videos.pair2jeux.tube",
@@ -1334,7 +1491,6 @@
     "https://xxx.noho.st",
     "https://peertube.stefofficiel.me",
     "https://canard.tube",
-    "https://videos.jordanwarne.xyz",
     "https://tube.jeena.net",
     "https://tube.cloud-libre.eu",
     "https://videos.coletivos.org",
@@ -1354,7 +1510,6 @@
     "https://tube.others.social",
     "https://videos.ubuntu-paris.org",
     "https://tube-poitiers.beta.education.fr",
-    "https://streamsource.video",
     "https://vid.wildeboer.net",
     "https://battlepenguin.video",
     "https://peertube.cloud.sans.pub",
@@ -1380,7 +1535,6 @@
     "https://peertube.devloprog.org",
     "https://peertube.designersethiques.org",
     "https://testtube.florimond.eu",
-    "https://tube.gnous.eu",
     "https://tube-lille.beta.education.fr",
     "https://peertube.monlycee.net",
     "https://tube.plomlompom.com",
@@ -1454,7 +1608,6 @@
     "https://video.oh14.de",
     "https://mytube.madzel.de",
     "https://monplaisirtube.ddns.net",
-    "https://video.okaris.de",
     "https://video.blender.org",
     "https://peertube.020.pl",
     "https://tube.azbyka.ru",
@@ -1510,14 +1663,12 @@
     "https://video.lemediatv.fr",
     "https://peertube.artica.center",
     "https://indymotion.fr",
-    "https://video.farci.org",
     "https://tube.fede.re",
     "https://peertube.mygaia.org",
     "https://peertube.livingutopia.org",
     "https://tube.anjara.eu",
     "https://video.latavernedejohnjohn.fr",
     "https://peertube.pcservice46.fr",
-    "https://alttube.fr",
     "https://video.coop.tools",
     "https://video.cabane-libre.org",
     "https://peertube.openstreetmap.fr",
@@ -1550,7 +1701,6 @@
     "https://www.yiny.org",
     "https://video.typica.us",
     "https://videos.lescommuns.org",
-    "https://dialup.express",
     "https://peertube.1312.media",
     "https://skeptikon.fr",
     "https://video.blueline.mg",
@@ -1562,20 +1712,6 @@
     "https://peertube.qtg.fr",
     "https://tube.p2p.legal",
     "https://troll.tv",
-    "https://videos.iut-orsay.fr",
-    "https://peertube.solidev.net",
-    "https://videos.cemea.org",
-    "https://video.passageenseine.fr",
-    "https://peertube.touhoppai.moe",
-    "https://share.tube",
-    "https://peertube.heraut.eu",
-    "https://peertube.gegeweb.eu",
-    "https://framatube.org",
-    "https://tube.conferences-gesticulees.net",
-    "https://peertube.datagueule.tv",
-    "https://video.lqdn.fr",
-    "https://peertube3.cpy.re",
-    "https://peertube2.cpy.re",
-    "https://peertube.cpy.re"
+    "https://videos.iut-orsay.fr"
   ]
 }

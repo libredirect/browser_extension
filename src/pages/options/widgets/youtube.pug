@@ -15,54 +15,70 @@ section#youtube_page.option-block
             option(value="freetube") FreeTube
             option(value="yatte") Yattee
 
-    #freetube-yatte
+    #youtube-embedded_frontend
         .some-block.option-block
             h4(data-localise="__MSG_embeddedVids__") Embedded Videos Frontend
             select#youtube-embed_frontend
                 option(value="invidious") Invidious
                 option(value="piped") Piped
                 option(value="pipedMaterial") Piped-Material
-                option(value="youtube") Youtube
 
-    #invidious-piped-pipedMaterial
-        .some-block.option-block
-            h4(data-localise="__MSG_protocol__") Protocol
-            select#youtube-protocol
-                option(value="normal" data-localise="__MSG_normal__") Normal
-                option(value="tor" data-localise="__MSG_tor__") Tor
-
-        .some-block.option-block
-            h4(data-localise="__MSG_redirectType__") Redirect Type
-            select#youtube-redirect_type
-                option(value="both" data-localise="__MSG_both__") both
-                option(value="onlyEmbedded" data-localise="__MSG_onlyEmbedded__") Only Embedded
-                option(value="onlyNotEmbedded" data-localise="__MSG_onlyNotEmbedded__") Only Not Embedded
+    .some-block.option-block
+        h4(data-localise="__MSG_redirectType__") Redirect Type
+        select#youtube-redirect_type
+            option(value="both" data-localise="__MSG_both__") both
+            option(value="onlyEmbedded" data-localise="__MSG_onlyEmbedded__") Only Embedded
+            option(value="onlyNotEmbedded" data-localise="__MSG_onlyNotEmbedded__") Only Not Embedded
 
     #invidious
         hr
         .normal
             include ../../widgets/instances.pug
-            +instances('https://invidious.com')
+            +instances('http://invidious.com')
             include ../../widgets/latency.pug
             +latency('invidious')
         .tor
-            +instances('https://invidious.onion')
+            include ../../widgets/instances.pug
+            +instances('http://invidious.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://invidious.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://invidious.loki')
 
     #piped
         hr
         .normal
+            include ../../widgets/instances.pug
             +instances('https://piped.com')
+            include ../../widgets/latency.pug
             +latency('piped')
         .tor
-            +instances('https://piped.onion')
+            +instances('http://piped.onion')
+            include ../../widgets/instances.pug
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://piped.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://piped.loki')
 
     #pipedMaterial
         hr
         .normal
+            include ../../widgets/instances.pug
             +instances('https://piped-material.com')
+            include ../../widgets/latency.pug
             +latency('pipedMaterial')
         .tor
-            +instances('https://piped-material.onion')
-
+            +instances('http://piped-material.onion')
+            include ../../widgets/instances.pug
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://piped-material.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://piped-material.loki')
 
     script(type="module" src="./widgets/youtube.js")

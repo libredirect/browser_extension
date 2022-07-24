@@ -14,7 +14,10 @@ let redirects = {
   'facil': {
     "normal": [
       "https://facilmap.org"
-    ]
+    ],
+    "tor": [],
+    "i2p": [],
+    "loki": []
   }
 };
 
@@ -22,22 +25,37 @@ let redirects = {
 let
   disableMaps,
   mapsFrontend,
+  protocol,
+  protocolFallback,
   facilNormalRedirectsChecks,
-  facilNormalCustomRedirects;
+  facilNormalCustomRedirects,
+  facilTorCustomRedirects,
+  facilI2pCustomRedirects,
+  facilLokiCustomRedirects;
 
 function init() {
   browser.storage.local.get(
     [
       "disableMaps",
       "mapsFrontend",
+      "protocol",
+      "protocolFallback",
       "facilNormalRedirectsChecks",
       "facilNormalCustomRedirects",
+      "facilTorCustomRedirects",
+      "facilI2pCustomRedirects",
+      "facilLokiCustomRedirects"
     ],
     r => {
       disableMaps = r.disableMaps;
       mapsFrontend = r.mapsFrontend;
+      protocol = r.protocol;
+      protocolFallback = r.protocolFallback;
       facilNormalRedirectsChecks = r.facilNormalRedirectsChecks;
       facilNormalCustomRedirects = r.facilNormalCustomRedirects;
+      facilTorCustomRedirects = r.facilTorCustomRedirects;
+      facilI2pCustomRedirects = r.facilI2pCustomRedirects;
+      facilLokiCustomRedirects = r.facilLokiCustomRedirects;
     }
   )
 }
@@ -89,7 +107,15 @@ function redirect(url, initiator) {
 
   let randomInstance;
   if (mapsFrontend == 'osm') randomInstance = utils.getRandomInstance(redirects.osm.normal);
-  if (mapsFrontend == 'facil') randomInstance = utils.getRandomInstance([...facilNormalRedirectsChecks, ...facilNormalCustomRedirects]);
+
+  if (mapsFrontend == 'facil') {
+    if (protocol == 'loki') randomInstance = utils.getRandomInstance(...facilLokiCustomRedirects);
+    else if (protocol == 'i2p') randomInstance = utils.getRandomInstance(...facilI2pCustomRedirects);
+    else if (protocol == 'tor') randomInstance = utils.getRandomInstance(...facilTorCustomRedirects);
+    if ((randomInstance == "" && protocolFallback) || protocol == 'normal') {
+      randomInstance = utils.getRandomInstance([...facilNormalRedirectsChecks, ...facilNormalCustomRedirects]);
+    }
+  }
 
   let mapCentre = "#";
   let prefs = {};
@@ -201,6 +227,15 @@ async function initDefaults() {
       mapsRedirects: redirects,
       facilNormalRedirectsChecks: [...redirects.facil.normal],
       facilNormalCustomRedirects: [],
+
+      facilTorRedirectsChecks: [...redirects.facil.tor],
+      facilTorCustomRedirects: [],
+
+      facilI2pRedirectsChecks: [...redirects.facil.i2p],
+      facilI2pCustomRedirects: [],
+
+      facilLokiRedirectsChecks: [...redirects.facil.loki],
+      facilLokiCustomRedirects: []
     }, () => resolve())
   )
 

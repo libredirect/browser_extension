@@ -6,12 +6,6 @@ section#imdb_page.option-block
         h4(data-localise="__MSG_enable__") Enable
         input#imdb-enable(type="checkbox")
 
-    .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#imdb-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-
     #libremdb
         hr
         .normal
@@ -21,6 +15,12 @@ section#imdb_page.option-block
             +latency('libremdb')
         .tor
             include ../../widgets/instances.pug
-            +instances('https://libremdb.onion')
+            +instances('http://libremdb.onion')
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://libremdb.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://libremdb.loki')
 
     script(type="module" src="./widgets/imdb.js")

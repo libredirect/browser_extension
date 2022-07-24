@@ -14,6 +14,7 @@ import tiktokHelper from "./tiktok.js";
 import quoraHelper from "./quora.js"
 import libremdbHelper from "./imdb.js";
 import imgurHelper from "./imgur.js";
+import reutersHelper from './reuters.js';
 import localise from './localise.js'
 
 function getRandomInstance(instances) {
@@ -41,18 +42,20 @@ function updateInstances() {
       await initcloudflareBlackList();
       const instances = JSON.parse(http.responseText);
 
-      youtubeHelper.setRedirects({ 'invidious': instances.invidious, 'piped': instances.piped, })
+      youtubeHelper.setRedirects({ 'invidious': instances.invidious, 'piped': instances.piped, 'pipedMaterial': instances.pipedMaterial })
       twitterHelper.setRedirects(instances.nitter);
       instagramHelper.setRedirects(instances.bibliogram);
       redditHelper.setRedirects({ 'libreddit': instances.libreddit, 'teddit': instances.teddit });
       translateHelper.setRedirects({ "simplyTranslate": instances.simplyTranslate, "lingva": instances.lingva });
-      searchHelper.setRedirects({ 'searx': instances.searx, 'searxng': instances.searxng, 'whoogle': instances.whoogle });
+      searchHelper.setRedirects({ 'searx': instances.searx, 'searxng': instances.searxng, 'whoogle': instances.whoogle, 'librex': instances.librex });
       wikipediaHelper.setRedirects(instances.wikiless);
       mediumHelper.setRedirects(instances.scribe);
       quoraHelper.setRedirects(instances.quetre);
       libremdbHelper.setRedirects(instances.libremdb);
       sendTargetsHelper.setRedirects(instances.send);
       tiktokHelper.setRedirects(instances.proxiTok);
+      lbryHelper.setRedirects(instances.librarian);
+      reutersHelper.setRedirects(instances.neuters);
 
       console.info("Successfully updated Instances");
       resolve(true); return;
@@ -89,7 +92,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
   let redirects;
 
   async function getFromStorage() {
-    return new Promise(async resolve => {
+    return new Promise(async resolve =>
       browser.storage.local.get(
         [
           redirectsChecks,
@@ -105,27 +108,31 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
           resolve();
         }
       )
-    })
+    )
   }
+  
   await getFromStorage();
+  if (nameCustomInstances === undefined) console.log(customRedirects);
 
   function calcNameCheckBoxes() {
     let isTrue = true;
-    for (const item of redirects[name][protocol])
+    for (const item of redirects[name][protocol]) {
       if (!nameDefaultRedirects.includes(item)) {
         isTrue = false;
         break;
       }
-    for (const element of nameCheckListElement.getElementsByTagName('input'))
+    }
+    for (const element of nameCheckListElement.getElementsByTagName('input')) {
       element.checked = nameDefaultRedirects.includes(element.className)
+    }
     if (nameDefaultRedirects.length == 0) isTrue = false;
-    nameProtocolElement.getElementsByClassName('toogle-all')[0].checked = isTrue;
+    nameProtocolElement.getElementsByClassName('toggle-all')[0].checked = isTrue;
   }
   nameCheckListElement.innerHTML =
     [
       `<div>
         <x data-localise="__MSG_toggleAll__">Toggle All</x>
-        <input type="checkbox" class="toogle-all"/>
+        <input type="checkbox" class="toggle-all"/>
       </div>`,
       ...redirects[name][protocol].map(
         x => {
@@ -153,7 +160,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
   localise.localisePage();
 
   calcNameCheckBoxes();
-  nameProtocolElement.getElementsByClassName('toogle-all')[0].addEventListener("change", async event => {
+  nameProtocolElement.getElementsByClassName('toggle-all')[0].addEventListener("change", async event => {
     if (event.target.checked)
       nameDefaultRedirects = [...redirects[name][protocol]];
     else
@@ -164,7 +171,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
   });
 
   for (let element of nameCheckListElement.getElementsByTagName('input')) {
-    if (element.className != 'toogle-all')
+    if (element.className != 'toggle-all')
       nameProtocolElement.getElementsByClassName(element.className)[0].addEventListener("change", async event => {
         if (event.target.checked)
           nameDefaultRedirects.push(element.className)
@@ -384,6 +391,7 @@ function unify(test) {
 
           if (!result) result = await searchHelper.initSearxCookies(test, url);
           if (!result) result = await searchHelper.initSearxngCookies(test, url);
+          if (!result) result = await searchHelper.initLibrexCookies(test, url);
 
           if (!result) result = await tiktokHelper.initProxiTokCookies(test, url);
 

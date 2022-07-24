@@ -1,42 +1,61 @@
 import utils from "../../../assets/javascripts/utils.js";
 
+// UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
+
+const frontends = new Array("simpleertube")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
 const enable = document.getElementById("peertube-enable");
-const protocol = document.getElementById("peertube-protocol");
 const peertube = document.getElementById('peertube_page');
+//const frontend = document.getElementById("peertube-frontend");
+let protocol
+
+/*
+function changeFrontendsSettings() {
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        if (frontends[i] == frontend.value) {
+            frontendDiv.style.display = 'block'
+        } else {
+            frontendDiv.style.display = 'none'
+        }
+    }
+}
+*/
 
 function changeProtocolSettings() {
-    const normalDiv = peertube.getElementsByClassName("normal")[0];
-    const torDiv = peertube.getElementsByClassName("tor")[0];
-    if (protocol.value == 'normal') {
-        normalDiv.style.display = 'block';
-        torDiv.style.display = 'none';
-    }
-    else if (protocol.value == 'tor') {
-        normalDiv.style.display = 'none';
-        torDiv.style.display = 'block';
+    for (let i = 0; i < frontends.length; i++) {
+        const frontendDiv = document.getElementById(frontends[i])
+        for (let x = 0; x < protocols.length; x++) {
+            const protocolDiv = frontendDiv.getElementsByClassName(protocols[x])[0]
+            if (protocols[x] == protocol) {
+                protocolDiv.style.display = 'block'
+            } else {
+                protocolDiv.style.display = 'none'
+            }
+        }
     }
 }
 
 browser.storage.local.get(
     [
         "disablePeertubeTargets",
-        "peertubeTargetsProtocol"
+        "protocol"
     ],
     r => {
         enable.checked = !r.disablePeertubeTargets;
-        protocol.value = r.peertubeTargetsProtocol;
+        protocol = r.protocol;
         changeProtocolSettings();
     }
 )
 
 peertube.addEventListener("change", () => {
-    changeProtocolSettings();
-    browser.storage.local.set({
-        disablePeertubeTargets: !enable.checked,
-        peertubeTargetsProtocol: protocol.value
-    })
+    browser.storage.local.set({ disablePeertubeTargets: !enable.checked })
 })
 
-utils.processDefaultCustomInstances('peertube', 'simpleertube', 'normal', document);
-utils.processDefaultCustomInstances('peertube', 'simpleertube', 'tor', document);
-utils.latency('peertube', 'simpleertube', document, location)
+for (let i = 0; i < frontends.length; i++) {
+    for (let x = 0; x < protocols.length; x++){
+        utils.processDefaultCustomInstances('peertube', frontends[i], protocols[x], document)
+    }
+    utils.latency('peertube', frontends[i], document, location)
+}

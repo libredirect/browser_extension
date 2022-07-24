@@ -9,41 +9,77 @@ const targets = [
 let redirects = {
     "neuters": {
         "normal": [
-            'https://neuters.de',
+            "https://neuters.de"
         ],
-        "tor": []
+        "tor": [],
+        "i2p": [],
+        "loki": []
     }
+}
+
+// const frontends = new Array("neuters")
+// const protocols = new Array("normal", "tor", "i2p", "loki")
+
+// for (let i = 0; i < frontends.length; i++) {
+//     redirects[frontends[i]] = {}
+//     for (let x = 0; x < protocols.length; x++) {
+//         redirects[frontends[i]][protocols[x]] = []
+//     }
+// }
+
+function setRedirects(val) {
+    browser.storage.local.get('cloudflareBlackList', r => {
+        redirects.neuters = val;
+        neutersNormalRedirectsChecks = [...redirects.neuters.normal];
+        for (const instance of r.cloudflareBlackList) {
+            const a = neutersNormalRedirectsChecks.indexOf(instance);
+            if (a > -1) neutersNormalRedirectsChecks.splice(a, 1);
+        }
+        browser.storage.local.set({
+            neutersRedirects: redirects,
+            neutersNormalRedirectsChecks
+        })
+    })
 }
 
 let
     disableReuters,
-    reutersProtocol,
+    protocol,
+    protocolFallback,
     reutersRedirects,
     neutersNormalRedirectsChecks,
     neutersNormalCustomRedirects,
     neutersTorRedirectsChecks,
-    neutersTorCustomRedirects;
+    neutersTorCustomRedirects,
+    neutersI2pCustomRedirects,
+    neutersLokiCustomRedirects;
 
 function init() {
     return new Promise(async resolve => {
         browser.storage.local.get(
             [
                 "disableReuters",
-                "reutersProtocol",
+                "protocol",
+                "protocolFallback",
                 "reutersRedirects",
                 "neutersNormalRedirectsChecks",
                 "neutersNormalCustomRedirects",
                 "neutersTorRedirectsChecks",
                 "neutersTorCustomRedirects",
+                "neutersI2pCustomRedirects",
+                "neutersLokiCustomRedirects"
             ],
             r => {
                 disableReuters = r.disableReuters;
-                reutersProtocol = r.reutersProtocol;
+                protocol = r.protocol;
+                protocolFallback = r.protocolFallback;
                 reutersRedirects = r.reutersRedirects;
                 neutersNormalRedirectsChecks = r.neutersNormalRedirectsChecks;
                 neutersNormalCustomRedirects = r.neutersNormalCustomRedirects;
                 neutersTorRedirectsChecks = r.neutersTorRedirectsChecks;
                 neutersTorCustomRedirects = r.neutersTorCustomRedirects;
+                neutersI2pCustomRedirects = r.neutersI2pCustomRedirects;
+                neutersLokiCustomRedirects = r.neutersLokiCustomRedirects;
                 resolve();
             }
         )
@@ -63,9 +99,13 @@ function redirect(url, type, initiator, disableOverride) {
     if (initiator && (all.includes(initiator.origin) || targets.includes(initiator.host))) return;
     if (!targets.some(rx => rx.test(url.href))) return;
 
-    let instancesList;
-    if (reutersProtocol == 'normal') instancesList = [...neutersNormalRedirectsChecks, ...neutersNormalCustomRedirects];
-    if (reutersProtocol == 'tor') instancesList = [...neutersTorRedirectsChecks, ...neutersTorCustomRedirects];
+    let instancesList = [];
+    if (protocol == 'loki') instancesList = [...neutersLokiCustomRedirects];
+    else if (protocol == 'i2p') instancesList = [...neutersI2pCustomRedirects];
+    else if (protocol == 'tor') instancesList = [...neutersTorRedirectsChecks, ...neutersTorCustomRedirects];
+    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
+        instancesList = [...neutersNormalRedirectsChecks, ...neutersNormalCustomRedirects];
+    }
     if (instancesList.length === 0) return;
 
     const randomInstance = utils.getRandomInstance(instancesList);
@@ -87,7 +127,6 @@ function initDefaults() {
     return new Promise(resolve => {
         browser.storage.local.set({
             disableReuters: true,
-            reutersProtocol: "normal",
 
             reutersRedirects: redirects,
 
@@ -96,11 +135,18 @@ function initDefaults() {
 
             neutersTorRedirectsChecks: [...redirects.neuters.tor],
             neutersTorCustomRedirects: [],
+
+            neutersI2pRedirectsChecks: [...redirects.neuters.i2p],
+            neutersI2pCustomRedirects: [],
+
+            neutersLokiRedirectsChecks: [...redirects.neuters.loki],
+            neutersLokiCustomRedirects: []
         }, () => resolve());
     });
 }
 
 export default {
+    setRedirects,
     redirect,
     initDefaults
 };

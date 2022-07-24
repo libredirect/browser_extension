@@ -6,13 +6,6 @@ section#wikipedia_page.option-block
         h4(data-localise="__MSG_enable__") Enable
         input#wikipedia-enable(type="checkbox")
 
-    .some-block.option-block
-        h4(data-localise="__MSG_protocol__") Protocol
-        select#wikipedia-protocol
-            option(value="normal" data-localise="__MSG_normal__") Normal
-            option(value="tor" data-localise="__MSG_tor__") Tor
-            option(value="i2p" data-localise="__MSG_i2p__") I2P
-
     #wikiless
         hr
         .normal
@@ -22,10 +15,12 @@ section#wikipedia_page.option-block
             +latency('wikiless')
         .tor
             include ../../widgets/instances.pug
-            +instances('https://wikiless.onion')
-
+            +instances('http://wikiless.onion')
         .i2p
             include ../../widgets/instances.pug
             +instances('https://wikiless.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://wikiless.loki')
 
     script(type="module" src="./widgets/wikipedia.js")

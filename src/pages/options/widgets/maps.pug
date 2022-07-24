@@ -18,6 +18,15 @@ section#maps_page.option-block
             include ../../widgets/instances.pug
             +instances('https://facilmap.com')
             include ../../widgets/latency.pug
-            +latency('facilmap')
+            +latency('facil')
+        .tor
+            +instances('http://facilmap.onion')
+            include ../../widgets/instances.pug
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://facilmap.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://facilmap.loki')
 
     script(type="module" src="./widgets/maps.js")
