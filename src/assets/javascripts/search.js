@@ -530,7 +530,7 @@ function switchInstance(url, disableOverride) {
       ...librexLokiCustomRedirects
     ].includes(protocolHost)) { resolve(); return; }
 
-    let instancesList;
+    let instancesList = [];
     
     if (protocol == 'loki') {
       if (searchFrontend == 'searx') instancesList = [...searxLokiCustomRedirects];

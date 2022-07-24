@@ -110,6 +110,8 @@ const disableImgurAllSites = allSites.getElementsByClassName("disable-imgur")[0]
 const disableTiktokCurrentSite = currSite.getElementsByClassName("disable-tiktok")[0];
 const disableTiktokAllSites = allSites.getElementsByClassName("disable-tiktok")[0];
 
+const currentSiteIsFrontend = document.getElementById('current_site_divider')
+
 browser.storage.local.get(
   [
     "disableTwitter",
@@ -154,16 +156,19 @@ browser.storage.local.get(
 
     browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
       for (const frontend of generalHelper.allPopupFrontends) {
-        if (!r.popupFrontends.includes(frontend))
+        if (!r.popupFrontends.includes(frontend)) 
           allSites.getElementsByClassName(frontend)[0].classList.add("hide")
         else
           allSites.getElementsByClassName(frontend)[0].classList.remove("hide")
-        currSite.getElementsByClassName(frontend)[0].classList.add("hide")
+          currSite.getElementsByClassName(frontend)[0].classList.add("hide")
       }
 
       let url;
       try { url = new URL(tabs[0].url); }
-      catch { return; }
+      catch { 
+        currentSiteIsFrontend.classList.add("hide")
+        return;
+      }
 
       if (youtubeHelper.redirect(url, 'main_frame', false, true) || await youtubeHelper.switchInstance(url, 'main_frame', false, true)) {
         currSite.getElementsByClassName('youtube')[0].classList.remove("hide");
@@ -236,6 +241,9 @@ browser.storage.local.get(
       else if (youtubeMusicHelper.redirect(url, 'main_frame', false, true)) {
         currSite.getElementsByClassName('youtubeMusic')[0].classList.remove("hide");
         allSites.getElementsByClassName('youtubeMusic')[0].classList.add("hide");
+      } else {
+        currentSiteIsFrontend.classList.add("hide")
+        console.log("This page is not an instance")
       }
     })
   }

@@ -140,7 +140,7 @@ function init() {
         pipedMaterialNormalCustomRedirects = r.pipedMaterialNormalCustomRedirects;
         pipedMaterialTorRedirectsChecks = r.pipedMaterialTorRedirectsChecks;
         pipedMaterialTorCustomRedirects = r.pipedMaterialTorCustomRedirects;
-        pipedMaterialI2pCustomRedirects - r.pipedMaterialI2pCustomRedirects;
+        pipedMaterialI2pCustomRedirects = r.pipedMaterialI2pCustomRedirects;
         pipedMaterialLokiCustomRedirects = r.pipedMaterialLokiCustomRedirects;
         resolve();
       }
@@ -198,6 +198,7 @@ function redirect(url, type, initiator, disableOverride) {
   const main_frame = type === "main_frame";
   const sub_frame = type === "sub_frame";
 
+  if (!sub_frame && !main_frame) return;
   if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return; // Don't redirect YouTube Player API.
   if (onlyEmbeddedVideo == 'onlyEmbedded' && main_frame) return;
   if (onlyEmbeddedVideo == 'onlyNotEmbedded' && !main_frame) return;

@@ -87,6 +87,7 @@ youtube.addEventListener("change", () => {
     browser.storage.local.set({
         disableYoutube: !enable.checked,
         youtubeEmbedFrontend: youtubeEmbedFrontend.value,
+        youtubeFrontend: frontend.value,
         onlyEmbeddedVideo: onlyEmbeddedVideo.value
     })
     changeFrontendsSettings();
