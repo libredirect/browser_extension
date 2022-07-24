@@ -96,7 +96,7 @@
         "description": "used in the settings page"
     },
     "autoRedirect": {
-        "message": "Automatisch Instanzen meiden, die offline sind",
+        "message": "Automatisch von Offline-Instanzen zu Online-Instanzen wechseln",
         "description": "used in the settings page"
     },
     "exceptions": {

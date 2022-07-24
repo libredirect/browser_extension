@@ -211,5 +211,8 @@
     "normal": {
         "message": "Normal",
         "description": "used in the settings page"
+    },
+    "loki": {
+        "message": "Lokinet"
     }
 }
