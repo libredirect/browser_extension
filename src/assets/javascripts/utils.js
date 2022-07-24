@@ -92,7 +92,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
   let redirects;
 
   async function getFromStorage() {
-    return new Promise(async resolve => {
+    return new Promise(async resolve =>
       browser.storage.local.get(
         [
           redirectsChecks,
@@ -108,9 +108,11 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
           resolve();
         }
       )
-    })
+    )
   }
+  
   await getFromStorage();
+  if (nameCustomInstances === undefined) console.log(customRedirects);
 
   function calcNameCheckBoxes() {
     let isTrue = true;

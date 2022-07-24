@@ -40,6 +40,7 @@ let
     librarianNormalCustomRedirects,
     librarianTorRedirectsChecks,
     librarianTorCustomRedirects,
+    librarianI2pRedirectsChecks,
     librarianI2pCustomRedirects,
     librarianLokiCustomRedirects;
 
@@ -55,6 +56,7 @@ function init() {
                 "librarianNormalCustomRedirects",
                 "librarianTorRedirectsChecks",
                 "librarianTorCustomRedirects",
+                "librarianI2pRedirectsChecks",
                 "librarianI2pCustomRedirects",
                 "librarianLokiCustomRedirects"
             ],
@@ -67,6 +69,7 @@ function init() {
                 librarianNormalCustomRedirects = r.librarianNormalCustomRedirects;
                 librarianTorRedirectsChecks = r.librarianTorRedirectsChecks;
                 librarianTorCustomRedirects = r.librarianTorCustomRedirects;
+                librarianI2pRedirectsChecks = r.librarianI2pRedirectsChecks;
                 librarianI2pCustomRedirects = r.librarianI2pCustomRedirects;
                 librarianLokiCustomRedirects = r.librarianLokiCustomRedirects;
                 resolve();
@@ -140,17 +143,18 @@ function initDefaults() {
             }
             browser.storage.local.set({
                 disableLbryTargets: true,
-
                 lbryTargetsRedirects: redirects,
 
-                librarianNormalRedirectsChecks: librarianNormalRedirectsChecks,
+                librarianNormalRedirectsChecks: [...redirects.librarian.normal],
                 librarianNormalCustomRedirects: [],
 
                 librarianTorRedirectsChecks: [...redirects.librarian.tor],
                 librarianTorCustomRedirects: [],
 
+                librarianI2pRedirectsChecks: [...redirects.librarian.i2p],
                 librarianI2pCustomRedirects: [],
 
+                librarianLokiRedirectsChecks: [...redirects.librarian.loki],
                 librarianLokiCustomRedirects: []
             }, () => resolve());
         });

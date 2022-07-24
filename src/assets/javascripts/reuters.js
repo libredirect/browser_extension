@@ -136,8 +136,10 @@ function initDefaults() {
             neutersTorRedirectsChecks: [...redirects.neuters.tor],
             neutersTorCustomRedirects: [],
 
+            neutersI2pRedirectsChecks: [...redirects.neuters.i2p],
             neutersI2pCustomRedirects: [],
 
+            neutersLokiRedirectsChecks: [...redirects.neuters.loki],
             neutersLokiCustomRedirects: []
         }, () => resolve());
     });

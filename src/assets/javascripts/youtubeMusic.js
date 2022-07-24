@@ -117,10 +117,13 @@ async function initDefaults() {
             beatbumpNormalRedirectsChecks: [...redirects.beatbump.normal],
             beatbumpNormalCustomRedirects: [],
 
+            beatbumpTorRedirectsChecks: [...redirects.beatbump.tor],
             beatbumpTorCustomRedirects: [],
 
+            beatbumpI2pRedirectsChecks: [...redirects.beatbump.i2p],
             beatbumpI2pCustomRedirects: [],
 
+            beatbumpLokiRedirectsChecks: [...redirects.beatbump.loki],
             beatbumpLokiCustomRedirects: []
         }, () => resolve())
     )

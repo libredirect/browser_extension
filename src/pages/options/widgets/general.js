@@ -42,7 +42,7 @@ function exportSettings() {
     null,
     result => {
       let resultString = JSON.stringify(result, null, '  ');
-      exportSettingsElement.href = 'data:application/json;base64,' + btoa(resultString);
+      exportSettingsElement.href = 'data:application/json;base64,' + btoa(encodeURI(resultString));
       exportSettingsElement.download = 'libredirect-settings.json';
     }
   );
@@ -171,7 +171,7 @@ protocolElement.addEventListener("change", event => {
 
 let protocolFallbackCheckbox = document.getElementById("protocol-fallback-checkbox")
 protocolFallbackCheckbox.addEventListener("change", event => {
-  browser.storage.local.set({ protocolFallback: event.target.checked});
+  browser.storage.local.set({ protocolFallback: event.target.checked });
 })
 
 let nameCustomInstanceInput = document.getElementById("exceptions-custom-instance");
@@ -210,7 +210,7 @@ browser.storage.local.get(
     protocolElement.value = r.protocol;
     protocolFallbackCheckbox.checked = r.protocolFallback;
     // firstPartyIsolate.checked = r.firstPartyIsolate;
-     
+
     let protocolFallbackElement = document.getElementById('protocol-fallback')
     if (protocolElement.value == "normal") {
       protocolFallbackElement.style.display = 'none';

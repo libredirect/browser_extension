@@ -23,10 +23,10 @@ const protocols = new Array("normal", "tor", "i2p", "loki")
 let redirects = {};
 
 for (let i = 0; i < frontends.length; i++) {
-    redirects[frontends[i]] = {}
-    for (let x = 0; x < protocols.length; x++) {
-        redirects[frontends[i]][protocols[x]] = []
-    }
+  redirects[frontends[i]] = {}
+  for (let x = 0; x < protocols.length; x++) {
+    redirects[frontends[i]][protocols[x]] = []
+  }
 }
 
 function setRedirects(val) {
@@ -81,7 +81,7 @@ let
   pipedLokiCustomRedirects,
   pipedMaterialNormalRedirectsChecks,
   pipedMaterialNormalCustomRedirects,
-  // pipedMaterialTorRedirectsChecks,
+  pipedMaterialTorRedirectsChecks,
   pipedMaterialTorCustomRedirects,
   pipedMaterialI2pCustomRedirects,
   pipedMaterialLokiCustomRedirects;
@@ -111,7 +111,7 @@ function init() {
         "pipedLokiCustomRedirects",
         "pipedMaterialNormalRedirectsChecks",
         "pipedMaterialNormalCustomRedirects",
-        // "pipedMaterialTorRedirectsChecks",
+        "pipedMaterialTorRedirectsChecks",
         "pipedMaterialTorCustomRedirects",
         "pipedMaterialI2pCustomRedirects",
         "pipedMaterialLokiCustomRedirects"
@@ -138,7 +138,7 @@ function init() {
         pipedLokiCustomRedirects = r.pipedLokiCustomRedirects;
         pipedMaterialNormalRedirectsChecks = r.pipedMaterialNormalRedirectsChecks;
         pipedMaterialNormalCustomRedirects = r.pipedMaterialNormalCustomRedirects;
-        // pipedMaterialTorRedirectsChecks = r.pipedMaterialTorRedirectsChecks;
+        pipedMaterialTorRedirectsChecks = r.pipedMaterialTorRedirectsChecks;
         pipedMaterialTorCustomRedirects = r.pipedMaterialTorCustomRedirects;
         pipedMaterialI2pCustomRedirects - r.pipedMaterialI2pCustomRedirects;
         pipedMaterialLokiCustomRedirects = r.pipedMaterialLokiCustomRedirects;
@@ -160,7 +160,7 @@ function all() {
     ...youtubeRedirects.piped.tor,
 
     ...youtubeRedirects.pipedMaterial.normal,
-    //...youtubeRedirects.pipedMaterial.tor,
+    ...youtubeRedirects.pipedMaterial.tor,
 
     ...invidiousNormalCustomRedirects,
     ...invidiousTorCustomRedirects,
@@ -320,9 +320,7 @@ function initDefaults() {
           disableYoutube: false,
           enableYoutubeCustomSettings: false,
           onlyEmbeddedVideo: 'both',
-
           youtubeRedirects: redirects,
-
           youtubeFrontend: 'invidious',
 
           invidiousNormalRedirectsChecks: invidiousNormalRedirectsChecks,
@@ -331,8 +329,10 @@ function initDefaults() {
           invidiousTorRedirectsChecks: [...redirects.invidious.tor],
           invidiousTorCustomRedirects: [],
 
+          invidiousI2pRedirectsChecks: [...redirects.invidious.i2p],
           invidiousI2pCustomRedirects: [],
 
+          invidiousLokiRedirectsChecks: [...redirects.invidious.loki],
           invidiousLokiCustomRedirects: [],
 
           pipedNormalRedirectsChecks: pipedNormalRedirectsChecks,
@@ -341,18 +341,22 @@ function initDefaults() {
           pipedTorRedirectsChecks: [...redirects.piped.tor],
           pipedTorCustomRedirects: [],
 
+          pipedI2pRedirectsChecks: [...redirects.piped.i2p],
           pipedI2pCustomRedirects: [],
 
+          pipedLokiRedirectsChecks: [...redirects.piped.loki],
           pipedLokiCustomRedirects: [],
 
           pipedMaterialNormalRedirectsChecks: pipedMaterialNormalRedirectsChecks,
           pipedMaterialNormalCustomRedirects: [],
 
-          //pipedMaterialTorRedirectsChecks: [...redirects.pipedMaterial.tor],
+          pipedMaterialTorRedirectsChecks: [...redirects.pipedMaterial.tor],
           pipedMaterialTorCustomRedirects: [],
 
+          pipedMaterialI2pRedirectsChecks: [...redirects.pipedMaterial.i2p],
           pipedMaterialI2pCustomRedirects: [],
 
+          pipedMaterialLokiRedirectsChecks: [...redirects.pipedMaterial.loki],
           pipedMaterialLokiCustomRedirects: [],
 
           youtubeEmbedFrontend: 'invidious'

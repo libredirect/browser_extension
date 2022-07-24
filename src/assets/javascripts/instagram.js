@@ -173,13 +173,15 @@ function initDefaults() {
           instagramRedirects: redirects,
 
           bibliogramNormalRedirectsChecks: bibliogramNormalRedirectsChecks,
-          bibliogramTorRedirectsChecks: [],
+          bibliogramNormalCustomRedirects: [],
 
-          bibliogramNormalCustomRedirects: [...redirects.bibliogram.tor],
+          bibliogramTorRedirectsChecks: [...redirects.bibliogram.tor],
           bibliogramTorCustomRedirects: [],
 
+          bibliogramI2pRedirectsChecks: [...redirects.bibliogram.i2p],
           bibliogramI2pCustomRedirects: [],
 
+          bibliogramLokiRedirectsChecks: [...redirects.bibliogram.loki],
           bibliogramLokiCustomRedirects: []
         })
         resolve();

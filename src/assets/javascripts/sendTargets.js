@@ -161,8 +161,10 @@ function initDefaults() {
                     sendTorRedirectsChecks: [...redirects.send.tor],
                     sendTorCustomRedirects: [],
 
+                    sendI2pRedirectsChecks: [...redirects.send.i2p],
                     sendI2pCustomRedirects: [],
 
+                    sendLokiRedirectsChecks: [...redirects.send.loki],
                     sendLokiCustomRedirects: []
                 }, () => resolve())
             })

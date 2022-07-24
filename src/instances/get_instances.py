@@ -87,6 +87,8 @@ def invidious():
     invidiousList = {}
     invidiousList['normal'] = []
     invidiousList['tor'] = []
+    invidiousList['i2p'] = []
+    invidiousList['loki'] = []
     for instance in rJson:
         if instance[1]['type'] == 'https':
             invidiousList['normal'].append(instance[1]['uri'])
@@ -112,6 +114,8 @@ def pipedMaterial():
     pipedMaterialList = {}
     pipedMaterialList['normal'] = []
     pipedMaterialList['tor'] = []
+    pipedMaterialList['i2p'] = []
+    pipedMaterialList['loki'] = []
     for item in tmp:
         pipedMaterialList['normal'].append(item)
     mightyList['pipedMaterial'] = pipedMaterialList
@@ -127,6 +131,8 @@ def proxitok():
     proxiTokList = {}
     proxiTokList['normal'] = []
     proxiTokList['tor'] = []
+    proxiTokList['i2p'] = []
+    proxiTokList['loki'] = []
     for item in tmp:
         proxiTokList['normal'].append(re.sub(r'/$', '', item))
     mightyList['proxiTok'] = proxiTokList
@@ -141,6 +147,8 @@ def send():
     sendList = {}
     sendList['normal'] = []
     sendList['tor'] = []
+    sendList['i2p'] = []
+    sendList['loki'] = []
     for item in tmp:
         sendList['normal'].append(item)
     mightyList['send'] = sendList
@@ -157,6 +165,8 @@ def nitter():
     nitterList = {}
     nitterList['normal'] = []
     nitterList['tor'] = []
+    nitterList['i2p'] = []
+    nitterList['loki'] = []
     for table in tables:
         tbody = table.find('tbody')
         trs = tbody.find_all('tr')
@@ -180,6 +190,8 @@ def bibliogram():
     bibliogramList = {}
     bibliogramList['normal'] = []
     bibliogramList['tor'] = []
+    bibliogramList['i2p'] = []
+    bibliogramList['loki'] = []
     for item in rJson['data']:
         bibliogramList['normal'].append(item['address'])
     mightyList['bibliogram'] = bibliogramList
@@ -192,6 +204,8 @@ def libreddit():
     libredditList = {}
     libredditList['normal'] = []
     libredditList['tor'] = []
+    libredditList['i2p'] = []
+    libredditList['loki'] = []
 
     tmp = re.findall(
         r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|", r.text)
@@ -212,6 +226,8 @@ def teddit():
     tedditList = {}
     tedditList['normal'] = []
     tedditList['tor'] = []
+    tedditList['i2p'] = []
+    tedditList['loki'] = []
     for item in rJson:
         url = item['url']
         if url != '':
@@ -232,6 +248,7 @@ def wikiless():
     wikilessList['normal'] = []
     wikilessList['tor'] = []
     wikilessList['i2p'] = []
+    wikilessList['loki'] = []
     for item in rJson:
         if 'url' in item:
             if item['url'].strip() != "":
@@ -253,6 +270,8 @@ def scribe():
     scribeList = {}
     scribeList['normal'] = []
     scribeList['tor'] = []
+    scribeList['i2p'] = []
+    scribeList['loki'] = []
     for item in rJson:
         scribeList['normal'].append(item)
     mightyList['scribe'] = scribeList
@@ -265,6 +284,8 @@ def quetre():
     _list = {}
     _list['normal'] = []
     _list['tor'] = []
+    _list['i2p'] = []
+    _list['loki'] = []
 
     tmp = re.findall(
         r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|", r.text)
@@ -285,6 +306,8 @@ def libremdb():
     _list = {}
     _list['normal'] = []
     _list['tor'] = []
+    _list['i2p'] = []
+    _list['loki'] = []
 
     tmp = re.findall(
         r"\| ([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)*\|*[A-Z]{0,}.*\|.*\|", r.text)
@@ -335,6 +358,8 @@ def linvgatranslate():
     lingvaList = {}
     lingvaList['normal'] = []
     lingvaList['tor'] = []
+    lingvaList['i2p'] = []
+    lingvaList['loki'] = []
     for item in rJson:
         lingvaList['normal'].append(item)
 
@@ -346,13 +371,15 @@ def searx_searxng():
     r = requests.get('https://searx.space/data/instances.json')
     rJson = json.loads(r.text)
     searxList = {}
+    searxList['normal'] = []
     searxList['tor'] = []
     searxList['i2p'] = []
-    searxList['normal'] = []
+    searxList['loki'] = []
     searxngList = {}
+    searxngList['normal'] = []
     searxngList['tor'] = []
     searxngList['i2p'] = []
-    searxngList['normal'] = []
+    searxngList['loki'] = []
     for item in rJson['instances']:
         if re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item[:-1]):
             if (rJson['instances'][item].get('generator') == 'searxng'):
@@ -383,6 +410,7 @@ def whoogle():
     whoogleList['normal'] = []
     whoogleList['tor'] = []
     whoogleList['i2p'] = []
+    whoogleList['loki'] = []
     for item in tmpList:
         if re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item):
             whoogleList['tor'].append(item)
@@ -401,6 +429,7 @@ def librex():
     _list['normal'] = []
     _list['tor'] = []
     _list['i2p'] = []
+    _list['loki'] = []
 
     tmp = re.findall(
             r"\| {1,2}\[(?:(?:[a-zA-Z0-9]+\.)+[a-zA-Z]{2,}|✅)\]\((https?:\/{2}(?:[a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,})", r.text)
@@ -426,6 +455,7 @@ def rimgo():
     rimgoList['normal'] = []
     rimgoList['tor'] = []
     rimgoList['i2p'] = []
+    rimgoList['loki'] = []
     for item in rJson:
         if 'url' in item:
             rimgoList['normal'].append(item['url'])
@@ -445,6 +475,7 @@ def librarian():
     librarianList['normal'] = []
     librarianList['tor'] = []
     librarianList['i2p'] = []
+    librarianList['loki'] = []
     instances = rJson['instances']
     for item in instances:
         url = item['url']

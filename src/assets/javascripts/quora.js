@@ -173,8 +173,10 @@ function initDefaults() {
                 quetreTorRedirectsChecks: [...redirects.quetre.tor],
                 quetreTorCustomRedirects: [],
 
+                quetreI2pRedirectsChecks: [...redirects.quetre.i2p],
                 quetreI2pCustomRedirects: [],
 
+                quetreLokiRedirectsChecks: [...redirects.quetre.loki],
                 quetreLokiCustomRedirects: []
             }, () => resolve());
         });

@@ -228,10 +228,13 @@ async function initDefaults() {
       facilNormalRedirectsChecks: [...redirects.facil.normal],
       facilNormalCustomRedirects: [],
 
+      facilTorRedirectsChecks: [...redirects.facil.tor],
       facilTorCustomRedirects: [],
 
+      facilI2pRedirectsChecks: [...redirects.facil.i2p],
       facilI2pCustomRedirects: [],
 
+      facilLokiRedirectsChecks: [...redirects.facil.loki],
       facilLokiCustomRedirects: []
     }, () => resolve())
   )

@@ -188,8 +188,10 @@ function initDefaults() {
             scribeTorRedirectsChecks: [...redirects.scribe.tor],
             scribeTorCustomRedirects: [],
 
+            scribeI2pRedirectsChecks: [...redirects.scribe.i2p],
             scribeI2pCustomRedirects: [],
 
+            scribeLokiRedirectsChecks: [...redirects.scribe.loki],
             scribeLokiCustomRedirects: []
           }, () => resolve())
         })

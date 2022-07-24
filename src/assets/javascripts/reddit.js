@@ -12,10 +12,10 @@ const frontends = new Array("libreddit", "teddit")
 const protocols = new Array("normal", "tor", "i2p", "loki")
 
 for (let i = 0; i < frontends.length; i++) {
-    redirects[frontends[i]] = {}
-    for (let x = 0; x < protocols.length; x++) {
-        redirects[frontends[i]][protocols[x]] = []
-    }
+  redirects[frontends[i]] = {}
+  for (let x = 0; x < protocols.length; x++) {
+    redirects[frontends[i]][protocols[x]] = []
+  }
 }
 
 function setRedirects(val) {
@@ -44,16 +44,23 @@ let
   redditRedirects,
   protocol,
   protocolFallback,
+
   libredditNormalRedirectsChecks,
   libredditNormalCustomRedirects,
+
   libredditTorRedirectsChecks,
   libredditTorCustomRedirects,
+
   libredditI2pCustomRedirects,
+
   libredditLokiCustomRedirects,
+
   tedditNormalRedirectsChecks,
   tedditNormalCustomRedirects,
+
   tedditTorRedirectsChecks,
   tedditTorCustomRedirects,
+
   tedditI2pCustomRedirects,
   tedditLokiCustomRedirects;
 
@@ -411,8 +418,10 @@ function initDefaults() {
           libredditTorRedirectsChecks: [...redirects.libreddit.tor],
           libredditTorCustomRedirects: [],
 
+          libredditI2pRedirectsChecks: [...redirects.libreddit.i2p],
           libredditI2pCustomRedirects: [],
 
+          libredditLokiRedirectsChecks: [...redirects.libreddit.loki],
           libredditLokiCustomRedirects: [],
 
           tedditNormalRedirectsChecks: tedditNormalRedirectsChecks,
@@ -421,8 +430,10 @@ function initDefaults() {
           tedditTorRedirectsChecks: [...redirects.teddit.tor],
           tedditTorCustomRedirects: [],
 
+          tedditI2pRedirectsChecks: [...redirects.teddit.i2p],
           tedditI2pCustomRedirects: [],
 
+          tedditLokiRedirectsChecks: [...redirects.teddit.loki],
           tedditLokiCustomRedirects: []
         }, () => resolve());
       });

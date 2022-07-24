@@ -194,6 +194,7 @@ function initDefaults() {
                     rimgoI2pRedirectsChecks: [...redirects.rimgo.i2p],
                     rimgoI2pCustomRedirects: [],
 
+                    rimgoLokiRedirectsChecks: [...redirects.rimgo.loki],
                     rimgoLokiCustomRedirects: []
                 }, () => resolve());
             });

@@ -172,8 +172,10 @@ function initDefaults() {
                 libremdbTorRedirectsChecks: [...redirects.libremdb.tor],
                 libremdbTorCustomRedirects: [],
 
+                libremdbI2pRedirectsChecks: [],
                 libremdbI2pCustomRedirects: [],
 
+                libremdbLokiRedirectsChecks: [],
                 libremdbLokiCustomRedirects: []
             }, () => resolve());
         });

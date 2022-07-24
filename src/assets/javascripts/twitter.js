@@ -278,8 +278,10 @@ function initDefaults() {
           nitterTorRedirectsChecks: [...redirects.nitter.tor],
           nitterTorCustomRedirects: [],
 
+          nitterI2pRedirectsChecks: [...redirects.nitter.i2p],
           nitterI2pCustomRedirects: [],
 
+          nitterLokiRedirectsChecks: [...redirects.nitter.loki],
           nitterLokiCustomRedirects: []
         }, () => resolve());
       })

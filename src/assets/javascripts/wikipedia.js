@@ -217,13 +217,19 @@ function initDefaults() {
         browser.storage.local.set({
           disableWikipedia: true,
           wikipediaRedirects: redirects,
+          
           wikilessNormalRedirectsChecks: wikilessNormalRedirectsChecks,
-          wikilessTorRedirectsChecks: [...redirects.wikiless.tor],
-          wikilessI2pRedirectsChecks: [...redirects.wikiless.i2p],
           wikilessNormalCustomRedirects: [],
+          
+          wikilessTorRedirectsChecks: [...redirects.wikiless.tor],
           wikilessTorCustomRedirects: [],
+          
+          wikilessI2pRedirectsChecks: [...redirects.wikiless.i2p],
           wikilessI2pCustomRedirects: [],
+          
+          wikilessLokiRedirectsChecks: [...redirects.wikiless.loki],
           wikilessLokiCustomRedirects: []
+          
         }, () => resolve());
       })
     })

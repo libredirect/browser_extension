@@ -613,8 +613,8 @@ function initDefaults() {
           whoogleI2pRedirectsChecks: [...redirects.whoogle.i2p],
           whoogleI2pCustomRedirects: [],
 
+          whoogleLokiRedirectsChecks: [...redirects.whoogle.loki],
           whoogleLokiCustomRedirects: [],
-
 
           searxNormalRedirectsChecks: searxNormalRedirectsChecks,
           searxNormalCustomRedirects: [],
@@ -625,8 +625,8 @@ function initDefaults() {
           searxI2pRedirectsChecks: [...redirects.searx.i2p],
           searxI2pCustomRedirects: [],
 
+          searxLokiRedirectsChecks: [...redirects.searx.loki],
           searxLokiCustomRedirects: [],
-
 
           searxngNormalRedirectsChecks: searxngNormalRedirectsChecks,
           searxngNormalCustomRedirects: [],
@@ -637,8 +637,8 @@ function initDefaults() {
           searxngI2pRedirectsChecks: [...redirects.searxng.i2p],
           searxngI2pCustomRedirects: [],
 
+          searxngLokiRedirectsChecks: [...redirects.searxng.loki],
           searxngLokiCustomRedirects: [],
-
 
           librexNormalRedirectsChecks: librexNormalRedirectsChecks,
           librexNormalCustomRedirects: [],
@@ -649,6 +649,7 @@ function initDefaults() {
           librexI2pRedirectsChecks: [...redirects.librex.i2p],
           librexI2pCustomRedirects: [],
 
+          librexLokiRedirectsChecks: [...redirects.librex.loki],
           librexLokiCustomRedirects: []
         }, () => resolve())
       })

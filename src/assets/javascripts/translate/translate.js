@@ -340,18 +340,26 @@ function initDefaults() {
 
             simplyTranslateNormalRedirectsChecks: [...redirects.simplyTranslate.normal],
             simplyTranslateNormalCustomRedirects: [],
+            
             simplyTranslateTorRedirectsChecks: [...redirects.simplyTranslate.tor],
             simplyTranslateTorCustomRedirects: [],
+            
             simplyTranslateI2pRedirectsChecks: [...redirects.simplyTranslate.i2p],
             simplyTranslateI2pCustomRedirects: [],
+            
             simplyTranslateLokiRedirectsChecks: [...redirects.simplyTranslate.loki],
             simplyTranslateLokiCustomRedirects: [],
 
             lingvaNormalRedirectsChecks: lingvaNormalRedirectsChecks,
             lingvaNormalCustomRedirects: [],
+
             lingvaTorRedirectsChecks: [...redirects.lingva.tor],
             lingvaTorCustomRedirects: [],
+
+            lingvaI2pRedirectsChecks: [...redirects.lingva.i2p],
             lingvaI2pCustomRedirects: [],
+
+            lingvaLokiRedirectsChecks: [...redirects.lingva.loki],
             lingvaLokiCustomRedirects: []
           }, () => resolve())
         })

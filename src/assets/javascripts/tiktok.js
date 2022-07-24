@@ -219,8 +219,10 @@ function initDefaults() {
                 proxiTokTorRedirectsChecks: [...redirects.proxiTok.tor],
                 proxiTokTorCustomRedirects: [],
 
+                proxiTokI2pRedirectsChecks: [...redirects.proxiTok.i2p],
                 proxiTokI2pCustomRedirects: [],
 
+                proxiTokLokiRedirectsChecks: [...redirects.proxiTok.loki],
                 proxiTokLokiCustomRedirects: []
             }, () => resolve());
         });

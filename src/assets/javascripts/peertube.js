@@ -11,7 +11,9 @@ let redirects = {
             "https://st.phreedom.club",
             "https://simpleertube.esmailelbob.xyz",
         ],
-        "tor": []
+        "tor": [],
+        "i2p": [],
+        "loki": []
     }
 }
 function setRedirects(val) {
@@ -159,8 +161,10 @@ function initDefaults() {
                     simpleertubeTorRedirectsChecks: [...redirects.simpleertube.tor],
                     simpleertubeTorCustomRedirects: [],
 
+                    simpleertubeI2pRedirectsChecks: [...redirects.simpleertube.i2p],
                     simpleertubeI2pCustomRedirects: [],
 
+                    simpleertubeLokiRedirectsChecks: [...redirects.simpleertube.loki],
                     simpleertubeLokiCustomRedirects: []
                 }, () => resolve());
             })
