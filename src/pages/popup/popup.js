@@ -243,7 +243,6 @@ browser.storage.local.get(
         allSites.getElementsByClassName('youtubeMusic')[0].classList.add("hide");
       } else {
         currentSiteIsFrontend.classList.add("hide")
-        console.log("This page is not an instance")
       }
     })
   }
