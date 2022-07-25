@@ -8,6 +8,7 @@
       "https://inv.riverside.rocks",
       "https://invidious.osi.kr",
       "https://y.com.sb",
+      "https://yt.artemislena.eu",
       "https://invidious.flokinet.to",
       "https://invidious.sethforprivacy.com",
       "https://invidious.tiekoetter.com",
@@ -15,12 +16,12 @@
       "https://invidious.projectsegfau.lt",
       "https://inv.vern.cc",
       "https://invidious.nerdvpn.de",
+      "https://inv.privacy.com.de",
       "https://invidious.slipfox.xyz",
+      "https://invidious.weblibre.org",
       "https://youtube.076.ne.jp",
       "https://invidious.esmailelbob.xyz",
-      "https://invidious.weblibre.org",
-      "https://invidious.namazso.eu",
-      "https://yt.artemislena.eu"
+      "https://invidious.namazso.eu"
     ],
     "tor": [
       "http://c7hqkpkpemu6e7emz5b4vyz7idjgdvgaaa3dyimmeojqbgpea3xqjoid.onion",
@@ -394,7 +395,8 @@
       "https://wuetre.herokuapp.com",
       "https://quetreus.herokuapp.com",
       "https://quetre.tokhmi.xyz",
-      "https://quetre.projectsegfau.lt"
+      "https://quetre.projectsegfau.lt",
+      "https://quetre.esmailelbob.xyz"
     ],
     "tor": [],
     "i2p": [],
@@ -405,7 +407,8 @@
       "https://libremdb.herokuapp.com",
       "https://libremdb.pussthecat.org",
       "https://libremdbeu.herokuapp.com",
-      "https://lmdb.tokhmi.xyz"
+      "https://lmdb.tokhmi.xyz",
+      "https://libremdb.esmailelbob.xyz"
     ],
     "tor": [],
     "i2p": [],
@@ -460,7 +463,6 @@
       "https://anon.sx",
       "https://dynabyte.ca",
       "https://jsearch.pw",
-      "https://private-searx.ml",
       "https://search.ethibox.fr",
       "https://search.snopyta.org",
       "https://search.stinpriza.org",
@@ -476,6 +478,7 @@
       "https://searx.netzspielplatz.de",
       "https://searx.nixnet.services",
       "https://searx.org",
+      "https://searx.priv.pw",
       "https://searx.pwoss.org",
       "https://searx.rasp.fr",
       "https://searx.ru",
@@ -500,13 +503,10 @@
     ],
     "tor": [
       "http://3afisqjw2rxm6z7mmstyt5rx75qfqrgxnkzftknbp2vhipr2nrmrjdyd.onion",
-      "http://x5gdjh6t7kb4yubpufhtc3l3df2acev3emxdasd5vyuyoon5rzf5zkyd.onion",
-      "http://search3q76rqpektbrchlf2rjq4fnbxzeov6rljdywg3nwbunpgd7bid.onion",
       "http://yra4tke2pwcnatxjkufpw6kvebu3h3ti2jca2lcdpgx3mpwol326lzid.onion",
       "http://z5vawdol25vrmorm4yydmohsd4u6rdoj2sylvoi3e3nqvxkvpqul7bqd.onion",
       "http://zbuc3bbzbfdqqo2x46repx2ddajbha6fpsjeeptjhhhhzji3zopxdqyd.onion",
-      "http://f4qfqajszpx5b7itzxt6mb7kj4ktpgbdq7lq6xaiqyqx6a7de3epptad.onion",
-      "http://rq2w52kyrif3xpfihkgjnhqm3a5aqhoikpv72z3drpjglfzc2wr5z4yd.onion"
+      "http://f4qfqajszpx5b7itzxt6mb7kj4ktpgbdq7lq6xaiqyqx6a7de3epptad.onion"
     ],
     "i2p": [
       "http://ransack.i2p",
@@ -528,6 +528,7 @@
       "https://privatus.live",
       "https://s.frlt.one",
       "https://s.zhaocloud.net",
+      "https://saber.tk",
       "https://search.affusio.com",
       "https://search.ashs.club",
       "https://search.bingowaves.xyz",
@@ -556,12 +557,10 @@
       "https://searx.fi",
       "https://searx.fmac.xyz",
       "https://searx.gnous.eu",
-      "https://searx.loafland.xyz",
       "https://searx.mha.fi",
       "https://searx.mistli.net",
       "https://searx.namejeff.xyz",
       "https://searx.orion-hub.fr",
-      "https://searx.priv.pw",
       "https://searx.prvcy.eu",
       "https://searx.rimkus.it",
       "https://searx.sethforprivacy.com",
@@ -584,11 +583,13 @@
     "tor": [
       "http://w5rl6wsd7mzj4bdkbuqvzidet5osdsm5jhg2f7nvfidakfq5exda5wid.onion",
       "http://4n53nafyi77iplnbrpmxnp3x4exbswwxigujaxy3b37fvr7bvlopxeyd.onion",
+      "http://search3q76rqpektbrchlf2rjq4fnbxzeov6rljdywg3nwbunpgd7bid.onion",
       "http://searchoorwalty5a2ailrboa2asqyts2u7bdoqwnjefpgjobpvtzn4qd.onion",
       "http://gbat2pbpg7ys3fi3pbp64667tt5x66mg45xok35bxdw7v55brm7a27yd.onion",
       "http://searxdr3pqz4nydgnqocsia2xbywptxbkympa2emn7zlgggrir4bkfad.onion",
       "http://searx.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion",
       "http://searx.privpw3tndpkw6pnp3g727zfgfdzbu3k6a7chv226s3xymv2p4eiuqyd.onion",
+      "http://rq2w52kyrif3xpfihkgjnhqm3a5aqhoikpv72z3drpjglfzc2wr5z4yd.onion",
       "http://fub6vgedgeadlu3ctskrpkcqjruh76tckwtj5swfhyblgml2tzgzckqd.onion/searx",
       "http://searx3aolosaf3urwnhpynlhuokqsgz47si4pzz5hvb7uuzyjncl2tid.onion",
       "http://4tz2vlnwk2apf2rpinkqv6uxvfgo5xjx6vl5vp7lxgaiooumetjpstqd.onion"
@@ -671,6 +672,7 @@
     "loki": []
   },
   "peertube": [
+    "https://soberania.tv",
     "https://pire.artisanlogiciel.net",
     "https://trutube.xyz",
     "https://tube-test.apps.education.fr",
@@ -1025,7 +1027,6 @@
     "https://peertube.marud.fr",
     "https://freetubehub.live",
     "https://peertube.librelabucm.org",
-    "https://tube4.apolut.net",
     "https://mtube.mooo.com",
     "https://skeptube.fr",
     "https://tube.villejuif.fr",
@@ -1042,7 +1043,6 @@
     "https://open.movie",
     "https://tube.rfc1149.net",
     "https://tube.radiomercure.fr",
-    "https://medias.debrouillonet.org",
     "https://peertube.1984.cz",
     "https://tube.sp4ke.com",
     "https://pt.nix.uno",
@@ -1074,7 +1074,6 @@
     "https://dud-video.inf.tu-dresden.de",
     "https://media-test.interior.edu.uy",
     "https://media.interior.edu.uy",
-    "https://peertube.la-scic.fr",
     "https://phoenixproject.group",
     "https://peertube.sebu77.com",
     "https://www.orion-hub.fr",
@@ -1132,7 +1131,6 @@
     "https://tube.geekyboo.net",
     "https://notretube.asselma.eu",
     "https://canal.facil.services",
-    "https://ukva.li",
     "https://pt.gordons.gen.nz",
     "https://tube.misterbanal.net",
     "https://peertube.fomin.site",
@@ -1228,7 +1226,6 @@
     "https://kino.kompot.si",
     "https://tube.kockatoo.org",
     "https://peertube.cabaal.net",
-    "https://sovran.video",
     "https://stream.k-prod.fr",
     "https://tube.tylerdavis.xyz",
     "https://video.marcorennmaus.de",
@@ -1443,7 +1440,6 @@
     "https://peertube.tspu.edu.ru",
     "https://p.lu",
     "https://serv3.wiki-tube.de",
-    "https://serv1.wiki-tube.de",
     "https://video.lavolte.net",
     "https://peertube.public.cat",
     "https://peertube.anduin.net",
@@ -1511,7 +1507,6 @@
     "https://video.pony.gallery",
     "https://tube.skrep.in",
     "https://tube.others.social",
-    "https://videos.ubuntu-paris.org",
     "https://tube-poitiers.beta.education.fr",
     "https://vid.wildeboer.net",
     "https://battlepenguin.video",
@@ -1715,6 +1710,12 @@
     "https://peertube.qtg.fr",
     "https://tube.p2p.legal",
     "https://troll.tv",
-    "https://videos.iut-orsay.fr"
+    "https://videos.iut-orsay.fr",
+    "https://peertube.solidev.net",
+    "https://videos.cemea.org",
+    "https://video.passageenseine.fr",
+    "https://peertube.touhoppai.moe",
+    "https://share.tube",
+    "https://peertube.heraut.eu"
   ]
 }
