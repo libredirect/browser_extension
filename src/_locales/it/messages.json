@@ -211,5 +211,8 @@
     "frontend": {
         "message": "Frontend",
         "description": "used in the settings page"
+    },
+    "loki": {
+        "message": "Lokinet"
     }
 }
