@@ -8,10 +8,10 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 
 [![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)&nbsp;
 <a href="https://microsoftedge.microsoft.com/addons/detail/libredirect/aodffkeankebfonljgbcfbbaljopcpdb">
-  <img src="./img/badge-ms.png" height=60>
+<img src="./img/badge-ms.png" height=60>
 </a>&nbsp;
 <a href="./chromium.md">
-  <img src ="./img/badge-chromium.png" height=60 >
+<img src ="./img/badge-chromium.png" height=60 >
 </a>
 
 <img src ="./img/1.png" width=350>&nbsp;
@@ -42,6 +42,7 @@ Send Files => [Send](https://gitlab.com/timvisee/send)
 [FAQ](https://libredirect.github.io/faq.html)
 
 ## Donate
+
 [![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)&nbsp;
 [![Patreon](./img/patreon.svg)](https://patreon.com/LibRedirect)&nbsp;
 [![Buy me a coffee](./img/bmc.svg)](https://www.buymeacoffee.com/libredirect)
@@ -52,47 +53,59 @@ ETH: 0x896E5796Da76E49A400A9186E1c459CD2C64b4E8\
 XMR: 4AM5CVfaGsnEXQQjZSzJvaWufe7pT86ubcZPr83fCjb2Hn3iwcForTWFy2Z3ugXcufUwHaGcucfPMFgPXBFSYGFvNrmV5XR
 
 ## Mirror Repos
+
 [![GitHub](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/github.svg)](https://github.com/libredirect/libredirect/)&nbsp;&nbsp;
 [![Codeberg](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/codeberg.svg)](https://codeberg.org/LibRedirect/libredirect)&nbsp;&nbsp;
 
 ## Translate
+
 [![Weblate](./img/weblate.svg)](https://hosted.weblate.org/projects/libredirect/extension)
 
 ## Development
+
 ### Install Dependencies
+
 [Node.js](https://nodejs.org/) latest LTS is recommended
+
 ```
 npm update
 npm install
 ```
 
 If you are modifying any files ending with .pug, the pug cli needs to be installed with the following command (with root privileges):
+
 ```
 npm install -g pug-cli
 ```
-and then run `./script.sh` to generate pages in the background.
+
+and then run `npm run pug` to generate pages in the background.
 
 ### Build
+
 ```
 npm run build
 ```
 
 ### Test
+
 ```
 npm run test
 ```
 
 ### Test in Firefox
+
 ```
 npm run start
 ```
 
 ### Install temporarily
+
 open `about:addons`\
 click on the settings button below the addon search bar and select `debug add-on`\
 press `load temporarily addon`
 
 ### Install in Firefox ESR, Developer Edition, Nightly
+
 open `about:config`\
 set `xpinstall.signatures.required` to `false`\
 open `about:addons`\
@@ -100,6 +113,7 @@ click on the gear shaped `settings` button and select `Install Add-on From File.
 select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
 
 ### Install in Chromium browsers
+
 open `chrome://extensions`\
 enable `dev mode`\
 select `load unpacked extension`\

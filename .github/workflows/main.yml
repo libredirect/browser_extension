@@ -2,21 +2,21 @@ name: instances-updater
 
 on:
   schedule:
-    - cron: '10 22 */3 * *'
-  
+    - cron: "10 22 */3 * *"
+
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: get repo content
         uses: actions/checkout@v2
 
       - name: setup python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.8' # install the python version needed
+          python-version: "3.8" # install the python version needed
 
       - name: install python packages
         run: |
@@ -24,7 +24,7 @@ jobs:
           pip install requests bs4 colorama
       - name: run script
         run: python src/instances/get_instances.py
-      
+
       - name: commit files
         run: |
           git config --local user.email "action@github.com"

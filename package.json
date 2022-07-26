@@ -1,29 +1,33 @@
 {
-  "name": "libredirect",
-  "description": "Redirects YouTube, Twitter, Instagram and more to privacy friendly frontends.",
-  "engines": {
-    "node": ">=16.13.1",
-    "npm": ">=8.1.2"
-  },
-  "scripts": {
-    "start": "web-ext run --browser-console --source-dir ./src/",
-    "build": "web-ext build --overwrite-dest --source-dir ./src/",
-    "test": "web-ext lint --source-dir ./src/ || true"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LibRedirect/LibRedirect.git"
-  },
-  "author": "LibRedirect",
-  "license": "GPL-3.0-only",
-  "bugs": {
-    "url": "https://github.com/LibRedirect/LibRedirect/issues"
-  },
-  "homepage": "https://github.com/LibRedirect/LibRedirect",
-  "devDependencies": {
-    "web-ext": "^6.7.0"
-  },
-  "dependencies": {
-    "buffer": "^6.0.3"
-  }
+	"name": "libredirect",
+	"description": "Redirects YouTube, Twitter, Instagram and more to privacy friendly frontends.",
+	"engines": {
+		"node": ">=16.13.1",
+		"npm": ">=8.1.2"
+	},
+	"scripts": {
+		"start": "web-ext run --browser-console --source-dir ./src/",
+		"build": "web-ext build --overwrite-dest --source-dir ./src/",
+		"test": "web-ext lint --source-dir ./src/ || true",
+		"pug": "pug ./src/pages/options/*.pug ./src/pages/popup/ -P -w",
+		"prettier": "npx prettier --write .",
+		"instances": "python3 src/instances/get_instances.py; git update-index --assume-unchanged src/instances/blacklist.json src/instances/data.json"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/LibRedirect/LibRedirect.git"
+	},
+	"author": "LibRedirect",
+	"license": "GPL-3.0-only",
+	"bugs": {
+		"url": "https://github.com/LibRedirect/LibRedirect/issues"
+	},
+	"homepage": "https://github.com/LibRedirect/LibRedirect",
+	"devDependencies": {
+		"prettier": "2.7.1",
+		"web-ext": "^6.7.0"
+	},
+	"dependencies": {
+		"buffer": "^6.0.3"
+	}
 }

@@ -1,23 +1,24 @@
 body {
-    width: 230px;
-    min-height: auto;
+	width: 230px;
+	min-height: auto;
 }
 
-html, body {
-    margin: 0;
+html,
+body {
+	margin: 0;
 }
 
 .hide {
-    display: none !important;
+	display: none !important;
 }
 
 .button {
-    display: flex;
-    margin: 0 auto;
-    justify-content: space-between;
-    width: 100%;
+	display: flex;
+	margin: 0 auto;
+	justify-content: space-between;
+	width: 100%;
 }
 
 .space {
-    height: 10px;
+	height: 10px;
 }

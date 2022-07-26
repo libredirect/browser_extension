@@ -1,81 +1,72 @@
 {
-  "name": "__MSG_extensionName__",
-  "description": "__MSG_extensionDescription__",
-  "version": "2.2.1",
-  "manifest_version": 2,
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "7esoorv3@alefvanoon.anonaddy.me",
-      "strict_min_version": "67.0"
-    }
-  },
-  "background": {
-    "page": "pages/background/background.html",
-    "persistent": true
-  },
-  "icons": {
-    "16": "assets/images/libredirect-16.png",
-    "32": "assets/images/libredirect-32.png",
-    "48": "assets/images/libredirect-48.png",
-    "128": "assets/images/libredirect-128.png"
-  },
-  "permissions": [
-    "webRequest",
-    "webRequestBlocking",
-    "storage",
-    "unlimitedStorage",
-    "cookies",
-    "clipboardWrite",
-    "contextMenus",
-    "<all_urls>"
-  ],
-  "browser_action": {
-    "default_title": "__MSG_extensionName__",
-    "browser_style": false,
-    "default_popup": "pages/popup/popup.html",
-    "default_icon": {
-      "16": "assets/images/libredirect-16.png",
-      "32": "assets/images/libredirect-32.png",
-      "48": "assets/images/libredirect-48.png",
-      "128": "assets/images/libredirect-128.png"
-    }
-  },
-  "options_ui": {
-    "page": "pages/options/index.html",
-    "browser_style": false,
-    "open_in_tab": true
-  },
-  "chrome_settings_overrides": {
-    "search_provider": {
-      "name": "__MSG_extensionName__",
-      "keyword": "libredirect",
-      "favicon_url": "https://raw.githubusercontent.com/libredirect/libredirect/master/src/assets/images/libredirect-16.png",
-      "search_url": "https://search.libredirect.invalid/?q={searchTerms}",
-      "encoding": "UTF-8",
-      "is_default": false
-    }
-  },
-  "commands": {
-    "switchInstance": {
-      "suggested_key": {
-        "default": "Alt+Shift+L"
-      },
-      "description": "__MSG_switchInstance__"
-    },
-    "copyRaw": {
-      "suggested_key": {
-        "default": "Alt+Shift+C"
-      },
-      "description": "Copies the original link. Ex: Copies the original twitter link while in the nitter website"
-    },
-    "unify": {
-      "suggested_key": {
-        "default": "Alt+Shift+U"
-      },
-      "description": "Copies the preferences (cookies, localStorage) from the current opened instance and copy them to all the other selected instances"
-    }
-  },
-  "default_locale": "en",
-  "update_url": "https://raw.githubusercontent.com/libredirect/libredirect/master/src/updates/updates.xml",
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAroWDSoSRZ1scj+eJRrvnhJbrqXTKnhQuxs6+AJg16sqr0bsMdFV+MSY4i4xnK+K5WOYkBliWXgUyk/wzicoAjOnSJddrL/Md4FuWHI2NVIkrlsLOrYkygi5OLqGPajRH/w8Cdmg7KzEpXe/OnYV0/qS8li8huEdTzdeLdhfbiVl1j3DOr4OJALQ7mPeeNFHFo/oVQ+OkSezWLezA5jUGfhtzPYV6u1TXzX7lCi8E/BbDbwkvvXOMcjXCv08kjdLOY2djCA2a6zr0xAb3q8DlexAMZ8vMof7AQRFtBKhLc9n9VFoipMMdBOVQQj/eIcRILBrmkcZNnJxFKiHNJ+NcZQIDAQAB"
+	"name": "__MSG_extensionName__",
+	"description": "__MSG_extensionDescription__",
+	"version": "2.2.1",
+	"manifest_version": 2,
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "7esoorv3@alefvanoon.anonaddy.me",
+			"strict_min_version": "67.0"
+		}
+	},
+	"background": {
+		"page": "pages/background/background.html",
+		"persistent": true
+	},
+	"icons": {
+		"16": "assets/images/libredirect-16.png",
+		"32": "assets/images/libredirect-32.png",
+		"48": "assets/images/libredirect-48.png",
+		"128": "assets/images/libredirect-128.png"
+	},
+	"permissions": ["webRequest", "webRequestBlocking", "storage", "unlimitedStorage", "cookies", "clipboardWrite", "contextMenus", "<all_urls>"],
+	"browser_action": {
+		"default_title": "__MSG_extensionName__",
+		"browser_style": false,
+		"default_popup": "pages/popup/popup.html",
+		"default_icon": {
+			"16": "assets/images/libredirect-16.png",
+			"32": "assets/images/libredirect-32.png",
+			"48": "assets/images/libredirect-48.png",
+			"128": "assets/images/libredirect-128.png"
+		}
+	},
+	"options_ui": {
+		"page": "pages/options/index.html",
+		"browser_style": false,
+		"open_in_tab": true
+	},
+	"chrome_settings_overrides": {
+		"search_provider": {
+			"name": "__MSG_extensionName__",
+			"keyword": "libredirect",
+			"favicon_url": "https://raw.githubusercontent.com/libredirect/libredirect/master/src/assets/images/libredirect-16.png",
+			"search_url": "https://search.libredirect.invalid/?q={searchTerms}",
+			"encoding": "UTF-8",
+			"is_default": false
+		}
+	},
+	"commands": {
+		"switchInstance": {
+			"suggested_key": {
+				"default": "Alt+Shift+L"
+			},
+			"description": "__MSG_switchInstance__"
+		},
+		"copyRaw": {
+			"suggested_key": {
+				"default": "Alt+Shift+C"
+			},
+			"description": "Copies the original link. Ex: Copies the original twitter link while in the nitter website"
+		},
+		"unify": {
+			"suggested_key": {
+				"default": "Alt+Shift+U"
+			},
+			"description": "Copies the preferences (cookies, localStorage) from the current opened instance and copy them to all the other selected instances"
+		}
+	},
+	"default_locale": "en",
+	"update_url": "https://raw.githubusercontent.com/libredirect/libredirect/master/src/updates/updates.xml",
+	"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAroWDSoSRZ1scj+eJRrvnhJbrqXTKnhQuxs6+AJg16sqr0bsMdFV+MSY4i4xnK+K5WOYkBliWXgUyk/wzicoAjOnSJddrL/Md4FuWHI2NVIkrlsLOrYkygi5OLqGPajRH/w8Cdmg7KzEpXe/OnYV0/qS8li8huEdTzdeLdhfbiVl1j3DOr4OJALQ7mPeeNFHFo/oVQ+OkSezWLezA5jUGfhtzPYV6u1TXzX7lCi8E/BbDbwkvvXOMcjXCv08kjdLOY2djCA2a6zr0xAb3q8DlexAMZ8vMof7AQRFtBKhLc9n9VFoipMMdBOVQQj/eIcRILBrmkcZNnJxFKiHNJ+NcZQIDAQAB"
 }

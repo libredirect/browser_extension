@@ -12,6 +12,12 @@ import subprocess
 
 mightyList = {}
 
+startRegex = "https?:\/{2}(?:[^\s\/]+\.)+"
+endRegex = "(?:\/[^\s\/]+)*\/?"
+torRegex = startRegex + "onion" + endRegex
+i2pRegex = startRegex + "i2p" + endRegex
+lokiRegex = startRegex + "loki" + endRegex
+authRegex = "https?:\/{2}\S+:\S+@(?:[^\s\/]+\.)+[a-zA-Z0-9]+" + endRegex
 
 def filterLastSlash(urlList):
     tmp = {}
@@ -65,16 +71,19 @@ def is_cloudflare(url):
         instance_bin_masked = instance_bin[:mask]
 
         if cloudflare_bin_masked == instance_bin_masked:
-            print(url + ' is ' + Fore.RED + 'cloudflare' + Style.RESET_ALL)
+            print(url + ' is behind ' + Fore.RED + 'cloudflare' + Style.RESET_ALL)
             return True
     return False
 
 
 def is_authenticate(url):
     try:
+        if re.match(authRegex, url):
+            print(url + ' requires ' + Fore.RED + 'authentication' + Style.RESET_ALL)
+            return True
         r = requests.get(url, timeout=5)
         if 'www-authenticate' in r.headers:
-            print(url + ' is ' + Fore.RED + 'authenticate' + Style.RESET_ALL)
+            print(url + ' requires ' + Fore.RED + 'authentication' + Style.RESET_ALL)
             return True
     except:
         return False
@@ -99,9 +108,26 @@ def invidious():
 
 
 def piped():
-    json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
-    with open('./src/instances/piped.json') as file:
-        mightyList['piped'] = json.load(file)
+    r = requests.get(
+        'https://raw.githubusercontent.com/wiki/TeamPiped/Piped/Instances.md')
+
+    tmp = re.findall(
+        '(?:[^\s\/]+\.)+[a-zA-Z]+ (?:\(Official\) )?\| (https:\/{2}(?:[^\s\/]+\.)+[a-zA-Z]+) \| ', r.text)
+    _list = {}
+    _list['normal'] = []
+    _list['tor'] = []
+    _list['i2p'] = []
+    _list['loki'] = []
+    for item in tmp:
+        try:
+            url = requests.get(item, timeout=5).url
+            if url.strip("/") == item:
+                continue
+            else:
+                _list['normal'].append(url)
+        except:
+            continue
+    mightyList['piped'] = _list
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Piped')
 
 
@@ -110,7 +136,7 @@ def pipedMaterial():
         'https://raw.githubusercontent.com/mmjee/Piped-Material/master/README.md')
 
     tmp = re.findall(
-            r"\| (https?:\/{2}(?:.+\.)+[a-zA-Z0-9]*) +\|", r.text)
+            r"\| (https?:\/{2}(?:\S+\.)+[a-zA-Z0-9]*) +\|", r.text)
     pipedMaterialList = {}
     pipedMaterialList['normal'] = []
     pipedMaterialList['tor'] = []
@@ -120,6 +146,13 @@ def pipedMaterial():
         pipedMaterialList['normal'].append(item)
     mightyList['pipedMaterial'] = pipedMaterialList
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'pipedMaterial')
+
+
+def cloudtube():
+    json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
+    with open('./src/instances/cloudtube.json') as file:
+        mightyList['cloudtube'] = json.load(file)
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'CloudTube')
 
 
 def proxitok():
@@ -156,30 +189,29 @@ def send():
 
 
 def nitter():
-    r = requests.get('https://github.com/zedeus/nitter/wiki/Instances')
-    soup = BeautifulSoup(r.text, 'html.parser')
-    markdownBody = soup.find(class_='markdown-body')
-    tables = markdownBody.find_all('table')
-    tables.pop(3)
-    tables.pop(3)
+    r = requests.get('https://raw.githubusercontent.com/wiki/zedeus/nitter/Instances.md')
+    tmp = re.findall(
+        r"(?:(?:\| \[(?:\S+\.)+[a-zA-Z]+\]\((https?:\/{2}(?:\S+\.)+[a-zA-Z]+)\/?\) (?:\((?:\S+ ?\S*)\) )? *\| (?:✅|🇩🇪) +\|(?:(?:\n)|(?: (?:❌)|(?: ✅)|(?: ❓)|(?: \[))))|(?:-   \[(?:\S+\.)+(?:(?:i2p)|(?:loki))\]\((https?:\/{2}(?:\S+\.)(?:(?:i2p)|(?:loki)))\/?\)))", r.text)
+
     nitterList = {}
     nitterList['normal'] = []
     nitterList['tor'] = []
     nitterList['i2p'] = []
     nitterList['loki'] = []
-    for table in tables:
-        tbody = table.find('tbody')
-        trs = tbody.find_all('tr')
-        for tr in trs:
-            td = tr.find('td')
-            a = td.find('a')
-            url = a.contents[0]
-            if url.endswith('.onion'):
-                url = 'http://' + url
-                nitterList['tor'].append(url)
+    for item in tmp:
+        for i in item:
+            if i == '':
+                continue
             else:
-                url = 'https://' + url
-                nitterList['normal'].append(url)
+                item = i
+        if re.search(torRegex, item):
+            nitterList['tor'].append(item)
+        elif re.search(i2pRegex, item):
+            nitterList['i2p'].append(item)
+        elif re.search(lokiRegex, item):
+            nitterList['loki'].append(item)
+        else:
+            nitterList['normal'].append(item)
     mightyList['nitter'] = nitterList
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Nitter')
 
@@ -211,7 +243,7 @@ def libreddit():
         r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|", r.text)
 
     for item in tmp:
-        if re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item):
+        if re.search(torRegex, item):
             libredditList['tor'].append(item)
         else:
             libredditList['normal'].append(item)
@@ -292,7 +324,7 @@ def quetre():
 
 
     for item in tmp:
-        if re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item):
+        if re.search(torRegex, item):
             _list['tor'].append(item)
         else:
             _list['normal'].append(item)
@@ -316,13 +348,26 @@ def libremdb():
     for item in tmp:
         if item.strip() == "":
             continue
-        if re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item):
+        if re.search(torRegex, item):
             _list['tor'].append(item)
         else:
             _list['normal'].append(item)
 
     mightyList['libremdb'] = _list
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Libremdb')
+
+def simpleertube():
+    r = requests.get('https://simple-web.org/instances/simpleertube')
+    _list = {}
+    _list['normal'] = []
+    _list['tor'] = []
+    _list['i2p'] = []
+    _list['loki'] = []
+    for item in r.text.strip().split('\n'):
+        _list['normal'].append('https://' + item)
+
+    mightyList['simpleertube'] = _list
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'SimpleerTube')
 
 
 def simplytranslate():
@@ -381,12 +426,12 @@ def searx_searxng():
     searxngList['i2p'] = []
     searxngList['loki'] = []
     for item in rJson['instances']:
-        if re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item[:-1]):
+        if re.search(torRegex, item[:-1]):
             if (rJson['instances'][item].get('generator') == 'searxng'):
                 searxngList['tor'].append(item[:-1])
             else:
                 searxList['tor'].append(item[:-1])
-        elif re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+i2p(?:\/[a-zA-Z0-9]+)*\/?", item[:-1]):
+        elif re.search(torRegex, item[:-1]):
             if (rJson['instances'][item].get('generator') == 'searxng'):
                 searxngList['i2p'].append(item[:-1])
             else:
@@ -412,9 +457,9 @@ def whoogle():
     whoogleList['i2p'] = []
     whoogleList['loki'] = []
     for item in tmpList:
-        if re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item):
+        if re.search(torRegex, item):
             whoogleList['tor'].append(item)
-        elif re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+i2p(?:\/[a-zA-Z0-9]+)*\/?", item):
+        elif re.search(torRegex, item):
             whoogleList['i2p'].append(item)
         else:
             whoogleList['normal'].append(item)
@@ -437,9 +482,9 @@ def librex():
     for item in tmp:
         if item.strip() == "":
             continue
-        elif re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", item):
+        elif re.search(torRegex, item):
             _list['tor'].append(item)
-        elif re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+i2p(?:\/[a-zA-Z0-9]+)*\/?", item):
+        elif re.search(i2pRegex, item):
             _list['i2p'].append(item)
         else:
             _list['normal'].append(item)
@@ -481,14 +526,62 @@ def librarian():
         url = item['url']
         if url.strip() == "":
             continue
-        elif re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+onion(?:\/[a-zA-Z0-9]+)*\/?", url):
+        elif re.search(torRegex, url):
             librarianList['tor'].append(url)
-        elif re.search("https?:\/{2}(?:[a-zA-Z0-9]+\.)+i2p(?:\/[a-zA-Z0-9]+)*\/?", url):
+        elif re.search(i2pRegex, url):
             librarianList['i2p'].append(url)
+        elif re.search(lokiRegex, url):
+            librarianList['loki'].append(url)
         else:
             librarianList['normal'].append(url)
     mightyList['librarian'] = librarianList
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Librarian')
+
+
+def neuters():
+    json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
+    with open('./src/instances/neuters.json') as file:
+        mightyList['neuters'] = json.load(file)
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Neuters')
+
+
+def beatbump():
+    json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
+    with open('./src/instances/beatbump.json') as file:
+        mightyList['beatbump'] = json.load(file)
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Beatbump')
+
+
+def hyperpipe():
+    r = requests.get(
+        'https://codeberg.org/Hyperpipe/pages/raw/branch/main/api/frontend.json')
+    rJson = json.loads(r.text)
+    hyperpipeList = {}
+    hyperpipeList['normal'] = []
+    hyperpipeList['tor'] = []
+    hyperpipeList['i2p'] = []
+    hyperpipeList['loki'] = []
+    for item in rJson:
+        url = item['url']
+        if url.strip() == "":
+            continue
+        elif re.search(torRegex, url):
+            hyperpipeList['tor'].append(url)
+        elif re.search(i2pRegex, url):
+            hyperpipeList['i2p'].append(url)
+        elif re.search(lokiRegex, url):
+            hyperpipeList['loki'].append(url)
+        else:
+            hyperpipeList['normal'].append(url)
+    mightyList['hyperpipe'] = hyperpipeList
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Hyperpipe')
+
+
+def facil():
+    json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
+    with open('./src/instances/facil.json') as file:
+        mightyList['facil'] = json.load(file)
+    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'FacilMap')
 
 
 def peertube():
@@ -515,6 +608,7 @@ def isValid(url):  # This code is contributed by avanitrachhadiya2155
 invidious()
 piped()
 pipedMaterial()
+cloudtube()
 proxitok()
 send()
 nitter()
@@ -532,6 +626,11 @@ whoogle()
 librex()
 rimgo()
 librarian()
+neuters()
+beatbump()
+hyperpipe()
+facil()
+simpleertube()
 mightyList = filterLastSlash(mightyList)
 
 cloudflare = []

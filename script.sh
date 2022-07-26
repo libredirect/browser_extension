@@ -1,1 +1,0 @@
-pug ./src/pages/options/*.pug ./src/pages/popup/ -P -w

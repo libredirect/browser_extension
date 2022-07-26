@@ -1,0 +1,23 @@
+{
+	"semi": false,
+	"tabWidth": 2,
+	"useTabs": true,
+	"arrowParens": "avoid",
+	"printWidth": 200,
+	"overrides": [
+		{
+			"files": ["*.js", "*.json"],
+			"options": {
+				"tabWidth": 2,
+				"singleQuote": false
+			}
+		},
+		{
+			"files": ["*.html", "*.py"],
+			"options": {
+				"tabWidth": 4,
+				"singleQuote": true
+			}
+		}
+	]
+}
