@@ -191,7 +191,7 @@ def send():
 def nitter():
     r = requests.get('https://raw.githubusercontent.com/wiki/zedeus/nitter/Instances.md')
     tmp = re.findall(
-        r"(?:(?:\| \[(?:\S+\.)+[a-zA-Z]+\]\((https?:\/{2}(?:\S+\.)+[a-zA-Z]+)\/?\) (?:\((?:\S+ ?\S*)\) )? *\| (?:✅|🇩🇪) +\|(?:(?:\n)|(?: (?:❌)|(?: ✅)|(?: ❓)|(?: \[))))|(?:-   \[(?:\S+\.)+(?:(?:i2p)|(?:loki))\]\((https?:\/{2}(?:\S+\.)(?:(?:i2p)|(?:loki)))\/?\)))", r.text)
+        r"(?:(?:\| \[(?:\S+\.)+[a-zA-Z]+\]\((https?:\/{2}(?:\S+\.)+[a-zA-Z]+)\/?\) (?:\((?:\S+ ?\S*)\) )? *\| [^❌]{1,3} +\|(?:(?:\n)|(?: (?:❌)|(?: ✅)|(?: ❓)|(?: \[))))|(?:-   \[(?:\S+\.)+(?:(?:i2p)|(?:loki))\]\((https?:\/{2}(?:\S+\.)(?:(?:i2p)|(?:loki)))\/?\)))", r.text)
 
     nitterList = {}
     nitterList['normal'] = []
