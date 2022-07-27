@@ -32,6 +32,7 @@ function setRedirects(val) {
 }
 
 let disableLbryTargets,
+	lbryFrontend,
 	protocol,
 	protocolFallback,
 	lbryTargetsRedirects,
@@ -48,6 +49,7 @@ function init() {
 		browser.storage.local.get(
 			[
 				"disableLbryTargets",
+				"lbryFrontend",
 				"protocol",
 				"protocolFallback",
 				"lbryTargetsRedirects",
@@ -61,6 +63,7 @@ function init() {
 			],
 			r => {
 				disableLbryTargets = r.disableLbryTargets
+				lbryFrontend = r.lbryFrontend
 				protocol = r.protocol
 				protocolFallback = r.protocolFallback
 				lbryTargetsRedirects = r.lbryTargetsRedirects
@@ -120,17 +123,34 @@ function redirect(url, type, initiator, disableOverride) {
 	if (disableLbryTargets && !disableOverride) return
 	if (initiator && (all().includes(initiator.origin) || targets.includes(initiator.host))) return
 	if (!targets.includes(url.host)) return
-	if (type != "main_frame") return
+	if (type != ("main_frame" || "sub_frame")) return
+	//https://odysee.com/$/embed/the-anti-smartphone-revolution/22b482e450c4ca13c464eee8f51b3a52bbb942ae?r=7pAWcQybShS63wz486r8wVv9FpsDJ47A
+	// to
+	//https://{instance}/embed/@Coldfusion:f/the-anti-smartphone-revolution:2
 
 	let instancesList = []
-	if (protocol == "loki") instancesList = [...librarianLokiCustomRedirects]
-	else if (protocol == "i2p") instancesList = [...librarianI2pCustomRedirects]
-	else if (protocol == "tor") instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects]
-	if ((instancesList.length === 0 && protocolFallback) || protocol == "normal") {
-		instancesList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects]
+	switch (lbryFrontend) {
+		case "librarian":
+			switch (protocol) {
+				case "loki":
+					instancesList = [...librarianLokiCustomRedirects]
+					break
+				case "i2p":
+					instancesList = [...librarianI2pRedirectsChecks, ...librarianI2pCustomRedirects]
+					break
+				case "tor":
+					instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects]
+			}
+			if ((instancesList.length === 0 && protocolFallback) || protocol == "normal") {
+				instancesList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects]
+			}
+			break
+		case "lbryDesktop":
+			if (type == "main_frame") {
+				return url.href.replace(/^https?:\/{2}odysee\.com\//, "lbry://").replace(/:(?=[a-zA-Z0-9])/g, "#")
+			}
+			if (instancesList.length === 0) return
 	}
-	if (instancesList.length === 0) return
-
 	const randomInstance = utils.getRandomInstance(instancesList)
 	return `${randomInstance}${url.pathname}${url.search}`
 }
@@ -147,6 +167,7 @@ function initDefaults() {
 				browser.storage.local.set(
 					{
 						disableLbryTargets: true,
+						lbryFrontend: "librarian",
 						lbryTargetsRedirects: redirects,
 
 						librarianNormalRedirectsChecks: [...redirects.librarian.normal],

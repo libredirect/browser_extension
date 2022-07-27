@@ -2,7 +2,7 @@ window.browser = window.browser || window.chrome
 
 import utils from "./utils.js"
 
-const targets = /^https?:\/{2}(([a-z]{1,}\.){0,})wikipedia\.org/
+const targets = /^https?:\/{2}([a-z]+\.)*wikipedia\.org/
 
 const frontends = new Array("wikiless")
 const protocols = new Array("normal", "tor", "i2p", "loki")

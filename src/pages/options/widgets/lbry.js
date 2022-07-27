@@ -1,27 +1,23 @@
 import utils from "../../../assets/javascripts/utils.js"
 
-// UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
-
 const frontends = new Array("librarian")
 const protocols = new Array("normal", "tor", "i2p", "loki")
 
 const enable = document.getElementById("lbry-enable")
 const lbry = document.getElementById("lbry_page")
-//const frontend = document.getElementById("lbry-frontend");
+const frontend = document.getElementById("lbry-frontend")
 let protocol
 
-/*
 function changeFrontendsSettings() {
-    for (let i = 0; i < frontends.length; i++) {
-        const frontendDiv = document.getElementById(frontends[i])
-        if (frontends[i] == frontend.value) {
-            frontendDiv.style.display = 'block'
-        } else {
-            frontendDiv.style.display = 'none'
-        }
-    }
+	for (let i = 0; i < frontends.length; i++) {
+		const frontendDiv = document.getElementById(frontends[i])
+		if (frontends[i] == frontend.value) {
+			frontendDiv.style.display = "block"
+		} else {
+			frontendDiv.style.display = "none"
+		}
+	}
 }
-*/
 
 function changeProtocolSettings() {
 	for (let i = 0; i < frontends.length; i++) {
@@ -37,14 +33,20 @@ function changeProtocolSettings() {
 	}
 }
 
-browser.storage.local.get(["disableLbryTargets", "protocol"], r => {
+browser.storage.local.get(["disableLbryTargets", "protocol", "lbryFrontend"], r => {
 	enable.checked = !r.disableLbryTargets
 	protocol = r.protocol
+	frontend.value = r.lbryFrontend
+	changeFrontendsSettings()
 	changeProtocolSettings()
 })
 
 lbry.addEventListener("change", () => {
-	browser.storage.local.set({ disableLbryTargets: !enable.checked })
+	browser.storage.local.set({
+		disableLbryTargets: !enable.checked,
+		lbryFrontend: frontend.value,
+	})
+	changeFrontendsSettings()
 })
 
 for (let i = 0; i < frontends.length; i++) {
