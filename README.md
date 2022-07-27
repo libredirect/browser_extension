@@ -101,7 +101,7 @@ npm run start
 ### Install temporarily
 
 open `about:addons`\
-click on the settings button below the addon search bar and select `debug add-on`\
+type in the address bar `about:debugging`\
 press `load temporarily addon`
 
 ### Install in Firefox ESR, Developer Edition, Nightly
