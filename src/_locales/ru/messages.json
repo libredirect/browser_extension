@@ -1,0 +1,218 @@
+{
+    "extensionDescription": {
+        "message": "Веб-расширение, которое перенаправляет популярные сайты на альтернативные фронтенды и бэкенды, обеспечивающие конфиденциальность",
+        "description": "description of the extension"
+    },
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "protocol": {
+        "message": "Протокол",
+        "description": "used in the settings page"
+    },
+    "normal": {
+        "message": "Нормальный",
+        "description": "used in the settings page"
+    },
+    "settings": {
+        "message": "Настройки",
+        "description": "used in the popup"
+    },
+    "general": {
+        "message": "Общее",
+        "description": "used in the settings page"
+    },
+    "search": {
+        "message": "Поиск",
+        "description": "used in the settings page"
+    },
+    "translate": {
+        "message": "Перевод",
+        "description": "used in the settings page"
+    },
+    "maps": {
+        "message": "Карты",
+        "description": "used in the settings page"
+    },
+    "sendFiles": {
+        "message": "Отправка файлов",
+        "description": "used in the settings page"
+    },
+    "youtube": {
+        "message": "YouTube",
+        "description": "used in the settings page"
+    },
+    "tiktok": {
+        "message": "TikTok",
+        "description": "used in the settings page"
+    },
+    "ytmusic": {
+        "message": "YT Music",
+        "description": "used in the settings page"
+    },
+    "imgur": {
+        "message": "Imgur",
+        "description": "used in the settings page"
+    },
+    "wikipedia": {
+        "message": "Wikipedia",
+        "description": "used in the settings page"
+    },
+    "peertube": {
+        "message": "PeerTube",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "Импорт настроек",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "Экспорт настроек",
+        "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "Сброс настроек",
+        "description": "used in the settings page"
+    },
+    "customPopup": {
+        "message": "Настроить всплывающее окно",
+        "description": "used in the settings page"
+    },
+    "redirectType": {
+        "message": "Тип перенаправления",
+        "description": "used in the settings page"
+    },
+    "both": {
+        "message": "оба",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "только встроенные",
+        "description": "used in the settings page"
+    },
+    "onlyNotEmbedded": {
+        "message": "только не встроеные",
+        "description": "used in the settings page"
+    },
+    "instanceOffline": {
+        "message": "Этот экземпляр находится в автономном режиме, вы будете перенаправлены после&nbsp;",
+        "description": "used in instance_offline.html"
+    },
+    "cancel": {
+        "message": "Отмена",
+        "description": "used in instance_offline.html"
+    },
+    "instanceIsOff": {
+        "message": "Экземпляр не в сети",
+        "description": "used in instance_offline.html"
+    },
+    "redirectionCanceled": {
+        "message": "Перенаправление отменено",
+        "description": "used in instance_offline.js"
+    },
+    "switchInstance": {
+        "message": "Переключить экземпляр",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "autoRedirect": {
+        "message": "Автоматическое перенаправление на экземпляров находящихся в сети",
+        "description": "used in the settings page"
+    },
+    "updateInstances": {
+        "message": "Обновить экземпляры",
+        "description": "used in the settings page"
+    },
+    "defaultInstances": {
+        "message": "Экземпляры по умолчанию",
+        "description": "used in the settings page"
+    },
+    "customInstances": {
+        "message": "Пользовательские экземпляры",
+        "description": "used in the settings page"
+    },
+    "embeddedVids": {
+        "message": "Фронтенд со встроенным видео",
+        "description": "used in the settings page"
+    },
+    "copied": {
+        "message": "Скопировано"
+    },
+    "lbry": {
+        "message": "LBRY"
+    },
+    "i2p": {
+        "message": "I2P"
+    },
+    "loki": {
+        "message": "Lokinet"
+    },
+    "testInstancesLatency": {
+        "message": "Тестирование задержки экземпляров"
+    },
+    "copyRaw": {
+        "message": "Скопировать напрямую"
+    },
+    "unifySettings": {
+        "message": "Унифицировать настройки"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Включить",
+        "description": "used in the settings page"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "Системная",
+        "description": "used in the settings page"
+    },
+    "exceptions": {
+        "message": "Исключения",
+        "description": "used in the settings page"
+    },
+    "reddit": {
+        "message": "Reddit",
+        "description": "used in the settings page"
+    },
+    "tor": {
+        "message": "Tor",
+        "description": "used in the settings page"
+    },
+    "medium": {
+        "message": "Medium",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "Тема",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "Светлая",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Тёмная",
+        "description": "used in the settings page"
+    },
+    "toggleAll": {
+        "message": "Переключить все",
+        "description": "used in the settings page"
+    },
+    "notFullyPrivate": {
+        "message": "Это не полностью приватный фронтенд."
+    },
+    "frontend": {
+        "message": "Фронтенд",
+        "description": "used in the settings page"
+    },
+    "searchNote": {
+        "message": "Примечание: Используйте поиск в полной мере, сделав LibRedirect поисковой системой по умолчанию.",
+        "description": "used in the settings page"
+    }
+}

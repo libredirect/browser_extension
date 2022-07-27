@@ -1,0 +1,211 @@
+{
+    "light": {
+        "message": "Licht thema",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "Systeemthema",
+        "description": "used in the settings page"
+    },
+    "customInstances": {
+        "message": "Aangepaste servers",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Donker thema",
+        "description": "used in the settings page"
+    },
+    "updateInstances": {
+        "message": "Serverlijst bijwerken",
+        "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "Standaardwaarden",
+        "description": "used in the settings page"
+    },
+    "customPopup": {
+        "message": "Pop-upvenster instellen",
+        "description": "used in the settings page"
+    },
+    "normal": {
+        "message": "Normaal",
+        "description": "used in the settings page"
+    },
+    "defaultInstances": {
+        "message": "Standaardservers",
+        "description": "used in the settings page"
+    },
+    "toggleAll": {
+        "message": "Alles aan/uit",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Frontend",
+        "description": "used in the settings page"
+    },
+    "autoRedirect": {
+        "message": "Automatisch overschakelen naar online-servers",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "Instellingen importeren",
+        "description": "used in the settings page"
+    },
+    "protocol": {
+        "message": "Protocol",
+        "description": "used in the settings page"
+    },
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "switchInstance": {
+        "message": "Andere server kiezen",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "settings": {
+        "message": "Instellingen",
+        "description": "used in the popup"
+    },
+    "general": {
+        "message": "Algemeen",
+        "description": "used in the settings page"
+    },
+    "search": {
+        "message": "Zoeken",
+        "description": "used in the settings page"
+    },
+    "translate": {
+        "message": "Vertalen",
+        "description": "used in the settings page"
+    },
+    "maps": {
+        "message": "Kaarten",
+        "description": "used in the settings page"
+    },
+    "sendFiles": {
+        "message": "Bestanden versturen",
+        "description": "used in the settings page"
+    },
+    "youtube": {
+        "message": "YouTube",
+        "description": "used in the settings page"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "used in the settings page"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "used in the settings page"
+    },
+    "reddit": {
+        "message": "Reddit",
+        "description": "used in the settings page"
+    },
+    "tiktok": {
+        "message": "TikTok",
+        "description": "used in the settings page"
+    },
+    "ytmusic": {
+        "message": "YT Music",
+        "description": "used in the settings page"
+    },
+    "imgur": {
+        "message": "Imgur",
+        "description": "used in the settings page"
+    },
+    "wikipedia": {
+        "message": "Wikipedia",
+        "description": "used in the settings page"
+    },
+    "peertube": {
+        "message": "PeerTube",
+        "description": "used in the settings page"
+    },
+    "medium": {
+        "message": "Medium",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "Thema",
+        "description": "used in the settings page"
+    },
+    "extensionDescription": {
+        "message": "Een browserextensie die je automatisch doorstuurt naar privacy-respecterende alternatieven voor populaire sites",
+        "description": "description of the extension"
+    },
+    "copied": {
+        "message": "Gekopieerd"
+    },
+    "lbry": {
+        "message": "LBRY"
+    },
+    "exceptions": {
+        "message": "Uitzonderingen",
+        "description": "used in the settings page"
+    },
+    "notFullyPrivate": {
+        "message": "Dit frontend is niet volledig privaat."
+    },
+    "searchNote": {
+        "message": "Tip: benut de extensie optimaal door LibRedirect in te stellen als de standaard zoekmachine.",
+        "description": "used in the settings page"
+    },
+    "redirectType": {
+        "message": "Soort doorverwijzing",
+        "description": "used in the settings page"
+    },
+    "embeddedVids": {
+        "message": "Ingesloten video's-frontend",
+        "description": "used in the settings page"
+    },
+    "both": {
+        "message": "Beide",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "Alleen ingesloten",
+        "description": "used in the settings page"
+    },
+    "onlyNotEmbedded": {
+        "message": "Alleen niet-ingesloten",
+        "description": "used in the settings page"
+    },
+    "instanceOffline": {
+        "message": "Deze server is offline - je wordt doorgestuurd over&nbsp;",
+        "description": "used in instance_offline.html"
+    },
+    "cancel": {
+        "message": "Annuleren",
+        "description": "used in instance_offline.html"
+    },
+    "instanceIsOff": {
+        "message": "Server is offline",
+        "description": "used in instance_offline.html"
+    },
+    "protocolFallback": {
+        "message": "Terugvallen op reguliere server als er geen servers met het huidige protocol beschikbaar zijn"
+    },
+    "exportSettings": {
+        "message": "Instellingen exporteren",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Inschakelen",
+        "description": "used in the settings page"
+    },
+    "testInstancesLatency": {
+        "message": "Controleren op serververtragingen"
+    },
+    "copyRaw": {
+        "message": "Onbewerkte code kopiëren"
+    },
+    "redirectionCanceled": {
+        "message": "Doorverwijzen afgebroken",
+        "description": "used in instance_offline.js"
+    },
+    "unifySettings": {
+        "message": "Globale instellingen"
+    }
+}
