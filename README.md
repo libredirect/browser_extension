@@ -19,7 +19,7 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 <img src ="./img/3.png" width=350>&nbsp;
 <img src ="./img/4.png" width=350>&nbsp;
 
-Youtube => [Invidious](https://github.com/iv-org/invidious), [Piped](https://github.com/TeamPiped/Piped), [Piped-Material](https://github.com/mmjee/Piped-Material), [CloudTube](https://sr.ht/~cadence/tube/) [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee)\
+Youtube => [Invidious](https://github.com/iv-org/invidious), [Piped](https://github.com/TeamPiped/Piped), [Piped-Material](https://github.com/mmjee/Piped-Material), [CloudTube](https://sr.ht/~cadence/tube/), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee)\
 Youtube Music => [Beatbump](https://github.com/snuffyDev/Beatbump), [Hyperpipe](https://codeberg.org/Hyperpipe/Hyperpipe)\
 Twitter => [Nitter](https://github.com/zedeus/nitter)\
 Instagram => [Bibliogram](https://sr.ht/~cadence/bibliogram/)\
