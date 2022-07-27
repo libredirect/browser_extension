@@ -19,8 +19,8 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 <img src ="./img/3.png" width=350>&nbsp;
 <img src ="./img/4.png" width=350>&nbsp;
 
-Youtube => [Invidious](https://github.com/iv-org/invidious), [Piped](https://github.com/TeamPiped/Piped), [Piped-Material](https://github.com/mmjee/Piped-Material), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee)\
-Youtube Music => [Beatbump](https://github.com/snuffyDev/Beatbump)\
+Youtube => [Invidious](https://github.com/iv-org/invidious), [Piped](https://github.com/TeamPiped/Piped), [Piped-Material](https://github.com/mmjee/Piped-Material), [CloudTube](https://sr.ht/~cadence/tube/) [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee)\
+Youtube Music => [Beatbump](https://github.com/snuffyDev/Beatbump), [Hyperpipe](https://codeberg.org/Hyperpipe/Hyperpipe)\
 Twitter => [Nitter](https://github.com/zedeus/nitter)\
 Instagram => [Bibliogram](https://sr.ht/~cadence/bibliogram/)\
 TikTok => [ProxiTok](https://github.com/pablouser1/ProxiTok)\
@@ -31,7 +31,7 @@ Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)\
 Quora => [Quetre](https://github.com/zyachel/quetre)\
 IMDb => [Libremdb](https://github.com/zyachel/libremdb)\
 PeerTube => [SimpleerTube](https://git.sr.ht/~metalune/simpleweb_peertube)\
-LBRY/Odysee => [Librarian](https://codeberg.org/librarian/librarian)\
+LBRY/Odysee => [Librarian](https://codeberg.org/librarian/librarian) [LBRY Desktop](https://lbry.com/get)\
 Search => [SearXNG](https://github.com/searxng/searxng), [SearX](https://searx.github.io/searx/), [Whoogle](https://benbusby.com/projects/whoogle-search/), [Librex](https://github.com/hnhx/librex/)\
 Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web), [LingvaTranslate](https://github.com/TheDavidDelta/lingva-translate)\
 Maps => [OpenStreetMap](https://www.openstreetmap.org/), [FacilMap](https://github.com/FacilMap/facilmap)\
