@@ -1,1 +1,78 @@
-{}
+{
+    "settings": {
+        "message": "设置",
+        "description": "used in the popup"
+    },
+    "translate": {
+        "message": "翻译",
+        "description": "used in the settings page"
+    },
+    "wikipedia": {
+        "message": "Wikipedia",
+        "description": "used in the settings page"
+    },
+    "switchInstance": {
+        "message": "切换实例",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "sendFiles": {
+        "message": "发送文件",
+        "description": "used in the settings page"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "used in the settings page"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "used in the settings page"
+    },
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "peertube": {
+        "message": "PeerTube",
+        "description": "used in the settings page"
+    },
+    "youtube": {
+        "message": "YouTube",
+        "description": "used in the settings page"
+    },
+    "general": {
+        "message": "通用",
+        "description": "used in the settings page"
+    },
+    "maps": {
+        "message": "地图",
+        "description": "used in the settings page"
+    },
+    "reddit": {
+        "message": "Reddit",
+        "description": "used in the settings page"
+    },
+    "tiktok": {
+        "message": "TikTok",
+        "description": "used in the settings page"
+    },
+    "search": {
+        "message": "搜索",
+        "description": "used in the settings page"
+    },
+    "imgur": {
+        "message": "Imgur",
+        "description": "used in the settings page"
+    },
+    "ytmusic": {
+        "message": "YT Music",
+        "description": "used in the settings page"
+    },
+    "medium": {
+        "message": "Medium",
+        "description": "used in the settings page"
+    },
+    "extensionDescription": {
+        "message": "一个可将热门网站重定向到其替代隐私友好型前端和后端的 Web 扩展程序",
+        "description": "description of the extension"
+    }
+}
