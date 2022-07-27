@@ -78,8 +78,8 @@ browser.storage.onChanged.addListener(init)
 
 function all() {
 	return [
-		...instagramRedirects.bibliogram.normal,
-		...instagramRedirects.bibliogram.tor,
+		...bibliogramNormalRedirectsChecks,
+		...bibliogramTorRedirectsChecks,
 		...bibliogramNormalCustomRedirects,
 		...bibliogramTorCustomRedirects,
 		...bibliogramI2pCustomRedirects,
@@ -89,8 +89,8 @@ function all() {
 
 function redirect(url, type, initiator, disableOverride) {
 	if (disableInstagram && !disableOverride) return
-	if (initiator && all().includes(initiator.origin)) return "BYPASSTAB"
 	if (!targets.includes(url.host)) return
+	if (initiator && all().includes(initiator.origin)) return "BYPASSTAB"
 	if (!["main_frame", "sub_frame", "xmlhttprequest", "other", "image", "media"].includes(type)) return
 
 	const bypassPaths = [/about/, /explore/, /support/, /press/, /api/, /privacy/, /safety/, /admin/, /\/(accounts\/|embeds?.js)/]
