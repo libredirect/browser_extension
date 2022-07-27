@@ -1,5 +1,3 @@
 module.exports = {
-    ignoreFiles: [
-        "instances/get_instances.py"
-    ],
-};
+	ignoreFiles: ["instances/get_instances.py"],
+}

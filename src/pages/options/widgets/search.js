@@ -1,4 +1,4 @@
-import utils from "../../../assets/javascripts/utils.js";
+import utils from "../../../assets/javascripts/utils.js"
 
 // GOAL: to never mention frontends/protocls outside these two arrays, so that adding a new frontend/protocol is as easy as adding it here.
 // This may be expanded across the whole project, where almost everything becomes a template, and the frontend/protocol parts just become a JSON file.
@@ -15,8 +15,8 @@ for (let i = 0; i < frontends.length; i++) {
   this.frontends[i] = frontends[i].getElementsByClassName(protocol)
 }
 */
-    // There was a class here, but I deleted a bit of it
-    /*
+// There was a class here, but I deleted a bit of it
+/*
     this.searxDiv = searxDiv.getElementsByClassName(protocol)[0];
     this.searxngDiv = searxngDiv.getElementsByClassName(protocol)[0];
     this.librexDiv = librexDiv.getElementsByClassName(protocol)[0];
@@ -35,23 +35,22 @@ const searxngDiv = document.getElementById("searxng");
 const whoogleDiv = document.getElementById("whoogle");
 */
 
-const enable = document.getElementById("search-enable");
-const search = document.getElementById('search_page');
-const frontend = document.getElementById("search-frontend");
+const enable = document.getElementById("search-enable")
+const search = document.getElementById("search_page")
+const frontend = document.getElementById("search-frontend")
 let protocol
 
 function changeFrontendsSettings() {
-  for (let i = 0; i < frontends.length; i++) {
-    const frontendDiv = document.getElementById(frontends[i])
-    if (frontends[i] == frontend.value) {
-      frontendDiv.style.display = 'block'
-    } else {
-      frontendDiv.style.display = 'none'
-    }
-  }
+	for (let i = 0; i < frontends.length; i++) {
+		const frontendDiv = document.getElementById(frontends[i])
+		if (frontends[i] == frontend.value) {
+			frontendDiv.style.display = "block"
+		} else {
+			frontendDiv.style.display = "none"
+		}
+	}
 
-
-  /*
+	/*
   if (frontend.value == 'searx') {
     searxDiv.style.display = 'block';
     searxngDiv.style.display = 'none';
@@ -79,32 +78,27 @@ function changeFrontendsSettings() {
   */
 }
 
-
-
 function changeProtocolSettings() {
-
-
-  for (let i = 0; i < frontends.length; i++) {
-    const frontendDiv = document.getElementById(frontends[i])
-    //if (frontends[i] == frontend.value) {       // Here we are checking if the frontend matches the current one. This skips the protocol checking for that frontend, speeding things up. I no longer do this as protocol setting is only set once in the ui so every frontend needs to get their protocols setup immidiately.
-      for (let x = 0; x < protocols.length; x++) {
-        const protocolDiv = frontendDiv.getElementsByClassName(protocols[x])[0]
-        if (protocols[x] == protocol) { //if the frontend value equals the selected one, it will show. Otherwise, it will be hidden
-          protocolDiv.style.display = 'block'
-        } else {
-          protocolDiv.style.display = 'none'
-        }
-      }
-      /*
+	for (let i = 0; i < frontends.length; i++) {
+		const frontendDiv = document.getElementById(frontends[i])
+		//if (frontends[i] == frontend.value) {       // Here we are checking if the frontend matches the current one. This skips the protocol checking for that frontend, speeding things up. I no longer do this as protocol setting is only set once in the ui so every frontend needs to get their protocols setup immidiately.
+		for (let x = 0; x < protocols.length; x++) {
+			const protocolDiv = frontendDiv.getElementsByClassName(protocols[x])[0]
+			if (protocols[x] == protocol) {
+				//if the frontend value equals the selected one, it will show. Otherwise, it will be hidden
+				protocolDiv.style.display = "block"
+			} else {
+				protocolDiv.style.display = "none"
+			}
+		}
+		/*
     } else {
       continue
     }
     */
-  }
+	}
 
-
-
-/*
+	/*
     * "Legacy" code
   const normalsearxDiv = searxDiv.getElementsByClassName("normal")[0];
   const torsearxDiv = searxDiv.getElementsByClassName("tor")[0];
@@ -168,35 +162,28 @@ function changeProtocolSettings() {
   */
 }
 
-browser.storage.local.get(
-  [
-    "disableSearch",
-    "searchFrontend",
-    "protocol",
-  ],
-  r => {
-    enable.checked = !r.disableSearch;
-    frontend.value = r.searchFrontend;
-    protocol = r.protocol;
+browser.storage.local.get(["disableSearch", "searchFrontend", "protocol"], r => {
+	enable.checked = !r.disableSearch
+	frontend.value = r.searchFrontend
+	protocol = r.protocol
 
-    changeFrontendsSettings();
-    changeProtocolSettings();
-  }
-);
+	changeFrontendsSettings()
+	changeProtocolSettings()
+})
 
 for (let i = 0; i < frontends.length; i++) {
-  for (let x = 0; x < protocols.length; x++){
-    utils.processDefaultCustomInstances('search', frontends[i], protocols[x], document)
-  }
-  utils.latency('search', frontends[i], document, location)
+	for (let x = 0; x < protocols.length; x++) {
+		utils.processDefaultCustomInstances("search", frontends[i], protocols[x], document)
+	}
+	utils.latency("search", frontends[i], document, location)
 }
 
 search.addEventListener("change", () => {
-  browser.storage.local.set({
-    disableSearch: !enable.checked,
-    searchFrontend: frontend.value,
-  });
-  changeFrontendsSettings();
+	browser.storage.local.set({
+		disableSearch: !enable.checked,
+		searchFrontend: frontend.value,
+	})
+	changeFrontendsSettings()
 })
 
 /*

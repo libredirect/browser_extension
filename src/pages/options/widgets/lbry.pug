@@ -1,10 +1,16 @@
 section#lbry_page.option-block
     .some-block.option-block
-        h1(data-localise="__MSG_lbry__") LBRY/Odysee
+        h1(data-localise="__MSG_lbry__") LBRY
     hr
     .some-block.option-block
         h4(data-localise="__MSG_enable__") Enable
         input#lbry-enable(type="checkbox")
+
+    .some-block.option-block
+        h4(data-localise="__MSG_frontend__") Frontend
+        select#lbry-frontend
+            option(value="librarian") Librarian
+            option(value="lbryDesktop" data-localise="__MSG_lbryDesktop__") LBRY Desktop
 
     #librarian
         hr

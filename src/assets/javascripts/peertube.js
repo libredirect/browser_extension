@@ -1,180 +1,201 @@
-window.browser = window.browser || window.chrome;
+window.browser = window.browser || window.chrome
 
-import utils from './utils.js'
+import utils from "./utils.js"
 
-let redirects = {
-    "simpleertube": {
-        "normal": [
-            "https://tube.simple-web.org",
-            "https://tube.ftild3.org",
-            "https://stube.alefvanoon.xyz",
-            "https://st.phreedom.club",
-            "https://simpleertube.esmailelbob.xyz",
-        ],
-        "tor": [],
-        "i2p": [],
-        "loki": []
-    }
+const frontends = new Array("simpleertube")
+const protocols = new Array("normal", "tor", "i2p", "loki")
+
+let redirects = {}
+
+for (let i = 0; i < frontends.length; i++) {
+	redirects[frontends[i]] = {}
+	for (let x = 0; x < protocols.length; x++) {
+		redirects[frontends[i]][protocols[x]] = []
+	}
 }
+
 function setRedirects(val) {
-    redirects.simpleertube = val;
-    browser.storage.local.set({ peertubeTargetsRedirects: redirects })
-    for (const item of simpleertubeNormalRedirectsChecks)
-        if (!redirects.simpleertube.normal.includes(item)) {
-            var index = simpleertubeNormalRedirectsChecks.indexOf(item);
-            if (index !== -1) simpleertubeNormalRedirectsChecks.splice(index, 1);
-        }
-    browser.storage.local.set({ simpleertubeNormalRedirectsChecks })
-
-    for (const item of simpleertubeTorRedirectsChecks)
-        if (!redirects.simpleertube.normal.includes(item)) {
-            var index = simpleertubeTorRedirectsChecks.indexOf(item);
-            if (index !== -1) simpleertubeTorRedirectsChecks.splice(index, 1);
-        }
-    browser.storage.local.set({ simpleertubeTorRedirectsChecks })
+	browser.storage.local.get("cloudflareBlackList", r => {
+		redirects.simpleertube = val
+		simpleertubeNormalRedirectsChecks = [...redirects.simpleertube.normal]
+		for (const instance of r.cloudflareBlackList) {
+			const a = simpleertubeNormalRedirectsChecks.indexOf(instance)
+			if (a > -1) simpleertubeNormalRedirectsChecks.splice(a, 1)
+		}
+		browser.storage.local.set({
+			peertubeRedirects: redirects,
+			simpleertubeNormalRedirectsChecks,
+		})
+	})
 }
 
-let
-    disablePeertubeTargets,
-    peertubeRedirects,
-    simpleertubeNormalRedirectsChecks,
-    simpleertubeNormalCustomRedirects,
-    simpleertubeTorRedirectsChecks,
-    simpleertubeTorCustomRedirects,
-    simpleertubeI2pCustomRedirects,
-    simpleertubeLokiCustomRedirects,
-    peerTubeTargets,
-    protocol,
-    protocolFallback;
+let disablePeertubeTargets,
+	peertubeRedirects,
+	simpleertubeNormalRedirectsChecks,
+	simpleertubeNormalCustomRedirects,
+	simpleertubeTorRedirectsChecks,
+	simpleertubeTorCustomRedirects,
+	simpleertubeI2pRedirectsChecks,
+	simpleertubeI2pCustomRedirects,
+	simpleertubeLokiRedirectsChecks,
+	simpleertubeLokiCustomRedirects,
+	peerTubeTargets,
+	protocol,
+	protocolFallback
 
 function init() {
-    return new Promise(resolve => {
-        browser.storage.local.get(
-            [
-                "disablePeertubeTargets",
-                "peertubeRedirects",
-                "simpleertubeNormalRedirectsChecks",
-                "simpleertubeNormalCustomRedirects",
-                "simpleertubeTorRedirectsChecks",
-                "simpleertubeTorCustomRedirects",
-                "simpleertubeI2pCustomRedirects",
-                "simpleertubeLokiCustomRedirects",
-                "peerTubeTargets",
-                "protocol",
-                "protocolFallback"
-            ],
-            r => {
-                disablePeertubeTargets = r.disablePeertubeTargets;
-                peertubeRedirects = r.peertubeRedirects;
-                simpleertubeNormalRedirectsChecks = r.simpleertubeNormalRedirectsChecks;
-                simpleertubeNormalCustomRedirects = r.simpleertubeNormalCustomRedirects;
-                simpleertubeTorRedirectsChecks = r.simpleertubeTorRedirectsChecks;
-                simpleertubeTorCustomRedirects = r.simpleertubeTorCustomRedirects;
-                simpleertubeI2pCustomRedirects = r.simpleertubeI2pCustomRedirects;
-                simpleertubeLokiCustomRedirects = r.simpleertubeLokiCustomRedirects;
-                peerTubeTargets = r.peerTubeTargets;
-                protocol = r.protocol;
-                protocolFallback = r.protocolFallback;
-                resolve();
-            }
-        )
-    })
+	return new Promise(resolve => {
+		browser.storage.local.get(
+			[
+				"disablePeertubeTargets",
+				"peertubeRedirects",
+				"simpleertubeNormalRedirectsChecks",
+				"simpleertubeNormalCustomRedirects",
+				"simpleertubeTorRedirectsChecks",
+				"simpleertubeTorCustomRedirects",
+				"simpleertubeI2pRedirectsChecks",
+				"simpleertubeI2pCustomRedirects",
+				"simpleertubeLokiRedirectsChecks",
+				"simpleertubeLokiCustomRedirects",
+				"peerTubeTargets",
+				"protocol",
+				"protocolFallback",
+			],
+			r => {
+				disablePeertubeTargets = r.disablePeertubeTargets
+				peertubeRedirects = r.peertubeRedirects
+				simpleertubeNormalRedirectsChecks = r.simpleertubeNormalRedirectsChecks
+				simpleertubeNormalCustomRedirects = r.simpleertubeNormalCustomRedirects
+				simpleertubeTorRedirectsChecks = r.simpleertubeTorRedirectsChecks
+				simpleertubeTorCustomRedirects = r.simpleertubeTorCustomRedirects
+				simpleertubeI2pRedirectsChecks = r.simpleertubeI2pRedirectsChecks
+				simpleertubeI2pCustomRedirects = r.simpleertubeI2pCustomRedirects
+				simpleertubeLokiRedirectsChecks = r.simpleertubeLokiRedirectsChecks
+				simpleertubeLokiCustomRedirects = r.simpleertubeLokiCustomRedirects
+				peerTubeTargets = r.peerTubeTargets
+				protocol = r.protocol
+				protocolFallback = r.protocolFallback
+				resolve()
+			}
+		)
+	})
 }
 
-init();
+init()
 browser.storage.onChanged.addListener(init)
 
 function all() {
-    return [
-        ...redirects.simpleertube.normal,
-        ...redirects.simpleertube.tor,
-        ...simpleertubeNormalCustomRedirects,
-        ...simpleertubeTorCustomRedirects,
-        ...simpleertubeI2pCustomRedirects,
-        ...simpleertubeLokiCustomRedirects
-    ];
+	return [
+		...simpleertubeNormalRedirectsChecks,
+		...simpleertubeTorRedirectsChecks,
+		...simpleertubeI2pRedirectsChecks,
+		...simpleertubeLokiRedirectsChecks,
+		...simpleertubeNormalCustomRedirects,
+		...simpleertubeTorCustomRedirects,
+		...simpleertubeI2pCustomRedirects,
+		...simpleertubeLokiCustomRedirects,
+	]
 }
 
 function redirect(url, type, initiator, disableOverride) {
-    if (disablePeertubeTargets && !disableOverride) return;
-    if (initiator && (all().includes(initiator.origin) || peerTubeTargets.includes(initiator.host))) return;
-    let protocolHost = utils.protocolHost(url);
-    if (!peerTubeTargets.includes(protocolHost)) return;
-    if (type != "main_frame") return;
+	if (disablePeertubeTargets && !disableOverride) return
+	if (initiator && (all().includes(initiator.origin) || peerTubeTargets.includes(initiator.host))) return
+	let protocolHost = utils.protocolHost(url)
+	if (!peerTubeTargets.includes(protocolHost)) return
+	if (type != "main_frame") return
 
-    let instancesList = [];
-    if (protocol == 'loki') instancesList = [...simpleertubeLokiCustomRedirects];
-    else if (protocol == 'i2p') instancesList = [...simpleertubeI2pCustomRedirects];
-    else if (protocol == 'tor') instancesList = [...simpleertubeTorRedirectsChecks, ...simpleertubeTorCustomRedirects];
-    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
-        instancesList = [...simpleertubeNormalRedirectsChecks, ...simpleertubeNormalCustomRedirects];
-    }
-    if (instancesList.length === 0) { return; }
+	let instancesList = []
+	if (protocol == "loki") instancesList = [...simpleertubeLokiRedirectsChecks, ...simpleertubeLokiCustomRedirects]
+	else if (protocol == "i2p") instancesList = [...simpleertubeI2pRedirectsChecks, ...simpleertubeI2pCustomRedirects]
+	else if (protocol == "tor") instancesList = [...simpleertubeTorRedirectsChecks, ...simpleertubeTorCustomRedirects]
+	if ((instancesList.length === 0 && protocolFallback) || protocol == "normal") {
+		instancesList = [...simpleertubeNormalRedirectsChecks, ...simpleertubeNormalCustomRedirects]
+	}
+	if (instancesList.length === 0) {
+		return
+	}
 
-    const randomInstance = utils.getRandomInstance(instancesList);
-    if (url.host == 'search.joinpeertube.org' || url.host == 'sepiasearch.org') return randomInstance;
-    return `${randomInstance}/${url.host}${url.pathname}${url.search}`;
+	const randomInstance = utils.getRandomInstance(instancesList)
+	if (url.host == "search.joinpeertube.org" || url.host == "sepiasearch.org") return randomInstance
+	return `${randomInstance}/${url.host}${url.pathname}${url.search}`
 }
 
 function switchInstance(url, disableOverride) {
-    return new Promise(async resolve => {
-        await init();
-        if (disablePeertubeTargets && !disableOverride) { resolve(); return; }
-        const protocolHost = utils.protocolHost(url);
-        if (!all().includes(protocolHost)) { resolve(); return; }
+	return new Promise(async resolve => {
+		await init()
+		if (disablePeertubeTargets && !disableOverride) {
+			resolve()
+			return
+		}
+		const protocolHost = utils.protocolHost(url)
+		if (!all().includes(protocolHost)) {
+			resolve()
+			return
+		}
 
-        let instancesList = [];
-        if (protocol == 'loki') instancesList = [...simpleertubeLokiCustomRedirects];
-        else if (protocol == 'i2p') instancesList = [...simpleertubeI2pCustomRedirects];
-        else if (protocol == 'tor') instancesList = [...simpleertubeTorRedirectsChecks, ...simpleertubeTorCustomRedirects];
-        if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
-            instancesList = [...simpleertubeNormalRedirectsChecks, ...simpleertubeNormalCustomRedirects];
-        }
+		let instancesList = []
+		if (protocol == "loki") instancesList = [...simpleertubeLokiRedirectsChecks, ...simpleertubeLokiCustomRedirects]
+		else if (protocol == "i2p") instancesList = [...simpleertubeI2pRedirectsChecks, ...simpleertubeI2pCustomRedirects]
+		else if (protocol == "tor") instancesList = [...simpleertubeTorRedirectsChecks, ...simpleertubeTorCustomRedirects]
+		if ((instancesList.length === 0 && protocolFallback) || protocol == "normal") {
+			instancesList = [...simpleertubeNormalRedirectsChecks, ...simpleertubeNormalCustomRedirects]
+		}
 
-        const i = instancesList.indexOf(protocolHost);
-        if (i > -1) instancesList.splice(i, 1);
-        if (instancesList.length === 0) { resolve(); return; }
+		const i = instancesList.indexOf(protocolHost)
+		if (i > -1) instancesList.splice(i, 1)
+		if (instancesList.length === 0) {
+			resolve()
+			return
+		}
 
-        const randomInstance = utils.getRandomInstance(instancesList);
-        resolve(`${randomInstance}${url.pathname}${url.search}`);
-    })
+		const randomInstance = utils.getRandomInstance(instancesList)
+		resolve(`${randomInstance}${url.pathname}${url.search}`)
+	})
 }
 
 function initDefaults() {
-    return new Promise(resolve => {
-        fetch('/instances/data.json').then(response => response.text()).then(async data => {
-            let dataJson = JSON.parse(data);
-            browser.storage.local.get('cloudflareBlackList', async r => {
-                simpleertubeNormalRedirectsChecks = [...redirects.simpleertube.normal];
-                for (const instance of r.cloudflareBlackList) {
-                    let i = simpleertubeNormalRedirectsChecks.indexOf(instance);
-                    if (i > -1) simpleertubeNormalRedirectsChecks.splice(i, 1);
-                }
-                browser.storage.local.set({
-                    peerTubeTargets: ['https://search.joinpeertube.org', ...dataJson.peertube],
-                    disablePeertubeTargets: true,
-                    peertubeRedirects: redirects,
+	return new Promise(resolve => {
+		fetch("/instances/data.json")
+			.then(response => response.text())
+			.then(data => {
+				let dataJson = JSON.parse(data)
+				for (let i = 0; i < frontends.length; i++) {
+					redirects[frontends[i]] = dataJson[frontends[i]]
+				}
+				browser.storage.local.get("cloudflareBlackList", async r => {
+					simpleertubeNormalRedirectsChecks = [...redirects.simpleertube.normal]
+					for (const instance of r.cloudflareBlackList) {
+						let i = simpleertubeNormalRedirectsChecks.indexOf(instance)
+						if (i > -1) simpleertubeNormalRedirectsChecks.splice(i, 1)
+					}
+					browser.storage.local.set(
+						{
+							peerTubeTargets: ["https://search.joinpeertube.org", ...dataJson.peertube],
+							disablePeertubeTargets: true,
+							peertubeRedirects: redirects,
 
-                    simpleertubeNormalRedirectsChecks: simpleertubeNormalRedirectsChecks,
-                    simpleertubeNormalCustomRedirects: [],
+							simpleertubeNormalRedirectsChecks: simpleertubeNormalRedirectsChecks,
+							simpleertubeNormalCustomRedirects: [],
 
-                    simpleertubeTorRedirectsChecks: [...redirects.simpleertube.tor],
-                    simpleertubeTorCustomRedirects: [],
+							simpleertubeTorRedirectsChecks: [...redirects.simpleertube.tor],
+							simpleertubeTorCustomRedirects: [],
 
-                    simpleertubeI2pRedirectsChecks: [...redirects.simpleertube.i2p],
-                    simpleertubeI2pCustomRedirects: [],
+							simpleertubeI2pRedirectsChecks: [...redirects.simpleertube.i2p],
+							simpleertubeI2pCustomRedirects: [],
 
-                    simpleertubeLokiRedirectsChecks: [...redirects.simpleertube.loki],
-                    simpleertubeLokiCustomRedirects: []
-                }, () => resolve());
-            })
-        })
-    })
+							simpleertubeLokiRedirectsChecks: [...redirects.simpleertube.loki],
+							simpleertubeLokiCustomRedirects: [],
+						},
+						() => resolve()
+					)
+				})
+			})
+	})
 }
 
 export default {
-    setRedirects,
-    switchInstance,
-    redirect,
-    initDefaults,
-};
+	setRedirects,
+	switchInstance,
+	redirect,
+	initDefaults,
+}

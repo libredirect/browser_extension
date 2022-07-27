@@ -12,6 +12,7 @@ section#youtube_page.option-block
             option(value="invidious") Invidious
             option(value="piped") Piped
             option(value="pipedMaterial") Piped-Material
+            option(value="cloudtube") CloudTube
             option(value="freetube") FreeTube
             option(value="yatte") Yattee
 
@@ -22,6 +23,7 @@ section#youtube_page.option-block
                 option(value="invidious") Invidious
                 option(value="piped") Piped
                 option(value="pipedMaterial") Piped-Material
+                option(value="cloudtube") CloudTube
 
     .some-block.option-block
         h4(data-localise="__MSG_redirectType__") Redirect Type
@@ -80,5 +82,22 @@ section#youtube_page.option-block
         .loki
             include ../../widgets/instances.pug
             +instances('http://piped-material.loki')
+
+    #cloudtube
+        hr
+        .normal
+            include ../../widgets/instances.pug
+            +instances('https://cloudtube.com')
+            include ../../widgets/latency.pug
+            +latency('cloudtube')
+        .tor
+            +instances('http://cloudtube.onion')
+            include ../../widgets/instances.pug
+        .i2p
+            include ../../widgets/instances.pug
+            +instances('http://cloudtube.i2p')
+        .loki
+            include ../../widgets/instances.pug
+            +instances('http://cloudtube.loki')
 
     script(type="module" src="./widgets/youtube.js")

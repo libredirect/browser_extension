@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title data-localise="__MSG_instanceIsOff__">Instance is offline</title>
+		<link href="../stylesheets/styles.css" rel="stylesheet" />
+		<style>
+			body {
+				margin: 0;
+				padding: 0;
+				height: 100vh;
+				width: 100vw;
+				flex-wrap: wrap;
+				justify-content: center;
+				align-items: center;
+				font-size: 30px;
+				display: flex;
+			}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title data-localise="__MSG_instanceIsOff__">Instance is offline</title>
-    <link href="../stylesheets/styles.css" rel="stylesheet" />
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            width: 100vw;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            font-size: 30px;
-            display: flex;
-        }
+			div {
+				text-align: center;
+			}
+		</style>
+	</head>
 
-        div {
-            text-align: center;
-        }
-    </style>
+	<body>
+		<div>
+			<p id="message" data-localise="__MSG_instanceOffline__">
+				This instance is offline, you'll be redirected after&nbsp;<span id="number">2</span>&nbsp;<x data-localise="__MSG_sec__">seconds</x>
+			</p>
+			<button id="cancel" data-localise="__MSG_cancel__">Cancel</button>
+		</div>
 
-</head>
-
-<body>
-    <div>
-        <p id="message" data-localise="__MSG_instanceOffline__">This instance is offline, you'll be redirected
-            after&nbsp;<span id="number">2</span>&nbsp;<x data-localise="__MSG_sec__">seconds</x>
-        </p>
-        <button id="cancel" data-localise="__MSG_cancel__">Cancel</button>
-    </div>
-
-    <script src="instance_offline.js" type="module"></script>
-</body>
-
+		<script src="instance_offline.js" type="module"></script>
+	</body>
 </html>

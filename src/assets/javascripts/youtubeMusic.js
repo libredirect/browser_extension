@@ -1,60 +1,191 @@
-"use strict";
+"use strict"
 
-import utils from './utils.js'
+import utils from "./utils.js"
 
-window.browser = window.browser || window.chrome;
+window.browser = window.browser || window.chrome
 
-const targets = [
-    /^https?:\/{2}music\.youtube\.com(\/.*|$)/,
-];
-let redirects = {
-    "beatbump": {
-        "normal": [
-            "https://beatbump.ml"
-        ],
-        "tor": [],
-        "i2p": [],
-        "loki": []
-    },
-};
+const targets = [/^https?:\/{2}music\.youtube\.com(\/.*|$)/]
 
-let
-    disableYoutubeMusic,
-    protocol,
-    protocolFallback,
-    beatbumpNormalRedirectsChecks,
-    beatbumpNormalCustomRedirects,
-    beatbumpTorCustomRedirects,
-    beatbumpI2pCustomRedirects,
-    beatbumpLokiCustomRedirects;
+const frontends = new Array("beatbump", "hyperpipe")
+const protocols = new Array("normal", "tor", "i2p", "loki")
 
-function init() {
-    browser.storage.local.get(
-        [
-            "disableYoutubeMusic",
-            "protocol",
-            "protocolFallback",
-            "beatbumpNormalRedirectsChecks",
-            "beatbumpNormalCustomRedirects",
-            "beatbumpTorCustomRedirects",
-            "beatbumpI2pCustomRedirects",
-            "beatbumpLokiCustomRedirects"
-        ],
-        r => {
-            disableYoutubeMusic = r.disableYoutubeMusic;
-            protocol = r.protocol;
-            protocolFallback = r.protocolFallback;
-            beatbumpNormalRedirectsChecks = r.beatbumpNormalRedirectsChecks;
-            beatbumpNormalCustomRedirects = r.beatbumpNormalCustomRedirects;
-            beatbumpTorCustomRedirects = r.beatbumpTorCustomRedirects;
-            beatbumpI2pCustomRedirects = r.beatbumpI2pCustomRedirects;
-            beatbumpLokiCustomRedirects = r.beatbumpLokiCustomRedirects;
-        }
-    )
+let redirects = {}
+
+for (let i = 0; i < frontends.length; i++) {
+	redirects[frontends[i]] = {}
+	for (let x = 0; x < protocols.length; x++) {
+		redirects[frontends[i]][protocols[x]] = []
+	}
 }
 
-init();
+function setRedirects(val) {
+	browser.storage.local.get("cloudflareBlackList", r => {
+		redirects = val
+		beatbumpNormalRedirectsChecks = [...redirects.beatbump.normal]
+		hyperpipeNormalRedirectsChecks = [...redirects.hyperpipe.normal]
+		for (const instance of r.cloudflareBlackList) {
+			const a = beatbumpNormalRedirectsChecks.indexOf(instance)
+			if (a > -1) beatbumpNormalRedirectsChecks.splice(a, 1)
+
+			const b = hyperpipeNormalRedirectsChecks.indexOf(instance)
+			if (b > -1) hyperpipeNormalRedirectsChecks.splice(b, 1)
+		}
+		browser.storage.local.set({
+			youtubeMusicRedirects: redirects,
+			beatbumpNormalRedirectsChecks,
+			hyperpipeNormalRedirectsChecks,
+		})
+	})
+}
+
+let disableYoutubeMusic,
+	youtubeMusicFrontend,
+	youtubeMusicRedirects,
+	protocol,
+	protocolFallback,
+	beatbumpNormalRedirectsChecks,
+	beatbumpNormalCustomRedirects,
+	beatbumpTorRedirectsChecks,
+	beatbumpTorCustomRedirects,
+	beatbumpI2pRedirectsChecks,
+	beatbumpI2pCustomRedirects,
+	beatbumpLokiRedirectsChecks,
+	beatbumpLokiCustomRedirects,
+	hyperpipeNormalRedirectsChecks,
+	hyperpipeNormalCustomRedirects,
+	hyperpipeTorRedirectsChecks,
+	hyperpipeTorCustomRedirects,
+	hyperpipeI2pRedirectsChecks,
+	hyperpipeI2pCustomRedirects,
+	hyperpipeLokiRedirectsChecks,
+	hyperpipeLokiCustomRedirects
+
+function init() {
+	return new Promise(async resolve => {
+		browser.storage.local.get(
+			[
+				"disableYoutubeMusic",
+				"youtubeMusicFrontend",
+				"youtubeMusicRedirects",
+				"protocol",
+				"protocolFallback",
+				"beatbumpNormalRedirectsChecks",
+				"beatbumpNormalCustomRedirects",
+				"beatbumpTorRedirectsChecks",
+				"beatbumpTorCustomRedirects",
+				"beatbumpI2pRedirectsChecks",
+				"beatbumpI2pCustomRedirects",
+				"beatbumpLokiRedirectsChecks",
+				"beatbumpLokiCustomRedirects",
+				"hyperpipeNormalRedirectsChecks",
+				"hyperpipeNormalCustomRedirects",
+				"hyperpipeTorRedirectsChecks",
+				"hyperpipeTorCustomRedirects",
+				"hyperpipeI2pRedirectsChecks",
+				"hyperpipeI2pCustomRedirects",
+				"hyperpipeLokiRedirectsChecks",
+				"hyperpipeLokiCustomRedirects",
+			],
+			r => {
+				disableYoutubeMusic = r.disableYoutubeMusic
+				youtubeMusicFrontend = r.youtubeMusicFrontend
+				youtubeMusicRedirects = r.youtubeMusicRedirects
+				protocol = r.protocol
+				protocolFallback = r.protocolFallback
+				beatbumpNormalRedirectsChecks = r.beatbumpNormalRedirectsChecks
+				beatbumpNormalCustomRedirects = r.beatbumpNormalCustomRedirects
+				beatbumpTorRedirectsChecks = r.beatbumpTorRedirectsChecks
+				beatbumpTorCustomRedirects = r.beatbumpTorCustomRedirects
+				beatbumpI2pRedirectsChecks = r.beatbumpI2pRedirectsChecks
+				beatbumpI2pCustomRedirects = r.beatbumpI2pCustomRedirects
+				beatbumpLokiRedirectsChecks = r.beatbumpLokiRedirectsChecks
+				beatbumpLokiCustomRedirects = r.beatbumpLokiCustomRedirects
+				hyperpipeNormalRedirectsChecks = r.hyperpipeNormalRedirectsChecks
+				hyperpipeNormalCustomRedirects = r.hyperpipeNormalCustomRedirects
+				hyperpipeTorRedirectsChecks = r.hyperpipeTorRedirectsChecks
+				hyperpipeTorCustomRedirects = r.hyperpipeTorCustomRedirects
+				hyperpipeI2pRedirectsChecks = r.hyperpipeI2pRedirectsChecks
+				hyperpipeI2pCustomRedirects = r.hyperpipeI2pCustomRedirects
+				hyperpipeLokiRedirectsChecks = r.hyperpipeLokiRedirectsChecks
+				hyperpipeLokiCustomRedirects = r.hyperpipeLokiCustomRedirects
+				resolve()
+			}
+		)
+	})
+}
+
+init()
 browser.storage.onChanged.addListener(init)
+
+function all() {
+	return [
+		...beatbumpNormalRedirectsChecks,
+		...beatbumpNormalCustomRedirects,
+		...beatbumpTorRedirectsChecks,
+		...beatbumpTorCustomRedirects,
+		...beatbumpI2pRedirectsChecks,
+		...beatbumpI2pCustomRedirects,
+		...beatbumpLokiRedirectsChecks,
+		...beatbumpLokiCustomRedirects,
+		...hyperpipeNormalRedirectsChecks,
+		...hyperpipeNormalCustomRedirects,
+		...hyperpipeTorRedirectsChecks,
+		...hyperpipeTorCustomRedirects,
+		...hyperpipeI2pRedirectsChecks,
+		...hyperpipeI2pCustomRedirects,
+		...hyperpipeLokiRedirectsChecks,
+		...hyperpipeLokiCustomRedirects,
+	]
+}
+
+function getInstanceList() {
+	let tmpList = []
+	switch (youtubeMusicFrontend) {
+		case "beatbump":
+			switch (protocol) {
+				case "loki":
+					tmpList = [...beatbumpLokiRedirectsChecks, ...beatbumpLokiCustomRedirects]
+					break
+				case "i2p":
+					tmpList = [...beatbumpI2pRedirectsChecks, ...beatbumpI2pCustomRedirects]
+					break
+				case "tor":
+					tmpList = [...beatbumpTorRedirectsChecks, ...beatbumpTorCustomRedirects]
+			}
+			if ((tmpList.length === 0 && protocolFallback) || protocol == "normal") {
+				tmpList = [...beatbumpNormalRedirectsChecks, ...beatbumpNormalCustomRedirects]
+			}
+			break
+		case "hyperpipe":
+			switch (protocol) {
+				case "loki":
+					tmpList = [...hyperpipeLokiRedirectsChecks, ...hyperpipeLokiCustomRedirects]
+					break
+				case "i2p":
+					tmpList = [...hyperpipeI2pRedirectsChecks, ...hyperpipeI2pCustomRedirects]
+					break
+				case "tor":
+					tmpList = [...hyperpipeTorRedirectsChecks, ...hyperpipeTorCustomRedirects]
+			}
+			if ((tmpList.length === 0 && protocolFallback) || protocol == "normal") {
+				tmpList = [...hyperpipeNormalRedirectsChecks, ...hyperpipeNormalCustomRedirects]
+			}
+	}
+	return tmpList
+}
+
+function getUrl(randomInstance, url) {
+	switch (youtubeMusicFrontend) {
+		case "beatbump":
+			return `${randomInstance}${url.pathname}${url.search}`
+				.replace("/watch?v=", "/listen?id=")
+				.replace("/channel/", "/artist/")
+				.replace("/playlist?list=", "/playlist/VL")
+				.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/") + "?filter=EgWKAQIIAWoKEAMQBBAKEAkQBQ%3D%3D")
+		case "hyperpipe":
+			return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/"))
+	}
+}
 
 /* 
 Video
@@ -88,48 +219,105 @@ https://music.youtube.com/search?q=test
 https://beatbump.ml/search/test?filter=EgWKAQIIAWoKEAMQBBAKEAkQBQ%3D%3D
 
 */
-function redirect(url, disableOverride) {
-    if (disableYoutubeMusic && !disableOverride) return;
-    if (!targets.some(rx => rx.test(url.href))) return;
+function redirect(url, type, initiator, disableOverride) {
+	if (disableYoutubeMusic && !disableOverride) return
+	if (!targets.some(rx => rx.test(url.href))) return
 
-    let instancesList = [];
-    if (protocol == 'loki') instancesList = [...beatbumpLokiCustomRedirects];
-    else if (protocol == 'i2p') instancesList = [...beatbumpI2pCustomRedirects];
-    else if (protocol == 'tor') instancesList = [...beatbumpTorCustomRedirects];
-    if ((instancesList.length === 0 && protocolFallback) || protocol == 'normal') {
-        instancesList = [...beatbumpNormalRedirectsChecks, ...beatbumpNormalCustomRedirects];
-    }
-    if (instancesList.length === 0) return;
-    const randomInstance = utils.getRandomInstance(instancesList);
-    return `${randomInstance}${url.pathname}${url.search}`
-        .replace("/watch?v=", "/listen?id=")
-        .replace("/channel/", "/artist/")
-        .replace("/playlist?list=", "/playlist/VL")
-        .replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/") + "?filter=EgWKAQIIAWoKEAMQBBAKEAkQBQ%3D%3D");
+	let instancesList = getInstanceList()
+
+	if (instancesList.length === 0) return
+	const randomInstance = utils.getRandomInstance(instancesList)
+	return getUrl(randomInstance, url)
 }
 
-async function initDefaults() {
-    return new Promise(resolve =>
-        browser.storage.local.set({
-            disableYoutubeMusic: true,
-            youtubeMusicRedirects: redirects,
+function switchInstance(url, disableOverride) {
+	return new Promise(async resolve => {
+		await init()
+		if (disableYoutubeMusic && !disableOverride) {
+			resolve()
+			return
+		}
+		const protocolHost = utils.protocolHost(url)
+		if (!all().includes(protocolHost)) {
+			resolve()
+			return
+		}
 
-            beatbumpNormalRedirectsChecks: [...redirects.beatbump.normal],
-            beatbumpNormalCustomRedirects: [],
+		let instancesList = getInstanceList()
 
-            beatbumpTorRedirectsChecks: [...redirects.beatbump.tor],
-            beatbumpTorCustomRedirects: [],
+		const i = instancesList.indexOf(protocolHost)
+		if (i > -1) instancesList.splice(i, 1)
+		if (instancesList.length === 0) {
+			resolve()
+			return
+		}
 
-            beatbumpI2pRedirectsChecks: [...redirects.beatbump.i2p],
-            beatbumpI2pCustomRedirects: [],
+		const randomInstance = utils.getRandomInstance(instancesList)
+		return getUrl(randomInstance, url)
+	})
+}
 
-            beatbumpLokiRedirectsChecks: [...redirects.beatbump.loki],
-            beatbumpLokiCustomRedirects: []
-        }, () => resolve())
-    )
+function initDefaults() {
+	return new Promise(resolve => {
+		fetch("/instances/data.json")
+			.then(response => response.text())
+			.then(async data => {
+				let dataJson = JSON.parse(data)
+				for (let i = 0; i < frontends.length; i++) {
+					redirects[frontends[i]] = dataJson[frontends[i]]
+				}
+				browser.storage.local.get("cloudflareBlackList", async r => {
+					beatbumpNormalRedirectsChecks = [...redirects.beatbump.normal]
+					hyperpipeNormalRedirectsChecks = [...redirects.hyperpipe.normal]
+					for (const instance of r.cloudflareBlackList) {
+						let i
+
+						i = beatbumpNormalRedirectsChecks.indexOf(instance)
+						if (i > -1) beatbumpNormalRedirectsChecks.splice(i, 1)
+
+						i = hyperpipeNormalRedirectsChecks.indexOf(instance)
+						if (i > -1) hyperpipeNormalRedirectsChecks.splice(i, 1)
+					}
+					browser.storage.local.set(
+						{
+							disableYoutubeMusic: false,
+							youtubeMusicFrontend: "hyperpipe",
+							youtubeMusicRedirects: redirects,
+
+							beatbumpNormalRedirectsChecks: beatbumpNormalRedirectsChecks,
+							beatbumpNormalCustomRedirects: [],
+
+							beatbumpTorRedirectsChecks: [...redirects.beatbump.tor],
+							beatbumpTorCustomRedirects: [],
+
+							beatbumpI2pRedirectsChecks: [...redirects.beatbump.i2p],
+							beatbumpI2pCustomRedirects: [],
+
+							beatbumpLokiRedirectsChecks: [...redirects.beatbump.loki],
+							beatbumpLokiCustomRedirects: [],
+
+							hyperpipeNormalRedirectsChecks: hyperpipeNormalRedirectsChecks,
+							hyperpipeNormalCustomRedirects: [],
+
+							hyperpipeTorRedirectsChecks: [...redirects.hyperpipe.tor],
+							hyperpipeTorCustomRedirects: [],
+
+							hyperpipeI2pRedirectsChecks: [...redirects.hyperpipe.i2p],
+							hyperpipeI2pCustomRedirects: [],
+
+							hyperpipeLokiRedirectsChecks: [...redirects.hyperpipe.loki],
+							hyperpipeLokiCustomRedirects: [],
+						},
+						() => resolve()
+					)
+				})
+			})
+	})
 }
 
 export default {
-    redirect,
-    initDefaults,
-};
+	setRedirects,
+	switchInstance,
+	redirect,
+	initDefaults,
+}
