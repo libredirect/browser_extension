@@ -1,7 +1,7 @@
 ---
 name: "Report a bug"
 about: "Is libredirect not behaving as expected? Report a bug so that it can be fixed as soon as possible."
-lables:
+labels:
   - "Kind: Bug"
 ---
 

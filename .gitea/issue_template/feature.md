@@ -1,7 +1,7 @@
 ---
 name: "Suggest a new feature"
 about: "Is there something missing that you want to see in libredirect? Suggest a feature so it will exist in a future release."
-lables:
+labels:
   - "Kind: Feature"
 ---
 
