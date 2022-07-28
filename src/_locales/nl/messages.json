@@ -207,5 +207,8 @@
     },
     "unifySettings": {
         "message": "Globale instellingen"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Desktop"
     }
 }
