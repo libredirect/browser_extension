@@ -5,6 +5,7 @@ const protocols = new Array("normal", "tor", "i2p", "loki")
 
 const enable = document.getElementById("lbry-enable")
 const lbry = document.getElementById("lbry_page")
+const redirectType = document.getElementById("lbry-redirect_type")
 const frontend = document.getElementById("lbry-frontend")
 let protocol
 
@@ -33,9 +34,10 @@ function changeProtocolSettings() {
 	}
 }
 
-browser.storage.local.get(["disableLbryTargets", "protocol", "lbryFrontend"], r => {
+browser.storage.local.get(["disableLbryTargets", "protocol", "lbryFrontend", "lbryRedirectType"], r => {
 	enable.checked = !r.disableLbryTargets
 	protocol = r.protocol
+	redirectType.value = r.lbryRedirectType
 	frontend.value = r.lbryFrontend
 	changeFrontendsSettings()
 	changeProtocolSettings()
@@ -44,6 +46,7 @@ browser.storage.local.get(["disableLbryTargets", "protocol", "lbryFrontend"], r 
 lbry.addEventListener("change", () => {
 	browser.storage.local.set({
 		disableLbryTargets: !enable.checked,
+		lbryRedirectType: redirectType.value,
 		lbryFrontend: frontend.value,
 	})
 	changeFrontendsSettings()
