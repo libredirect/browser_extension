@@ -4,16 +4,14 @@
     "https://piped.kavin.rocks",
     "https://piped.tokhmi.xyz",
     "https://piped.moomoo.me",
-    "https://piped.syncpundit.com",
     "https://piped.mha.fi",
-    "https://piped.shimul.me",
+    "https://us-piped.shimul.me",
     "https://pipedus.palash.dev",
     "https://piped.waffle.wiki",
     "https://watch.whatever.social",
     "https://nitter.domain.glass",
     "https://birdsite.xanny.family",
     "https://nitter.moomoo.me",
-    "https://nitter.it",
     "https://notabird.site",
     "https://fuckthesacklers.network",
     "https://nitter.winscloud.net",
@@ -44,6 +42,8 @@
     "https://teddit.garudalinux.org",
     "https://tedd.it",
     "https://wiki.604kph.xyz",
+    "https://lingva.garudalinux.org",
+    "https://translate.dr460nf1r3.org",
     "https://searx.org",
     "https://searx.run",
     "https://search.albony.xyz",
@@ -51,9 +51,10 @@
     "https://search.dr460nf1r3.org",
     "https://search.wef.lol",
     "https://i.actionsack.com",
-    "https://rimgo.encrypted-data.xyz"
+    "https://rimgo.encrypted-data.xyz",
+    "https://beatbump.ml"
   ],
   "authenticate": [
-    "https://nitter.nixnet.services"
+    "https://nitter:nitter@nitter.nixnet.services"
   ]
 }
