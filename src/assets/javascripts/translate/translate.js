@@ -271,7 +271,7 @@ function switchInstance(url, disableOverride) {
 			return
 		}
 
-		let instancesList
+		let instancesList = []
 
 		if (protocol == "loki") {
 			if (translateFrontend == "simplyTranslate") instancesList = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomRedirects]
