@@ -1,215 +1,211 @@
 {
-    "youtube": {
-        "message": "YouTube",
-        "description": "used in the settings page"
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "Nome da Extensão"
     },
-    "ytmusic": {
-        "message": "Música YT",
-        "description": "used in the settings page"
-    },
-    "cancel": {
-        "message": "Cancelar",
-        "description": "used in instance_offline.html"
-    },
-    "unifySettings": {
-        "message": "Unificar configurações"
-    },
-    "twitter": {
-        "message": "Twitter",
-        "description": "used in the settings page"
-    },
-    "i2p": {
-        "message": "I2P"
+    "extensionDescription": {
+        "message": "Uma extensão para os navegadores de internet que redireciona os sítios/sites populares para interfaces gráficas e interfaces de textos alternativos e amigáveis ​​à sua privacidade",
+        "description": "Descrição da extensão"
     },
     "switchInstance": {
-        "message": "Mudar de instância",
-        "description": "used in manifest.json as shortcut description"
+        "message": "Trocar a Instância",
+        "description": "Utilizado no arquivo manifest.json como descrição do atalho"
     },
     "settings": {
         "message": "Configurações",
-        "description": "used in the popup"
+        "description": "Utilizado na janela da caixa de diálogo"
     },
     "general": {
         "message": "Geral",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "search": {
-        "message": "Buscar",
-        "description": "used in the settings page"
+        "message": "Pesquisar",
+        "description": "Utilizado na página de configurações"
     },
     "translate": {
         "message": "Traduzir",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "maps": {
         "message": "Mapas",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "sendFiles": {
-        "message": "Enviar arquivos",
-        "description": "used in the settings page"
+        "message": "Enviar Arquivos",
+        "description": "Utilizado na página de configurações"
+    },
+    "youtube": {
+        "message": "YouTube",
+        "description": "Utilizado na página de configurações"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "Utilizado na página de configurações"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "Utilizado na página de configurações"
     },
     "reddit": {
         "message": "Reddit",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "tiktok": {
         "message": "TikTok",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
+    },
+    "ytmusic": {
+        "message": "YouTube Músicas",
+        "description": "Utilizado na página de configurações"
     },
     "imgur": {
         "message": "Imgur",
-        "description": "used in the settings page"
-    },
-    "extensionName": {
-        "message": "LibRedirect",
-        "description": "name of the extension"
+        "description": "Utilizado na página de configurações"
     },
     "wikipedia": {
-        "message": "Wikipedia",
-        "description": "used in the settings page"
+        "message": "Wikipédia",
+        "description": "Utilizado na página de configurações"
     },
     "peertube": {
         "message": "PeerTube",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "medium": {
         "message": "Medium",
-        "description": "used in the settings page"
-    },
-    "tor": {
-        "message": "Tor",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "theme": {
         "message": "Tema",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "system": {
         "message": "Sistema",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "light": {
         "message": "Claro",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "dark": {
         "message": "Escuro",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "autoRedirect": {
-        "message": "Redirecionar automaticamente instâncias offline a instâncias online",
-        "description": "used in the settings page"
+        "message": "Redirecionar automaticamente as instâncias que estão desconectadas (off-line) para o estado de conectadas (on-line)",
+        "description": "Utilizado na página de configurações"
     },
     "exceptions": {
         "message": "Exceções",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "updateInstances": {
-        "message": "Atualizar instâncias",
-        "description": "used in the settings page"
+        "message": "Atualizar as Instâncias",
+        "description": "Utilizado na página de configurações"
     },
     "importSettings": {
-        "message": "Importar configurações",
-        "description": "used in the settings page"
+        "message": "Importar as Configurações",
+        "description": "Utilizado na página de configurações"
     },
     "exportSettings": {
-        "message": "Exportar configurações",
-        "description": "used in the settings page"
+        "message": "Exportar as Configurações",
+        "description": "Utilizado na página de configurações"
     },
     "resetSettings": {
-        "message": "Redefinir configurações",
-        "description": "used in the settings page"
+        "message": "Redefinir as Configurações",
+        "description": "Utilizado na página de configurações"
     },
     "customPopup": {
-        "message": "Personalizar popup",
-        "description": "used in the settings page"
+        "message": "Personalizar a Janela",
+        "description": "Utilizado na página de configurações"
     },
     "enable": {
-        "message": "Ligar",
-        "description": "used in the settings page"
+        "message": "Ativar",
+        "description": "Utilizado na página de configurações"
     },
     "protocol": {
         "message": "Protocolo",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "normal": {
         "message": "Normal",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "defaultInstances": {
-        "message": "Instâncias padrão",
-        "description": "used in the settings page"
+        "message": "Instâncias Padrão",
+        "description": "Utilizado na página de configurações"
     },
     "customInstances": {
-        "message": "Instâncias personalizadas",
-        "description": "used in the settings page"
+        "message": "Instâncias Personalizadas",
+        "description": "Utilizado na página de configurações"
     },
     "toggleAll": {
-        "message": "Ligar tudo",
-        "description": "used in the settings page"
+        "message": "Ativar Tudo",
+        "description": "Utilizado na página de configurações"
     },
     "frontend": {
-        "message": "Frontend",
-        "description": "used in the settings page"
+        "message": "Interface Gráfica",
+        "description": "Utilizado na página de configurações"
     },
     "notFullyPrivate": {
-        "message": "Este não é um frontend totalmente privado."
+        "message": "Esta não é uma interface gráfica totalmente privada."
     },
     "searchNote": {
-        "message": "Repare bem: Tire a máxima vantagem de pesquisas na internet fazendo o LibRedirect seu buscador padrão.",
-        "description": "used in the settings page"
+        "message": "Observação: Utilize a pesquisa do LibRedirect com todo o seu potencial para torná-lo o seu mecanismo de pesquisa padrão.",
+        "description": "Utilizado na página de configurações"
     },
     "redirectType": {
-        "message": "Tipo de redirecionamento",
-        "description": "used in the settings page"
+        "message": "Tipo de Redirecionamento",
+        "description": "Utilizado na página de configurações"
     },
     "embeddedVids": {
-        "message": "Frontend de vídeos integrados",
-        "description": "used in the settings page"
+        "message": "Interface Gráfica para Incorporar os Vídeos",
+        "description": "Utilizado na página de configurações"
     },
     "both": {
         "message": "ambos",
-        "description": "used in the settings page"
+        "description": "Utilizado na página de configurações"
     },
     "onlyEmbedded": {
-        "message": "somente integrados",
-        "description": "used in the settings page"
+        "message": "apenas os incorporados",
+        "description": "Utilizado na página de configurações"
     },
     "onlyNotEmbedded": {
-        "message": "somente não integrados",
-        "description": "used in the settings page"
+        "message": "apenas os não incorporados",
+        "description": "Utilizado na página de configurações"
     },
     "instanceOffline": {
-        "message": "Esta instância está offline, você será redirecionado após&nbsp;",
-        "description": "used in instance_offline.html"
+        "message": "Esta instância está desconectada (off-line), você será redirecionado após&nbsp;",
+        "description": "Utilizado no arquivo instance_offline.html"
+    },
+    "cancel": {
+        "message": "Cancelar",
+        "description": "Utilizado no arquivo instance_offline.html"
     },
     "instanceIsOff": {
-        "message": "Instância está offline",
-        "description": "used in instance_offline.html"
+        "message": "A instância está desconectada (off-line)",
+        "description": "Utilizado no arquivo instance_offline.html"
     },
     "redirectionCanceled": {
-        "message": "Redirecionamento cancelado",
-        "description": "used in instance_offline.js"
+        "message": "O Redirecionamento Foi Cancelado",
+        "description": "Utilizado no arquivo instance_offline.js"
     },
     "copyRaw": {
-        "message": "Copiar link original"
+        "message": "Cópiar em Formato Bruto"
     },
     "copied": {
         "message": "Copiado"
+    },
+    "unifySettings": {
+        "message": "Unificar as Configurações"
     },
     "lbry": {
         "message": "LBRY"
     },
     "testInstancesLatency": {
-        "message": "Teste latência das instâncias"
+        "message": "Testar a Latência das Instâncias"
     },
-    "extensionDescription": {
-        "message": "Uma extensão web que redireciona os sites populares para frontends e backends alternativos que respeitam sua privacidade",
-        "description": "description of the extension"
-    },
-    "instagram": {
-        "message": "Instagram",
-        "description": "used in the settings page"
+    "protocolFallback": {
+        "message": "Retornar ao normal se não houver outras instâncias disponíveis para o protocolo atual"
     }
 }
