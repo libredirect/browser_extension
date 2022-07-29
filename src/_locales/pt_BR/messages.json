@@ -1,7 +1,7 @@
 {
     "extensionName": {
         "message": "LibRedirect",
-        "description": "Nome da Extensão"
+        "description": "Nome da extensão"
     },
     "extensionDescription": {
         "message": "Uma extensão para os navegadores de internet que redireciona os sítios/sites populares para interfaces gráficas e interfaces de textos alternativos e amigáveis ​​à sua privacidade",
@@ -56,7 +56,7 @@
         "description": "Utilizado na página de configurações"
     },
     "ytmusic": {
-        "message": "YouTube Músicas",
+        "message": "Músicas do YouTube",
         "description": "Utilizado na página de configurações"
     },
     "imgur": {
@@ -163,15 +163,15 @@
         "description": "Utilizado na página de configurações"
     },
     "both": {
-        "message": "ambos",
+        "message": "Ambos",
         "description": "Utilizado na página de configurações"
     },
     "onlyEmbedded": {
-        "message": "apenas os incorporados",
+        "message": "Apenas os incorporados",
         "description": "Utilizado na página de configurações"
     },
     "onlyNotEmbedded": {
-        "message": "apenas os não incorporados",
+        "message": "Apenas os não incorporados",
         "description": "Utilizado na página de configurações"
     },
     "instanceOffline": {
@@ -191,7 +191,7 @@
         "description": "Utilizado no arquivo instance_offline.js"
     },
     "copyRaw": {
-        "message": "Cópiar em Formato Bruto"
+        "message": "Copiar o Link Original"
     },
     "copied": {
         "message": "Copiado"
