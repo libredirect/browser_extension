@@ -431,7 +431,7 @@ def searx_searxng():
                 searxngList['tor'].append(item[:-1])
             else:
                 searxList['tor'].append(item[:-1])
-        elif re.search(torRegex, item[:-1]):
+        elif re.search(i2pRegex, item[:-1]):
             if (rJson['instances'][item].get('generator') == 'searxng'):
                 searxngList['i2p'].append(item[:-1])
             else:

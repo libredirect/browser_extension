@@ -40,53 +40,61 @@ async function initcloudflareBlackList() {
 function updateInstances() {
 	return new Promise(async resolve => {
 		let http = new XMLHttpRequest()
+		let fallback = new XMLHttpRequest()
 		http.open("GET", "https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json", false)
 		http.send(null)
-		if (http.status === 200) {
-			await initcloudflareBlackList()
-			const instances = JSON.parse(http.responseText)
-
-			youtubeHelper.setRedirects({
-				invidious: instances.invidious,
-				piped: instances.piped,
-				pipedMaterial: instances.pipedMaterial,
-			})
-			twitterHelper.setRedirects(instances.nitter)
-			instagramHelper.setRedirects(instances.bibliogram)
-			redditHelper.setRedirects({
-				libreddit: instances.libreddit,
-				teddit: instances.teddit,
-			})
-			translateHelper.setRedirects({
-				simplyTranslate: instances.simplyTranslate,
-				lingva: instances.lingva,
-			})
-			searchHelper.setRedirects({
-				searx: instances.searx,
-				searxng: instances.searxng,
-				whoogle: instances.whoogle,
-				librex: instances.librex,
-			})
-			wikipediaHelper.setRedirects(instances.wikiless)
-			mediumHelper.setRedirects(instances.scribe)
-			quoraHelper.setRedirects(instances.quetre)
-			libremdbHelper.setRedirects(instances.libremdb)
-			sendTargetsHelper.setRedirects(instances.send)
-			tiktokHelper.setRedirects(instances.proxiTok)
-			lbryHelper.setRedirects(instances.librarian)
-			reutersHelper.setRedirects(instances.neuters)
-			youtubeMusicHelper.setRedirects({
-				beatbump: instances.beatbump,
-				hyperpipe: instances.hyperpipe,
-			})
-			mapsHelper.setRedirects(instances.facil)
-			peertubeHelper.setRedirects(instances.simpleertube)
-
-			console.info("Successfully updated Instances")
-			resolve(true)
-			return
+		if (http.status != 200) {
+			fallback.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/data.json", false)
+			fallback.send(null)
+			if (fallback.status === 200) {
+				http = fallback
+			} else {
+				resolve()
+				return
+			}
 		}
-		resolve()
+		await initcloudflareBlackList()
+		const instances = JSON.parse(http.responseText)
+
+		youtubeHelper.setRedirects({
+			invidious: instances.invidious,
+			piped: instances.piped,
+			pipedMaterial: instances.pipedMaterial,
+		})
+		twitterHelper.setRedirects(instances.nitter)
+		instagramHelper.setRedirects(instances.bibliogram)
+		redditHelper.setRedirects({
+			libreddit: instances.libreddit,
+			teddit: instances.teddit,
+		})
+		translateHelper.setRedirects({
+			simplyTranslate: instances.simplyTranslate,
+			lingva: instances.lingva,
+		})
+		searchHelper.setRedirects({
+			searx: instances.searx,
+			searxng: instances.searxng,
+			whoogle: instances.whoogle,
+			librex: instances.librex,
+		})
+		wikipediaHelper.setRedirects(instances.wikiless)
+		mediumHelper.setRedirects(instances.scribe)
+		quoraHelper.setRedirects(instances.quetre)
+		libremdbHelper.setRedirects(instances.libremdb)
+		sendTargetsHelper.setRedirects(instances.send)
+		tiktokHelper.setRedirects(instances.proxiTok)
+		lbryHelper.setRedirects(instances.librarian)
+		reutersHelper.setRedirects(instances.neuters)
+		youtubeMusicHelper.setRedirects({
+			beatbump: instances.beatbump,
+			hyperpipe: instances.hyperpipe,
+		})
+		mapsHelper.setRedirects(instances.facil)
+		peertubeHelper.setRedirects(instances.simpleertube)
+
+		console.info("Successfully updated Instances")
+		resolve(true)
+		return
 	})
 }
 

@@ -2,7 +2,7 @@ window.browser = window.browser || window.chrome
 
 import utils from "./utils.js"
 
-let targets = ["odysee.com"]
+const targets = [/^https?:\/{2}odysee\.com/]
 
 const frontends = new Array("librarian")
 const protocols = new Array("normal", "tor", "i2p", "loki")
@@ -36,6 +36,7 @@ let disableLbryTargets,
 	protocol,
 	protocolFallback,
 	lbryTargetsRedirects,
+	lbryRedirectType,
 	librarianNormalRedirectsChecks,
 	librarianNormalCustomRedirects,
 	librarianTorRedirectsChecks,
@@ -53,6 +54,7 @@ function init() {
 				"protocol",
 				"protocolFallback",
 				"lbryTargetsRedirects",
+				"lbryRedirectType",
 				"librarianNormalRedirectsChecks",
 				"librarianNormalCustomRedirects",
 				"librarianTorRedirectsChecks",
@@ -67,6 +69,7 @@ function init() {
 				protocol = r.protocol
 				protocolFallback = r.protocolFallback
 				lbryTargetsRedirects = r.lbryTargetsRedirects
+				lbryRedirectType = r.lbryRedirectType
 				librarianNormalRedirectsChecks = r.librarianNormalRedirectsChecks
 				librarianNormalCustomRedirects = r.librarianNormalCustomRedirects
 				librarianTorRedirectsChecks = r.librarianTorRedirectsChecks
@@ -84,6 +87,24 @@ browser.storage.onChanged.addListener(init)
 
 function all() {
 	return [...redirects.librarian.normal, ...redirects.librarian.tor, ...librarianNormalCustomRedirects, ...librarianTorCustomRedirects, ...librarianI2pCustomRedirects, ...librarianLokiCustomRedirects]
+}
+
+function getInstancesList() {
+	let tmpList = []
+	switch (protocol) {
+		case "loki":
+			tmpList = [...librarianLokiCustomRedirects]
+			break
+		case "i2p":
+			tmpList = [...librarianI2pRedirectsChecks, ...librarianI2pCustomRedirects]
+			break
+		case "tor":
+			tmpList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects]
+	}
+	if ((tmpList.length === 0 && protocolFallback) || protocol == "normal") {
+		tmpList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects]
+	}
+	return tmpList
 }
 
 function switchInstance(url, disableOverride) {
@@ -122,37 +143,27 @@ function switchInstance(url, disableOverride) {
 function redirect(url, type, initiator, disableOverride) {
 	if (disableLbryTargets && !disableOverride) return
 	if (initiator && (all().includes(initiator.origin) || targets.includes(initiator.host))) return
-	if (!targets.includes(url.host)) return
-	if (type != ("main_frame" || "sub_frame")) return
-	//https://odysee.com/$/embed/the-anti-smartphone-revolution/22b482e450c4ca13c464eee8f51b3a52bbb942ae?r=7pAWcQybShS63wz486r8wVv9FpsDJ47A
-	// to
-	//https://{instance}/embed/@Coldfusion:f/the-anti-smartphone-revolution:2
+	if (!targets.some(rx => rx.test(url.href))) return
+	if ((type == "main_frame" && lbryRedirectType == "sub_frame") || (type == "sub_frame" && lbryRedirectType == "main_frame")) return
 
-	let instancesList = []
-	switch (lbryFrontend) {
-		case "librarian":
-			switch (protocol) {
-				case "loki":
-					instancesList = [...librarianLokiCustomRedirects]
-					break
-				case "i2p":
-					instancesList = [...librarianI2pRedirectsChecks, ...librarianI2pCustomRedirects]
-					break
-				case "tor":
-					instancesList = [...librarianTorRedirectsChecks, ...librarianTorCustomRedirects]
+	const instancesList = getInstancesList()
+	switch (type) {
+		case "main_frame":
+			switch (lbryFrontend) {
+				case "librarian":
+					if (instancesList.length === 0) return
+					const randomInstance = utils.getRandomInstance(instancesList)
+					return `${randomInstance}${url.pathname}${url.search}`
+				case "lbryDesktop":
+					if (type == "main_frame") {
+						return url.href.replace(/^https?:\/{2}odysee\.com\//, "lbry://").replace(/:(?=[a-zA-Z0-9])/g, "#")
+					}
 			}
-			if ((instancesList.length === 0 && protocolFallback) || protocol == "normal") {
-				instancesList = [...librarianNormalRedirectsChecks, ...librarianNormalCustomRedirects]
-			}
-			break
-		case "lbryDesktop":
-			if (type == "main_frame") {
-				return url.href.replace(/^https?:\/{2}odysee\.com\//, "lbry://").replace(/:(?=[a-zA-Z0-9])/g, "#")
-			}
+		case "sub_frame":
 			if (instancesList.length === 0) return
+			const randomInstance = utils.getRandomInstance(instancesList)
+			return `${randomInstance}${url.pathname}${url.search}`.replace(/\/(?=[a-f0-9]{40})/, ":")
 	}
-	const randomInstance = utils.getRandomInstance(instancesList)
-	return `${randomInstance}${url.pathname}${url.search}`
 }
 
 function initDefaults() {
@@ -169,6 +180,7 @@ function initDefaults() {
 						disableLbryTargets: true,
 						lbryFrontend: "librarian",
 						lbryTargetsRedirects: redirects,
+						lbryRedirectType: "both",
 
 						librarianNormalRedirectsChecks: [...redirects.librarian.normal],
 						librarianNormalCustomRedirects: [],

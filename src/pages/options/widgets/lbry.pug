@@ -12,6 +12,13 @@ section#lbry_page.option-block
             option(value="librarian") Librarian
             option(value="lbryDesktop" data-localise="__MSG_lbryDesktop__") LBRY Desktop
 
+    .some-block.option-block
+        h4(data-localise="__MSG_redirectType__") Redirect Type
+        select#lbry-redirect_type
+            option(value="both" data-localise="__MSG_both__") both
+            option(value="sub_frame" data-localise="__MSG_onlyEmbedded__") Only Embedded
+            option(value="main_frame" data-localise="__MSG_onlyNotEmbedded__") Only Not Embedded
+
     #librarian
         hr
         .normal
