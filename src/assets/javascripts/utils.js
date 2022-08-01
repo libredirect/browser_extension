@@ -247,34 +247,65 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
 	})
 }
 
-async function ping(href) {
+function ping(href) {
 	return new Promise(async resolve => {
+		let average = 0
+		let time
+		for (let i = 0; i < 3; i++) {
+			time = await pingOnce(href)
+			if (i == 0) continue
+			if (time >= 5000) {
+				resolve(time)
+				return
+			}
+			average += time
+		}
+		average = parseInt(average / 3)
+		resolve(average)
+	})
+}
+
+function pingOnce(href) {
+	return new Promise(async resolve => {
+		let started
 		let http = new XMLHttpRequest()
-		http.open("GET", `${href}?_=${new Date().getTime()}`, /*async*/ true)
 		http.timeout = 5000
-		let started = new Date().getTime()
+		http.ontimeout = () => resolve(5000)
+		http.onerror = () => resolve()
 		http.onreadystatechange = () => {
 			if (http.readyState == 2) {
 				if (http.status == 200) {
 					let ended = new Date().getTime()
 					http.abort()
 					resolve(ended - started)
-				} else resolve(5000 + http.status)
+				} else {
+					resolve(5000 + http.status)
+				}
 			}
+
 		}
-		http.ontimeout = () => resolve(5000)
-		http.onerror = () => resolve()
-		try {
-			http.send(null)
-		} catch (exception) {
-			resolve()
-		}
+		http.open("GET", `${href}?_=${new Date().getTime()}`, true)
+		started = new Date().getTime()
+		http.send(null)
 	})
 }
+ 
 
-async function testLatency(element, instances) {
+async function testLatency(element, instances, frontend) {
 	return new Promise(async resolve => {
 		let myList = {}
+		let latencyThreshold
+		let redirectsChecks = []
+		browser.storage.local.get(
+			[
+				"latencyThreshold",
+				`${frontend}NormalRedirectsChecks`
+			],
+			r => {
+				latencyThreshold = r.latencyThreshold
+				redirectsChecks = r[`${frontend}NormalRedirectsChecks`]
+			}
+		)
 		for (const href of instances)
 			await ping(href).then(time => {
 				if (time) {
@@ -283,6 +314,12 @@ async function testLatency(element, instances) {
 					if (time <= 1000) color = "green"
 					else if (time <= 2000) color = "orange"
 					else color = "red"
+
+					if (time > latencyThreshold) {
+						redirectsChecks.splice(redirectsChecks.indexOf(href), 1)
+					}
+
+					browser.storage.local.set({ [`${frontend}NormalRedirectsChecks`]: redirectsChecks })
 
 					let text
 					if (time == 5000) text = "5000ms+"
@@ -487,7 +524,7 @@ function latency(name, frontend, document, location) {
 			let redirects = r[key]
 			const oldHtml = latencyLabel.innerHTML
 			latencyLabel.innerHTML = "..."
-			testLatency(latencyLabel, redirects[frontend].normal).then(r => {
+			testLatency(latencyLabel, redirects[frontend].normal, frontend).then(r => {
 				browser.storage.local.set({ [`${frontend}Latency`]: r })
 				latencyLabel.innerHTML = oldHtml
 				processDefaultCustomInstances(name, frontend, "normal", document)
