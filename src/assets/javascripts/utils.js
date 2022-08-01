@@ -25,13 +25,15 @@ function getRandomInstance(instances) {
 
 let cloudflareBlackList = []
 let authenticateBlackList = []
-async function initcloudflareBlackList() {
+let offlineBlacklist = []
+async function initBlackList() {
 	return new Promise(resolve => {
 		fetch("/instances/blacklist.json")
 			.then(response => response.text())
 			.then(data => {
 				cloudflareBlackList = JSON.parse(data).cloudflare
 				authenticateBlackList = JSON.parse(data).authenticate
+				offlineBlacklist = JSON.parse(data).offlineBlacklist
 				resolve()
 			})
 	})
@@ -53,7 +55,7 @@ function updateInstances() {
 				return
 			}
 		}
-		await initcloudflareBlackList()
+		await initBlackList()
 		const instances = JSON.parse(http.responseText)
 
 		youtubeHelper.setRedirects({
@@ -114,7 +116,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
 	let nameCustomInstances = []
 	let nameCheckListElement = nameProtocolElement.getElementsByClassName("checklist")[0]
 
-	await initcloudflareBlackList()
+	await initBlackList()
 
 	let nameDefaultRedirects
 
@@ -162,6 +164,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
 		...redirects[name][protocol].map(x => {
 			const cloudflare = cloudflareBlackList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ""
 			const authenticate = authenticateBlackList.includes(x) ? ' <span style="color:orange;">authenticate</span>' : ""
+			const offline = offlineBlacklist.includes(x) ? ' <span style="color:grey;">offline</span>' : ""
 
 			let ms = instancesLatency[x]
 			let latencyColor = ms <= 1000 ? "green" : ms <= 2000 ? "orange" : "red"
@@ -172,7 +175,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
 
 			const latency = x in instancesLatency ? '<span style="color:' + latencyColor + ';">' + latencyLimit + "</span>" : ""
 
-			let warnings = [cloudflare, authenticate, latency].join(" ")
+			let warnings = [cloudflare, authenticate, offline, latency].join(" ")
 			return `<div>
                     <x><a href="${x}" target="_blank">${x}</a>${warnings}</x>
                     <input type="checkbox" class="${x}"/>
