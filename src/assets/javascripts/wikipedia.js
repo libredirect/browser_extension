@@ -113,26 +113,6 @@ function initWikilessCookies(test, from) {
 	})
 }
 
-function pasteWikilessCookies() {
-	return new Promise(async resolve => {
-		await init()
-		if (disableWikipedia || protocol === undefined) {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...wikilessLokiCustomRedirects]
-		else if (protocol == "i2p") checkedInstances = [...wikilessI2pCustomRedirects, ...wikilessI2pRedirectsChecks]
-		else if (protocol == "tor") checkedInstances = [...wikilessTorRedirectsChecks, ...wikilessTorCustomRedirects]
-		if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...wikilessNormalRedirectsChecks, ...wikilessNormalCustomRedirects]
-		}
-		utils.getCookiesFromStorage("wikiless", checkedInstances, "theme")
-		utils.getCookiesFromStorage("wikiless", checkedInstances, "default_lang")
-		resolve()
-	})
-}
-
 function redirect(url, disableOverride) {
 	if (disableWikipedia && !disableOverride) return
 	if (!targets.test(url.href)) return
@@ -252,10 +232,7 @@ function initDefaults() {
 
 export default {
 	setRedirects,
-
 	initWikilessCookies,
-	pasteWikilessCookies,
-
 	redirect,
 	initDefaults,
 	switchInstance,

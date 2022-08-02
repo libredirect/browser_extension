@@ -573,25 +573,6 @@ function copyPasteInvidiousCookies(test, from) {
 	})
 }
 
-function pasteInvidiousCookies() {
-	return new Promise(async resolve => {
-		await init()
-		if (disableYoutube || youtubeFrontend != "invidious") {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...invidiousLokiCustomRedirects]
-		else if (protocol == "i2p") checkedInstances = [...invidiousI2pCustomRedirects]
-		else if (protocol == "tor") checkedInstances = [...invidiousTorRedirectsChecks, ...invidiousTorCustomRedirects]
-		if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...invidiousNormalRedirectsChecks, ...invidiousNormalCustomRedirects]
-		}
-		utils.getCookiesFromStorage("invidious", checkedInstances, "PREFS")
-		resolve()
-	})
-}
-
 function copyPastePipedLocalStorage(test, url, tabId) {
 	return new Promise(async resolve => {
 		await init()
@@ -619,7 +600,7 @@ function copyPastePipedLocalStorage(test, url, tabId) {
 			if (protocol == "loki") checkedInstances = [...pipedLokiCustomRedirects]
 			else if (protocol == "i2p") checkedInstances = [...pipedI2pCustomRedirects]
 			else if (protocol == "tor") checkedInstances = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects]
-			if ((instancesList.length === 0 && protocolFallback) || protocol == "normal") {
+			if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
 				checkedInstances = [...pipedNormalCustomRedirects, ...pipedNormalRedirectsChecks]
 			}
 			const i = checkedInstances.indexOf(protocolHost)
@@ -634,31 +615,6 @@ function copyPastePipedLocalStorage(test, url, tabId) {
 			}
 		}
 		resolve(true)
-	})
-}
-function pastePipedLocalStorage() {
-	return new Promise(async resolve => {
-		await init()
-		if (disableYoutube || youtubeFrontend != "piped") {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...pipedLokiCustomRedirects]
-		else if (protocol == "i2p") checkedInstances = [...pipedI2pCustomRedirects]
-		else if (protocol == "tor") checkedInstances = [...pipedTorRedirectsChecks, ...pipedTorCustomRedirects]
-		if ((instancesList.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...pipedNormalCustomRedirects, ...pipedNormalRedirectsChecks]
-		}
-		for (const to of checkedInstances) {
-			browser.tabs.create({ url: to }, tab =>
-				browser.tabs.executeScript(tab.id, {
-					file: "/assets/javascripts/youtube/set_piped_preferences.js",
-					runAt: "document_start",
-				})
-			)
-		}
-		resolve()
 	})
 }
 
@@ -708,32 +664,6 @@ function copyPastePipedMaterialLocalStorage(test, url, tabId) {
 				)
 		}
 		resolve(true)
-	})
-}
-
-function pastePipedMaterialLocalStorage() {
-	return new Promise(async resolve => {
-		await init()
-		if (disableYoutube || youtubeFrontend != "pipedMaterial") {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...pipedMaterialLokiCustomRedirects]
-		else if (protocol == "i2p") checkedInstances = [...pipedMaterialI2pCustomRedirects]
-		else if (protocol == "tor") checkedInstances = [...pipedMaterialTorCustomRedirects] //...pipedMaterialTorRedirectsChecks,
-		if ((instancesList.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...pipedMaterialNormalRedirectsChecks, ...pipedMaterialNormalCustomRedirects]
-		}
-		for (const to of checkedInstances) {
-			browser.tabs.create({ url: to }, tab =>
-				browser.tabs.executeScript(tab.id, {
-					file: "/assets/javascripts/youtube/set_pipedMaterial_preferences.js",
-					runAt: "document_start",
-				})
-			)
-		}
-		resolve()
 	})
 }
 
@@ -843,11 +773,8 @@ function removeXFrameOptions(e) {
 export default {
 	setRedirects,
 	copyPastePipedLocalStorage,
-	pastePipedLocalStorage,
 	copyPastePipedMaterialLocalStorage,
-	pastePipedMaterialLocalStorage,
 	copyPasteInvidiousCookies,
-	pasteInvidiousCookies,
 	redirect,
 	reverse,
 	switchInstance,

@@ -160,33 +160,6 @@ function copyPasteLingvaLocalStorage(test, url, tabId) {
 	})
 }
 
-function pasteLingvaLocalStorage() {
-	return new Promise(async resolve => {
-		await init()
-		if (translateDisable || translateFrontend != "lingva") {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...lingvaLokiCustomRedirects]
-		//...lingvaLokiRedirectsChecks,
-		else if (protocol == "i2p") checkedInstances = [...lingvaI2pCustomRedirects]
-		//...lingvaI2pRedirectsChecks,
-		else if (protocol == "tor") checkedInstances = [...lingvaTorRedirectsChecks, ...lingvaTorCustomRedirects]
-		if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...lingvaNormalRedirectsChecks, ...lingvaNormalCustomRedirects]
-		}
-		for (const to of checkedInstances)
-			browser.tabs.create({ url: to }, tab =>
-				browser.tabs.executeScript(tab.id, {
-					file: "/assets/javascripts/translate/set_lingva_preferences.js",
-					runAt: "document_start",
-				})
-			)
-		resolve()
-	})
-}
-
 function copyPasteSimplyTranslateCookies(test, from) {
 	return new Promise(async resolve => {
 		await init()
@@ -220,28 +193,6 @@ function copyPasteSimplyTranslateCookies(test, from) {
 			await utils.copyCookie("simplyTranslate", from, checkedInstances, "use_text_fields")
 		}
 		resolve(true)
-	})
-}
-
-function pasteSimplyTranslateCookies() {
-	return new Promise(async resolve => {
-		await init()
-		if (translateDisable || translateFrontend != "simplyTranslate") {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomRedirects]
-		else if (protocol == "i2p") checkedInstances = [...simplyTranslateI2pCustomRedirects, ...simplyTranslateI2pRedirectsChecks]
-		else if (protocol == "tor") checkedInstances = [...simplyTranslateTorRedirectsChecks, ...simplyTranslateTorCustomRedirects]
-		if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...simplyTranslateNormalRedirectsChecks, ...simplyTranslateNormalCustomRedirects]
-		}
-		utils.getCookiesFromStorage("simplyTranslate", checkedInstances, "from_lang")
-		utils.getCookiesFromStorage("simplyTranslate", checkedInstances, "to_lang")
-		utils.getCookiesFromStorage("simplyTranslate", checkedInstances, "tts_enabled")
-		utils.getCookiesFromStorage("simplyTranslate", checkedInstances, "use_text_fields")
-		resolve()
 	})
 }
 
@@ -403,9 +354,7 @@ function initDefaults() {
 
 export default {
 	copyPasteSimplyTranslateCookies,
-	pasteSimplyTranslateCookies,
 	copyPasteLingvaLocalStorage,
-	pasteLingvaLocalStorage,
 	setRedirects,
 	redirect,
 	initDefaults,

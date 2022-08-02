@@ -56,31 +56,7 @@ importSettingsElement.addEventListener("change", () => {
 	reader.onload = async () => {
 		const data = JSON.parse(reader.result)
 		if ("theme" in data && "disableImgur" in data && "imgurRedirects" in data) {
-			browser.storage.local.clear(() => {
-				browser.storage.local.set({ ...data }, async () => {
-					await youtubeHelper.pasteInvidiousCookies()
-					await youtubeHelper.pastePipedLocalStorage()
-					await youtubeHelper.pastePipedMaterialLocalStorage()
-
-					await translateHelper.pasteSimplyTranslateCookies()
-					await translateHelper.pasteLingvaLocalStorage()
-
-					await twitterHelper.pasteNitterCookies()
-
-					await wikipediaHelper.pasteWikilessCookies()
-
-					await searchHelper.pasteSearxCookies()
-					await searchHelper.pasteSearxngCookies()
-					await searchHelper.pasteLibrexCookies()
-
-					await redditHelper.pasteLibredditCookies()
-					await redditHelper.pasteTedditCookies()
-
-					await tiktokHelper.pasteProxiTokCookies()
-
-					location.reload()
-				})
-			})
+			browser.storage.local.clear(() => browser.storage.local.set({ ...data }, () => location.reload()))
 		} else {
 			console.log("incompatible settings")
 			importError()
@@ -156,14 +132,14 @@ protocolFallbackCheckbox.addEventListener("change", event => {
 	browser.storage.local.set({ protocolFallback: event.target.checked })
 })
 
-let latencyOutput = document.getElementById("latency-output")
-let latencyInput = document.getElementById("latency-input")
-latencyInput.addEventListener("change", event => {
-	browser.storage.local.set({ latencyThreshold: event.target.value})
-})
-latencyInput.addEventListener("input", event => {
-	latencyOutput.value = event.target.value
-})
+// let latencyOutput = document.getElementById("latency-output")
+// let latencyInput = document.getElementById("latency-input")
+// latencyInput.addEventListener("change", event => {
+// 	browser.storage.local.set({ latencyThreshold: event.target.value })
+// })
+// latencyInput.addEventListener("input", event => {
+// 	latencyOutput.value = event.target.value
+// })
 
 let nameCustomInstanceInput = document.getElementById("exceptions-custom-instance")
 let instanceTypeElement = document.getElementById("exceptions-custom-instance-type")
@@ -198,7 +174,7 @@ browser.storage.local.get(
 		themeElement.value = r.theme
 		protocolElement.value = r.protocol
 		protocolFallbackCheckbox.checked = r.protocolFallback
-		latencyOutput.value = r.latencyThreshold
+		// latencyOutput.value = r.latencyThreshold
 		// firstPartyIsolate.checked = r.firstPartyIsolate;
 
 		let protocolFallbackElement = document.getElementById("protocol-fallback")

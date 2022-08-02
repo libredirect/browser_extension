@@ -240,41 +240,6 @@ function initSearxCookies(test, from) {
 	})
 }
 
-function pasteSearxCookies() {
-	return new Promise(async resolve => {
-		await init()
-		if (disableSearch || searchFrontend != "searx") {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...searxLokiCustomRedirects]
-		else if (protocol == "i2p") checkedInstances = [...searxI2pCustomRedirects, ...searxI2pRedirectsChecks]
-		else if (protocol == "tor") checkedInstances = [...searxTorRedirectsChecks, ...searxTorCustomRedirects]
-		if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...searxNormalRedirectsChecks, ...searxNormalCustomRedirects]
-		}
-		utils.getCookiesFromStorage("searx", checkedInstances, "advanced_search")
-		utils.getCookiesFromStorage("searx", checkedInstances, "autocomplete")
-		utils.getCookiesFromStorage("searx", checkedInstances, "categories")
-		utils.getCookiesFromStorage("searx", checkedInstances, "disabled_engines")
-		utils.getCookiesFromStorage("searx", checkedInstances, "disabled_plugins")
-		utils.getCookiesFromStorage("searx", checkedInstances, "doi_resolver")
-		utils.getCookiesFromStorage("searx", checkedInstances, "enabled_engines")
-		utils.getCookiesFromStorage("searx", checkedInstances, "enabled_plugins")
-		utils.getCookiesFromStorage("searx", checkedInstances, "image_proxy")
-		utils.getCookiesFromStorage("searx", checkedInstances, "language")
-		utils.getCookiesFromStorage("searx", checkedInstances, "locale")
-		utils.getCookiesFromStorage("searx", checkedInstances, "method")
-		utils.getCookiesFromStorage("searx", checkedInstances, "oscar-style")
-		utils.getCookiesFromStorage("searx", checkedInstances, "results_on_new_tab")
-		utils.getCookiesFromStorage("searx", checkedInstances, "safesearch")
-		utils.getCookiesFromStorage("searx", checkedInstances, "theme")
-		utils.getCookiesFromStorage("searx", checkedInstances, "tokens")
-		resolve()
-	})
-}
-
 function initSearxngCookies(test, from) {
 	return new Promise(async resolve => {
 		await init()
@@ -326,43 +291,6 @@ function initSearxngCookies(test, from) {
 	})
 }
 
-function pasteSearxngCookies() {
-	return new Promise(async resolve => {
-		await init()
-		if ((disableSearch || searchFrontend != "searxng", protocol === undefined)) {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...searxngLokiCustomRedirects]
-		else if (protocol == "i2p") checkedInstances = [...searxngI2pCustomRedirects, ...searxngI2pRedirectsChecks]
-		else if (protocol == "tor") checkedInstances = [...searxngTorRedirectsChecks, ...searxngTorCustomRedirects]
-		if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...searxngNormalRedirectsChecks, ...searxngNormalCustomRedirects]
-		}
-		utils.getCookiesFromStorage("searxng", checkedInstances, "autocomplete")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "categories")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "disabled_engines")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "disabled_plugins")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "doi_resolver")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "enabled_plugins")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "enabled_engines")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "image_proxy")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "infinite_scroll")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "language")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "locale")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "maintab")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "method")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "query_in_title")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "results_on_new_tab")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "safesearch")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "simple_style")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "theme")
-		utils.getCookiesFromStorage("searxng", checkedInstances, "tokens")
-		resolve()
-	})
-}
-
 function initLibrexCookies(test, from) {
 	return new Promise(async resolve => {
 		await init()
@@ -400,32 +328,6 @@ function initLibrexCookies(test, from) {
 			await utils.copyCookie("librex", from, checkedInstances, "wikiless")
 		}
 		resolve(true)
-	})
-}
-
-function pasteLibrexCookies() {
-	return new Promise(async resolve => {
-		await init()
-		if ((disableSearch || searchFrontend != "librex", protocol === undefined)) {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...librexLokiCustomRedirects]
-		else if (protocol == "i2p") checkedInstances = [...librexI2pCustomRedirects, ...librexI2pRedirectsChecks]
-		else if (protocol == "tor") checkedInstances = [...librexTorRedirectsChecks, ...librexTorCustomRedirects]
-		if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...librexNormalRedirectsChecks, ...librexNormalCustomRedirects]
-		}
-		utils.getCookiesFromStorage("librex", checkedInstances, "bibliogram")
-		utils.getCookiesFromStorage("librex", checkedInstances, "disable_special")
-		utils.getCookiesFromStorage("librex", checkedInstances, "invidious")
-		utils.getCookiesFromStorage("librex", checkedInstances, "libreddit")
-		utils.getCookiesFromStorage("librex", checkedInstances, "nitter")
-		utils.getCookiesFromStorage("librex", checkedInstances, "proxitok")
-		utils.getCookiesFromStorage("librex", checkedInstances, "theme")
-		utils.getCookiesFromStorage("librex", checkedInstances, "wikiless")
-		resolve()
 	})
 }
 
@@ -691,11 +593,8 @@ function initDefaults() {
 export default {
 	setRedirects,
 	initSearxCookies,
-	pasteSearxCookies,
 	initSearxngCookies,
-	pasteSearxngCookies,
 	initLibrexCookies,
-	pasteLibrexCookies,
 	redirect,
 	initDefaults,
 	switchInstance,
