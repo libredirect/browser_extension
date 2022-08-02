@@ -315,19 +315,19 @@ function copyCookie(frontend, targetUrl, urls, name) {
 						for (const url of urls) {
 							const setQuery = r.firstPartyIsolate
 								? {
-										url: url,
-										name: name,
-										value: cookie.value,
-										secure: true,
-										firstPartyDomain: new URL(url).hostname,
-								  }
+									url: url,
+									name: name,
+									value: cookie.value,
+									secure: true,
+									firstPartyDomain: new URL(url).hostname,
+								}
 								: {
-										url: url,
-										name: name,
-										value: cookie.value,
-										secure: true,
-										expirationDate: cookie.expirationDate,
-								  }
+									url: url,
+									name: name,
+									value: cookie.value,
+									secure: true,
+									expirationDate: cookie.expirationDate,
+								}
 							browser.cookies.set(setQuery, () => browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve()))
 						}
 						break
@@ -346,20 +346,20 @@ function getCookiesFromStorage(frontend, urls, name) {
 		for (const url of urls) {
 			let query = r.firstPartyIsolate
 				? {
-						url: url,
-						name: cookie.name,
-						value: cookie.value,
-						secure: true,
-						expirationDate: null,
-						firstPartyDomain: new URL(url).hostname,
-				  }
+					url: url,
+					name: cookie.name,
+					value: cookie.value,
+					secure: true,
+					expirationDate: null,
+					firstPartyDomain: new URL(url).hostname,
+				}
 				: {
-						url: url,
-						name: cookie.name,
-						value: cookie.value,
-						secure: true,
-						expirationDate: cookie.expirationDate,
-				  }
+					url: url,
+					name: cookie.name,
+					value: cookie.value,
+					secure: true,
+					expirationDate: cookie.expirationDate,
+				}
 			browser.cookies.set(query)
 		}
 	})
@@ -368,96 +368,25 @@ function getCookiesFromStorage(frontend, urls, name) {
 function getPreferencesFromToken(frontend, targetUrl, urls, name, endpoint) {
 	return new Promise(resolve => {
 		browser.storage.local.get("firstPartyIsolate", r => {
-			let query
-			if (!r.firstPartyIsolate) query = { url: protocolHost(targetUrl), name: name }
-			else
-				query = {
-					url: protocolHost(targetUrl),
-					name: name,
-					firstPartyDomain: null,
-				}
-			browser.cookies.getAll(query, async cookies => {
-				for (const cookie of cookies)
-					if (cookie.name == name) {
-							const setQuery = r.firstPartyIsolate
-								? {
-										url: targetUrl,
-										name: name,
-										value: cookie.value,
-										secure: true,
-										firstPartyDomain: new URL(targetUrl).hostname,
-								  }
-								: {
-										url: targetUrl,
-										name: name,
-										value: cookie.value,
-										secure: true,
-										expirationDate: cookie.expirationDate,
-								  }
-						console.log(toString(targetUrl))
-									const http = new XMLHttpRequest();
-									http.open("GET", targetUrl + endpoint)
-									http.setRequestHeader("Cookie", name + "=" + cookie.value)
-									http.send(null)
-									const preferences = http.responseText
-							//console.log(preferences)
-
-
-							browser.cookies.set(setQuery, () => browser.storage.local.set({ [`${frontend}_${name}`]: preferences }, () => resolve()))
-						break
-					}
-				resolve()
-			})
+			const http = new XMLHttpRequest();
+			const url = `${targetUrl}${endpoint}`
+			http.open("GET", url, false)
+			http.setRequestHeader("Cookie", `${name}=${cookie.value}`)
+			http.send(null)
+			const preferences = JSON.parse(http.responseText)
+			let formdata = new FormData();
+			for (var key in preferences) formdata.append(key, preferences[key]);
+			for (const url of urls) {
+				const http = new XMLHttpRequest();
+				http.open("POST", `${url}/settings/stay`, false)
+				http.send(null)
+			}
+			resolve()
+			return
 		})
 	})
 }
 
-
-function setPreferencesFromToken(frontend, urls, name) {
-	let key = `${frontend}_${name}`
-	let formdata = ""
-	browser.storage.local.get(key, r => {
-		//console.log(r[key])
-		const preferences = JSON.parse(r[key])
-		if (preferences === undefined) return
-		for (const prefName of names(preferences)) {
-			if (formdata != "") {
-				formdata += "&"
-			}
-			formdata += prefName + "=" + preferences[prefName]
-		}
-		for (const url of urls) {
-
-			const http = new XMLHttpRequest();
-			http.open("POST", url + "/settings")
-			http.send(formdata)
-
-
-
-
-
-			/*
-			let query = r.firstPartyIsolate
-				? {
-						url: url,
-						name: cookie.name,
-						value: cookie.value,
-						secure: true,
-						expirationDate: null,
-						firstPartyDomain: new URL(url).hostname,
-				  }
-				: {
-						url: url,
-						name: cookie.name,
-						value: cookie.value,
-						secure: true,
-						expirationDate: cookie.expirationDate,
-				  }
-			browser.cookies.set(query)
-			*/
-		}
-	})
-}
 
 function copyRaw(test, copyRawElement) {
 	return new Promise(resolve => {
@@ -575,18 +504,18 @@ function switchInstance(test) {
 }
 
 function latency(name, frontend, document, location) {
-	let latencyElement = document.getElementById(`latency-${frontend}`)
-	let latencyLabel = document.getElementById(`latency-${frontend}-label`)
+	let latencyElement = document.getElementById(`latency - ${frontend} `)
+	let latencyLabel = document.getElementById(`latency - ${frontend} -label`)
 	latencyElement.addEventListener("click", async () => {
 		let reloadWindow = () => location.reload()
 		latencyElement.addEventListener("click", reloadWindow)
-		let key = `${name}Redirects`
+		let key = `${name} Redirects`
 		browser.storage.local.get(key, r => {
 			let redirects = r[key]
 			const oldHtml = latencyLabel.innerHTML
 			latencyLabel.innerHTML = "..."
 			testLatency(latencyLabel, redirects[frontend].normal).then(r => {
-				browser.storage.local.set({ [`${frontend}Latency`]: r })
+				browser.storage.local.set({ [`${frontend} Latency`]: r })
 				latencyLabel.innerHTML = oldHtml
 				processDefaultCustomInstances(name, frontend, "normal", document)
 				latencyElement.removeEventListener("click", reloadWindow)
@@ -604,7 +533,6 @@ export default {
 	copyCookie,
 	getCookiesFromStorage,
 	getPreferencesFromToken,
-	setPreferencesFromToken,
 	switchInstance,
 	copyRaw,
 	unify,
