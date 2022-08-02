@@ -4,9 +4,12 @@
       "https://yewtu.be",
       "https://vid.puffyan.us",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       "https://invidious.snopyta.org",
 >>>>>>> 0b6c717 (update instances)
+=======
+>>>>>>> origin/master
       "https://invidious.kavin.rocks",
       "https://inv.riverside.rocks",
       "https://invidious.osi.kr",
@@ -16,15 +19,21 @@
       "https://invidious.sethforprivacy.com",
       "https://invidious.tiekoetter.com",
       "https://inv.bp.projectsegfau.lt",
-      "https://invidious.projectsegfau.lt",
       "https://inv.vern.cc",
       "https://invidious.nerdvpn.de",
       "https://inv.privacy.com.de",
       "https://invidious.slipfox.xyz",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "https://youtube.076.ne.jp",
       "https://invidious.weblibre.org",
       "https://invidious.snopyta.org",
+=======
+      "https://youtube.076.ne.jp",
+      "https://invidious.weblibre.org",
+      "https://invidious.snopyta.org",
+      "https://invidious.projectsegfau.lt",
+>>>>>>> origin/master
       "https://invidious.esmailelbob.xyz",
       "https://invidious.namazso.eu"
 =======
@@ -55,16 +64,23 @@
       "https://piped.moomoo.me",
       "https://il.ax",
       "https://piped.mha.fi",
+<<<<<<< HEAD
       "https://de-piped.shimul.me",
+=======
+      "https://jp-piped.shimul.me",
+>>>>>>> origin/master
       "https://pipedus.palash.dev",
       "https://piped.waffle.wiki",
       "https://watch.whatever.social",
       "https://yt.jae.fi",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       "https://piped.mint.lgbt",
       "https://piped.privacy.com.de",
 >>>>>>> 0b6c717 (update instances)
+=======
+>>>>>>> origin/master
       "https://piped.esmailelbob.xyz",
       "https://piped.projectsegfau.lt"
     ],
@@ -517,6 +533,7 @@
       "https://searx.tuxcloud.net",
       "https://searx.tyil.nl",
       "https://searx.vanwa.tech",
+      "https://searx.vimproved.me",
       "https://searx.webheberg.info",
       "https://searx.xyz",
       "https://searx.zapashcanon.fr",
@@ -535,11 +552,16 @@
       "http://z5vawdol25vrmorm4yydmohsd4u6rdoj2sylvoi3e3nqvxkvpqul7bqd.onion",
       "http://zbuc3bbzbfdqqo2x46repx2ddajbha6fpsjeeptjhhhhzji3zopxdqyd.onion",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "http://f4qfqajszpx5b7itzxt6mb7kj4ktpgbdq7lq6xaiqyqx6a7de3epptad.onion"
 =======
       "http://f4qfqajszpx5b7itzxt6mb7kj4ktpgbdq7lq6xaiqyqx6a7de3epptad.onion",
       "http://fub6vgedgeadlu3ctskrpkcqjruh76tckwtj5swfhyblgml2tzgzckqd.onion/searx"
 >>>>>>> 0b6c717 (update instances)
+=======
+      "http://f4qfqajszpx5b7itzxt6mb7kj4ktpgbdq7lq6xaiqyqx6a7de3epptad.onion",
+      "http://searx.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion"
+>>>>>>> origin/master
     ],
     "i2p": [
       "http://ransack.i2p",
@@ -600,7 +622,10 @@
       "https://searx.sev.monster",
       "https://searx.slipfox.xyz/searx",
       "https://searx.tiekoetter.com",
+<<<<<<< HEAD
       "https://searx.vimproved.me",
+=======
+>>>>>>> origin/master
       "https://searx.zcyph.cc",
       "https://searxng.au/searx",
       "https://searxng.tordenskjold.de",
@@ -622,7 +647,6 @@
       "http://searchoorwalty5a2ailrboa2asqyts2u7bdoqwnjefpgjobpvtzn4qd.onion",
       "http://gbat2pbpg7ys3fi3pbp64667tt5x66mg45xok35bxdw7v55brm7a27yd.onion",
       "http://searxdr3pqz4nydgnqocsia2xbywptxbkympa2emn7zlgggrir4bkfad.onion",
-      "http://searx.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion",
       "http://searx.privpw3tndpkw6pnp3g727zfgfdzbu3k6a7chv226s3xymv2p4eiuqyd.onion",
       "http://rq2w52kyrif3xpfihkgjnhqm3a5aqhoikpv72z3drpjglfzc2wr5z4yd.onion",
       "http://searx3aolosaf3urwnhpynlhuokqsgz47si4pzz5hvb7uuzyjncl2tid.onion",
@@ -753,9 +777,13 @@
   },
   "peertube": [
 <<<<<<< HEAD
+<<<<<<< HEAD
     "https://tube.nogafa.org",
 =======
 >>>>>>> 0b6c717 (update instances)
+=======
+    "https://tube.nogafa.org",
+>>>>>>> origin/master
     "https://www.neptube.io",
     "https://tube.ghk-academy.info",
     "https://pcbu.nl",
