@@ -29,7 +29,7 @@ function setRedirects(val) {
 			wikilessNormalRedirectsChecks,
 			wikilessTorRedirectsChecks: [...redirects.wikiless.tor],
 			wikilessI2pRedirectsChecks: [...redirects.wikiless.i2p],
-			wikilessLokiRedirectsChecks: [...redirects.wikiless.loki]
+			wikilessLokiRedirectsChecks: [...redirects.wikiless.loki],
 		})
 	})
 }
@@ -203,12 +203,12 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
-		wikilessNormalRedirectsChecks = [...redirects.wikiless.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = wikilessNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) wikilessNormalRedirectsChecks.splice(a, 1)
-		}
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					wikilessNormalRedirectsChecks = [...redirects.wikiless.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = wikilessNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) wikilessNormalRedirectsChecks.splice(a, 1)
+					}
 					browser.storage.local.set(
 						{
 							disableWikipedia: true,

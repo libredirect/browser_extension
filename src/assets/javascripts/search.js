@@ -53,7 +53,7 @@ function setRedirects(val) {
 			librexNormalRedirectsChecks,
 			librexTorRedirectsChecks: [...redirects.librex.tor],
 			librexI2pRedirectsChecks: [...redirects.librex.i2p],
-			librexLokiRedirectsChecks: [...redirects.librex.loki]
+			librexLokiRedirectsChecks: [...redirects.librex.loki],
 		})
 	})
 }
@@ -485,24 +485,24 @@ function initDefaults() {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
 
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
-		searxNormalRedirectsChecks = [...redirects.searx.normal]
-		searxngNormalRedirectsChecks = [...redirects.searxng.normal]
-		whoogleNormalRedirectsChecks = [...redirects.whoogle.normal]
-		librexNormalRedirectsChecks = [...redirects.librex.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = searxNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) searxNormalRedirectsChecks.splice(a, 1)
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					searxNormalRedirectsChecks = [...redirects.searx.normal]
+					searxngNormalRedirectsChecks = [...redirects.searxng.normal]
+					whoogleNormalRedirectsChecks = [...redirects.whoogle.normal]
+					librexNormalRedirectsChecks = [...redirects.librex.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = searxNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) searxNormalRedirectsChecks.splice(a, 1)
 
-			const b = searxngNormalRedirectsChecks.indexOf(instance)
-			if (b > -1) searxngNormalRedirectsChecks.splice(b, 1)
+						const b = searxngNormalRedirectsChecks.indexOf(instance)
+						if (b > -1) searxngNormalRedirectsChecks.splice(b, 1)
 
-			const c = whoogleNormalRedirectsChecks.indexOf(instance)
-			if (c > -1) whoogleNormalRedirectsChecks.splice(c, 1)
+						const c = whoogleNormalRedirectsChecks.indexOf(instance)
+						if (c > -1) whoogleNormalRedirectsChecks.splice(c, 1)
 
-			const d = librexNormalRedirectsChecks.indexOf(instance)
-			if (d > -1) librexNormalRedirectsChecks.splice(d, 1)
-		}
+						const d = librexNormalRedirectsChecks.indexOf(instance)
+						if (d > -1) librexNormalRedirectsChecks.splice(d, 1)
+					}
 					browser.storage.local.set(
 						{
 							disableSearch: false,

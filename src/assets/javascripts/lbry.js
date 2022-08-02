@@ -29,7 +29,7 @@ function setRedirects(val) {
 			librarianNormalRedirectsChecks,
 			librarianTorRedirectsChecks: [...redirects.librarian.tor],
 			librarianI2pRedirectsChecks: [...redirects.librarian.i2p],
-			librarianLokiRedirectsChecks: [...redirects.librarian.loki]
+			librarianLokiRedirectsChecks: [...redirects.librarian.loki],
 		})
 	})
 }
@@ -178,34 +178,34 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
-		librarianNormalRedirectsChecks = [...redirects.librarian.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = librarianNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) librarianNormalRedirectsChecks.splice(a, 1)
-		}
-				browser.storage.local.set(
-					{
-						disableLbryTargets: true,
-						lbryFrontend: "librarian",
-						lbryTargetsRedirects: redirects,
-						lbryRedirectType: "both",
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					librarianNormalRedirectsChecks = [...redirects.librarian.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = librarianNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) librarianNormalRedirectsChecks.splice(a, 1)
+					}
+					browser.storage.local.set(
+						{
+							disableLbryTargets: true,
+							lbryFrontend: "librarian",
+							lbryTargetsRedirects: redirects,
+							lbryRedirectType: "both",
 
-						librarianNormalRedirectsChecks,
-						librarianNormalCustomRedirects: [],
+							librarianNormalRedirectsChecks,
+							librarianNormalCustomRedirects: [],
 
-						librarianTorRedirectsChecks: [...redirects.librarian.tor],
-						librarianTorCustomRedirects: [],
+							librarianTorRedirectsChecks: [...redirects.librarian.tor],
+							librarianTorCustomRedirects: [],
 
-						librarianI2pRedirectsChecks: [...redirects.librarian.i2p],
-						librarianI2pCustomRedirects: [],
+							librarianI2pRedirectsChecks: [...redirects.librarian.i2p],
+							librarianI2pCustomRedirects: [],
 
-						librarianLokiRedirectsChecks: [...redirects.librarian.loki],
-						librarianLokiCustomRedirects: [],
-					},
-					() => resolve()
-				)
-			})
+							librarianLokiRedirectsChecks: [...redirects.librarian.loki],
+							librarianLokiCustomRedirects: [],
+						},
+						() => resolve()
+					)
+				})
 			})
 	})
 }

@@ -62,7 +62,7 @@ function updateInstances() {
 			invidious: instances.invidious,
 			piped: instances.piped,
 			pipedMaterial: instances.pipedMaterial,
-			cloudtube: instances.cloudtube
+			cloudtube: instances.cloudtube,
 		})
 		twitterHelper.setRedirects(instances.nitter)
 		instagramHelper.setRedirects(instances.bibliogram)

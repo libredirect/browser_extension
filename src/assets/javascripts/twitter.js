@@ -29,7 +29,7 @@ function setRedirects(val) {
 			nitterNormalRedirectsChecks,
 			nitterTorRedirectsChecks: [...redirects.nitter.tor],
 			nitterI2pRedirectsChecks: [...redirects.nitter.i2p],
-			nitterLokiRedirectsChecks: [...redirects.nitter.loki]
+			nitterLokiRedirectsChecks: [...redirects.nitter.loki],
 		})
 	})
 }
@@ -226,12 +226,12 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-	browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], async r => {
-		nitterNormalRedirectsChecks = [...redirects.nitter.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.authenticateBlackList, ...r.offlineBlackList]) {
-			let i = nitterNormalRedirectsChecks.indexOf(instance)
-			if (i > -1) nitterNormalRedirectsChecks.splice(i, 1)
-		}
+				browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], async r => {
+					nitterNormalRedirectsChecks = [...redirects.nitter.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.authenticateBlackList, ...r.offlineBlackList]) {
+						let i = nitterNormalRedirectsChecks.indexOf(instance)
+						if (i > -1) nitterNormalRedirectsChecks.splice(i, 1)
+					}
 					browser.storage.local.set(
 						{
 							disableTwitter: false,
@@ -253,7 +253,7 @@ function initDefaults() {
 						() => resolve()
 					)
 				})
-})
+			})
 	})
 }
 

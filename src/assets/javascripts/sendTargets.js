@@ -29,7 +29,7 @@ function setRedirects(val) {
 			sendNormalRedirectsChecks,
 			sendTorRedirectsChecks: [...redirects.send.tor],
 			sendI2pRedirectsChecks: [...redirects.send.i2p],
-			sendLokiRedirectsChecks: [...redirects.send.loki]
+			sendLokiRedirectsChecks: [...redirects.send.loki],
 		})
 	})
 }
@@ -157,12 +157,12 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
-		sendNormalRedirectsChecks = [...redirects.send.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = sendNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) sendNormalRedirectsChecks.splice(a, 1)
-		}
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					sendNormalRedirectsChecks = [...redirects.send.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = sendNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) sendNormalRedirectsChecks.splice(a, 1)
+					}
 					browser.storage.local.set(
 						{
 							disableSendTarget: false,

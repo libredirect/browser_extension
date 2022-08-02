@@ -28,7 +28,7 @@ function setRedirects(val) {
 			bibliogramNormalRedirectsChecks,
 			bibliogramTorRedirectsChecks: [...redirects.bibliogram.tor],
 			bibliogramI2pRedirectsChecks: [...redirects.bibliogram.i2p],
-			bibliogramLokiRedirectsChecks: [...redirects.bibliogram.loki]
+			bibliogramLokiRedirectsChecks: [...redirects.bibliogram.loki],
 		})
 	})
 }
@@ -206,12 +206,12 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
-		bibliogramNormalRedirectsChecks = [...redirects.bibliogram.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = bibliogramNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) bibliogramNormalRedirectsChecks.splice(a, 1)
-		}
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					bibliogramNormalRedirectsChecks = [...redirects.bibliogram.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = bibliogramNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) bibliogramNormalRedirectsChecks.splice(a, 1)
+					}
 					browser.storage.local.set({
 						disableInstagram: false,
 						instagramRedirects: redirects,

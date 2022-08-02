@@ -36,7 +36,7 @@ function setRedirects(val) {
 			tedditNormalRedirectsChecks,
 			tedditTorRedirectsChecks: [...redirects.teddit.tor],
 			tedditI2pRedirectsChecks: [...redirects.teddit.i2p],
-			tedditLokiRedirectsChecks: [...redirects.teddit.loki]
+			tedditLokiRedirectsChecks: [...redirects.teddit.loki],
 		})
 	})
 }
@@ -336,16 +336,16 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
-		libredditNormalRedirectsChecks = [...redirects.libreddit.normal]
-		tedditNormalRedirectsChecks = [...redirects.teddit.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = libredditNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) libredditNormalRedirectsChecks.splice(a, 1)
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					libredditNormalRedirectsChecks = [...redirects.libreddit.normal]
+					tedditNormalRedirectsChecks = [...redirects.teddit.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = libredditNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) libredditNormalRedirectsChecks.splice(a, 1)
 
-			const b = tedditNormalRedirectsChecks.indexOf(instance)
-			if (b > -1) tedditNormalRedirectsChecks.splice(b, 1)
-		}
+						const b = tedditNormalRedirectsChecks.indexOf(instance)
+						if (b > -1) tedditNormalRedirectsChecks.splice(b, 1)
+					}
 					browser.storage.local.set(
 						{
 							disableReddit: false,

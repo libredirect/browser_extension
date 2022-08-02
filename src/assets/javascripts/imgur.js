@@ -29,7 +29,7 @@ function setRedirects(val) {
 			rimgoNormalRedirectsChecks,
 			rimgoTorRedirectsChecks: [...redirects.rimgo.tor],
 			rimgoI2pRedirectsChecks: [...redirects.rimgo.i2p],
-			rimgoLokiRedirectsChecks: [...redirects.rimgo.loki]
+			rimgoLokiRedirectsChecks: [...redirects.rimgo.loki],
 		})
 	})
 }
@@ -177,12 +177,12 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
-		rimgoNormalRedirectsChecks = [...redirects.rimgo.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = rimgoNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) rimgoNormalRedirectsChecks.splice(a, 1)
-		}
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					rimgoNormalRedirectsChecks = [...redirects.rimgo.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = rimgoNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) rimgoNormalRedirectsChecks.splice(a, 1)
+					}
 					browser.storage.local.set(
 						{
 							disableImgur: false,

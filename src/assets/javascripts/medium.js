@@ -52,7 +52,7 @@ function setRedirects(val) {
 			scribeNormalRedirectsChecks,
 			scribeTorRedirectsChecks: [...redirects.scribe.tor],
 			scribeI2pRedirectsChecks: [...redirects.scribe.i2p],
-			scribeLokiRedirectsChecks: [...redirects.scribe.loki]
+			scribeLokiRedirectsChecks: [...redirects.scribe.loki],
 		})
 	})
 }
@@ -184,12 +184,12 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
-		scribeNormalRedirectsChecks = [...redirects.scribe.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = scribeNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) scribeNormalRedirectsChecks.splice(a, 1)
-		}
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					scribeNormalRedirectsChecks = [...redirects.scribe.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = scribeNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) scribeNormalRedirectsChecks.splice(a, 1)
+					}
 					browser.storage.local.set(
 						{
 							disableMedium: false,

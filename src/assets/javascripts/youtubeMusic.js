@@ -39,7 +39,7 @@ function setRedirects(val) {
 			hyperpipeNormalRedirectsChecks,
 			hyperpipeTorRedirectsChecks: [...redirects.hyperpipe.tor],
 			hyperpipeI2pRedirectsChecks: [...redirects.hyperpipe.i2p],
-			hyperpipeLokiRedirectsChecks: [...redirects.hyperpipe.loki]
+			hyperpipeLokiRedirectsChecks: [...redirects.hyperpipe.loki],
 		})
 	})
 }
@@ -272,16 +272,16 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
-		beatbumpNormalRedirectsChecks = [...redirects.beatbump.normal]
-		hyperpipeNormalRedirectsChecks = [...redirects.hyperpipe.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = beatbumpNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) beatbumpNormalRedirectsChecks.splice(a, 1)
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					beatbumpNormalRedirectsChecks = [...redirects.beatbump.normal]
+					hyperpipeNormalRedirectsChecks = [...redirects.hyperpipe.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = beatbumpNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) beatbumpNormalRedirectsChecks.splice(a, 1)
 
-			const b = hyperpipeNormalRedirectsChecks.indexOf(instance)
-			if (b > -1) hyperpipeNormalRedirectsChecks.splice(b, 1)
-		}
+						const b = hyperpipeNormalRedirectsChecks.indexOf(instance)
+						if (b > -1) hyperpipeNormalRedirectsChecks.splice(b, 1)
+					}
 					browser.storage.local.set(
 						{
 							disableYoutubeMusic: false,

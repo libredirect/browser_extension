@@ -99,8 +99,8 @@ function setRedirects(val) {
 			const a = simplyTranslateNormalCustomRedirects.indexOf(instance)
 			if (a > -1) simplyTranslateNormalCustomRedirects.splice(a, 1)
 
-			const i = lingvaNormalRedirectsChecks.indexOf(instance)
-			if (i > -1) lingvaNormalRedirectsChecks.splice(i, 1)
+			const b = lingvaNormalRedirectsChecks.indexOf(instance)
+			if (b > -1) lingvaNormalRedirectsChecks.splice(b, 1)
 		}
 		browser.storage.local.set({
 			translateRedirects: redirects,
@@ -111,7 +111,7 @@ function setRedirects(val) {
 			lingvaNormalRedirectsChecks,
 			lingvaTorRedirectsChecks: [...redirects.lingva.tor],
 			lingvaI2pRedirectsChecks: [...redirects.lingva.i2p],
-			lingvaLokiRedirectsChecks: [...redirects.lingva.loki]
+			lingvaLokiRedirectsChecks: [...redirects.lingva.loki],
 		})
 	})
 }
@@ -310,22 +310,21 @@ function initDefaults() {
 	return new Promise(async resolve => {
 		fetch("/instances/data.json")
 			.then(response => response.text())
-			.then(data => {
+			.then(async data => {
 				let dataJson = JSON.parse(data)
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
-		simplyTranslateNormalCustomRedirects = [...redirects.simplyTranslate.normal]
-		lingvaNormalRedirectsChecks = [...redirects.lingva.normal]
-		console.log(r.offlineBlackList)
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = simplyTranslateNormalCustomRedirects.indexOf(instance)
-			if (a > -1) simplyTranslateNormalCustomRedirects.splice(a, 1)
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					simplyTranslateNormalRedirectsChecks = [...redirects.simplyTranslate.normal]
+					lingvaNormalRedirectsChecks = [...redirects.lingva.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = simplyTranslateNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) simplyTranslateNormalRedirectsChecks.splice(a, 1)
 
-			const b = lingvaNormalRedirectsChecks.indexOf(instance)
-			if (b > -1) lingvaNormalRedirectsChecks.splice(b, 1)
-		}
+						const b = lingvaNormalRedirectsChecks.indexOf(instance)
+						if (b > -1) lingvaNormalRedirectsChecks.splice(b, 1)
+					}
 					browser.storage.local.set(
 						{
 							translateDisable: false,

@@ -29,7 +29,7 @@ function setRedirects(val) {
 			libremdbNormalRedirectsChecks,
 			libremdbTorRedirectsChecks: [...redirects.libremdb.tor],
 			libremdbI2pRedirectsChecks: [...redirects.libremdb.i2p],
-			libremdbLokiRedirectsChecks: [...redirects.libremdb.loki]
+			libremdbLokiRedirectsChecks: [...redirects.libremdb.loki],
 		})
 	})
 }
@@ -175,32 +175,32 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
-		libremdbNormalRedirectsChecks = [...redirects.libremdb.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = libremdbNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) libremdbNormalRedirectsChecks.splice(a, 1)
-		}
-				browser.storage.local.set(
-					{
-						disableImdb: true,
-						imdbRedirects: redirects,
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					libremdbNormalRedirectsChecks = [...redirects.libremdb.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = libremdbNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) libremdbNormalRedirectsChecks.splice(a, 1)
+					}
+					browser.storage.local.set(
+						{
+							disableImdb: true,
+							imdbRedirects: redirects,
 
-						libremdbNormalRedirectsChecks,
-						libremdbNormalCustomRedirects: [],
+							libremdbNormalRedirectsChecks,
+							libremdbNormalCustomRedirects: [],
 
-						libremdbTorRedirectsChecks: [...redirects.libremdb.tor],
-						libremdbTorCustomRedirects: [],
+							libremdbTorRedirectsChecks: [...redirects.libremdb.tor],
+							libremdbTorCustomRedirects: [],
 
-						libremdbI2pRedirectsChecks: [],
-						libremdbI2pCustomRedirects: [],
+							libremdbI2pRedirectsChecks: [],
+							libremdbI2pCustomRedirects: [],
 
-						libremdbLokiRedirectsChecks: [],
-						libremdbLokiCustomRedirects: [],
-					},
-					() => resolve()
-				)
-			})
+							libremdbLokiRedirectsChecks: [],
+							libremdbLokiCustomRedirects: [],
+						},
+						() => resolve()
+					)
+				})
 			})
 	})
 }

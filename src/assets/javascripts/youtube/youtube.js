@@ -31,7 +31,7 @@ for (let i = 0; i < frontends.length; i++) {
 
 function setRedirects(val) {
 	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
-			redirects = val
+		redirects = val
 		invidiousNormalRedirectsChecks = [...redirects.invidious.normal]
 		pipedNormalRedirectsChecks = [...redirects.piped.normal]
 		pipedMaterialNormalRedirectsChecks = [...redirects.pipedMaterial.normal]
@@ -66,7 +66,7 @@ function setRedirects(val) {
 			cloudtubeNormalRedirectsChecks,
 			cloudtubeTorRedirectsChecks: [...redirects.cloudtube.tor],
 			cloudtubeI2pRedirectsChecks: [...redirects.cloudtube.i2p],
-			cloudtubeLokiRedirectsChecks: [...redirects.cloudtube.loki]
+			cloudtubeLokiRedirectsChecks: [...redirects.cloudtube.loki],
 		})
 	})
 }

@@ -33,7 +33,7 @@ function setRedirects(val) {
 			facilNormalRedirectsChecks,
 			facilTorRedirectsChecks: [...redirects.facil.tor],
 			facilI2pRedirectsChecks: [...redirects.facil.i2p],
-			facilLokiRedirectsChecks: [...redirects.facil.loki]
+			facilLokiRedirectsChecks: [...redirects.facil.loki],
 		})
 	})
 }
@@ -267,32 +267,32 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
-		facilNormalRedirectsChecks = [...redirects.facil.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = facilNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) facilNormalRedirectsChecks.splice(a, 1)
-		}
-				browser.storage.local.set(
-					{
-						disableMaps: false,
-						mapsFrontend: "osm",
-						mapsRedirects: redirects,
-						facilNormalRedirectsChecks,
-						facilNormalCustomRedirects: [],
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					facilNormalRedirectsChecks = [...redirects.facil.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = facilNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) facilNormalRedirectsChecks.splice(a, 1)
+					}
+					browser.storage.local.set(
+						{
+							disableMaps: false,
+							mapsFrontend: "osm",
+							mapsRedirects: redirects,
+							facilNormalRedirectsChecks,
+							facilNormalCustomRedirects: [],
 
-						facilTorRedirectsChecks: [...redirects.facil.tor],
-						facilTorCustomRedirects: [],
+							facilTorRedirectsChecks: [...redirects.facil.tor],
+							facilTorCustomRedirects: [],
 
-						facilI2pRedirectsChecks: [...redirects.facil.i2p],
-						facilI2pCustomRedirects: [],
+							facilI2pRedirectsChecks: [...redirects.facil.i2p],
+							facilI2pCustomRedirects: [],
 
-						facilLokiRedirectsChecks: [...redirects.facil.loki],
-						facilLokiCustomRedirects: [],
-					},
-					() => resolve()
-				)
-			})
+							facilLokiRedirectsChecks: [...redirects.facil.loki],
+							facilLokiCustomRedirects: [],
+						},
+						() => resolve()
+					)
+				})
 			})
 	})
 }

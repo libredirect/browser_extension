@@ -27,7 +27,7 @@ function setRedirects(val) {
 			simpleertubeNormalRedirectsChecks,
 			simpleertubeTorRedirectsChecks: [...redirects.simpleertube.tor],
 			simpleertubeI2pRedirectsChecks: [...redirects.simpleertube.i2p],
-			simpleertubeLokiRedirectsChecks: [...redirects.simpleertube.loki]
+			simpleertubeLokiRedirectsChecks: [...redirects.simpleertube.loki],
 		})
 	})
 }
@@ -165,12 +165,12 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
-		simpleertubeNormalRedirectsChecks = [...redirects.simpleertube.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = simpleertubeNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) simpleertubeNormalRedirectsChecks.splice(a, 1)
-		}
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					simpleertubeNormalRedirectsChecks = [...redirects.simpleertube.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = simpleertubeNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) simpleertubeNormalRedirectsChecks.splice(a, 1)
+					}
 					browser.storage.local.set(
 						{
 							peerTubeTargets: ["https://search.joinpeertube.org", ...dataJson.peertube],
