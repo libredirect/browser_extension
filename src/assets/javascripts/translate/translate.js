@@ -91,21 +91,27 @@ init()
 browser.storage.onChanged.addListener(init)
 
 function setRedirects(val) {
-	browser.storage.local.get("cloudflareBlackList", r => {
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
 		redirects = val
+		simplyTranslateNormalRedirectsChecks = [...redirects.simplyTranslate.normal]
 		lingvaNormalRedirectsChecks = [...redirects.lingva.normal]
-		for (const instance of r.cloudflareBlackList) {
-			const i = lingvaNormalRedirectsChecks.indexOf(instance)
-			if (i > -1) lingvaNormalRedirectsChecks.splice(i, 1)
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+			const a = simplyTranslateNormalCustomRedirects.indexOf(instance)
+			if (a > -1) simplyTranslateNormalCustomRedirects.splice(a, 1)
+
+			const b = lingvaNormalRedirectsChecks.indexOf(instance)
+			if (b > -1) lingvaNormalRedirectsChecks.splice(b, 1)
 		}
 		browser.storage.local.set({
 			translateRedirects: redirects,
-			simplyTranslateNormalRedirectsChecks: redirects.simplyTranslate.normal,
-			simplyTranslateTorRedirectsChecks: redirects.simplyTranslate.tor,
-			simplyTranslateI2pRedirectsChecks: redirects.simplyTranslate.i2p,
-			simplyTranslateLokiRedirectsChecks: redirects.simplyTranslate.loki,
+			simplyTranslateNormalRedirectsChecks,
+			simplyTranslateTorRedirectsChecks: [...redirects.simplyTranslate.tor],
+			simplyTranslateI2pRedirectsChecks: [...redirects.simplyTranslate.i2p],
+			simplyTranslateLokiRedirectsChecks: [...redirects.simplyTranslate.loki],
 			lingvaNormalRedirectsChecks,
-			lingvaTorRedirectsChecks: redirects.lingva.tor,
+			lingvaTorRedirectsChecks: [...redirects.lingva.tor],
+			lingvaI2pRedirectsChecks: [...redirects.lingva.i2p],
+			lingvaLokiRedirectsChecks: [...redirects.lingva.loki],
 		})
 	})
 }
@@ -271,7 +277,7 @@ function switchInstance(url, disableOverride) {
 			return
 		}
 
-		let instancesList
+		let instancesList = []
 
 		if (protocol == "loki") {
 			if (translateFrontend == "simplyTranslate") instancesList = [...simplyTranslateLokiRedirectsChecks, ...simplyTranslateLokiCustomRedirects]
@@ -304,16 +310,20 @@ function initDefaults() {
 	return new Promise(async resolve => {
 		fetch("/instances/data.json")
 			.then(response => response.text())
-			.then(data => {
+			.then(async data => {
 				let dataJson = JSON.parse(data)
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-				browser.storage.local.get("cloudflareBlackList", async r => {
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					simplyTranslateNormalRedirectsChecks = [...redirects.simplyTranslate.normal]
 					lingvaNormalRedirectsChecks = [...redirects.lingva.normal]
-					for (const instance of r.cloudflareBlackList) {
-						const i = lingvaNormalRedirectsChecks.indexOf(instance)
-						if (i > -1) lingvaNormalRedirectsChecks.splice(i, 1)
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = simplyTranslateNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) simplyTranslateNormalRedirectsChecks.splice(a, 1)
+
+						const b = lingvaNormalRedirectsChecks.indexOf(instance)
+						if (b > -1) lingvaNormalRedirectsChecks.splice(b, 1)
 					}
 					browser.storage.local.set(
 						{
@@ -321,7 +331,7 @@ function initDefaults() {
 							translateFrontend: "simplyTranslate",
 							translateRedirects: redirects,
 
-							simplyTranslateNormalRedirectsChecks: [...redirects.simplyTranslate.normal],
+							simplyTranslateNormalRedirectsChecks,
 							simplyTranslateNormalCustomRedirects: [],
 
 							simplyTranslateTorRedirectsChecks: [...redirects.simplyTranslate.tor],
@@ -333,7 +343,7 @@ function initDefaults() {
 							simplyTranslateLokiRedirectsChecks: [...redirects.simplyTranslate.loki],
 							simplyTranslateLokiCustomRedirects: [],
 
-							lingvaNormalRedirectsChecks: lingvaNormalRedirectsChecks,
+							lingvaNormalRedirectsChecks,
 							lingvaNormalCustomRedirects: [],
 
 							lingvaTorRedirectsChecks: [...redirects.lingva.tor],

@@ -17,16 +17,19 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get("cloudflareBlackList", r => {
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
 		redirects.neuters = val
 		neutersNormalRedirectsChecks = [...redirects.neuters.normal]
-		for (const instance of r.cloudflareBlackList) {
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
 			const a = neutersNormalRedirectsChecks.indexOf(instance)
 			if (a > -1) neutersNormalRedirectsChecks.splice(a, 1)
 		}
 		browser.storage.local.set({
 			neutersRedirects: redirects,
 			neutersNormalRedirectsChecks,
+			neutersTorRedirectsChecks: [...redirects.neuters.tor],
+			neutersI2pRedirectsChecks: [...redirects.neuters.i2p],
+			neutersLokiRedirectsChecks: [...redirects.neuters.loki],
 		})
 	})
 }
@@ -109,26 +112,33 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-				browser.storage.local.set(
-					{
-						disableReuters: true,
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					neutersNormalRedirectsChecks = [...redirects.neuters.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = neutersNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) neutersNormalRedirectsChecks.splice(a, 1)
+					}
+					browser.storage.local.set(
+						{
+							disableReuters: true,
 
-						reutersRedirects: redirects,
+							reutersRedirects: redirects,
 
-						neutersNormalRedirectsChecks: [...redirects.neuters.normal],
-						neutersNormalCustomRedirects: [],
+							neutersNormalRedirectsChecks,
+							neutersNormalCustomRedirects: [],
 
-						neutersTorRedirectsChecks: [...redirects.neuters.tor],
-						neutersTorCustomRedirects: [],
+							neutersTorRedirectsChecks: [...redirects.neuters.tor],
+							neutersTorCustomRedirects: [],
 
-						neutersI2pRedirectsChecks: [...redirects.neuters.i2p],
-						neutersI2pCustomRedirects: [],
+							neutersI2pRedirectsChecks: [...redirects.neuters.i2p],
+							neutersI2pCustomRedirects: [],
 
-						neutersLokiRedirectsChecks: [...redirects.neuters.loki],
-						neutersLokiCustomRedirects: [],
-					},
-					() => resolve()
-				)
+							neutersLokiRedirectsChecks: [...redirects.neuters.loki],
+							neutersLokiCustomRedirects: [],
+						},
+						() => resolve()
+					)
+				})
 			})
 	})
 }

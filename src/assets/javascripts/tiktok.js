@@ -17,16 +17,19 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get("cloudflareBlackList", r => {
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
 		redirects.proxiTok = val
 		proxiTokNormalRedirectsChecks = [...redirects.proxiTok.normal]
-		for (const instance of r.cloudflareBlackList) {
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
 			const a = proxiTokNormalRedirectsChecks.indexOf(instance)
 			if (a > -1) proxiTokNormalRedirectsChecks.splice(a, 1)
 		}
 		browser.storage.local.set({
 			tiktokRedirects: redirects,
 			proxiTokNormalRedirectsChecks,
+			proxiTokTorRedirectsChecks: [...redirects.proxiTok.tor],
+			proxiTokI2pRedirectsChecks: [...redirects.proxiTok.i2p],
+			proxiTokLokiRedirectsChecks: [...redirects.proxiTok.loki],
 		})
 	})
 }
@@ -202,26 +205,33 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-				browser.storage.local.set(
-					{
-						disableTiktok: false,
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+					proxiTokNormalRedirectsChecks = [...redirects.proxiTok.normal]
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = proxiTokNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) proxiTokNormalRedirectsChecks.splice(a, 1)
+					}
+					browser.storage.local.set(
+						{
+							disableTiktok: false,
 
-						tiktokRedirects: redirects,
+							tiktokRedirects: redirects,
 
-						proxiTokNormalRedirectsChecks: [...redirects.proxiTok.normal],
-						proxiTokNormalCustomRedirects: [],
+							proxiTokNormalRedirectsChecks,
+							proxiTokNormalCustomRedirects: [],
 
-						proxiTokTorRedirectsChecks: [...redirects.proxiTok.tor],
-						proxiTokTorCustomRedirects: [],
+							proxiTokTorRedirectsChecks: [...redirects.proxiTok.tor],
+							proxiTokTorCustomRedirects: [],
 
-						proxiTokI2pRedirectsChecks: [...redirects.proxiTok.i2p],
-						proxiTokI2pCustomRedirects: [],
+							proxiTokI2pRedirectsChecks: [...redirects.proxiTok.i2p],
+							proxiTokI2pCustomRedirects: [],
 
-						proxiTokLokiRedirectsChecks: [...redirects.proxiTok.loki],
-						proxiTokLokiCustomRedirects: [],
-					},
-					() => resolve()
-				)
+							proxiTokLokiRedirectsChecks: [...redirects.proxiTok.loki],
+							proxiTokLokiCustomRedirects: [],
+						},
+						() => resolve()
+					)
+				})
 			})
 	})
 }

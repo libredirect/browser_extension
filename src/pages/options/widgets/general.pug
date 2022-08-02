@@ -31,6 +31,12 @@ section#general_page.option-block
         h4(data-localise="__MSG_autoRedirect__")
         input#auto-redirect(type="checkbox")
 
+    form
+        .some-block.option-block
+            h4(data-localise="__MSG_latencyThreshold") Latency Threshold
+            output#latency-output(for="latencyInput" name="latencyOutput")
+            input#latency-input(type="range" min="50" max="5000" value="1000" name="latencyInput" step="50")
+
     .some-block.option-block
         h4(data-localise="__MSG_exceptions__")
 
@@ -117,7 +123,7 @@ section#general_page.option-block
 
         div 
             div 
-                img(src="../../../assets/images/imgur-icon.png")
+                img(src="../../../assets/images/imgur.png")
                 x(data-localise="__MSG_imgur__") Imgur
             input#imgur(type="checkbox")
 
@@ -190,7 +196,7 @@ section#general_page.option-block
         div 
             div 
                 img(src="../../../assets/images/lbry-icon.png")
-                x(data-localise="__MSG_lbry__") LBRY/Odysee
+                x(data-localise="__MSG_lbry__") LBRY
             input#lbry(type="checkbox")
 
         div 

@@ -19,11 +19,11 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get("cloudflareBlackList", r => {
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
 		redirects = val
 		beatbumpNormalRedirectsChecks = [...redirects.beatbump.normal]
 		hyperpipeNormalRedirectsChecks = [...redirects.hyperpipe.normal]
-		for (const instance of r.cloudflareBlackList) {
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
 			const a = beatbumpNormalRedirectsChecks.indexOf(instance)
 			if (a > -1) beatbumpNormalRedirectsChecks.splice(a, 1)
 
@@ -33,7 +33,13 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			youtubeMusicRedirects: redirects,
 			beatbumpNormalRedirectsChecks,
+			beatbumpTorRedirectsChecks: [...redirects.beatbump.tor],
+			beatbumpI2pRedirectsChecks: [...redirects.beatbump.i2p],
+			beatbumpLokiRedirectsChecks: [...redirects.beatbump.loki],
 			hyperpipeNormalRedirectsChecks,
+			hyperpipeTorRedirectsChecks: [...redirects.hyperpipe.tor],
+			hyperpipeI2pRedirectsChecks: [...redirects.hyperpipe.i2p],
+			hyperpipeLokiRedirectsChecks: [...redirects.hyperpipe.loki],
 		})
 	})
 }
@@ -266,17 +272,15 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-				browser.storage.local.get("cloudflareBlackList", async r => {
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
 					beatbumpNormalRedirectsChecks = [...redirects.beatbump.normal]
 					hyperpipeNormalRedirectsChecks = [...redirects.hyperpipe.normal]
-					for (const instance of r.cloudflareBlackList) {
-						let i
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = beatbumpNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) beatbumpNormalRedirectsChecks.splice(a, 1)
 
-						i = beatbumpNormalRedirectsChecks.indexOf(instance)
-						if (i > -1) beatbumpNormalRedirectsChecks.splice(i, 1)
-
-						i = hyperpipeNormalRedirectsChecks.indexOf(instance)
-						if (i > -1) hyperpipeNormalRedirectsChecks.splice(i, 1)
+						const b = hyperpipeNormalRedirectsChecks.indexOf(instance)
+						if (b > -1) hyperpipeNormalRedirectsChecks.splice(b, 1)
 					}
 					browser.storage.local.set(
 						{
@@ -284,7 +288,7 @@ function initDefaults() {
 							youtubeMusicFrontend: "hyperpipe",
 							youtubeMusicRedirects: redirects,
 
-							beatbumpNormalRedirectsChecks: beatbumpNormalRedirectsChecks,
+							beatbumpNormalRedirectsChecks,
 							beatbumpNormalCustomRedirects: [],
 
 							beatbumpTorRedirectsChecks: [...redirects.beatbump.tor],
@@ -296,7 +300,7 @@ function initDefaults() {
 							beatbumpLokiRedirectsChecks: [...redirects.beatbump.loki],
 							beatbumpLokiCustomRedirects: [],
 
-							hyperpipeNormalRedirectsChecks: hyperpipeNormalRedirectsChecks,
+							hyperpipeNormalRedirectsChecks,
 							hyperpipeNormalCustomRedirects: [],
 
 							hyperpipeTorRedirectsChecks: [...redirects.hyperpipe.tor],

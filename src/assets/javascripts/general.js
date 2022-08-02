@@ -32,6 +32,7 @@ async function initDefaults() {
 				firstPartyIsolate: false,
 				protocol: "normal",
 				protocolFallback: true,
+				latencyThreshold: 1000,
 			},
 			() => resolve()
 		)

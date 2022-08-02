@@ -92,7 +92,7 @@ def is_authenticate(url):
 def is_offline(url):
     try:
         r = requests.get(url, timeout=5)
-        if r.status_code != 200:
+        if r.status_code >= 400:
             print(url + ' is ' + Fore.RED + 'offline' + Style.RESET_ALL)
             print("Status code")
             print(r.status_code)

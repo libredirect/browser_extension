@@ -16,39 +16,21 @@ for (let i = 0; i < frontends.length; i++) {
 	}
 }
 
-function setRedirects() {
-	return new Promise(resolve => {
-		fetch("/instances/data.json")
-			.then(response => response.text())
-			.then(async data => {
-				let dataJson = JSON.parse(data)
-				redirects.rimgo = dataJson.rimgo
-
-				rimgoNormalRedirectsChecks = [...redirects.rimgo.normal]
-				rimgoTorRedirectsChecks = [...redirects.rimgo.tor]
-				rimgoI2pRedirectsChecks = [...redirects.rimgo.i2p]
-
-				for (const instance of r.cloudflareBlackList) {
-					const a = rimgoNormalRedirectsChecks.indexOf(instance)
-					if (a > -1) rimgoNormalRedirectsChecks.splice(a, 1)
-
-					const b = rimgoTorRedirectsChecks.indexOf(instance)
-					if (b > -1) rimgoTorRedirectsChecks.splice(b, 1)
-
-					const c = rimgoI2pRedirectsChecks.indexOf(instance)
-					if (c > -1) rimgoI2pRedirectsChecks.splice(c, 1)
-				}
-
-				browser.storage.local.set(
-					{
-						imgurRedirects: redirects,
-						rimgoNormalRedirectsChecks,
-						rimgoTorRedirectsChecks,
-						rimgoI2pRedirectsChecks,
-					},
-					() => resolve()
-				)
-			})
+function setRedirects(val) {
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
+		redirects.rimgo = val
+		rimgoNormalRedirectsChecks = [...redirects.rimgo.normal]
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+			const a = rimgoNormalRedirectsChecks.indexOf(instance)
+			if (a > -1) rimgoNormalRedirectsChecks.splice(a, 1)
+		}
+		browser.storage.local.set({
+			imgurRedirects: redirects,
+			rimgoNormalRedirectsChecks,
+			rimgoTorRedirectsChecks: [...redirects.rimgo.tor],
+			rimgoI2pRedirectsChecks: [...redirects.rimgo.i2p],
+			rimgoLokiRedirectsChecks: [...redirects.rimgo.loki],
+		})
 	})
 }
 
@@ -195,11 +177,11 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-				browser.storage.local.get("cloudflareBlackList", async r => {
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
 					rimgoNormalRedirectsChecks = [...redirects.rimgo.normal]
-					for (const instance of r.cloudflareBlackList) {
-						const i = rimgoNormalRedirectsChecks.indexOf(instance)
-						if (i > -1) rimgoNormalRedirectsChecks.splice(i, 1)
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+						const a = rimgoNormalRedirectsChecks.indexOf(instance)
+						if (a > -1) rimgoNormalRedirectsChecks.splice(a, 1)
 					}
 					browser.storage.local.set(
 						{
