@@ -365,6 +365,100 @@ function getCookiesFromStorage(frontend, urls, name) {
 	})
 }
 
+function getPreferencesFromToken(frontend, targetUrl, urls, name, endpoint) {
+	return new Promise(resolve => {
+		browser.storage.local.get("firstPartyIsolate", r => {
+			let query
+			if (!r.firstPartyIsolate) query = { url: protocolHost(targetUrl), name: name }
+			else
+				query = {
+					url: protocolHost(targetUrl),
+					name: name,
+					firstPartyDomain: null,
+				}
+			browser.cookies.getAll(query, async cookies => {
+				for (const cookie of cookies)
+					if (cookie.name == name) {
+							const setQuery = r.firstPartyIsolate
+								? {
+										url: targetUrl,
+										name: name,
+										value: cookie.value,
+										secure: true,
+										firstPartyDomain: new URL(targetUrl).hostname,
+								  }
+								: {
+										url: targetUrl,
+										name: name,
+										value: cookie.value,
+										secure: true,
+										expirationDate: cookie.expirationDate,
+								  }
+						console.log(toString(targetUrl))
+									const http = new XMLHttpRequest();
+									http.open("GET", targetUrl + endpoint)
+									http.setRequestHeader("Cookie", name + "=" + cookie.value)
+									http.send(null)
+									const preferences = http.responseText
+							//console.log(preferences)
+
+
+							browser.cookies.set(setQuery, () => browser.storage.local.set({ [`${frontend}_${name}`]: preferences }, () => resolve()))
+						break
+					}
+				resolve()
+			})
+		})
+	})
+}
+
+
+function setPreferencesFromToken(frontend, urls, name) {
+	let key = `${frontend}_${name}`
+	let formdata = ""
+	browser.storage.local.get(key, r => {
+		//console.log(r[key])
+		const preferences = JSON.parse(r[key])
+		if (preferences === undefined) return
+		for (const prefName of names(preferences)) {
+			if (formdata != "") {
+				formdata += "&"
+			}
+			formdata += prefName + "=" + preferences[prefName]
+		}
+		for (const url of urls) {
+
+			const http = new XMLHttpRequest();
+			http.open("POST", url + "/settings")
+			http.send(formdata)
+
+
+
+
+
+			/*
+			let query = r.firstPartyIsolate
+				? {
+						url: url,
+						name: cookie.name,
+						value: cookie.value,
+						secure: true,
+						expirationDate: null,
+						firstPartyDomain: new URL(url).hostname,
+				  }
+				: {
+						url: url,
+						name: cookie.name,
+						value: cookie.value,
+						secure: true,
+						expirationDate: cookie.expirationDate,
+				  }
+			browser.cookies.set(query)
+			*/
+		}
+	})
+}
+
 function copyRaw(test, copyRawElement) {
 	return new Promise(resolve => {
 		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
@@ -434,6 +528,7 @@ function unify(test) {
 				if (!result) result = await wikipediaHelper.initWikilessCookies(test, url)
 				if (!result) result = await translateHelper.copyPasteSimplyTranslateCookies(test, url)
 				if (!result) result = await translateHelper.copyPasteLingvaLocalStorage(test, url)
+				if (!result) result = await instagramHelper.initBibliogramPreferences(test, url)
 
 				resolve(result)
 			}
@@ -508,6 +603,8 @@ export default {
 	latency,
 	copyCookie,
 	getCookiesFromStorage,
+	getPreferencesFromToken,
+	setPreferencesFromToken,
 	switchInstance,
 	copyRaw,
 	unify,
