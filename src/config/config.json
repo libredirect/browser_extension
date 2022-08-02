@@ -1,0 +1,98 @@
+{
+	"networks": {
+		"normal": {
+			"url": "org",
+			"name": "Clearnet"
+		},
+		"tor": {
+			"url": "onion",
+			"name": "Tor"
+		},
+		"i2p": {
+			"url": "i2p",
+			"name": "I2P"
+		},
+		"loki": {
+			"url": "loki",
+			"name": "Lokinet"
+		}
+	},
+	"services": {
+		"youtube": {
+			"frontends": {
+				"invidious": {
+					"preferences": {
+						"method": "cookies",
+						"cookies": ["PREFS"]
+					}
+				},
+				"piped": {
+					"preferences": {
+						"method": "localstorage",
+						"localstorage": [
+							"bufferGoal",
+							"comments",
+							"disableLBRY",
+							"enabledCodecs",
+							"hl",
+							"homepage",
+							"instance",
+							"listen",
+							"minimizeDescription",
+							"playerAutoPlay",
+							"proxyLBRY",
+							"quality",
+							"region",
+							"selectedSkip",
+							"sponsorblock",
+							"theme",
+							"volume",
+							"watchHistory"
+						]
+					}
+				},
+				"pipedMaterial": {
+					"preferences": {
+						"method": "localstorage",
+						"localstorage": ["PREFERENCES"]
+					}
+				},
+				"cloudtube": {
+					"preferences": {
+						"method": "token",
+						"token": "token",
+						"fetchEndpoint": "/api/settings",
+						"setEndpoint": "/settings"
+					}
+				}
+			},
+			"singleInstanceFrontends": {
+				"freetube": {},
+				"yatte": {}
+			},
+			"targets": [
+				"/^https?:\\/{2}(www.|music.|m.|)youtube.com(\\/.*|$)/",
+				"/^https?:\\/{2}img.youtube.com\\/vi\\/.*\\/..*/",
+				"/^https?:\\/{2}(i|s).ytimg.com\\/vi\\/.*\\/..*/",
+				"/^https?:\\/{2}(www.|music.|)youtube.com\\/watch?v=..*/",
+				"/^https?:\\/{2}youtu.be\\/..*/",
+				"/^https?:\\/{2}(www.|)(youtube|youtube-nocookie).com\\/embed\\/..*/"
+			],
+			"name": "Youtube",
+			"defaults": {
+				"disableYoutube": false,
+				"enableYoutubeCustomSettings": false,
+				"onlyEmbeddedVideo": "both",
+				"youtubeFrontend": "invidious",
+				"youtubeEmbedFrontend": "invidious"
+			},
+			"youtubeMusic": {
+				"frontends": {
+					"beatbump": {},
+					"hyperpipe": {}
+				},
+			"targets": ["^https?:\\/{2}music\.youtube\.com(\\/.*|$)"]
+			}
+		}
+	}
+}
