@@ -76,6 +76,58 @@ function init() {
 init()
 browser.storage.onChanged.addListener(init)
 
+function initBibliogramPreferences(test, from) {
+	return new Promise(async resolve => {
+		await init()
+		const protocolHost = utils.protocolHost(from)
+		if (
+			![
+				...bibliogramNormalRedirectsChecks,
+				...bibliogramTorRedirectsChecks,
+				...bibliogramNormalCustomRedirects,
+				...bibliogramTorCustomRedirects,
+				...bibliogramI2pCustomRedirects,
+				...bibliogramLokiCustomRedirects,
+			].includes(protocolHost)
+		) {
+			resolve()
+			return
+		}
+
+		if (!test) {
+			let checkedInstances = []
+			if (protocol == "loki") checkedInstances = [...bibliogramLokiCustomRedirects]
+			else if (protocol == "i2p") checkedInstances = [...bibliogramI2pCustomRedirects]
+			else if (protocol == "tor") checkedInstances = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects]
+			if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
+				checkedInstances = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects]
+			}
+			utils.getPreferencesFromToken("bibliogram", from, checkedInstances, "settings", "/settings.json")
+			utils.setPreferencesFromToken("bibliogram", checkedInstances, "settings")
+		}
+		resolve(true)
+	})
+}
+
+function setBibliogramPreferences() {
+	return new Promise(async resolve => {
+		await init()
+		if (disableInstagram || protocol === undefined) {
+			resolve()
+			return
+		}
+		let checkedInstances = []
+		if (protocol == "loki") checkedInstances = [...bibliogramLokiCustomRedirects]
+		else if (protocol == "i2p") checkedInstances = [...bibliogramI2pCustomRedirects]
+		else if (protocol == "tor") checkedInstances = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects]
+		if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
+			checkedInstances = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects]
+		}
+		utils.setPreferencesFromToken("bibliogram", checkedInstances, "settings")
+		resolve()
+	})
+}
+
 function all() {
 	return [
 		...bibliogramNormalRedirectsChecks,
@@ -201,6 +253,8 @@ function initDefaults() {
 
 export default {
 	setRedirects,
+	initBibliogramPreferences,
+	setBibliogramPreferences,
 	reverse,
 	redirect,
 	initDefaults,
