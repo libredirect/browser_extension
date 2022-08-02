@@ -102,29 +102,9 @@ function initBibliogramPreferences(test, from) {
 			if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
 				checkedInstances = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects]
 			}
-			utils.getPreferencesFromToken("bibliogram", from, checkedInstances, "settings", "/settings.json")
-			utils.setPreferencesFromToken("bibliogram", checkedInstances, "settings")
+			await utils.getPreferencesFromToken("bibliogram", from, checkedInstances, "settings", "settings.json")
 		}
 		resolve(true)
-	})
-}
-
-function setBibliogramPreferences() {
-	return new Promise(async resolve => {
-		await init()
-		if (disableInstagram || protocol === undefined) {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...bibliogramLokiCustomRedirects]
-		else if (protocol == "i2p") checkedInstances = [...bibliogramI2pCustomRedirects]
-		else if (protocol == "tor") checkedInstances = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects]
-		if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects]
-		}
-		utils.setPreferencesFromToken("bibliogram", checkedInstances, "settings")
-		resolve()
 	})
 }
 
@@ -254,7 +234,6 @@ function initDefaults() {
 export default {
 	setRedirects,
 	initBibliogramPreferences,
-	setBibliogramPreferences,
 	reverse,
 	redirect,
 	initDefaults,
