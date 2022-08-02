@@ -134,14 +134,14 @@ protocolFallbackCheckbox.addEventListener("change", event => {
 	browser.storage.local.set({ protocolFallback: event.target.checked })
 })
 
-// let latencyOutput = document.getElementById("latency-output")
-// let latencyInput = document.getElementById("latency-input")
-// latencyInput.addEventListener("change", event => {
-// 	browser.storage.local.set({ latencyThreshold: event.target.value })
-// })
-// latencyInput.addEventListener("input", event => {
-// 	latencyOutput.value = event.target.value
-// })
+let latencyOutput = document.getElementById("latency-output")
+let latencyInput = document.getElementById("latency-input")
+latencyInput.addEventListener("change", event => {
+	browser.storage.local.set({ latencyThreshold: event.target.value })
+})
+latencyInput.addEventListener("input", event => {
+	latencyOutput.value = event.target.value
+})
 
 let nameCustomInstanceInput = document.getElementById("exceptions-custom-instance")
 let instanceTypeElement = document.getElementById("exceptions-custom-instance-type")
@@ -176,7 +176,7 @@ browser.storage.local.get(
 		themeElement.value = r.theme
 		protocolElement.value = r.protocol
 		protocolFallbackCheckbox.checked = r.protocolFallback
-		// latencyOutput.value = r.latencyThreshold
+		latencyOutput.value = r.latencyThreshold
 		// firstPartyIsolate.checked = r.firstPartyIsolate;
 
 		let protocolFallbackElement = document.getElementById("protocol-fallback")
