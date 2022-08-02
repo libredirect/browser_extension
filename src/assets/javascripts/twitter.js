@@ -215,43 +215,6 @@ function initNitterCookies(test, from) {
 	})
 }
 
-function pasteNitterCookies() {
-	return new Promise(async resolve => {
-		await init()
-		if (disableTwitter || protocol === undefined) {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...nitterI2pCustomRedirects]
-		else if (protocol == "i2p") checkedInstances = [...nitterLokiCustomRedirects]
-		else if (protocol == "tor") checkedInstances = [...nitterTorRedirectsChecks, ...nitterTorCustomRedirects]
-		if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...nitterNormalRedirectsChecks, ...nitterNormalCustomRedirects]
-		}
-		utils.getCookiesFromStorage("nitter", checkedInstances, "theme")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "infiniteScroll")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "stickyProfile")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "bidiSupport")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "hideTweetStats")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "hideBanner")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "hidePins")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "hideReplies")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "squareAvatars")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "mp4Playback")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "hlsPlayback")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "proxyVideos")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "muteVideos")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "autoplayGifs")
-
-		utils.getCookiesFromStorage("nitter", checkedInstances, "replaceInstagram")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "replaceReddit")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "replaceTwitter")
-		utils.getCookiesFromStorage("nitter", checkedInstances, "replaceYouTube")
-		resolve()
-	})
-}
-
 function initDefaults() {
 	return new Promise(resolve => {
 		fetch("/instances/data.json")
@@ -299,6 +262,5 @@ export default {
 	reverse,
 	removeXFrameOptions,
 	initNitterCookies,
-	pasteNitterCookies,
 	initDefaults,
 }

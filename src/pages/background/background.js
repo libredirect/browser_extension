@@ -71,17 +71,6 @@ browser.runtime.onInstalled.addListener(details => {
 	// }
 })
 
-youtubeHelper.pasteInvidiousCookies()
-translateHelper.pasteSimplyTranslateCookies()
-twitterHelper.pasteNitterCookies()
-wikipediaHelper.pasteWikilessCookies()
-searchHelper.pasteSearxCookies()
-searchHelper.pasteSearxngCookies()
-searchHelper.pasteLibrexCookies()
-redditHelper.pasteLibredditCookies()
-redditHelper.pasteTedditCookies()
-tiktokHelper.pasteProxiTokCookies()
-
 let BYPASSTABs = []
 browser.webRequest.onBeforeRequest.addListener(
 	details => {

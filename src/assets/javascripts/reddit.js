@@ -145,36 +145,6 @@ function initLibredditCookies(test, from) {
 	})
 }
 
-function pasteLibredditCookies() {
-	return new Promise(async resolve => {
-		await init()
-		if (disableReddit || redditFrontend != "libreddit" || protocol === undefined) {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...libredditLokiCustomRedirects]
-		else if (protocol == "i2p") checkedInstances = [...libredditI2pCustomRedirects]
-		else if (protocol == "tor") checkedInstances = [...libredditTorRedirectsChecks, ...libredditTorCustomRedirects]
-		if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...libredditNormalRedirectsChecks, ...libredditNormalCustomRedirects]
-		}
-		utils.getCookiesFromStorage("libreddit", checkedInstances, "theme")
-		utils.getCookiesFromStorage("libreddit", checkedInstances, "front_page")
-		utils.getCookiesFromStorage("libreddit", checkedInstances, "layout")
-		utils.getCookiesFromStorage("libreddit", checkedInstances, "wide")
-		utils.getCookiesFromStorage("libreddit", checkedInstances, "post_sort")
-		utils.getCookiesFromStorage("libreddit", checkedInstances, "comment_sort")
-		utils.getCookiesFromStorage("libreddit", checkedInstances, "show_nsfw")
-		utils.getCookiesFromStorage("libreddit", checkedInstances, "autoplay_videos")
-		utils.getCookiesFromStorage("libreddit", checkedInstances, "use_hls")
-		utils.getCookiesFromStorage("libreddit", checkedInstances, "hide_hls_notification")
-		utils.getCookiesFromStorage("libreddit", checkedInstances, "subscriptions")
-		utils.getCookiesFromStorage("libreddit", checkedInstances, "filters")
-		resolve()
-	})
-}
-
 function initTedditCookies(test, from) {
 	return new Promise(async resolve => {
 		await init()
@@ -208,36 +178,6 @@ function initTedditCookies(test, from) {
 			await utils.copyCookie("teddit", from, checkedInstances, "videos_muted")
 		}
 		resolve(true)
-	})
-}
-
-function pasteTedditCookies() {
-	return new Promise(async resolve => {
-		await init()
-		if (disableReddit || redditFrontend != "teddit" || protocol === undefined) {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...tedditLokiCustomRedirects]
-		else if (protocol == "i2p") checkedInstances = [...tedditI2pCustomRedirects]
-		else if (protocol == "tor") checkedInstances = [...tedditTorRedirectsChecks, ...tedditTorCustomRedirects]
-		if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...tedditNormalRedirectsChecks, ...tedditNormalCustomRedirects]
-		}
-		utils.getCookiesFromStorage("teddit", checkedInstances, "collapse_child_comments")
-		utils.getCookiesFromStorage("teddit", checkedInstances, "domain_instagram")
-		utils.getCookiesFromStorage("teddit", checkedInstances, "domain_twitter")
-		utils.getCookiesFromStorage("teddit", checkedInstances, "domain_youtube")
-		utils.getCookiesFromStorage("teddit", checkedInstances, "flairs")
-		utils.getCookiesFromStorage("teddit", checkedInstances, "highlight_controversial")
-		utils.getCookiesFromStorage("teddit", checkedInstances, "nsfw_enabled")
-		utils.getCookiesFromStorage("teddit", checkedInstances, "post_media_max_height")
-		utils.getCookiesFromStorage("teddit", checkedInstances, "show_upvoted_percentage")
-		utils.getCookiesFromStorage("teddit", checkedInstances, "show_upvotes")
-		utils.getCookiesFromStorage("teddit", checkedInstances, "theme")
-		utils.getCookiesFromStorage("teddit", checkedInstances, "videos_muted")
-		resolve()
 	})
 }
 
@@ -442,9 +382,7 @@ function initDefaults() {
 export default {
 	setRedirects,
 	initLibredditCookies,
-	pasteLibredditCookies,
 	initTedditCookies,
-	pasteTedditCookies,
 
 	redirect,
 	initDefaults,

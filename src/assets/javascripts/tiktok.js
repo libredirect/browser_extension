@@ -62,26 +62,6 @@ function initProxiTokCookies(test, from) {
 	})
 }
 
-function pasteProxiTokCookies() {
-	return new Promise(async resolve => {
-		await init()
-		if (disableTiktok || protocol === undefined) {
-			resolve()
-			return
-		}
-		let checkedInstances = []
-		if (protocol == "loki") checkedInstances = [...proxiTokI2pCustomRedirects]
-		else if (protocol == "i2p") checkedInstances = [...proxiTokLokiCustomRedirects]
-		else if (protocol == "tor") checkedInstances = [...proxiTokTorRedirectsChecks, ...proxiTokTorCustomRedirects]
-		if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
-			checkedInstances = [...proxiTokNormalRedirectsChecks, ...proxiTokNormalCustomRedirects]
-		}
-		utils.getCookiesFromStorage("proxitok", checkedInstances, "theme")
-		utils.getCookiesFromStorage("proxitok", checkedInstances, "api-legacy")
-		resolve()
-	})
-}
-
 let disableTiktok,
 	protocol,
 	protocolFallback,
@@ -248,13 +228,9 @@ function initDefaults() {
 
 export default {
 	setRedirects,
-
 	redirect,
 	reverse,
 	switchInstance,
-
 	initProxiTokCookies,
-	pasteProxiTokCookies,
-
 	initDefaults,
 }

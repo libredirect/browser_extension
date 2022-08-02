@@ -339,7 +339,11 @@ function copyCookie(frontend, targetUrl, urls, name) {
 	return new Promise(resolve => {
 		browser.storage.local.get("firstPartyIsolate", r => {
 			let query
-			if (!r.firstPartyIsolate) query = { url: protocolHost(targetUrl), name: name }
+			if (!r.firstPartyIsolate)
+				query = {
+					url: protocolHost(targetUrl),
+					name: name,
+				}
 			else
 				query = {
 					url: protocolHost(targetUrl),
@@ -365,40 +369,13 @@ function copyCookie(frontend, targetUrl, urls, name) {
 										secure: true,
 										expirationDate: cookie.expirationDate,
 								  }
-							browser.cookies.set(setQuery, () => browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve()))
+							browser.cookies.set(setQuery)
 						}
 						break
 					}
 				resolve()
 			})
 		})
-	})
-}
-
-function getCookiesFromStorage(frontend, urls, name) {
-	let key = `${frontend}_${name}`
-	browser.storage.local.get([key, "firstPartyIsolate"], r => {
-		const cookie = r[key]
-		if (cookie === undefined) return
-		for (const url of urls) {
-			let query = r.firstPartyIsolate
-				? {
-						url: url,
-						name: cookie.name,
-						value: cookie.value,
-						secure: true,
-						expirationDate: null,
-						firstPartyDomain: new URL(url).hostname,
-				  }
-				: {
-						url: url,
-						name: cookie.name,
-						value: cookie.value,
-						secure: true,
-						expirationDate: cookie.expirationDate,
-				  }
-			browser.cookies.set(query)
-		}
 	})
 }
 
@@ -474,10 +451,6 @@ function unify(test) {
 					resolve()
 					return
 				}
-				if (currTab.incognito) {
-					resolve()
-					return
-				}
 
 				let result = await youtubeHelper.copyPasteInvidiousCookies(test, url)
 				if (!result) result = await youtubeHelper.copyPastePipedLocalStorage(test, url, currTab.id)
@@ -540,8 +513,8 @@ function switchInstance(test) {
 }
 
 function latency(name, frontend, document, location) {
-	let latencyElement = document.getElementById(`latency - ${frontend} `)
-	let latencyLabel = document.getElementById(`latency - ${frontend} -label`)
+	let latencyElement = document.getElementById(`latency-${frontend}`)
+	let latencyLabel = document.getElementById(`latency-${frontend}-label`)
 	latencyElement.addEventListener("click", async () => {
 		let reloadWindow = () => location.reload()
 		latencyElement.addEventListener("click", reloadWindow)
@@ -567,7 +540,6 @@ export default {
 	processDefaultCustomInstances,
 	latency,
 	copyCookie,
-	getCookiesFromStorage,
 	getPreferencesFromToken,
 	switchInstance,
 	copyRaw,
