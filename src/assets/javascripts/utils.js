@@ -352,19 +352,19 @@ function copyCookie(frontend, targetUrl, urls, name) {
 						for (const url of urls) {
 							const setQuery = r.firstPartyIsolate
 								? {
-									url: url,
-									name: name,
-									value: cookie.value,
-									secure: true,
-									firstPartyDomain: new URL(url).hostname,
-								}
+										url: url,
+										name: name,
+										value: cookie.value,
+										secure: true,
+										firstPartyDomain: new URL(url).hostname,
+								  }
 								: {
-									url: url,
-									name: name,
-									value: cookie.value,
-									secure: true,
-									expirationDate: cookie.expirationDate,
-								}
+										url: url,
+										name: name,
+										value: cookie.value,
+										secure: true,
+										expirationDate: cookie.expirationDate,
+								  }
 							browser.cookies.set(setQuery, () => browser.storage.local.set({ [`${frontend}_${name}`]: cookie }, () => resolve()))
 						}
 						break
@@ -383,20 +383,20 @@ function getCookiesFromStorage(frontend, urls, name) {
 		for (const url of urls) {
 			let query = r.firstPartyIsolate
 				? {
-					url: url,
-					name: cookie.name,
-					value: cookie.value,
-					secure: true,
-					expirationDate: null,
-					firstPartyDomain: new URL(url).hostname,
-				}
+						url: url,
+						name: cookie.name,
+						value: cookie.value,
+						secure: true,
+						expirationDate: null,
+						firstPartyDomain: new URL(url).hostname,
+				  }
 				: {
-					url: url,
-					name: cookie.name,
-					value: cookie.value,
-					secure: true,
-					expirationDate: cookie.expirationDate,
-				}
+						url: url,
+						name: cookie.name,
+						value: cookie.value,
+						secure: true,
+						expirationDate: cookie.expirationDate,
+				  }
 			browser.cookies.set(query)
 		}
 	})
@@ -405,16 +405,16 @@ function getCookiesFromStorage(frontend, urls, name) {
 function getPreferencesFromToken(frontend, targetUrl, urls, name, endpoint) {
 	return new Promise(resolve => {
 		browser.storage.local.get("firstPartyIsolate", r => {
-			const http = new XMLHttpRequest();
+			const http = new XMLHttpRequest()
 			const url = `${targetUrl}${endpoint}`
 			http.open("GET", url, false)
 			http.setRequestHeader("Cookie", `${name}=${cookie.value}`)
 			http.send(null)
 			const preferences = JSON.parse(http.responseText)
-			let formdata = new FormData();
-			for (var key in preferences) formdata.append(key, preferences[key]);
+			let formdata = new FormData()
+			for (var key in preferences) formdata.append(key, preferences[key])
 			for (const url of urls) {
-				const http = new XMLHttpRequest();
+				const http = new XMLHttpRequest()
 				http.open("POST", `${url}/settings/stay`, false)
 				http.send(null)
 			}
@@ -423,7 +423,6 @@ function getPreferencesFromToken(frontend, targetUrl, urls, name, endpoint) {
 		})
 	})
 }
-
 
 function copyRaw(test, copyRawElement) {
 	return new Promise(resolve => {
