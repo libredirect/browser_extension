@@ -17,10 +17,10 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get("cloudflareBlackList", r => {
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
 		redirects.proxiTok = val
 		proxiTokNormalRedirectsChecks = [...redirects.proxiTok.normal]
-		for (const instance of r.cloudflareBlackList) {
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
 			const a = proxiTokNormalRedirectsChecks.indexOf(instance)
 			if (a > -1) proxiTokNormalRedirectsChecks.splice(a, 1)
 		}
@@ -202,13 +202,20 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+		proxiTokNormalRedirectsChecks = [...redirects.proxiTok.normal]
+		console.log(r)
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+			const a = proxiTokNormalRedirectsChecks.indexOf(instance)
+			if (a > -1) proxiTokNormalRedirectsChecks.splice(a, 1)
+		}
 				browser.storage.local.set(
 					{
 						disableTiktok: false,
 
 						tiktokRedirects: redirects,
 
-						proxiTokNormalRedirectsChecks: [...redirects.proxiTok.normal],
+						proxiTokNormalRedirectsChecks,
 						proxiTokNormalCustomRedirects: [],
 
 						proxiTokTorRedirectsChecks: [...redirects.proxiTok.tor],
@@ -222,6 +229,7 @@ function initDefaults() {
 					},
 					() => resolve()
 				)
+			})
 			})
 	})
 }

@@ -17,10 +17,10 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get("cloudflareBlackList", r => {
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
 		redirects.send = val
 		sendNormalRedirectsChecks = [...redirects.send.normal]
-		for (const instance of r.cloudflareBlackList) {
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
 			const a = sendNormalRedirectsChecks.indexOf(instance)
 			if (a > -1) sendNormalRedirectsChecks.splice(a, 1)
 		}
@@ -154,18 +154,18 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-				browser.storage.local.get("cloudflareBlackList", async r => {
-					sendNormalRedirectsChecks = [...redirects.send.normal]
-					for (const instance of r.cloudflareBlackList) {
-						let i = sendNormalRedirectsChecks.indexOf(instance)
-						if (i > -1) sendNormalRedirectsChecks.splice(i, 1)
-					}
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+		sendNormalRedirectsChecks = [...redirects.send.normal]
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+			const a = sendNormalRedirectsChecks.indexOf(instance)
+			if (a > -1) sendNormalRedirectsChecks.splice(a, 1)
+		}
 					browser.storage.local.set(
 						{
 							disableSendTarget: false,
 							sendTargetsRedirects: redirects,
 
-							sendNormalRedirectsChecks: sendNormalRedirectsChecks,
+							sendNormalRedirectsChecks,
 							sendNormalCustomRedirects: [],
 
 							sendTorRedirectsChecks: [...redirects.send.tor],

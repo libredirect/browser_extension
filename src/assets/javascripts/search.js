@@ -8,52 +8,22 @@ const frontends = new Array("searx", "searxng", "whoogle", "librex")
 const protocols = new Array("normal", "tor", "i2p", "loki")
 
 const redirects = {}
-/*
-  "searx": {
-    "normal": [],
-    "tor": [],
-    "i2p": []
-  },
-  "searxng": {
-    "normal": [],
-    "tor": [],
-    "i2p": []
-  },
-  "whoogle": {
-    "normal": [],
-    "tor": [],
-    "i2p": []
-  }
-  */
-//};
-
-//let tmp = "{"
 
 for (let i = 0; i < frontends.length; i++) {
-	//redirects.frontends[i] = {}
-	//redirects.push(frontends[i])
-	//tmp = frontends[i]
-	//tmp = tmp + '\n"' + frontends[i] + '": {'
 	redirects[frontends[i]] = {}
 	for (let x = 0; x < protocols.length; x++) {
-		//redirects.frontends[i].protocols = []
-		//tmp = tmp + '\n"' + protocols[x] + '": [],'
 		redirects[frontends[i]][protocols[x]] = []
 	}
-	//tmp = tmp + "\n},"
 }
-//tmp = tmp + "\n}"
-
-//const redirects = JSON.parse(tmp)
 
 function setRedirects(val) {
-	browser.storage.local.get("cloudflareBlackList", r => {
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
 		redirects = val
 		searxNormalRedirectsChecks = [...redirects.searx.normal]
 		searxngNormalRedirectsChecks = [...redirects.searxng.normal]
 		whoogleNormalRedirectsChecks = [...redirects.whoogle.normal]
 		librexNormalRedirectsChecks = [...redirects.librex.normal]
-		for (const instance of r.cloudflareBlackList) {
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
 			const a = searxNormalRedirectsChecks.indexOf(instance)
 			if (a > -1) searxNormalRedirectsChecks.splice(a, 1)
 
@@ -499,35 +469,28 @@ function initDefaults() {
 			.then(response => response.text())
 			.then(async data => {
 				let dataJson = JSON.parse(data)
-				/*
-      redirects.searx = dataJson.searx;
-      redirects.searxng = dataJson.searxng;
-      redirects.whoogle = dataJson.whoogle;
-      */
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
 
-				browser.storage.local.get("cloudflareBlackList", async r => {
-					whoogleNormalRedirectsChecks = [...redirects.whoogle.normal]
-					searxNormalRedirectsChecks = [...redirects.searx.normal]
-					searxngNormalRedirectsChecks = [...redirects.searxng.normal]
-					librexNormalRedirectsChecks = [...redirects.librex.normal]
-					for (const instance of r.cloudflareBlackList) {
-						let i
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+		searxNormalRedirectsChecks = [...redirects.searx.normal]
+		searxngNormalRedirectsChecks = [...redirects.searxng.normal]
+		whoogleNormalRedirectsChecks = [...redirects.whoogle.normal]
+		librexNormalRedirectsChecks = [...redirects.librex.normal]
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+			const a = searxNormalRedirectsChecks.indexOf(instance)
+			if (a > -1) searxNormalRedirectsChecks.splice(a, 1)
 
-						i = whoogleNormalRedirectsChecks.indexOf(instance)
-						if (i > -1) whoogleNormalRedirectsChecks.splice(i, 1)
+			const b = searxngNormalRedirectsChecks.indexOf(instance)
+			if (b > -1) searxngNormalRedirectsChecks.splice(b, 1)
 
-						i = searxNormalRedirectsChecks.indexOf(instance)
-						if (i > -1) searxNormalRedirectsChecks.splice(i, 1)
+			const c = whoogleNormalRedirectsChecks.indexOf(instance)
+			if (c > -1) whoogleNormalRedirectsChecks.splice(c, 1)
 
-						i = searxngNormalRedirectsChecks.indexOf(instance)
-						if (i > -1) searxngNormalRedirectsChecks.splice(i, 1)
-
-						i = librexNormalRedirectsChecks.indexOf(instance)
-						if (i > -1) librexNormalRedirectsChecks.splice(i, 1)
-					}
+			const d = librexNormalRedirectsChecks.indexOf(instance)
+			if (d > -1) librexNormalRedirectsChecks.splice(d, 1)
+		}
 					browser.storage.local.set(
 						{
 							disableSearch: false,
@@ -535,7 +498,7 @@ function initDefaults() {
 							searchRedirects: redirects,
 							searxngCustomSettings: false,
 
-							whoogleNormalRedirectsChecks: whoogleNormalRedirectsChecks,
+							whoogleNormalRedirectsChecks,
 							whoogleNormalCustomRedirects: [],
 
 							whoogleTorRedirectsChecks: [...redirects.whoogle.tor],
@@ -547,7 +510,7 @@ function initDefaults() {
 							whoogleLokiRedirectsChecks: [...redirects.whoogle.loki],
 							whoogleLokiCustomRedirects: [],
 
-							searxNormalRedirectsChecks: searxNormalRedirectsChecks,
+							searxNormalRedirectsChecks,
 							searxNormalCustomRedirects: [],
 
 							searxTorRedirectsChecks: [...redirects.searx.tor],
@@ -559,7 +522,7 @@ function initDefaults() {
 							searxLokiRedirectsChecks: [...redirects.searx.loki],
 							searxLokiCustomRedirects: [],
 
-							searxngNormalRedirectsChecks: searxngNormalRedirectsChecks,
+							searxngNormalRedirectsChecks,
 							searxngNormalCustomRedirects: [],
 
 							searxngTorRedirectsChecks: [...redirects.searxng.tor],
@@ -571,7 +534,7 @@ function initDefaults() {
 							searxngLokiRedirectsChecks: [...redirects.searxng.loki],
 							searxngLokiCustomRedirects: [],
 
-							librexNormalRedirectsChecks: librexNormalRedirectsChecks,
+							librexNormalRedirectsChecks,
 							librexNormalCustomRedirects: [],
 
 							librexTorRedirectsChecks: [...redirects.librex.tor],

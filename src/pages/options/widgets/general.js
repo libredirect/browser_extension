@@ -81,6 +81,7 @@ resetSettings.addEventListener("click", async () => {
 			.then(response => response.text())
 			.then(async data => {
 				browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare }, () => {
+					browser.storage.local.set({ offlineBlackList: JSON.parse(data).offline }, () => {
 					browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate }, async () => {
 						await generalHelper.initDefaults()
 						await youtubeHelper.initDefaults()
@@ -102,6 +103,7 @@ resetSettings.addEventListener("click", async () => {
 						await peertubeHelper.initDefaults()
 						await lbryHelper.initDefaults()
 						location.reload()
+					})
 					})
 				})
 			})

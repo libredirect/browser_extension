@@ -30,14 +30,13 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get("cloudflareBlackList", r => {
-		for (let i = 0; i < frontends.length; i++) {
-			redirects.frontends = val.frontends
-		}
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
+			redirects = val
 		invidiousNormalRedirectsChecks = [...redirects.invidious.normal]
 		pipedNormalRedirectsChecks = [...redirects.piped.normal]
 		pipedMaterialNormalRedirectsChecks = [...redirects.pipedMaterial.normal]
-		for (const instance of r.cloudflareBlackList) {
+		cloudtubeNormalRedirectsChecks = [...redirects.cloudtube.normal]
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
 			const a = invidiousNormalRedirectsChecks.indexOf(instance)
 			if (a > -1) invidiousNormalRedirectsChecks.splice(a, 1)
 
@@ -450,13 +449,12 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-				browser.storage.local.get("cloudflareBlackList", async r => {
+				browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
 					invidiousNormalRedirectsChecks = [...redirects.invidious.normal]
 					pipedNormalRedirectsChecks = [...redirects.piped.normal]
 					pipedMaterialNormalRedirectsChecks = [...redirects.pipedMaterial.normal]
 					cloudtubeNormalRedirectsChecks = [...redirects.cloudtube.normal]
-
-					for (const instance of r.cloudflareBlackList) {
+					for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
 						const a = invidiousNormalRedirectsChecks.indexOf(instance)
 						if (a > -1) invidiousNormalRedirectsChecks.splice(a, 1)
 
@@ -467,9 +465,8 @@ function initDefaults() {
 						if (c > -1) pipedMaterialNormalRedirectsChecks.splice(c, 1)
 
 						const d = cloudtubeNormalRedirectsChecks.indexOf(instance)
-						if (d > -1) cloudtubeNormalRedirectsChecks.indexOf(instance)
+						if (c > -1) cloudtubeNormalRedirectsChecks.splice(d, 1)
 					}
-
 					browser.storage.local.set(
 						{
 							disableYoutube: false,
@@ -478,7 +475,7 @@ function initDefaults() {
 							youtubeRedirects: redirects,
 							youtubeFrontend: "invidious",
 
-							invidiousNormalRedirectsChecks: invidiousNormalRedirectsChecks,
+							invidiousNormalRedirectsChecks,
 							invidiousNormalCustomRedirects: [],
 
 							invidiousTorRedirectsChecks: [...redirects.invidious.tor],
@@ -490,7 +487,7 @@ function initDefaults() {
 							invidiousLokiRedirectsChecks: [...redirects.invidious.loki],
 							invidiousLokiCustomRedirects: [],
 
-							pipedNormalRedirectsChecks: pipedNormalRedirectsChecks,
+							pipedNormalRedirectsChecks,
 							pipedNormalCustomRedirects: [],
 
 							pipedTorRedirectsChecks: [...redirects.piped.tor],

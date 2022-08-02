@@ -17,10 +17,10 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get("cloudflareBlackList", r => {
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
 		redirects.neuters = val
 		neutersNormalRedirectsChecks = [...redirects.neuters.normal]
-		for (const instance of r.cloudflareBlackList) {
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
 			const a = neutersNormalRedirectsChecks.indexOf(instance)
 			if (a > -1) neutersNormalRedirectsChecks.splice(a, 1)
 		}
@@ -109,13 +109,19 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+		neutersNormalRedirectsChecks = [...redirects.neuters.normal]
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+			const a = neutersNormalRedirectsChecks.indexOf(instance)
+			if (a > -1) neutersNormalRedirectsChecks.splice(a, 1)
+		}
 				browser.storage.local.set(
 					{
 						disableReuters: true,
 
 						reutersRedirects: redirects,
 
-						neutersNormalRedirectsChecks: [...redirects.neuters.normal],
+						neutersNormalRedirectsChecks,
 						neutersNormalCustomRedirects: [],
 
 						neutersTorRedirectsChecks: [...redirects.neuters.tor],
@@ -129,6 +135,7 @@ function initDefaults() {
 					},
 					() => resolve()
 				)
+			})
 			})
 	})
 }

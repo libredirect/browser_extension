@@ -16,11 +16,11 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get("cloudflareBlackList", r => {
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
 		redirects = val
 		libredditNormalRedirectsChecks = [...redirects.libreddit.normal]
 		tedditNormalRedirectsChecks = [...redirects.teddit.normal]
-		for (const instance of r.cloudflareBlackList) {
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
 			const a = libredditNormalRedirectsChecks.indexOf(instance)
 			if (a > -1) libredditNormalRedirectsChecks.splice(a, 1)
 
@@ -330,25 +330,23 @@ function initDefaults() {
 				for (let i = 0; i < frontends.length; i++) {
 					redirects[frontends[i]] = dataJson[frontends[i]]
 				}
-				browser.storage.local.get("cloudflareBlackList", async r => {
-					libredditNormalRedirectsChecks = [...redirects.libreddit.normal]
-					tedditNormalRedirectsChecks = [...redirects.teddit.normal]
-					for (const instance of r.cloudflareBlackList) {
-						let i
+	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], async r => {
+		libredditNormalRedirectsChecks = [...redirects.libreddit.normal]
+		tedditNormalRedirectsChecks = [...redirects.teddit.normal]
+		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+			const a = libredditNormalRedirectsChecks.indexOf(instance)
+			if (a > -1) libredditNormalRedirectsChecks.splice(a, 1)
 
-						i = libredditNormalRedirectsChecks.indexOf(instance)
-						if (i > -1) libredditNormalRedirectsChecks.splice(i, 1)
-
-						i = tedditNormalRedirectsChecks.indexOf(instance)
-						if (i > -1) tedditNormalRedirectsChecks.splice(i, 1)
-					}
+			const b = tedditNormalRedirectsChecks.indexOf(instance)
+			if (b > -1) tedditNormalRedirectsChecks.splice(b, 1)
+		}
 					browser.storage.local.set(
 						{
 							disableReddit: false,
 							redditFrontend: "libreddit",
 							redditRedirects: redirects,
 
-							libredditNormalRedirectsChecks: libredditNormalRedirectsChecks,
+							libredditNormalRedirectsChecks,
 							libredditNormalCustomRedirects: [],
 
 							libredditTorRedirectsChecks: [...redirects.libreddit.tor],
@@ -360,7 +358,7 @@ function initDefaults() {
 							libredditLokiRedirectsChecks: [...redirects.libreddit.loki],
 							libredditLokiCustomRedirects: [],
 
-							tedditNormalRedirectsChecks: tedditNormalRedirectsChecks,
+							tedditNormalRedirectsChecks,
 							tedditNormalCustomRedirects: [],
 
 							tedditTorRedirectsChecks: [...redirects.teddit.tor],

@@ -25,7 +25,7 @@ function getRandomInstance(instances) {
 
 let cloudflareBlackList = []
 let authenticateBlackList = []
-let offlineBlacklist = []
+let offlineBlackList = []
 async function initBlackList() {
 	return new Promise(resolve => {
 		fetch("/instances/blacklist.json")
@@ -33,7 +33,7 @@ async function initBlackList() {
 			.then(data => {
 				cloudflareBlackList = JSON.parse(data).cloudflare
 				authenticateBlackList = JSON.parse(data).authenticate
-				offlineBlacklist = JSON.parse(data).offlineBlacklist
+				offlineBlackList = JSON.parse(data).offline
 				resolve()
 			})
 	})
@@ -62,6 +62,7 @@ function updateInstances() {
 			invidious: instances.invidious,
 			piped: instances.piped,
 			pipedMaterial: instances.pipedMaterial,
+			cloudtube: instances.cloudtube
 		})
 		twitterHelper.setRedirects(instances.nitter)
 		instagramHelper.setRedirects(instances.bibliogram)
@@ -164,7 +165,7 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
 		...redirects[name][protocol].map(x => {
 			const cloudflare = cloudflareBlackList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ""
 			const authenticate = authenticateBlackList.includes(x) ? ' <span style="color:orange;">authenticate</span>' : ""
-			const offline = offlineBlacklist.includes(x) ? ' <span style="color:grey;">offline</span>' : ""
+			const offline = offlineBlackList.includes(x) ? ' <span style="color:grey;">offline</span>' : ""
 
 			let ms = instancesLatency[x]
 			let latencyColor = ms <= 1000 ? "green" : ms <= 2000 ? "orange" : "red"
@@ -285,30 +286,22 @@ function pingOnce(href) {
 					resolve(5000 + http.status)
 				}
 			}
-
 		}
 		http.open("GET", `${href}?_=${new Date().getTime()}`, true)
 		started = new Date().getTime()
 		http.send(null)
 	})
 }
- 
 
 async function testLatency(element, instances, frontend) {
 	return new Promise(async resolve => {
 		let myList = {}
 		let latencyThreshold
 		let redirectsChecks = []
-		browser.storage.local.get(
-			[
-				"latencyThreshold",
-				`${frontend}NormalRedirectsChecks`
-			],
-			r => {
-				latencyThreshold = r.latencyThreshold
-				redirectsChecks = r[`${frontend}NormalRedirectsChecks`]
-			}
-		)
+		browser.storage.local.get(["latencyThreshold", `${frontend}NormalRedirectsChecks`], r => {
+			latencyThreshold = r.latencyThreshold
+			redirectsChecks = r[`${frontend}NormalRedirectsChecks`]
+		})
 		for (const href of instances)
 			await ping(href).then(time => {
 				if (time) {
