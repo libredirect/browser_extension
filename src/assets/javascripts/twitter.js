@@ -27,6 +27,9 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			twitterRedirects: redirects,
 			nitterNormalRedirectsChecks,
+			nitterTorRedirectsChecks: [...redirects.nitter.tor],
+			nitterI2pRedirectsChecks: [...redirects.nitter.i2p],
+			nitterLokiRedirectsChecks: [...redirects.nitter.loki]
 		})
 	})
 }

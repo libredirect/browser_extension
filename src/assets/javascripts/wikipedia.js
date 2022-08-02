@@ -27,6 +27,9 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			wikipediaRedirects: redirects,
 			wikilessNormalRedirectsChecks,
+			wikilessTorRedirectsChecks: [...redirects.wikiless.tor],
+			wikilessI2pRedirectsChecks: [...redirects.wikiless.i2p],
+			wikilessLokiRedirectsChecks: [...redirects.wikiless.loki]
 		})
 	})
 }

@@ -27,6 +27,9 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			lbryTargetsRedirects: redirects,
 			librarianNormalRedirectsChecks,
+			librarianTorRedirectsChecks: [...redirects.librarian.tor],
+			librarianI2pRedirectsChecks: [...redirects.librarian.i2p],
+			librarianLokiRedirectsChecks: [...redirects.librarian.loki]
 		})
 	})
 }

@@ -25,6 +25,9 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			peertubeRedirects: redirects,
 			simpleertubeNormalRedirectsChecks,
+			simpleertubeTorRedirectsChecks: [...redirects.simpleertube.tor],
+			simpleertubeI2pRedirectsChecks: [...redirects.simpleertube.i2p],
+			simpleertubeLokiRedirectsChecks: [...redirects.simpleertube.loki]
 		})
 	})
 }

@@ -27,6 +27,9 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			quoraRedirects: redirects,
 			quetreNormalRedirectsChecks,
+			quetreTorRedirectsChecks: [...redirects.quetre.tor],
+			quetreI2pRedirectsChecks: [...redirects.quetre.i2p],
+			quetreLokiRedirectsChecks: [...redirects.quetre.loki]
 		})
 	})
 }

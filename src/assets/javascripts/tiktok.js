@@ -27,6 +27,9 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			tiktokRedirects: redirects,
 			proxiTokNormalRedirectsChecks,
+			proxiTokTorRedirectsChecks: [...redirects.proxiTok.tor],
+			proxiTokI2pRedirectsChecks: [...redirects.proxiTok.i2p],
+			proxiTokLokiRedirectsChecks: [...redirects.proxiTok.loki]
 		})
 	})
 }

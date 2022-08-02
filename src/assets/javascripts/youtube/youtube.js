@@ -52,9 +52,21 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			youtubeRedirects: redirects,
 			invidiousNormalRedirectsChecks,
+			invidiousTorRedirectsChecks: [...redirects.invidious.tor],
+			invidiousI2pRedirectsChecks: [...redirects.invidious.i2p],
+			invidiousLokiRedirectsChecks: [...redirects.invidious.loki],
 			pipedNormalRedirectsChecks,
+			pipedTorRedirectsChecks: [...redirects.piped.tor],
+			pipedI2pRedirectsChecks: [...redirects.piped.i2p],
+			pipedLokiRedirectsChecks: [...redirects.piped.loki],
 			pipedMaterialNormalRedirectsChecks,
+			pipedMaterialTorRedirectsChecks: [...redirects.pipedMaterial.tor],
+			pipedMaterialI2pRedirectsChecks: [...redirects.pipedMaterial.i2p],
+			pipedMaterialLokiRedirectsChecks: [...redirects.pipedMaterial.loki],
 			cloudtubeNormalRedirectsChecks,
+			cloudtubeTorRedirectsChecks: [...redirects.cloudtube.tor],
+			cloudtubeI2pRedirectsChecks: [...redirects.cloudtube.i2p],
+			cloudtubeLokiRedirectsChecks: [...redirects.cloudtube.loki]
 		})
 	})
 }

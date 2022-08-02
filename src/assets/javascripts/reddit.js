@@ -30,7 +30,13 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			redditRedirects: redirects,
 			libredditNormalRedirectsChecks,
+			libredditTorRedirectsChecks: [...redirects.libreddit.tor],
+			libredditI2pRedirectsChecks: [...redirects.libreddit.i2p],
+			libredditLokiRedirectsChecks: [...redirects.libreddit.loki],
 			tedditNormalRedirectsChecks,
+			tedditTorRedirectsChecks: [...redirects.teddit.tor],
+			tedditI2pRedirectsChecks: [...redirects.teddit.i2p],
+			tedditLokiRedirectsChecks: [...redirects.teddit.loki]
 		})
 	})
 }

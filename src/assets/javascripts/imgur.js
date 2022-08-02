@@ -27,6 +27,9 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			imgurRedirects: redirects,
 			rimgoNormalRedirectsChecks,
+			rimgoTorRedirectsChecks: [...redirects.rimgo.tor],
+			rimgoI2pRedirectsChecks: [...redirects.rimgo.i2p],
+			rimgoLokiRedirectsChecks: [...redirects.rimgo.loki]
 		})
 	})
 }

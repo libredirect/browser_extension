@@ -39,9 +39,21 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			searchRedirects: redirects,
 			searxNormalRedirectsChecks,
+			searxTorRedirectsChecks: [...redirects.searx.tor],
+			searxI2pRedirectsChecks: [...redirects.searx.i2p],
+			searxLokiRedirectsChecks: [...redirects.searx.loki],
 			searxngNormalRedirectsChecks,
+			searxngTorRedirectsChecks: [...redirects.searxng.tor],
+			searxngI2pRedirectsChecks: [...redirects.searxng.i2p],
+			searxngLokiRedirectsChecks: [...redirects.searxng.loki],
 			whoogleNormalRedirectsChecks,
+			whoogleTorRedirectsChecks: [...redirects.whoogle.tor],
+			whoogleI2pRedirectsChecks: [...redirects.whoogle.i2p],
+			whoogleLokiRedirectsChecks: [...redirects.whoogle.loki],
 			librexNormalRedirectsChecks,
+			librexTorRedirectsChecks: [...redirects.librex.tor],
+			librexI2pRedirectsChecks: [...redirects.librex.i2p],
+			librexLokiRedirectsChecks: [...redirects.librex.loki]
 		})
 	})
 }

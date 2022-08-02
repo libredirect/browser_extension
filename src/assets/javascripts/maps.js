@@ -31,6 +31,9 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			mapsRedirects: redirects,
 			facilNormalRedirectsChecks,
+			facilTorRedirectsChecks: [...redirects.facil.tor],
+			facilI2pRedirectsChecks: [...redirects.facil.i2p],
+			facilLokiRedirectsChecks: [...redirects.facil.loki]
 		})
 	})
 }

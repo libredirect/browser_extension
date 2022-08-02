@@ -27,6 +27,9 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			imdbRedirects: redirects,
 			libremdbNormalRedirectsChecks,
+			libremdbTorRedirectsChecks: [...redirects.libremdb.tor],
+			libremdbI2pRedirectsChecks: [...redirects.libremdb.i2p],
+			libremdbLokiRedirectsChecks: [...redirects.libremdb.loki]
 		})
 	})
 }

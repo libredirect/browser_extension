@@ -50,6 +50,9 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			mediumRedirects: redirects,
 			scribeNormalRedirectsChecks,
+			scribeTorRedirectsChecks: [...redirects.scribe.tor],
+			scribeI2pRedirectsChecks: [...redirects.scribe.i2p],
+			scribeLokiRedirectsChecks: [...redirects.scribe.loki]
 		})
 	})
 }

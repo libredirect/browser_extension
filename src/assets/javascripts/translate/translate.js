@@ -105,7 +105,13 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			translateRedirects: redirects,
 			simplyTranslateNormalRedirectsChecks,
+			simplyTranslateTorRedirectsChecks: [...redirects.simplyTranslate.tor],
+			simplyTranslateI2pRedirectsChecks: [...redirects.simplyTranslate.i2p],
+			simplyTranslateLokiRedirectsChecks: [...redirects.simplyTranslate.loki],
 			lingvaNormalRedirectsChecks,
+			lingvaTorRedirectsChecks: [...redirects.lingva.tor],
+			lingvaI2pRedirectsChecks: [...redirects.lingva.i2p],
+			lingvaLokiRedirectsChecks: [...redirects.lingva.loki]
 		})
 	})
 }

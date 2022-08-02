@@ -27,6 +27,9 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			neutersRedirects: redirects,
 			neutersNormalRedirectsChecks,
+			neutersTorRedirectsChecks: [...redirects.neuters.tor],
+			neutersI2pRedirectsChecks: [...redirects.neuters.i2p],
+			neutersLokiRedirectsChecks: [...redirects.neuters.loki]
 		})
 	})
 }

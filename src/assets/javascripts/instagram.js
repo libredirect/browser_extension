@@ -26,6 +26,9 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			instagramRedirects: redirects,
 			bibliogramNormalRedirectsChecks,
+			bibliogramTorRedirectsChecks: [...redirects.bibliogram.tor],
+			bibliogramI2pRedirectsChecks: [...redirects.bibliogram.i2p],
+			bibliogramLokiRedirectsChecks: [...redirects.bibliogram.loki]
 		})
 	})
 }

@@ -33,7 +33,13 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			youtubeMusicRedirects: redirects,
 			beatbumpNormalRedirectsChecks,
+			beatbumpTorRedirectsChecks: [...redirects.beatbump.tor],
+			beatbumpI2pRedirectsChecks: [...redirects.beatbump.i2p],
+			beatbumpLokiRedirectsChecks: [...redirects.beatbump.loki],
 			hyperpipeNormalRedirectsChecks,
+			hyperpipeTorRedirectsChecks: [...redirects.hyperpipe.tor],
+			hyperpipeI2pRedirectsChecks: [...redirects.hyperpipe.i2p],
+			hyperpipeLokiRedirectsChecks: [...redirects.hyperpipe.loki]
 		})
 	})
 }

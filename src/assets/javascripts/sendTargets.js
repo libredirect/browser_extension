@@ -27,6 +27,9 @@ function setRedirects(val) {
 		browser.storage.local.set({
 			sendTargetsRedirects: redirects,
 			sendNormalRedirectsChecks,
+			sendTorRedirectsChecks: [...redirects.send.tor],
+			sendI2pRedirectsChecks: [...redirects.send.i2p],
+			sendLokiRedirectsChecks: [...redirects.send.loki]
 		})
 	})
 }
