@@ -28,4 +28,5 @@ Libredirect version:
 
 <br>
 <!--Put an "x" inbetween the brackets to confirm-->
-[ ] I have checked on codeberg and github and can confirm this issue is not a duplicate.
+
+- [ ] I have checked on codeberg and github and can confirm this issue is not a duplicate.
