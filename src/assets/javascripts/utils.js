@@ -28,14 +28,56 @@ let authenticateBlackList = []
 let offlineBlackList = []
 async function initBlackList() {
 	return new Promise(resolve => {
+	browser.storage.local.get([
+		"cloudflareBlackList",
+		"authenticateBlackList",
+		"offlineBlackList"
+	],
+	r => {
+		cloudflareBlackList = r.cloudflareBlackList
+		authenticateBlackList = r.authenticateBlackList
+		offlineBlackList = r.offlineBlackList
+	})
+		if (cloudflareBlackList.length == 0) {
 		fetch("/instances/blacklist.json")
 			.then(response => response.text())
 			.then(data => {
 				cloudflareBlackList = JSON.parse(data).cloudflare
 				authenticateBlackList = JSON.parse(data).authenticate
 				offlineBlackList = JSON.parse(data).offline
-				resolve()
 			})
+		}
+		console.log(offlineBlackList)
+		resolve()
+	})
+}
+
+function updateBlackList() {
+	return new Promise(async resolve => {
+		let http = new XMLHttpRequest()
+		let fallback = new XMLHttpRequest()
+		http.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/blacklist.json", false)
+		http.send(null)
+		if (http.status != 200) {
+			fallback.open("GET", "https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/blacklist.json", false)
+			fallback.send(null)
+			if (fallback.status === 200) {
+				http = fallback
+			} else {
+				resolve()
+				return
+			}
+		}
+		const blackList = JSON.parse(http.responseText)
+		browser.storage.local.set({
+			cloudflareBlackList: blackList.cloudflare,
+			authenticateBlackList: blackList.authenticate,
+			offlineBlackList: blackList.offline
+		})
+		cloudflareBlackList = blackList.cloudflare,
+		authenticateBlackList = blackList.authenticate,
+		offlineBlackList = blackList.offline
+		resolve()
 	})
 }
 
@@ -55,7 +97,7 @@ function updateInstances() {
 				return
 			}
 		}
-		await initBlackList()
+		await updateBlackList()
 		const instances = JSON.parse(http.responseText)
 
 		youtubeHelper.setRedirects({

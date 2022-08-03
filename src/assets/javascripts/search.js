@@ -7,7 +7,7 @@ const targets = [/^https?:\/{2}search\.libredirect\.invalid/]
 const frontends = new Array("searx", "searxng", "whoogle", "librex")
 const protocols = new Array("normal", "tor", "i2p", "loki")
 
-const redirects = {}
+let redirects = {}
 
 for (let i = 0; i < frontends.length; i++) {
 	redirects[frontends[i]] = {}
