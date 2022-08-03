@@ -1,5 +1,8 @@
 {
-	"normal": ["https://beatbump.ml"],
+	"normal": [
+		"https://beatbump.ml",
+		"https://beatbump.esmailelbob.xyz"
+	],
 	"tor": [],
 	"i2p": [],
 	"loki": []
