@@ -7,9 +7,6 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 [![LibrePay Badge](https://img.shields.io/liberapay/gives/libredirect?label=Liberapay)](https://liberapay.com/LibRedirect)
 
 [![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)&nbsp;
-<a href="https://microsoftedge.microsoft.com/addons/detail/libredirect/aodffkeankebfonljgbcfbbaljopcpdb">
-<img src="./img/badge-ms.png" height=60>
-</a>&nbsp;
 <a href="./chromium.md">
 <img src ="./img/badge-chromium.png" height=60 >
 </a>
