@@ -211,5 +211,11 @@
     "searchNote": {
         "message": "Merk: For å bruke søket til dets fulle kan du gjøre LibRedirect til din forvalgte søkemotor",
         "description": "used in the settings page"
+    },
+    "lbryDesktop": {
+        "message": "LBRY-skrivebord"
+    },
+    "protocolFallback": {
+        "message": "Gå tilbake til normal hvis ingen instanser er tilgjengelige for nåværende protokoll"
     }
 }
