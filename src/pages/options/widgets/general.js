@@ -36,15 +36,16 @@ updateInstancesElement.addEventListener("click", async () => {
 let exportSettingsElement = document.getElementById("export-settings")
 
 function exportSettings() {
-	browser.storage.local.get(null, result => {
+	return browser.storage.local.get(null, result => {
 		let resultString = JSON.stringify(result, null, "  ")
 		exportSettingsElement.href = "data:application/json;base64," + btoa(encodeURI(resultString))
 		exportSettingsElement.download = "libredirect-settings.json"
+		return
 	})
 }
 exportSettings()
 
-document.getElementById("general_page").addEventListener("click", exportSettings)
+document.getElementById("general_page").onclick = exportSettings
 
 let importSettingsElement = document.getElementById("import-settings")
 let importSettingsElementText = document.getElementById("import_settings_text")
@@ -82,28 +83,28 @@ resetSettings.addEventListener("click", async () => {
 			.then(async data => {
 				browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare }, () => {
 					browser.storage.local.set({ offlineBlackList: JSON.parse(data).offline }, () => {
-					browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate }, async () => {
-						await generalHelper.initDefaults()
-						await youtubeHelper.initDefaults()
-						await youtubeMusicHelper.initDefaults()
-						await twitterHelper.initDefaults()
-						await instagramHelper.initDefaults()
-						await mapsHelper.initDefaults()
-						await searchHelper.initDefaults()
-						await translateHelper.initDefaults()
-						await mediumHelper.initDefaults()
-						await quoraHelper.initDefaults()
-						await libremdbHelper.initDefaults()
-						await reutersHelper.initDefaults()
-						await redditHelper.initDefaults()
-						await wikipediaHelper.initDefaults()
-						await imgurHelper.initDefaults()
-						await tiktokHelper.initDefaults()
-						await sendTargetsHelper.initDefaults()
-						await peertubeHelper.initDefaults()
-						await lbryHelper.initDefaults()
-						location.reload()
-					})
+						browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate }, async () => {
+							await generalHelper.initDefaults()
+							await youtubeHelper.initDefaults()
+							await youtubeMusicHelper.initDefaults()
+							await twitterHelper.initDefaults()
+							await instagramHelper.initDefaults()
+							await mapsHelper.initDefaults()
+							await searchHelper.initDefaults()
+							await translateHelper.initDefaults()
+							await mediumHelper.initDefaults()
+							await quoraHelper.initDefaults()
+							await libremdbHelper.initDefaults()
+							await reutersHelper.initDefaults()
+							await redditHelper.initDefaults()
+							await wikipediaHelper.initDefaults()
+							await imgurHelper.initDefaults()
+							await tiktokHelper.initDefaults()
+							await sendTargetsHelper.initDefaults()
+							await peertubeHelper.initDefaults()
+							await lbryHelper.initDefaults()
+							location.reload()
+						})
 					})
 				})
 			})

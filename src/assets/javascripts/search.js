@@ -17,45 +17,50 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
-		redirects = val
-		searxNormalRedirectsChecks = [...redirects.searx.normal]
-		searxngNormalRedirectsChecks = [...redirects.searxng.normal]
-		whoogleNormalRedirectsChecks = [...redirects.whoogle.normal]
-		librexNormalRedirectsChecks = [...redirects.librex.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = searxNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) searxNormalRedirectsChecks.splice(a, 1)
+	return new Promise(resolve =>
+		browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
+			redirects = val
+			searxNormalRedirectsChecks = [...redirects.searx.normal]
+			searxngNormalRedirectsChecks = [...redirects.searxng.normal]
+			whoogleNormalRedirectsChecks = [...redirects.whoogle.normal]
+			librexNormalRedirectsChecks = [...redirects.librex.normal]
+			for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+				const a = searxNormalRedirectsChecks.indexOf(instance)
+				if (a > -1) searxNormalRedirectsChecks.splice(a, 1)
 
-			const b = searxngNormalRedirectsChecks.indexOf(instance)
-			if (b > -1) searxngNormalRedirectsChecks.splice(b, 1)
+				const b = searxngNormalRedirectsChecks.indexOf(instance)
+				if (b > -1) searxngNormalRedirectsChecks.splice(b, 1)
 
-			const c = whoogleNormalRedirectsChecks.indexOf(instance)
-			if (c > -1) whoogleNormalRedirectsChecks.splice(c, 1)
+				const c = whoogleNormalRedirectsChecks.indexOf(instance)
+				if (c > -1) whoogleNormalRedirectsChecks.splice(c, 1)
 
-			const d = librexNormalRedirectsChecks.indexOf(instance)
-			if (d > -1) librexNormalRedirectsChecks.splice(d, 1)
-		}
-		browser.storage.local.set({
-			searchRedirects: redirects,
-			searxNormalRedirectsChecks,
-			searxTorRedirectsChecks: [...redirects.searx.tor],
-			searxI2pRedirectsChecks: [...redirects.searx.i2p],
-			searxLokiRedirectsChecks: [...redirects.searx.loki],
-			searxngNormalRedirectsChecks,
-			searxngTorRedirectsChecks: [...redirects.searxng.tor],
-			searxngI2pRedirectsChecks: [...redirects.searxng.i2p],
-			searxngLokiRedirectsChecks: [...redirects.searxng.loki],
-			whoogleNormalRedirectsChecks,
-			whoogleTorRedirectsChecks: [...redirects.whoogle.tor],
-			whoogleI2pRedirectsChecks: [...redirects.whoogle.i2p],
-			whoogleLokiRedirectsChecks: [...redirects.whoogle.loki],
-			librexNormalRedirectsChecks,
-			librexTorRedirectsChecks: [...redirects.librex.tor],
-			librexI2pRedirectsChecks: [...redirects.librex.i2p],
-			librexLokiRedirectsChecks: [...redirects.librex.loki],
+				const d = librexNormalRedirectsChecks.indexOf(instance)
+				if (d > -1) librexNormalRedirectsChecks.splice(d, 1)
+			}
+			browser.storage.local.set(
+				{
+					searchRedirects: redirects,
+					searxNormalRedirectsChecks,
+					searxTorRedirectsChecks: [...redirects.searx.tor],
+					searxI2pRedirectsChecks: [...redirects.searx.i2p],
+					searxLokiRedirectsChecks: [...redirects.searx.loki],
+					searxngNormalRedirectsChecks,
+					searxngTorRedirectsChecks: [...redirects.searxng.tor],
+					searxngI2pRedirectsChecks: [...redirects.searxng.i2p],
+					searxngLokiRedirectsChecks: [...redirects.searxng.loki],
+					whoogleNormalRedirectsChecks,
+					whoogleTorRedirectsChecks: [...redirects.whoogle.tor],
+					whoogleI2pRedirectsChecks: [...redirects.whoogle.i2p],
+					whoogleLokiRedirectsChecks: [...redirects.whoogle.loki],
+					librexNormalRedirectsChecks,
+					librexTorRedirectsChecks: [...redirects.librex.tor],
+					librexI2pRedirectsChecks: [...redirects.librex.i2p],
+					librexLokiRedirectsChecks: [...redirects.librex.loki],
+				},
+				() => resolve()
+			)
 		})
-	})
+	)
 }
 
 let disableSearch,

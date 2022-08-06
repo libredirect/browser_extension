@@ -17,21 +17,26 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
-		redirects.wikiless = val
-		wikilessNormalRedirectsChecks = [...redirects.wikiless.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = wikilessNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) wikilessNormalRedirectsChecks.splice(a, 1)
-		}
-		browser.storage.local.set({
-			wikipediaRedirects: redirects,
-			wikilessNormalRedirectsChecks,
-			wikilessTorRedirectsChecks: [...redirects.wikiless.tor],
-			wikilessI2pRedirectsChecks: [...redirects.wikiless.i2p],
-			wikilessLokiRedirectsChecks: [...redirects.wikiless.loki],
+	return new Promise(resolve =>
+		browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
+			redirects.wikiless = val
+			wikilessNormalRedirectsChecks = [...redirects.wikiless.normal]
+			for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+				const a = wikilessNormalRedirectsChecks.indexOf(instance)
+				if (a > -1) wikilessNormalRedirectsChecks.splice(a, 1)
+			}
+			browser.storage.local.set(
+				{
+					wikipediaRedirects: redirects,
+					wikilessNormalRedirectsChecks,
+					wikilessTorRedirectsChecks: [...redirects.wikiless.tor],
+					wikilessI2pRedirectsChecks: [...redirects.wikiless.i2p],
+					wikilessLokiRedirectsChecks: [...redirects.wikiless.loki],
+				},
+				() => resolve()
+			)
 		})
-	})
+	)
 }
 
 let disableWikipedia,

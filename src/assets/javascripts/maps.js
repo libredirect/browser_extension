@@ -21,21 +21,26 @@ redirects.osm = {}
 redirects.osm.normal = ["https://www.openstreetmap.org"]
 
 function setRedirects(val) {
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
-		redirects.facil = val
-		facilNormalRedirectsChecks = [...redirects.facil.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = facilNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) facilNormalRedirectsChecks.splice(a, 1)
-		}
-		browser.storage.local.set({
-			mapsRedirects: redirects,
-			facilNormalRedirectsChecks,
-			facilTorRedirectsChecks: [...redirects.facil.tor],
-			facilI2pRedirectsChecks: [...redirects.facil.i2p],
-			facilLokiRedirectsChecks: [...redirects.facil.loki],
+	return new Promise(resolve =>
+		browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
+			redirects.facil = val
+			facilNormalRedirectsChecks = [...redirects.facil.normal]
+			for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+				const a = facilNormalRedirectsChecks.indexOf(instance)
+				if (a > -1) facilNormalRedirectsChecks.splice(a, 1)
+			}
+			browser.storage.local.set(
+				{
+					mapsRedirects: redirects,
+					facilNormalRedirectsChecks,
+					facilTorRedirectsChecks: [...redirects.facil.tor],
+					facilI2pRedirectsChecks: [...redirects.facil.i2p],
+					facilLokiRedirectsChecks: [...redirects.facil.loki],
+				},
+				() => resolve()
+			)
 		})
-	})
+	)
 }
 
 let disableMaps,

@@ -40,21 +40,26 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
-		redirects.scribe = val
-		scribeNormalRedirectsChecks = [...redirects.scribe.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = scribeNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) scribeNormalRedirectsChecks.splice(a, 1)
-		}
-		browser.storage.local.set({
-			mediumRedirects: redirects,
-			scribeNormalRedirectsChecks,
-			scribeTorRedirectsChecks: [...redirects.scribe.tor],
-			scribeI2pRedirectsChecks: [...redirects.scribe.i2p],
-			scribeLokiRedirectsChecks: [...redirects.scribe.loki],
+	return new Promise(resolve =>
+		browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
+			redirects.scribe = val
+			scribeNormalRedirectsChecks = [...redirects.scribe.normal]
+			for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+				const a = scribeNormalRedirectsChecks.indexOf(instance)
+				if (a > -1) scribeNormalRedirectsChecks.splice(a, 1)
+			}
+			browser.storage.local.set(
+				{
+					mediumRedirects: redirects,
+					scribeNormalRedirectsChecks,
+					scribeTorRedirectsChecks: [...redirects.scribe.tor],
+					scribeI2pRedirectsChecks: [...redirects.scribe.i2p],
+					scribeLokiRedirectsChecks: [...redirects.scribe.loki],
+				},
+				() => resolve()
+			)
 		})
-	})
+	)
 }
 
 let disableMedium,

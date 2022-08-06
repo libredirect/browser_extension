@@ -17,21 +17,26 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], r => {
-		redirects.nitter = val
-		nitterNormalRedirectsChecks = [...redirects.nitter.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.authenticateBlackList, ...r.offlineBlackList]) {
-			let i = nitterNormalRedirectsChecks.indexOf(instance)
-			if (i > -1) nitterNormalRedirectsChecks.splice(i, 1)
-		}
-		browser.storage.local.set({
-			twitterRedirects: redirects,
-			nitterNormalRedirectsChecks,
-			nitterTorRedirectsChecks: [...redirects.nitter.tor],
-			nitterI2pRedirectsChecks: [...redirects.nitter.i2p],
-			nitterLokiRedirectsChecks: [...redirects.nitter.loki],
+	return new Promise(resolve =>
+		browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], r => {
+			redirects.nitter = val
+			nitterNormalRedirectsChecks = [...redirects.nitter.normal]
+			for (const instance of [...r.cloudflareBlackList, ...r.authenticateBlackList, ...r.offlineBlackList]) {
+				let i = nitterNormalRedirectsChecks.indexOf(instance)
+				if (i > -1) nitterNormalRedirectsChecks.splice(i, 1)
+			}
+			browser.storage.local.set(
+				{
+					twitterRedirects: redirects,
+					nitterNormalRedirectsChecks,
+					nitterTorRedirectsChecks: [...redirects.nitter.tor],
+					nitterI2pRedirectsChecks: [...redirects.nitter.i2p],
+					nitterLokiRedirectsChecks: [...redirects.nitter.loki],
+				},
+				() => resolve()
+			)
 		})
-	})
+	)
 }
 
 let disableTwitter,

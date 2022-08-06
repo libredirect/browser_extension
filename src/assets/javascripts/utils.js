@@ -28,26 +28,20 @@ let authenticateBlackList = []
 let offlineBlackList = []
 async function initBlackList() {
 	return new Promise(resolve => {
-	browser.storage.local.get([
-		"cloudflareBlackList",
-		"authenticateBlackList",
-		"offlineBlackList"
-	],
-	r => {
-		cloudflareBlackList = r.cloudflareBlackList
-		authenticateBlackList = r.authenticateBlackList
-		offlineBlackList = r.offlineBlackList
-	})
+		browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], r => {
+			cloudflareBlackList = r.cloudflareBlackList
+			authenticateBlackList = r.authenticateBlackList
+			offlineBlackList = r.offlineBlackList
+		})
 		if (cloudflareBlackList.length == 0) {
-		fetch("/instances/blacklist.json")
-			.then(response => response.text())
-			.then(data => {
-				cloudflareBlackList = JSON.parse(data).cloudflare
-				authenticateBlackList = JSON.parse(data).authenticate
-				offlineBlackList = JSON.parse(data).offline
-			})
+			fetch("/instances/blacklist.json")
+				.then(response => response.text())
+				.then(data => {
+					cloudflareBlackList = JSON.parse(data).cloudflare
+					authenticateBlackList = JSON.parse(data).authenticate
+					offlineBlackList = JSON.parse(data).offline
+				})
 		}
-		console.log(offlineBlackList)
 		resolve()
 	})
 }
@@ -72,11 +66,9 @@ function updateBlackList() {
 		browser.storage.local.set({
 			cloudflareBlackList: blackList.cloudflare,
 			authenticateBlackList: blackList.authenticate,
-			offlineBlackList: blackList.offline
+			offlineBlackList: blackList.offline,
 		})
-		cloudflareBlackList = blackList.cloudflare,
-		authenticateBlackList = blackList.authenticate,
-		offlineBlackList = blackList.offline
+		;(cloudflareBlackList = blackList.cloudflare), (authenticateBlackList = blackList.authenticate), (offlineBlackList = blackList.offline)
 		resolve()
 	})
 }
@@ -100,42 +92,42 @@ function updateInstances() {
 		await updateBlackList()
 		const instances = JSON.parse(http.responseText)
 
-		youtubeHelper.setRedirects({
+		await youtubeHelper.setRedirects({
 			invidious: instances.invidious,
 			piped: instances.piped,
 			pipedMaterial: instances.pipedMaterial,
 			cloudtube: instances.cloudtube,
 		})
-		twitterHelper.setRedirects(instances.nitter)
-		instagramHelper.setRedirects(instances.bibliogram)
-		redditHelper.setRedirects({
+		await twitterHelper.setRedirects(instances.nitter)
+		await instagramHelper.setRedirects(instances.bibliogram)
+		await redditHelper.setRedirects({
 			libreddit: instances.libreddit,
 			teddit: instances.teddit,
 		})
-		translateHelper.setRedirects({
+		await translateHelper.setRedirects({
 			simplyTranslate: instances.simplyTranslate,
 			lingva: instances.lingva,
 		})
-		searchHelper.setRedirects({
+		await searchHelper.setRedirects({
 			searx: instances.searx,
 			searxng: instances.searxng,
 			whoogle: instances.whoogle,
 			librex: instances.librex,
 		})
-		wikipediaHelper.setRedirects(instances.wikiless)
-		mediumHelper.setRedirects(instances.scribe)
-		quoraHelper.setRedirects(instances.quetre)
-		libremdbHelper.setRedirects(instances.libremdb)
-		sendTargetsHelper.setRedirects(instances.send)
-		tiktokHelper.setRedirects(instances.proxiTok)
-		lbryHelper.setRedirects(instances.librarian)
-		reutersHelper.setRedirects(instances.neuters)
-		youtubeMusicHelper.setRedirects({
+		await wikipediaHelper.setRedirects(instances.wikiless)
+		await mediumHelper.setRedirects(instances.scribe)
+		await quoraHelper.setRedirects(instances.quetre)
+		await libremdbHelper.setRedirects(instances.libremdb)
+		await sendTargetsHelper.setRedirects(instances.send)
+		await tiktokHelper.setRedirects(instances.proxiTok)
+		await lbryHelper.setRedirects(instances.librarian)
+		await reutersHelper.setRedirects(instances.neuters)
+		await youtubeMusicHelper.setRedirects({
 			beatbump: instances.beatbump,
 			hyperpipe: instances.hyperpipe,
 		})
-		mapsHelper.setRedirects(instances.facil)
-		peertubeHelper.setRedirects(instances.simpleertube)
+		await mapsHelper.setRedirects(instances.facil)
+		await peertubeHelper.setRedirects(instances.simpleertube)
 
 		console.info("Successfully updated Instances")
 		resolve(true)
@@ -553,7 +545,7 @@ function latency(name, frontend, document, location) {
 	latencyElement.addEventListener("click", async () => {
 		let reloadWindow = () => location.reload()
 		latencyElement.addEventListener("click", reloadWindow)
-		let key = `${name} Redirects`
+		let key = `${name}Redirects`
 		browser.storage.local.get(key, r => {
 			let redirects = r[key]
 			const oldHtml = latencyLabel.innerHTML

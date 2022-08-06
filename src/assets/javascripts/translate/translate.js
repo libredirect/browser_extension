@@ -91,29 +91,34 @@ init()
 browser.storage.onChanged.addListener(init)
 
 function setRedirects(val) {
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
-		redirects = val
-		simplyTranslateNormalRedirectsChecks = [...redirects.simplyTranslate.normal]
-		lingvaNormalRedirectsChecks = [...redirects.lingva.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = simplyTranslateNormalCustomRedirects.indexOf(instance)
-			if (a > -1) simplyTranslateNormalCustomRedirects.splice(a, 1)
+	return new Promise(resolve =>
+		browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
+			redirects = val
+			simplyTranslateNormalRedirectsChecks = [...redirects.simplyTranslate.normal]
+			lingvaNormalRedirectsChecks = [...redirects.lingva.normal]
+			for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+				const a = simplyTranslateNormalCustomRedirects.indexOf(instance)
+				if (a > -1) simplyTranslateNormalCustomRedirects.splice(a, 1)
 
-			const b = lingvaNormalRedirectsChecks.indexOf(instance)
-			if (b > -1) lingvaNormalRedirectsChecks.splice(b, 1)
-		}
-		browser.storage.local.set({
-			translateRedirects: redirects,
-			simplyTranslateNormalRedirectsChecks,
-			simplyTranslateTorRedirectsChecks: [...redirects.simplyTranslate.tor],
-			simplyTranslateI2pRedirectsChecks: [...redirects.simplyTranslate.i2p],
-			simplyTranslateLokiRedirectsChecks: [...redirects.simplyTranslate.loki],
-			lingvaNormalRedirectsChecks,
-			lingvaTorRedirectsChecks: [...redirects.lingva.tor],
-			lingvaI2pRedirectsChecks: [...redirects.lingva.i2p],
-			lingvaLokiRedirectsChecks: [...redirects.lingva.loki],
+				const b = lingvaNormalRedirectsChecks.indexOf(instance)
+				if (b > -1) lingvaNormalRedirectsChecks.splice(b, 1)
+			}
+			browser.storage.local.set(
+				{
+					translateRedirects: redirects,
+					simplyTranslateNormalRedirectsChecks,
+					simplyTranslateTorRedirectsChecks: [...redirects.simplyTranslate.tor],
+					simplyTranslateI2pRedirectsChecks: [...redirects.simplyTranslate.i2p],
+					simplyTranslateLokiRedirectsChecks: [...redirects.simplyTranslate.loki],
+					lingvaNormalRedirectsChecks,
+					lingvaTorRedirectsChecks: [...redirects.lingva.tor],
+					lingvaI2pRedirectsChecks: [...redirects.lingva.i2p],
+					lingvaLokiRedirectsChecks: [...redirects.lingva.loki],
+				},
+				() => resolve()
+			)
 		})
-	})
+	)
 }
 
 function copyPasteLingvaLocalStorage(test, url, tabId) {

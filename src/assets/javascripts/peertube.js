@@ -15,21 +15,26 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
-		redirects.simpleertube = val
-		simpleertubeNormalRedirectsChecks = [...redirects.simpleertube.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = simpleertubeNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) simpleertubeNormalRedirectsChecks.splice(a, 1)
-		}
-		browser.storage.local.set({
-			peertubeRedirects: redirects,
-			simpleertubeNormalRedirectsChecks,
-			simpleertubeTorRedirectsChecks: [...redirects.simpleertube.tor],
-			simpleertubeI2pRedirectsChecks: [...redirects.simpleertube.i2p],
-			simpleertubeLokiRedirectsChecks: [...redirects.simpleertube.loki],
+	return new Promise(resolve =>
+		browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
+			redirects.simpleertube = val
+			simpleertubeNormalRedirectsChecks = [...redirects.simpleertube.normal]
+			for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+				const a = simpleertubeNormalRedirectsChecks.indexOf(instance)
+				if (a > -1) simpleertubeNormalRedirectsChecks.splice(a, 1)
+			}
+			browser.storage.local.set(
+				{
+					peertubeRedirects: redirects,
+					simpleertubeNormalRedirectsChecks,
+					simpleertubeTorRedirectsChecks: [...redirects.simpleertube.tor],
+					simpleertubeI2pRedirectsChecks: [...redirects.simpleertube.i2p],
+					simpleertubeLokiRedirectsChecks: [...redirects.simpleertube.loki],
+				},
+				() => resolve()
+			)
 		})
-	})
+	)
 }
 
 let disablePeertubeTargets,
