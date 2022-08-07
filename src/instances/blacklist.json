@@ -56,18 +56,18 @@
     "https://nitter:nitter@nitter.nixnet.services"
   ],
   "offline": [
-    "https://invidious.snopyta.org",
     "https://tok.habedieeh.re",
     "https://n.hyperborea.cloud",
-    "https://de.nttr.stream",
     "https://twitter.dr460nf1r3.org",
     "https://nitter.catalyst.sx",
     "https://bibliogram.snopyta.org",
+    "https://bibliogram.privacydev.net",
     "https://libreddit.autarkic.org",
-    "https://de.leddit.xyz",
+    "https://lr.vern.cc",
     "https://reddi.tk",
     "https://libreddit.notyourcomputer.net",
     "https://reddit.dr460nf1r3.org",
+    "https://teddit.froth.zone",
     "https://translate.dr460nf1r3.org",
     "https://anon.sx",
     "https://jsearch.pw",
@@ -83,6 +83,7 @@
     "https://search.albony.xyz",
     "https://search.dr460nf1r3.org",
     "https://whoogle.esmailelbob.xyz",
+    "https://lbry.bcow.xyz",
     "https://beatbump.ml",
     "https://stube.tokhmi.xyz"
   ]
