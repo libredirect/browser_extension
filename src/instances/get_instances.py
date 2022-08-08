@@ -661,7 +661,7 @@ for k1, v1 in mightyList.items():
                         cloudflare.append(instance)
                     if not instance.endswith('.onion') and not instance.endswith('.i2p') and not instance.endswith('.loki') and is_authenticate(instance):
                         authenticate.append(instance)
-                    if not instance.endswith('.onion') and not instance.endswith('.i2p') and not instance.endswith('.loki') and is_offline(instance):
+                    elif not instance.endswith('.onion') and not instance.endswith('.i2p') and not instance.endswith('.loki') and is_offline(instance):
                         offline.append(instance)
 
 peertube()

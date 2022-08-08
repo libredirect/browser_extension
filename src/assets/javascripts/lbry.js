@@ -17,21 +17,26 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
-		redirects.librarian = val
-		librarianNormalRedirectsChecks = [...redirects.librarian.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = librarianNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) librarianNormalRedirectsChecks.splice(a, 1)
-		}
-		browser.storage.local.set({
-			lbryTargetsRedirects: redirects,
-			librarianNormalRedirectsChecks,
-			librarianTorRedirectsChecks: [...redirects.librarian.tor],
-			librarianI2pRedirectsChecks: [...redirects.librarian.i2p],
-			librarianLokiRedirectsChecks: [...redirects.librarian.loki],
+	return new Promise(resolve =>
+		browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
+			redirects.librarian = val
+			librarianNormalRedirectsChecks = [...redirects.librarian.normal]
+			for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+				const a = librarianNormalRedirectsChecks.indexOf(instance)
+				if (a > -1) librarianNormalRedirectsChecks.splice(a, 1)
+			}
+			browser.storage.local.set(
+				{
+					lbryTargetsRedirects: redirects,
+					librarianNormalRedirectsChecks,
+					librarianTorRedirectsChecks: [...redirects.librarian.tor],
+					librarianI2pRedirectsChecks: [...redirects.librarian.i2p],
+					librarianLokiRedirectsChecks: [...redirects.librarian.loki],
+				},
+				() => resolve()
+			)
 		})
-	})
+	)
 }
 
 let disableLbryTargets,

@@ -30,45 +30,50 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
-		redirects = val
-		invidiousNormalRedirectsChecks = [...redirects.invidious.normal]
-		pipedNormalRedirectsChecks = [...redirects.piped.normal]
-		pipedMaterialNormalRedirectsChecks = [...redirects.pipedMaterial.normal]
-		cloudtubeNormalRedirectsChecks = [...redirects.cloudtube.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = invidiousNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) invidiousNormalRedirectsChecks.splice(a, 1)
+	return new Promise(resolve =>
+		browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
+			redirects = val
+			invidiousNormalRedirectsChecks = [...redirects.invidious.normal]
+			pipedNormalRedirectsChecks = [...redirects.piped.normal]
+			pipedMaterialNormalRedirectsChecks = [...redirects.pipedMaterial.normal]
+			cloudtubeNormalRedirectsChecks = [...redirects.cloudtube.normal]
+			for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+				const a = invidiousNormalRedirectsChecks.indexOf(instance)
+				if (a > -1) invidiousNormalRedirectsChecks.splice(a, 1)
 
-			const b = pipedNormalRedirectsChecks.indexOf(instance)
-			if (b > -1) pipedNormalRedirectsChecks.splice(b, 1)
+				const b = pipedNormalRedirectsChecks.indexOf(instance)
+				if (b > -1) pipedNormalRedirectsChecks.splice(b, 1)
 
-			const c = pipedMaterialNormalRedirectsChecks.indexOf(instance)
-			if (c > -1) pipedMaterialNormalRedirectsChecks.splice(c, 1)
+				const c = pipedMaterialNormalRedirectsChecks.indexOf(instance)
+				if (c > -1) pipedMaterialNormalRedirectsChecks.splice(c, 1)
 
-			const d = cloudtubeNormalRedirectsChecks.indexOf(instance)
-			if (c > -1) cloudtubeNormalRedirectsChecks.splice(d, 1)
-		}
-		browser.storage.local.set({
-			youtubeRedirects: redirects,
-			invidiousNormalRedirectsChecks,
-			invidiousTorRedirectsChecks: [...redirects.invidious.tor],
-			invidiousI2pRedirectsChecks: [...redirects.invidious.i2p],
-			invidiousLokiRedirectsChecks: [...redirects.invidious.loki],
-			pipedNormalRedirectsChecks,
-			pipedTorRedirectsChecks: [...redirects.piped.tor],
-			pipedI2pRedirectsChecks: [...redirects.piped.i2p],
-			pipedLokiRedirectsChecks: [...redirects.piped.loki],
-			pipedMaterialNormalRedirectsChecks,
-			pipedMaterialTorRedirectsChecks: [...redirects.pipedMaterial.tor],
-			pipedMaterialI2pRedirectsChecks: [...redirects.pipedMaterial.i2p],
-			pipedMaterialLokiRedirectsChecks: [...redirects.pipedMaterial.loki],
-			cloudtubeNormalRedirectsChecks,
-			cloudtubeTorRedirectsChecks: [...redirects.cloudtube.tor],
-			cloudtubeI2pRedirectsChecks: [...redirects.cloudtube.i2p],
-			cloudtubeLokiRedirectsChecks: [...redirects.cloudtube.loki],
+				const d = cloudtubeNormalRedirectsChecks.indexOf(instance)
+				if (c > -1) cloudtubeNormalRedirectsChecks.splice(d, 1)
+			}
+			browser.storage.local.set(
+				{
+					youtubeRedirects: redirects,
+					invidiousNormalRedirectsChecks,
+					invidiousTorRedirectsChecks: [...redirects.invidious.tor],
+					invidiousI2pRedirectsChecks: [...redirects.invidious.i2p],
+					invidiousLokiRedirectsChecks: [...redirects.invidious.loki],
+					pipedNormalRedirectsChecks,
+					pipedTorRedirectsChecks: [...redirects.piped.tor],
+					pipedI2pRedirectsChecks: [...redirects.piped.i2p],
+					pipedLokiRedirectsChecks: [...redirects.piped.loki],
+					pipedMaterialNormalRedirectsChecks,
+					pipedMaterialTorRedirectsChecks: [...redirects.pipedMaterial.tor],
+					pipedMaterialI2pRedirectsChecks: [...redirects.pipedMaterial.i2p],
+					pipedMaterialLokiRedirectsChecks: [...redirects.pipedMaterial.loki],
+					cloudtubeNormalRedirectsChecks,
+					cloudtubeTorRedirectsChecks: [...redirects.cloudtube.tor],
+					cloudtubeI2pRedirectsChecks: [...redirects.cloudtube.i2p],
+					cloudtubeLokiRedirectsChecks: [...redirects.cloudtube.loki],
+				},
+				() => resolve()
+			)
 		})
-	})
+	)
 }
 
 let disableYoutube,

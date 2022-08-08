@@ -17,21 +17,26 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
-		redirects.libremdb = val
-		libremdbNormalRedirectsChecks = [...redirects.libremdb.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = libremdbNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) libremdbNormalRedirectsChecks.splice(a, 1)
-		}
-		browser.storage.local.set({
-			imdbRedirects: redirects,
-			libremdbNormalRedirectsChecks,
-			libremdbTorRedirectsChecks: [...redirects.libremdb.tor],
-			libremdbI2pRedirectsChecks: [...redirects.libremdb.i2p],
-			libremdbLokiRedirectsChecks: [...redirects.libremdb.loki],
+	return new Promise(resolve =>
+		browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
+			redirects.libremdb = val
+			libremdbNormalRedirectsChecks = [...redirects.libremdb.normal]
+			for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+				const a = libremdbNormalRedirectsChecks.indexOf(instance)
+				if (a > -1) libremdbNormalRedirectsChecks.splice(a, 1)
+			}
+			browser.storage.local.set(
+				{
+					imdbRedirects: redirects,
+					libremdbNormalRedirectsChecks,
+					libremdbTorRedirectsChecks: [...redirects.libremdb.tor],
+					libremdbI2pRedirectsChecks: [...redirects.libremdb.i2p],
+					libremdbLokiRedirectsChecks: [...redirects.libremdb.loki],
+				},
+				() => resolve()
+			)
 		})
-	})
+	)
 }
 
 let disableImdb,

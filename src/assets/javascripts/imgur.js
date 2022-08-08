@@ -17,21 +17,26 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
-		redirects.rimgo = val
-		rimgoNormalRedirectsChecks = [...redirects.rimgo.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = rimgoNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) rimgoNormalRedirectsChecks.splice(a, 1)
-		}
-		browser.storage.local.set({
-			imgurRedirects: redirects,
-			rimgoNormalRedirectsChecks,
-			rimgoTorRedirectsChecks: [...redirects.rimgo.tor],
-			rimgoI2pRedirectsChecks: [...redirects.rimgo.i2p],
-			rimgoLokiRedirectsChecks: [...redirects.rimgo.loki],
+	return new Promise(resolve =>
+		browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
+			redirects.rimgo = val
+			rimgoNormalRedirectsChecks = [...redirects.rimgo.normal]
+			for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+				const a = rimgoNormalRedirectsChecks.indexOf(instance)
+				if (a > -1) rimgoNormalRedirectsChecks.splice(a, 1)
+			}
+			browser.storage.local.set(
+				{
+					imgurRedirects: redirects,
+					rimgoNormalRedirectsChecks,
+					rimgoTorRedirectsChecks: [...redirects.rimgo.tor],
+					rimgoI2pRedirectsChecks: [...redirects.rimgo.i2p],
+					rimgoLokiRedirectsChecks: [...redirects.rimgo.loki],
+				},
+				() => resolve()
+			)
 		})
-	})
+	)
 }
 
 let disableImgur,

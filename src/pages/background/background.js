@@ -22,7 +22,10 @@ import sendTargetsHelper from "../../assets/javascripts/sendTargets.js"
 import peertubeHelper from "../../assets/javascripts/peertube.js"
 import lbryHelper from "../../assets/javascripts/lbry.js"
 
+import frontend from "../../assets/javascripts/frontend.js"
+
 window.browser = window.browser || window.chrome
+
 
 browser.runtime.onInstalled.addListener(details => {
 	function initDefaults() {

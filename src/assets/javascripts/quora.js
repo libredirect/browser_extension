@@ -17,21 +17,26 @@ for (let i = 0; i < frontends.length; i++) {
 }
 
 function setRedirects(val) {
-	browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
-		redirects.quetre = val
-		quetreNormalRedirectsChecks = [...redirects.quetre.normal]
-		for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
-			const a = quetreNormalRedirectsChecks.indexOf(instance)
-			if (a > -1) quetreNormalRedirectsChecks.splice(a, 1)
-		}
-		browser.storage.local.set({
-			quoraRedirects: redirects,
-			quetreNormalRedirectsChecks,
-			quetreTorRedirectsChecks: [...redirects.quetre.tor],
-			quetreI2pRedirectsChecks: [...redirects.quetre.i2p],
-			quetreLokiRedirectsChecks: [...redirects.quetre.loki],
+	return new Promise(resolve =>
+		browser.storage.local.get(["cloudflareBlackList", "offlineBlackList"], r => {
+			redirects.quetre = val
+			quetreNormalRedirectsChecks = [...redirects.quetre.normal]
+			for (const instance of [...r.cloudflareBlackList, ...r.offlineBlackList]) {
+				const a = quetreNormalRedirectsChecks.indexOf(instance)
+				if (a > -1) quetreNormalRedirectsChecks.splice(a, 1)
+			}
+			browser.storage.local.set(
+				{
+					quoraRedirects: redirects,
+					quetreNormalRedirectsChecks,
+					quetreTorRedirectsChecks: [...redirects.quetre.tor],
+					quetreI2pRedirectsChecks: [...redirects.quetre.i2p],
+					quetreLokiRedirectsChecks: [...redirects.quetre.loki],
+				},
+				() => resolve()
+			)
 		})
-	})
+	)
 }
 
 let disableQuora,
@@ -95,9 +100,7 @@ function redirect(url, type, initiator, disableOverride) {
 	if ((instancesList.length === 0 && protocolFallback) || protocol == "normal") {
 		instancesList = [...quetreNormalRedirectsChecks, ...quetreNormalCustomRedirects]
 	}
-	if (instancesList.length === 0) {
-		return
-	}
+	if (instancesList.length === 0) return
 
 	const randomInstance = utils.getRandomInstance(instancesList)
 	return `${randomInstance}${url.pathname}`
