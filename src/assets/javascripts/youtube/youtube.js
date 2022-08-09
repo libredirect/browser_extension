@@ -342,6 +342,7 @@ function redirect(url, type, initiator, disableOverride) {
 			case "yatte":
 				return url.href.replace(/^https?:\/{2}/, "yattee://")
 			case "freetube":
+				if (url.host === "youtu.be") return `freetube://https://youtube.com/watch?v=${url.pathname.slice(1)}&${url.search.slice(1)}`
 				return `freetube://https://youtube.com${url.pathname}${url.search}`
 		}
 	}
