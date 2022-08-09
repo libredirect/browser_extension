@@ -1,11 +1,11 @@
 {
   "cloudflare": [
     "https://invidious.kavin.rocks",
+    "https://piped.kavin.rocks",
     "https://piped.tokhmi.xyz",
     "https://piped.moomoo.me",
-    "https://piped.syncpundit.com",
     "https://piped.mha.fi",
-    "https://jp-piped.shimul.me",
+    "https://us-piped.shimul.me",
     "https://pipedus.palash.dev",
     "https://piped.waffle.wiki",
     "https://watch.whatever.social",
@@ -56,13 +56,19 @@
     "https://nitter:nitter@nitter.nixnet.services"
   ],
   "offline": [
-    "https://invidious.snopyta.org",
     "https://tok.habedieeh.re",
     "https://n.hyperborea.cloud",
+    "https://twitter.dr460nf1r3.org",
+    "https://nitter.catalyst.sx",
     "https://bibliogram.snopyta.org",
-    "https://insta.trom.tf",
+    "https://bibliogram.privacydev.net",
     "https://libreddit.autarkic.org",
+    "https://lr.vern.cc",
+    "https://reddi.tk",
     "https://libreddit.notyourcomputer.net",
+    "https://reddit.dr460nf1r3.org",
+    "https://teddit.froth.zone",
+    "https://translate.dr460nf1r3.org",
     "https://anon.sx",
     "https://jsearch.pw",
     "https://searx.gnu.style",
@@ -73,8 +79,11 @@
     "https://searx.ericaftereric.top",
     "https://searx.fmac.xyz",
     "https://searxng.au/searx",
+    "https://www.webrats.xyz",
     "https://search.albony.xyz",
+    "https://search.dr460nf1r3.org",
     "https://whoogle.esmailelbob.xyz",
+    "https://lbry.bcow.xyz",
     "https://beatbump.ml",
     "https://stube.tokhmi.xyz"
   ]
