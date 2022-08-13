@@ -8,6 +8,7 @@
     "https://us-piped.shimul.me",
     "https://pipedus.palash.dev",
     "https://watch.whatever.social",
+    "https://cringe.whatever.social",
     "https://nitter.domain.glass",
     "https://birdsite.xanny.family",
     "https://notabird.site",
@@ -37,7 +38,9 @@
     "https://teddit.encrypted-data.xyz",
     "https://teddit.garudalinux.org",
     "https://tedd.it",
+    "https://wiki.privacytools.io",
     "https://wiki.604kph.xyz",
+    "https://wiki.privacytools.io",
     "https://lingva.garudalinux.org",
     "https://translate.dr460nf1r3.org",
     "https://searx.org",
@@ -47,21 +50,26 @@
     "https://search.wef.lol",
     "https://i.actionsack.com",
     "https://rimgo.encrypted-data.xyz",
-    "https://beatbump.ml"
+    "https://beatbump.ml",
+    "https://listen.whatever.social"
   ],
   "authenticate": [
     "https://nitter:nitter@nitter.nixnet.services"
   ],
   "offline": [
+    "https://invidious.kavin.rocks",
+    "https://invidious.osi.kr",
     "https://tok.habedieeh.re",
     "https://twitter.dr460nf1r3.org",
     "https://nitter.catalyst.sx",
+    "https://twt.funami.tech",
     "https://bibliogram.snopyta.org",
-    "https://insta.tromdienste.de",
+    "https://ig.beparanoid.de",
     "https://libreddit.autarkic.org",
     "https://reddi.tk",
     "https://libreddit.notyourcomputer.net",
     "https://reddit.dr460nf1r3.org",
+    "https://translate.riverside.rocks",
     "https://translate.dr460nf1r3.org",
     "https://anon.sx",
     "https://jsearch.pw",
@@ -76,7 +84,6 @@
     "https://www.webrats.xyz",
     "https://search.dr460nf1r3.org",
     "https://whoogle.esmailelbob.xyz",
-    "https://lbry.bcow.xyz",
     "https://beatbump.ml",
     "https://stube.tokhmi.xyz"
   ]
