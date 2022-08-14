@@ -8,7 +8,7 @@ import youtubeHelper from "../../../assets/javascripts/youtube/youtube.js"
 import youtubeMusicHelper from "../../../assets/javascripts/youtubeMusic.js"
 import twitterHelper from "../../../assets/javascripts/twitter.js"
 import instagramHelper from "../../../assets/javascripts/instagram.js"
-import redditHelper from "../../../assets/javascripts/reddit.js"
+import Reddit from "../../../assets/javascripts/reddit.js"
 import searchHelper from "../../../assets/javascripts/search.js"
 import translateHelper from "../../../assets/javascripts/translate/translate.js"
 import mapsHelper from "../../../assets/javascripts/maps.js"
@@ -96,7 +96,7 @@ resetSettings.addEventListener("click", async () => {
 							await quoraHelper.initDefaults()
 							await libremdbHelper.initDefaults()
 							await reutersHelper.initDefaults()
-							await redditHelper.initDefaults()
+							await Reddit.initDefaults()
 							await wikipediaHelper.initDefaults()
 							await imgurHelper.initDefaults()
 							await tiktokHelper.initDefaults()

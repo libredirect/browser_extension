@@ -7,7 +7,7 @@ import youtubeHelper from "../../assets/javascripts/youtube/youtube.js"
 import youtubeMusicHelper from "../../assets/javascripts/youtubeMusic.js"
 import twitterHelper from "../../assets/javascripts/twitter.js"
 import instagramHelper from "../../assets/javascripts/instagram.js"
-import redditHelper from "../../assets/javascripts/reddit.js"
+import Reddit from "../../assets/javascripts/reddit.js"
 import searchHelper from "../../assets/javascripts/search.js"
 import translateHelper from "../../assets/javascripts/translate/translate.js"
 import mapsHelper from "../../assets/javascripts/maps.js"
@@ -22,58 +22,37 @@ import sendTargetsHelper from "../../assets/javascripts/sendTargets.js"
 import peertubeHelper from "../../assets/javascripts/peertube.js"
 import lbryHelper from "../../assets/javascripts/lbry.js"
 
-import frontend from "../../assets/javascripts/frontend.js"
-
 window.browser = window.browser || window.chrome
 
-browser.runtime.onInstalled.addListener(details => {
-	function initDefaults() {
-		fetch("/instances/blacklist.json")
-			.then(response => response.text())
-			.then(async data => {
-				browser.storage.local.clear(() => {
-					browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare }, () => {
-						browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate }, () => {
-							browser.storage.local.set({ offlineBlackList: JSON.parse(data).offline }, () => {
-								generalHelper.initDefaults()
-								youtubeHelper.initDefaults()
-								youtubeMusicHelper.initDefaults()
-								twitterHelper.initDefaults()
-								instagramHelper.initDefaults()
-								mapsHelper.initDefaults()
-								searchHelper.initDefaults()
-								translateHelper.initDefaults()
-								mediumHelper.initDefaults()
-								quoraHelper.initDefaults()
-								libremdbHelper.initDefaults()
-								reutersHelper.initDefaults()
-								redditHelper.initDefaults()
-								wikipediaHelper.initDefaults()
-								imgurHelper.initDefaults()
-								tiktokHelper.initDefaults()
-								sendTargetsHelper.initDefaults()
-								peertubeHelper.initDefaults()
-								lbryHelper.initDefaults()
-							})
-						})
-					})
-				})
-			})
-	}
-	if (details.reason == "install") initDefaults()
+// browser.runtime.onInstalled.addListener(details => {
+// 	function initDefaults() {
+// 		fetch("/instances/blacklist.json")
+// 			.then(response => response.text())
+// 			.then(async data => {
+// 				browser.storage.local.clear(() => {
+// 					browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare }, () => {
+// 						browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate }, () => {
+// 							browser.storage.local.set({ offlineBlackList: JSON.parse(data).offline })
+// 						})
+// 					})
+// 				})
+// 			})
+// 	}
+// 	if (details.reason == "install") initDefaults()
 
-	// if (details.reason == 'install' || (details.reason == "update" && details.previousVersion != browser.runtime.getManifest().version)) {
-	//   if (details.reason == "update")
-	//     browser.storage.local.get(null, r => {
-	//       if (r.theme) {
-	//         const old = encodeURIComponent(JSON.stringify(r))
-	//         browser.tabs.create({ url: browser.runtime.getURL(`/pages/background/reset_warning.html?data=${old}`) });
-	//       }
-	//       initDefaults();
-	//     })
-	//   else initDefaults();
-	// }
-})
+// 	// if (details.reason == 'install' || (details.reason == "update" && details.previousVersion != browser.runtime.getManifest().version)) {
+// 	//   if (details.reason == "update")
+// 	//     browser.storage.local.get(null, r => {
+// 	//       if (r.theme) {
+// 	//         const old = encodeURIComponent(JSON.stringify(r))
+// 	//         browser.tabs.create({ url: browser.runtime.getURL(`/pages/background/reset_warning.html?data=${old}`) });
+// 	//       }
+// 	//       initDefaults();
+// 	//     })
+// 	//   else initDefaults();
+// 	// }
+// })
+
 
 let BYPASSTABs = []
 browser.webRequest.onBeforeRequest.addListener(
@@ -93,7 +72,7 @@ browser.webRequest.onBeforeRequest.addListener(
 		if (!newUrl) newUrl = twitterHelper.redirect(url, details.type, initiator)
 		if (!newUrl) newUrl = instagramHelper.redirect(url, details.type, initiator)
 		if (!newUrl) newUrl = mapsHelper.redirect(url, initiator)
-		if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator)
+		if (!newUrl) newUrl = Reddit.redirect(url, details.type, initiator)
 		if (!newUrl) newUrl = mediumHelper.redirect(url, details.type, initiator)
 		if (!newUrl) newUrl = quoraHelper.redirect(url, details.type, initiator)
 		if (!newUrl) newUrl = libremdbHelper.redirect(url, details.type, initiator)
@@ -147,57 +126,6 @@ browser.webRequest.onHeadersReceived.addListener(
 	},
 	{ urls: ["<all_urls>"] },
 	["blocking", "responseHeaders"]
-)
-
-async function redirectOfflineInstance(url, tabId) {
-	let newUrl = await youtubeHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await twitterHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await instagramHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await redditHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await searchHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await translateHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await mediumHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await quoraHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await libremdbHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await tiktokHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await imgurHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await peertubeHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await lbryHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await youtubeMusicHelper.switchInstance(url, true)
-
-	if (newUrl) {
-		if (counter >= 5) {
-			browser.tabs.update(tabId, {
-				url: `/pages/errors/instance_offline.html?url=${encodeURIComponent(newUrl)}`,
-			})
-			counter = 0
-		} else {
-			browser.tabs.update(tabId, { url: newUrl })
-			counter++
-		}
-	}
-}
-let counter = 0
-
-function isAutoRedirect() {
-	return new Promise(resolve => browser.storage.local.get("autoRedirect", r => resolve(r.autoRedirect == true)))
-}
-
-browser.webRequest.onResponseStarted.addListener(
-	async details => {
-		if (!(await isAutoRedirect())) return null
-		if (details.type == "main_frame" && details.statusCode >= 500) redirectOfflineInstance(new URL(details.url), details.tabId)
-	},
-	{ urls: ["<all_urls>"] }
-)
-
-browser.webRequest.onErrorOccurred.addListener(
-	async details => {
-		if (!(await isAutoRedirect())) return
-		if (details.type == "main_frame") redirectOfflineInstance(new URL(details.url), details.tabId)
-	},
-	{ urls: ["<all_urls>"] }
 )
 
 browser.commands.onCommand.addListener(command => {

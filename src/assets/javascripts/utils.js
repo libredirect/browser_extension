@@ -3,7 +3,7 @@ import twitterHelper from "./twitter.js"
 import youtubeHelper from "./youtube/youtube.js"
 import instagramHelper from "./instagram.js"
 import mediumHelper from "./medium.js"
-import redditHelper from "./reddit.js"
+import Reddit from "./reddit.js"
 import searchHelper from "./search.js"
 import translateHelper from "./translate/translate.js"
 import wikipediaHelper from "./wikipedia.js"
@@ -68,8 +68,7 @@ function updateBlackList() {
 			authenticateBlackList: blackList.authenticate,
 			offlineBlackList: blackList.offline,
 		})
-		;(cloudflareBlackList = blackList.cloudflare), (authenticateBlackList = blackList.authenticate), (offlineBlackList = blackList.offline)
-		resolve()
+		resolve(blackList)
 	})
 }
 
@@ -89,7 +88,7 @@ function updateInstances() {
 				return
 			}
 		}
-		await updateBlackList()
+		const blackList = await updateBlackList()
 		const instances = JSON.parse(http.responseText)
 
 		await youtubeHelper.setRedirects({
@@ -100,9 +99,9 @@ function updateInstances() {
 		})
 		await twitterHelper.setRedirects(instances.nitter)
 		await instagramHelper.setRedirects(instances.bibliogram)
-		await redditHelper.setRedirects({
-			libreddit: instances.libreddit,
-			teddit: instances.teddit,
+		await Reddit.setRedirects({
+			list: instances,
+			blackList: blackList,
 		})
 		await translateHelper.setRedirects({
 			simplyTranslate: instances.simplyTranslate,
@@ -484,8 +483,7 @@ function unify(test) {
 				if (!result) result = await youtubeHelper.copyPastePipedMaterialLocalStorage(test, url, currTab.id)
 
 				if (!result) result = await twitterHelper.initNitterCookies(test, url)
-				if (!result) result = await redditHelper.initLibredditCookies(test, url)
-				if (!result) result = await redditHelper.initTedditCookies(test, url)
+				if (!result) result = await Reddit.unify(test, url)
 				if (!result) result = await searchHelper.initSearxCookies(test, url)
 				if (!result) result = await searchHelper.initSearxngCookies(test, url)
 				if (!result) result = await searchHelper.initLibrexCookies(test, url)
@@ -516,7 +514,7 @@ function switchInstance(test) {
 				let newUrl = await youtubeHelper.switchInstance(url, true)
 				if (!newUrl) newUrl = await twitterHelper.switchInstance(url, true)
 				if (!newUrl) newUrl = await instagramHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await redditHelper.switchInstance(url, true)
+				if (!newUrl) newUrl = Reddit.switch(url, true)
 				if (!newUrl) newUrl = await searchHelper.switchInstance(url, true)
 				if (!newUrl) newUrl = await translateHelper.switchInstance(url, true)
 				if (!newUrl) newUrl = await mediumHelper.switchInstance(url, true)

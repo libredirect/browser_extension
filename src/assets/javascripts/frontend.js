@@ -1,143 +1,141 @@
-class FrontEnd {
-	constructor({ enable, frontends, frontend, redirect }) {
-		this.redirects = {}
-		this.enable = enable
-		this.frontend = frontend
-		this.protocol = "normal"
-		this.protocolFallback = true
-		fetch("/instances/data.json")
-			.then(response => response.text())
-			.then(async data => {
-				data = JSON.parse(data)
-				fetch("/instances/blacklist.json")
-					.then(response => response.text())
-					.then(async blackList => {
-						blackList = JSON.parse(blackList)
-						for (const frontend in frontends) {
-							this.redirects[frontend] = {}
+"use strict"
 
-							this.redirects[frontend].cookies = [...frontends[frontend].cookies]
+window.browser = window.browser || window.chrome
 
-							for (const protocol in data[frontend]) {
-								this.redirects[frontend][protocol] = {}
+import utils from "./utils.js"
 
-								this.redirects[frontend][protocol].all = [...data[frontend][protocol]]
+export async function FrontEnd({ name, enable, frontends, frontend, protocol, redirect }) {
+	let these = {}
+	these.redirects = {}
+	these.enable = enable
+	these.frontend = frontend
+	these.protocol = protocol
+	these.name = name
+	these.protocolFallback = true
 
-								this.redirects[frontend][protocol].custom = []
-
-								this.redirects[frontend][protocol].checked = [...data[frontend][protocol]]
-								for (const instance of blackList.cloudflare) {
-									const a = this.redirects[frontend][protocol].checked.indexOf(instance)
-									if (a > -1) this.redirects[frontend][protocol].checked.splice(a, 1)
-								}
-								for (const instance of blackList.offline) {
-									const a = this.redirects[frontend][protocol].checked.indexOf(instance)
-									if (a > -1) this.redirects[frontend][protocol].checked.splice(a, 1)
-								}
-							}
-						}
-					})
-			})
-		this.unifyCookies = from =>
-			new Promise(async resolve => {
-				await init()
-				const protocolHost = utils.protocolHost(from)
-				const list = [...this.redirects[this.frontend][this.protocol]]
-				if (![...list.checked, ...list.custom].includes(protocolHost)) {
-					resolve()
-					return
+	let init = () => {
+		return new Promise(async resolve =>
+			browser.storage.local.get(these.name, async r => {
+				r = r[these.name]
+				if (r) {
+					these.redirects = r[these.redirects]
+					these.enable = r[these.enable]
+					these.frontend = r[these.frontend]
+					these.protocol = r[these.protocol]
+					these.name = r[these.name]
+					these.protocolFallback = r[these.protocolFallback]
+				} else {
+					await these.initDefaults()
+					init()
 				}
-				for (const cookie of this.redirects[this.frontend].cookies) {
-					await utils.copyCookie(frontend, protocolHost, [...list.checked, list.custom], cookie)
-				}
-				resolve(true)
+				resolve()
 			})
-
-		this.switchInstance = (url, disableOverride) => {
-			if (!this.enable && !disableOverride) return
-
-			const protocolHost = utils.protocolHost(url)
-
-			const list = [...this.redirects[this.frontend][this.protocol]]
-			if (!list.all.includes(protocolHost)) return
-
-			let userList = [...list.checked, ...list.custom]
-			if (userList.length === 0 && this.protocolFallback) userList = [...list.normal.all]
-
-			const i = userList.indexOf(protocolHost)
-			if (i > -1) userList.splice(i, 1)
-			if (userList.length === 0) return
-
-			const randomInstance = utils.getRandomInstance(userList)
-			return `${randomInstance}${url.pathname}${url.search}`
-		}
-
-		this.redirect = (url, type, initiator, disableOverride) => {
-			const result = redirect(url, type, initiator, disableOverride)
-			if (result == "BYPASSTAB") return "BYPASSTAB"
-			if (result) {
-				const list = [...this.redirects[this.frontend][this.protocol]]
-				let userList = [...list.checked, ...list.custom]
-				const randomInstance = utils.getRandomInstance(userList)
-				return `${randomInstance}${result.pathname}${result.search}`
-			}
-		}
-
-		let init = () => new Promise(async resolve => {})
+		)
 	}
-}
 
-let Reddit = new FrontEnd({
-	enable: true,
-	frontends: {
-		libreddit: { cookies: ["theme", "front_page", "layout", "wide", "post_sort", "comment_sort", "show_nsfw", "autoplay_videos", "use_hls", "hide_hls_notification", "subscriptions", "filters"] },
-		teddit: {
-			cookies: [
-				"collapse_child_comments",
-				"domain_instagram",
-				"domain_twitter",
-				"domain_youtube",
-				"flairs",
-				"highlight_controversial",
-				"nsfw_enabled",
-				"post_media_max_height",
-				"show_upvoted_percentage",
-				"show_upvotes",
-				"theme",
-				"videos_muted",
-			],
-		},
-	},
-	frontend: "libreddit",
-	redirect: (url, type, initiator, disableOverride) => {
-		if (this.enable && !disableOverride) return
+	these.initDefaults = () => {
+		return new Promise(resolve => {
+			fetch("/instances/data.json")
+				.then(response => response.text())
+				.then(list =>
+					fetch("/instances/blacklist.json")
+						.then(response => response.text())
+						.then(blackList => these.setRedirects(JSON.parse(list), JSON.parse(blackList)).then(() => resolve()))
+				)
+		})
+	}
 
-		const targets = [/^https?:\/{2}(www\.|old\.|np\.|new\.|amp\.|)reddit\.com/, /^https?:\/{2}(i\.|preview\.)redd\.it/]
-		if (!targets.some(rx => rx.test(url.href))) return
+	these.setRedirects = (list, blackList) => {
+		return new Promise(resolve => {
+			for (const frontend in frontends) {
+				these.redirects[frontend] = {}
 
-		if (initiator && all().includes(initiator.origin)) return "BYPASSTAB"
-		if (!["main_frame", "xmlhttprequest", "other", "image", "media"].includes(type)) return
+				these.redirects[frontend].cookies = [...frontends[frontend].cookies]
 
-		const bypassPaths = /\/(gallery\/poll\/rpan\/settings\/topics)/
-		if (url.pathname.match(bypassPaths)) return
+				for (const protocol in list[frontend]) {
+					these.redirects[frontend][protocol] = {}
+
+					these.redirects[frontend][protocol].all = [...list[frontend][protocol]]
+
+					these.redirects[frontend][protocol].custom = []
+
+					these.redirects[frontend][protocol].checked = [...list[frontend][protocol]]
+					for (const instance of blackList.cloudflare) {
+						const a = these.redirects[frontend][protocol].checked.indexOf(instance)
+						if (a > -1) these.redirects[frontend][protocol].checked.splice(a, 1)
+					}
+					for (const instance of blackList.offline) {
+						const a = these.redirects[frontend][protocol].checked.indexOf(instance)
+						if (a > -1) these.redirects[frontend][protocol].checked.splice(a, 1)
+					}
+				}
+			}
+			browser.storage.local.set(
+				{
+					[these.name]: {
+						[these.redirects]: these.redirects,
+						[these.enable]: these.enable,
+						[these.frontend]: these.frontend,
+						[these.protocol]: these.protocol,
+						[these.name]: these.name,
+						[these.protocolFallback]: these.protocolFallback,
+					},
+				},
+				() => resolve()
+			)
+		})
+	}
+
+	these.unify = from => {
+		return new Promise(async resolve => {
+			const protocolHost = utils.protocolHost(from)
+			const list = these.redirects[these.frontend][these.protocol]
+			if (![...list.checked, ...list.custom].includes(protocolHost)) {
+				resolve()
+				return
+			}
+			for (const cookie of these.redirects[these.frontend].cookies) {
+				await utils.copyCookie(frontend, protocolHost, [...list.checked, list.custom], cookie)
+			}
+			resolve(true)
+		})
+	}
+
+	these.switch = (url, disableOverride) => {
+		if (!these.enable && !disableOverride) return
 
 		const protocolHost = utils.protocolHost(url)
 
-		if (url.host === "i.redd.it") {
-			if (this.frontend == "libreddit") return `${protocolHost}/img${url.pathname}${url.search}`
-			if (this.frontend == "teddit") return `${protocolHost}/pics/w:null_${url.pathname.substring(1)}${url.search}`
-		} else if (url.host === "redd.it") {
-			// https://redd.it/foo => https://libredd.it/comments/foo
-			if (this.frontend == "libreddit" && !url.pathname.match(/^\/+[^\/]+\/+[^\/]/)) return `${protocolHost}/comments${url.pathname}${url.search}`
-			// https://redd.it/foo => https://teddit.net/comments/foo
-			if (this.frontend == "teddit" && !url.pathname.match(/^\/+[^\/]+\/+[^\/]/)) return `${protocolHost}/comments${url.pathname}${url.search}`
-		} else if (url.host === "preview.redd.it") {
-			if (this.frontend == "libreddit") return `${protocolHost}/preview/pre${url.pathname}${url.search}`
-			if (this.frontend == "teddit") return
-		} else {
-			return `${url.href}`
-		}
-	},
-})
+		const list = these.redirects[these.frontend][these.protocol]
+		if (!list.all.includes(protocolHost)) return
 
-export default {}
+		let userList = [...list.checked, ...list.custom]
+		if (userList.length === 0 && these.protocolFallback) userList = [...list.normal.all]
+
+		const i = userList.indexOf(protocolHost)
+		if (i > -1) userList.splice(i, 1)
+		if (userList.length === 0) return
+
+		const randomInstance = utils.getRandomInstance(userList)
+		return `${randomInstance}${url.pathname}${url.search}`
+	}
+
+	these.redirect = (url, type, initiator, disableOverride) => {
+		if (!these.enable && !disableOverride) return
+		if (initiator && these.redirects[frontend][protocol].all.includes(initiator.origin)) return "BYPASSTAB"
+		const result = redirect(url, type, these.frontend)
+		if (result == "SKIP") return "SKIP"
+		if (result) {
+			const list = these.redirects[these.frontend][these.protocol]
+			const userList = [...list.checked, ...list.custom]
+			const randomInstance = utils.getRandomInstance(userList)
+			const url = new URL(result)
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
+	}
+
+	await init()
+	browser.storage.onChanged.addListener(init)
+
+	return these
+}

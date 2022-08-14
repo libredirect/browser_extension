@@ -17,8 +17,8 @@ const targets = [
 	/^https?:\/{2}(www\.|)(youtube|youtube-nocookie)\.com\/embed\/..*/,
 ]
 
-const frontends = new Array("invidious", "piped", "pipedMaterial", "cloudtube")
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const frontends = ["invidious", "piped", "pipedMaterial", "cloudtube"]
+const protocols = ["normal", "tor", "i2p", "loki"]
 
 let redirects = {}
 

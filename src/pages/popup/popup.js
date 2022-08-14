@@ -8,7 +8,7 @@ import youtubeHelper from "../../assets/javascripts/youtube/youtube.js"
 import youtubeMusicHelper from "../../assets/javascripts/youtubeMusic.js"
 import twitterHelper from "../../assets/javascripts/twitter.js"
 import instagramHelper from "../../assets/javascripts/instagram.js"
-import redditHelper from "../../assets/javascripts/reddit.js"
+import Reddit from "../../assets/javascripts/reddit.js"
 import searchHelper from "../../assets/javascripts/search.js"
 import translateHelper from "../../assets/javascripts/translate/translate.js"
 import mapsHelper from "../../assets/javascripts/maps.js"
@@ -22,6 +22,7 @@ import tiktokHelper from "../../assets/javascripts/tiktok.js"
 import sendTargetsHelper from "../../assets/javascripts/sendTargets.js"
 import peertubeHelper from "../../assets/javascripts/peertube.js"
 import lbryHelper from "../../assets/javascripts/lbry.js"
+
 
 utils.unify(true).then(r => {
 	if (!r) document.getElementById("unify_div").style.display = "none"
@@ -118,7 +119,6 @@ browser.storage.local.get(
 		"disableYoutubeMusic",
 		"disableInstagram",
 		"disableMaps",
-		"disableReddit",
 		"disableSearch",
 		"translateDisable",
 		"disableWikipedia",
@@ -132,6 +132,7 @@ browser.storage.local.get(
 		"disableLbryTargets",
 		"disableSendTarget",
 		"popupFrontends",
+		"reddit"
 	],
 	r => {
 		disableTwitterCurrentSite.checked = !r.disableTwitter
@@ -144,8 +145,8 @@ browser.storage.local.get(
 		disableInstagramAllSites.checked = !r.disableInstagram
 		disableMapsCurrentSite.checked = !r.disableMaps
 		disableMapsAllSites.checked = !r.disableMaps
-		disableRedditCurrentSite.checked = !r.disableReddit
-		disableRedditAllSites.checked = !r.disableReddit
+		disableRedditCurrentSite.checked = r.reddit.enable
+		disableRedditAllSites.checked = r.reddit.enable
 		disableSearchCurrentSite.checked = !r.disableSearch
 		disableSearchAllSites.checked = !r.disableSearch
 		disableTranslateCurrentSite.checked = !r.translateDisable
@@ -198,7 +199,7 @@ browser.storage.local.get(
 			} else if (mapsHelper.redirect(url, false)) {
 				currSite.getElementsByClassName("maps")[0].classList.remove("hide")
 				allSites.getElementsByClassName("maps")[0].classList.add("hide")
-			} else if (redditHelper.redirect(url, "main_frame", false, true) || (await redditHelper.switchInstance(url, "main_frame", false, true))) {
+			} else if (Reddit.redirect(url, "main_frame", false, true) || Reddit.switch(url, "main_frame", false, true)) {
 				currSite.getElementsByClassName("reddit")[0].classList.remove("hide")
 				allSites.getElementsByClassName("reddit")[0].classList.add("hide")
 			} else if (mediumHelper.redirect(url, "main_frame", false, true) || (await mediumHelper.switchInstance(url, "main_frame", false, true))) {
@@ -315,13 +316,13 @@ document.addEventListener("change", () => {
 					disableMaps: !disableMapsAllSites.checked,
 				})
 
-			if (!r.disableReddit != disableRedditCurrentSite.checked)
+			if (r.reddit.enable != disableRedditCurrentSite.checked)
 				browser.storage.local.set({
-					disableReddit: !disableRedditCurrentSite.checked,
+					[reddit[enable]]: disableRedditCurrentSite.checked,
 				})
-			else if (!r.disableReddit != disableRedditAllSites.checked)
+			else if (r.reddit.enable != disableRedditAllSites.checked)
 				browser.storage.local.set({
-					disableReddit: !disableRedditAllSites.checked,
+					[reddit[enable]]: !disableRedditAllSites.checked,
 				})
 
 			if (!r.disableSearch != disableSearchCurrentSite.checked)
