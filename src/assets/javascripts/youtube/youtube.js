@@ -327,14 +327,13 @@ function getInstanceList(type) {
 	return instancesList
 }
 
-function redirect(url, type, initiator, disableOverride) {
+function redirect(url, type, tabId, initiator, disableOverride) {
 	if (disableYoutube && !disableOverride) return
 	if (!targets.some(rx => rx.test(url.href))) return
 	if (initiator && all().includes(initiator.origin)) return "BYPASSTAB"
 
 	if (type != ("main_frame" || "sub_frame")) return
 	if (url.pathname.match(/iframe_api/) || url.pathname.match(/www-widgetapi/)) return // Don't redirect YouTube Player API.
-	if (onlyEmbeddedVideo == "onlyEmbedded" && type == "main_frame") return
 	if (onlyEmbeddedVideo == "onlyNotEmbedded" && type == "sub_frame") return
 
 	if (type == "main_frame") {

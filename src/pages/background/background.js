@@ -26,7 +26,6 @@ import frontend from "../../assets/javascripts/frontend.js"
 
 window.browser = window.browser || window.chrome
 
-
 browser.runtime.onInstalled.addListener(details => {
 	function initDefaults() {
 		fetch("/instances/blacklist.json")
@@ -90,7 +89,7 @@ browser.webRequest.onBeforeRequest.addListener(
 		}
 
 		let newUrl = youtubeMusicHelper.redirect(url, details.type)
-		if (!newUrl) newUrl = youtubeHelper.redirect(url, details.type, initiator)
+		if (!newUrl) newUrl = youtubeHelper.redirect(url, details.type, details.tabId, initiator)
 		if (!newUrl) newUrl = twitterHelper.redirect(url, details.type, initiator)
 		if (!newUrl) newUrl = instagramHelper.redirect(url, details.type, initiator)
 		if (!newUrl) newUrl = mapsHelper.redirect(url, initiator)

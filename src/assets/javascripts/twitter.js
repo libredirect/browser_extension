@@ -97,7 +97,6 @@ function redirect(url, type, initiator, disableOverride) {
 	if (!targets.some(rx => rx.test(url.href))) return
 	if (url.pathname.split("/").includes("home")) return
 	if (initiator && all().includes(initiator.origin)) return "BYPASSTAB"
-	if (twitterRedirectType == "sub_frame" && type == "main_frame") return
 	if (twitterRedirectType == "main_frame" && type != "main_frame") return
 
 	let instancesList = []

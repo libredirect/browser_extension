@@ -152,7 +152,7 @@ function redirect(url, type, initiator, disableOverride) {
 	if (disableLbryTargets && !disableOverride) return
 	if (initiator && (all().includes(initiator.origin) || targets.includes(initiator.host))) return
 	if (!targets.some(rx => rx.test(url.href))) return
-	if ((type == "main_frame" && lbryRedirectType == "sub_frame") || (type == "sub_frame" && lbryRedirectType == "main_frame")) return
+	if (type == "sub_frame" && lbryRedirectType == "main_frame") return
 
 	const instancesList = getInstancesList()
 	switch (type) {
