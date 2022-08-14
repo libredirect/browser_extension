@@ -100,7 +100,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "Ta instancja jest offline, przekierowanie nastąpi po&nbsp;",
+        "message": "Ta instancja jest offline, przekierowanie nastąpi po",
         "description": "used in instance_offline.html"
     },
     "cancel": {

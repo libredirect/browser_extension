@@ -119,7 +119,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "Bu örnek çevrim dışı, yeniden yönlendirileceksiniz&nbsp;",
+        "message": "Bu örnek çevrim dışı, yeniden yönlendirileceksiniz",
         "description": "used in instance_offline.html"
     },
     "cancel": {

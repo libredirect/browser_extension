@@ -127,7 +127,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "Instansi ini luring, Anda akan dialihkan setelah&nbsp;",
+        "message": "Instansi ini luring, Anda akan dialihkan setelah",
         "description": "used in instance_offline.html"
     },
     "cancel": {

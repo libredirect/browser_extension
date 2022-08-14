@@ -179,7 +179,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "このインスタンスはオフラインです。&nbsp;",
+        "message": "このインスタンスはオフラインです。",
         "description": "used in instance_offline.html"
     },
     "cancel": {

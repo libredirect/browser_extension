@@ -161,7 +161,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "هذا النظير غير متصل بالإنترنت، سيتم إعادة توجيهك بعد&nbsp;",
+        "message": "هذا النظير غير متصل بالإنترنت، سيتم إعادة توجيهك بعد",
         "description": "used in instance_offline.html"
     },
     "cancel": {

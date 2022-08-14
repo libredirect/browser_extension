@@ -139,7 +139,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "Cette instance est hors ligne, vous serez redirigé après&nbsp;",
+        "message": "Cette instance est hors ligne, vous serez redirigé après",
         "description": "used in instance_offline.html"
     },
     "settings": {

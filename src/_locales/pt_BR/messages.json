@@ -181,7 +181,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "Esta instância está offline, você será redirecionado após&nbsp;",
+        "message": "Esta instância está offline, você será redirecionado após",
         "description": "used in instance_offline.html"
     },
     "instanceIsOff": {

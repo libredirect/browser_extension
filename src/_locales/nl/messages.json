@@ -173,7 +173,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "Deze server is offline - je wordt doorgestuurd over&nbsp;",
+        "message": "Deze server is offline - je wordt doorgestuurd over",
         "description": "used in instance_offline.html"
     },
     "cancel": {

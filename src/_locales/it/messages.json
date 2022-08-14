@@ -159,7 +159,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "Questa istanza è offline, verrai reindirizzato tra&nbsp;",
+        "message": "Questa istanza è offline, verrai reindirizzato tra",
         "description": "used in instance_offline.html"
     },
     "cancel": {

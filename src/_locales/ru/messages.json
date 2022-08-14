@@ -96,7 +96,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "Этот экземпляр находится в автономном режиме, вы будете перенаправлены после&nbsp;",
+        "message": "Этот экземпляр находится в автономном режиме, вы будете перенаправлены после",
         "description": "used in instance_offline.html"
     },
     "cancel": {

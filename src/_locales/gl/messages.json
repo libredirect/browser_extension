@@ -196,7 +196,7 @@
         "message": "Esta interface non é totalmente privada."
     },
     "instanceOffline": {
-        "message": "Esta instancia está caída, ímoste redirixir após&nbsp;",
+        "message": "Esta instancia está caída, ímoste redirixir após",
         "description": "used in instance_offline.html"
     },
     "cancel": {

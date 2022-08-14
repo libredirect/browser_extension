@@ -206,7 +206,7 @@
         "message": "I2P"
     },
     "instanceOffline": {
-        "message": "Diese Instanz ist offline , du wirst weitergeleitet nach &nbsp;"
+        "message": "Diese Instanz ist offline , du wirst weitergeleitet nach "
     },
     "testInstancesLatency": {
         "message": "Teste Latenz der Instanzen"

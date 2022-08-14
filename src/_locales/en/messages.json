@@ -175,7 +175,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "This instance is offline, you'll be redirected after&nbsp;",
+        "message": "This instance is offline, you'll be redirected after",
         "description": "used in instance_offline.html"
     },
     "cancel": {

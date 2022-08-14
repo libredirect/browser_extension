@@ -115,7 +115,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "이 인스턴스는 오프라인입니다, 다음 초 후에 리다이렉트됩니다:&nbsp;",
+        "message": "이 인스턴스는 오프라인입니다, 다음 초 후에 리다이렉트됩니다:",
         "description": "used in instance_offline.html"
     },
     "notFullyPrivate": {

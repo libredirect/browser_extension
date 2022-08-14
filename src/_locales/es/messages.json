@@ -107,7 +107,7 @@
         "message": "I2P"
     },
     "instanceOffline": {
-        "message": "Esta instancia está offline, serás redirigido/a luego de&nbsp;",
+        "message": "Esta instancia está offline, serás redirigido/a luego de",
         "description": "used in instance_offline.html"
     },
     "testInstancesLatency": {
