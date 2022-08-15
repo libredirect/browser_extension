@@ -4,14 +4,15 @@ window.browser = window.browser || window.chrome
 
 import utils from "./utils.js"
 
-export async function FrontEnd({ name, enable, frontends, frontend, protocol, redirect }) {
+export async function FrontEnd({ name, enable, frontends, frontend, redirect, reverse }) {
 	let these = {}
 	these.redirects = {}
 	these.enable = enable
 	these.frontend = frontend
-	these.protocol = protocol
+	these.protocol = "normal"
 	these.name = name
 	these.protocolFallback = true
+	these.redirectType = "both"
 
 	let init = () => {
 		return new Promise(async resolve =>
@@ -122,8 +123,8 @@ export async function FrontEnd({ name, enable, frontends, frontend, protocol, re
 
 	these.redirect = (url, type, initiator, disableOverride) => {
 		if (!these.enable && !disableOverride) return
-		if (initiator && these.redirects[frontend][protocol].all.includes(initiator.origin)) return "BYPASSTAB"
-		const result = redirect(url, type, these.frontend)
+		if (initiator && these.redirects[these.frontend][these.protocol].all.includes(initiator.origin)) return "BYPASSTAB"
+		const result = redirect(url, type, these.frontend, these.redirectType)
 		if (result == "SKIP") return "SKIP"
 		if (result) {
 			const list = these.redirects[these.frontend][these.protocol]
@@ -132,6 +133,13 @@ export async function FrontEnd({ name, enable, frontends, frontend, protocol, re
 			const url = new URL(result)
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
+	}
+
+	this.reverse = url => {
+		const protocolHost = utils.protocolHost(url)
+		const list = these.redirects[these.frontend][these.protocol]
+		if (!list.all.includes(protocolHost)) return
+		return reverse(url)
 	}
 
 	await init()

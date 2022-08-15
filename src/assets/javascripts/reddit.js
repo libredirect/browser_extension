@@ -30,7 +30,6 @@ export default await FrontEnd({
 		},
 	},
 	frontend: "libreddit",
-	protocol: "normal",
 	redirect: (url, type, frontend) => {
 		const targets = [/^https?:\/{2}(www\.|old\.|np\.|new\.|amp\.|)reddit\.com/, /^https?:\/{2}(i\.|preview\.)redd\.it/]
 		if (!targets.some(rx => rx.test(url.href))) return
