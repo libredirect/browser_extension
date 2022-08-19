@@ -58,7 +58,6 @@
     "https://nitter:nitter@nitter.nixnet.services"
   ],
   "offline": [
-    "https://invidious.kavin.rocks",
     "https://invidious.osi.kr",
     "https://twitter.dr460nf1r3.org",
     "https://nitter.catalyst.sx",
@@ -67,12 +66,13 @@
     "https://reddi.tk",
     "https://libreddit.notyourcomputer.net",
     "https://reddit.dr460nf1r3.org",
+    "https://teddit.tokhmi.xyz",
     "https://translate.riverside.rocks",
     "https://translate.dr460nf1r3.org",
     "https://jsearch.pw",
     "https://searx.gnu.style",
     "https://searx.semipvt.com",
-    "https://serx.ml",
+    "https://suche.tromdienste.de",
     "https://etsi.me",
     "https://s.zhaocloud.net",
     "https://search.vidhukant.xyz",
