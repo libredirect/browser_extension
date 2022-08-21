@@ -8,12 +8,7 @@ import { FrontEnd } from "./frontend.js"
 export default await FrontEnd({
 	enable: true,
 	name: "imdb",
-	frontends: {
-		libremdb: {
-			cookies: [],
-		},
-	},
-	frontend: "libremdb",
+	frontends: ["libremdb"],
 	redirect: (url, type) => {
 		const targets = [/^https?:\/{2}(?:www\.|)imdb\.com.*/]
 		if (!targets.some(rx => rx.test(url.href))) return

@@ -8,15 +8,7 @@ import { FrontEnd } from "./frontend.js"
 export default await FrontEnd({
 	enable: true,
 	name: "maps",
-	frontends: {
-		osm: {
-			cookies: [],
-		},
-		facilMap: {
-			cookies: [],
-		},
-	},
-	frontend: "osm",
+	frontends: ["osm", "facilMap"],
 	redirect: url => {
 		const targets = /^https?:\/{2}(((www|maps)\.)?(google\.).*(\/maps)|maps\.(google\.).*)/
 		if (!url.href.match(targets)) return

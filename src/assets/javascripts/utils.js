@@ -1,6 +1,6 @@
 window.browser = window.browser || window.chrome
 import twitterHelper from "./twitter.js"
-import youtubeHelper from "./youtube/youtube.js"
+import youtubeHelper from "./youtube.js"
 import instagramHelper from "./instagram.js"
 import mediumHelper from "./medium.js"
 import Reddit from "./reddit.js"
@@ -26,6 +26,7 @@ function getRandomInstance(instances) {
 let cloudflareBlackList = []
 let authenticateBlackList = []
 let offlineBlackList = []
+
 async function initBlackList() {
 	return new Promise(resolve => {
 		browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], r => {
@@ -289,7 +290,27 @@ function ping(href) {
 		let average = 0
 		let time
 		for (let i = 0; i < 3; i++) {
-			time = await pingOnce(href)
+			time = await new Promise(async resolve => {
+				let started
+				let http = new XMLHttpRequest()
+				http.timeout = 5000
+				http.ontimeout = () => resolve(5000)
+				http.onerror = () => resolve()
+				http.onreadystatechange = () => {
+					if (http.readyState == 2) {
+						if (http.status == 200) {
+							let ended = new Date().getTime()
+							http.abort()
+							resolve(ended - started)
+						} else {
+							resolve(5000 + http.status)
+						}
+					}
+				}
+				http.open("GET", `${href}?_=${new Date().getTime()}`, true)
+				started = new Date().getTime()
+				http.send(null)
+			})
 			if (i == 0) continue
 			if (time >= 5000) {
 				resolve(time)
@@ -299,30 +320,6 @@ function ping(href) {
 		}
 		average = parseInt(average / 3)
 		resolve(average)
-	})
-}
-
-function pingOnce(href) {
-	return new Promise(async resolve => {
-		let started
-		let http = new XMLHttpRequest()
-		http.timeout = 5000
-		http.ontimeout = () => resolve(5000)
-		http.onerror = () => resolve()
-		http.onreadystatechange = () => {
-			if (http.readyState == 2) {
-				if (http.status == 200) {
-					let ended = new Date().getTime()
-					http.abort()
-					resolve(ended - started)
-				} else {
-					resolve(5000 + http.status)
-				}
-			}
-		}
-		http.open("GET", `${href}?_=${new Date().getTime()}`, true)
-		started = new Date().getTime()
-		http.send(null)
 	})
 }
 
@@ -358,50 +355,6 @@ async function testLatency(element, instances, frontend) {
 				}
 			})
 		resolve(myList)
-	})
-}
-
-function copyCookie(frontend, targetUrl, urls, name) {
-	return new Promise(resolve => {
-		browser.storage.local.get("firstPartyIsolate", r => {
-			let query
-			if (!r.firstPartyIsolate)
-				query = {
-					url: protocolHost(targetUrl),
-					name: name,
-				}
-			else
-				query = {
-					url: protocolHost(targetUrl),
-					name: name,
-					firstPartyDomain: null,
-				}
-			browser.cookies.getAll(query, async cookies => {
-				for (const cookie of cookies)
-					if (cookie.name == name) {
-						for (const url of urls) {
-							const setQuery = r.firstPartyIsolate
-								? {
-										url: url,
-										name: name,
-										value: cookie.value,
-										secure: true,
-										firstPartyDomain: new URL(url).hostname,
-								  }
-								: {
-										url: url,
-										name: name,
-										value: cookie.value,
-										secure: true,
-										expirationDate: cookie.expirationDate,
-								  }
-							browser.cookies.set(setQuery)
-						}
-						break
-					}
-				resolve()
-			})
-		})
 	})
 }
 
@@ -564,7 +517,6 @@ export default {
 	protocolHost,
 	processDefaultCustomInstances,
 	latency,
-	copyCookie,
 	getPreferencesFromToken,
 	switchInstance,
 	copyRaw,

@@ -8,12 +8,7 @@ import { FrontEnd } from "./frontend.js"
 export default await FrontEnd({
 	enable: true,
 	name: "imgur",
-	frontends: {
-		rimgo: {
-			cookies: [],
-		},
-	},
-	frontend: "rimgo",
+	frontends: ["rimgo"],
 	redirect: (url, type) => {
 		const targets = /^https?:\/{2}([im]\.)?imgur\.(com|io)(\/|$)/
 		if (!targets.test(url.href)) return

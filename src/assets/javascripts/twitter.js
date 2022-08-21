@@ -7,10 +7,11 @@ import { FrontEnd } from "./frontend.js"
 
 export default await FrontEnd({
 	enable: true,
-	name: "nitter",
-	frontends: {
-		nitter: {
-			cookies: [
+	name: "twitter",
+	frontends: ["nitter"],
+	unify: {
+		cookies: {
+			nitter: [
 				"theme",
 				"infiniteScroll",
 				"stickyProfile",
@@ -32,7 +33,6 @@ export default await FrontEnd({
 			],
 		},
 	},
-	frontend: "nitter",
 	redirect: (url, type) => {
 		const targets = [/^https?:\/{2}(www\.|mobile\.|)twitter\.com/, /^https?:\/{2}(pbs\.|video\.|)twimg\.com/, /^https?:\/{2}platform\.twitter\.com\/embed/, /^https?:\/{2}t\.co/]
 		if (!targets.some(rx => rx.test(url.href))) return
@@ -40,15 +40,15 @@ export default await FrontEnd({
 		if (twitterRedirectType == "main_frame" && type != "main_frame") return "SKIP"
 
 		let search = new URLSearchParams(url.search)
-		
+
 		search.delete("ref_src")
 		search.delete("ref_url")
-		
+
 		search = search.toString()
 		if (search !== "") search = `?${search}`
-		
+
 		const protocolHost = utils.protocolHost(url)
-		
+
 		// https://pbs.twimg.com/profile_images/648888480974508032/66_cUYfj_400x400.jpg
 		if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video") {
 			const [, id, format, extra] = search.match(/(.*)\?format=(.*)&(.*)/)
@@ -65,18 +65,5 @@ export default await FrontEnd({
 	},
 	reverse: url => {
 		return `https://twitter.com${url.pathname}${url.search}`
-	},
-	removeXFrameOptions: () => {
-		let isChanged = false
-		for (const i in e.responseHeaders) {
-			if (e.responseHeaders[i].name == "x-frame-options") {
-				e.responseHeaders.splice(i, 1)
-				isChanged = true
-			} else if (e.responseHeaders[i].name == "content-security-policy") {
-				e.responseHeaders.splice(i, 1)
-				isChanged = true
-			}
-		}
-		if (isChanged) return { responseHeaders: e.responseHeaders }
 	},
 })

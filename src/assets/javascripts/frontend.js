@@ -4,15 +4,17 @@ window.browser = window.browser || window.chrome
 
 import utils from "./utils.js"
 
-export async function FrontEnd({ name, enable, frontends, frontend, redirect, reverse }) {
+// cookieTokens
+export async function FrontEnd({ name, enable, frontends, redirect, reverse, unify }) {
 	let these = {}
 	these.redirects = {}
 	these.enable = enable
-	these.frontend = frontend
+	these.frontend = frontends[0]
 	these.protocol = "normal"
 	these.name = name
 	these.protocolFallback = true
 	these.redirectType = "both"
+	these.unify = unify
 
 	let init = () => {
 		return new Promise(async resolve =>
@@ -86,19 +88,77 @@ export async function FrontEnd({ name, enable, frontends, frontend, redirect, re
 			)
 		})
 	}
-
-	these.unify = from => {
+	these.unify = ({ test, from, tabId }) => {
 		return new Promise(async resolve => {
-			const protocolHost = utils.protocolHost(from)
-			const list = these.redirects[these.frontend][these.protocol]
-			if (![...list.checked, ...list.custom].includes(protocolHost)) {
+			if (!these.enable) {
 				resolve()
 				return
 			}
-			for (const cookie of these.redirects[these.frontend].cookies) {
-				await utils.copyCookie(frontend, protocolHost, [...list.checked, list.custom], cookie)
+
+			const protocolHost = utils.protocolHost(from)
+			const list = these.redirects[these.frontend][these.protocol]
+			let selectedList = [...list.checked, ...list.custom]
+			if (!selectedList.includes(protocolHost)) {
+				resolve()
+				return
 			}
-			resolve(true)
+
+			const i = selectedList.indexOf(protocolHost)
+			if (i !== -1) selectedList.splice(i, 1)
+
+			if (these.frontend in these.unify.cookies) {
+				if (!test) {
+					for (const cookie of these.unify.cookies[these.frontend]) {
+						await new Promise(resolve => {
+							browser.cookies.getAll(
+								{
+									url: protocolHost(protocolHost),
+									name: cookie,
+								},
+								cookies => {
+									for (const cookie of cookies) {
+										if (cookie.name == cookie) {
+											for (const url of selectedList) {
+												browser.cookies.set({
+													url: url,
+													name: cookie.name,
+													value: cookie.value,
+													secure: cookie.secure,
+													expirationDate: cookie.expirationDate,
+												})
+											}
+											break
+										}
+									}
+									resolve()
+								}
+							)
+						})
+					}
+				}
+				resolve(true)
+				return
+			}
+			if (these.frontend in these.unify.localStorage) {
+				if (!test) {
+					browser.storage.local.set({ localStorage_tmp_list: these.unify.localStorage[these.frontend] })
+					browser.tabs.executeScript(tabId, {
+						file: `/assets/javascripts/localStorage/get.js`,
+						runAt: "document_start",
+					})
+					for (const to of selectedList) {
+						browser.tabs.create({ url: to }, tab =>
+							browser.tabs.executeScript(tab.id, {
+								file: `/assets/javascripts/localStorage/set.js`,
+								runAt: "document_start",
+							})
+						)
+					}
+				}
+				resolve(true)
+				return
+			}
+			resolve()
 		})
 	}
 
@@ -135,11 +195,54 @@ export async function FrontEnd({ name, enable, frontends, frontend, redirect, re
 		}
 	}
 
-	this.reverse = url => {
+	these.reverse = url => {
 		const protocolHost = utils.protocolHost(url)
 		const list = these.redirects[these.frontend][these.protocol]
 		if (!list.all.includes(protocolHost)) return
 		return reverse(url)
+	}
+
+	these.removeXFrameOptions = e => {
+		let isChanged = false
+
+		const list = these.redirects[these.frontend][these.protocol]
+		if (e.type == "main_frame") {
+			for (const i in e.responseHeaders) {
+				if (e.responseHeaders[i].name == "content-security-policy") {
+					const selectedList = [...list.checked, ...list.custom]
+
+					let securityPolicyList = e.responseHeaders[i].value.split(";")
+					for (const i in securityPolicyList) securityPolicyList[i] = securityPolicyList[i].trim()
+
+					let newSecurity = ""
+					for (const item of securityPolicyList) {
+						if (item.trim() == "") continue
+						let regex = item.match(/([a-z-]{0,}) (.*)/)
+						if (regex == null) continue
+						let [, key, vals] = regex
+						if (key == "frame-src") vals = vals + " " + selectedList.join(" ")
+						newSecurity += key + " " + vals + "; "
+					}
+
+					e.responseHeaders[i].value = newSecurity
+					isChanged = true
+				}
+			}
+		} else if (e.type == "sub_frame") {
+			const url = new URL(e.url)
+			const protocolHost = utils.protocolHost(url)
+			if (!list.all.includes(protocolHost)) return
+			for (const i in e.responseHeaders) {
+				if (e.responseHeaders[i].name == "x-frame-options") {
+					e.responseHeaders.splice(i, 1)
+					isChanged = true
+				} else if (e.responseHeaders[i].name == "content-security-policy") {
+					e.responseHeaders.splice(i, 1)
+					isChanged = true
+				}
+			}
+		}
+		if (isChanged) return { responseHeaders: e.responseHeaders }
 	}
 
 	await init()

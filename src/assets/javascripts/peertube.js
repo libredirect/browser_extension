@@ -8,12 +8,7 @@ import { FrontEnd } from "./frontend.js"
 export default await FrontEnd({
 	enable: true,
 	name: "peertube",
-	frontends: {
-		simpleertube: {
-			cookies: [],
-		},
-	},
-	frontend: "simpleertube",
+	frontends: ["simpleertube"],
 	redirect: (url, type) => {
 		if (type != "main_frame") return "SKIP"
 

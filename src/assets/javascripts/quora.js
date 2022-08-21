@@ -8,12 +8,7 @@ import { FrontEnd } from "./frontend.js"
 export default await FrontEnd({
 	enable: true,
 	name: "quora",
-	frontends: {
-		quetre: {
-			cookies: [],
-		},
-	},
-	frontend: "quetre",
+	frontends: ["quetre"],
 	redirect: (url, type) => {
 		const targets = [/^https?:\/{2}(www\.|)quora\.com.*/]
 		if (!targets.some(rx => rx.test(url.href))) return

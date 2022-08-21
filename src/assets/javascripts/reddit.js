@@ -8,12 +8,12 @@ import { FrontEnd } from "./frontend.js"
 export default await FrontEnd({
 	enable: true,
 	name: "reddit",
-	frontends: {
-		libreddit: {
-			cookies: ["theme", "front_page", "layout", "wide", "post_sort", "comment_sort", "show_nsfw", "autoplay_videos", "use_hls", "hide_hls_notification", "subscriptions", "filters"],
-		},
-		teddit: {
-			cookies: [
+	frontends: ["libreddit", "teddit"],
+	unify: {
+		cookies: {
+			libreddit: ["theme", "front_page", "layout", "wide", "post_sort", "comment_sort", "show_nsfw", "autoplay_videos", "use_hls", "hide_hls_notification", "subscriptions", "filters"],
+
+			teddit: [
 				"collapse_child_comments",
 				"domain_instagram",
 				"domain_twitter",
@@ -29,7 +29,6 @@ export default await FrontEnd({
 			],
 		},
 	},
-	frontend: "libreddit",
 	redirect: (url, type, frontend) => {
 		const targets = [/^https?:\/{2}(www\.|old\.|np\.|new\.|amp\.|)reddit\.com/, /^https?:\/{2}(i\.|preview\.)redd\.it/]
 		if (!targets.some(rx => rx.test(url.href))) return

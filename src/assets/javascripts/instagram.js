@@ -8,13 +8,7 @@ import { FrontEnd } from "./frontend.js"
 export default await FrontEnd({
 	enable: true,
 	name: "instagram",
-	frontends: {
-		bibliogram: {
-			cookies: [],
-		},
-	},
-	frontend: "bibliogram",
-	protocol: "normal",
+	frontends: ["bibliogram"],
 	redirect: (url, type) => {
 		const targets = /^https?:\/{2}(www\.)?instagram\.com/
 		if (!targets.test(url.href)) return
@@ -37,35 +31,3 @@ export default await FrontEnd({
 		return `https://instagram.com${url.pathname}${url.search}`
 	},
 })
-
-function initBibliogramPreferences(test, from) {
-	return new Promise(async resolve => {
-		await init()
-		const protocolHost = utils.protocolHost(from)
-		if (
-			![
-				...bibliogramNormalRedirectsChecks,
-				...bibliogramTorRedirectsChecks,
-				...bibliogramNormalCustomRedirects,
-				...bibliogramTorCustomRedirects,
-				...bibliogramI2pCustomRedirects,
-				...bibliogramLokiCustomRedirects,
-			].includes(protocolHost)
-		) {
-			resolve()
-			return
-		}
-
-		if (!test) {
-			let checkedInstances = []
-			if (protocol == "loki") checkedInstances = [...bibliogramLokiCustomRedirects]
-			else if (protocol == "i2p") checkedInstances = [...bibliogramI2pCustomRedirects]
-			else if (protocol == "tor") checkedInstances = [...bibliogramTorRedirectsChecks, ...bibliogramTorCustomRedirects]
-			if ((checkedInstances.length === 0 && protocolFallback) || protocol == "normal") {
-				checkedInstances = [...bibliogramNormalRedirectsChecks, ...bibliogramNormalCustomRedirects]
-			}
-			await utils.getPreferencesFromToken("bibliogram", from, checkedInstances, "settings", "settings.json")
-		}
-		resolve(true)
-	})
-}

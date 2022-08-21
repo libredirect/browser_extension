@@ -8,12 +8,7 @@ import { FrontEnd } from "./frontend.js"
 export default await FrontEnd({
 	enable: true,
 	name: "reuters",
-	frontends: {
-		neuters: {
-			cookies: [],
-		},
-	},
-	frontend: "neuters",
+	frontends: ["neuters"],
 	redirect: (url, type) => {
 		const targets = [/^https?:\/{2}(www\.|)reuters\.com.*/]
 		if (!targets.some(rx => rx.test(url.href))) return

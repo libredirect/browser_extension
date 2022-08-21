@@ -8,15 +8,7 @@ import { FrontEnd } from "./frontend.js"
 export default await FrontEnd({
 	enable: true,
 	name: "lbry",
-	frontends: {
-		librarian: {
-			cookies: [],
-		},
-		lbryDesktop: {
-			cookies: [],
-		},
-	},
-	frontend: "librarian",
+	frontends: ["librarian", "lbryDesktop"],
 	redirect: (url, type, frontend, redirectType) => {
 		const targets = [/^https?:\/{2}odysee\.com/]
 		if (!targets.some(rx => rx.test(url.href))) return
@@ -35,5 +27,5 @@ export default await FrontEnd({
 			case "sub_frame":
 				return `${protocolHost}${url.pathname}${url.search}`.replace(/\/(?=[a-f0-9]{40})/, ":")
 		}
-	}
+	},
 })

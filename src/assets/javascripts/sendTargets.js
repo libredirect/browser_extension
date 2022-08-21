@@ -8,12 +8,7 @@ import { FrontEnd } from "./frontend.js"
 export default await FrontEnd({
 	enable: true,
 	name: "sendTargets",
-	frontends: {
-		send: {
-			cookies: [],
-		},
-	},
-	frontend: "send",
+	frontends: ["send"],
 	redirect: (url, type) => {
 		const targets = [/^https?:\/{2}send\.libredirect\.invalid\/$/, /^ https ?: \/\/send\.firefox\.com\/$/, /^https?:\/{2}sendfiles\.online\/$/]
 		if (!targets.some(rx => rx.test(url.href))) return

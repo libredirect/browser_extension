@@ -8,12 +8,12 @@ import { FrontEnd } from "./frontend.js"
 export default await FrontEnd({
 	enable: true,
 	name: "wikipedia",
-	frontends: {
-		wikiless: {
+	frontends: ["wikiless"],
+	unify: {
+		cookies: {
 			wikiless: ["theme", "default_lang"],
 		},
 	},
-	frontend: "wikiless",
 	redirect: url => {
 		const targets = /^https?:\/{2}([a-z]+\.)*wikipedia\.org/
 		if (!targets.test(url.href)) return

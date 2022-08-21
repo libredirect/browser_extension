@@ -7,10 +7,11 @@ import { FrontEnd } from "./frontend.js"
 
 export default await FrontEnd({
 	enable: true,
-	name: "reuters",
-	frontends: {
-		searx: {
-			cookies: [
+	name: "search",
+	frontend: ["searxng", "searx", "whoogle", "librex"],
+	unify: {
+		cookies: {
+			searx: [
 				"advanced_search",
 				"autocomplete",
 				"categories",
@@ -29,9 +30,7 @@ export default await FrontEnd({
 				"theme",
 				"tokens",
 			],
-		},
-		searxng: {
-			cookies: [
+			searxng: [
 				"autocomplete",
 				"categories",
 				"disabled_engines",
@@ -52,15 +51,9 @@ export default await FrontEnd({
 				"theme",
 				"tokens",
 			],
-		},
-		whoogle: {
-			cookies: [],
-		},
-		librex: {
-			cookies: ["bibliogram", "disable_special", "invidious", "libreddit", "nitter", "proxitok", "theme", "wikiless"],
+			librex: ["bibliogram", "disable_special", "invidious", "libreddit", "nitter", "proxitok", "theme", "wikiless"],
 		},
 	},
-	frontend: "searxng",
 	redirect: url => {
 		const targets = [/^https?:\/{2}search\.libredirect\.invalid/]
 		if (!targets.some(rx => rx.test(url.href))) return
