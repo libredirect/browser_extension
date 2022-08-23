@@ -1,1 +1,214 @@
-{}
+{
+    "switchInstance": {
+        "message": "Přepnout instanci",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "settings": {
+        "message": "Nastavení",
+        "description": "used in the popup"
+    },
+    "search": {
+        "message": "Vyhledávání",
+        "description": "used in the settings page"
+    },
+    "translate": {
+        "message": "Překlad",
+        "description": "used in the settings page"
+    },
+    "sendFiles": {
+        "message": "Posílání souborů",
+        "description": "used in the settings page"
+    },
+    "youtube": {
+        "message": "YouTube",
+        "description": "used in the settings page"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "used in the settings page"
+    },
+    "imgur": {
+        "message": "Imgur",
+        "description": "used in the settings page"
+    },
+    "wikipedia": {
+        "message": "Wikipedie",
+        "description": "used in the settings page"
+    },
+    "peertube": {
+        "message": "PeerTube",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "Téma",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "Systém",
+        "description": "used in the settings page"
+    },
+    "medium": {
+        "message": "Medium",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "Světlé",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Tmavé",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "Importovat nastavení",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "Exportovat nastavení",
+        "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "Obnovit nastavení",
+        "description": "used in the settings page"
+    },
+    "customPopup": {
+        "message": "Přizpůsobit vyskakovací nabídku",
+        "description": "used in the settings page"
+    },
+    "toggleAll": {
+        "message": "Přepnout vše",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Frontend",
+        "description": "used in the settings page"
+    },
+    "notFullyPrivate": {
+        "message": "Toto není plně soukromý frontend."
+    },
+    "searchNote": {
+        "message": "Poznámka: Využijte plný potenciál vyhledávání tak, že si jako výchozí vyhledávač nastavíte LibRedirect.",
+        "description": "used in the settings page"
+    },
+    "redirectType": {
+        "message": "Typ přesměrování",
+        "description": "used in the settings page"
+    },
+    "embeddedVids": {
+        "message": "Frontend vložených videí",
+        "description": "used in the settings page"
+    },
+    "cancel": {
+        "message": "Zrušit",
+        "description": "used in instance_offline.html"
+    },
+    "instanceIsOff": {
+        "message": "Instance je offline",
+        "description": "used in instance_offline.html"
+    },
+    "redirectionCanceled": {
+        "message": "Přesměrování zrušeno",
+        "description": "used in instance_offline.js"
+    },
+    "copied": {
+        "message": "Zkopírováno"
+    },
+    "unifySettings": {
+        "message": "Sjednotit nastavení"
+    },
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "ytmusic": {
+        "message": "YT Music",
+        "description": "used in the settings page"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Desktop"
+    },
+    "instanceOffline": {
+        "message": "Tato instance je offline, budete přesměrováni za",
+        "description": "used in instance_offline.html"
+    },
+    "extensionDescription": {
+        "message": "Webové rozšíření, které přesměrovává oblíbené weby na alternativní frontendy a backendy respektující soukromí",
+        "description": "description of the extension"
+    },
+    "general": {
+        "message": "Obecné",
+        "description": "used in the settings page"
+    },
+    "maps": {
+        "message": "Mapy",
+        "description": "used in the settings page"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "used in the settings page"
+    },
+    "reddit": {
+        "message": "Reddit",
+        "description": "used in the settings page"
+    },
+    "tiktok": {
+        "message": "TikTok",
+        "description": "used in the settings page"
+    },
+    "autoRedirect": {
+        "message": "Automaticky přesměrovat offline instance na online instance",
+        "description": "used in the settings page"
+    },
+    "updateInstances": {
+        "message": "Aktualizovat instance",
+        "description": "used in the settings page"
+    },
+    "onlyNotEmbedded": {
+        "message": "pouze nevložené",
+        "description": "used in the settings page"
+    },
+    "protocol": {
+        "message": "Protokol",
+        "description": "used in the settings page"
+    },
+    "normal": {
+        "message": "Normální",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "pouze vložené",
+        "description": "used in the settings page"
+    },
+    "exceptions": {
+        "message": "Výjimky",
+        "description": "used in the settings page"
+    },
+    "copyRaw": {
+        "message": "Zkopírovat surové"
+    },
+    "enable": {
+        "message": "Povolit",
+        "description": "used in the settings page"
+    },
+    "defaultInstances": {
+        "message": "Výchozí instance",
+        "description": "used in the settings page"
+    },
+    "customInstances": {
+        "message": "Vlastní instance",
+        "description": "used in the settings page"
+    },
+    "both": {
+        "message": "oba",
+        "description": "used in the settings page"
+    },
+    "testInstancesLatency": {
+        "message": "Otestovat latenci instancí"
+    },
+    "lbry": {
+        "message": "LBRY"
+    },
+    "protocolFallback": {
+        "message": "Návrat k normálnímu protokolu, pokud pro současný nebudou dostupné žádné instance"
+    }
+}
