@@ -4,6 +4,7 @@
       "https://yewtu.be",
       "https://vid.puffyan.us",
       "https://invidious.snopyta.org",
+      "https://invidious.kavin.rocks",
       "https://inv.riverside.rocks",
       "https://y.com.sb",
       "https://yt.artemislena.eu",
@@ -15,11 +16,10 @@
       "https://inv.vern.cc",
       "https://invidious.nerdvpn.de",
       "https://inv.privacy.com.de",
-      "https://invidious.slipfox.xyz",
       "https://invidious.rhyshl.live",
-      "https://youtube.076.ne.jp",
+      "https://invidious.slipfox.xyz",
       "https://invidious.weblibre.org",
-      "https://invidious.kavin.rocks",
+      "https://youtube.076.ne.jp",
       "https://invidious.namazso.eu",
       "https://invidious.osi.kr",
       "https://invidious.esmailelbob.xyz"
@@ -41,6 +41,7 @@
   },
   "piped": {
     "normal": [
+      "https://piped.kavin.rocks",
       "https://piped.tokhmi.xyz",
       "https://piped.moomoo.me",
       "https://piped.mha.fi",
@@ -50,7 +51,6 @@
       "https://yt.jae.fi",
       "https://piped.mint.lgbt",
       "https://il.ax",
-      "https://piped.privacy.com.de",
       "https://piped.esmailelbob.xyz",
       "https://piped.projectsegfau.lt",
       "https://piped.privacydev.net"
@@ -167,6 +167,7 @@
       "https://n.ramle.be",
       "https://nitter.cz",
       "https://nitter.privacydev.net",
+      "https://nitter.evil.site",
       "https://tweet.lambda.dance",
       "https://nitter.ebnar.xyz",
       "https://nitter.kylrth.com",
@@ -512,6 +513,7 @@
       "https://searx.dresden.network",
       "https://searx.fossencdi.org",
       "https://searx.gnu.style",
+      "https://searx.kujonello.cf",
       "https://searx.mastodontech.de",
       "https://searx.mxchange.org",
       "https://searx.nakhan.net",
@@ -543,7 +545,8 @@
       "http://yra4tke2pwcnatxjkufpw6kvebu3h3ti2jca2lcdpgx3mpwol326lzid.onion",
       "http://z5vawdol25vrmorm4yydmohsd4u6rdoj2sylvoi3e3nqvxkvpqul7bqd.onion",
       "http://zbuc3bbzbfdqqo2x46repx2ddajbha6fpsjeeptjhhhhzji3zopxdqyd.onion",
-      "http://f4qfqajszpx5b7itzxt6mb7kj4ktpgbdq7lq6xaiqyqx6a7de3epptad.onion"
+      "http://f4qfqajszpx5b7itzxt6mb7kj4ktpgbdq7lq6xaiqyqx6a7de3epptad.onion",
+      "http://fub6vgedgeadlu3ctskrpkcqjruh76tckwtj5swfhyblgml2tzgzckqd.onion/searx"
     ],
     "i2p": [
       "http://ransack.i2p",
@@ -558,6 +561,7 @@
       "https://etsi.me",
       "https://icanfindit.online",
       "https://jackgoss.xyz",
+      "https://metasearch.nl",
       "https://northboot.xyz",
       "https://opnxng.com",
       "https://paulgo.io",
@@ -580,6 +584,7 @@
       "https://search.projectsegfau.lt",
       "https://search.rabbit-company.com",
       "https://search.rhscze.cf",
+      "https://search.rowie.at",
       "https://search.sapti.me",
       "https://search.teamriverbubbles.com",
       "https://search.unlocked.link",
@@ -596,7 +601,6 @@
       "https://searx.fi",
       "https://searx.fmac.xyz",
       "https://searx.gnous.eu",
-      "https://searx.kujonello.cf",
       "https://searx.mha.fi",
       "https://searx.mistli.net",
       "https://searx.namejeff.xyz",
@@ -608,7 +612,6 @@
       "https://searx.sev.monster",
       "https://searx.slipfox.xyz/searx",
       "https://searx.tiekoetter.com",
-      "https://searx.vimproved.me",
       "https://searx.zcyph.cc",
       "https://searxng.au/searx",
       "https://searxng.tordenskjold.de",
@@ -620,7 +623,6 @@
       "https://srx.cosmohub.io",
       "https://trydex.tk/searxng",
       "https://www.gruble.de",
-      "https://www.higgssearch.com",
       "https://www.webrats.xyz",
       "https://xcxc.ml",
       "https://xo.wtf"
@@ -633,10 +635,10 @@
       "http://gbat2pbpg7ys3fi3pbp64667tt5x66mg45xok35bxdw7v55brm7a27yd.onion",
       "http://searxdr3pqz4nydgnqocsia2xbywptxbkympa2emn7zlgggrir4bkfad.onion",
       "http://searx.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion",
+      "http://searxfilowxokbogygrigir4wqxfxqzuxofxgdon7dg6rsii4yxzytyd.onion",
       "http://searx.micohauwkjbyw5meacrb4ipicwvwg4xtzl7y7viv53kig2mdcsvwkyyd.onion",
       "http://searx.privpw3tndpkw6pnp3g727zfgfdzbu3k6a7chv226s3xymv2p4eiuqyd.onion",
       "http://rq2w52kyrif3xpfihkgjnhqm3a5aqhoikpv72z3drpjglfzc2wr5z4yd.onion",
-      "http://fub6vgedgeadlu3ctskrpkcqjruh76tckwtj5swfhyblgml2tzgzckqd.onion/searx",
       "http://searx3aolosaf3urwnhpynlhuokqsgz47si4pzz5hvb7uuzyjncl2tid.onion",
       "http://4tz2vlnwk2apf2rpinkqv6uxvfgo5xjx6vl5vp7lxgaiooumetjpstqd.onion"
     ],
@@ -722,7 +724,8 @@
       "http://librarian.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion",
       "http://lbry.vernccvbvyi5qhfzyqengccj7lkove6bjot2xhh5kajhwvidqafczrad.onion",
       "http://5znbzx2xcymhddzekfjib3isgqq4ilcyxa2bsq6vqmnvbtgu4f776lqd.onion",
-      "http://zjmls4urccc5wxc64ilbv4oqarjab6pbanvmhd2qqt6p7fgqrjjnryqd.onion"
+      "http://zjmls4urccc5wxc64ilbv4oqarjab6pbanvmhd2qqt6p7fgqrjjnryqd.onion",
+      "http://bxewpsswttslepw27w2hhxhlizwm7l7y54x3jw5cfrb64hb6lgc557ad.onion"
     ],
     "i2p": [],
     "loki": []
@@ -776,11 +779,11 @@
     "loki": []
   },
   "peertube": [
+    "https://apertatube.net",
     "https://iamazure.auton.id",
     "https://beetoons.tv",
     "https://rankett.net",
     "https://media.unifiedberets.com",
-    "https://jzqk.org",
     "https://tube.xsoftware.it",
     "https://video.ut0pia.org",
     "https://kinotu.be",
@@ -832,7 +835,6 @@
     "https://nekofans.tv",
     "https://video.comun.al",
     "https://video.occm.cc",
-    "https://peertube.viviers-fibre.net",
     "https://tube-action-educative.apps.education.fr",
     "https://jahve.pl",
     "https://videos.yesil.club",
@@ -1511,7 +1513,6 @@
     "https://40two.tube",
     "https://tube.amic37.fr",
     "https://video.comptoir.net",
-    "https://kino.schuerz.at",
     "https://peertube.tiennot.net",
     "https://tututu.tube",
     "https://tube.picasoft.net",
@@ -1578,7 +1579,6 @@
     "https://video.violoncello.ch",
     "https://peertube.gidikroon.eu",
     "https://tubedu.org",
-    "https://watch.breadtube.tv",
     "https://video.exodus-privacy.eu.org",
     "https://tilvids.com",
     "https://peertube.devloprog.org",
