@@ -72,7 +72,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "Сервер недоступний, до переспрямування&nbsp;",
+        "message": "Сервер недоступний, до переспрямування",
         "description": "used in instance_offline.html"
     },
     "customInstances": {
