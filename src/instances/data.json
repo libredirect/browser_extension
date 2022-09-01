@@ -4,7 +4,6 @@
       "https://yewtu.be",
       "https://vid.puffyan.us",
       "https://invidious.snopyta.org",
-      "https://invidious.kavin.rocks",
       "https://inv.riverside.rocks",
       "https://invidio.xamh.de",
       "https://y.com.sb",
@@ -22,7 +21,8 @@
       "https://youtube.076.ne.jp",
       "https://invidious.weblibre.org",
       "https://invidious.flokinet.to",
-      "https://invidious.namazso.eu"
+      "https://invidious.namazso.eu",
+      "https://invidious.kavin.rocks"
     ],
     "tor": [
       "http://inv.vernccvbvyi5qhfzyqengccj7lkove6bjot2xhh5kajhwvidqafczrad.onion",
@@ -41,8 +41,6 @@
   },
   "piped": {
     "normal": [
-      "https://piped.kavin.rocks",
-      "https://piped.tokhmi.xyz",
       "https://piped.moomoo.me",
       "https://piped.mha.fi",
       "https://us-piped.shimul.me",
@@ -564,6 +562,7 @@
       "https://jackgoss.xyz",
       "https://metasearch.nl",
       "https://northboot.xyz",
+      "https://notsearch.uk",
       "https://opnxng.com",
       "https://paulgo.io",
       "https://priv.au",
@@ -782,10 +781,10 @@
     "loki": []
   },
   "peertube": [
+    "https://pt.prnetsec.ml",
     "https://peertube.as62430.net",
     "https://peertube.askan.info",
     "https://apertatube.net",
-    "https://iamazure.auton.id",
     "https://beetoons.tv",
     "https://rankett.net",
     "https://media.unifiedberets.com",
@@ -859,7 +858,6 @@
     "https://peertube.0x5e.eu",
     "https://tube.darknight-coffee.org",
     "https://play.mittdata.se",
-    "https://see.vtopia.live",
     "https://peertube.letoine.fr",
     "https://tube-enseignement-professionnel.apps.education.fr",
     "https://videos.laliguepaysdelaloire.org",
@@ -1000,7 +998,6 @@
     "https://tube.revertron.com",
     "https://tube.erzbistum-hamburg.de",
     "https://views.southfox.me",
-    "https://vide.oxel.me",
     "https://video.mttv.it",
     "https://peertube.cloud.nerdraum.de",
     "https://vid.pretok.tv",
@@ -1237,7 +1234,6 @@
     "https://peertube.kleph.eu",
     "https://tube.missbanal.net",
     "https://pityu.flaki.hu",
-    "https://tv.catalpafestival.fr",
     "https://pony.tube",
     "https://peertube.umeahackerspace.se",
     "https://tube.okcinfo.news",
@@ -1521,7 +1517,6 @@
     "https://videos.testimonia.org",
     "https://video.mass-trespass.uk",
     "https://peertube.cipherbliss.com",
-    "https://peertube.stemy.me",
     "https://daschauher.aksel.rocks",
     "https://tube.cyano.at",
     "https://tube.nox-rhea.org",
@@ -1546,7 +1541,6 @@
     "https://cinema.yunohost.support",
     "https://peertube.s2s.video",
     "https://peertube.travelpandas.eu",
-    "https://video.sdm-tools.net",
     "https://peertube.anzui.dev",
     "https://video.up.edu.ph",
     "https://video.igem.org",
