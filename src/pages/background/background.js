@@ -22,6 +22,8 @@ import sendTargetsHelper from "../../assets/javascripts/sendTargets.js"
 import peertubeHelper from "../../assets/javascripts/peertube.js"
 import lbryHelper from "../../assets/javascripts/lbry.js"
 
+import servicesHelper from "../../assets/javascripts/services.js"
+
 window.browser = window.browser || window.chrome
 
 browser.runtime.onInstalled.addListener(details => {
@@ -86,6 +88,7 @@ browser.webRequest.onBeforeRequest.addListener(
 			return null
 		}
 
+		/*
 		let newUrl = youtubeMusicHelper.redirect(url, details.type)
 		if (!newUrl) newUrl = youtubeHelper.redirect(url, details.type, initiator)
 		if (!newUrl) newUrl = twitterHelper.redirect(url, details.type, initiator)
@@ -104,6 +107,8 @@ browser.webRequest.onBeforeRequest.addListener(
 		if (!newUrl) newUrl = translateHelper.redirect(url)
 		if (!newUrl) newUrl = searchHelper.redirect(url)
 		if (!newUrl) newUrl = wikipediaHelper.redirect(url)
+		*/
+		let newUrl = servicesHelper.redirect(url, details.type, initiator)
 
 		if (details.frameAncestors && details.frameAncestors.length > 0 && generalHelper.isException(new URL(details.frameAncestors[0].url))) newUrl = null
 

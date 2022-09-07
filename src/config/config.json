@@ -251,7 +251,7 @@
 					"preferences": {}
 				}
 			},
-			"targets": ["^https?:\\/{2}(www\\.|)quora\\.com.*"],
+			"targets": ["^https?:\\/{2}([a-z]+\\.)*quora\\.com.*"],
 			"name": "Quora",
 			"defaults": {
 				"disableQuora": false
