@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "此实例已离线，将在 &nbsp; 后重定向",
+        "message": "此实例已离线，将重定向于",
         "description": "used in instance_offline.html"
     },
     "copied": {
@@ -207,5 +207,8 @@
     "redirectionCanceled": {
         "message": "已取消重定向",
         "description": "used in instance_offline.js"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Desktop"
     }
 }
