@@ -71,7 +71,7 @@ function redirect(url, type, initiator) {
 				.replace("/watch?v=", "/listen?id=")
 				.replace("/channel/", "/artist/")
 				.replace("/playlist?list=", "/playlist/VL")
-				.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/") + "?filter=EgWKAQIIAWoKEAMQBBAKEAkQBQ%3D%3D")
+				.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/") + "?filter=song")
 		case "hyperpipe":
 			return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/"))
 		default:
