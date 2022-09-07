@@ -50,18 +50,32 @@ init()
 browser.storage.onChanged.addListener(init)
 
 function redirect(url, type, initiator) {
+	let randomInstance
 	if (url.pathname == "/") return
-	for (curService in config.services) {
+	for (service in config.services) {
 		if (disabled && !disableOverride) continue
 		if (initiator && (all().includes(initiator.origin) || targets.includes(initiator.host))) continue
 		//if (!targets.some(rx => rx.test(url.href))) continue
 		if (!target.test(url)) continue
 		if (type != redirectType && type != "both") continue
-		let instanceList = redirects[frontend][curNetwork]
-		if (instanceList.length === 0 && networkFallback) instanceList = redirects[frontend].clearnet
-		if (instanceList.length === 0) return
-		const randomInstance = utils.getRandomInstance(instanceList)
-		return `${randomInstance}${url.pathname}${url.search}`
+		for (frontend in service.frontends) {
+			let instanceList = redirects[frontend][curNetwork]
+			if (instanceList.length === 0 && networkFallback) instanceList = redirects[frontend].clearnet
+			if (instanceList.length === 0) return
+			randomInstance = utils.getRandomInstance(instanceList)
+		}
+	}
+	switch (frontend) {
+		case "beatbump":
+			return `${randomInstance}${url.pathname}${url.search}`
+				.replace("/watch?v=", "/listen?id=")
+				.replace("/channel/", "/artist/")
+				.replace("/playlist?list=", "/playlist/VL")
+				.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/") + "?filter=EgWKAQIIAWoKEAMQBBAKEAkQBQ%3D%3D")
+		case "hyperpipe":
+			return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/"))
+		default:
+			return `${randomInstance}${url.pathname}${url.search}`
 	}
 }
 
@@ -102,4 +116,5 @@ function initDefaults() {
 
 export default {
 	redirect,
+	initDefaults,
 }
