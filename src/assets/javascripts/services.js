@@ -61,7 +61,7 @@ function redirect(url, type, initiator) {
 		browser.storage.local.get(`${service}Frontend`, (frontend = r[service + "Frontend"]))
 		let instanceList = redirects[frontend][curNetwork]
 		if (instanceList.length === 0 && networkFallback) instanceList = redirects[frontend].clearnet
-		if (instanceList.length === 0) return
+		if (instanceList.length === 0 && redirects.indexOf(frontend) != -1) return
 		randomInstance = utils.getRandomInstance(instanceList)
 	}
 	switch (frontend) {
