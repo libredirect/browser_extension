@@ -64,7 +64,7 @@
 			},
 			"singleInstanceFrontends": ["freetube", "yatte"],
 			"targets": [
-				"^https?:\\/{2}(www\\.|music\\.|m\\.|)youtube.com(\\/.*|$)",
+				"^https?:\\/{2}(www\\.|music\\.|m\\.|)youtube.com(\\(?!iframe_api)/.*|$)",
 				"^https?:\\/{2}img\\.youtube.com\\/vi\\/.*\\/..*",
 				"^https?:\\/{2}(i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
 				"^https?:\\/{2}(www\\.|music\\.|)youtube.com\\/watch?v=..*",

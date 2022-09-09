@@ -36,6 +36,7 @@ browser.runtime.onInstalled.addListener(details => {
 						browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate }, () => {
 							browser.storage.local.set({ offlineBlackList: JSON.parse(data).offline }, () => {
 								generalHelper.initDefaults()
+								/*
 								youtubeHelper.initDefaults()
 								youtubeMusicHelper.initDefaults()
 								twitterHelper.initDefaults()
@@ -54,6 +55,8 @@ browser.runtime.onInstalled.addListener(details => {
 								sendTargetsHelper.initDefaults()
 								peertubeHelper.initDefaults()
 								lbryHelper.initDefaults()
+								*/
+								servicesHelper.initDefaults()
 							})
 						})
 					})
