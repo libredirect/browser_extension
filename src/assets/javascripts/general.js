@@ -30,8 +30,8 @@ async function initDefaults() {
 				popupFrontends: ["youtube", "twitter", "instagram", "tiktok", "imgur", "reddit", "quora", "translate", "maps"],
 				autoRedirect: false,
 				firstPartyIsolate: false,
-				protocol: "normal",
-				protocolFallback: true,
+				network: "clearnet",
+				networkFallback: true,
 				latencyThreshold: 1000,
 			},
 			() => resolve()

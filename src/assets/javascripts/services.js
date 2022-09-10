@@ -35,11 +35,14 @@ function init() {
 				options[service].disabled = r["disable" + camelCase(service)]
 				options[service].redirects = r[service + "Redirects"]
 				options[service].frontend = r[service + "Frontend"]
+				// console.log(r)
 			})
 			for (const frontend in config.services[service].frontends) {
 				redirects[frontend] = {}
 				for (const network in config.networks) {
 					browser.storage.local.get([`${frontend}${camelCase(network)}RedirectsChecks`, `${frontend}${camelCase(network)}CustomRedirects`], r => {
+						console.log(r)
+						// console.log(`${frontend}${camelCase(network)}RedirectsChecks`)
 						redirects[frontend][network] = [...r[frontend + camelCase(network) + "RedirectsChecks"], ...r[frontend + camelCase(network) + "CustomRedirects"]]
 					})
 				}
@@ -49,9 +52,15 @@ function init() {
 	})
 }
 
+function all(service) {
+	let tmp = []
+	for (frontend in config.services[service].frontends) {
+		for (network in config.networks) tmp.push([...redirects[frontend][network]])
+	}
+}
+
 await getConfig()
-console.log(config)
-init()
+await init()
 browser.storage.onChanged.addListener(init)
 
 function redirect(url, type, initiator) {
@@ -64,7 +73,7 @@ function redirect(url, type, initiator) {
 			browser.storage.local.get(`${service}Targets`, (targets = r[service + "Targets"]))
 		}
 
-		if (initiator && (all().includes(initiator.origin) || targets.includes(initiator.host))) continue
+		if (initiator && (all(service).includes(initiator.origin) || targets.includes(initiator.host))) continue
 		if (!targets.some(rx => rx.test(url.href))) continue
 		if (type != redirectType && type != "both") continue
 		browser.storage.local.get(`${service}Frontend`, (frontend = r[service + "Frontend"]))
@@ -363,20 +372,24 @@ function redirect(url, type, initiator) {
 }
 
 function initDefaults() {
-	return new Promise(resolve => {
+	return new Promise(async resolve => {
 		fetch("/instances/data.json")
 			.then(response => response.text())
-			.then(data => {
+			.then(async data => {
 				let dataJson = JSON.parse(data)
 				redirects = dataJson
+				console.log(redirects)
+				console.log(config)
 				browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], async r => {
 					for (const service in config.services) {
 						for (const defaultOption in service.defaults) {
-							browser.storage.local.set({
-								[defaultOption]: service.defaults[defaultOption],
-							})
+							browser.storage.local.set({ [defaultOption]: service.defaults[defaultOption] })
 						}
-						for (const frontend in service.frontends) {
+						for (const frontend in config.services[service].frontends) {
+							if ((config.services[service].targets = "datajson")) {
+								browser.storage.local.set({ [service + "Targets"]: redirects[service] })
+								continue
+							}
 							for (const instance of [...r.cloudflareBlackList, ...r.authenticateBlackList, ...r.offlineBlackList]) {
 								let i = redirects[frontend]["clearnet"].indexOf(instance)
 								if (i > -1) redirects[frontend]["clearnet"].splice(i, 1)
