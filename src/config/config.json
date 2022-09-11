@@ -293,7 +293,7 @@
 			"targets": "datajson",
 			"name": "PeerTube",
 			"defaults": {
-				"disablePeertubeTargets": true
+				"disablePeertube": true
 			},
 			"imageType": "svg"
 		},
@@ -310,7 +310,7 @@
 			"targets": ["^https?:\\/{2}odysee\\.com", "^https?:\\/{2}lbry\\.tv"],
 			"name": "LBRY",
 			"defaults": {
-				"disableLbryTargets": true,
+				"disableLbry": true,
 				"lbryFrontend": "librarian",
 				"lbryRedirectType": "both"
 			},
@@ -429,7 +429,7 @@
 			"targets": ["^https?:\\/{2}send\\.libredirect\\.invalid\\/$", "^https?:\\/{2}send\\.firefox\\.com\\/$", "^https?:\\/{2}sendfiles\\.online\\/$"],
 			"name": "Send Files",
 			"defaults": {
-				"disableSendTarget": false
+				"disableSendTargets": false
 			},
 			"imageType": "svg"
 		}
