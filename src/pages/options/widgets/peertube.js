@@ -3,7 +3,7 @@ import utils from "../../../assets/javascripts/utils.js"
 // UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
 
 const frontends = new Array("simpleertube")
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const protocols = new Array("clearnet", "tor", "i2p", "loki")
 
 const enable = document.getElementById("peertube-enable")
 const peertube = document.getElementById("peertube_page")
@@ -39,7 +39,7 @@ function changeProtocolSettings() {
 
 browser.storage.local.get(["disablePeertubeTargets", "protocol"], r => {
 	enable.checked = !r.disablePeertubeTargets
-	protocol = r.protocol
+	protocol = r.network
 	changeProtocolSettings()
 })
 

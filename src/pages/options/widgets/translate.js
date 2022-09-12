@@ -1,7 +1,7 @@
 import utils from "../../../assets/javascripts/utils.js"
 
 const frontends = new Array("simplyTranslate", "lingva")
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const protocols = new Array("clearnet", "tor", "i2p", "loki")
 
 const enable = document.getElementById("translate-enable")
 const translate = document.getElementById("translate_page")
@@ -36,7 +36,7 @@ function changeProtocolSettings() {
 browser.storage.local.get(["translateDisable", "translateFrontend", "protocol"], r => {
 	enable.checked = !r.translateDisable
 	frontend.value = r.translateFrontend
-	protocol = r.protocol
+	protocol = r.network
 	changeFrontendsSettings()
 	changeProtocolSettings()
 })

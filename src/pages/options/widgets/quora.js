@@ -3,7 +3,7 @@ import utils from "../../../assets/javascripts/utils.js"
 // UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
 
 const frontends = new Array("quetre")
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const protocols = new Array("clearnet", "tor", "i2p", "loki")
 
 const enable = document.getElementById("quora-enable")
 const quora = document.getElementById("quora_page")
@@ -39,7 +39,7 @@ function changeProtocolSettings() {
 
 browser.storage.local.get(["disableQuora", "protocol"], r => {
 	enable.checked = !r.disableQuora
-	protocol = r.protocol
+	protocol = r.network
 	changeProtocolSettings()
 })
 

@@ -123,17 +123,16 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
 
 	let redirectsChecks = `${name}${camelCase(protocol)}RedirectsChecks`
 	let customRedirects = `${name}${camelCase(protocol)}CustomRedirects`
-	let redirectsKey = `${target}Redirects`
 
 	let redirects
 
 	async function getFromStorage() {
 		return new Promise(async resolve =>
-			browser.storage.local.get([redirectsChecks, customRedirects, redirectsKey, latencyKey], r => {
+			browser.storage.local.get([redirectsChecks, customRedirects, "redirects", latencyKey], r => {
 				nameDefaultRedirects = r[redirectsChecks]
 				nameCustomInstances = r[customRedirects]
 				instancesLatency = r[latencyKey] ?? []
-				redirects = r[redirectsKey]
+				redirects = r.redirects
 				resolve()
 			})
 		)
@@ -298,9 +297,9 @@ async function testLatency(element, instances, frontend) {
 		let myList = {}
 		let latencyThreshold
 		let redirectsChecks = []
-		browser.storage.local.get(["latencyThreshold", `${frontend}NormalRedirectsChecks`], r => {
+		browser.storage.local.get(["latencyThreshold", `${frontend}ClearnetRedirectsChecks`], r => {
 			latencyThreshold = r.latencyThreshold
-			redirectsChecks = r[`${frontend}NormalRedirectsChecks`]
+			redirectsChecks = r[`${frontend}ClearnetRedirectsChecks`]
 		})
 		for (const href of instances)
 			await ping(href).then(time => {
@@ -315,7 +314,7 @@ async function testLatency(element, instances, frontend) {
 						redirectsChecks.splice(redirectsChecks.indexOf(href), 1)
 					}
 
-					browser.storage.local.set({ [`${frontend}NormalRedirectsChecks`]: redirectsChecks })
+					browser.storage.local.set({ [`${frontend}ClearnetRedirectsChecks`]: redirectsChecks })
 
 					let text
 					if (time == 5000) text = "5000ms+"
@@ -516,10 +515,10 @@ function latency(name, frontend, document, location) {
 			let redirects = r[key]
 			const oldHtml = latencyLabel.innerHTML
 			latencyLabel.innerHTML = "..."
-			testLatency(latencyLabel, redirects[frontend].normal, frontend).then(r => {
+			testLatency(latencyLabel, redirects[frontend].clearnet, frontend).then(r => {
 				browser.storage.local.set({ [`${frontend}Latency`]: r })
 				latencyLabel.innerHTML = oldHtml
-				processDefaultCustomInstances(name, frontend, "normal", document)
+				processDefaultCustomInstances(name, frontend, "clearnet", document)
 				latencyElement.removeEventListener("click", reloadWindow)
 			})
 		})
@@ -537,4 +536,5 @@ export default {
 	switchInstance,
 	copyRaw,
 	unify,
+	camelCase,
 }

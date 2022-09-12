@@ -1,7 +1,7 @@
 import utils from "../../../assets/javascripts/utils.js"
 
 const frontends = new Array("librarian")
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const protocols = new Array("clearnet", "tor", "i2p", "loki")
 
 const enable = document.getElementById("lbry-enable")
 const lbry = document.getElementById("lbry_page")
@@ -36,7 +36,7 @@ function changeProtocolSettings() {
 
 browser.storage.local.get(["disableLbryTargets", "protocol", "lbryFrontend", "lbryRedirectType"], r => {
 	enable.checked = !r.disableLbryTargets
-	protocol = r.protocol
+	protocol = r.network
 	redirectType.value = r.lbryRedirectType
 	frontend.value = r.lbryFrontend
 	changeFrontendsSettings()

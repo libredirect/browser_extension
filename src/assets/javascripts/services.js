@@ -17,10 +17,6 @@ async function getConfig() {
 	})
 }
 
-function camelCase(str) {
-	return str.charAt(0).toUpperCase() + str.slice(1)
-}
-
 function init() {
 	return new Promise(async resolve => {
 		browser.storage.local.get(["network", "networkFallback"], r => {
@@ -31,8 +27,8 @@ function init() {
 		//cur = current
 		for (const service in config.services) {
 			options[service] = {}
-			browser.storage.local.get([`disable${camelCase(service)}`, `${service}RedirectType`, `${service}Frontend`], r => {
-				options[service].disabled = r["disable" + camelCase(service)]
+			browser.storage.local.get([`disable${utils.camelCase(service)}`, `${service}RedirectType`, `${service}Frontend`], r => {
+				options[service].disabled = r["disable" + utils.camelCase(service)]
 				options[service].frontend = r[service + "Frontend"]
 				options[service].redirectType = r[service + "RedirectType"]
 				// console.log(r)
@@ -42,11 +38,11 @@ function init() {
 				options[frontend].checks = []
 				options[frontend].custom = []
 				for (const network in config.networks) {
-					browser.storage.local.get([`${frontend}${camelCase(network)}RedirectsChecks`, `${frontend}${camelCase(network)}CustomRedirects`], r => {
+					browser.storage.local.get([`${frontend}${utils.camelCase(network)}RedirectsChecks`, `${frontend}${utils.camelCase(network)}CustomRedirects`], r => {
 						// console.log(r)
-						// console.log(`${frontend}${camelCase(network)}RedirectsChecks`)
-						options[frontend].checks = r[frontend + camelCase(network) + "RedirectsChecks"]
-						options[frontend].custom = r[frontend + camelCase(network) + "CustomRedirects"]
+						// console.log(`${frontend}${utils.camelCase(network)}RedirectsChecks`)
+						options[frontend].checks = r[frontend + utils.camelCase(network) + "RedirectsChecks"]
+						options[frontend].custom = r[frontend + utils.camelCase(network) + "CustomRedirects"]
 					})
 				}
 			}
@@ -72,6 +68,7 @@ function redirect(url, type, initiator) {
 	let frontend = options[service].frontend
 	let network = options.network
 	let networkFallback = options.networkFallback
+	let redirectType = options[service].redirectType
 	if (url.pathname == "/") return
 	for (const service in config.services) {
 		if (options[service].disabled && !disableOverride) continue
@@ -82,9 +79,9 @@ function redirect(url, type, initiator) {
 
 		if (initiator && (all(service).includes(initiator.origin) || targets.includes(initiator.host))) continue
 		if (!targets.some(rx => rx.test(url.href))) continue
-		if (type != options[service].redirectType && type != "both") continue
+		if (type != redirectType && type != "both") continue
 		// browser.storage.local.get(`${service}Frontend`, (frontend = r[service + "Frontend"]))
-		let instanceList = [...[service + camelCase(network) + "RedirectsChecks"], ...[service + camelCase(network) + "CustomRedirects"]]
+		let instanceList = [...[service + utils.camelCase(network) + "RedirectsChecks"], ...[service + utils.camelCase(network) + "CustomRedirects"]]
 		if (instanceList.length === 0 && networkFallback) instanceList = [...[service + "ClearnetRedirectsChecks"], ...[service + "ClearnetCustomRedirects"]]
 		if (instanceList.length === 0 && redirects.indexOf(frontend) != -1) return
 		randomInstance = utils.getRandomInstance(instanceList)
@@ -400,13 +397,13 @@ function initDefaults() {
 							browser.storage.local.set({ [defaultOption]: config.services[service].defaults[defaultOption] })
 						}
 						for (const frontend in config.services[service].frontends) {
-							let clearnetChecks = redirects[frontend][clearnet]
+							let clearnetChecks = redirects[frontend].clearnet
 							for (const instance of [...r.cloudflareBlackList, ...r.authenticateBlackList, ...r.offlineBlackList]) {
 								let i = clearnetChecks.indexOf(instance)
 								if (i > -1) clearnetChecks.splice(i, 1)
 							}
 							for (const network in config.networks) {
-								console.log(redirects[frontend][network])
+								// console.log(redirects[frontend][network])
 								switch (network) {
 									case "clearnet":
 										browser.storage.local.set({
@@ -416,8 +413,8 @@ function initDefaults() {
 										break
 									default:
 										browser.storage.local.set({
-											[frontend + camelCase(network) + "RedirectsChecks"]: [...redirects[frontend][network]],
-											[frontend + camelCase(network) + "CustomRedirects"]: [],
+											[frontend + utils.camelCase(network) + "RedirectsChecks"]: [...redirects[frontend][network]],
+											[frontend + utils.camelCase(network) + "CustomRedirects"]: [],
 										})
 								}
 							}

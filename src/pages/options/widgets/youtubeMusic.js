@@ -1,7 +1,7 @@
 import utils from "../../../assets/javascripts/utils.js"
 
 const frontends = new Array("beatbump", "hyperpipe")
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const protocols = new Array("clearnet", "tor", "i2p", "loki")
 
 let enable = document.getElementById("youtubeMusic-enable")
 const youtubeMusic = document.getElementById("youtubeMusic_page")
@@ -36,7 +36,7 @@ function changeProtocolSettings() {
 browser.storage.local.get(["disableYoutubeMusic", "youtubeMusicFrontend", "protocol"], r => {
 	enable.checked = !r.disableYoutubeMusic
 	frontend.value = r.youtubeMusicFrontend
-	protocol = r.protocol
+	protocol = r.network
 	changeFrontendsSettings()
 	changeProtocolSettings()
 })

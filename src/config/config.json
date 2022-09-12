@@ -1,19 +1,19 @@
 {
 	"networks": {
 		"clearnet": {
-			"url": "org",
+			"tld": "org",
 			"name": "Clearnet"
 		},
 		"tor": {
-			"url": "onion",
+			"tld": "onion",
 			"name": "Tor"
 		},
 		"i2p": {
-			"url": "i2p",
+			"tld": "i2p",
 			"name": "I2P"
 		},
 		"loki": {
-			"url": "loki",
+			"tld": "loki",
 			"name": "Lokinet"
 		}
 	},
@@ -72,14 +72,14 @@
 				"^https?:\\/{2}(www\\.|)(youtube|youtube-nocookie)\\.com\\/embed\\/..*"
 			],
 			"name": "Youtube",
-			"defaults": {
-				"disableYoutube": false,
-				"enableYoutubeCustomSettings": false,
-				"onlyEmbeddedVideo": "both",
-				"youtubeFrontend": "invidious",
-				"youtubeEmbedFrontend": "invidious"
+			"options": {
+				"disabled": false,
+				"redirectType": "both",
+				"frontend": "invidious",
+				"embedFrontend": "invidious"
 			},
-			"imageType": "png"
+			"imageType": "png",
+			"embeddable": true
 		},
 		"youtubeMusic": {
 			"frontends": {
@@ -88,11 +88,12 @@
 			},
 			"targets": ["^https?:\\/{2}music\\.youtube\\.com(\\/.*|$)"],
 			"name": "YT Music",
-			"defaults": {
-				"disableYoutubeMusic": false,
-				"youtubeMusicFrontend": "beatbump"
+			"options": {
+				"disabled": false,
+				"frontend": "beatbump"
 			},
-			"imageType": "png"
+			"imageType": "png",
+			"embeddable": false
 		},
 		"twitter": {
 			"frontends": {
@@ -123,11 +124,12 @@
 			},
 			"targets": ["^https?:\\/{2}(www\\.|mobile\\.|)twitter\\.com", "^https?:\\/{2}(pbs\\.|video\\.|)twimg\\.com", "^https?:\\/{2}platform\\.twitter\\.com/embed", "^https?:\\/{2}t\\.co"],
 			"name": "Twitter",
-			"defaults": {
-				"disableTwitter": false,
-				"twitterRedirectType": "both"
+			"options": {
+				"disabled": false,
+				"redirectType": "both"
 			},
-			"imageType": "png"
+			"imageType": "png",
+			"embeddable": true
 		},
 		"instagram": {
 			"frontends": {
@@ -141,10 +143,9 @@
 			},
 			"targets": ["^https?:\\/{2}(www\\.)?instagram\\.com"],
 			"name": "Instagram",
-			"defaults": {
-				"disableInstagram": false
-			},
-			"imageType": "png"
+			"options": { "disabled": false },
+			"imageType": "png",
+			"embeddable": false
 		},
 		"tiktok": {
 			"frontends": {
@@ -152,10 +153,9 @@
 			},
 			"targets": ["^https?:\\/{2}(www\\.|)tiktok\\.com.*"],
 			"name": "TikTok",
-			"defaults": {
-				"disableTiktok": false
-			},
-			"imageType": "png"
+			"options": { "disabled": false },
+			"imageType": "png",
+			"embeddable": false
 		},
 		"reddit": {
 			"frontends": {
@@ -185,11 +185,12 @@
 			},
 			"targets": ["^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com", "^https?:\\/{2}(i\\.|preview\\.)redd\\.it"],
 			"name": "Reddit",
-			"defaults": {
-				"disableReddit": false,
-				"redditFrontend": "libreddit"
+			"options": {
+				"disabled": false,
+				"frontend": "libreddit"
 			},
-			"imageType": "png"
+			"imageType": "png",
+			"embeddable": false
 		},
 		"imgur": {
 			"frontends": {
@@ -199,8 +200,9 @@
 			},
 			"targets": ["^https?:\\/{2}([im]\\.)?imgur\\.(com|io)(\\/|$)"],
 			"name": "Imgur",
-			"defaults": { "disableImgur": false },
-			"imageType": "png"
+			"options": { "disabled": false },
+			"imageType": "png",
+			"embeddable": false
 		},
 		"wikipedia": {
 			"frontends": {
@@ -212,8 +214,9 @@
 			},
 			"targets": ["^https?:\\/{2}([a-z]+\\.)*wikipedia\\.org"],
 			"name": "Wikipedia",
-			"defaults": { "disableWikipedia": true },
-			"imageType": "svg"
+			"options": { "disabled": true },
+			"imageType": "svg",
+			"embeddable": false
 		},
 		"medium": {
 			"frontends": {
@@ -242,8 +245,9 @@
 				"^writingcooperative\\.com "
 			],
 			"name": "Medium",
-			"defaults": { "disableMedium": false },
-			"imageType": "svg"
+			"options": { "disabled": false },
+			"imageType": "svg",
+			"embeddable": false
 		},
 		"quora": {
 			"frontends": {
@@ -253,10 +257,9 @@
 			},
 			"targets": ["^https?:\\/{2}([a-z]+\\.)*quora\\.com.*"],
 			"name": "Quora",
-			"defaults": {
-				"disableQuora": false
-			},
-			"imageType": "png"
+			"options": { "disabled": false },
+			"imageType": "png",
+			"embeddable": false
 		},
 		"imdb": {
 			"frontends": {
@@ -266,10 +269,9 @@
 			},
 			"targets": ["^https?:\\/{2}(?:www\\.|)imdb\\.com.*"],
 			"name": "IMDb",
-			"defaults": {
-				"disableImdb": true
-			},
-			"imageType": "svg"
+			"options": { "disabled": true },
+			"imageType": "svg",
+			"embeddable": false
 		},
 		"reuters": {
 			"frontends": {
@@ -279,10 +281,9 @@
 			},
 			"targets": ["^https?:\\/{2}(www\\.|)reuters\\.com.*"],
 			"name": "Reuters",
-			"defaults": {
-				"disableReuters": true
-			},
-			"imageType": "svg"
+			"options": { "disabled": true },
+			"imageType": "svg",
+			"embeddable": false
 		},
 		"peertube": {
 			"frontends": {
@@ -292,10 +293,9 @@
 			},
 			"targets": "datajson",
 			"name": "PeerTube",
-			"defaults": {
-				"disablePeertube": true
-			},
-			"imageType": "svg"
+			"options": { "disabled": true },
+			"imageType": "svg",
+			"embeddable": false
 		},
 		"lbry": {
 			"frontends": {
@@ -309,12 +309,13 @@
 			"singleInstanceFrontends": ["lbryDesktop"],
 			"targets": ["^https?:\\/{2}odysee\\.com", "^https?:\\/{2}lbry\\.tv"],
 			"name": "LBRY",
-			"defaults": {
-				"disableLbry": true,
-				"lbryFrontend": "librarian",
-				"lbryRedirectType": "both"
+			"options": {
+				"disabled": true,
+				"frontend": "librarian",
+				"redirectType": "both"
 			},
-			"imageType": "png"
+			"imageType": "png",
+			"embeddable": true
 		},
 		"search": {
 			"frontends": {
@@ -377,12 +378,12 @@
 			},
 			"targets": ["^https?:\\/{2}search\\.libredirect\\.invalid"],
 			"name": "Search",
-			"defaults": {
-				"disableSearch": false,
-				"searchFrontend": "searxng",
-				"searxngCustomSettings": false
+			"options": {
+				"disabled": false,
+				"frontend": "searxng"
 			},
-			"imageType": "svg"
+			"imageType": "svg",
+			"embeddable": false
 		},
 		"translate": {
 			"frontends": {
@@ -399,11 +400,12 @@
 			},
 			"targets": ["^https?:\\/{2}translate\\.google(\\.[a-z]{2,3}){1,2}\\/"],
 			"name": "Translate",
-			"defaults": {
-				"translateDisable": false,
-				"translateFrontend": "simplyTranslate"
+			"options": {
+				"disabled": false,
+				"frontend": "simplyTranslate"
 			},
-			"imageType": "svg"
+			"imageType": "svg",
+			"embeddable": false
 		},
 		"maps": {
 			"frontends": {
@@ -414,11 +416,12 @@
 			"singleInstanceFrontends": ["osm"],
 			"targets": ["^https?:\\/{2}(((www|maps)\\.)?(google\\.).*(\\/maps)|maps\\.(google\\.).*)"],
 			"name": "Maps",
-			"defaults": {
-				"disableMaps": false,
-				"mapsFrontend": "osm"
+			"options": {
+				"disabled": false,
+				"frontend": "osm"
 			},
-			"imageType": "svg"
+			"imageType": "svg",
+			"embeddable": false
 		},
 		"sendTargets": {
 			"frontends": {
@@ -428,10 +431,9 @@
 			},
 			"targets": ["^https?:\\/{2}send\\.libredirect\\.invalid\\/$", "^https?:\\/{2}send\\.firefox\\.com\\/$", "^https?:\\/{2}sendfiles\\.online\\/$"],
 			"name": "Send Files",
-			"defaults": {
-				"disableSendTargets": false
-			},
-			"imageType": "svg"
+			"options": { "disabled": false },
+			"imageType": "svg",
+			"embeddable": false
 		}
 	}
 }

@@ -3,25 +3,7 @@ window.browser = window.browser || window.chrome
 
 import utils from "../../../assets/javascripts/utils.js"
 import generalHelper from "../../../assets/javascripts/general.js"
-
-import youtubeHelper from "../../../assets/javascripts/youtube/youtube.js"
-import youtubeMusicHelper from "../../../assets/javascripts/youtubeMusic.js"
-import twitterHelper from "../../../assets/javascripts/twitter.js"
-import instagramHelper from "../../../assets/javascripts/instagram.js"
-import redditHelper from "../../../assets/javascripts/reddit.js"
-import searchHelper from "../../../assets/javascripts/search.js"
-import translateHelper from "../../../assets/javascripts/translate/translate.js"
-import mapsHelper from "../../../assets/javascripts/maps.js"
-import wikipediaHelper from "../../../assets/javascripts/wikipedia.js"
-import mediumHelper from "../../../assets/javascripts/medium.js"
-import quoraHelper from "../../../assets/javascripts/quora.js"
-import libremdbHelper from "../../../assets/javascripts/imdb.js"
-import reutersHelper from "../../../assets/javascripts/reuters.js"
-import imgurHelper from "../../../assets/javascripts/imgur.js"
-import tiktokHelper from "../../../assets/javascripts/tiktok.js"
-import sendTargetsHelper from "../../../assets/javascripts/sendTargets.js"
-import peertubeHelper from "../../../assets/javascripts/peertube.js"
-import lbryHelper from "../../../assets/javascripts/lbry.js"
+import servicesHelper from "../../../assets/javascripts/services.js"
 
 let updateInstancesElement = document.getElementById("update-instances")
 updateInstancesElement.addEventListener("click", async () => {
@@ -82,28 +64,10 @@ resetSettings.addEventListener("click", async () => {
 			.then(async data => {
 				browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare }, () => {
 					browser.storage.local.set({ offlineBlackList: JSON.parse(data).offline }, () => {
-					browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate }, async () => {
-						await generalHelper.initDefaults()
-						await youtubeHelper.initDefaults()
-						await youtubeMusicHelper.initDefaults()
-						await twitterHelper.initDefaults()
-						await instagramHelper.initDefaults()
-						await mapsHelper.initDefaults()
-						await searchHelper.initDefaults()
-						await translateHelper.initDefaults()
-						await mediumHelper.initDefaults()
-						await quoraHelper.initDefaults()
-						await libremdbHelper.initDefaults()
-						await reutersHelper.initDefaults()
-						await redditHelper.initDefaults()
-						await wikipediaHelper.initDefaults()
-						await imgurHelper.initDefaults()
-						await tiktokHelper.initDefaults()
-						await sendTargetsHelper.initDefaults()
-						await peertubeHelper.initDefaults()
-						await lbryHelper.initDefaults()
-						location.reload()
-					})
+						browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate }, async () => {
+							await servicesHelper.initDefaults()
+							location.reload()
+						})
 					})
 				})
 			})
@@ -125,13 +89,13 @@ themeElement.addEventListener("change", event => {
 let protocolElement = document.getElementById("protocol")
 protocolElement.addEventListener("change", event => {
 	const value = event.target.options[protocol.selectedIndex].value
-	browser.storage.local.set({ protocol: value })
+	browser.storage.local.set({ network: value })
 	location.reload()
 })
 
 let protocolFallbackCheckbox = document.getElementById("protocol-fallback-checkbox")
 protocolFallbackCheckbox.addEventListener("change", event => {
-	browser.storage.local.set({ protocolFallback: event.target.checked })
+	browser.storage.local.set({ networkFallback: event.target.checked })
 })
 
 let latencyOutput = document.getElementById("latency-output")
@@ -166,21 +130,21 @@ browser.storage.local.get(
 		"theme",
 		"autoRedirect",
 		"exceptions",
-		"protocol",
-		"protocolFallback",
+		"network",
+		"networkFallback",
 		"latencyThreshold",
 		// 'firstPartyIsolate'
 	],
 	r => {
 		autoRedirectElement.checked = r.autoRedirect
 		themeElement.value = r.theme
-		protocolElement.value = r.protocol
-		protocolFallbackCheckbox.checked = r.protocolFallback
+		protocolElement.value = r.network
+		protocolFallbackCheckbox.checked = r.networkFallback
 		latencyOutput.value = r.latencyThreshold
 		// firstPartyIsolate.checked = r.firstPartyIsolate;
 
 		let protocolFallbackElement = document.getElementById("protocol-fallback")
-		if (protocolElement.value == "normal") {
+		if (protocolElement.value == "clearnet") {
 			protocolFallbackElement.style.display = "none"
 		} else {
 			protocolFallbackElement.style.display = "block"

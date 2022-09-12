@@ -1,7 +1,7 @@
 import utils from "../../../assets/javascripts/utils.js"
 
 const frontends = new Array("facil")
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const protocols = new Array("clearnet", "tor", "i2p", "loki")
 
 const enable = document.getElementById("maps-enable")
 const maps = document.getElementById("maps_page")
@@ -35,7 +35,7 @@ function changeFrontendsSettings() {
 
 browser.storage.local.get(["disableMaps", "protocol", "mapsFrontend"], r => {
 	enable.checked = !r.disableMaps
-	protocol = r.protocol
+	protocol = r.network
 	frontend.value = r.mapsFrontend
 	changeFrontendsSettings()
 	changeProtocolSettings()

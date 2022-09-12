@@ -5,7 +5,7 @@ import utils from "../../../assets/javascripts/utils.js"
 
 // ONCE FINISHED: add librex and see if it works
 const frontends = new Array("searx", "searxng", "whoogle", "librex") // Add librex once /javascripts/search.js is made agnostic
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const protocols = new Array("clearnet", "tor", "i2p", "loki")
 //let frontendProtocols = (frontends.length)
 
 // I will leave comments of my privious attemps so that people can learn from my mistakes. :)
@@ -29,12 +29,6 @@ for (var i = 0; i < frontends.length; i++) {
 }
 */
 
-/*
-const searxDiv = document.getElementById("searx");
-const searxngDiv = document.getElementById("searxng");
-const whoogleDiv = document.getElementById("whoogle");
-*/
-
 const enable = document.getElementById("search-enable")
 const search = document.getElementById("search_page")
 const frontend = document.getElementById("search-frontend")
@@ -49,33 +43,6 @@ function changeFrontendsSettings() {
 			frontendDiv.style.display = "none"
 		}
 	}
-
-	/*
-  if (frontend.value == 'searx') {
-    searxDiv.style.display = 'block';
-    searxngDiv.style.display = 'none';
-    whoogleDiv.style.display = 'none';
-    librexDiv.style.display = 'none';
-  }
-  else if (frontend.value == 'searxng') {
-    searxDiv.style.display = 'none';
-    searxngDiv.style.display = 'block';
-    whoogleDiv.style.display = 'none';
-    librexDiv.style.display = 'none';
-  }
-  else if (frontend.value == 'whoogle') {
-    searxDiv.style.display = 'none';
-    searxngDiv.style.display = 'none';
-    whoogleDiv.style.display = 'block';
-    librexDiv.style.display = 'none';
-  }
-  else if (frontend.value == 'librex') {
-    searxDiv.style.display = 'none';
-    searxDiv.style.display = 'none';
-    searxngDiv.style.display = 'none';
-    librexDiv.style.display = 'block';
-  }
-  */
 }
 
 function changeProtocolSettings() {
@@ -97,75 +64,12 @@ function changeProtocolSettings() {
     }
     */
 	}
-
-	/*
-    * "Legacy" code
-  const normalsearxDiv = searxDiv.getElementsByClassName("normal")[0];
-  const torsearxDiv = searxDiv.getElementsByClassName("tor")[0];
-  const i2psearxDiv = searxDiv.getElementsByClassName("i2p")[0];
-
-  const normalsearxngDiv = searxngDiv.getElementsByClassName("normal")[0];
-  const torsearxngDiv = searxngDiv.getElementsByClassName("tor")[0];
-  const i2psearxngDiv = searxngDiv.getElementsByClassName("i2p")[0];
-
-  const torwhoogleDiv = whoogleDiv.getElementsByClassName("tor")[0];
-  const i2pwhoogleDiv = whoogleDiv.getElementsByClassName("i2p")[0];
-  const normalwhoogleDiv = whoogleDiv.getElementsByClassName("normal")[0];
-
-  
-  function protocolDisplay(proto) {
-    proto.searxngDiv = 'block'
-  }
-
-  protocolDisplay(protocol.value)
-  
-  
-  if (protocol.value == 'normal') {
-    normalsearxDiv.style.display = 'block';
-    normalsearxngDiv.style.display = 'block';
-    normalwhoogleDiv.style.display = 'block';
-
-    torsearxDiv.style.display = 'none';
-    torsearxngDiv.style.display = 'none';
-    torwhoogleDiv.style.display = 'none';
-
-    i2psearxDiv.style.display = 'none';
-    i2psearxngDiv.style.display = 'none';
-    i2pwhoogleDiv.style.display = 'none';
-  }
-  else if (protocol.value == 'tor') {
-    normalsearxDiv.style.display = 'none';
-    normalsearxngDiv.style.display = 'none';
-    normalwhoogleDiv.style.display = 'none';
-
-    torsearxDiv.style.display = 'block';
-    torsearxngDiv.style.display = 'block';
-    torwhoogleDiv.style.display = 'block';
-
-    i2psearxDiv.style.display = 'none';
-    i2psearxngDiv.style.display = 'none';
-    i2pwhoogleDiv.style.display = 'none';
-  }
-  else if (protocol.value == 'i2p') {
-    normalsearxDiv.style.display = 'none';
-    normalsearxngDiv.style.display = 'none';
-    normalwhoogleDiv.style.display = 'none';
-
-    torsearxDiv.style.display = 'none';
-    torsearxngDiv.style.display = 'none';
-    torwhoogleDiv.style.display = 'none';
-
-    i2psearxDiv.style.display = 'block';
-    i2psearxngDiv.style.display = 'block';
-    i2pwhoogleDiv.style.display = 'block';
-  }
-  */
 }
 
 browser.storage.local.get(["disableSearch", "searchFrontend", "protocol"], r => {
 	enable.checked = !r.disableSearch
 	frontend.value = r.searchFrontend
-	protocol = r.protocol
+	protocol = r.network
 
 	changeFrontendsSettings()
 	changeProtocolSettings()
@@ -185,20 +89,3 @@ search.addEventListener("change", () => {
 	})
 	changeFrontendsSettings()
 })
-
-/*
-  * more "legacy" code
-utils.processDefaultCustomInstances('search', 'searx', 'normal', document);
-utils.processDefaultCustomInstances('search', 'searx', 'tor', document);
-utils.processDefaultCustomInstances('search', 'searx', 'i2p', document);
-utils.processDefaultCustomInstances('search', 'searxng', 'normal', document);
-utils.processDefaultCustomInstances('search', 'searxng', 'tor', document);
-utils.processDefaultCustomInstances('search', 'searxng', 'i2p', document);
-utils.processDefaultCustomInstances('search', 'whoogle', 'normal', document);
-utils.processDefaultCustomInstances('search', 'whoogle', 'tor', document);
-utils.processDefaultCustomInstances('search', 'whoogle', 'i2p', document);
-
-utils.latency('search', 'searx', document, location, true)
-utils.latency('search', 'searxng', document, location, true)
-utils.latency('search', 'whoogle', document, location, true)
-*/

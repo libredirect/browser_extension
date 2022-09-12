@@ -3,7 +3,7 @@ import utils from "../../../assets/javascripts/utils.js"
 // UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
 
 const frontends = new Array("nitter")
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const protocols = new Array("clearnet", "tor", "i2p", "loki")
 
 const enable = document.getElementById("twitter-enable")
 const twitter = document.getElementById("twitter_page")
@@ -40,7 +40,7 @@ function changeProtocolSettings() {
 
 browser.storage.local.get(["disableTwitter", "protocol", "twitterRedirectType"], r => {
 	enable.checked = !r.disableTwitter
-	protocol = r.protocol
+	protocol = r.network
 	redirectType.value = r.twitterRedirectType
 	changeProtocolSettings()
 })

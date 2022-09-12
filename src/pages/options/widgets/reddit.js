@@ -1,7 +1,7 @@
 import utils from "../../../assets/javascripts/utils.js"
 
 const frontends = new Array("libreddit", "teddit")
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const protocols = new Array("clearnet", "tor", "i2p", "loki")
 
 const enable = document.getElementById("reddit-enable")
 const reddit = document.getElementById("reddit_page")
@@ -35,7 +35,7 @@ function changeProtocolSettings() {
 
 browser.storage.local.get(["disableReddit", "protocol", "redditFrontend"], r => {
 	enable.checked = !r.disableReddit
-	protocol = r.protocol
+	protocol = r.network
 	frontend.value = r.redditFrontend
 	changeFrontendsSettings()
 	changeProtocolSettings()

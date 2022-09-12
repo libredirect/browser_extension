@@ -3,7 +3,7 @@ import utils from "../../../assets/javascripts/utils.js"
 // UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
 
 const frontends = new Array("rimgo")
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const protocols = new Array("clearnet", "tor", "i2p", "loki")
 
 const enable = document.getElementById("imgur-enable")
 const imgur = document.getElementById("imgur_page")
@@ -39,7 +39,7 @@ function changeProtocolSettings() {
 
 browser.storage.local.get(["disableImgur", "protocol"], r => {
 	enable.checked = !r.disableImgur
-	protocol = r.protocol
+	protocol = r.network
 	changeProtocolSettings()
 })
 

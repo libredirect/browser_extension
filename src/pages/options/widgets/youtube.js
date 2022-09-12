@@ -1,7 +1,7 @@
 import utils from "../../../assets/javascripts/utils.js"
 
 const frontends = new Array("invidious", "piped", "pipedMaterial", "cloudtube")
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const protocols = new Array("clearnet", "tor", "i2p", "loki")
 const singleInstanceFrontends = new Array("freetube", "yatte")
 
 const enable = document.getElementById("youtube-enable")
@@ -66,7 +66,7 @@ browser.storage.local.get(["disableYoutube", "onlyEmbeddedVideo", "youtubeRedire
 	onlyEmbeddedVideo.value = r.onlyEmbeddedVideo
 	youtubeEmbedFrontend.value = r.youtubeEmbedFrontend
 	frontend.value = r.youtubeFrontend
-	protocol = r.protocol
+	protocol = r.network
 
 	changeFrontendsSettings()
 	changeProtocolSettings()

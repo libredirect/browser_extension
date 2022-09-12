@@ -3,7 +3,7 @@ import utils from "../../../assets/javascripts/utils.js"
 // UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
 
 const frontends = new Array("scribe")
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const protocols = new Array("clearnet", "tor", "i2p", "loki")
 
 const enable = document.getElementById("medium-enable")
 const medium = document.getElementById("medium_page")
@@ -39,7 +39,7 @@ function changeProtocolSettings() {
 
 browser.storage.local.get(["disableMedium", "protocol"], r => {
 	enable.checked = !r.disableMedium
-	protocol = r.protocol
+	protocol = r.network
 	changeProtocolSettings()
 })
 

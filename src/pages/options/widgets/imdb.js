@@ -3,7 +3,7 @@ import utils from "../../../assets/javascripts/utils.js"
 // UNCOMMENT ALL COMMENTS ONCE OTHER FRONTENDS EXIST
 
 const frontends = new Array("libremdb")
-const protocols = new Array("normal", "tor", "i2p", "loki")
+const protocols = new Array("clearnet", "tor", "i2p", "loki")
 
 const enable = document.getElementById("imdb-enable")
 const imdb = document.getElementById("imdb_page")
@@ -39,7 +39,7 @@ function changeProtocolSettings() {
 
 browser.storage.local.get(["disableImdb", "protocol"], r => {
 	enable.checked = !r.disableImdb
-	protocol = r.protocol
+	protocol = r.network
 	changeProtocolSettings()
 })
 
