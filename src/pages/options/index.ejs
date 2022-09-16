@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html id="elementToShowWithJavaScript" lang="en">
+  <%- include('../widgets/head') %>
+  <body class="option" dir="auto">
+    <div id="pages">
+      <%- include('../widgets/links', {config: config}) %>
+      <%- include('widgets/general', {config: config}) %>
+      <%- include('widgets/services', {config: config}) %>
+      <%- include('widgets/about') %>
+    </div>
+  </body>
+  <script type="module" src="./index.js"></script>
+</html>
