@@ -230,16 +230,9 @@ def nitter():
 
 
 def bibliogram():
-    r = requests.get('https://bibliogram.art/api/instances')
-    rJson = json.loads(r.text)
-    bibliogramList = {}
-    bibliogramList['normal'] = []
-    bibliogramList['tor'] = []
-    bibliogramList['i2p'] = []
-    bibliogramList['loki'] = []
-    for item in rJson['data']:
-        bibliogramList['normal'].append(item['address'])
-    mightyList['bibliogram'] = bibliogramList
+    json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
+    with open('./src/instances/bibliogram.json') as file:
+        mightyList['bibliogram'] = json.load(file)
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Bibliogram')
 
 

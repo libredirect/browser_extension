@@ -1,9 +1,6 @@
 {
-	"normal": [
-		"https://beatbump.ml",
-		"https://beatbump.esmailelbob.xyz"
-	],
-	"tor": [],
+	"normal": ["https://beatbump.ml", "https://beatbump.esmailelbob.xyz"],
+	"tor": ["http://beatbump.esmail5pdn24shtvieloeedh7ehz3nrwcdivnfhfcedl7gf4kwddhkqd.onion"],
 	"i2p": [],
 	"loki": []
 }

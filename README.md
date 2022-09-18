@@ -36,7 +36,7 @@ Send Files => [Send](https://gitlab.com/timvisee/send)
 
 **Note**: The Extension will be using random instances by default. You can modify this and add custom instances too.
 
-[FAQ](https://libredirect.github.io/faq.html)
+# Please read the [FAQ](https://libredirect.github.io/faq.html) if you have any questions!
 
 ## Donate
 
