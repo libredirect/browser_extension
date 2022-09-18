@@ -23,6 +23,10 @@ function getRandomInstance(instances) {
 	return instances[~~(instances.length * Math.random())]
 }
 
+function camelCase(str) {
+	return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
 let cloudflareBlackList = []
 let authenticateBlackList = []
 let offlineBlackList = []
@@ -107,9 +111,6 @@ function protocolHost(url) {
 }
 
 async function processDefaultCustomInstances(target, name, protocol, document) {
-	function camelCase(str) {
-		return str.charAt(0).toUpperCase() + str.slice(1)
-	}
 	let latencyKey = `${name}Latency`
 	let instancesLatency
 	let nameProtocolElement = document.getElementById(name).getElementsByClassName(protocol)[0]

@@ -1,5 +1,5 @@
-<% config.services.forEach(service=>{ %>
-<section class="option-block" id="<%= service %>_page"</section>
+<% for (const service in config.services) { %>
+<section class="option-block" id="<%= service %>_page">
   <div class="some-block option-block">
     <h1 data-localise="__MSG_<%= service %>__"><%= config.services[service].name %></h1>
   </div>
@@ -8,33 +8,35 @@
     <h4 data-localise="__MSG_enable__">Enable</h4>
     <input id="<%= service %>-enable" type="checkbox">
   </div>
+  <% if ((Object.keys(config.services[service].frontends).length > 1) || config.services[service].singleInstanceFrontends) { %>
   <div class="some-block option-block">
   <h4 data-localise="__MSG_frontend__">Frontend</h4>
   <select id="<%= service %>-frontend">
-    <% config.services[service].frontends.forEach(frontend=>{ %>
+    <% for (const frontend in config.services[service].frontends) { %>
     <option value="<%= frontend %>"><%= frontend %></option>
-    <% }); %>
-    <% config.services[service].singleInstanceFrontends.forEach(frontend=>{ %>
-    <option value="<%= frontend %>"><%= frontend %></option>
-    <% }); %>
+    <% }; %>
+    <% for (const frontend in config.services[service].singleInstanceFrontends){ %>
+    <option value="<%= config.services[service].singleInstanceFrontends[frontend] %>"><%= config.services[service].singleInstanceFrontends[frontend] %></option>
+    <% }; %>
   </select>
   </div>
-  <% if (config.services[service].embeddable) { %>
-  <% if (config.services[service].singleInstanceFrontends) { %>
+  <% } %>
+  <% if ((config.services[service].singleInstanceFrontends) && (Object.keys(config.services[service].frontends).length > 1)) { %>
   <div id="<%= service %>-embedded_frontend">
     <div class="some-block option-block">
-      <h4 data-localise="__MSG_embeddedVids__">Embedded Videos Frontend</h4>
+      <h4 data-localise="__MSG_embed_frontend__">Embed Frontend</h4>
       <select id="<%= service %>-embed_frontend">
-        <% config.services[service].frontends.forEach(frontend=>{ %>
-        <option value="frontend">frontend</option>
-        <% }); %>
+        <% for (const frontend in config.services[service].frontends) { %>
+        <option value="<%= frontend %>"><%= frontend %></option>
+        <% }; %>
       </select>
     </div>
   </div>
   <% } %>
+  <% if (config.services[service].embeddable) { %>
   <div class="some-block option-block">
     <h4 data-localise="__MSG_redirectType__">Redirect Type</h4>
-    <select id="<%= service =%-redirect_type">
+    <select id="<%= service %>-redirect_type">
       <option value="both" data-localise="__MSG_both__">both</option>
       <option value="onlyEmbedded" data-localise="__MSG_onlyEmbedded__">Only Embedded</option>
       <option value="onlyNotEmbedded" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
@@ -42,9 +44,9 @@
   </div>
   <% } %>
   <hr>
-  <% config.services[service].frontends.forEach(frontend=>{ %>
+  <% for (const frontend in config.services[service].frontends) { %>
   <div id="<%= frontend %>">
-    <% config.networks.forEach(network=>{ %>
+    <% for (const network in config.networks) { %>
     <div class="<%= network %>">
       <div class="some-block option-block">
         <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
@@ -56,7 +58,7 @@
       </div>
       <form class="custom-instance-form">
         <div class="some-block option-block">
-          <input class="custom-instance" placeholder="http://<%= frontend %>.<%= config[network].tld %>" type="url">
+          <input class="custom-instance" placeholder="http://<%= frontend %>.<%= config.networks[network].tld %>" type="url">
           <button class="add add-instance" type="submit">
             <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
               <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -77,8 +79,9 @@
       </div>
       <% } %>
     </div>
-    <% }); %>
-  <% }); %>
+    <% }; %>
+  </div>
+  <% }; %>
 </section>
-<% }); %>
+<% }; %>
 <script type="module" src="./widgets/services.js"></script>

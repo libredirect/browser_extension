@@ -11,7 +11,8 @@ async function getConfig() {
 		fetch("/config/config.json")
 			.then(response => response.text())
 			.then(data => {
-				config = JSON.parse(data)
+				const tmp = JSON.parse(data)
+				config = tmp.config
 				resolve()
 			})
 	})
