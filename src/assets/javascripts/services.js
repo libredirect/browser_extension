@@ -28,8 +28,8 @@ function init() {
 		//cur = current
 		for (const service in config.services) {
 			options[service] = {}
-			browser.storage.local.get([`disable${utils.camelCase(service)}`, `${service}RedirectType`, `${service}Frontend`], r => {
-				options[service].disabled = r["disable" + utils.camelCase(service)]
+			browser.storage.local.get([`${utils.camelCase(service)}Enable`, `${service}RedirectType`, `${service}Frontend`], r => {
+				options[service].enabled = r[utils.camelCase(service) + "Enable"]
 				options[service].frontend = r[service + "Frontend"]
 				options[service].redirectType = r[service + "RedirectType"]
 				// console.log(r)
@@ -60,19 +60,19 @@ function all(service) {
 	return tmp
 }
 
-getConfig()
+await getConfig()
 init()
 browser.storage.onChanged.addListener(init)
 
 function redirect(url, type, initiator) {
 	let randomInstance
-	let frontend = options[service].frontend
+	let frontend
 	let network = options.network
 	let networkFallback = options.networkFallback
-	let redirectType = options[service].redirectType
+	let redirectType
 	if (url.pathname == "/") return
 	for (const service in config.services) {
-		if (options[service].disabled && !disableOverride) continue
+		if (!options[service].enabled && !disableOverride) continue
 		let targets = service.targets
 		if (targets == "datajson") {
 			browser.storage.local.get(`${service}Targets`, (targets = r[service + "Targets"]))
@@ -81,11 +81,18 @@ function redirect(url, type, initiator) {
 		if (initiator && (all(service).includes(initiator.origin) || targets.includes(initiator.host))) continue
 		if (!targets.some(rx => rx.test(url.href))) continue
 		if (type != redirectType && type != "both") continue
+
+		frontend = options[service].frontend
+		redirectType = options[service].redirectType
+
 		// browser.storage.local.get(`${service}Frontend`, (frontend = r[service + "Frontend"]))
-		let instanceList = [...[service + utils.camelCase(network) + "RedirectsChecks"], ...[service + utils.camelCase(network) + "CustomRedirects"]]
-		if (instanceList.length === 0 && networkFallback) instanceList = [...[service + "ClearnetRedirectsChecks"], ...[service + "ClearnetCustomRedirects"]]
-		if (instanceList.length === 0 && redirects.indexOf(frontend) != -1) return
-		randomInstance = utils.getRandomInstance(instanceList)
+
+		if (config.services[service].frontends[frontend].instanceList) {
+			let instanceList = [...[frontend + utils.camelCase(network) + "RedirectsChecks"], ...[frontend + utils.camelCase(network) + "CustomRedirects"]]
+			if (instanceList.length === 0 && networkFallback) instanceList = [...[frontend + "ClearnetRedirectsChecks"], ...[frontend + "ClearnetCustomRedirects"]]
+			if (instanceList.length === 0 && redirects.indexOf(frontend) != -1) return
+			randomInstance = utils.getRandomInstance(instanceList)
+		}
 	}
 
 	// Here is a (temperory) space for defining constants required in 2 or more switch cases.
@@ -114,7 +121,7 @@ function redirect(url, type, initiator) {
 				.replace("/watch?v=", "/listen?id=")
 				.replace("/channel/", "/artist/")
 				.replace("/playlist?list=", "/playlist/VL")
-				.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/") + "?filter=song")
+				.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/") + "?filter=all")
 		case "hyperpipe":
 			return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/"))
 		case "bibliogram":
@@ -386,7 +393,7 @@ function initDefaults() {
 				// console.log(redirects)
 				// console.log(config)
 				browser.storage.local.set({
-					redirects,
+					redirects: redirects.invidious,
 				})
 				browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], async r => {
 					// console.log(r)
@@ -395,7 +402,7 @@ function initDefaults() {
 							browser.storage.local.set({ [service + "Targets"]: redirects[service] })
 						}
 						for (const defaultOption in config.services[service].defaults) {
-							browser.storage.local.set({ [defaultOption]: config.services[service].defaults[defaultOption] })
+							browser.storage.local.set({ [service + camelCase(defaultOption)]: config.services[service].defaults[defaultOption] })
 						}
 						for (const frontend in config.services[service].frontends) {
 							let clearnetChecks = redirects[frontend].clearnet

@@ -24,7 +24,10 @@
 					"invidious": {
 						"preferences": {
 							"cookies": ["PREFS"]
-						}
+						},
+						"name": "Invidious",
+						"embeddable": true,
+						"instanceList": true
 					},
 					"piped": {
 						"preferences": {
@@ -48,19 +51,38 @@
 								"volume",
 								"watchHistory"
 							]
-						}
+						},
+						"name": "Piped",
+						"embeddable": true,
+						"instanceList": true
 					},
 					"pipedMaterial": {
 						"preferences": {
 							"localstorage": ["PREFERENCES"]
-						}
+						},
+						"name": "Piped-Material",
+						"embeddable": false,
+						"instanceList": true
 					},
 					"cloudtube": {
 						"preferences": {
 							"token": "token",
 							"fetchEndpoint": "/api/settings",
 							"setEndpoint": "/settings"
-						}
+						},
+						"name": "CloudTube",
+						"embeddable": false,
+						"instanceList": true
+					},
+					"freetube": {
+						"name": "FreeTube",
+						"embeddable": false,
+						"instanceList": false
+					},
+					"yattee": {
+						"name": "Yattee",
+						"embeddable": false,
+						"instanceList": false
 					}
 				},
 				"singleInstanceFrontends": ["freetube", "yatte"],
@@ -74,7 +96,7 @@
 				],
 				"name": "Youtube",
 				"options": {
-					"disabled": false,
+					"enabled": true,
 					"redirectType": "both",
 					"frontend": "invidious",
 					"embedFrontend": "invidious"
@@ -88,19 +110,23 @@
 						"preferences": {
 							"localstorage": ["settings"],
 							"indexeddb": "beatbump"
-						}
+						},
+						"name": "Beatbump",
+						"instanceList": true
 					},
 					"hyperpipe": {
 						"preferences": {
 							"localstorage": ["api", "authapi", "codec", "locale", "next", "pipedapi", "quality", "theme", "vol"],
 							"indexeddb": ["hyperpipedb"]
-						}
+						},
+						"name": "HyperPipe",
+						"instanceList": true
 					}
 				},
 				"targets": ["^https?:\\/{2}music\\.youtube\\.com(\\/.*|$)"],
 				"name": "YT Music",
 				"options": {
-					"disabled": false,
+					"enabled": true,
 					"frontend": "beatbump"
 				},
 				"imageType": "png",
@@ -130,13 +156,16 @@
 								"replaceTwitter",
 								"replaceYouTube"
 							]
-						}
+						},
+						"name": "Nitter",
+						"embeddable": true,
+						"instanceList": true
 					}
 				},
 				"targets": ["^https?:\\/{2}(www\\.|mobile\\.|)twitter\\.com", "^https?:\\/{2}(pbs\\.|video\\.|)twimg\\.com", "^https?:\\/{2}platform\\.twitter\\.com/embed", "^https?:\\/{2}t\\.co"],
 				"name": "Twitter",
 				"options": {
-					"disabled": false,
+					"enabled": true,
 					"redirectType": "both"
 				},
 				"imageType": "png",
@@ -149,12 +178,14 @@
 							"token": "token",
 							"fetchEndpoint": "/settings.json",
 							"setEndpoint": "/applysettings"
-						}
+						},
+						"name": "Bibliogram",
+						"instanceList": false
 					}
 				},
 				"targets": ["^https?:\\/{2}(www\\.)?instagram\\.com"],
 				"name": "Instagram",
-				"options": { "disabled": false },
+				"options": { "enabled": true },
 				"imageType": "png",
 				"embeddable": false
 			},
@@ -163,12 +194,14 @@
 					"proxiTok": {
 						"preferences": {
 							"cookies": ["api-test_endpoints", "theme"]
-						}
+						},
+						"name": "ProxiTok",
+						"instanceList": true
 					}
 				},
 				"targets": ["^https?:\\/{2}(www\\.|)tiktok\\.com.*"],
 				"name": "TikTok",
-				"options": { "disabled": false },
+				"options": { "enabled": true },
 				"imageType": "png",
 				"embeddable": false
 			},
@@ -177,7 +210,9 @@
 					"libreddit": {
 						"preferences": {
 							"cookies": ["theme", "front_page", "layout", "wide", "post_sort", "comment_sort", "show_nsfw", "autoplay_videos", "use_hls", "hide_hls_notification", "subscriptions", "filters"]
-						}
+						},
+						"name": "Libreddit",
+						"instanceList": true
 					},
 					"teddit": {
 						"preferences": {
@@ -195,13 +230,15 @@
 								"theme",
 								"videos_muted"
 							]
-						}
+						},
+						"name": "Teddit",
+						"instanceList": true
 					}
 				},
 				"targets": ["^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com", "^https?:\\/{2}(i\\.|preview\\.)redd\\.it"],
 				"name": "Reddit",
 				"options": {
-					"disabled": false,
+					"enabled": true,
 					"frontend": "libreddit"
 				},
 				"imageType": "png",
@@ -210,12 +247,14 @@
 			"imgur": {
 				"frontends": {
 					"rimgo": {
-						"preferences": {}
+						"preferences": {},
+						"name": "rimgo",
+						"instanceList": true
 					}
 				},
 				"targets": ["^https?:\\/{2}([im]\\.)?imgur\\.(com|io)(\\/|$)"],
 				"name": "Imgur",
-				"options": { "disabled": false },
+				"options": { "enabled": true },
 				"imageType": "png",
 				"embeddable": false
 			},
@@ -224,19 +263,23 @@
 					"wikiless": {
 						"preferences": {
 							"cookies": ["theme", "default_lang"]
-						}
+						},
+						"name": "Wikiless",
+						"instanceList": true
 					}
 				},
 				"targets": ["^https?:\\/{2}([a-z]+\\.)*wikipedia\\.org"],
 				"name": "Wikipedia",
-				"options": { "disabled": true },
+				"options": { "enabled": false },
 				"imageType": "svg",
 				"embeddable": false
 			},
 			"medium": {
 				"frontends": {
 					"scribe": {
-						"preferences": {}
+						"preferences": {},
+						"name": "Scribe",
+						"instanceList": true
 					}
 				},
 				"targets": [
@@ -260,7 +303,7 @@
 					"^writingcooperative\\.com "
 				],
 				"name": "Medium",
-				"options": { "disabled": false },
+				"options": { "enabled": true },
 				"imageType": "svg",
 				"embeddable": false
 			},
@@ -269,12 +312,14 @@
 					"quetre": {
 						"preferences": {
 							"localstorage": ["theme"]
-						}
+						},
+						"name": "Quetre",
+						"instanceList": true
 					}
 				},
 				"targets": ["^https?:\\/{2}([a-z]+\\.)*quora\\.com.*"],
 				"name": "Quora",
-				"options": { "disabled": false },
+				"options": { "enabled": true },
 				"imageType": "png",
 				"embeddable": false
 			},
@@ -283,36 +328,42 @@
 					"libremdb": {
 						"preferences": {
 							"localstorage": ["theme"]
-						}
+						},
+						"name": "libremdb",
+						"instanceList": true
 					}
 				},
 				"targets": ["^https?:\\/{2}(?:www\\.|)imdb\\.com.*"],
 				"name": "IMDb",
-				"options": { "disabled": true },
+				"options": { "enabled": false },
 				"imageType": "svg",
 				"embeddable": false
 			},
 			"reuters": {
 				"frontends": {
 					"neuters": {
-						"preferences": {}
+						"preferences": {},
+						"name": "Neuters",
+						"instanceList": true
 					}
 				},
 				"targets": ["^https?:\\/{2}(www\\.|)reuters\\.com.*"],
 				"name": "Reuters",
-				"options": { "disabled": true },
+				"options": { "enabled": false },
 				"imageType": "svg",
 				"embeddable": false
 			},
 			"peertube": {
 				"frontends": {
 					"simpleertube": {
-						"preferences": {}
+						"preferences": {},
+						"name": "SimpleerTube",
+						"instanceList": true
 					}
 				},
 				"targets": "datajson",
 				"name": "PeerTube",
-				"options": { "disabled": true },
+				"options": { "enabled": false },
 				"imageType": "svg",
 				"embeddable": false
 			},
@@ -322,14 +373,21 @@
 						"preferences": {
 							"cookies": ["nsfw", "theme"],
 							"localstorage": ["autoplay", "autoplayNextVid", "collapseComments", "plyr", "sb_categories", "showRelated"]
-						}
+						},
+						"name": "Librarian",
+						"embeddable": true,
+						"instanceList": true
+					},
+					"lbryDesktop": {
+						"name": "LBRY Desktop",
+						"embeddable": false,
+						"instanceList": false
 					}
 				},
-				"singleInstanceFrontends": ["lbryDesktop"],
 				"targets": ["^https?:\\/{2}odysee\\.com", "^https?:\\/{2}lbry\\.tv"],
 				"name": "LBRY",
 				"options": {
-					"disabled": true,
+					"enabled": false,
 					"frontend": "librarian",
 					"redirectType": "both"
 				},
@@ -359,7 +417,9 @@
 								"theme",
 								"tokens"
 							]
-						}
+						},
+						"name": "SearX",
+						"instanceList": true
 					},
 					"searxng": {
 						"preferences": {
@@ -384,21 +444,27 @@
 								"theme",
 								"tokens"
 							]
-						}
+						},
+						"name": "SearXNG",
+						"instanceList": true
 					},
 					"whoogle": {
-						"preferences": {}
+						"preferences": {},
+						"name": "Whoogle",
+						"instanceList": true
 					},
 					"librex": {
 						"preferences": {
 							"cookies": ["bibliogram", "disable_special", "invidious", "libreddit", "nitter", "proxitok", "theme", "wikiless"]
-						}
+						},
+						"name": "LibreX",
+						"instanceList": true
 					}
 				},
 				"targets": ["^https?:\\/{2}search\\.libredirect\\.invalid"],
 				"name": "Search",
 				"options": {
-					"disabled": false,
+					"enabled": true,
 					"frontend": "searxng"
 				},
 				"imageType": "svg",
@@ -409,18 +475,22 @@
 					"simplyTranslate": {
 						"preferences": {
 							"cookies": ["from_lang", "to_lang", "tts_enabled", "use_text_fields"]
-						}
+						},
+						"name": "SimplyTranslate",
+						"instanceList": true
 					},
 					"lingva": {
 						"preferences": {
 							"localstorage": ["isauto", "source", "target"]
-						}
+						},
+						"name": "Lingva",
+						"instanceList": true
 					}
 				},
 				"targets": ["^https?:\\/{2}translate\\.google(\\.[a-z]{2,3}){1,2}\\/"],
 				"name": "Translate",
 				"options": {
-					"disabled": false,
+					"enabled": true,
 					"frontend": "simplyTranslate"
 				},
 				"imageType": "svg",
@@ -429,14 +499,19 @@
 			"maps": {
 				"frontends": {
 					"facil": {
-						"preferences": {}
+						"preferences": {},
+						"name": "FacilMap",
+						"instanceList": true
+					},
+					"osm": {
+						"name": "OpenStreetMap",
+						"instanceList": false
 					}
 				},
-				"singleInstanceFrontends": ["osm"],
 				"targets": ["^https?:\\/{2}(((www|maps)\\.)?(google\\.).*(\\/maps)|maps\\.(google\\.).*)"],
 				"name": "Maps",
 				"options": {
-					"disabled": false,
+					"enabled": true,
 					"frontend": "osm"
 				},
 				"imageType": "svg",
@@ -445,12 +520,14 @@
 			"sendTargets": {
 				"frontends": {
 					"send": {
-						"preferences": {}
+						"preferences": {},
+						"name": "Send",
+						"instanceList": "true"
 					}
 				},
 				"targets": ["^https?:\\/{2}send\\.libredirect\\.invalid\\/$", "^https?:\\/{2}send\\.firefox\\.com\\/$", "^https?:\\/{2}sendfiles\\.online\\/$"],
 				"name": "Send Files",
-				"options": { "disabled": false },
+				"options": { "enabled": true },
 				"imageType": "svg",
 				"embeddable": false
 			}

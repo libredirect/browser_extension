@@ -1,4 +1,4 @@
-<% for (const service in config.services) { %>
+<% for (const service in config.services) { -%>
 <section class="option-block" id="<%= service %>_page">
   <div class="some-block option-block">
     <h1 data-localise="__MSG_<%= service %>__"><%= config.services[service].name %></h1>
@@ -6,47 +6,47 @@
   <hr>
   <div class="some-block option-block">
     <h4 data-localise="__MSG_enable__">Enable</h4>
-    <input id="<%= service %>-enable" type="checkbox">
+    <input id="<%= service %>-enabled" type="checkbox">
   </div>
-  <% if ((Object.keys(config.services[service].frontends).length > 1) || config.services[service].singleInstanceFrontends) { %>
+  <% if (Object.keys(config.services[service].frontends).length > 1) { %>
   <div class="some-block option-block">
-  <h4 data-localise="__MSG_frontend__">Frontend</h4>
-  <select id="<%= service %>-frontend">
-    <% for (const frontend in config.services[service].frontends) { %>
-    <option value="<%= frontend %>"><%= frontend %></option>
-    <% }; %>
-    <% for (const frontend in config.services[service].singleInstanceFrontends){ %>
-    <option value="<%= config.services[service].singleInstanceFrontends[frontend] %>"><%= config.services[service].singleInstanceFrontends[frontend] %></option>
-    <% }; %>
-  </select>
+    <h4 data-localise="__MSG_frontend__">Frontend</h4>
+    <select id="<%= service %>-frontend">
+      <% for (const frontend in config.services[service].frontends) { -%>
+      <option value="<%= frontend %>"><%= config.services[service].frontends[frontend].name %></option>
+      <% } %>
+    </select>
   </div>
-  <% } %>
-  <% if ((config.services[service].singleInstanceFrontends) && (Object.keys(config.services[service].frontends).length > 1)) { %>
-  <div id="<%= service %>-embedded_frontend">
+  <% if (config.services[service].embeddable) { _%>
+  <div id="<%= service %>-embedFrontend">
     <div class="some-block option-block">
       <h4 data-localise="__MSG_embed_frontend__">Embed Frontend</h4>
       <select id="<%= service %>-embed_frontend">
-        <% for (const frontend in config.services[service].frontends) { %>
+        <% for (const frontend in config.services[service].frontends) { -%>
+        <% if (config.services[service].frontends[frontend].embeddable) { _%>
         <option value="<%= frontend %>"><%= frontend %></option>
-        <% }; %>
+        <% } _%>
+        <% } %>
       </select>
     </div>
   </div>
-  <% } %>
-  <% if (config.services[service].embeddable) { %>
+  <% } _%>
+  <% } _%>
+  <% if (config.services[service].embeddable) { _%>
   <div class="some-block option-block">
     <h4 data-localise="__MSG_redirectType__">Redirect Type</h4>
-    <select id="<%= service %>-redirect_type">
+    <select id="<%= service %>-redirectType">
       <option value="both" data-localise="__MSG_both__">both</option>
-      <option value="onlyEmbedded" data-localise="__MSG_onlyEmbedded__">Only Embedded</option>
-      <option value="onlyNotEmbedded" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
+      <option value="sub_frame" data-localise="__MSG_onlyEmbedded__">Only Embedded</option>
+      <option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
     </select>
   </div>
-  <% } %>
+  <% } _%>
   <hr>
-  <% for (const frontend in config.services[service].frontends) { %>
+  <% for (const frontend in config.services[service].frontends) { -%>
+  <% if (config.services[service].frontends[frontend].instanceList) { _%>
   <div id="<%= frontend %>">
-    <% for (const network in config.networks) { %>
+    <% for (const network in config.networks) { -%>
     <div class="<%= network %>">
       <div class="some-block option-block">
         <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
@@ -67,7 +67,7 @@
         </div>
       </form>
       <div class="checklist custom-checklist"></div>
-      <% if (network == "clearnet") { %>
+      <% if (network == "clearnet") { _%>
       <div class="buttons buttons-inline">
         <label class="button button-inline" id="latency-<%= frontend %>-label" for="latency-<%= frontend %>"> 
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
@@ -77,11 +77,12 @@
         </label>
         <input class="button button-inline" id="latency-<%= frontend %>" style="display:none;">
       </div>
-      <% } %>
+      <% } _%>
     </div>
-    <% }; %>
+    <% } %>
   </div>
-  <% }; %>
+  <% } _%>
+  <% } %>
 </section>
-<% }; %>
+<% } %>
 <script type="module" src="./widgets/services.js"></script>

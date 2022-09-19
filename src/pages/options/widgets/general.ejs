@@ -14,10 +14,10 @@
   <div class="some-block option-block">
     <h4 data-localise="__MSG_protocol__"></h4>
     <select id="protocol">
-      <% for (const network in config.networks) { %>
-      <option value="<%= network %>"><%= config.networks[network].name %></option>
+      <% for (const network in config.networks) { -%>
+<option value="<%= network %>"><%= config.networks[network].name %></option>
       <% }; %>
-    </select>
+</select>
   </div>
   <div id="protocol-fallback">
     <div class="some-block option-block">
@@ -84,14 +84,14 @@
     <h4 data-localise="__MSG_customPopup__">Customize Popup</h4>
   </div>
   <div class="checklist-popup" id="popup-frontends-checklist">
-    <% for (const service in config.services) { %>
-    <div>
+    <% for (const service in config.services) { -%>
+<div>
       <div><img src="../../../assets/images/<%= service %>-icon.<%= config.services[service].imageType %>">
         <x data-localise="__MSG_<%= service %>__"><%= service %></x>
       </div>
       <input id="<%= service %>" type="checkbox">
     </div>
     <% }; %>
-  </div>
+</div>
   <script type="module" src="./widgets/general.js"></script>
 </section>

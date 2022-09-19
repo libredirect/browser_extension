@@ -1,7 +1,7 @@
 <section class="links" id="links">
   <div class="title"><img src="../../../assets/images/general-icon.svg"><a href="#general" data-localise="__MSG_general__">General</a></div>
-  <% for (const service in config.services) { %>
+  <% for (const service in config.services) { -%>
   <div class="title"><img src="../../../assets/images/<%= service %>-icon.<%= config.services[service].imageType %>"><a href="#<%= service %>" data-localise="__MSG_<%= service %>__"><%= service %></a></div>
-  <% }; %>
+  <% }; -%>
   <div class="title"><img src="../../../assets/images/about-icon.svg"><a href="#about" data-localise="__MSG_about__">About</a></div>
 </section>
