@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 import socket
 
 mightyList = {}
+config = {}
 
 startRegex = "https?:\/{2}(?:[^\s\/]+\.)+"
 endRegex = "(?:\/[^\s\/]+)*\/?"
@@ -16,10 +17,10 @@ torRegex = startRegex + "onion" + endRegex
 i2pRegex = startRegex + "i2p" + endRegex
 lokiRegex = startRegex + "loki" + endRegex
 authRegex = "https?:\/{2}\S+:\S+@(?:[^\s\/]+\.)+[a-zA-Z0-9]+" + endRegex
-config = {}
 
-with open('./config/config.json') as file:
-    config = file
+with open('./src/config/config.json', 'rt') as tmp:
+    config['networks'] = json.load(tmp)['config']['networks']
+
 
 
 def filterLastSlash(urlList):
@@ -108,8 +109,8 @@ def is_offline(url):
 def fetchCache(frontend, name) :
     # json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
     with open('./src/instances/data.json') as file:
-        mightyList[frontend] = json.load(file).frontend
-    print(Fore.ORANGE + 'Failed' + Style.RESET_ALL + ' to fetch ' + name)
+        mightyList[frontend] = json.load(file)[frontend]
+    print(Fore.YELLOW + 'Failed' + Style.RESET_ALL + ' to fetch ' + name)
 
 def fetchFromFile(frontend, name):
     #json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
@@ -122,32 +123,31 @@ def fetchJsonList(frontend, name, url, urlItem):
         r = requests.get(url)
         rJson = json.loads(r.text)
         _list = {}
-        for network in config.networks:
+        for network in config['networks']:
             _list[network] = []
-        if type(urlItem) is 'str':
+        if type(urlItem) == 'str':
             for item in rJson:
+                tmpItem = item
                 if urlItem is not None:
-                    tmpUrl = item[urlItem]
-                else:
-                    tmpUrl = item
-                if tmpUrl.strip() == "":
+                    tmpItem = item[urlItem]
+                if tmpItem.strip() == '':
                     continue
-                elif re.search(torRegex, tmpUrl):
-                    _list['tor'].append(tmpUrl)
-                elif re.search(i2pRegex, tmpUrl):
-                    _list['i2p'].append(tmpUrl)
-                elif re.search(lokiRegex, tmpUrl):
-                    _list['loki'].append(tmpUrl)
+                elif re.search(torRegex, tmpItem):
+                    _list['tor'].append(tmpItem)
+                elif re.search(i2pRegex, tmpItem):
+                    _list['i2p'].append(tmpItem)
+                elif re.search(lokiRegex, tmpItem):
+                    _list['loki'].append(tmpItem)
                 else:
-                    _list['clearnet'].append(tmpUrl)
+                    _list['clearnet'].append(tmpItem)
         else:
-            for i in range(config.networks.length):
+            for i in range(len(config['networks']) - 1):
                 # The expected order is the same as in config.json. If the frontend doesn't have any instances for a specified network, use None
                 if urlItem != None:
                     for item in rJson:
                         if network in item:
-                            if item[network].strip() != "":
-                                _list[config.networks[i]].append(item[urlItem[i]])
+                            if item[network].strip() != '':
+                                _list[config['networks'][i]].append(item[urlItem[i]])
 
         mightyList[frontend] = _list
         print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + name)
@@ -158,7 +158,7 @@ def fetchRegexList(frontend, name, url, regex):
     try:
         r = requests.get(url)
         _list = {}
-        for network in config.networks:
+        for network in config['networks']:
             _list[network] = []
     
         tmp = re.findall(regex, r.text)
@@ -185,7 +185,7 @@ def fetchTextList(frontend, name, url, prepend):
         tmp = r.text.strip().split('\n')
 
         _list = {}
-        for network in config.networks:
+        for network in config['networks']:
             _list[network] = []
 
         for item in tmp:
@@ -207,13 +207,14 @@ def fetchTextList(frontend, name, url, prepend):
 def invidious():
     name = 'Invidious'
     frontend = 'invidious'
+    url = 'https://api.invidious.io/instances.json'
     try:
         _list = {}
         _list['clearnet'] = []
         _list['tor'] = []
         _list['i2p'] = []
         _list['loki'] = []
-        r = requests.get('https://api.invidious.io/instances.json')
+        r = requests.get(url)
         rJson = json.loads(r.text)
         for instance in rJson:
             if instance[1]['type'] == 'https':
@@ -256,11 +257,11 @@ def piped():
 
 
 def pipedMaterial():
-    fetchRegexList('pipedMaterial', 'Piped-Material', 'https://raw.githubusercontent.com/mmjee/Piped-Material/master/README.md', r"\| (https?:\/{2}(?:\S+\.)+[a-zA-Z0-9]*) +\|")
+    fetchRegexList('pipedMaterial', 'Piped-Material', 'https://raw.githubusercontent.com/mmjee/Piped-Material/master/README.md', r"\| (https?:\/{2}(?:\S+\.)+[a-zA-Z0-9]*) +\| Production")
 
 
 def cloudtube():
-    fetchCache('cloudtube', 'Cloudtube')
+    fetchFromFile('cloudtube', 'Cloudtube')
 
 
 def proxitok():
