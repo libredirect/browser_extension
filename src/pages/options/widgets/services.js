@@ -1,7 +1,7 @@
 import utils from "../../../assets/javascripts/utils.js"
 
 let config,
-	network,
+	selectedNetwork,
 	divs = {}
 
 function getConfig() {
@@ -19,7 +19,7 @@ function getConfig() {
 await getConfig()
 
 browser.storage.local.get("network", r => {
-	network = r.network
+	selectedNetwork = r.network
 })
 
 function changeFrontendsSettings(service) {
@@ -54,6 +54,7 @@ function changeNetworkSettings(selectedNetwork) {
 	}
 }
 
+changeNetworkSettings(selectedNetwork)
 for (const service in config.services) {
 	divs[service] = {}
 	divs[service][service] = document.getElementById(`${service}_page`)
@@ -73,7 +74,6 @@ for (const service in config.services) {
 	}
 
 	changeFrontendsSettings(service)
-	changeNetworkSettings(network)
 
 	for (const frontend in config.services[service].frontends) {
 		if (config.services[service].frontends[frontend].instanceList) {

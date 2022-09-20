@@ -25,14 +25,12 @@ function init() {
 			options.networkFallback = r.networkFallback
 			options.redirects = r.redirects
 		})
-		//cur = current
 		for (const service in config.services) {
 			options[service] = {}
 			browser.storage.local.get([`${utils.camelCase(service)}Enable`, `${service}RedirectType`, `${service}Frontend`], r => {
 				options[service].enabled = r[utils.camelCase(service) + "Enable"]
 				options[service].frontend = r[service + "Frontend"]
 				options[service].redirectType = r[service + "RedirectType"]
-				// console.log(r)
 			})
 			for (const frontend in config.services[service].frontends) {
 				options[frontend] = {}
@@ -40,8 +38,6 @@ function init() {
 				options[frontend].custom = []
 				for (const network in config.networks) {
 					browser.storage.local.get([`${frontend}${utils.camelCase(network)}RedirectsChecks`, `${frontend}${utils.camelCase(network)}CustomRedirects`], r => {
-						// console.log(r)
-						// console.log(`${frontend}${utils.camelCase(network)}RedirectsChecks`)
 						options[frontend].checks = r[frontend + utils.camelCase(network) + "RedirectsChecks"]
 						options[frontend].custom = r[frontend + utils.camelCase(network) + "CustomRedirects"]
 					})
@@ -390,46 +386,45 @@ function initDefaults() {
 			.then(async data => {
 				let dataJson = JSON.parse(data)
 				redirects = dataJson
-				// console.log(redirects)
-				// console.log(config)
-				browser.storage.local.set({
-					redirects: redirects.invidious,
-				})
 				browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], async r => {
-					// console.log(r)
 					for (const service in config.services) {
 						if (config.services[service].targets == "datajson") {
-							browser.storage.local.set({ [service + "Targets"]: redirects[service] })
+							browser.storage.local.set({ [service + "Targets"]: [...dataJson[service]] })
+							delete redirects[service]
 						}
-						for (const defaultOption in config.services[service].defaults) {
-							browser.storage.local.set({ [service + camelCase(defaultOption)]: config.services[service].defaults[defaultOption] })
+						for (const defaultOption in config.services[service].options) {
+							browser.storage.local.set({ [service + utils.camelCase(defaultOption)]: config.services[service].options[defaultOption] })
 						}
 						for (const frontend in config.services[service].frontends) {
-							let clearnetChecks = redirects[frontend].clearnet
-							for (const instance of [...r.cloudflareBlackList, ...r.authenticateBlackList, ...r.offlineBlackList]) {
-								let i = clearnetChecks.indexOf(instance)
-								if (i > -1) clearnetChecks.splice(i, 1)
-							}
-							for (const network in config.networks) {
-								// console.log(redirects[frontend][network])
-								switch (network) {
-									case "clearnet":
-										browser.storage.local.set({
-											[frontend + "ClearnetRedirectsChecks"]: [clearnetChecks],
-											[frontend + "ClearnetCustomRedirects"]: [],
-										})
-										break
-									default:
-										browser.storage.local.set({
-											[frontend + utils.camelCase(network) + "RedirectsChecks"]: [...redirects[frontend][network]],
-											[frontend + utils.camelCase(network) + "CustomRedirects"]: [],
-										})
+							if (config.services[service].frontends[frontend].instanceList) {
+								let clearnetChecks = redirects[frontend].clearnet
+								for (const instance of [...r.cloudflareBlackList, ...r.authenticateBlackList, ...r.offlineBlackList]) {
+									let i = clearnetChecks.indexOf(instance)
+									if (i > -1) clearnetChecks.splice(i, 1)
+								}
+								for (const network in config.networks) {
+									switch (network) {
+										case "clearnet":
+											browser.storage.local.set({
+												[frontend + "ClearnetRedirectsChecks"]: [...clearnetChecks],
+												[frontend + "ClearnetCustomRedirects"]: [],
+											})
+											break
+										default:
+											browser.storage.local.set({
+												[frontend + utils.camelCase(network) + "RedirectsChecks"]: [...redirects[frontend][network]],
+												[frontend + utils.camelCase(network) + "CustomRedirects"]: [],
+											})
+									}
 								}
 							}
 						}
 					}
-					;() => resolve()
 				})
+				browser.storage.local.set({
+					redirects,
+				})
+				;() => resolve()
 			})
 	})
 }

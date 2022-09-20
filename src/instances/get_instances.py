@@ -22,7 +22,6 @@ with open('./src/config/config.json', 'rt') as tmp:
     config['networks'] = json.load(tmp)['config']['networks']
 
 
-
 def filterLastSlash(urlList):
     tmp = {}
     for x in urlList:
@@ -106,7 +105,7 @@ def is_offline(url):
     except:
         return False
 
-def fetchCache(frontend, name) :
+def fetchCache(frontend, name):
     # json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
     with open('./src/instances/data.json') as file:
         mightyList[frontend] = json.load(file)[frontend]
@@ -125,7 +124,16 @@ def fetchJsonList(frontend, name, url, urlItem):
         _list = {}
         for network in config['networks']:
             _list[network] = []
-        if type(urlItem) == 'str':
+        if type(urlItem) == dict:
+            for item in rJson:
+                for network in config['networks']:
+                    if urlItem[network] != None:
+                        if urlItem[network] in item:
+                            if item[urlItem[network]].strip() != '':
+                                _list[network].append(item[urlItem[network]])
+        else:
+            if frontend == 'librarian':
+                rJson = rJson['instances'] # I got lazy :p   Might fix this at some point...
             for item in rJson:
                 tmpItem = item
                 if urlItem is not None:
@@ -140,14 +148,6 @@ def fetchJsonList(frontend, name, url, urlItem):
                     _list['loki'].append(tmpItem)
                 else:
                     _list['clearnet'].append(tmpItem)
-        else:
-            for i in range(len(config['networks']) - 1):
-                # The expected order is the same as in config.json. If the frontend doesn't have any instances for a specified network, use None
-                if urlItem != None:
-                    for item in rJson:
-                        if network in item:
-                            if item[network].strip() != '':
-                                _list[config['networks'][i]].append(item[urlItem[i]])
 
         mightyList[frontend] = _list
         print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + name)
@@ -322,11 +322,11 @@ def libreddit():
 
 
 def teddit():
-    fetchJsonList('teddit', 'Teddit', 'https://codeberg.org/teddit/teddit/raw/branch/main/instances.json', ['url', 'onion', 'i2p', None])
+    fetchJsonList('teddit', 'Teddit', 'https://codeberg.org/teddit/teddit/raw/branch/main/instances.json', { 'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None })
 
 
 def wikiless():
-    fetchJsonList('wikiless', 'Wikiless', 'https://wikiless.org/instances.json', ['url', 'onion', 'i2p', None])
+    fetchJsonList('wikiless', 'Wikiless', 'https://wikiless.org/instances.json', { 'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None})
 
 
 def scribe():
@@ -419,7 +419,7 @@ def librex():
 
 
 def rimgo():
-    fetchJsonList('rimgo', 'rimgo', 'https://codeberg.org/video-prize-ranch/rimgo/raw/branch/main/instances.json', ['url', 'onion', 'i2p', None])
+    fetchJsonList('rimgo', 'rimgo', 'https://codeberg.org/video-prize-ranch/rimgo/raw/branch/main/instances.json', {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None})
 
 
 def librarian():
