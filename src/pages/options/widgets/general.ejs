@@ -12,17 +12,17 @@
     </select>
   </div>
   <div class="some-block option-block">
-    <h4 data-localise="__MSG_protocol__"></h4>
-    <select id="protocol">
+    <h4 data-localise="__MSG_network__">Network</h4>
+    <select id="network">
       <% for (const network in config.networks) { -%>
 <option value="<%= network %>"><%= config.networks[network].name %></option>
       <% }; %>
 </select>
   </div>
-  <div id="protocol-fallback">
+  <div id="network-fallback">
     <div class="some-block option-block">
-      <h4 data-localise="__MSG_protocolFallback__">Fallback to normal if no instances are available for the current protocol</h4>
-      <input id="protocol-fallback-checkbox" type="checkbox">
+      <h4 data-localise="__MSG_networkFallback__">Fallback to normal if no instances are available for the current network</h4>
+      <input id="network-fallback-checkbox" type="checkbox">
     </div>
   </div>
   <div class="some-block option-block">

@@ -385,7 +385,7 @@ function initDefaults() {
 			.then(response => response.text())
 			.then(async data => {
 				let dataJson = JSON.parse(data)
-				redirects = dataJson
+				redirects = dataJson.slice()
 				browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], async r => {
 					for (const service in config.services) {
 						if (config.services[service].targets == "datajson") {

@@ -18,17 +18,15 @@
     </select>
   </div>
   <% if (config.services[service].embeddable) { _%>
-  <div id="<%= service %>-embedFrontend">
-    <div class="some-block option-block">
-      <h4 data-localise="__MSG_embed_frontend__">Embed Frontend</h4>
-      <select id="<%= service %>-embed_frontend">
-        <% for (const frontend in config.services[service].frontends) { -%>
-        <% if (config.services[service].frontends[frontend].embeddable) { _%>
-        <option value="<%= frontend %>"><%= frontend %></option>
-        <% } _%>
-        <% } %>
-      </select>
-    </div>
+  <div class="some-block option-block">
+    <h4 data-localise="__MSG_embed_frontend__">Embed Frontend</h4>
+    <select id="<%= service %>-embedFrontend">
+      <% for (const frontend in config.services[service].frontends) { -%>
+      <% if (config.services[service].frontends[frontend].embeddable) { _%>
+      <option value="<%= frontend %>"><%= config.services[service].frontends[frontend].name %></option>
+      <% } _%>
+      <% } %>
+    </select>
   </div>
   <% } _%>
   <% } _%>

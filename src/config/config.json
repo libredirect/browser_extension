@@ -180,7 +180,7 @@
 							"setEndpoint": "/applysettings"
 						},
 						"name": "Bibliogram",
-						"instanceList": false
+						"instanceList": true
 					}
 				},
 				"targets": ["^https?:\\/{2}(www\\.)?instagram\\.com"],

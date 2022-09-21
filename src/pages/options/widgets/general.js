@@ -86,15 +86,15 @@ themeElement.addEventListener("change", event => {
 	location.reload()
 })
 
-let protocolElement = document.getElementById("protocol")
-protocolElement.addEventListener("change", event => {
-	const value = event.target.options[protocol.selectedIndex].value
+let networkElement = document.getElementById("network")
+networkElement.addEventListener("change", event => {
+	const value = event.target.options[network.selectedIndex].value
 	browser.storage.local.set({ network: value })
 	location.reload()
 })
 
-let protocolFallbackCheckbox = document.getElementById("protocol-fallback-checkbox")
-protocolFallbackCheckbox.addEventListener("change", event => {
+let networkFallbackCheckbox = document.getElementById("network-fallback-checkbox")
+networkFallbackCheckbox.addEventListener("change", event => {
 	browser.storage.local.set({ networkFallback: event.target.checked })
 })
 
@@ -138,16 +138,16 @@ browser.storage.local.get(
 	r => {
 		autoRedirectElement.checked = r.autoRedirect
 		themeElement.value = r.theme
-		protocolElement.value = r.network
-		protocolFallbackCheckbox.checked = r.networkFallback
+		networkElement.value = r.network
+		networkFallbackCheckbox.checked = r.networkFallback
 		latencyOutput.value = r.latencyThreshold
 		// firstPartyIsolate.checked = r.firstPartyIsolate;
 
-		let protocolFallbackElement = document.getElementById("protocol-fallback")
-		if (protocolElement.value == "clearnet") {
-			protocolFallbackElement.style.display = "none"
+		let networkFallbackElement = document.getElementById("network-fallback")
+		if (networkElement.value == "clearnet") {
+			networkFallbackElement.style.display = "none"
 		} else {
-			protocolFallbackElement.style.display = "block"
+			networkFallbackElement.style.display = "block"
 		}
 
 		instanceTypeElement.addEventListener("change", event => {
@@ -200,7 +200,7 @@ browser.storage.local.get(
 			if (instanceType == "url") {
 				if (nameCustomInstanceInput.validity.valid) {
 					let url = new URL(nameCustomInstanceInput.value)
-					val = `${url.protocol}//${url.host}`
+					val = `${url.network}//${url.host}`
 					if (!exceptionsCustomInstances.url.includes(val)) exceptionsCustomInstances.url.push(val)
 				}
 			} else if (instanceType == "regex") {
