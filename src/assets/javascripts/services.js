@@ -68,7 +68,7 @@ function redirect(url, type, initiator) {
 	let redirectType
 	if (url.pathname == "/") return
 	for (const service in config.services) {
-		if (!options[service].enabled && !disableOverride) continue
+		if (!options[service].enabled) continue
 		let targets = service.targets
 		if (targets == "datajson") {
 			browser.storage.local.get(`${service}Targets`, (targets = r[service + "Targets"]))
@@ -385,12 +385,12 @@ function initDefaults() {
 			.then(response => response.text())
 			.then(async data => {
 				let dataJson = JSON.parse(data)
-				redirects = dataJson.slice()
+				redirects = JSON.parse(data)
 				browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], async r => {
 					for (const service in config.services) {
 						if (config.services[service].targets == "datajson") {
 							browser.storage.local.set({ [service + "Targets"]: [...dataJson[service]] })
-							delete redirects[service]
+							delete dataJson[service]
 						}
 						for (const defaultOption in config.services[service].options) {
 							browser.storage.local.set({ [service + utils.camelCase(defaultOption)]: config.services[service].options[defaultOption] })
@@ -422,7 +422,7 @@ function initDefaults() {
 					}
 				})
 				browser.storage.local.set({
-					redirects,
+					redirects: dataJson,
 				})
 				;() => resolve()
 			})

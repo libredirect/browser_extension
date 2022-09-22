@@ -102,7 +102,8 @@
 					"embedFrontend": "invidious"
 				},
 				"imageType": "png",
-				"embeddable": true
+				"embeddable": true,
+				"url": "https://youtube.com"
 			},
 			"youtubeMusic": {
 				"frontends": {
@@ -130,7 +131,8 @@
 					"frontend": "beatbump"
 				},
 				"imageType": "png",
-				"embeddable": false
+				"embeddable": false,
+				"url": "https://music.youtube.com"
 			},
 			"twitter": {
 				"frontends": {
@@ -169,7 +171,8 @@
 					"redirectType": "both"
 				},
 				"imageType": "png",
-				"embeddable": true
+				"embeddable": true,
+				"url": "https://twitter.com"
 			},
 			"instagram": {
 				"frontends": {
@@ -187,7 +190,8 @@
 				"name": "Instagram",
 				"options": { "enabled": true },
 				"imageType": "png",
-				"embeddable": false
+				"embeddable": false,
+				"url": "https://instagram.com"
 			},
 			"tiktok": {
 				"frontends": {
@@ -203,7 +207,8 @@
 				"name": "TikTok",
 				"options": { "enabled": true },
 				"imageType": "png",
-				"embeddable": false
+				"embeddable": false,
+				"url": "https://tiktok.com"
 			},
 			"reddit": {
 				"frontends": {
@@ -242,7 +247,8 @@
 					"frontend": "libreddit"
 				},
 				"imageType": "png",
-				"embeddable": false
+				"embeddable": false,
+				"url": "https://reddit.com"
 			},
 			"imgur": {
 				"frontends": {
@@ -256,7 +262,8 @@
 				"name": "Imgur",
 				"options": { "enabled": true },
 				"imageType": "png",
-				"embeddable": false
+				"embeddable": false,
+				"url": "https://imgur.com"
 			},
 			"wikipedia": {
 				"frontends": {
@@ -272,7 +279,8 @@
 				"name": "Wikipedia",
 				"options": { "enabled": false },
 				"imageType": "svg",
-				"embeddable": false
+				"embeddable": false,
+				"url": "https://wikipedia.com"
 			},
 			"medium": {
 				"frontends": {
@@ -304,8 +312,9 @@
 				],
 				"name": "Medium",
 				"options": { "enabled": true },
-				"imageType": "svg",
-				"embeddable": false
+				"imageType": "svgMono",
+				"embeddable": false,
+				"url": "https://medium.com"
 			},
 			"quora": {
 				"frontends": {
@@ -321,7 +330,8 @@
 				"name": "Quora",
 				"options": { "enabled": true },
 				"imageType": "png",
-				"embeddable": false
+				"embeddable": false,
+				"url": "https://quora.com"
 			},
 			"imdb": {
 				"frontends": {
@@ -337,7 +347,8 @@
 				"name": "IMDb",
 				"options": { "enabled": false },
 				"imageType": "svg",
-				"embeddable": false
+				"embeddable": false,
+				"url": "https://imdb.com"
 			},
 			"reuters": {
 				"frontends": {
@@ -351,7 +362,8 @@
 				"name": "Reuters",
 				"options": { "enabled": false },
 				"imageType": "svg",
-				"embeddable": false
+				"embeddable": false,
+				"url": "https://reuters.com"
 			},
 			"peertube": {
 				"frontends": {
@@ -365,7 +377,8 @@
 				"name": "PeerTube",
 				"options": { "enabled": false },
 				"imageType": "svg",
-				"embeddable": false
+				"embeddable": false,
+				"url": "https://search.joinpeertube.org"
 			},
 			"lbry": {
 				"frontends": {
@@ -389,10 +402,12 @@
 				"options": {
 					"enabled": false,
 					"frontend": "librarian",
-					"redirectType": "both"
+					"redirectType": "both",
+					"embedFrontend": "librarian"
 				},
 				"imageType": "png",
-				"embeddable": true
+				"embeddable": true,
+				"url": "https://odysee.com"
 			},
 			"search": {
 				"frontends": {
@@ -467,8 +482,9 @@
 					"enabled": true,
 					"frontend": "searxng"
 				},
-				"imageType": "svg",
-				"embeddable": false
+				"imageType": "svgMono",
+				"embeddable": false,
+				"url": "https://search.libredirect.invalid"
 			},
 			"translate": {
 				"frontends": {
@@ -493,8 +509,9 @@
 					"enabled": true,
 					"frontend": "simplyTranslate"
 				},
-				"imageType": "svg",
-				"embeddable": false
+				"imageType": "svgMono",
+				"embeddable": false,
+				"url": "https://translate.google.com"
 			},
 			"maps": {
 				"frontends": {
@@ -514,8 +531,9 @@
 					"enabled": true,
 					"frontend": "osm"
 				},
-				"imageType": "svg",
-				"embeddable": false
+				"imageType": "svgMono",
+				"embeddable": false,
+				"url": "https://maps.google.com"
 			},
 			"sendTargets": {
 				"frontends": {
@@ -528,8 +546,9 @@
 				"targets": ["^https?:\\/{2}send\\.libredirect\\.invalid\\/$", "^https?:\\/{2}send\\.firefox\\.com\\/$", "^https?:\\/{2}sendfiles\\.online\\/$"],
 				"name": "Send Files",
 				"options": { "enabled": true },
-				"imageType": "svg",
-				"embeddable": false
+				"imageType": "svgMono",
+				"embeddable": false,
+				"url": "https://send.libredirect.invalid"
 			}
 		}
 	}

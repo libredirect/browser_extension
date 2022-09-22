@@ -53,7 +53,7 @@ function changeFrontendsSettings(service) {
 					}
 				}
 			}
-		} else if (Object.keys(config.services[service].frontends) > 1) divs[service].embedFrontend.disabled = true
+		} else if (Object.keys(config.services[service].frontends).length > 1) divs[service].embedFrontend.disabled = true
 	}
 }
 
