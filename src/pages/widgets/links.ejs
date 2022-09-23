@@ -7,7 +7,7 @@
   <% } else { _%>
   <%- include ('src/assets/images/' + service + '-icon.svg') %>
   <% } _%>
-  <a href="#<%= service %>" data-localise="__MSG_<%= service %>__"><%= service %></a></div>
+  <a href="#<%= service %>" data-localise="__MSG_<%= service %>__"><%= config.services[service].name %></a></div>
   <% }; -%>
   <div class="title"><%- include ('src/assets/images/about-icon.svg') %><a href="#about" data-localise="__MSG_about__">About</a></div>
 </section>

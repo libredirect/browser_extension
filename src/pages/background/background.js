@@ -145,6 +145,7 @@ browser.tabs.onRemoved.addListener(tabId => {
 	}
 })
 
+/*
 browser.webRequest.onHeadersReceived.addListener(
 	e => {
 		let response = youtubeHelper.removeXFrameOptions(e)
@@ -154,6 +155,7 @@ browser.webRequest.onHeadersReceived.addListener(
 	{ urls: ["<all_urls>"] },
 	["blocking", "responseHeaders"]
 )
+*/
 
 async function redirectOfflineInstance(url, tabId) {
 	let newUrl = await youtubeHelper.switchInstance(url, true)

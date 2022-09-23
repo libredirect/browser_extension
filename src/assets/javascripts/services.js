@@ -20,10 +20,10 @@ async function getConfig() {
 
 function init() {
 	return new Promise(async resolve => {
-		browser.storage.local.get(["network", "networkFallback"], r => {
+		browser.storage.local.get(["network", "networkFallback", "redirects"], r => {
 			options.network = r.network
 			options.networkFallback = r.networkFallback
-			options.redirects = r.redirects
+			redirects = r.redirects
 		})
 		for (const service in config.services) {
 			options[service] = {}
@@ -50,14 +50,26 @@ function init() {
 
 function all(service) {
 	let tmp = []
-	for (frontend in config.services[service].frontends) {
-		for (network in config.networks) tmp.push([...redirects[frontend][network]])
+	for (const frontend in config.services[service].frontends) {
+		if (config.services[service].frontends[frontend].instanceList) {
+			for (const network in config.networks) {
+				tmp.push(...redirects[frontend][network])
+			}
+		}
 	}
 	return tmp
 }
 
+function regexArray(service, url) {
+	for (const targetString in config.services[service].targets) {
+		const target = new RegExp(config.services[service].targets[targetString])
+		if (target.test(url.href)) return true
+	}
+	return false
+}
+
 await getConfig()
-init()
+await init()
 browser.storage.onChanged.addListener(init)
 
 function redirect(url, type, initiator) {
@@ -69,7 +81,7 @@ function redirect(url, type, initiator) {
 	if (url.pathname == "/") return
 	for (const service in config.services) {
 		if (!options[service].enabled) continue
-		let targets = service.targets
+		let targets = config.services[service].targets
 		if (targets == "datajson") {
 			browser.storage.local.get(`${service}Targets`, (targets = r[service + "Targets"]))
 		}
@@ -424,12 +436,29 @@ function initDefaults() {
 				browser.storage.local.set({
 					redirects: dataJson,
 				})
-				;() => resolve()
+				resolve()
 			})
 	})
+}
+
+function computeService(url) {
+	for (const service in config.services) {
+		const regex = config.services[service].targets
+		console.log(regex)
+		if (regexArray(service, url)) {
+			console.log(service + "gi")
+			return service
+		} else if (all(service).includes(utils.protocolHost(url))) {
+			console.log(service)
+			return service
+		}
+	}
+	console.log("moment")
+	return null
 }
 
 export default {
 	redirect,
 	initDefaults,
+	computeService,
 }

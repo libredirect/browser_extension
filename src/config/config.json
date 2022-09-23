@@ -87,12 +87,12 @@
 				},
 				"singleInstanceFrontends": ["freetube", "yatte"],
 				"targets": [
-					"^https?:\\/{2}(www\\.|music\\.|m\\.|)youtube.com(\\(?!iframe_api)/.*|$)",
+					"^https?:\\/{2}(?:www\\.|music\\.|m\\.|)youtube.com(\\(?!iframe_api/.*|$)",
 					"^https?:\\/{2}img\\.youtube.com\\/vi\\/.*\\/..*",
-					"^https?:\\/{2}(i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
-					"^https?:\\/{2}(www\\.|music\\.|)youtube.com\\/watch?v=..*",
+					"^https?:\\/{2}(?:i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
+					"^https?:\\/{2}(?:www\\.|music\\.|)youtube.com\\/watch?v=..*",
 					"^https?:\\/{2}youtu\\.be\\/..*",
-					"^https?:\\/{2}(www\\.|)(youtube|youtube-nocookie)\\.com\\/embed\\/..*"
+					"^https?:\\/{2}(?:www\\.|)(youtube|youtube-nocookie)\\.com\\/embed\\/..*"
 				],
 				"name": "Youtube",
 				"options": {
@@ -275,7 +275,7 @@
 						"instanceList": true
 					}
 				},
-				"targets": ["^https?:\\/{2}([a-z]+\\.)*wikipedia\\.org"],
+				"targets": ["^https?:\\/{2}(?:[a-z]+\\.)*wikipedia\\.org"],
 				"name": "Wikipedia",
 				"options": { "enabled": false },
 				"imageType": "svg",
