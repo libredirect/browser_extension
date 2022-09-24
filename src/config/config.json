@@ -85,9 +85,8 @@
 						"instanceList": false
 					}
 				},
-				"singleInstanceFrontends": ["freetube", "yatte"],
 				"targets": [
-					"^https?:\\/{2}(?:www\\.|music\\.|m\\.|)youtube.com(\\(?!iframe_api/.*|$)",
+					"^https?:\\/{2}(?:www\\.|m\\.|)youtube.com(?!iframe_api\\/.*)",
 					"^https?:\\/{2}img\\.youtube.com\\/vi\\/.*\\/..*",
 					"^https?:\\/{2}(?:i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
 					"^https?:\\/{2}(?:www\\.|music\\.|)youtube.com\\/watch?v=..*",
@@ -253,7 +252,6 @@
 			"imgur": {
 				"frontends": {
 					"rimgo": {
-						"preferences": {},
 						"name": "rimgo",
 						"instanceList": true
 					}
@@ -285,7 +283,6 @@
 			"medium": {
 				"frontends": {
 					"scribe": {
-						"preferences": {},
 						"name": "Scribe",
 						"instanceList": true
 					}
@@ -301,14 +298,14 @@
 					"^psiloveyou\\.xyz",
 					"^entrepreneurshandbook\\.co",
 					"^blog\\.coinbase\\.com",
-					"^levelup\\.gitconnected\\.com ",
-					"^javascript\\.plainenglish\\.io ",
-					"^blog\\.bitsrc\\.io ",
-					"^itnext\\.io ",
-					"^codeburst\\.io ",
-					"^infosecwriteups\\.com ",
-					"^blog\\.devgenius\\.io ",
-					"^writingcooperative\\.com "
+					"^levelup\\.gitconnected\\.com",
+					"^javascript\\.plainenglish\\.io",
+					"^blog\\.bitsrc\\.io",
+					"^itnext\\.io",
+					"^codeburst\\.io",
+					"^infosecwriteups\\.com",
+					"^blog\\.devgenius\\.io",
+					"^writingcooperative\\.com"
 				],
 				"name": "Medium",
 				"options": { "enabled": true },
@@ -353,7 +350,6 @@
 			"reuters": {
 				"frontends": {
 					"neuters": {
-						"preferences": {},
 						"name": "Neuters",
 						"instanceList": true
 					}
@@ -368,7 +364,6 @@
 			"peertube": {
 				"frontends": {
 					"simpleertube": {
-						"preferences": {},
 						"name": "SimpleerTube",
 						"instanceList": true
 					}
@@ -464,13 +459,12 @@
 						"instanceList": true
 					},
 					"whoogle": {
-						"preferences": {},
 						"name": "Whoogle",
 						"instanceList": true
 					},
 					"librex": {
 						"preferences": {
-							"cookies": ["bibliogram", "disable_special", "invidious", "libreddit", "nitter", "proxitok", "theme", "wikiless"]
+							"cookies": ["bibliogram", "disable_frontends", " disable_special", "invidious", "libreddit", "nitter", "proxitok", "save", "theme", "wikiless"]
 						},
 						"name": "LibreX",
 						"instanceList": true
@@ -516,13 +510,13 @@
 			"maps": {
 				"frontends": {
 					"facil": {
-						"preferences": {},
 						"name": "FacilMap",
 						"instanceList": true
 					},
 					"osm": {
 						"name": "OpenStreetMap",
-						"instanceList": false
+						"instanceList": false,
+						"singleInstance": "https://www.openstreetmap.org"
 					}
 				},
 				"targets": ["^https?:\\/{2}(((www|maps)\\.)?(google\\.).*(\\/maps)|maps\\.(google\\.).*)"],
@@ -538,7 +532,6 @@
 			"sendTargets": {
 				"frontends": {
 					"send": {
-						"preferences": {},
 						"name": "Send",
 						"instanceList": "true"
 					}

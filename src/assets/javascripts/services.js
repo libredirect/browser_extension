@@ -27,19 +27,19 @@ function init() {
 		})
 		for (const service in config.services) {
 			options[service] = {}
-			browser.storage.local.get([`${utils.camelCase(service)}Enable`, `${service}RedirectType`, `${service}Frontend`], r => {
-				options[service].enabled = r[utils.camelCase(service) + "Enable"]
+			browser.storage.local.get([`${service}Enabled`, `${service}RedirectType`, `${service}Frontend`], r => {
+				options[service].enabled = r[service + "Enabled"]
 				options[service].frontend = r[service + "Frontend"]
 				options[service].redirectType = r[service + "RedirectType"]
 			})
 			for (const frontend in config.services[service].frontends) {
 				options[frontend] = {}
-				options[frontend].checks = []
-				options[frontend].custom = []
 				for (const network in config.networks) {
+					options[frontend][network] = {}
+					options[frontend][network] = {}
 					browser.storage.local.get([`${frontend}${utils.camelCase(network)}RedirectsChecks`, `${frontend}${utils.camelCase(network)}CustomRedirects`], r => {
-						options[frontend].checks = r[frontend + utils.camelCase(network) + "RedirectsChecks"]
-						options[frontend].custom = r[frontend + utils.camelCase(network) + "CustomRedirects"]
+						options[frontend][network].checks = r[frontend + utils.camelCase(network) + "RedirectsChecks"]
+						options[frontend][network].custom = r[frontend + utils.camelCase(network) + "CustomRedirects"]
 					})
 				}
 			}
@@ -55,14 +55,22 @@ function all(service) {
 			for (const network in config.networks) {
 				tmp.push(...redirects[frontend][network])
 			}
-		}
+		} else if (config.services[service].frontends[frontend].singleInstance != undefined) tmp.push(config.services[service].frontends[frontend].singleInstance)
 	}
 	return tmp
 }
 
 function regexArray(service, url) {
-	for (const targetString in config.services[service].targets) {
-		const target = new RegExp(config.services[service].targets[targetString])
+	let targets
+	if (config.services[service].targets == "datajson") {
+		browser.storage.local.get(`${service}Targets`, r => {
+			targets = r[service + "Targets"]
+		})
+	} else {
+		targets = config.services[service].targets
+	}
+	for (const targetString in targets) {
+		const target = new RegExp(targets[targetString])
 		if (target.test(url.href)) return true
 	}
 	return false
@@ -76,32 +84,30 @@ function redirect(url, type, initiator) {
 	let randomInstance
 	let frontend
 	let network = options.network
-	let networkFallback = options.networkFallback
-	let redirectType
-	if (url.pathname == "/") return
 	for (const service in config.services) {
 		if (!options[service].enabled) continue
-		let targets = config.services[service].targets
-		if (targets == "datajson") {
-			browser.storage.local.get(`${service}Targets`, (targets = r[service + "Targets"]))
+		if (config.services[service].embeddable && type != options[service].redirectType && options[service].redirectType != "both") continue
+		if (!config.services[service].embeddable && type != "main_frame") continue
+		let targets = new RegExp(config.services[service].targets.join("|"), "i")
+
+		if (initiator && (all(service).includes(initiator.origin) || targets.test(initiator.host))) continue
+		if (!regexArray(service, url)) continue
+
+		if (Object.keys(config.services[service].frontends).length > 1) {
+			frontend = options[service].frontend
+		} else {
+			frontend = Object.keys(config.services[service].frontends)[0]
 		}
-
-		if (initiator && (all(service).includes(initiator.origin) || targets.includes(initiator.host))) continue
-		if (!targets.some(rx => rx.test(url.href))) continue
-		if (type != redirectType && type != "both") continue
-
-		frontend = options[service].frontend
-		redirectType = options[service].redirectType
-
-		// browser.storage.local.get(`${service}Frontend`, (frontend = r[service + "Frontend"]))
 
 		if (config.services[service].frontends[frontend].instanceList) {
-			let instanceList = [...[frontend + utils.camelCase(network) + "RedirectsChecks"], ...[frontend + utils.camelCase(network) + "CustomRedirects"]]
-			if (instanceList.length === 0 && networkFallback) instanceList = [...[frontend + "ClearnetRedirectsChecks"], ...[frontend + "ClearnetCustomRedirects"]]
-			if (instanceList.length === 0 && redirects.indexOf(frontend) != -1) return
+			let instanceList = [...options[frontend][network].checks, ...options[frontend][network].custom]
+			if (instanceList.length === 0 && options.networkFallback) instanceList = [...options[frontend].clearnet.checks, ...options[frontend].clearnet.custom]
+			if (instanceList.length === 0) return
 			randomInstance = utils.getRandomInstance(instanceList)
-		}
+		} else if (config.services[service].frontends[frontend].singleInstance) randomInstance = config.services[service].frontends[frontend].singleInstance
+		break
 	}
+	if (frontend == null) return
 
 	// Here is a (temperory) space for defining constants required in 2 or more switch cases.
 	// When possible, try have the two switch cases share all their code as done with searx and searxng.
@@ -111,10 +117,10 @@ function redirect(url, type, initiator) {
 	const dataLatLngRegex = /!3d(-?[0-9]{1,}.[0-9]{1,})!4d(-?[0-9]{1,}.[0-9]{1,})/
 	const placeRegex = /\/place\/(.*)\//
 	function convertMapCentre() {
-		let [, lat, lon, zoom] = 0
+		let [lat, lon, zoom] = [null, null, null]
 		if (url.pathname.match(mapCentreRegex)) {
 			// Set map centre if present
-			;[, lat, lon, zoom] = url.pathname.match(mapCentreRegex)
+			;[lat, lon, zoom] = url.pathname.match(mapCentreRegex)
 		} else if (url.searchParams.has("center")) {
 			;[lat, lon] = url.searchParams.get("center").split(",")
 			zoom = url.searchParams.get("zoom") ?? "17"
@@ -149,7 +155,7 @@ function redirect(url, type, initiator) {
 		case "whoogle":
 			return `${randomInstance}/search${encodeURIComponent(url.searchParams.get("q"))}`
 		case "librex":
-			return `${randomInstance}/search.php${encodeURIComponent(url.searchParams.get("q"))}`
+			return `${randomInstance}/search.php?q=${encodeURIComponent(url.searchParams.get("q"))}`
 		case "send":
 			return randomInstance
 		case "nitter":
@@ -168,7 +174,7 @@ function redirect(url, type, initiator) {
 			return `${randomInstance}/${url.search}`
 		case "osm": {
 			if (initiator && initiator.host === "earth.google.com") return
-			travelModes = {
+			const travelModes = {
 				driving: "fossgis_osrm_car",
 				walking: "fossgis_osrm_foot",
 				bicycling: "fossgis_osrm_bike",
@@ -227,10 +233,8 @@ function redirect(url, type, initiator) {
 				let orgVal = url.searchParams.get("origin")
 				let destVal = url.searchParams.get("destination")
 
-				let org
-				addressToLatLng(orgVal, a => (org = a))
-				let dest
-				addressToLatLng(destVal, a => (dest = a))
+				let org = addressToLatLng(orgVal)
+				let dest = addressToLatLng(destVal)
 				prefs.route = `${org};${dest}`
 
 				let prefsEncoded = new URLSearchParams(prefs).toString()
@@ -280,7 +284,7 @@ function redirect(url, type, initiator) {
 		}
 		case "facil": {
 			if (initiator && initiator.host === "earth.google.com") return
-			let travelModes = {
+			const travelModes = {
 				driving: "car",
 				walking: "pedestrian",
 				bicycling: "bicycle",
@@ -443,17 +447,12 @@ function initDefaults() {
 
 function computeService(url) {
 	for (const service in config.services) {
-		const regex = config.services[service].targets
-		console.log(regex)
 		if (regexArray(service, url)) {
-			console.log(service + "gi")
 			return service
 		} else if (all(service).includes(utils.protocolHost(url))) {
-			console.log(service)
 			return service
 		}
 	}
-	console.log("moment")
 	return null
 }
 

@@ -77,22 +77,22 @@ browser.storage.local.get("popupFrontends", r => {
 			currSite.getElementsByClassName(frontend)[0].classList.add("hide")
 		}
 
+		await getEnabled()
+
 		let url
 		try {
 			url = new URL(tabs[0].url)
-			console.log(url.href)
 		} catch {
 			currentSiteIsFrontend.classList.add("hide")
+			document.getElementById("unify_div").style.display = "none"
 			return
 		}
-
-		await getEnabled()
 
 		const currentService = serviceHelper.computeService(url)
 		if (currentService != null) {
 			divs[currentService].current.classList.remove("hide")
 			divs[currentService].all.classList.add("hide")
-			if (config.services[currentService].preferences != {}) {
+			if (config.services[currentService].preferences != undefined) {
 				const unify = document.getElementById("unify")
 				const textElement = document.getElementById("unify").getElementsByTagName("h4")[0]
 				unify.addEventListener("click", () => {

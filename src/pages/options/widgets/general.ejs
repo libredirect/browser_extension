@@ -86,8 +86,13 @@
   <div class="checklist-popup" id="popup-frontends-checklist">
     <% for (const service in config.services) { -%>
 <div>
-      <div><img src="../../../assets/images/<%= service %>-icon.<%= config.services[service].imageType %>">
-        <x data-localise="__MSG_<%= service %>__"><%= service %></x>
+  <div>
+  <% if (config.services[service].imageType != "svgMono") { _%>
+  <img src="../../../assets/images/<%= service %>-icon.<%= config.services[service].imageType %>">
+  <% } else { _%>
+  <%- include ('src/assets/images/' + service + '-icon.svg') %>
+  <% } _%>
+  <x data-localise="__MSG_<%= service %>__"><%= config.services[service].name %></x>
       </div>
       <input id="<%= service %>" type="checkbox">
     </div>
