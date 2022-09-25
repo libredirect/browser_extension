@@ -30,7 +30,7 @@ async function initDefaults() {
 					regex: [],
 				},
 				theme: "DEFAULT",
-				popupFrontends: ["youtube", "twitter", "instagram", "tiktok", "imgur", "reddit", "quora", "translate", "maps"],
+				popupServices: ["youtube", "twitter", "instagram", "tiktok", "imgur", "reddit", "quora", "translate", "maps"],
 				autoRedirect: false,
 				firstPartyIsolate: false,
 				network: "clearnet",
@@ -42,29 +42,7 @@ async function initDefaults() {
 	)
 }
 
-const allPopupFrontends = [
-	"youtube",
-	"youtubeMusic",
-	"twitter",
-	"instagram",
-	"tiktok",
-	"imgur",
-	"reddit",
-	"search",
-	"translate",
-	"maps",
-	"wikipedia",
-	"medium",
-	"quora",
-	"imdb",
-	"reuters",
-	"peertube",
-	"lbry",
-	"sendTargets",
-]
-
 export default {
 	isException,
 	initDefaults,
-	allPopupFrontends,
 }

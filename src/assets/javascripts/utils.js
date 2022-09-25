@@ -18,6 +18,7 @@ import reutersHelper from "./reuters.js"
 import youtubeMusicHelper from "./youtubeMusic.js"
 import mapsHelper from "./maps.js"
 import localise from "./localise.js"
+import servicesHelper from "./services.js"
 
 function getRandomInstance(instances) {
 	return instances[~~(instances.length * Math.random())]
@@ -479,22 +480,7 @@ function switchInstance(test) {
 					resolve()
 					return
 				}
-				let newUrl = await youtubeHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await twitterHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await instagramHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await redditHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await searchHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await translateHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await mediumHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await quoraHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await libremdbHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await tiktokHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await sendTargetsHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await peertubeHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await lbryHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await imgurHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await youtubeMusicHelper.switchInstance(url, true)
+				let newUrl = await servicesHelper.switchInstance(url)
 
 				if (newUrl) {
 					if (!test) browser.tabs.update({ url: newUrl })

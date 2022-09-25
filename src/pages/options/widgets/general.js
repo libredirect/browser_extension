@@ -15,6 +15,20 @@ updateInstancesElement.addEventListener("click", async () => {
 	} else updateInstancesElement.innerHTML = "Failed Miserabely"
 })
 
+let config
+
+async function getConfig() {
+	return new Promise(resolve => {
+		fetch("/config/config.json")
+			.then(response => response.text())
+			.then(data => {
+				const tmp = JSON.parse(data)
+				config = tmp.config
+				resolve()
+			})
+	})
+}
+
 let exportSettingsElement = document.getElementById("export-settings")
 
 function exportSettings() {
@@ -111,17 +125,20 @@ let nameCustomInstanceInput = document.getElementById("exceptions-custom-instanc
 let instanceTypeElement = document.getElementById("exceptions-custom-instance-type")
 let instanceType = "url"
 
-let popupFrontends
-for (const frontend of generalHelper.allPopupFrontends)
-	document.getElementById(frontend).addEventListener("change", event => {
-		if (event.target.checked && !popupFrontends.includes(frontend)) popupFrontends.push(frontend)
-		else if (popupFrontends.includes(frontend)) {
-			var index = popupFrontends.indexOf(frontend)
-			if (index !== -1) popupFrontends.splice(index, 1)
-		}
-		browser.storage.local.set({ popupFrontends })
-	})
+let popupServices
 
+await getConfig()
+
+for (const service in config.services) {
+	document.getElementById(service).addEventListener("change", event => {
+		if (event.target.checked && !popupServices.includes(service)) popupServices.push(service)
+		else if (popupServices.includes(service)) {
+			var index = popupServices.indexOf(service)
+			if (index !== -1) popupServices.splice(index, 1)
+		}
+		browser.storage.local.set({ popupServices })
+	})
+}
 // const firstPartyIsolate = document.getElementById('firstPartyIsolate');
 // firstPartyIsolate.addEventListener("change", () => browser.storage.local.set({ firstPartyIsolate: firstPartyIsolate.checked }))
 
@@ -214,9 +231,9 @@ browser.storage.local.get(
 			calcExceptionsCustomInstances()
 		})
 
-		browser.storage.local.get("popupFrontends", r => {
-			popupFrontends = r.popupFrontends
-			for (const frontend of generalHelper.allPopupFrontends) document.getElementById(frontend).checked = popupFrontends.includes(frontend)
+		browser.storage.local.get("popupServices", r => {
+			popupServices = r.popupServices
+			for (const service in config.services) document.getElementById(service).checked = popupServices.includes(service)
 		})
 	}
 )

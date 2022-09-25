@@ -2,11 +2,9 @@
 
 import generalHelper from "../../assets/javascripts/general.js"
 import utils from "../../assets/javascripts/utils.js"
-
 import servicesHelper from "../../assets/javascripts/services.js"
 
 window.browser = window.browser || window.chrome
-
 
 browser.runtime.onInstalled.addListener(details => {
 	function initDefaults() {
@@ -53,26 +51,6 @@ browser.webRequest.onBeforeRequest.addListener(
 			return null
 		}
 
-		/*
-		let newUrl = youtubeMusicHelper.redirect(url, details.type)
-		if (!newUrl) newUrl = youtubeHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = twitterHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = instagramHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = mapsHelper.redirect(url, initiator)
-		if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = mediumHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = quoraHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = libremdbHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = reutersHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = imgurHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = tiktokHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = sendTargetsHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = peertubeHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = lbryHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = translateHelper.redirect(url)
-		if (!newUrl) newUrl = searchHelper.redirect(url)
-		if (!newUrl) newUrl = wikipediaHelper.redirect(url)
-		*/
 		let newUrl = servicesHelper.redirect(url, details.type, initiator)
 
 		if (details.frameAncestors && details.frameAncestors.length > 0 && generalHelper.isException(new URL(details.frameAncestors[0].url))) newUrl = null

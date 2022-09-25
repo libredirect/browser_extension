@@ -69,12 +69,12 @@ function getEnabled() {
 	})
 }
 
-browser.storage.local.get("popupFrontends", r => {
+browser.storage.local.get("popupServices", r => {
 	browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
-		for (const frontend of generalHelper.allPopupFrontends) {
-			if (!r.popupFrontends.includes(frontend)) allSites.getElementsByClassName(frontend)[0].classList.add("hide")
-			else allSites.getElementsByClassName(frontend)[0].classList.remove("hide")
-			currSite.getElementsByClassName(frontend)[0].classList.add("hide")
+		for (const service in config.services) {
+			if (!r.popupServices.includes(service)) allSites.getElementsByClassName(service)[0].classList.add("hide")
+			else allSites.getElementsByClassName(service)[0].classList.remove("hide")
+			currSite.getElementsByClassName(service)[0].classList.add("hide")
 		}
 
 		await getEnabled()

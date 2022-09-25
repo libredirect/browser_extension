@@ -19,7 +19,7 @@ async function getConfig() {
 }
 
 function init() {
-	return new Promise(async resolve => {
+	return new Promise(resolve => {
 		browser.storage.local.get(["network", "networkFallback", "redirects"], r => {
 			options.network = r.network
 			options.networkFallback = r.networkFallback
@@ -401,7 +401,7 @@ function initDefaults() {
 			.then(response => response.text())
 			.then(async data => {
 				let dataJson = JSON.parse(data)
-				redirects = JSON.parse(data)
+				let tmpRedirects = JSON.parse(data)
 				browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], async r => {
 					for (const service in config.services) {
 						if (config.services[service].targets == "datajson") {
@@ -413,7 +413,7 @@ function initDefaults() {
 						}
 						for (const frontend in config.services[service].frontends) {
 							if (config.services[service].frontends[frontend].instanceList) {
-								let clearnetChecks = redirects[frontend].clearnet
+								let clearnetChecks = tmpRedirects[frontend].clearnet
 								for (const instance of [...r.cloudflareBlackList, ...r.authenticateBlackList, ...r.offlineBlackList]) {
 									let i = clearnetChecks.indexOf(instance)
 									if (i > -1) clearnetChecks.splice(i, 1)
@@ -428,7 +428,7 @@ function initDefaults() {
 											break
 										default:
 											browser.storage.local.set({
-												[frontend + utils.camelCase(network) + "RedirectsChecks"]: [...redirects[frontend][network]],
+												[frontend + utils.camelCase(network) + "RedirectsChecks"]: [...tmpRedirects[frontend][network]],
 												[frontend + utils.camelCase(network) + "CustomRedirects"]: [],
 											})
 									}
@@ -436,11 +436,11 @@ function initDefaults() {
 							}
 						}
 					}
+					browser.storage.local.set({
+						redirects: dataJson,
+					})
+					resolve()
 				})
-				browser.storage.local.set({
-					redirects: dataJson,
-				})
-				resolve()
 			})
 	})
 }
@@ -456,8 +456,39 @@ function computeService(url) {
 	return null
 }
 
+function switchInstance(url) {
+	return new Promise(async resolve => {
+		await getConfig()
+		await init()
+		for (const service in config.services) {
+			if (!options[service].enabled) continue
+			const protocolHost = utils.protocolHost(url)
+			if (!all(service).includes(protocolHost)) continue
+
+			let instancesList = [...options[options[service].frontend][options.network].checks, ...options[options[service].frontend][options.network].custom]
+			if (instancesList.length === 0 && options.networkFallback) instancesList = [...options[options[service].frontend].clearnet.checks, ...options[options[service].frontend].clearnet.custom]
+
+			let oldInstance
+			const i = instancesList.indexOf(protocolHost)
+			if (i > -1) {
+				oldInstance = instancesList[i]
+				instancesList.splice(i, 1)
+			}
+			if (instancesList.length === 0) {
+				resolve()
+				return
+			}
+			const randomInstance = utils.getRandomInstance(instancesList)
+			const oldUrl = `${oldInstance}${url.pathname}${url.search}`
+			// This is to make instance switching work when the instance depends on the pathname, eg https://darmarit.org/searx
+			resolve(oldUrl.replace(oldUrl, randomInstance))
+		}
+	})
+}
+
 export default {
 	redirect,
 	initDefaults,
 	computeService,
+	switchInstance,
 }
