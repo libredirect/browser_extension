@@ -1,17 +1,20 @@
 "use strict"
 window.browser = window.browser || window.chrome
 
+let exceptions
+
 function isException(url) {
 	for (const item of exceptions.url) if (item == `${url.protocol}//${url.host}`) return true
 	for (const item of exceptions.regex) if (new RegExp(item).test(url.href)) return true
 	return false
 }
 
-let exceptions
-
 function init() {
-	browser.storage.local.get("exceptions", r => {
-		exceptions = r.exceptions
+	return new Promise(resolve => {
+		browser.storage.local.get("exceptions", r => {
+			exceptions = r.exceptions
+			resolve()
+		})
 	})
 }
 

@@ -76,8 +76,8 @@ function regexArray(service, url) {
 	return false
 }
 
-await getConfig()
-await init()
+getConfig()
+init()
 browser.storage.onChanged.addListener(init)
 
 function redirect(url, type, initiator) {

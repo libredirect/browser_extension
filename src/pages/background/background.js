@@ -3,28 +3,10 @@
 import generalHelper from "../../assets/javascripts/general.js"
 import utils from "../../assets/javascripts/utils.js"
 
-import youtubeHelper from "../../assets/javascripts/youtube/youtube.js"
-import youtubeMusicHelper from "../../assets/javascripts/youtubeMusic.js"
-import twitterHelper from "../../assets/javascripts/twitter.js"
-import instagramHelper from "../../assets/javascripts/instagram.js"
-import redditHelper from "../../assets/javascripts/reddit.js"
-import searchHelper from "../../assets/javascripts/search.js"
-import translateHelper from "../../assets/javascripts/translate/translate.js"
-import mapsHelper from "../../assets/javascripts/maps.js"
-import wikipediaHelper from "../../assets/javascripts/wikipedia.js"
-import mediumHelper from "../../assets/javascripts/medium.js"
-import quoraHelper from "../../assets/javascripts/quora.js"
-import libremdbHelper from "../../assets/javascripts/imdb.js"
-import reutersHelper from "../../assets/javascripts/reuters.js"
-import imgurHelper from "../../assets/javascripts/imgur.js"
-import tiktokHelper from "../../assets/javascripts/tiktok.js"
-import sendTargetsHelper from "../../assets/javascripts/sendTargets.js"
-import peertubeHelper from "../../assets/javascripts/peertube.js"
-import lbryHelper from "../../assets/javascripts/lbry.js"
-
 import servicesHelper from "../../assets/javascripts/services.js"
 
 window.browser = window.browser || window.chrome
+
 
 browser.runtime.onInstalled.addListener(details => {
 	function initDefaults() {
@@ -36,26 +18,6 @@ browser.runtime.onInstalled.addListener(details => {
 						browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate }, () => {
 							browser.storage.local.set({ offlineBlackList: JSON.parse(data).offline }, () => {
 								generalHelper.initDefaults()
-								/*
-								youtubeHelper.initDefaults()
-								youtubeMusicHelper.initDefaults()
-								twitterHelper.initDefaults()
-								instagramHelper.initDefaults()
-								mapsHelper.initDefaults()
-								searchHelper.initDefaults()
-								translateHelper.initDefaults()
-								mediumHelper.initDefaults()
-								quoraHelper.initDefaults()
-								libremdbHelper.initDefaults()
-								reutersHelper.initDefaults()
-								redditHelper.initDefaults()
-								wikipediaHelper.initDefaults()
-								imgurHelper.initDefaults()
-								tiktokHelper.initDefaults()
-								sendTargetsHelper.initDefaults()
-								peertubeHelper.initDefaults()
-								lbryHelper.initDefaults()
-								*/
 								servicesHelper.initDefaults()
 							})
 						})
