@@ -19,7 +19,8 @@ async function getConfig() {
 }
 
 function init() {
-	return new Promise(resolve => {
+	return new Promise(async resolve => {
+		await getConfig()
 		browser.storage.local.get(["network", "networkFallback", "redirects"], r => {
 			options.network = r.network
 			options.networkFallback = r.networkFallback
@@ -49,6 +50,7 @@ function init() {
 }
 
 function all(service) {
+	init()
 	let tmp = []
 	for (const frontend in config.services[service].frontends) {
 		if (config.services[service].frontends[frontend].instanceList) {
@@ -458,8 +460,8 @@ function computeService(url) {
 
 function switchInstance(url) {
 	return new Promise(async resolve => {
-		await getConfig()
 		await init()
+		await getConfig()
 		for (const service in config.services) {
 			if (!options[service].enabled) continue
 			const protocolHost = utils.protocolHost(url)
@@ -481,8 +483,10 @@ function switchInstance(url) {
 			const randomInstance = utils.getRandomInstance(instancesList)
 			const oldUrl = `${oldInstance}${url.pathname}${url.search}`
 			// This is to make instance switching work when the instance depends on the pathname, eg https://darmarit.org/searx
-			resolve(oldUrl.replace(oldUrl, randomInstance))
+			// Doesn't work because of .includes array method, not a top priotiry atm
+			resolve(oldUrl.replace(oldInstance, randomInstance))
 		}
+		resolve()
 	})
 }
 
@@ -491,4 +495,5 @@ export default {
 	initDefaults,
 	computeService,
 	switchInstance,
+	init,
 }
