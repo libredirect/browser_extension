@@ -2,10 +2,10 @@
 <html id="elementToShowWithJavaScript" lang="en">
   <%- include('src/pages/widgets/head') -%>
   <body class="option" dir="auto">
-  <%- include('src/pages/widgets/links', {config: config}) -%>
+  <%- include('src/pages/widgets/links', {services: services}) -%>
     <div id="pages">
-      <%- include('src/pages/options/widgets/general', {config: config}) -%>
-      <%- include('src/pages/options/widgets/services', {config: config}) -%>
+      <%- include('src/pages/options/widgets/general', {config: {networks, services}}) -%>
+      <%- include('src/pages/options/widgets/services', {config: {networks, services}}) -%>
       <%- include('src/pages/options/widgets/about') -%>
     </div>
   </body>

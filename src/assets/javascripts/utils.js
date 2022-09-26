@@ -408,13 +408,7 @@ function copyRaw(test, copyRawElement) {
 					return
 				}
 
-				let newUrl = await youtubeHelper.reverse(url)
-				if (!newUrl) newUrl = await twitterHelper.reverse(url)
-				if (!newUrl) newUrl = await instagramHelper.reverse(url)
-				if (!newUrl) newUrl = await tiktokHelper.reverse(url)
-				if (!newUrl) newUrl = await quoraHelper.reverse(url)
-				if (!newUrl) newUrl = await libremdbHelper.reverse(url)
-				if (!newUrl) newUrl = await imgurHelper.reverse(url)
+				let newUrl = await servicesHelper.reverse(url)
 
 				if (newUrl) {
 					resolve(newUrl)

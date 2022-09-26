@@ -8,13 +8,13 @@
   </head>
   <body dir="auto">
     <div class="current_site">
-      <%- include('src/pages/widgets/switches', {config: config}) -%>
+      <%- include('src/pages/widgets/switches', {config: {networks, services}}) -%>
       <div id="current_site_divider">
         <hr>
       </div>
     </div>
     <div class="all_sites">
-      <%- include('src/pages/widgets/switches', {config: config}) -%>
+      <%- include('src/pages/widgets/switches', {config: {networks, services}}) -%>
     </div>
     <hr>
     <div class="some-block" id="change_instance_div"><a class="title button prevent" id="change_instance">

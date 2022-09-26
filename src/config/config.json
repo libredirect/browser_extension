@@ -1,548 +1,546 @@
 {
-	"config": {
-		"networks": {
-			"clearnet": {
-				"tld": "org",
-				"name": "Clearnet"
-			},
-			"tor": {
-				"tld": "onion",
-				"name": "Tor"
-			},
-			"i2p": {
-				"tld": "i2p",
-				"name": "I2P"
-			},
-			"loki": {
-				"tld": "loki",
-				"name": "Lokinet"
-			}
+	"networks": {
+		"clearnet": {
+			"tld": "org",
+			"name": "Clearnet"
 		},
-		"services": {
-			"youtube": {
-				"frontends": {
-					"invidious": {
-						"preferences": {
-							"cookies": ["PREFS"]
-						},
-						"name": "Invidious",
-						"embeddable": true,
-						"instanceList": true
+		"tor": {
+			"tld": "onion",
+			"name": "Tor"
+		},
+		"i2p": {
+			"tld": "i2p",
+			"name": "I2P"
+		},
+		"loki": {
+			"tld": "loki",
+			"name": "Lokinet"
+		}
+	},
+	"services": {
+		"youtube": {
+			"frontends": {
+				"invidious": {
+					"preferences": {
+						"cookies": ["PREFS"]
 					},
-					"piped": {
-						"preferences": {
-							"localstorage": [
-								"bufferGoal",
-								"comments",
-								"disableLBRY",
-								"enabledCodecs",
-								"hl",
-								"homepage",
-								"instance",
-								"listen",
-								"minimizeDescription",
-								"playerAutoPlay",
-								"proxyLBRY",
-								"quality",
-								"region",
-								"selectedSkip",
-								"sponsorblock",
-								"theme",
-								"volume",
-								"watchHistory"
-							]
-						},
-						"name": "Piped",
-						"embeddable": true,
-						"instanceList": true
+					"name": "Invidious",
+					"embeddable": true,
+					"instanceList": true
+				},
+				"piped": {
+					"preferences": {
+						"localstorage": [
+							"bufferGoal",
+							"comments",
+							"disableLBRY",
+							"enabledCodecs",
+							"hl",
+							"homepage",
+							"instance",
+							"listen",
+							"minimizeDescription",
+							"playerAutoPlay",
+							"proxyLBRY",
+							"quality",
+							"region",
+							"selectedSkip",
+							"sponsorblock",
+							"theme",
+							"volume",
+							"watchHistory"
+						]
 					},
-					"pipedMaterial": {
-						"preferences": {
-							"localstorage": ["PREFERENCES"]
-						},
-						"name": "Piped-Material",
-						"embeddable": false,
-						"instanceList": true
+					"name": "Piped",
+					"embeddable": true,
+					"instanceList": true
+				},
+				"pipedMaterial": {
+					"preferences": {
+						"localstorage": ["PREFERENCES"]
 					},
-					"cloudtube": {
-						"preferences": {
-							"token": "token",
-							"fetchEndpoint": "/api/settings",
-							"setEndpoint": "/settings"
-						},
-						"name": "CloudTube",
-						"embeddable": false,
-						"instanceList": true
+					"name": "Piped-Material",
+					"embeddable": false,
+					"instanceList": true
+				},
+				"cloudtube": {
+					"preferences": {
+						"token": "token",
+						"fetchEndpoint": "/api/settings",
+						"setEndpoint": "/settings"
 					},
-					"freetube": {
-						"name": "FreeTube",
-						"embeddable": false,
-						"instanceList": false
+					"name": "CloudTube",
+					"embeddable": false,
+					"instanceList": true
+				},
+				"freetube": {
+					"name": "FreeTube",
+					"embeddable": false,
+					"instanceList": false
+				},
+				"yattee": {
+					"name": "Yattee",
+					"embeddable": false,
+					"instanceList": false
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(?:www\\.|m\\.|)youtube.com(?!iframe_api\\/.*)",
+				"^https?:\\/{2}img\\.youtube.com\\/vi\\/.*\\/..*",
+				"^https?:\\/{2}(?:i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
+				"^https?:\\/{2}(?:www\\.|music\\.|)youtube.com\\/watch?v=..*",
+				"^https?:\\/{2}youtu\\.be\\/..*",
+				"^https?:\\/{2}(?:www\\.|)(youtube|youtube-nocookie)\\.com\\/embed\\/..*"
+			],
+			"name": "Youtube",
+			"options": {
+				"enabled": true,
+				"redirectType": "both",
+				"frontend": "invidious",
+				"embedFrontend": "invidious"
+			},
+			"imageType": "png",
+			"embeddable": true,
+			"url": "https://youtube.com"
+		},
+		"youtubeMusic": {
+			"frontends": {
+				"beatbump": {
+					"preferences": {
+						"localstorage": ["settings"],
+						"indexeddb": "beatbump"
 					},
-					"yattee": {
-						"name": "Yattee",
-						"embeddable": false,
-						"instanceList": false
-					}
+					"name": "Beatbump",
+					"instanceList": true
 				},
-				"targets": [
-					"^https?:\\/{2}(?:www\\.|m\\.|)youtube.com(?!iframe_api\\/.*)",
-					"^https?:\\/{2}img\\.youtube.com\\/vi\\/.*\\/..*",
-					"^https?:\\/{2}(?:i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
-					"^https?:\\/{2}(?:www\\.|music\\.|)youtube.com\\/watch?v=..*",
-					"^https?:\\/{2}youtu\\.be\\/..*",
-					"^https?:\\/{2}(?:www\\.|)(youtube|youtube-nocookie)\\.com\\/embed\\/..*"
-				],
-				"name": "Youtube",
-				"options": {
-					"enabled": true,
-					"redirectType": "both",
-					"frontend": "invidious",
-					"embedFrontend": "invidious"
-				},
-				"imageType": "png",
-				"embeddable": true,
-				"url": "https://youtube.com"
-			},
-			"youtubeMusic": {
-				"frontends": {
-					"beatbump": {
-						"preferences": {
-							"localstorage": ["settings"],
-							"indexeddb": "beatbump"
-						},
-						"name": "Beatbump",
-						"instanceList": true
+				"hyperpipe": {
+					"preferences": {
+						"localstorage": ["api", "authapi", "codec", "locale", "next", "pipedapi", "quality", "theme", "vol"],
+						"indexeddb": ["hyperpipedb"]
 					},
-					"hyperpipe": {
-						"preferences": {
-							"localstorage": ["api", "authapi", "codec", "locale", "next", "pipedapi", "quality", "theme", "vol"],
-							"indexeddb": ["hyperpipedb"]
-						},
-						"name": "HyperPipe",
-						"instanceList": true
-					}
-				},
-				"targets": ["^https?:\\/{2}music\\.youtube\\.com(\\/.*|$)"],
-				"name": "YT Music",
-				"options": {
-					"enabled": true,
-					"frontend": "beatbump"
-				},
-				"imageType": "png",
-				"embeddable": false,
-				"url": "https://music.youtube.com"
+					"name": "HyperPipe",
+					"instanceList": true
+				}
 			},
-			"twitter": {
-				"frontends": {
-					"nitter": {
-						"preferences": {
-							"cookies": [
-								"theme",
-								"infiniteScroll",
-								"stickyProfile",
-								"bidiSupport",
-								"hideTweetStats",
-								"hideBanner",
-								"hidePins",
-								"hideReplies",
-								"squareAvatars",
-								"mp4Playback",
-								"hlsPlayback",
-								"proxyVideos",
-								"muteVideos",
-								"autoplayGifs",
-								"replaceInstagram",
-								"replaceReddit",
-								"replaceTwitter",
-								"replaceYouTube"
-							]
-						},
-						"name": "Nitter",
-						"embeddable": true,
-						"instanceList": true
-					}
-				},
-				"targets": ["^https?:\\/{2}(www\\.|mobile\\.|)twitter\\.com", "^https?:\\/{2}(pbs\\.|video\\.|)twimg\\.com", "^https?:\\/{2}platform\\.twitter\\.com/embed", "^https?:\\/{2}t\\.co"],
-				"name": "Twitter",
-				"options": {
-					"enabled": true,
-					"redirectType": "both"
-				},
-				"imageType": "png",
-				"embeddable": true,
-				"url": "https://twitter.com"
+			"targets": ["^https?:\\/{2}music\\.youtube\\.com(\\/.*|$)"],
+			"name": "YT Music",
+			"options": {
+				"enabled": true,
+				"frontend": "beatbump"
 			},
-			"instagram": {
-				"frontends": {
-					"bibliogram": {
-						"preferences": {
-							"token": "token",
-							"fetchEndpoint": "/settings.json",
-							"setEndpoint": "/applysettings"
-						},
-						"name": "Bibliogram",
-						"instanceList": true
-					}
-				},
-				"targets": ["^https?:\\/{2}(www\\.)?instagram\\.com"],
-				"name": "Instagram",
-				"options": { "enabled": true },
-				"imageType": "png",
-				"embeddable": false,
-				"url": "https://instagram.com"
-			},
-			"tiktok": {
-				"frontends": {
-					"proxiTok": {
-						"preferences": {
-							"cookies": ["api-test_endpoints", "theme"]
-						},
-						"name": "ProxiTok",
-						"instanceList": true
-					}
-				},
-				"targets": ["^https?:\\/{2}(www\\.|)tiktok\\.com.*"],
-				"name": "TikTok",
-				"options": { "enabled": true },
-				"imageType": "png",
-				"embeddable": false,
-				"url": "https://tiktok.com"
-			},
-			"reddit": {
-				"frontends": {
-					"libreddit": {
-						"preferences": {
-							"cookies": ["theme", "front_page", "layout", "wide", "post_sort", "comment_sort", "show_nsfw", "autoplay_videos", "use_hls", "hide_hls_notification", "subscriptions", "filters"]
-						},
-						"name": "Libreddit",
-						"instanceList": true
+			"imageType": "png",
+			"embeddable": false,
+			"url": "https://music.youtube.com"
+		},
+		"twitter": {
+			"frontends": {
+				"nitter": {
+					"preferences": {
+						"cookies": [
+							"theme",
+							"infiniteScroll",
+							"stickyProfile",
+							"bidiSupport",
+							"hideTweetStats",
+							"hideBanner",
+							"hidePins",
+							"hideReplies",
+							"squareAvatars",
+							"mp4Playback",
+							"hlsPlayback",
+							"proxyVideos",
+							"muteVideos",
+							"autoplayGifs",
+							"replaceInstagram",
+							"replaceReddit",
+							"replaceTwitter",
+							"replaceYouTube"
+						]
 					},
-					"teddit": {
-						"preferences": {
-							"cookies": [
-								"collapse_child_comments",
-								"domain_instagram",
-								"domain_twitter",
-								"domain_youtube",
-								"flairs",
-								"highlight_controversial",
-								"nsfw_enabled",
-								"post_media_max_height",
-								"show_upvoted_percentage",
-								"show_upvotes",
-								"theme",
-								"videos_muted"
-							]
-						},
-						"name": "Teddit",
-						"instanceList": true
-					}
-				},
-				"targets": ["^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com", "^https?:\\/{2}(i\\.|preview\\.)redd\\.it"],
-				"name": "Reddit",
-				"options": {
-					"enabled": true,
-					"frontend": "libreddit"
-				},
-				"imageType": "png",
-				"embeddable": false,
-				"url": "https://reddit.com"
+					"name": "Nitter",
+					"embeddable": true,
+					"instanceList": true
+				}
 			},
-			"imgur": {
-				"frontends": {
-					"rimgo": {
-						"name": "rimgo",
-						"instanceList": true
-					}
-				},
-				"targets": ["^https?:\\/{2}([im]\\.)?imgur\\.(com|io)(\\/|$)"],
-				"name": "Imgur",
-				"options": { "enabled": true },
-				"imageType": "png",
-				"embeddable": false,
-				"url": "https://imgur.com"
+			"targets": ["^https?:\\/{2}(www\\.|mobile\\.|)twitter\\.com", "^https?:\\/{2}(pbs\\.|video\\.|)twimg\\.com", "^https?:\\/{2}platform\\.twitter\\.com/embed", "^https?:\\/{2}t\\.co"],
+			"name": "Twitter",
+			"options": {
+				"enabled": true,
+				"redirectType": "both"
 			},
-			"wikipedia": {
-				"frontends": {
-					"wikiless": {
-						"preferences": {
-							"cookies": ["theme", "default_lang"]
-						},
-						"name": "Wikiless",
-						"instanceList": true
-					}
-				},
-				"targets": ["^https?:\\/{2}(?:[a-z]+\\.)*wikipedia\\.org"],
-				"name": "Wikipedia",
-				"options": { "enabled": false },
-				"imageType": "svg",
-				"embeddable": false,
-				"url": "https://wikipedia.com"
-			},
-			"medium": {
-				"frontends": {
-					"scribe": {
-						"name": "Scribe",
-						"instanceList": true
-					}
-				},
-				"targets": [
-					"(?:.*\\.)*(?<!(link\\.|cdn\\-images\\-\\d+\\.))medium\\.com(\\/.*)?$",
-					"^towardsdatascience\\.com",
-					"^uxdesign\\.cc",
-					"^uxplanet\\.org",
-					"^betterprogramming\\.pub",
-					"^aninjusticemag\\.com",
-					"^betterhumans\\.pub",
-					"^psiloveyou\\.xyz",
-					"^entrepreneurshandbook\\.co",
-					"^blog\\.coinbase\\.com",
-					"^levelup\\.gitconnected\\.com",
-					"^javascript\\.plainenglish\\.io",
-					"^blog\\.bitsrc\\.io",
-					"^itnext\\.io",
-					"^codeburst\\.io",
-					"^infosecwriteups\\.com",
-					"^blog\\.devgenius\\.io",
-					"^writingcooperative\\.com"
-				],
-				"name": "Medium",
-				"options": { "enabled": true },
-				"imageType": "svgMono",
-				"embeddable": false,
-				"url": "https://medium.com"
-			},
-			"quora": {
-				"frontends": {
-					"quetre": {
-						"preferences": {
-							"localstorage": ["theme"]
-						},
-						"name": "Quetre",
-						"instanceList": true
-					}
-				},
-				"targets": ["^https?:\\/{2}([a-z]+\\.)*quora\\.com.*"],
-				"name": "Quora",
-				"options": { "enabled": true },
-				"imageType": "png",
-				"embeddable": false,
-				"url": "https://quora.com"
-			},
-			"imdb": {
-				"frontends": {
-					"libremdb": {
-						"preferences": {
-							"localstorage": ["theme"]
-						},
-						"name": "libremdb",
-						"instanceList": true
-					}
-				},
-				"targets": ["^https?:\\/{2}(?:www\\.|)imdb\\.com.*"],
-				"name": "IMDb",
-				"options": { "enabled": false },
-				"imageType": "svg",
-				"embeddable": false,
-				"url": "https://imdb.com"
-			},
-			"reuters": {
-				"frontends": {
-					"neuters": {
-						"name": "Neuters",
-						"instanceList": true
-					}
-				},
-				"targets": ["^https?:\\/{2}(www\\.|)reuters\\.com.*"],
-				"name": "Reuters",
-				"options": { "enabled": false },
-				"imageType": "svg",
-				"embeddable": false,
-				"url": "https://reuters.com"
-			},
-			"peertube": {
-				"frontends": {
-					"simpleertube": {
-						"name": "SimpleerTube",
-						"instanceList": true
-					}
-				},
-				"targets": "datajson",
-				"name": "PeerTube",
-				"options": { "enabled": false },
-				"imageType": "svg",
-				"embeddable": false,
-				"url": "https://search.joinpeertube.org"
-			},
-			"lbry": {
-				"frontends": {
-					"librarian": {
-						"preferences": {
-							"cookies": ["nsfw", "theme"],
-							"localstorage": ["autoplay", "autoplayNextVid", "collapseComments", "plyr", "sb_categories", "showRelated"]
-						},
-						"name": "Librarian",
-						"embeddable": true,
-						"instanceList": true
+			"imageType": "png",
+			"embeddable": true,
+			"url": "https://twitter.com"
+		},
+		"instagram": {
+			"frontends": {
+				"bibliogram": {
+					"preferences": {
+						"token": "token",
+						"fetchEndpoint": "/settings.json",
+						"setEndpoint": "/applysettings"
 					},
-					"lbryDesktop": {
-						"name": "LBRY Desktop",
-						"embeddable": false,
-						"instanceList": false
-					}
-				},
-				"targets": ["^https?:\\/{2}odysee\\.com", "^https?:\\/{2}lbry\\.tv"],
-				"name": "LBRY",
-				"options": {
-					"enabled": false,
-					"frontend": "librarian",
-					"redirectType": "both",
-					"embedFrontend": "librarian"
-				},
-				"imageType": "png",
-				"embeddable": true,
-				"url": "https://odysee.com"
+					"name": "Bibliogram",
+					"instanceList": true
+				}
 			},
-			"search": {
-				"frontends": {
-					"searx": {
-						"preferences": {
-							"cookies": [
-								"advanced_search",
-								"autocomplete",
-								"categories",
-								"disabled_engines",
-								"disabled_plugins",
-								"doi_resolver",
-								"enabled_engines",
-								"enabled_plugins",
-								"image_proxy",
-								"language",
-								"locale",
-								"method",
-								"oscar-style",
-								"results_on_new_tab",
-								"safesearch",
-								"theme",
-								"tokens"
-							]
-						},
-						"name": "SearX",
-						"instanceList": true
+			"targets": ["^https?:\\/{2}(www\\.)?instagram\\.com"],
+			"name": "Instagram",
+			"options": { "enabled": true },
+			"imageType": "png",
+			"embeddable": false,
+			"url": "https://instagram.com"
+		},
+		"tiktok": {
+			"frontends": {
+				"proxiTok": {
+					"preferences": {
+						"cookies": ["api-test_endpoints", "theme"]
 					},
-					"searxng": {
-						"preferences": {
-							"cookies": [
-								"autocomplete",
-								"categories",
-								"disabled_engines",
-								"disabled_plugins",
-								"doi_resolver",
-								"enabled_plugins",
-								"enabled_engines",
-								"image_proxy",
-								"infinite_scroll",
-								"language",
-								"locale",
-								"maintab",
-								"method",
-								"query_in_title",
-								"results_on_new_tab",
-								"safesearch",
-								"simple_style",
-								"theme",
-								"tokens"
-							]
-						},
-						"name": "SearXNG",
-						"instanceList": true
-					},
-					"whoogle": {
-						"name": "Whoogle",
-						"instanceList": true
-					},
-					"librex": {
-						"preferences": {
-							"cookies": ["bibliogram", "disable_frontends", " disable_special", "invidious", "libreddit", "nitter", "proxitok", "save", "theme", "wikiless"]
-						},
-						"name": "LibreX",
-						"instanceList": true
-					}
-				},
-				"targets": ["^https?:\\/{2}search\\.libredirect\\.invalid"],
-				"name": "Search",
-				"options": {
-					"enabled": true,
-					"frontend": "searxng"
-				},
-				"imageType": "svgMono",
-				"embeddable": false,
-				"url": "https://search.libredirect.invalid"
+					"name": "ProxiTok",
+					"instanceList": true
+				}
 			},
-			"translate": {
-				"frontends": {
-					"simplyTranslate": {
-						"preferences": {
-							"cookies": ["from_lang", "to_lang", "tts_enabled", "use_text_fields"]
-						},
-						"name": "SimplyTranslate",
-						"instanceList": true
+			"targets": ["^https?:\\/{2}(www\\.|)tiktok\\.com.*"],
+			"name": "TikTok",
+			"options": { "enabled": true },
+			"imageType": "png",
+			"embeddable": false,
+			"url": "https://tiktok.com"
+		},
+		"reddit": {
+			"frontends": {
+				"libreddit": {
+					"preferences": {
+						"cookies": ["theme", "front_page", "layout", "wide", "post_sort", "comment_sort", "show_nsfw", "autoplay_videos", "use_hls", "hide_hls_notification", "subscriptions", "filters"]
 					},
-					"lingva": {
-						"preferences": {
-							"localstorage": ["isauto", "source", "target"]
-						},
-						"name": "Lingva",
-						"instanceList": true
-					}
+					"name": "Libreddit",
+					"instanceList": true
 				},
-				"targets": ["^https?:\\/{2}translate\\.google(\\.[a-z]{2,3}){1,2}\\/"],
-				"name": "Translate",
-				"options": {
-					"enabled": true,
-					"frontend": "simplyTranslate"
-				},
-				"imageType": "svgMono",
-				"embeddable": false,
-				"url": "https://translate.google.com"
-			},
-			"maps": {
-				"frontends": {
-					"facil": {
-						"name": "FacilMap",
-						"instanceList": true
+				"teddit": {
+					"preferences": {
+						"cookies": [
+							"collapse_child_comments",
+							"domain_instagram",
+							"domain_twitter",
+							"domain_youtube",
+							"flairs",
+							"highlight_controversial",
+							"nsfw_enabled",
+							"post_media_max_height",
+							"show_upvoted_percentage",
+							"show_upvotes",
+							"theme",
+							"videos_muted"
+						]
 					},
-					"osm": {
-						"name": "OpenStreetMap",
-						"instanceList": false,
-						"singleInstance": "https://www.openstreetmap.org"
-					}
-				},
-				"targets": ["^https?:\\/{2}(((www|maps)\\.)?(google\\.).*(\\/maps)|maps\\.(google\\.).*)"],
-				"name": "Maps",
-				"options": {
-					"enabled": true,
-					"frontend": "osm"
-				},
-				"imageType": "svgMono",
-				"embeddable": false,
-				"url": "https://maps.google.com"
+					"name": "Teddit",
+					"instanceList": true
+				}
 			},
-			"sendTargets": {
-				"frontends": {
-					"send": {
-						"name": "Send",
-						"instanceList": "true"
-					}
+			"targets": ["^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com", "^https?:\\/{2}(i\\.|preview\\.)redd\\.it"],
+			"name": "Reddit",
+			"options": {
+				"enabled": true,
+				"frontend": "libreddit"
+			},
+			"imageType": "png",
+			"embeddable": false,
+			"url": "https://reddit.com"
+		},
+		"imgur": {
+			"frontends": {
+				"rimgo": {
+					"name": "rimgo",
+					"instanceList": true
+				}
+			},
+			"targets": ["^https?:\\/{2}([im]\\.)?imgur\\.(com|io)(\\/|$)"],
+			"name": "Imgur",
+			"options": { "enabled": true },
+			"imageType": "png",
+			"embeddable": false,
+			"url": "https://imgur.com"
+		},
+		"wikipedia": {
+			"frontends": {
+				"wikiless": {
+					"preferences": {
+						"cookies": ["theme", "default_lang"]
+					},
+					"name": "Wikiless",
+					"instanceList": true
+				}
+			},
+			"targets": ["^https?:\\/{2}(?:[a-z]+\\.)*wikipedia\\.org"],
+			"name": "Wikipedia",
+			"options": { "enabled": false },
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://wikipedia.com"
+		},
+		"medium": {
+			"frontends": {
+				"scribe": {
+					"name": "Scribe",
+					"instanceList": true
+				}
+			},
+			"targets": [
+				"(?:.*\\.)*(?<!(link\\.|cdn\\-images\\-\\d+\\.))medium\\.com(\\/.*)?$",
+				"^towardsdatascience\\.com",
+				"^uxdesign\\.cc",
+				"^uxplanet\\.org",
+				"^betterprogramming\\.pub",
+				"^aninjusticemag\\.com",
+				"^betterhumans\\.pub",
+				"^psiloveyou\\.xyz",
+				"^entrepreneurshandbook\\.co",
+				"^blog\\.coinbase\\.com",
+				"^levelup\\.gitconnected\\.com",
+				"^javascript\\.plainenglish\\.io",
+				"^blog\\.bitsrc\\.io",
+				"^itnext\\.io",
+				"^codeburst\\.io",
+				"^infosecwriteups\\.com",
+				"^blog\\.devgenius\\.io",
+				"^writingcooperative\\.com"
+			],
+			"name": "Medium",
+			"options": { "enabled": true },
+			"imageType": "svgMono",
+			"embeddable": false,
+			"url": "https://medium.com"
+		},
+		"quora": {
+			"frontends": {
+				"quetre": {
+					"preferences": {
+						"localstorage": ["theme"]
+					},
+					"name": "Quetre",
+					"instanceList": true
+				}
+			},
+			"targets": ["^https?:\\/{2}([a-z]+\\.)*quora\\.com.*"],
+			"name": "Quora",
+			"options": { "enabled": true },
+			"imageType": "png",
+			"embeddable": false,
+			"url": "https://quora.com"
+		},
+		"imdb": {
+			"frontends": {
+				"libremdb": {
+					"preferences": {
+						"localstorage": ["theme"]
+					},
+					"name": "libremdb",
+					"instanceList": true
+				}
+			},
+			"targets": ["^https?:\\/{2}(?:www\\.|)imdb\\.com.*"],
+			"name": "IMDb",
+			"options": { "enabled": false },
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://imdb.com"
+		},
+		"reuters": {
+			"frontends": {
+				"neuters": {
+					"name": "Neuters",
+					"instanceList": true
+				}
+			},
+			"targets": ["^https?:\\/{2}(www\\.|)reuters\\.com.*"],
+			"name": "Reuters",
+			"options": { "enabled": false },
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://reuters.com"
+		},
+		"peertube": {
+			"frontends": {
+				"simpleertube": {
+					"name": "SimpleerTube",
+					"instanceList": true
+				}
+			},
+			"targets": "datajson",
+			"name": "PeerTube",
+			"options": { "enabled": false },
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://search.joinpeertube.org"
+		},
+		"lbry": {
+			"frontends": {
+				"librarian": {
+					"preferences": {
+						"cookies": ["nsfw", "theme"],
+						"localstorage": ["autoplay", "autoplayNextVid", "collapseComments", "plyr", "sb_categories", "showRelated"]
+					},
+					"name": "Librarian",
+					"embeddable": true,
+					"instanceList": true
 				},
-				"targets": ["^https?:\\/{2}send\\.libredirect\\.invalid\\/$", "^https?:\\/{2}send\\.firefox\\.com\\/$", "^https?:\\/{2}sendfiles\\.online\\/$"],
-				"name": "Send Files",
-				"options": { "enabled": true },
-				"imageType": "svgMono",
-				"embeddable": false,
-				"url": "https://send.libredirect.invalid"
-			}
+				"lbryDesktop": {
+					"name": "LBRY Desktop",
+					"embeddable": false,
+					"instanceList": false
+				}
+			},
+			"targets": ["^https?:\\/{2}odysee\\.com", "^https?:\\/{2}lbry\\.tv"],
+			"name": "LBRY",
+			"options": {
+				"enabled": false,
+				"frontend": "librarian",
+				"redirectType": "both",
+				"embedFrontend": "librarian"
+			},
+			"imageType": "png",
+			"embeddable": true,
+			"url": "https://odysee.com"
+		},
+		"search": {
+			"frontends": {
+				"searx": {
+					"preferences": {
+						"cookies": [
+							"advanced_search",
+							"autocomplete",
+							"categories",
+							"disabled_engines",
+							"disabled_plugins",
+							"doi_resolver",
+							"enabled_engines",
+							"enabled_plugins",
+							"image_proxy",
+							"language",
+							"locale",
+							"method",
+							"oscar-style",
+							"results_on_new_tab",
+							"safesearch",
+							"theme",
+							"tokens"
+						]
+					},
+					"name": "SearX",
+					"instanceList": true
+				},
+				"searxng": {
+					"preferences": {
+						"cookies": [
+							"autocomplete",
+							"categories",
+							"disabled_engines",
+							"disabled_plugins",
+							"doi_resolver",
+							"enabled_plugins",
+							"enabled_engines",
+							"image_proxy",
+							"infinite_scroll",
+							"language",
+							"locale",
+							"maintab",
+							"method",
+							"query_in_title",
+							"results_on_new_tab",
+							"safesearch",
+							"simple_style",
+							"theme",
+							"tokens"
+						]
+					},
+					"name": "SearXNG",
+					"instanceList": true
+				},
+				"whoogle": {
+					"name": "Whoogle",
+					"instanceList": true
+				},
+				"librex": {
+					"preferences": {
+						"cookies": ["bibliogram", "disable_frontends", " disable_special", "invidious", "libreddit", "nitter", "proxitok", "save", "theme", "wikiless"]
+					},
+					"name": "LibreX",
+					"instanceList": true
+				}
+			},
+			"targets": ["^https?:\\/{2}search\\.libredirect\\.invalid"],
+			"name": "Search",
+			"options": {
+				"enabled": true,
+				"frontend": "searxng"
+			},
+			"imageType": "svgMono",
+			"embeddable": false,
+			"url": "https://search.libredirect.invalid"
+		},
+		"translate": {
+			"frontends": {
+				"simplyTranslate": {
+					"preferences": {
+						"cookies": ["from_lang", "to_lang", "tts_enabled", "use_text_fields"]
+					},
+					"name": "SimplyTranslate",
+					"instanceList": true
+				},
+				"lingva": {
+					"preferences": {
+						"localstorage": ["isauto", "source", "target"]
+					},
+					"name": "Lingva",
+					"instanceList": true
+				}
+			},
+			"targets": ["^https?:\\/{2}translate\\.google(\\.[a-z]{2,3}){1,2}\\/"],
+			"name": "Translate",
+			"options": {
+				"enabled": true,
+				"frontend": "simplyTranslate"
+			},
+			"imageType": "svgMono",
+			"embeddable": false,
+			"url": "https://translate.google.com"
+		},
+		"maps": {
+			"frontends": {
+				"facil": {
+					"name": "FacilMap",
+					"instanceList": true
+				},
+				"osm": {
+					"name": "OpenStreetMap",
+					"instanceList": false,
+					"singleInstance": "https://www.openstreetmap.org"
+				}
+			},
+			"targets": ["^https?:\\/{2}(((www|maps)\\.)?(google\\.).*(\\/maps)|maps\\.(google\\.).*)"],
+			"name": "Maps",
+			"options": {
+				"enabled": true,
+				"frontend": "osm"
+			},
+			"imageType": "svgMono",
+			"embeddable": false,
+			"url": "https://maps.google.com"
+		},
+		"sendTargets": {
+			"frontends": {
+				"send": {
+					"name": "Send",
+					"instanceList": "true"
+				}
+			},
+			"targets": ["^https?:\\/{2}send\\.libredirect\\.invalid\\/$", "^https?:\\/{2}send\\.firefox\\.com\\/$", "^https?:\\/{2}sendfiles\\.online\\/$"],
+			"name": "Send Files",
+			"options": { "enabled": true },
+			"imageType": "svgMono",
+			"embeddable": false,
+			"url": "https://send.libredirect.invalid"
 		}
 	}
 }

@@ -9,8 +9,7 @@ function getConfig() {
 		fetch("/config/config.json")
 			.then(response => response.text())
 			.then(data => {
-				const tmp = JSON.parse(data)
-				config = tmp.config
+				config = JSON.parse(data)
 				resolve()
 			})
 	})

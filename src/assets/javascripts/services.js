@@ -11,8 +11,7 @@ async function getConfig() {
 		fetch("/config/config.json")
 			.then(response => response.text())
 			.then(data => {
-				const tmp = JSON.parse(data)
-				config = tmp.config
+				config = JSON.parse(data)
 				resolve()
 			})
 	})
@@ -55,7 +54,7 @@ function all(service) {
 	for (const frontend in config.services[service].frontends) {
 		if (config.services[service].frontends[frontend].instanceList) {
 			for (const network in config.networks) {
-				tmp.push(...redirects[frontend][network])
+				tmp.push(...redirects[frontend][network], ...options[frontend][network].custom)
 			}
 		} else if (config.services[service].frontends[frontend].singleInstance != undefined) tmp.push(config.services[service].frontends[frontend].singleInstance)
 	}
@@ -168,10 +167,10 @@ function redirect(url, type, initiator) {
 			} else if (url.pathname.split("/").includes("tweets")) return `${randomInstance}${url.pathname.replace("/tweets", "")}${url.search}`
 			else if (url.host == "t.co") return `${randomInstance}/t.co${url.pathname}`
 			else return `${randomInstance}${url.pathname}${url.search}`
-		case "yatte":
+		case "yattee":
 			return url.href.replace(/^https?:\/{2}/, "yattee://")
 		case "freetube":
-			return `freetube://https://youtube.com${url.pathname}${url.search}`
+			return `freetube://https://youtu.be${url.pathname}${url.search}`.replace(/watch\?v=/, "")
 		case "simplyTranslate":
 			return `${randomInstance}/${url.search}`
 		case "osm": {
@@ -462,9 +461,9 @@ function switchInstance(url) {
 	return new Promise(async resolve => {
 		await init()
 		await getConfig()
+		const protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
 			if (!options[service].enabled) continue
-			const protocolHost = utils.protocolHost(url)
 			if (!all(service).includes(protocolHost)) continue
 
 			let instancesList = [...options[options[service].frontend][options.network].checks, ...options[options[service].frontend][options.network].custom]
@@ -485,8 +484,37 @@ function switchInstance(url) {
 			// This is to make instance switching work when the instance depends on the pathname, eg https://darmarit.org/searx
 			// Doesn't work because of .includes array method, not a top priotiry atm
 			resolve(oldUrl.replace(oldInstance, randomInstance))
+			return
 		}
 		resolve()
+	})
+}
+
+function reverse(url) {
+	return new Promise(async resolve => {
+		await init()
+		await getConfig()
+		let protocolHost = utils.protocolHost(url)
+		let currentService
+		for (const service in config.services) {
+			if (!all(service).includes(protocolHost)) continue
+			currentService = service
+		}
+		switch (currentService) {
+			case "instagram":
+				if (url.pathname.startsWith("/p")) resolve(`https://instagram.com${url.pathname.replace("/p", "")}${url.search}`)
+				if (url.pathname.startsWith("/u")) resolve(`https://instagram.com${url.pathname.replace("/u", "")}${url.search}`)
+			case "youtube":
+			case "imdb":
+			case "imgur":
+			case "tiktok":
+			case "twitter":
+				resolve(config.services[currentService].url + url.pathname + url.search)
+				return
+			default:
+				resolve()
+				return
+		}
 	})
 }
 
@@ -495,5 +523,5 @@ export default {
 	initDefaults,
 	computeService,
 	switchInstance,
-	init,
+	reverse,
 }
