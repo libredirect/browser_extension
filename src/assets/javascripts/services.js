@@ -2,9 +2,7 @@ window.browser = window.browser || window.chrome
 
 import utils from "./utils.js"
 
-let config = {},
-	redirects = {},
-	options = {}
+let config, redirects, options, targets, blacklists
 
 async function getConfig() {
 	return new Promise(resolve => {
@@ -19,46 +17,42 @@ async function getConfig() {
 
 function init() {
 	return new Promise(async resolve => {
-		await getConfig()
-		browser.storage.local.get(["network", "networkFallback", "redirects"], r => {
-			options.network = r.network
-			options.networkFallback = r.networkFallback
+		// await getConfig()
+		browser.storage.local.get(["options", "targets", "redirects", "blacklists"], r => {
+			blacklists = r.blacklists
 			redirects = r.redirects
+			targets = r.targets
+			options = r.options
+			resolve()
 		})
-		for (const service in config.services) {
-			options[service] = {}
-			browser.storage.local.get([`${service}Enabled`, `${service}RedirectType`, `${service}Frontend`], r => {
-				options[service].enabled = r[service + "Enabled"]
-				options[service].frontend = r[service + "Frontend"]
-				options[service].redirectType = r[service + "RedirectType"]
-			})
-			for (const frontend in config.services[service].frontends) {
-				options[frontend] = {}
-				for (const network in config.networks) {
-					options[frontend][network] = {}
-					options[frontend][network] = {}
-					browser.storage.local.get([`${frontend}${utils.camelCase(network)}RedirectsChecks`, `${frontend}${utils.camelCase(network)}CustomRedirects`], r => {
-						options[frontend][network].checks = r[frontend + utils.camelCase(network) + "RedirectsChecks"]
-						options[frontend][network].custom = r[frontend + utils.camelCase(network) + "CustomRedirects"]
-					})
-				}
-			}
-		}
-		resolve()
 	})
 }
 
-function all(service) {
-	init()
+await init()
+await getConfig()
+
+function fetchFrontendInstanceList(service, frontend) {
 	let tmp = []
-	for (const frontend in config.services[service].frontends) {
-		if (config.services[service].frontends[frontend].instanceList) {
-			for (const network in config.networks) {
-				tmp.push(...redirects[frontend][network], ...options[frontend][network].custom)
-			}
-		} else if (config.services[service].frontends[frontend].singleInstance != undefined) tmp.push(config.services[service].frontends[frontend].singleInstance)
-	}
+	if (!config.services[service].frontends[frontend].singleInstance) {
+		for (const network in config.networks) {
+			tmp.push(...redirects[frontend][network], ...options[frontend][network].custom)
+		}
+	} else if (config.services[service].frontends[frontend].singleInstance != undefined) tmp = config.services[service].frontends[frontend].singleInstance
 	return tmp
+}
+
+function all(service, frontend) {
+	// init()
+	// getConfig()
+	let instances = []
+	if (!frontend) {
+		for (const frontend in config.services[service].frontends) {
+			instances.push(...fetchFrontendInstanceList(service, frontend))
+		}
+	} else {
+		instances.push(...fetchFrontendInstanceList(service, frontend))
+	}
+	return instances
 }
 
 function regexArray(service, url) {
@@ -77,8 +71,6 @@ function regexArray(service, url) {
 	return false
 }
 
-getConfig()
-init()
 browser.storage.onChanged.addListener(init)
 
 function redirect(url, type, initiator) {
@@ -101,8 +93,8 @@ function redirect(url, type, initiator) {
 		}
 
 		if (config.services[service].frontends[frontend].instanceList) {
-			let instanceList = [...options[frontend][network].checks, ...options[frontend][network].custom]
-			if (instanceList.length === 0 && options.networkFallback) instanceList = [...options[frontend].clearnet.checks, ...options[frontend].clearnet.custom]
+			let instanceList = [...options[frontend][network].enabled, ...options[frontend][network].custom]
+			if (instanceList.length === 0 && options.networkFallback) instanceList = [...options[frontend].clearnet.enabled, ...options[frontend].clearnet.custom]
 			if (instanceList.length === 0) return
 			randomInstance = utils.getRandomInstance(instanceList)
 		} else if (config.services[service].frontends[frontend].singleInstance) randomInstance = config.services[service].frontends[frontend].singleInstance
@@ -401,45 +393,37 @@ function initDefaults() {
 		fetch("/instances/data.json")
 			.then(response => response.text())
 			.then(async data => {
-				let dataJson = JSON.parse(data)
-				let tmpRedirects = JSON.parse(data)
-				browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], async r => {
+				browser.storage.local.get(["options", "blacklists"], async r => {
+					let redirects = JSON.parse(data)
+					let options = r.options
+					let targets = {}
 					for (const service in config.services) {
+						options[service] = {}
 						if (config.services[service].targets == "datajson") {
-							browser.storage.local.set({ [service + "Targets"]: [...dataJson[service]] })
-							delete dataJson[service]
+							targets[service] = redirects[service]
+							//delete dataJson[service]
 						}
 						for (const defaultOption in config.services[service].options) {
-							browser.storage.local.set({ [service + utils.camelCase(defaultOption)]: config.services[service].options[defaultOption] })
+							options[service][defaultOption] = config.services[service].options[defaultOption]
 						}
 						for (const frontend in config.services[service].frontends) {
 							if (config.services[service].frontends[frontend].instanceList) {
-								let clearnetChecks = tmpRedirects[frontend].clearnet
-								for (const instance of [...r.cloudflareBlackList, ...r.authenticateBlackList, ...r.offlineBlackList]) {
-									let i = clearnetChecks.indexOf(instance)
-									if (i > -1) clearnetChecks.splice(i, 1)
-								}
+								options[frontend] = {}
 								for (const network in config.networks) {
-									switch (network) {
-										case "clearnet":
-											browser.storage.local.set({
-												[frontend + "ClearnetRedirectsChecks"]: [...clearnetChecks],
-												[frontend + "ClearnetCustomRedirects"]: [],
-											})
-											break
-										default:
-											browser.storage.local.set({
-												[frontend + utils.camelCase(network) + "RedirectsChecks"]: [...tmpRedirects[frontend][network]],
-												[frontend + utils.camelCase(network) + "CustomRedirects"]: [],
-											})
+									options[frontend][network] = {}
+									options[frontend][network].enabled = redirects[frontend][network]
+									options[frontend][network].custom = []
+								}
+								for (const blacklist in r.blacklists) {
+									for (const instance of blacklist) {
+										let i = options[frontend].clearnet.enabled.indexOf(instance)
+										if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
 									}
 								}
 							}
 						}
 					}
-					browser.storage.local.set({
-						redirects: dataJson,
-					})
+					browser.storage.local.set({ redirects, options, targets })
 					resolve()
 				})
 			})
@@ -459,15 +443,15 @@ function computeService(url) {
 
 function switchInstance(url) {
 	return new Promise(async resolve => {
-		await init()
-		await getConfig()
+		// await init()
+		// await getConfig()
 		const protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
 			if (!options[service].enabled) continue
 			if (!all(service).includes(protocolHost)) continue
 
-			let instancesList = [...options[options[service].frontend][options.network].checks, ...options[options[service].frontend][options.network].custom]
-			if (instancesList.length === 0 && options.networkFallback) instancesList = [...options[options[service].frontend].clearnet.checks, ...options[options[service].frontend].clearnet.custom]
+			let instancesList = [...options[options[service].frontend][options.network].enabled, ...options[options[service].frontend][options.network].custom]
+			if (instancesList.length === 0 && options.networkFallback) instancesList = [...options[options[service].frontend].clearnet.enabled, ...options[options[service].frontend].clearnet.custom]
 
 			let oldInstance
 			const i = instancesList.indexOf(protocolHost)
@@ -492,8 +476,8 @@ function switchInstance(url) {
 
 function reverse(url) {
 	return new Promise(async resolve => {
-		await init()
-		await getConfig()
+		// await init()
+		// await getConfig()
 		let protocolHost = utils.protocolHost(url)
 		let currentService
 		for (const service in config.services) {
@@ -504,6 +488,8 @@ function reverse(url) {
 			case "instagram":
 				if (url.pathname.startsWith("/p")) resolve(`https://instagram.com${url.pathname.replace("/p", "")}${url.search}`)
 				if (url.pathname.startsWith("/u")) resolve(`https://instagram.com${url.pathname.replace("/u", "")}${url.search}`)
+				resolve(config.services[currentService].url + url.pathname + url.search)
+				return
 			case "youtube":
 			case "imdb":
 			case "imgur":
@@ -518,10 +504,72 @@ function reverse(url) {
 	})
 }
 
+function unifyPreferences(url) {
+	return new Promise(async resolve => {
+		// await init()
+		// await getConfig()
+		const protocolHost = utils.protocolHost(url)
+		let currentFrontend, currentService
+		serviceloop: for (const service in config.services) {
+			for (const frontend in config.services[service].frontends) {
+				if (all(service, frontend).includes(protocolHost)) {
+					currentFrontend = frontend
+					currentService = service
+					break serviceloop
+				}
+			}
+		}
+		let instancesList = [...options[currentFrontend][options.network].enabled, ...options[currentFrontend][options.network].custom]
+		if (options.networkFallback && options.network != "clearnet") instancesList.push(...options[currentFrontend].clearnet.enabled, ...options[currentFrontend].clearnet.custom)
+
+		const frontend = config.services[currentService].frontends[currentFrontend]
+		if ("cookies" in frontend.preferences) {
+			for (const cookie in frontend.preferences.cookies) {
+				await utils.copyCookie(currentFrontend, url, instancesList, cookie)
+			}
+		}
+		if ("localStorage" in frontend.preferences) {
+		}
+		if ("indexeddb" in frontend.preferences) {
+		}
+		if ("token" in frontend.preferences) {
+		}
+		resolve(true)
+	})
+}
+
+function setRedirects(redirects) {
+	browser.storage.local.get(["options", "blacklists"], async r => {
+		let options = r.options
+		let targets = {}
+		for (const service in config.services) {
+			if (config.services[service].targets == "datajson") {
+				targets[service] = redirects[service]
+			}
+			for (const frontend in config.services[service].frontends) {
+				if (config.services[service].frontends[frontend].instanceList) {
+					for (const network in config.networks) {
+						options[frontend][network].enabled = redirects[frontend][network]
+					}
+					for (const blacklist in r.blacklists) {
+						for (const instance of blacklist) {
+							let i = options[frontend].clearnet.enabled.indexOf(instance)
+							if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
+						}
+					}
+				}
+			}
+		}
+		browser.storage.local.set({ redirects, targets, options })
+	})
+}
+
 export default {
 	redirect,
 	initDefaults,
 	computeService,
 	switchInstance,
 	reverse,
+	unifyPreferences,
+	setRedirects,
 }

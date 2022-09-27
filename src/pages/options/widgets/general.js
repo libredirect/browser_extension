@@ -28,6 +28,24 @@ async function getConfig() {
 	})
 }
 
+function setOption(option, multiChoice, event) {
+	browser.storage.local.get("options", r => {
+		let options = r.options
+		browser.storage.local.set({ options })
+	})
+
+	browser.storage.local.get("options", r => {
+		let options = r.options
+		if (multiChoice) {
+			options[option] = event.target.options[[option].selectedIndex].value
+		} else {
+			options[option] = event.target.checked
+		}
+		browser.storage.local.set({ options })
+		location.reload()
+	})
+}
+
 let exportSettingsElement = document.getElementById("export-settings")
 
 function exportSettings() {
@@ -75,13 +93,9 @@ resetSettings.addEventListener("click", async () => {
 		fetch("/instances/blacklist.json")
 			.then(response => response.text())
 			.then(async data => {
-				browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare }, () => {
-					browser.storage.local.set({ offlineBlackList: JSON.parse(data).offline }, () => {
-						browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate }, async () => {
-							await servicesHelper.initDefaults()
-							location.reload()
-						})
-					})
+				browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
+					await servicesHelper.initDefaults()
+					location.reload()
 				})
 			})
 	})
@@ -89,32 +103,30 @@ resetSettings.addEventListener("click", async () => {
 
 let autoRedirectElement = document.getElementById("auto-redirect")
 autoRedirectElement.addEventListener("change", event => {
-	browser.storage.local.set({ autoRedirect: event.target.checked })
+	setOption("autoRedirect", false, event)
 })
 
 let themeElement = document.getElementById("theme")
 themeElement.addEventListener("change", event => {
-	const value = event.target.options[theme.selectedIndex].value
-	browser.storage.local.set({ theme: value })
+	setOption("theme", true, event)
 	location.reload()
 })
 
 let networkElement = document.getElementById("network")
 networkElement.addEventListener("change", event => {
-	const value = event.target.options[network.selectedIndex].value
-	browser.storage.local.set({ network: value })
+	setOption("network", true, event)
 	location.reload()
 })
 
 let networkFallbackCheckbox = document.getElementById("network-fallback-checkbox")
 networkFallbackCheckbox.addEventListener("change", event => {
-	browser.storage.local.set({ networkFallback: event.target.checked })
+	setOption("networkFallback", false, event)
 })
 
 let latencyOutput = document.getElementById("latency-output")
 let latencyInput = document.getElementById("latency-input")
 latencyInput.addEventListener("change", event => {
-	browser.storage.local.set({ latencyThreshold: event.target.value })
+	setOption("latencyThreshold", false, event)
 })
 latencyInput.addEventListener("input", event => {
 	latencyOutput.value = event.target.value
@@ -141,46 +153,36 @@ for (const service in config.services) {
 // const firstPartyIsolate = document.getElementById('firstPartyIsolate');
 // firstPartyIsolate.addEventListener("change", () => browser.storage.local.set({ firstPartyIsolate: firstPartyIsolate.checked }))
 
-browser.storage.local.get(
-	[
-		"theme",
-		"autoRedirect",
-		"exceptions",
-		"network",
-		"networkFallback",
-		"latencyThreshold",
-		// 'firstPartyIsolate'
-	],
-	r => {
-		autoRedirectElement.checked = r.autoRedirect
-		themeElement.value = r.theme
-		networkElement.value = r.network
-		networkFallbackCheckbox.checked = r.networkFallback
-		latencyOutput.value = r.latencyThreshold
-		// firstPartyIsolate.checked = r.firstPartyIsolate;
+browser.storage.local.get("options", r => {
+	autoRedirectElement.checked = r.options.autoRedirect
+	themeElement.value = r.options.theme
+	networkElement.value = r.options.network
+	networkFallbackCheckbox.checked = r.options.networkFallback
+	latencyOutput.value = r.options.latencyThreshold
+	// firstPartyIsolate.checked = r.firstPartyIsolate;
 
-		let networkFallbackElement = document.getElementById("network-fallback")
-		if (networkElement.value == "clearnet") {
-			networkFallbackElement.style.display = "none"
-		} else {
-			networkFallbackElement.style.display = "block"
+	let networkFallbackElement = document.getElementById("network-fallback")
+	if (networkElement.value == "clearnet") {
+		networkFallbackElement.style.display = "none"
+	} else {
+		networkFallbackElement.style.display = "block"
+	}
+
+	instanceTypeElement.addEventListener("change", event => {
+		instanceType = event.target.options[instanceTypeElement.selectedIndex].value
+		if (instanceType == "url") {
+			nameCustomInstanceInput.setAttribute("type", "url")
+			nameCustomInstanceInput.setAttribute("placeholder", "https://www.google.com")
+		} else if (instanceType == "regex") {
+			nameCustomInstanceInput.setAttribute("type", "text")
+			nameCustomInstanceInput.setAttribute("placeholder", "https?://(www.|)youtube.com/")
 		}
-
-		instanceTypeElement.addEventListener("change", event => {
-			instanceType = event.target.options[instanceTypeElement.selectedIndex].value
-			if (instanceType == "url") {
-				nameCustomInstanceInput.setAttribute("type", "url")
-				nameCustomInstanceInput.setAttribute("placeholder", "https://www.google.com")
-			} else if (instanceType == "regex") {
-				nameCustomInstanceInput.setAttribute("type", "text")
-				nameCustomInstanceInput.setAttribute("placeholder", "https?://(www.|)youtube.com/")
-			}
-		})
-		let exceptionsCustomInstances = r.exceptions
-		function calcExceptionsCustomInstances() {
-			document.getElementById("exceptions-custom-checklist").innerHTML = [...exceptionsCustomInstances.url, ...exceptionsCustomInstances.regex]
-				.map(
-					x => `<div>
+	})
+	let exceptionsCustomInstances = r.options.exceptions
+	function calcExceptionsCustomInstances() {
+		document.getElementById("exceptions-custom-checklist").innerHTML = [...exceptionsCustomInstances.url, ...exceptionsCustomInstances.regex]
+			.map(
+				x => `<div>
                       ${x}
                       <button class="add" id="clear-${x}">
                         <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
@@ -190,49 +192,48 @@ browser.storage.local.get(
                       </button>
                     </div>
                     <hr>`
-				)
-				.join("\n")
+			)
+			.join("\n")
 
-			for (const x of [...exceptionsCustomInstances.url, ...exceptionsCustomInstances.regex]) {
-				document.getElementById(`clear-${x}`).addEventListener("click", () => {
-					console.log(x)
-					let index
-					index = exceptionsCustomInstances.url.indexOf(x)
-					if (index > -1) exceptionsCustomInstances.url.splice(index, 1)
-					else {
-						index = exceptionsCustomInstances.regex.indexOf(x)
-						if (index > -1) exceptionsCustomInstances.regex.splice(index, 1)
-					}
-					browser.storage.local.set({ exceptions: exceptionsCustomInstances })
-					calcExceptionsCustomInstances()
-				})
+		for (const x of [...exceptionsCustomInstances.url, ...exceptionsCustomInstances.regex]) {
+			document.getElementById(`clear-${x}`).addEventListener("click", () => {
+				console.log(x)
+				let index
+				index = exceptionsCustomInstances.url.indexOf(x)
+				if (index > -1) exceptionsCustomInstances.url.splice(index, 1)
+				else {
+					index = exceptionsCustomInstances.regex.indexOf(x)
+					if (index > -1) exceptionsCustomInstances.regex.splice(index, 1)
+				}
+				options.exceptions = exceptionsCustomInstances
+				browser.storage.local.set({ options })
+				calcExceptionsCustomInstances()
+			})
+		}
+	}
+	calcExceptionsCustomInstances()
+	document.getElementById("custom-exceptions-instance-form").addEventListener("submit", event => {
+		event.preventDefault()
+
+		let val
+		if (instanceType == "url") {
+			if (nameCustomInstanceInput.validity.valid) {
+				let url = new URL(nameCustomInstanceInput.value)
+				val = `${url.network}//${url.host}`
+				if (!exceptionsCustomInstances.url.includes(val)) exceptionsCustomInstances.url.push(val)
 			}
+		} else if (instanceType == "regex") {
+			val = nameCustomInstanceInput.value
+			if (val.trim() != "" && !exceptionsCustomInstances.regex.includes(val)) exceptionsCustomInstances.regex.push(val)
+		}
+		if (val) {
+			options.exceptions = exceptionsCustomInstances
+			browser.storage.local.set({ options })
+			nameCustomInstanceInput.value = ""
 		}
 		calcExceptionsCustomInstances()
-		document.getElementById("custom-exceptions-instance-form").addEventListener("submit", event => {
-			event.preventDefault()
+	})
 
-			let val
-			if (instanceType == "url") {
-				if (nameCustomInstanceInput.validity.valid) {
-					let url = new URL(nameCustomInstanceInput.value)
-					val = `${url.network}//${url.host}`
-					if (!exceptionsCustomInstances.url.includes(val)) exceptionsCustomInstances.url.push(val)
-				}
-			} else if (instanceType == "regex") {
-				val = nameCustomInstanceInput.value
-				if (val.trim() != "" && !exceptionsCustomInstances.regex.includes(val)) exceptionsCustomInstances.regex.push(val)
-			}
-			if (val) {
-				browser.storage.local.set({ exceptions: exceptionsCustomInstances })
-				nameCustomInstanceInput.value = ""
-			}
-			calcExceptionsCustomInstances()
-		})
-
-		browser.storage.local.get("popupServices", r => {
-			popupServices = r.popupServices
-			for (const service in config.services) document.getElementById(service).checked = popupServices.includes(service)
-		})
-	}
-)
+	popupServices = r.options.popupServices
+	for (const service in config.services) document.getElementById(service).checked = popupServices.includes(service)
+})

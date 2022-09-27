@@ -440,21 +440,7 @@ function unify(test) {
 					return
 				}
 
-				let result = await youtubeHelper.copyPasteInvidiousCookies(test, url)
-				if (!result) result = await youtubeHelper.copyPastePipedLocalStorage(test, url, currTab.id)
-				if (!result) result = await youtubeHelper.copyPastePipedMaterialLocalStorage(test, url, currTab.id)
-
-				if (!result) result = await twitterHelper.initNitterCookies(test, url)
-				if (!result) result = await redditHelper.initLibredditCookies(test, url)
-				if (!result) result = await redditHelper.initTedditCookies(test, url)
-				if (!result) result = await searchHelper.initSearxCookies(test, url)
-				if (!result) result = await searchHelper.initSearxngCookies(test, url)
-				if (!result) result = await searchHelper.initLibrexCookies(test, url)
-				if (!result) result = await tiktokHelper.initProxiTokCookies(test, url)
-				if (!result) result = await wikipediaHelper.initWikilessCookies(test, url)
-				if (!result) result = await translateHelper.copyPasteSimplyTranslateCookies(test, url)
-				if (!result) result = await translateHelper.copyPasteLingvaLocalStorage(test, url)
-				if (!result) result = await instagramHelper.initBibliogramPreferences(test, url)
+				let result = await servicesHelper.unifyPreferences(url)
 
 				resolve(result)
 			}

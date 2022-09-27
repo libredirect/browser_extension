@@ -12,18 +12,13 @@ browser.runtime.onInstalled.addListener(details => {
 			.then(response => response.text())
 			.then(async data => {
 				browser.storage.local.clear(() => {
-					browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare }, () => {
-						browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate }, () => {
-							browser.storage.local.set({ offlineBlackList: JSON.parse(data).offline }, () => {
-								generalHelper.initDefaults()
-								servicesHelper.initDefaults()
-							})
-						})
+					browser.storage.local.set({ blacklists: JSON.parse(data) }, () => {
+						generalHelper.initDefaults()
+						servicesHelper.initDefaults()
 					})
 				})
 			})
 	}
-	if (details.reason == "install") initDefaults()
 
 	// if (details.reason == 'install' || (details.reason == "update" && details.previousVersion != browser.runtime.getManifest().version)) {
 	//   if (details.reason == "update")
@@ -36,6 +31,17 @@ browser.runtime.onInstalled.addListener(details => {
 	//     })
 	//   else initDefaults();
 	// }
+	switch (details.reason) {
+		case "install":
+			initDefaults()
+			break
+		case "update":
+			switch (details.previousVersion) {
+				case "2.2.1":
+					//do stuff
+					break
+			}
+	}
 })
 
 let BYPASSTABs = []
@@ -98,21 +104,7 @@ browser.webRequest.onHeadersReceived.addListener(
 */
 
 async function redirectOfflineInstance(url, tabId) {
-	let newUrl = await youtubeHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await twitterHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await instagramHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await redditHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await searchHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await translateHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await mediumHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await quoraHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await libremdbHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await tiktokHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await imgurHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await peertubeHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await lbryHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await youtubeMusicHelper.switchInstance(url, true)
+	let newUrl = await servicesHelper.switchInstance(url, true)
 
 	if (newUrl) {
 		if (counter >= 5) {
@@ -189,5 +181,3 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	if (message.function === "unify") utils.unify(false).then(r => sendResponse({ response: r }))
 	return true
 })
-
-browser.storage.local.set({ version: browser.runtime.getManifest().version })

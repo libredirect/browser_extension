@@ -25,17 +25,19 @@ async function initDefaults() {
 	return new Promise(resolve =>
 		browser.storage.local.set(
 			{
-				exceptions: {
-					url: [],
-					regex: [],
+				options: {
+					exceptions: {
+						url: [],
+						regex: [],
+					},
+					theme: "DEFAULT",
+					popupServices: ["youtube", "twitter", "instagram", "tiktok", "imgur", "reddit", "quora", "translate", "maps"],
+					autoRedirect: false,
+					firstPartyIsolate: false,
+					network: "clearnet",
+					networkFallback: true,
+					latencyThreshold: 1000,
 				},
-				theme: "DEFAULT",
-				popupServices: ["youtube", "twitter", "instagram", "tiktok", "imgur", "reddit", "quora", "translate", "maps"],
-				autoRedirect: false,
-				firstPartyIsolate: false,
-				network: "clearnet",
-				networkFallback: true,
-				latencyThreshold: 1000,
 			},
 			() => resolve()
 		)

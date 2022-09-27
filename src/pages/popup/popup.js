@@ -56,27 +56,18 @@ await setDivs()
 
 const currentSiteIsFrontend = document.getElementById("current_site_divider")
 
-function getEnabled() {
-	return new Promise(async resolve => {
-		for (const service in config.services) {
-			browser.storage.local.get(`${service}Enabled`, r => {
-				divs[service].toggle.all.checked = r[service + "Enabled"]
-				divs[service].toggle.current.checked = r[service + "Enabled"]
-			})
-		}
-		resolve()
-	})
-}
-
-browser.storage.local.get("popupServices", r => {
+browser.storage.local.get("options", r => {
 	browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 		for (const service in config.services) {
-			if (!r.popupServices.includes(service)) allSites.getElementsByClassName(service)[0].classList.add("hide")
+			if (!r.options.popupServices.includes(service)) allSites.getElementsByClassName(service)[0].classList.add("hide")
 			else allSites.getElementsByClassName(service)[0].classList.remove("hide")
 			currSite.getElementsByClassName(service)[0].classList.add("hide")
 		}
 
-		await getEnabled()
+		for (const service in config.services) {
+			divs[service].toggle.all.checked = r.options[service].enabled
+			divs[service].toggle.current.checked = r.options[service].enabled
+		}
 
 		let url
 		try {
@@ -113,13 +104,17 @@ browser.storage.local.get("popupServices", r => {
 
 for (const service in config.services) {
 	divs[service].toggle.all.addEventListener("change", () => {
-		browser.storage.local.set({
-			[service + "Enabled"]: divs[service].toggle.all.checked,
+		browser.storage.local.get("options", r => {
+			let options = r.options
+			options[service].enabled = divs[service].toggle.all.checked
+			browser.storage.local.set({ options })
 		})
 	})
 	divs[service].toggle.current.addEventListener("change", () => {
-		browser.storage.local.set({
-			[service + "Enabled"]: divs[service].toggle.current.checked,
+		browser.storage.local.get("options", r => {
+			let options = r.options
+			options[service].enabled = divs[service].toggle.current.checked
+			browser.storage.local.set({ options })
 		})
 	})
 }

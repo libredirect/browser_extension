@@ -116,7 +116,7 @@
 				"hyperpipe": {
 					"preferences": {
 						"localstorage": ["api", "authapi", "codec", "locale", "next", "pipedapi", "quality", "theme", "vol"],
-						"indexeddb": ["hyperpipedb"]
+						"indexeddb": "hyperpipedb"
 					},
 					"name": "HyperPipe",
 					"instanceList": true
@@ -542,5 +542,10 @@
 			"embeddable": false,
 			"url": "https://send.libredirect.invalid"
 		}
+	},
+	"blacklist": {
+		"cloudflare": { "color": "red" },
+		"authenticate": { "color": "orange" },
+		"offline": { "color": "grey" }
 	}
 }
