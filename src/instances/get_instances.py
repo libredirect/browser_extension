@@ -238,21 +238,30 @@ def bibliogram():
 
 def libreddit():
     r = requests.get(
-        'https://raw.githubusercontent.com/spikecodes/libreddit/master/README.md')
+        'https://github.com/libbacon/libreddit-instances/raw/master/instances.json')
+    rJson = json.loads(r.text)
     libredditList = {}
     libredditList['normal'] = []
     libredditList['tor'] = []
     libredditList['i2p'] = []
     libredditList['loki'] = []
 
-    tmp = re.findall(
-        r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|", r.text)
+    if 'instances' not in rJson:
+        mightyList['libreddit'] = libredditList
+        print(Fore.RED + 'Failed to fetch ' + Style.RESET_ALL + 'LibReddit')
+        return
 
-    for item in tmp:
-        if re.search(torRegex, item):
-            libredditList['tor'].append(item)
-        else:
-            libredditList['normal'].append(item)
+    for item in rJson['instances']:
+        if 'url' in item:
+            url = item['url']
+            libredditList['normal'].append(url)
+        elif 'onion' in item:
+            onion = item['onion']
+            libredditList['tor'].append(onion)
+        elif 'i2p' in item:
+            i2p = item['i2p']
+            libredditList['i2p'].append(i2p)
+
     mightyList['libreddit'] = libredditList
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'LibReddit')
 
