@@ -341,6 +341,8 @@ def quetre():
     for item in tmp:
         if re.search(torRegex, item):
             _list['tor'].append(item)
+        elif re.search(i2pRegex, item):
+            _list['i2p'].append(item)
         else:
             _list['normal'].append(item)
     mightyList['quetre'] = _list
@@ -365,8 +367,11 @@ def libremdb():
             continue
         if re.search(torRegex, item):
             _list['tor'].append(item)
+        elif re.search(i2pRegex, item):
+            _list['i2p'].append(item)
         else:
             _list['normal'].append(item)
+
 
     mightyList['libremdb'] = _list
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'Libremdb')
