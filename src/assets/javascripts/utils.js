@@ -111,29 +111,27 @@ function protocolHost(url) {
 	return `${url.protocol}//${url.host}`
 }
 
-async function processDefaultCustomInstances(target, name, protocol, document) {
-	let latencyKey = `${name}Latency`
+async function processDefaultCustomInstances(service, name, network, document) {
 	let instancesLatency
-	let nameProtocolElement = document.getElementById(name).getElementsByClassName(protocol)[0]
+	let nameNetworkElement = document.getElementById(name).getElementsByClassName(network)[0]
 
 	let nameCustomInstances = []
-	let nameCheckListElement = nameProtocolElement.getElementsByClassName("checklist")[0]
+	let nameCheckListElement = nameNetworkElement.getElementsByClassName("checklist")[0]
 
 	await initBlackList()
 
 	let nameDefaultRedirects
 
-	let redirectsChecks = `${name}${camelCase(protocol)}RedirectsChecks`
-	let customRedirects = `${name}${camelCase(protocol)}CustomRedirects`
-
-	let redirects
+	let redirects, options
 
 	async function getFromStorage() {
 		return new Promise(async resolve =>
-			browser.storage.local.get([redirectsChecks, customRedirects, "redirects", latencyKey], r => {
-				nameDefaultRedirects = r[redirectsChecks]
-				nameCustomInstances = r[customRedirects]
-				instancesLatency = r[latencyKey] ?? []
+			browser.storage.local.get(["options", "redirects", "latency"], r => {
+				nameDefaultRedirects = r.options[name][network].enabled
+				nameCustomInstances = r.options[name][network].custom
+				options = r.options
+				if (r.latency) instancesLatency = r.latency[name] ?? []
+				else instancesLatency = []
 				redirects = r.redirects
 				resolve()
 			})
@@ -141,12 +139,11 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
 	}
 
 	await getFromStorage()
-	if (nameCustomInstances === undefined) console.log(customRedirects)
 
 	function calcNameCheckBoxes() {
 		let isTrue = true
-		for (const item of redirects[name][protocol]) {
-			if (nameDefaultRedirects === undefined) console.log(name + protocol + " is undefined")
+		for (const item of redirects[name][network]) {
+			if (nameDefaultRedirects === undefined) console.log(name + network + " is undefined")
 			if (!nameDefaultRedirects.includes(item)) {
 				isTrue = false
 				break
@@ -156,14 +153,14 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
 			element.checked = nameDefaultRedirects.includes(element.className)
 		}
 		if (nameDefaultRedirects.length == 0) isTrue = false
-		nameProtocolElement.getElementsByClassName("toggle-all")[0].checked = isTrue
+		nameNetworkElement.getElementsByClassName("toggle-all")[0].checked = isTrue
 	}
 	nameCheckListElement.innerHTML = [
 		`<div>
         <x data-localise="__MSG_toggleAll__">Toggle All</x>
         <input type="checkbox" class="toggle-all"/>
       </div>`,
-		...redirects[name][protocol].map(x => {
+		...redirects[name][network].map(x => {
 			const cloudflare = cloudflareBlackList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ""
 			const authenticate = authenticateBlackList.includes(x) ? ' <span style="color:orange;">authenticate</span>' : ""
 			const offline = offlineBlackList.includes(x) ? ' <span style="color:grey;">offline</span>' : ""
@@ -188,31 +185,32 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
 	localise.localisePage()
 
 	calcNameCheckBoxes()
-	nameProtocolElement.getElementsByClassName("toggle-all")[0].addEventListener("change", async event => {
-		if (event.target.checked) nameDefaultRedirects = [...redirects[name][protocol]]
+	nameNetworkElement.getElementsByClassName("toggle-all")[0].addEventListener("change", async event => {
+		if (event.service.checked) nameDefaultRedirects = [...redirects[name][network]]
 		else nameDefaultRedirects = []
 
-		browser.storage.local.set({ [redirectsChecks]: nameDefaultRedirects })
+		options[service][network].enabled = nameDefaultRedirects
+		browser.storage.local.set({ options })
 		calcNameCheckBoxes()
 	})
 
 	for (let element of nameCheckListElement.getElementsByTagName("input")) {
 		if (element.className != "toggle-all")
-			nameProtocolElement.getElementsByClassName(element.className)[0].addEventListener("change", async event => {
-				if (event.target.checked) nameDefaultRedirects.push(element.className)
+			nameNetworkElement.getElementsByClassName(element.className)[0].addEventListener("change", async event => {
+				if (event.service.checked) nameDefaultRedirects.push(element.className)
 				else {
 					let index = nameDefaultRedirects.indexOf(element.className)
 					if (index > -1) nameDefaultRedirects.splice(index, 1)
 				}
-				browser.storage.local.set({
-					[redirectsChecks]: nameDefaultRedirects,
-				})
+
+				options[service][network].enabled = nameDefaultRedirects
+				browser.storage.local.set({ options })
 				calcNameCheckBoxes()
 			})
 	}
 
 	function calcNameCustomInstances() {
-		nameProtocolElement.getElementsByClassName("custom-checklist")[0].innerHTML = nameCustomInstances
+		nameNetworkElement.getElementsByClassName("custom-checklist")[0].innerHTML = nameCustomInstances
 			.map(
 				x => `<div>
                 ${x}
@@ -227,24 +225,26 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
 			.join("\n")
 
 		for (const item of nameCustomInstances) {
-			nameProtocolElement.getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
+			nameNetworkElement.getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
 				let index = nameCustomInstances.indexOf(item)
 				if (index > -1) nameCustomInstances.splice(index, 1)
-				browser.storage.local.set({ [customRedirects]: nameCustomInstances })
+				options[service][network].custom = nameCustomInstances
+				browser.storage.local.set({ options })
 				calcNameCustomInstances()
 			})
 		}
 	}
 	calcNameCustomInstances()
-	nameProtocolElement.getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
+	nameNetworkElement.getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
 		event.preventDefault()
-		let nameCustomInstanceInput = nameProtocolElement.getElementsByClassName("custom-instance")[0]
+		let nameCustomInstanceInput = nameNetworkElement.getElementsByClassName("custom-instance")[0]
 		let url = new URL(nameCustomInstanceInput.value)
 		let protocolHostVar = protocolHost(url)
-		if (nameCustomInstanceInput.validity.valid && !redirects[name][protocol].includes(protocolHostVar)) {
+		if (nameCustomInstanceInput.validity.valid && !redirects[name][network].includes(protocolHostVar)) {
 			if (!nameCustomInstances.includes(protocolHostVar)) {
 				nameCustomInstances.push(protocolHostVar)
-				browser.storage.local.set({ [customRedirects]: nameCustomInstances })
+				options[service][network].custom = nameCustomInstances
+				browser.storage.local.set({ options })
 				nameCustomInstanceInput.value = ""
 			}
 			calcNameCustomInstances()
@@ -299,9 +299,9 @@ async function testLatency(element, instances, frontend) {
 		let myList = {}
 		let latencyThreshold
 		let redirectsChecks = []
-		browser.storage.local.get(["latencyThreshold", `${frontend}ClearnetRedirectsChecks`], r => {
-			latencyThreshold = r.latencyThreshold
-			redirectsChecks = r[`${frontend}ClearnetRedirectsChecks`]
+		browser.storage.local.get(["options"], r => {
+			latencyThreshold = r.options.latencyThreshold
+			redirectsChecks = r.options[frontend].clearnet.enabled
 		})
 		for (const href of instances)
 			await ping(href).then(time => {
@@ -331,9 +331,9 @@ async function testLatency(element, instances, frontend) {
 
 function copyCookie(frontend, targetUrl, urls, name) {
 	return new Promise(resolve => {
-		browser.storage.local.get("firstPartyIsolate", r => {
+		browser.storage.local.get("options", r => {
 			let query
-			if (!r.firstPartyIsolate)
+			if (!r.options.firstPartyIsolate)
 				query = {
 					url: protocolHost(targetUrl),
 					name: name,
@@ -348,7 +348,7 @@ function copyCookie(frontend, targetUrl, urls, name) {
 				for (const cookie of cookies)
 					if (cookie.name == name) {
 						for (const url of urls) {
-							const setQuery = r.firstPartyIsolate
+							const setQuery = r.options.firstPartyIsolate
 								? {
 										url: url,
 										name: name,
@@ -375,23 +375,21 @@ function copyCookie(frontend, targetUrl, urls, name) {
 
 function getPreferencesFromToken(frontend, targetUrl, urls, name, endpoint) {
 	return new Promise(resolve => {
-		browser.storage.local.get("firstPartyIsolate", r => {
+		const http = new XMLHttpRequest()
+		const url = `${targetUrl}${endpoint}`
+		http.open("GET", url, false)
+		//http.setRequestHeader("Cookie", `${name}=${cookie.value}`)
+		http.send(null)
+		const preferences = JSON.parse(http.responseText)
+		let formdata = new FormData()
+		for (var key in preferences) formdata.append(key, preferences[key])
+		for (const url of urls) {
 			const http = new XMLHttpRequest()
-			const url = `${targetUrl}${endpoint}`
-			http.open("GET", url, false)
-			http.setRequestHeader("Cookie", `${name}=${cookie.value}`)
+			http.open("POST", `${url}/settings/stay`, false)
 			http.send(null)
-			const preferences = JSON.parse(http.responseText)
-			let formdata = new FormData()
-			for (var key in preferences) formdata.append(key, preferences[key])
-			for (const url of urls) {
-				const http = new XMLHttpRequest()
-				http.open("POST", `${url}/settings/stay`, false)
-				http.send(null)
-			}
-			resolve()
-			return
-		})
+		}
+		resolve()
+		return
 	})
 }
 
@@ -427,7 +425,7 @@ function copyRaw(test, copyRawElement) {
 	})
 }
 
-function unify(test) {
+function unify() {
 	return new Promise(resolve => {
 		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 			let currTab = tabs[0]

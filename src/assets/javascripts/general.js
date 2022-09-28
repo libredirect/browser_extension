@@ -11,8 +11,8 @@ function isException(url) {
 
 function init() {
 	return new Promise(resolve => {
-		browser.storage.local.get("exceptions", r => {
-			exceptions = r.exceptions
+		browser.storage.local.get("options", r => {
+			exceptions = r.options.exceptions
 			resolve()
 		})
 	})
@@ -30,7 +30,7 @@ async function initDefaults() {
 						url: [],
 						regex: [],
 					},
-					theme: "DEFAULT",
+					theme: "detect",
 					popupServices: ["youtube", "twitter", "instagram", "tiktok", "imgur", "reddit", "quora", "translate", "maps"],
 					autoRedirect: false,
 					firstPartyIsolate: false,

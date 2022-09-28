@@ -78,11 +78,11 @@ browser.storage.local.get("options", r => {
 			return
 		}
 
-		const currentService = serviceHelper.computeService(url)
-		if (currentService != null) {
-			divs[currentService].current.classList.remove("hide")
-			divs[currentService].all.classList.add("hide")
-			if (config.services[currentService].preferences != undefined) {
+		const [service, frontend] = serviceHelper.computeService(url, true)
+		if (service) {
+			divs[service].current.classList.remove("hide")
+			divs[service].all.classList.add("hide")
+			if (config.services[service].frontends[frontend].preferences) {
 				const unify = document.getElementById("unify")
 				const textElement = document.getElementById("unify").getElementsByTagName("h4")[0]
 				unify.addEventListener("click", () => {

@@ -121,7 +121,7 @@ async function redirectOfflineInstance(url, tabId) {
 let counter = 0
 
 function isAutoRedirect() {
-	return new Promise(resolve => browser.storage.local.get("autoRedirect", r => resolve(r.autoRedirect == true)))
+	return new Promise(resolve => browser.storage.local.get("options", r => resolve(r.options.autoRedirect == true)))
 }
 
 browser.webRequest.onResponseStarted.addListener(

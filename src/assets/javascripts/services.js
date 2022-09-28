@@ -19,25 +19,28 @@ function init() {
 	return new Promise(async resolve => {
 		// await getConfig()
 		browser.storage.local.get(["options", "targets", "redirects", "blacklists"], r => {
-			blacklists = r.blacklists
-			redirects = r.redirects
-			targets = r.targets
-			options = r.options
+			if (r.options) {
+				blacklists = r.blacklists
+				redirects = r.redirects
+				targets = r.targets
+				options = r.options
+			}
 			resolve()
 		})
 	})
 }
 
-await init()
 await getConfig()
+await init()
 
 function fetchFrontendInstanceList(service, frontend) {
 	let tmp = []
-	if (!config.services[service].frontends[frontend].singleInstance) {
+	if (config.services[service].frontends[frontend].instanceList) {
 		for (const network in config.networks) {
+			if (!redirects[frontend]) console.log(frontend)
 			tmp.push(...redirects[frontend][network], ...options[frontend][network].custom)
 		}
-	} else if (config.services[service].frontends[frontend].singleInstance != undefined) tmp = config.services[service].frontends[frontend].singleInstance
+	} else if (config.services[service].frontends[frontend].singleInstance) tmp = config.services[service].frontends[frontend].singleInstance
 	return tmp
 }
 
@@ -58,8 +61,8 @@ function all(service, frontend) {
 function regexArray(service, url) {
 	let targets
 	if (config.services[service].targets == "datajson") {
-		browser.storage.local.get(`${service}Targets`, r => {
-			targets = r[service + "Targets"]
+		browser.storage.local.get("targets", r => {
+			targets = r.targets[service]
 		})
 	} else {
 		targets = config.services[service].targets
@@ -397,8 +400,10 @@ function initDefaults() {
 					let redirects = JSON.parse(data)
 					let options = r.options
 					let targets = {}
+					// let latency = {}
 					for (const service in config.services) {
 						options[service] = {}
+						// latency[service] = {}
 						if (config.services[service].targets == "datajson") {
 							targets[service] = redirects[service]
 							//delete dataJson[service]
@@ -423,19 +428,25 @@ function initDefaults() {
 							}
 						}
 					}
-					browser.storage.local.set({ redirects, options, targets })
+					browser.storage.local.set({ redirects, options, targets /*, latency*/ })
 					resolve()
 				})
 			})
 	})
 }
 
-function computeService(url) {
+function computeService(url, returnFrontend) {
 	for (const service in config.services) {
 		if (regexArray(service, url)) {
-			return service
-		} else if (all(service).includes(utils.protocolHost(url))) {
-			return service
+			if (returnFrontend) return [service, null]
+			else return service
+		} else {
+			for (const frontend in config.services[service].frontends) {
+				if (all(service, frontend).includes(utils.protocolHost(url))) {
+					if (returnFrontend) return [service, frontend]
+					else return service
+				}
+			}
 		}
 	}
 	return null
@@ -524,7 +535,7 @@ function unifyPreferences(url) {
 
 		const frontend = config.services[currentService].frontends[currentFrontend]
 		if ("cookies" in frontend.preferences) {
-			for (const cookie in frontend.preferences.cookies) {
+			for (const cookie of frontend.preferences.cookies) {
 				await utils.copyCookie(currentFrontend, url, instancesList, cookie)
 			}
 		}
