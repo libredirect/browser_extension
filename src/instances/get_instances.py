@@ -1,25 +1,26 @@
 # Note: Run this script from the root of the repo
 
+import traceback
+import logging
 import requests
 import json
 from urllib.parse import urlparse
 import re
-from colorama import Fore, Back, Style
-from urllib.parse import urlparse
+from colorama import Fore, Style
 import socket
 
 mightyList = {}
 config = {}
 
-startRegex = "https?:\/{2}(?:[^\s\/]+\.)+"
+startRegex = r"https?:\/{2}(?:[^\s\/]+\.)+"
 endRegex = "(?:\/[^\s\/]+)*\/?"
 torRegex = startRegex + "onion" + endRegex
 i2pRegex = startRegex + "i2p" + endRegex
 lokiRegex = startRegex + "loki" + endRegex
-authRegex = "https?:\/{2}\S+:\S+@(?:[^\s\/]+\.)+[a-zA-Z0-9]+" + endRegex
+authRegex = r"https?:\/{2}\S+:\S+@(?:[^\s\/]+\.)+[a-zA-Z0-9]+" + endRegex
 
 with open('./src/config/config.json', 'rt') as tmp:
-    config['networks'] = json.load(tmp)['config']['networks']
+    config['networks'] = json.load(tmp)['networks']
 
 
 def filterLastSlash(urlList):
@@ -61,7 +62,7 @@ def is_cloudflare(url):
         instance_ip = socket.gethostbyname(urlparse(url).hostname)
         if instance_ip is None:
             return False
-    except:
+    except Exception:
         return False
     instance_bin = ip2bin(instance_ip)
 
@@ -88,9 +89,10 @@ def is_authenticate(url):
         if 'www-authenticate' in r.headers:
             print(url + ' requires ' + Fore.RED + 'authentication' + Style.RESET_ALL)
             return True
-    except:
+    except Exception:
         return False
     return False
+
 
 def is_offline(url):
     try:
@@ -102,20 +104,21 @@ def is_offline(url):
             return True
         else:
             return False
-    except:
+    except Exception:
         return False
 
+
 def fetchCache(frontend, name):
-    # json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
     with open('./src/instances/data.json') as file:
         mightyList[frontend] = json.load(file)[frontend]
     print(Fore.YELLOW + 'Failed' + Style.RESET_ALL + ' to fetch ' + name)
 
+
 def fetchFromFile(frontend, name):
-    #json_object = json.dumps(mightyList, ensure_ascii=False, indent=2)
     with open('./src/instances/' + frontend + '.json') as file:
         mightyList[frontend] = json.load(file)
     print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + name)
+
 
 def fetchJsonList(frontend, name, url, urlItem):
     try:
@@ -127,13 +130,13 @@ def fetchJsonList(frontend, name, url, urlItem):
         if type(urlItem) == dict:
             for item in rJson:
                 for network in config['networks']:
-                    if urlItem[network] != None:
+                    if urlItem[network] is not None:
                         if urlItem[network] in item:
                             if item[urlItem[network]].strip() != '':
                                 _list[network].append(item[urlItem[network]])
         else:
             if frontend == 'librarian':
-                rJson = rJson['instances'] # I got lazy :p   Might fix this at some point...
+                rJson = rJson['instances']  # I got lazy :p   Might fix this at some point...
             for item in rJson:
                 tmpItem = item
                 if urlItem is not None:
@@ -151,18 +154,20 @@ def fetchJsonList(frontend, name, url, urlItem):
 
         mightyList[frontend] = _list
         print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + name)
-    except:
+    except Exception:
         fetchCache(frontend, name)
+        logging.error(traceback.format_exc())
 
-def fetchRegexList(frontend, name, url, regex): 
+
+def fetchRegexList(frontend, name, url, regex):
     try:
         r = requests.get(url)
         _list = {}
         for network in config['networks']:
             _list[network] = []
-    
+
         tmp = re.findall(regex, r.text)
-    
+
         for item in tmp:
             if item.strip() == "":
                 continue
@@ -176,8 +181,10 @@ def fetchRegexList(frontend, name, url, regex):
                 _list['clearnet'].append(item)
         mightyList[frontend] = _list
         print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + name)
-    except:
+    except Exception:
         fetchCache(frontend, name)
+        logging.error(traceback.format_exc())
+
 
 def fetchTextList(frontend, name, url, prepend):
     try:
@@ -200,8 +207,9 @@ def fetchTextList(frontend, name, url, prepend):
                 _list['clearnet'].append(item)
         mightyList[frontend] = _list
         print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + name)
-    except:
+    except Exception:
         fetchCache(frontend, name)
+        logging.error(traceback.format_exc())
 
 
 def invidious():
@@ -223,8 +231,9 @@ def invidious():
                 _list['tor'].append(instance[1]['uri'])
         mightyList[frontend] = _list
         print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + name)
-    except:
+    except Exception:
         fetchCache(frontend, name)
+        logging.error(traceback.format_exc())
 
 
 def piped():
@@ -240,7 +249,7 @@ def piped():
             'https://raw.githubusercontent.com/wiki/TeamPiped/Piped/Instances.md')
     
         tmp = re.findall(
-            '(?:[^\s\/]+\.)+[a-zA-Z]+ (?:\(Official\) )?\| (https:\/{2}(?:[^\s\/]+\.)+[a-zA-Z]+) \| ', r.text)
+            r'(?:[^\s\/]+\.)+[a-zA-Z]+ (?:\(Official\) )?\| (https:\/{2}(?:[^\s\/]+\.)+[a-zA-Z]+) \| ', r.text)
         for item in tmp:
             try:
                 url = requests.get(item, timeout=5).url
@@ -248,12 +257,14 @@ def piped():
                     continue
                 else:
                     _list['clearnet'].append(url)
-            except:
+            except Exception:
+                logging.error(traceback.format_exc())
                 continue
         mightyList[frontend] = _list
         print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + name)
-    except:
+    except Exception:
         fetchCache(frontend, name)
+        logging.error(traceback.format_exc())
 
 
 def pipedMaterial():
@@ -265,20 +276,7 @@ def cloudtube():
 
 
 def proxitok():
-    r = requests.get(
-        'https://raw.githubusercontent.com/wiki/pablouser1/ProxiTok/Public-instances.md')
-
-    tmp = re.findall(
-        r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|", r.text)
-    proxiTokList = {}
-    proxiTokList['clearnet'] = []
-    proxiTokList['tor'] = []
-    proxiTokList['i2p'] = []
-    proxiTokList['loki'] = []
-    for item in tmp:
-        proxiTokList['clearnet'].append(re.sub(r'/$', '', item))
-    mightyList['proxiTok'] = proxiTokList
-    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'ProxiTok')
+    fetchRegexList('proxiTok', 'ProxiTok', 'https://raw.githubusercontent.com/wiki/pablouser1/ProxiTok/Public-instances.md', r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)(?: \(Official\))? +\|(?:(?: [A-Z]*.*\|.*\|)|(?:$))")
 
 
 def send():
@@ -298,11 +296,11 @@ def libreddit():
 
 
 def teddit():
-    fetchJsonList('teddit', 'Teddit', 'https://codeberg.org/teddit/teddit/raw/branch/main/instances.json', { 'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None })
+    fetchJsonList('teddit', 'Teddit', 'https://codeberg.org/teddit/teddit/raw/branch/main/instances.json', {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None})
 
 
 def wikiless():
-    fetchJsonList('wikiless', 'Wikiless', 'https://wikiless.org/instances.json', { 'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None})
+    fetchJsonList('wikiless', 'Wikiless', 'https://wikiless.org/instances.json', {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None})
 
 
 def scribe():
@@ -401,6 +399,7 @@ def rimgo():
 def librarian():
     fetchJsonList('librarian', 'Librarian', 'https://codeberg.org/librarian/librarian/raw/branch/main/instances.json', 'url')
 
+
 def neuters():
     fetchFromFile('neuters', 'Neuters')
 
@@ -434,7 +433,7 @@ def isValid(url):  # This code is contributed by avanitrachhadiya2155
     try:
         result = urlparse(url)
         return all([result.scheme, result.netloc])
-    except:
+    except Exception:
         return False
 
 

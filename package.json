@@ -14,17 +14,17 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/LibRedirect/LibRedirect.git"
+		"url": "git+https://codeberg.org/LibRedirect/LibRedirect.git"
 	},
 	"author": "LibRedirect",
 	"license": "GPL-3.0-only",
 	"bugs": {
-		"url": "https://github.com/LibRedirect/LibRedirect/issues"
+		"url": "https://codeberg.org/LibRedirect/LibRedirect/issues"
 	},
-	"homepage": "https://libredirect.github.io",
+	"homepage": "https://libredirect.codeberg.page",
 	"devDependencies": {
 		"prettier": "2.7.1",
-		"web-ext": "^6.7.0"
+		"web-ext": "^7.2.0"
 	},
 	"dependencies": {
 		"buffer": "^6.0.3",

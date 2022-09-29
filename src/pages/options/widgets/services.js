@@ -87,7 +87,7 @@ for (const service in config.services) {
 		divs[service][option].addEventListener("change", () => {
 			if (typeof config.services[service].options[option] == "boolean") options[service][option] = divs[service][option].checked
 			else options[service][option] = divs[service][option].value
-			browser.local.storage.set({ options })
+			browser.storage.local.set({ options })
 			changeFrontendsSettings(service)
 		})
 	}

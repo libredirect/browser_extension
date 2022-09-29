@@ -12,7 +12,7 @@ function isException(url) {
 function init() {
 	return new Promise(resolve => {
 		browser.storage.local.get("options", r => {
-			exceptions = r.options.exceptions
+			if (r.options) exceptions = r.options.exceptions
 			resolve()
 		})
 	})

@@ -1,22 +1,5 @@
 window.browser = window.browser || window.chrome
-import twitterHelper from "./twitter.js"
-import youtubeHelper from "./youtube/youtube.js"
-import instagramHelper from "./instagram.js"
-import mediumHelper from "./medium.js"
-import redditHelper from "./reddit.js"
-import searchHelper from "./search.js"
-import translateHelper from "./translate/translate.js"
-import wikipediaHelper from "./wikipedia.js"
-import peertubeHelper from "./peertube.js"
-import lbryHelper from "./lbry.js"
-import sendTargetsHelper from "./sendTargets.js"
-import tiktokHelper from "./tiktok.js"
-import quoraHelper from "./quora.js"
-import libremdbHelper from "./imdb.js"
-import imgurHelper from "./imgur.js"
-import reutersHelper from "./reuters.js"
-import youtubeMusicHelper from "./youtubeMusic.js"
-import mapsHelper from "./maps.js"
+
 import localise from "./localise.js"
 import servicesHelper from "./services.js"
 
@@ -48,10 +31,10 @@ function updateInstances() {
 	return new Promise(async resolve => {
 		let http = new XMLHttpRequest()
 		let fallback = new XMLHttpRequest()
-		http.open("GET", "https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json", false)
+		http.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/data.json", false)
 		http.send(null)
 		if (http.status != 200) {
-			fallback.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/data.json", false)
+			fallback.open("GET", "https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json", false)
 			fallback.send(null)
 			if (fallback.status === 200) {
 				http = fallback
@@ -63,42 +46,7 @@ function updateInstances() {
 		await initBlackList()
 		const instances = JSON.parse(http.responseText)
 
-		youtubeHelper.setRedirects({
-			invidious: instances.invidious,
-			piped: instances.piped,
-			pipedMaterial: instances.pipedMaterial,
-			cloudtube: instances.cloudtube,
-		})
-		twitterHelper.setRedirects(instances.nitter)
-		instagramHelper.setRedirects(instances.bibliogram)
-		redditHelper.setRedirects({
-			libreddit: instances.libreddit,
-			teddit: instances.teddit,
-		})
-		translateHelper.setRedirects({
-			simplyTranslate: instances.simplyTranslate,
-			lingva: instances.lingva,
-		})
-		searchHelper.setRedirects({
-			searx: instances.searx,
-			searxng: instances.searxng,
-			whoogle: instances.whoogle,
-			librex: instances.librex,
-		})
-		wikipediaHelper.setRedirects(instances.wikiless)
-		mediumHelper.setRedirects(instances.scribe)
-		quoraHelper.setRedirects(instances.quetre)
-		libremdbHelper.setRedirects(instances.libremdb)
-		sendTargetsHelper.setRedirects(instances.send)
-		tiktokHelper.setRedirects(instances.proxiTok)
-		lbryHelper.setRedirects(instances.librarian)
-		reutersHelper.setRedirects(instances.neuters)
-		youtubeMusicHelper.setRedirects({
-			beatbump: instances.beatbump,
-			hyperpipe: instances.hyperpipe,
-		})
-		mapsHelper.setRedirects(instances.facil)
-		peertubeHelper.setRedirects(instances.simpleertube)
+		servicesHelper.setRedirects(instances)
 
 		console.info("Successfully updated Instances")
 		resolve(true)

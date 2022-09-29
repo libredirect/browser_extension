@@ -550,29 +550,30 @@ function unifyPreferences(url) {
 }
 
 function setRedirects(redirects) {
-	browser.storage.local.get(["options", "blacklists"], async r => {
-		let options = r.options
-		let targets = {}
-		for (const service in config.services) {
-			if (config.services[service].targets == "datajson") {
-				targets[service] = redirects[service]
-			}
-			for (const frontend in config.services[service].frontends) {
-				if (config.services[service].frontends[frontend].instanceList) {
-					for (const network in config.networks) {
-						options[frontend][network].enabled = redirects[frontend][network]
-					}
-					for (const blacklist in r.blacklists) {
-						for (const instance of blacklist) {
-							let i = options[frontend].clearnet.enabled.indexOf(instance)
-							if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
-						}
+	//browser.storage.local.get(["options", "blacklists"], async r => {
+	//let options = r.options
+	let targets = {}
+	for (const service in config.services) {
+		if (config.services[service].targets == "datajson") {
+			targets[service] = redirects[service]
+		}
+		for (const frontend in config.services[service].frontends) {
+			if (config.services[service].frontends[frontend].instanceList) {
+				for (const network in config.networks) {
+					options[frontend][network].enabled = redirects[frontend][network]
+				}
+				for (const blacklist in blacklists) {
+					for (const instance of blacklist) {
+						let i = options[frontend].clearnet.enabled.indexOf(instance)
+						if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
 					}
 				}
 			}
 		}
-		browser.storage.local.set({ redirects, targets, options })
-	})
+	}
+	console.log(redirects)
+	browser.storage.local.set({ redirects, targets, options })
+	//})
 }
 
 export default {

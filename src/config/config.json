@@ -535,7 +535,7 @@
 					"instanceList": "true"
 				}
 			},
-			"targets": ["^https?:\\/{2}send\\.libredirect\\.invalid\\/$", "^https?:\\/{2}send\\.firefox\\.com\\/$", "^https?:\\/{2}sendfiles\\.online\\/$"],
+			"targets": ["^https?:\\/{2}send\\.libredirect\\.invalid\\/?$", "^https?:\\/{2}send\\.firefox\\.com\\/?$", "^https?:\\/{2}sendfiles\\.online\\/?$"],
 			"name": "Send Files",
 			"options": { "enabled": true },
 			"imageType": "svgMono",
