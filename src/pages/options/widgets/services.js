@@ -77,7 +77,7 @@ function changeNetworkSettings() {
 changeNetworkSettings()
 for (const service in config.services) {
 	divs[service] = {}
-	divs[service][service] = document.getElementById(`${service}_page`)
+	//divs[service].page = document.getElementById(`${service}_page`)
 	for (const option in config.services[service].options) {
 		divs[service][option] = document.getElementById(`${service}-${option}`)
 

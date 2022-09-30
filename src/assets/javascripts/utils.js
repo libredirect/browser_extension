@@ -59,27 +59,26 @@ function protocolHost(url) {
 	return `${url.protocol}//${url.host}`
 }
 
-async function processDefaultCustomInstances(service, name, network, document) {
+async function processDefaultCustomInstances(service, frontend, network, document) {
 	let instancesLatency
-	let nameNetworkElement = document.getElementById(name).getElementsByClassName(network)[0]
+	let frontendNetworkElement = document.getElementById(frontend).getElementsByClassName(network)[0]
 
-	let nameCustomInstances = []
-	let nameCheckListElement = nameNetworkElement.getElementsByClassName("checklist")[0]
+	let frontendCustomInstances = []
+	let frontendCheckListElement = frontendNetworkElement.getElementsByClassName("checklist")[0]
 
 	await initBlackList()
 
-	let nameDefaultRedirects
+	let frontendDefaultRedirects
 
 	let redirects, options
 
 	async function getFromStorage() {
 		return new Promise(async resolve =>
 			browser.storage.local.get(["options", "redirects", "latency"], r => {
-				nameDefaultRedirects = r.options[name][network].enabled
-				nameCustomInstances = r.options[name][network].custom
+				frontendDefaultRedirects = r.options[frontend][network].enabled
+				frontendCustomInstances = r.options[frontend][network].custom
 				options = r.options
-				if (r.latency) instancesLatency = r.latency[name] ?? []
-				else instancesLatency = []
+				instancesLatency = r.latency[frontend] ?? []
 				redirects = r.redirects
 				resolve()
 			})
@@ -88,27 +87,26 @@ async function processDefaultCustomInstances(service, name, network, document) {
 
 	await getFromStorage()
 
-	function calcNameCheckBoxes() {
+	function calcFrontendCheckBoxes() {
 		let isTrue = true
-		for (const item of redirects[name][network]) {
-			if (nameDefaultRedirects === undefined) console.log(name + network + " is undefined")
-			if (!nameDefaultRedirects.includes(item)) {
+		for (const item of redirects[frontend][network]) {
+			if (!frontendDefaultRedirects.includes(item)) {
 				isTrue = false
 				break
 			}
 		}
-		for (const element of nameCheckListElement.getElementsByTagName("input")) {
-			element.checked = nameDefaultRedirects.includes(element.className)
+		for (const element of frontendCheckListElement.getElementsByTagName("input")) {
+			element.checked = frontendDefaultRedirects.includes(element.className)
 		}
-		if (nameDefaultRedirects.length == 0) isTrue = false
-		nameNetworkElement.getElementsByClassName("toggle-all")[0].checked = isTrue
+		if (frontendDefaultRedirects.length == 0) isTrue = false
+		frontendNetworkElement.getElementsByClassName("toggle-all")[0].checked = isTrue
 	}
-	nameCheckListElement.innerHTML = [
+	frontendCheckListElement.innerHTML = [
 		`<div>
         <x data-localise="__MSG_toggleAll__">Toggle All</x>
         <input type="checkbox" class="toggle-all"/>
       </div>`,
-		...redirects[name][network].map(x => {
+		...redirects[frontend][network].map(x => {
 			const cloudflare = cloudflareBlackList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ""
 			const authenticate = authenticateBlackList.includes(x) ? ' <span style="color:orange;">authenticate</span>' : ""
 			const offline = offlineBlackList.includes(x) ? ' <span style="color:grey;">offline</span>' : ""
@@ -132,33 +130,33 @@ async function processDefaultCustomInstances(service, name, network, document) {
 
 	localise.localisePage()
 
-	calcNameCheckBoxes()
-	nameNetworkElement.getElementsByClassName("toggle-all")[0].addEventListener("change", async event => {
-		if (event.service.checked) nameDefaultRedirects = [...redirects[name][network]]
-		else nameDefaultRedirects = []
+	calcFrontendCheckBoxes()
+	frontendNetworkElement.getElementsByClassName("toggle-all")[0].addEventListener("change", async event => {
+		if (event.target.checked) frontendDefaultRedirects = [...redirects[frontend][network]]
+		else frontendDefaultRedirects = []
 
-		options[service][network].enabled = nameDefaultRedirects
+		options[frontend][network].enabled = frontendDefaultRedirects
 		browser.storage.local.set({ options })
-		calcNameCheckBoxes()
+		calcFrontendCheckBoxes()
 	})
 
-	for (let element of nameCheckListElement.getElementsByTagName("input")) {
+	for (let element of frontendCheckListElement.getElementsByTagName("input")) {
 		if (element.className != "toggle-all")
-			nameNetworkElement.getElementsByClassName(element.className)[0].addEventListener("change", async event => {
-				if (event.service.checked) nameDefaultRedirects.push(element.className)
+			frontendNetworkElement.getElementsByClassName(element.className)[0].addEventListener("change", async event => {
+				if (event.target.checked) frontendDefaultRedirects.push(element.className)
 				else {
-					let index = nameDefaultRedirects.indexOf(element.className)
-					if (index > -1) nameDefaultRedirects.splice(index, 1)
+					let index = frontendDefaultRedirects.indexOf(element.className)
+					if (index > -1) frontendDefaultRedirects.splice(index, 1)
 				}
 
-				options[service][network].enabled = nameDefaultRedirects
+				options[frontend][network].enabled = frontendDefaultRedirects
 				browser.storage.local.set({ options })
-				calcNameCheckBoxes()
+				calcFrontendCheckBoxes()
 			})
 	}
 
-	function calcNameCustomInstances() {
-		nameNetworkElement.getElementsByClassName("custom-checklist")[0].innerHTML = nameCustomInstances
+	function calcFrontendCustomInstances() {
+		frontendNetworkElement.getElementsByClassName("custom-checklist")[0].innerHTML = frontendCustomInstances
 			.map(
 				x => `<div>
                 ${x}
@@ -172,30 +170,30 @@ async function processDefaultCustomInstances(service, name, network, document) {
 			)
 			.join("\n")
 
-		for (const item of nameCustomInstances) {
-			nameNetworkElement.getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
-				let index = nameCustomInstances.indexOf(item)
-				if (index > -1) nameCustomInstances.splice(index, 1)
-				options[service][network].custom = nameCustomInstances
+		for (const item of frontendCustomInstances) {
+			frontendNetworkElement.getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
+				let index = frontendCustomInstances.indexOf(item)
+				if (index > -1) frontendCustomInstances.splice(index, 1)
+				options[frontend][network].custom = frontendCustomInstances
 				browser.storage.local.set({ options })
-				calcNameCustomInstances()
+				calcFrontendCustomInstances()
 			})
 		}
 	}
-	calcNameCustomInstances()
-	nameNetworkElement.getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
+	calcFrontendCustomInstances()
+	frontendNetworkElement.getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
 		event.preventDefault()
-		let nameCustomInstanceInput = nameNetworkElement.getElementsByClassName("custom-instance")[0]
-		let url = new URL(nameCustomInstanceInput.value)
+		let frontendCustomInstanceInput = frontendNetworkElement.getElementsByClassName("custom-instance")[0]
+		let url = new URL(frontendCustomInstanceInput.value)
 		let protocolHostVar = protocolHost(url)
-		if (nameCustomInstanceInput.validity.valid && !redirects[name][network].includes(protocolHostVar)) {
-			if (!nameCustomInstances.includes(protocolHostVar)) {
-				nameCustomInstances.push(protocolHostVar)
-				options[service][network].custom = nameCustomInstances
+		if (frontendCustomInstanceInput.validity.valid && !redirects[frontend][network].includes(protocolHostVar)) {
+			if (!frontendCustomInstances.includes(protocolHostVar)) {
+				frontendCustomInstances.push(protocolHostVar)
+				options[frontend][network].custom = frontendCustomInstances
 				browser.storage.local.set({ options })
-				nameCustomInstanceInput.value = ""
+				frontendCustomInstanceInput.value = ""
 			}
-			calcNameCustomInstances()
+			calcFrontendCustomInstances()
 		}
 	})
 }
@@ -245,11 +243,12 @@ function pingOnce(href) {
 async function testLatency(element, instances, frontend) {
 	return new Promise(async resolve => {
 		let myList = {}
-		let latencyThreshold
-		let redirectsChecks = []
+		let latencyThreshold, options
+		//let redirectsChecks = []
 		browser.storage.local.get(["options"], r => {
 			latencyThreshold = r.options.latencyThreshold
-			redirectsChecks = r.options[frontend].clearnet.enabled
+			//redirectsChecks = r.options[frontend].clearnet.enabled
+			options = r.options
 		})
 		for (const href of instances)
 			await ping(href).then(time => {
@@ -261,10 +260,8 @@ async function testLatency(element, instances, frontend) {
 					else color = "red"
 
 					if (time > latencyThreshold) {
-						redirectsChecks.splice(redirectsChecks.indexOf(href), 1)
+						options[frontend].clearnet.enabled.splice(options[frontend].clearnet.enabled.indexOf(href), 1)
 					}
-
-					browser.storage.local.set({ [`${frontend}ClearnetRedirectsChecks`]: redirectsChecks })
 
 					let text
 					if (time == 5000) text = "5000ms+"
@@ -273,6 +270,7 @@ async function testLatency(element, instances, frontend) {
 					element.innerHTML = `${href}:&nbsp;<span style="color:${color};">${text}</span>`
 				}
 			})
+		browser.storage.local.set({ options })
 		resolve(myList)
 	})
 }
@@ -386,7 +384,7 @@ function unify() {
 					return
 				}
 
-				let result = await servicesHelper.unifyPreferences(url)
+				let result = await servicesHelper.unifyPreferences(url, currTab.id)
 
 				resolve(result)
 			}
@@ -417,21 +415,21 @@ function switchInstance(test) {
 	})
 }
 
-function latency(name, frontend, document, location) {
+function latency(service, frontend, document, location) {
 	let latencyElement = document.getElementById(`latency-${frontend}`)
 	let latencyLabel = document.getElementById(`latency-${frontend}-label`)
 	latencyElement.addEventListener("click", async () => {
 		let reloadWindow = () => location.reload()
 		latencyElement.addEventListener("click", reloadWindow)
-		let key = `${name} Redirects`
-		browser.storage.local.get(key, r => {
-			let redirects = r[key]
+		browser.storage.local.get(["redirects", "latency"], r => {
+			let redirects = r.redirects
 			const oldHtml = latencyLabel.innerHTML
 			latencyLabel.innerHTML = "..."
 			testLatency(latencyLabel, redirects[frontend].clearnet, frontend).then(r => {
-				browser.storage.local.set({ [`${frontend}Latency`]: r })
+				latency[frontend] = r
+				browser.storage.local.set({ latency })
 				latencyLabel.innerHTML = oldHtml
-				processDefaultCustomInstances(name, frontend, "clearnet", document)
+				processDefaultCustomInstances(service, frontend, "clearnet", document)
 				latencyElement.removeEventListener("click", reloadWindow)
 			})
 		})

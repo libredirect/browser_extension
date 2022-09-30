@@ -48,7 +48,8 @@
 							"sponsorblock",
 							"theme",
 							"volume",
-							"watchHistory"
+							"watchHistory",
+							"localSubscriptions"
 						]
 					},
 					"name": "Piped",
@@ -490,13 +491,13 @@
 				},
 				"lingva": {
 					"preferences": {
-						"localstorage": ["isauto", "source", "target"]
+						"localstorage": ["isauto", "source", "target", "chakra-ui-color-mode"]
 					},
-					"name": "Lingva",
+					"name": "Lingva Translate",
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}translate\\.google(\\.[a-z]{2,3}){1,2}\\/"],
+			"targets": ["^https?:\\/{2}translate\\.google(\\.[a-z]{2,3}){1,2}\\/", "^https?:\\/{2}translate\\.libredirect\\.invalid"],
 			"name": "Translate",
 			"options": {
 				"enabled": true,
@@ -504,7 +505,7 @@
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
-			"url": "https://translate.google.com"
+			"url": "https://translate.libredirect.invalid"
 		},
 		"maps": {
 			"frontends": {
@@ -518,7 +519,7 @@
 					"singleInstance": "https://www.openstreetmap.org"
 				}
 			},
-			"targets": ["^https?:\\/{2}(((www|maps)\\.)?(google\\.).*(\\/maps)|maps\\.(google\\.).*)"],
+			"targets": ["^https?:\\/{2}maps\\.libredirect\\.invalid", "^https?:\\/{2}(((www|maps)\\.)?(google\\.).*(\\/maps)|maps\\.(google\\.).*)"],
 			"name": "Maps",
 			"options": {
 				"enabled": true,
@@ -526,16 +527,16 @@
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
-			"url": "https://maps.google.com"
+			"url": "https://maps.libredirect.invalid"
 		},
-		"sendTargets": {
+		"uploadFiles": {
 			"frontends": {
 				"send": {
 					"name": "Send",
 					"instanceList": "true"
 				}
 			},
-			"targets": ["^https?:\\/{2}send\\.libredirect\\.invalid\\/?$", "^https?:\\/{2}send\\.firefox\\.com\\/?$", "^https?:\\/{2}sendfiles\\.online\\/?$"],
+			"targets": ["^https?:\\/{2}send\\.libredirect\\.invalid", "^https?:\\/{2}send\\.firefox\\.com\\/?$", "^https?:\\/{2}sendfiles\\.online\\/?$"],
 			"name": "Send Files",
 			"options": { "enabled": true },
 			"imageType": "svgMono",

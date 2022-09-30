@@ -391,7 +391,7 @@ function redirect(url, type, initiator) {
 	}
 }
 
-function initDefaults() {
+async function initDefaults() {
 	return new Promise(async resolve => {
 		fetch("/instances/data.json")
 			.then(response => response.text())
@@ -400,13 +400,12 @@ function initDefaults() {
 					let redirects = JSON.parse(data)
 					let options = r.options
 					let targets = {}
-					// let latency = {}
+					const localstorage = {}
+					const latency = {}
 					for (const service in config.services) {
 						options[service] = {}
-						// latency[service] = {}
 						if (config.services[service].targets == "datajson") {
 							targets[service] = redirects[service]
-							//delete dataJson[service]
 						}
 						for (const defaultOption in config.services[service].options) {
 							options[service][defaultOption] = config.services[service].options[defaultOption]
@@ -416,11 +415,11 @@ function initDefaults() {
 								options[frontend] = {}
 								for (const network in config.networks) {
 									options[frontend][network] = {}
-									options[frontend][network].enabled = redirects[frontend][network]
+									options[frontend][network].enabled = JSON.parse(data)[frontend][network]
 									options[frontend][network].custom = []
 								}
 								for (const blacklist in r.blacklists) {
-									for (const instance of blacklist) {
+									for (const instance of r.blacklists[blacklist]) {
 										let i = options[frontend].clearnet.enabled.indexOf(instance)
 										if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
 									}
@@ -428,7 +427,7 @@ function initDefaults() {
 							}
 						}
 					}
-					browser.storage.local.set({ redirects, options, targets /*, latency*/ })
+					browser.storage.local.set({ redirects, options, targets, latency, localstorage })
 					resolve()
 				})
 			})
@@ -449,7 +448,8 @@ function computeService(url, returnFrontend) {
 			}
 		}
 	}
-	return null
+	if (returnFrontend) return [null, null]
+	else return null
 }
 
 function switchInstance(url) {
@@ -515,7 +515,7 @@ function reverse(url) {
 	})
 }
 
-function unifyPreferences(url) {
+function unifyPreferences(url, tabId) {
 	return new Promise(async resolve => {
 		// await init()
 		// await getConfig()
@@ -539,7 +539,23 @@ function unifyPreferences(url) {
 				await utils.copyCookie(currentFrontend, url, instancesList, cookie)
 			}
 		}
-		if ("localStorage" in frontend.preferences) {
+		if ("localstorage" in frontend.preferences) {
+			browser.tabs.executeScript(tabId, {
+				code: "const frontend = " + frontend,
+				code: "const items = " + config.services[currentService].frontends[currentFrontend].preferences.localStorage,
+				//file: "/assets/javascripts/get-localstorage.js",
+				runAt: "document_start",
+			})
+
+			for (const instance of instancesList)
+				browser.tabs.create({ url: instance }, tab =>
+					browser.tabs.executeScript(tab.id, {
+						code: "const frontend = " + frontend,
+						code: "const items = " + config.services[currentService].frontends[currentFrontend].preferences.localStorage,
+						file: "/assets/javascripts/set-localstorage.js",
+						runAt: "document_start",
+					})
+				)
 		}
 		if ("indexeddb" in frontend.preferences) {
 		}

@@ -6,20 +6,7 @@ import servicesHelper from "../../assets/javascripts/services.js"
 
 window.browser = window.browser || window.chrome
 
-browser.runtime.onInstalled.addListener(details => {
-	function initDefaults() {
-		fetch("/instances/blacklist.json")
-			.then(response => response.text())
-			.then(async data => {
-				browser.storage.local.clear(() => {
-					browser.storage.local.set({ blacklists: JSON.parse(data) }, () => {
-						generalHelper.initDefaults()
-						servicesHelper.initDefaults()
-					})
-				})
-			})
-	}
-
+browser.runtime.onInstalled.addListener(async details => {
 	// if (details.reason == 'install' || (details.reason == "update" && details.previousVersion != browser.runtime.getManifest().version)) {
 	//   if (details.reason == "update")
 	//     browser.storage.local.get(null, r => {
@@ -38,11 +25,24 @@ browser.runtime.onInstalled.addListener(details => {
 		case "update":
 			switch (details.previousVersion) {
 				case "2.2.1":
-					//do stuff
+					initDefaults()
 					break
 			}
 	}
 })
+
+function initDefaults() {
+	browser.storage.local.clear(() => {
+		fetch("/instances/blacklist.json")
+			.then(response => response.text())
+			.then(async data => {
+				browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
+					await generalHelper.initDefaults()
+					await servicesHelper.initDefaults()
+				})
+			})
+	})
+}
 
 let BYPASSTABs = []
 browser.webRequest.onBeforeRequest.addListener(

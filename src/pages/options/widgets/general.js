@@ -37,7 +37,6 @@ function setOption(option, multiChoice, event) {
 	browser.storage.local.get("options", r => {
 		let options = r.options
 		if (multiChoice) {
-			console.log(event.target.options)
 			options[option] = event.target.options[event.target.options.selectedIndex].value
 		} else {
 			options[option] = event.target.checked
@@ -95,6 +94,7 @@ resetSettings.addEventListener("click", async () => {
 			.then(response => response.text())
 			.then(async data => {
 				browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
+					await generalHelper.initDefaults()
 					await servicesHelper.initDefaults()
 					location.reload()
 				})
