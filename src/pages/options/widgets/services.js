@@ -40,7 +40,7 @@ function changeFrontendsSettings(service) {
 	}
 
 	if (config.services[service].embeddable) {
-		if (!config.services[service].frontends[divs[service].frontend.value].instanceList) {
+		if (!config.services[service].frontends[divs[service].frontend.value].embeddable) {
 			divs[service].embedFrontend.disabled = false
 			for (const frontend in config.services[service].frontends) {
 				if (config.services[service].frontends[frontend].embeddable) {

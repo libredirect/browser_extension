@@ -244,22 +244,20 @@ async function testLatency(element, instances, frontend) {
 	return new Promise(async resolve => {
 		let myList = {}
 		let latencyThreshold, options
-		//let redirectsChecks = []
 		browser.storage.local.get(["options"], r => {
 			latencyThreshold = r.options.latencyThreshold
-			//redirectsChecks = r.options[frontend].clearnet.enabled
 			options = r.options
 		})
-		for (const href of instances)
+		for (const href of instances) {
 			await ping(href).then(time => {
+				let color
 				if (time) {
 					myList[href] = time
-					let color
 					if (time <= 1000) color = "green"
 					else if (time <= 2000) color = "orange"
 					else color = "red"
 
-					if (time > latencyThreshold) {
+					if (time > latencyThreshold && options[frontend].clearnet.enabled.includes(href)) {
 						options[frontend].clearnet.enabled.splice(options[frontend].clearnet.enabled.indexOf(href), 1)
 					}
 
@@ -268,8 +266,13 @@ async function testLatency(element, instances, frontend) {
 					else if (time > 5000) text = `ERROR: ${time - 5000}`
 					else text = `${time}ms`
 					element.innerHTML = `${href}:&nbsp;<span style="color:${color};">${text}</span>`
+				} else {
+					color = "red"
+					element.innerHTML = `${href}:&nbsp;<span style="color:${color};">Server not found</span>`
+					if (options[frontend].clearnet.enabled.includes(href)) options[frontend].clearnet.enabled.splice(options[frontend].clearnet.enabled.indexOf(href), 1)
 				}
 			})
+		}
 		browser.storage.local.set({ options })
 		resolve(myList)
 	})
@@ -423,6 +426,7 @@ function latency(service, frontend, document, location) {
 		latencyElement.addEventListener("click", reloadWindow)
 		browser.storage.local.get(["redirects", "latency"], r => {
 			let redirects = r.redirects
+			let latency = r.latency
 			const oldHtml = latencyLabel.innerHTML
 			latencyLabel.innerHTML = "..."
 			testLatency(latencyLabel, redirects[frontend].clearnet, frontend).then(r => {

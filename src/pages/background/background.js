@@ -3,6 +3,7 @@
 import generalHelper from "../../assets/javascripts/general.js"
 import utils from "../../assets/javascripts/utils.js"
 import servicesHelper from "../../assets/javascripts/services.js"
+import initHelper from "../../assets/javascripts/init.js"
 
 window.browser = window.browser || window.chrome
 
@@ -38,7 +39,7 @@ function initDefaults() {
 			.then(async data => {
 				browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
 					await generalHelper.initDefaults()
-					await servicesHelper.initDefaults()
+					await initHelper.initDefaults()
 				})
 			})
 	})

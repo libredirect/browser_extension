@@ -2,7 +2,7 @@ window.browser = window.browser || window.chrome
 
 import utils from "./utils.js"
 
-let config, redirects, options, targets, blacklists
+let config, redirects, options, blacklists
 
 async function getConfig() {
 	return new Promise(resolve => {
@@ -17,12 +17,10 @@ async function getConfig() {
 
 function init() {
 	return new Promise(async resolve => {
-		// await getConfig()
-		browser.storage.local.get(["options", "targets", "redirects", "blacklists"], r => {
+		browser.storage.local.get(["options", "redirects", "blacklists"], r => {
 			if (r.options) {
 				blacklists = r.blacklists
 				redirects = r.redirects
-				targets = r.targets
 				options = r.options
 			}
 			resolve()
@@ -37,7 +35,6 @@ function fetchFrontendInstanceList(service, frontend) {
 	let tmp = []
 	if (config.services[service].frontends[frontend].instanceList) {
 		for (const network in config.networks) {
-			if (!redirects[frontend]) console.log(frontend)
 			tmp.push(...redirects[frontend][network], ...options[frontend][network].custom)
 		}
 	} else if (config.services[service].frontends[frontend].singleInstance) tmp = config.services[service].frontends[frontend].singleInstance
@@ -45,8 +42,6 @@ function fetchFrontendInstanceList(service, frontend) {
 }
 
 function all(service, frontend) {
-	// init()
-	// getConfig()
 	let instances = []
 	if (!frontend) {
 		for (const frontend in config.services[service].frontends) {
@@ -90,10 +85,9 @@ function redirect(url, type, initiator) {
 		if (!regexArray(service, url)) continue
 
 		if (Object.keys(config.services[service].frontends).length > 1) {
-			frontend = options[service].frontend
-		} else {
-			frontend = Object.keys(config.services[service].frontends)[0]
-		}
+			if (type == "sub_frame") frontend = options[service].embedFrontend
+			else frontend = options[service].frontend
+		} else frontend = Object.keys(config.services[service].frontends)[0]
 
 		if (config.services[service].frontends[frontend].instanceList) {
 			let instanceList = [...options[frontend][network].enabled, ...options[frontend][network].custom]
@@ -103,7 +97,7 @@ function redirect(url, type, initiator) {
 		} else if (config.services[service].frontends[frontend].singleInstance) randomInstance = config.services[service].frontends[frontend].singleInstance
 		break
 	}
-	if (frontend == null) return
+	if (!frontend) return
 
 	// Here is a (temperory) space for defining constants required in 2 or more switch cases.
 	// When possible, try have the two switch cases share all their code as done with searx and searxng.
@@ -391,49 +385,6 @@ function redirect(url, type, initiator) {
 	}
 }
 
-async function initDefaults() {
-	return new Promise(async resolve => {
-		fetch("/instances/data.json")
-			.then(response => response.text())
-			.then(async data => {
-				browser.storage.local.get(["options", "blacklists"], async r => {
-					let redirects = JSON.parse(data)
-					let options = r.options
-					let targets = {}
-					const localstorage = {}
-					const latency = {}
-					for (const service in config.services) {
-						options[service] = {}
-						if (config.services[service].targets == "datajson") {
-							targets[service] = redirects[service]
-						}
-						for (const defaultOption in config.services[service].options) {
-							options[service][defaultOption] = config.services[service].options[defaultOption]
-						}
-						for (const frontend in config.services[service].frontends) {
-							if (config.services[service].frontends[frontend].instanceList) {
-								options[frontend] = {}
-								for (const network in config.networks) {
-									options[frontend][network] = {}
-									options[frontend][network].enabled = JSON.parse(data)[frontend][network]
-									options[frontend][network].custom = []
-								}
-								for (const blacklist in r.blacklists) {
-									for (const instance of r.blacklists[blacklist]) {
-										let i = options[frontend].clearnet.enabled.indexOf(instance)
-										if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
-									}
-								}
-							}
-						}
-					}
-					browser.storage.local.set({ redirects, options, targets, latency, localstorage })
-					resolve()
-				})
-			})
-	})
-}
-
 function computeService(url, returnFrontend) {
 	for (const service in config.services) {
 		if (regexArray(service, url)) {
@@ -454,8 +405,6 @@ function computeService(url, returnFrontend) {
 
 function switchInstance(url) {
 	return new Promise(async resolve => {
-		// await init()
-		// await getConfig()
 		const protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
 			if (!options[service].enabled) continue
@@ -487,8 +436,6 @@ function switchInstance(url) {
 
 function reverse(url) {
 	return new Promise(async resolve => {
-		// await init()
-		// await getConfig()
 		let protocolHost = utils.protocolHost(url)
 		let currentService
 		for (const service in config.services) {
@@ -517,8 +464,6 @@ function reverse(url) {
 
 function unifyPreferences(url, tabId) {
 	return new Promise(async resolve => {
-		// await init()
-		// await getConfig()
 		const protocolHost = utils.protocolHost(url)
 		let currentFrontend, currentService
 		serviceloop: for (const service in config.services) {
@@ -540,18 +485,14 @@ function unifyPreferences(url, tabId) {
 			}
 		}
 		if ("localstorage" in frontend.preferences) {
+			browser.storage.local.set({ tmp: [currentFrontend, frontend.preferences.localstorage] })
 			browser.tabs.executeScript(tabId, {
-				code: "const frontend = " + frontend,
-				code: "const items = " + config.services[currentService].frontends[currentFrontend].preferences.localStorage,
-				//file: "/assets/javascripts/get-localstorage.js",
+				file: "/assets/javascripts/get-localstorage.js",
 				runAt: "document_start",
 			})
-
 			for (const instance of instancesList)
 				browser.tabs.create({ url: instance }, tab =>
 					browser.tabs.executeScript(tab.id, {
-						code: "const frontend = " + frontend,
-						code: "const items = " + config.services[currentService].frontends[currentFrontend].preferences.localStorage,
 						file: "/assets/javascripts/set-localstorage.js",
 						runAt: "document_start",
 					})
@@ -594,7 +535,6 @@ function setRedirects(redirects) {
 
 export default {
 	redirect,
-	initDefaults,
 	computeService,
 	switchInstance,
 	reverse,
