@@ -2,25 +2,11 @@
 window.browser = window.browser || window.chrome
 
 import utils from "../../assets/javascripts/utils.js"
-import generalHelper from "../../assets/javascripts/general.js"
+// import generalHelper from "../../assets/javascripts/general.js"
 import serviceHelper from "../../assets/javascripts/services.js"
 
-utils.switchInstance(true).then(r => {
-	if (!r) document.getElementById("change_instance_div").style.display = "none"
-	else document.getElementById("change_instance").addEventListener("click", () => utils.switchInstance(false))
-})
-
-utils.copyRaw(true).then(r => {
-	if (!r) document.getElementById("copy_raw_div").style.display = "none"
-	else {
-		const copy_raw = document.getElementById("copy_raw")
-		copy_raw.addEventListener("click", () => utils.copyRaw(false, copy_raw))
-	}
-})
-document.getElementById("more-options").addEventListener("click", () => browser.runtime.openOptionsPage())
-
-let config
-let divs = {}
+let config,
+	divs = {}
 
 async function getConfig() {
 	return new Promise(resolve => {
@@ -34,6 +20,20 @@ async function getConfig() {
 }
 
 await getConfig()
+
+utils.switchInstance(true).then(r => {
+	if (!r) document.getElementById("change_instance_div").style.display = "none"
+	else document.getElementById("change_instance").addEventListener("click", () => utils.switchInstance(false))
+})
+
+utils.copyRaw(true, null, config).then(r => {
+	if (!r) document.getElementById("copy_raw_div").style.display = "none"
+	else {
+		const copy_raw = document.getElementById("copy_raw")
+		copy_raw.addEventListener("click", () => utils.copyRaw(false, copy_raw))
+	}
+})
+document.getElementById("more-options").addEventListener("click", () => browser.runtime.openOptionsPage())
 
 const allSites = document.getElementsByClassName("all_sites")[0]
 const currSite = document.getElementsByClassName("current_site")[0]
@@ -78,11 +78,16 @@ browser.storage.local.get("options", r => {
 			return
 		}
 
-		const [service, frontend] = serviceHelper.computeService(url, true)
+		let service = await serviceHelper.computeService(url, true)
+		let frontend
 		if (service) {
+			if (service[1]) {
+				frontend = service[1]
+				service = frontend[0]
+			}
 			divs[service].current.classList.remove("hide")
 			divs[service].all.classList.add("hide")
-			if (config.services[service].frontends[frontend].preferences) {
+			if (config.services[service].frontends[frontend].preferences && !config.services[service].frontends[frontend].preferences.token) {
 				const unify = document.getElementById("unify")
 				const textElement = document.getElementById("unify").getElementsByTagName("h4")[0]
 				unify.addEventListener("click", () => {

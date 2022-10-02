@@ -58,6 +58,7 @@ function exportSettings() {
 exportSettings()
 
 document.getElementById("general_page").addEventListener("click", exportSettings)
+document.getElementById("test").addEventListener("click", servicesHelper.upgradeOptions)
 
 let importSettingsElement = document.getElementById("import-settings")
 let importSettingsElementText = document.getElementById("import_settings_text")

@@ -342,7 +342,7 @@ function getPreferencesFromToken(frontend, targetUrl, urls, name, endpoint) {
 	})
 }
 
-function copyRaw(test, copyRawElement) {
+function copyRaw(test, copyRawElement, config) {
 	return new Promise(resolve => {
 		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 			let currTab = tabs[0]
@@ -355,7 +355,7 @@ function copyRaw(test, copyRawElement) {
 					return
 				}
 
-				let newUrl = await servicesHelper.reverse(url)
+				let newUrl = servicesHelper.reverse(url, config)
 
 				if (newUrl) {
 					resolve(newUrl)
@@ -387,7 +387,7 @@ function unify() {
 					return
 				}
 
-				let result = await servicesHelper.unifyPreferences(url, currTab.id)
+				const result = await servicesHelper.unifyPreferences(url, currTab.id)
 
 				resolve(result)
 			}
@@ -407,7 +407,7 @@ function switchInstance(test) {
 					resolve()
 					return
 				}
-				let newUrl = await servicesHelper.switchInstance(url)
+				const newUrl = await servicesHelper.switchInstance(url)
 
 				if (newUrl) {
 					if (!test) browser.tabs.update({ url: newUrl })

@@ -2,58 +2,49 @@ window.browser = window.browser || window.chrome
 
 import utils from "./utils.js"
 
-let config, redirects, options, blacklists
-
-async function getConfig() {
-	return new Promise(resolve => {
-		fetch("/config/config.json")
-			.then(response => response.text())
-			.then(data => {
-				config = JSON.parse(data)
-				resolve()
-			})
-	})
-}
+let config, options, redirects
 
 function init() {
 	return new Promise(async resolve => {
-		browser.storage.local.get(["options", "redirects", "blacklists"], r => {
-			if (r.options) {
-				blacklists = r.blacklists
-				redirects = r.redirects
-				options = r.options
-			}
-			resolve()
+		browser.storage.local.get(["options", "redirects"], r => {
+			options = r.options
+			redirects = r.redirects
+			fetch("/config/config.json")
+				.then(response => response.text())
+				.then(configData => {
+					config = JSON.parse(configData)
+					resolve()
+				})
 		})
 	})
 }
 
-await getConfig()
-await init()
+init()
+browser.storage.onChanged.addListener(init)
 
-function fetchFrontendInstanceList(service, frontend) {
+function fetchFrontendInstanceList(service, frontend, redirects, options, config) {
 	let tmp = []
 	if (config.services[service].frontends[frontend].instanceList) {
 		for (const network in config.networks) {
-			tmp.push(...redirects[frontend][network], ...options[frontend][network].custom)
+			tmp.push(...redirects[network], ...options[frontend][network].custom)
 		}
 	} else if (config.services[service].frontends[frontend].singleInstance) tmp = config.services[service].frontends[frontend].singleInstance
 	return tmp
 }
 
-function all(service, frontend) {
+function all(service, frontend, options, config, redirects) {
 	let instances = []
 	if (!frontend) {
 		for (const frontend in config.services[service].frontends) {
-			instances.push(...fetchFrontendInstanceList(service, frontend))
+			instances.push(...fetchFrontendInstanceList(service, frontend, redirects[frontend], options, config))
 		}
 	} else {
-		instances.push(...fetchFrontendInstanceList(service, frontend))
+		instances.push(...fetchFrontendInstanceList(service, frontend, redirects[frontend], options, config))
 	}
 	return instances
 }
 
-function regexArray(service, url) {
+function regexArray(service, url, config) {
 	let targets
 	if (config.services[service].targets == "datajson") {
 		browser.storage.local.get("targets", r => {
@@ -69,20 +60,20 @@ function regexArray(service, url) {
 	return false
 }
 
-browser.storage.onChanged.addListener(init)
-
 function redirect(url, type, initiator) {
 	let randomInstance
 	let frontend
-	let network = options.network
 	for (const service in config.services) {
 		if (!options[service].enabled) continue
 		if (config.services[service].embeddable && type != options[service].redirectType && options[service].redirectType != "both") continue
 		if (!config.services[service].embeddable && type != "main_frame") continue
 		let targets = new RegExp(config.services[service].targets.join("|"), "i")
 
-		if (initiator && (all(service).includes(initiator.origin) || targets.test(initiator.host))) continue
-		if (!regexArray(service, url)) continue
+		if (!regexArray(service, url, config)) continue
+		if (initiator) {
+			if (targets.test(initiator.host)) continue
+			if (all(service, null, options, config, redirects).includes(initiator.origin)) return "BYPASSTAB"
+		}
 
 		if (Object.keys(config.services[service].frontends).length > 1) {
 			if (type == "sub_frame") frontend = options[service].embedFrontend
@@ -90,7 +81,7 @@ function redirect(url, type, initiator) {
 		} else frontend = Object.keys(config.services[service].frontends)[0]
 
 		if (config.services[service].frontends[frontend].instanceList) {
-			let instanceList = [...options[frontend][network].enabled, ...options[frontend][network].custom]
+			let instanceList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]
 			if (instanceList.length === 0 && options.networkFallback) instanceList = [...options[frontend].clearnet.enabled, ...options[frontend].clearnet.custom]
 			if (instanceList.length === 0) return
 			randomInstance = utils.getRandomInstance(instanceList)
@@ -385,152 +376,276 @@ function redirect(url, type, initiator) {
 	}
 }
 
-function computeService(url, returnFrontend) {
-	for (const service in config.services) {
-		if (regexArray(service, url)) {
-			if (returnFrontend) return [service, null]
-			else return service
-		} else {
-			for (const frontend in config.services[service].frontends) {
-				if (all(service, frontend).includes(utils.protocolHost(url))) {
-					if (returnFrontend) return [service, frontend]
-					else return service
-				}
-			}
-		}
-	}
-	if (returnFrontend) return [null, null]
-	else return null
-}
-
-function switchInstance(url) {
-	return new Promise(async resolve => {
-		const protocolHost = utils.protocolHost(url)
-		for (const service in config.services) {
-			if (!options[service].enabled) continue
-			if (!all(service).includes(protocolHost)) continue
-
-			let instancesList = [...options[options[service].frontend][options.network].enabled, ...options[options[service].frontend][options.network].custom]
-			if (instancesList.length === 0 && options.networkFallback) instancesList = [...options[options[service].frontend].clearnet.enabled, ...options[options[service].frontend].clearnet.custom]
-
-			let oldInstance
-			const i = instancesList.indexOf(protocolHost)
-			if (i > -1) {
-				oldInstance = instancesList[i]
-				instancesList.splice(i, 1)
-			}
-			if (instancesList.length === 0) {
-				resolve()
-				return
-			}
-			const randomInstance = utils.getRandomInstance(instancesList)
-			const oldUrl = `${oldInstance}${url.pathname}${url.search}`
-			// This is to make instance switching work when the instance depends on the pathname, eg https://darmarit.org/searx
-			// Doesn't work because of .includes array method, not a top priotiry atm
-			resolve(oldUrl.replace(oldInstance, randomInstance))
-			return
-		}
-		resolve()
-	})
-}
-
-function reverse(url) {
-	return new Promise(async resolve => {
-		let protocolHost = utils.protocolHost(url)
-		let currentService
-		for (const service in config.services) {
-			if (!all(service).includes(protocolHost)) continue
-			currentService = service
-		}
-		switch (currentService) {
-			case "instagram":
-				if (url.pathname.startsWith("/p")) resolve(`https://instagram.com${url.pathname.replace("/p", "")}${url.search}`)
-				if (url.pathname.startsWith("/u")) resolve(`https://instagram.com${url.pathname.replace("/u", "")}${url.search}`)
-				resolve(config.services[currentService].url + url.pathname + url.search)
-				return
-			case "youtube":
-			case "imdb":
-			case "imgur":
-			case "tiktok":
-			case "twitter":
-				resolve(config.services[currentService].url + url.pathname + url.search)
-				return
-			default:
-				resolve()
-				return
-		}
-	})
-}
-
-function unifyPreferences(url, tabId) {
-	return new Promise(async resolve => {
-		const protocolHost = utils.protocolHost(url)
-		let currentFrontend, currentService
-		serviceloop: for (const service in config.services) {
-			for (const frontend in config.services[service].frontends) {
-				if (all(service, frontend).includes(protocolHost)) {
-					currentFrontend = frontend
-					currentService = service
-					break serviceloop
-				}
-			}
-		}
-		let instancesList = [...options[currentFrontend][options.network].enabled, ...options[currentFrontend][options.network].custom]
-		if (options.networkFallback && options.network != "clearnet") instancesList.push(...options[currentFrontend].clearnet.enabled, ...options[currentFrontend].clearnet.custom)
-
-		const frontend = config.services[currentService].frontends[currentFrontend]
-		if ("cookies" in frontend.preferences) {
-			for (const cookie of frontend.preferences.cookies) {
-				await utils.copyCookie(currentFrontend, url, instancesList, cookie)
-			}
-		}
-		if ("localstorage" in frontend.preferences) {
-			browser.storage.local.set({ tmp: [currentFrontend, frontend.preferences.localstorage] })
-			browser.tabs.executeScript(tabId, {
-				file: "/assets/javascripts/get-localstorage.js",
-				runAt: "document_start",
-			})
-			for (const instance of instancesList)
-				browser.tabs.create({ url: instance }, tab =>
-					browser.tabs.executeScript(tab.id, {
-						file: "/assets/javascripts/set-localstorage.js",
-						runAt: "document_start",
-					})
-				)
-		}
-		if ("indexeddb" in frontend.preferences) {
-		}
-		if ("token" in frontend.preferences) {
-		}
-		resolve(true)
-	})
-}
-
-function setRedirects(redirects) {
-	//browser.storage.local.get(["options", "blacklists"], async r => {
-	//let options = r.options
-	let targets = {}
-	for (const service in config.services) {
-		if (config.services[service].targets == "datajson") {
-			targets[service] = redirects[service]
-		}
-		for (const frontend in config.services[service].frontends) {
-			if (config.services[service].frontends[frontend].instanceList) {
-				for (const network in config.networks) {
-					options[frontend][network].enabled = redirects[frontend][network]
-				}
-				for (const blacklist in blacklists) {
-					for (const instance of blacklist) {
-						let i = options[frontend].clearnet.enabled.indexOf(instance)
-						if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
+async function computeService(url, returnFrontend) {
+	fetch("/config/config.json")
+		.then(response => response.text())
+		.then(configData => {
+			const config = JSON.parse(configData)
+			browser.storage.local.get(["redirects", "options"], r => {
+				const redirects = r.redirects
+				const options = r.options
+				for (const service in config.services) {
+					if (regexArray(service, url, config)) {
+						if (returnFrontend) return [service, null]
+						else return service
+					} else {
+						for (const frontend in config.services[service].frontends) {
+							if (all(service, frontend, options, config, redirects).includes(utils.protocolHost(url))) {
+								if (returnFrontend) {
+									return [service, frontend]
+								} else return service
+							}
+						}
 					}
 				}
+				// if (returnFrontend) return [null, null]
+				// else return null
+			})
+		})
+}
+
+async function switchInstance(url) {
+	fetch("/config/config.json")
+		.then(response => response.text())
+		.then(configData => {
+			const config = JSON.parse(configData)
+			browser.storage.local.get(["redirects", "options"], r => {
+				const redirects = r.redirects
+				const options = r.options
+				const protocolHost = utils.protocolHost(url)
+				for (const service in config.services) {
+					if (!options[service].enabled) continue
+					if (!all(service, null, options, config, redirects).includes(protocolHost)) continue
+
+					let instancesList = [...options[options[service].frontend][options.network].enabled, ...options[options[service].frontend][options.network].custom]
+					if (instancesList.length === 0 && options.networkFallback) instancesList = [...options[options[service].frontend].clearnet.enabled, ...options[options[service].frontend].clearnet.custom]
+
+					let oldInstance
+					const i = instancesList.indexOf(protocolHost)
+					if (i > -1) {
+						oldInstance = instancesList[i]
+						instancesList.splice(i, 1)
+					}
+					if (instancesList.length === 0) return
+					const randomInstance = utils.getRandomInstance(instancesList)
+					const oldUrl = `${oldInstance}${url.pathname}${url.search}`
+					// This is to make instance switching work when the instance depends on the pathname, eg https://darmarit.org/searx
+					// Doesn't work because of .includes array method, not a top priotiry atm
+					return oldUrl.replace(oldInstance, randomInstance)
+				}
+			})
+		})
+}
+
+async function reverse(url) {
+	fetch("/config/config.json")
+		.then(response => response.text())
+		.then(configData => {
+			const config = JSON.parse(configData)
+			browser.storage.local.get(["redirects", "options"], r => {
+				const redirects = r.redirects
+				const options = r.options
+				let protocolHost = utils.protocolHost(url)
+				for (const service in config.services) {
+					if (!all(service, null, options, config, redirects).includes(protocolHost)) continue
+
+					switch (service) {
+						case "instagram":
+							if (url.pathname.startsWith("/p")) return `https://instagram.com${url.pathname.replace("/p", "")}${url.search}`
+							if (url.pathname.startsWith("/u")) return `https://instagram.com${url.pathname.replace("/u", "")}${url.search}`
+							return config.services[service].url + url.pathname + url.search
+						case "youtube":
+						case "imdb":
+						case "imgur":
+						case "tiktok":
+						case "twitter":
+						case "reddit":
+							return config.services[service].url + url.pathname + url.search
+						default:
+							return
+					}
+				}
+			})
+		})
+}
+
+async function unifyPreferences(url, tabId) {
+	fetch("/config/config.json")
+		.then(response => response.text())
+		.then(configData => {
+			const config = JSON.parse(configData)
+			browser.storage.local.get(["options", "reidrects"], r => {
+				const redirects = r.redirects
+				const options = r.options
+				const protocolHost = utils.protocolHost(url)
+				for (const service in config.services) {
+					for (const frontend in config.services[service].frontends) {
+						if (all(service, frontend, options, config, redirects).includes(protocolHost)) {
+							let instancesList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]
+							if (options.networkFallback && options.network != "clearnet") instancesList.push(...options[frontend].clearnet.enabled, ...options[frontend].clearnet.custom)
+
+							const frontend = config.services[service].frontends[frontend]
+							if ("cookies" in frontend.preferences) {
+								for (const cookie of frontend.preferences.cookies) {
+									utils.copyCookie(frontend, url, instancesList, cookie)
+								}
+							}
+							if ("localstorage" in frontend.preferences) {
+								browser.storage.local.set({ tmp: [frontend, frontend.preferences.localstorage] })
+								browser.tabs.executeScript(tabId, {
+									file: "/assets/javascripts/get-localstorage.js",
+									runAt: "document_start",
+								})
+								for (const instance of instancesList)
+									browser.tabs.create({ url: instance }, tab =>
+										browser.tabs.executeScript(tab.id, {
+											file: "/assets/javascripts/set-localstorage.js",
+											runAt: "document_start",
+										})
+									)
+							}
+							if ("indexeddb" in frontend.preferences) {
+							}
+							if ("token" in frontend.preferences) {
+							}
+							return true
+						}
+					}
+				}
+			})
+		})
+}
+
+async function setRedirects(redirects) {
+	fetch("/config/config.json")
+		.then(response => response.text())
+		.then(configData => {
+			//browser.storage.local.get(["options", "blacklists"], async r => {
+			//const options = r.options
+			const config = JSON.parse(configData)
+			let targets = {}
+			for (const service in config.services) {
+				if (config.services[service].targets == "datajson") {
+					targets[service] = redirects[service]
+				}
+				/*
+					for (const frontend in config.services[service].frontends) {
+						if (config.services[service].frontends[frontend].instanceList) {
+							for (const network in config.networks) {
+								options[frontend][network].enabled = redirects[frontend][network]
+							}
+							for (const blacklist in r.blacklists) {
+								for (const instance of blacklist) {
+									let i = options[frontend].clearnet.enabled.indexOf(instance)
+									if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
+								}
+							}
+						}
+					}
+					*/
+				// The above will be implemented with https://github.com/libredirect/libredirect/issues/334
 			}
-		}
-	}
-	console.log(redirects)
-	browser.storage.local.set({ redirects, targets, options })
-	//})
+			browser.storage.local.set({ redirects, targets /*, options*/ })
+			//})
+		})
+}
+
+function initDefaults() {
+	return new Promise(resolve => {
+		fetch("/instances/data.json")
+			.then(response => response.text())
+			.then(data => {
+				fetch("/config/config.json")
+					.then(response => response.text())
+					.then(configData => {
+						browser.storage.local.get(["options", "blacklists"], r => {
+							let redirects = JSON.parse(data)
+							let options = r.options
+							let targets = {}
+							let config = JSON.parse(configData)
+							const localstorage = {}
+							const latency = {}
+							for (const service in config.services) {
+								options[service] = {}
+								if (config.services[service].targets == "datajson") {
+									targets[service] = redirects[service]
+								}
+								for (const defaultOption in config.services[service].options) {
+									options[service][defaultOption] = config.services[service].options[defaultOption]
+								}
+								for (const frontend in config.services[service].frontends) {
+									if (config.services[service].frontends[frontend].instanceList) {
+										options[frontend] = {}
+										for (const network in config.networks) {
+											options[frontend][network] = {}
+											options[frontend][network].enabled = JSON.parse(data)[frontend][network]
+											options[frontend][network].custom = []
+										}
+										for (const blacklist in r.blacklists) {
+											for (const instance of r.blacklists[blacklist]) {
+												let i = options[frontend].clearnet.enabled.indexOf(instance)
+												if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
+											}
+										}
+									}
+								}
+							}
+							browser.storage.local.set({ redirects, options, targets, latency, localstorage })
+							resolve()
+						})
+					})
+			})
+	})
+}
+
+function upgradeOptions() {
+	return new Promise(resolve => {
+		fetch("/config/config.json")
+			.then(response => response.text())
+			.then(configData => {
+				browser.storage.local.get(["options", "exceptions", "theme", "popupFrontends", "autoRedirect", "firstPartyIsolate"], r => {
+					let options = r.options
+					let latency = {}
+					const config = JSON.parse(configData)
+					options.exceptions = r.exceptions
+					if (r.theme != "DEFAULT") options.theme = r.theme
+					options.popupServices = r.popupFrontends
+					options.firstPartyIsolate = r.firstPartyIsolate
+					options.autoRedirect = r.autoRedirect
+					for (const service in config.services) {
+						browser.storage.local.get([`disable${utils.camelCase(service)}`, `${service}RedirectType`, `${service}Frontend`, `${service}Latency`, `${service}EmbedFrontend`], r => {
+							if (r) {
+								options[service].enabled = !r["disable" + utils.camelCase(service)]
+								if (r[service + "Frontend"]) {
+									if (r[service + "Frontend"] == "yatte") options[service].frontend = "yattee"
+									else options[service].frontend = r[service + "Frontend"]
+								}
+								if (r[service + "RedirectType"]) options[service].redirectType = r[service + "RedirectType"]
+								if (r[service + "EmbedFrontend"] && (service != "youtube" || r[service + "EmbedFrontend"] == "invidious" || "piped")) options[service].embedFrontend = r[service + "EmbedFrontend"]
+								for (const frontend in config.services[service].frontends) {
+									browser.local.storage.get(`${frontend}Latency`, r => {
+										if (r) latency[frontend] = r[frontend + "Latency"]
+										for (const network in config.networks) {
+											let protocol
+											if (network == "clearnet") protocol = "normal"
+											else protocol = network
+											browser.storage.local.get([`${frontend}${utils.camelCase(protocol)}RedirectsChecks`, `${frontend}${utils.camelCase(protocol)}CustomRedirects`], r => {
+												if (r) {
+													options[frontend][network].checks = r[frontend + utils.camelCase(protocol) + "RedirectsChecks"]
+													options[frontend][network].custom = r[frontend + utils.camelCase(protocol) + "CustomRedirects"]
+												}
+											})
+										}
+									})
+								}
+							}
+						})
+					}
+					browser.storage.local.set({ options, latency })
+					resolve()
+				})
+			})
+	})
 }
 
 export default {
@@ -540,4 +655,6 @@ export default {
 	reverse,
 	unifyPreferences,
 	setRedirects,
+	initDefaults,
+	upgradeOptions,
 }
