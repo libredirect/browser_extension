@@ -58,7 +58,7 @@ const currentSiteIsFrontend = document.getElementById("current_site_divider")
 
 browser.storage.local.get("options", r => {
 	browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
-		for (const service in config.services) {
+for (const service in config.services) {
 			if (!r.options.popupServices.includes(service)) allSites.getElementsByClassName(service)[0].classList.add("hide")
 			else allSites.getElementsByClassName(service)[0].classList.remove("hide")
 			currSite.getElementsByClassName(service)[0].classList.add("hide")
@@ -68,7 +68,7 @@ browser.storage.local.get("options", r => {
 			divs[service].toggle.all.checked = r.options[service].enabled
 			divs[service].toggle.current.checked = r.options[service].enabled
 		}
-
+		
 		let url
 		try {
 			url = new URL(tabs[0].url)
@@ -77,7 +77,7 @@ browser.storage.local.get("options", r => {
 			document.getElementById("unify_div").style.display = "none"
 			return
 		}
-
+		
 		let service = await serviceHelper.computeService(url, true)
 		let frontend
 		if (service) {

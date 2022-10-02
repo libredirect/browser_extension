@@ -376,32 +376,41 @@ function redirect(url, type, initiator) {
 	}
 }
 
-async function computeService(url, returnFrontend) {
-	fetch("/config/config.json")
-		.then(response => response.text())
-		.then(configData => {
-			const config = JSON.parse(configData)
-			browser.storage.local.get(["redirects", "options"], r => {
-				const redirects = r.redirects
-				const options = r.options
-				for (const service in config.services) {
-					if (regexArray(service, url, config)) {
-						if (returnFrontend) return [service, null]
-						else return service
-					} else {
-						for (const frontend in config.services[service].frontends) {
-							if (all(service, frontend, options, config, redirects).includes(utils.protocolHost(url))) {
-								if (returnFrontend) {
-									return [service, frontend]
-								} else return service
+function computeService(url, returnFrontend) {
+	return new Promise(resolve => {
+		fetch("/config/config.json")
+			.then(response => response.text())
+			.then(configData => {
+				const config = JSON.parse(configData)
+				browser.storage.local.get(["redirects", "options"], r => {
+					const redirects = r.redirects
+					const options = r.options
+					for (const service in config.services) {
+						if (regexArray(service, url, config)) {
+							if (returnFrontend) {
+								resolve([service, null])
+							} else {
+								resolve(service)
+							}
+							return
+						} else {
+							for (const frontend in config.services[service].frontends) {
+								if (all(service, frontend, options, config, redirects).includes(utils.protocolHost(url))) {
+									if (returnFrontend) {
+										resolve([service, frontend])
+									} else {
+										resolve(service)
+									}
+									return
+								}
 							}
 						}
 					}
-				}
-				// if (returnFrontend) return [null, null]
-				// else return null
+					// if (returnFrontend) return [null, null]
+					// else return null
+				})
 			})
-		})
+	})
 }
 
 async function switchInstance(url) {
