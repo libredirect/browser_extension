@@ -49,16 +49,16 @@ function setOption(option, multiChoice, event) {
 let exportSettingsElement = document.getElementById("export-settings")
 
 function exportSettings() {
-	browser.storage.local.get(null, result => {
-		let resultString = JSON.stringify(result, null, "  ")
-		exportSettingsElement.href = "data:application/json;base64," + btoa(encodeURI(resultString))
+	browser.storage.local.get("options", result => {
+		result.options.version = browser.runtime.getManifest().version
+		let resultString = JSON.stringify(result.options, null, "  ")
+		exportSettingsElement.href = "data:application/json;base64," + btoa(resultString)
 		exportSettingsElement.download = "libredirect-settings.json"
 	})
 }
 exportSettings()
 
 document.getElementById("general_page").addEventListener("click", exportSettings)
-document.getElementById("test").addEventListener("click", servicesHelper.upgradeOptions)
 
 let importSettingsElement = document.getElementById("import-settings")
 let importSettingsElementText = document.getElementById("import_settings_text")
@@ -70,7 +70,22 @@ importSettingsElement.addEventListener("change", () => {
 	reader.onload = async () => {
 		const data = JSON.parse(reader.result)
 		if ("theme" in data && "disableImgur" in data && "imgurRedirects" in data) {
-			browser.storage.local.clear(() => browser.storage.local.set({ ...data }, () => location.reload()))
+			browser.storage.local.clear(() =>
+				browser.storage.local.set({ ...data }, () => {
+					fetch("/instances/blacklist.json")
+						.then(response => response.text())
+						.then(async data => {
+							browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
+								await generalHelper.initDefaults()
+								await servicesHelper.initDefaults()
+								await servicesHelper.upgradeOptions()
+								location.reload()
+							})
+						})
+				})
+			)
+		} else if ("version" in data) {
+			browser.storage.local.clear(() => browser.storage.local.set({ options: data }, () => location.reload()))
 		} else {
 			console.log("incompatible settings")
 			importError()

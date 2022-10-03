@@ -431,6 +431,7 @@ def peertube():
 
 def isValid(url):  # This code is contributed by avanitrachhadiya2155
     try:
+        url.encode('ascii')
         result = urlparse(url)
         return all([result.scheme, result.netloc])
     except Exception:

@@ -406,123 +406,115 @@ function computeService(url, returnFrontend) {
 							}
 						}
 					}
-					// if (returnFrontend) return [null, null]
-					// else return null
+					resolve()
 				})
 			})
 	})
 }
 
-async function switchInstance(url) {
-	fetch("/config/config.json")
-		.then(response => response.text())
-		.then(configData => {
-			const config = JSON.parse(configData)
-			browser.storage.local.get(["redirects", "options"], r => {
-				const redirects = r.redirects
-				const options = r.options
-				const protocolHost = utils.protocolHost(url)
-				for (const service in config.services) {
-					if (!options[service].enabled) continue
-					if (!all(service, null, options, config, redirects).includes(protocolHost)) continue
+function switchInstance(url) {
+	return new Promise(async resolve => {
+		await init()
+		const protocolHost = utils.protocolHost(url)
+		for (const service in config.services) {
+			if (!all(service, null, options, config, redirects).includes(protocolHost)) continue
 
-					let instancesList = [...options[options[service].frontend][options.network].enabled, ...options[options[service].frontend][options.network].custom]
-					if (instancesList.length === 0 && options.networkFallback) instancesList = [...options[options[service].frontend].clearnet.enabled, ...options[options[service].frontend].clearnet.custom]
+			let instancesList = [...options[options[service].frontend][options.network].enabled, ...options[options[service].frontend][options.network].custom]
+			if (instancesList.length === 0 && options.networkFallback) instancesList = [...options[options[service].frontend].clearnet.enabled, ...options[options[service].frontend].clearnet.custom]
 
-					let oldInstance
-					const i = instancesList.indexOf(protocolHost)
-					if (i > -1) {
-						oldInstance = instancesList[i]
-						instancesList.splice(i, 1)
-					}
-					if (instancesList.length === 0) return
-					const randomInstance = utils.getRandomInstance(instancesList)
-					const oldUrl = `${oldInstance}${url.pathname}${url.search}`
-					// This is to make instance switching work when the instance depends on the pathname, eg https://darmarit.org/searx
-					// Doesn't work because of .includes array method, not a top priotiry atm
-					return oldUrl.replace(oldInstance, randomInstance)
-				}
-			})
-		})
+			let oldInstance
+			const i = instancesList.indexOf(protocolHost)
+			if (i > -1) {
+				oldInstance = instancesList[i]
+				instancesList.splice(i, 1)
+			}
+			if (instancesList.length === 0) {
+				resolve()
+				return
+			}
+			const randomInstance = utils.getRandomInstance(instancesList)
+			const oldUrl = `${oldInstance}${url.pathname}${url.search}`
+			// This is to make instance switching work when the instance depends on the pathname, eg https://darmarit.org/searx
+			// Doesn't work because of .includes array method, not a top priotiry atm
+			resolve(oldUrl.replace(oldInstance, randomInstance))
+			return
+		}
+		resolve()
+	})
 }
 
-async function reverse(url) {
-	fetch("/config/config.json")
-		.then(response => response.text())
-		.then(configData => {
-			const config = JSON.parse(configData)
-			browser.storage.local.get(["redirects", "options"], r => {
-				const redirects = r.redirects
-				const options = r.options
-				let protocolHost = utils.protocolHost(url)
-				for (const service in config.services) {
-					if (!all(service, null, options, config, redirects).includes(protocolHost)) continue
+function reverse(url) {
+	return new Promise(async resolve => {
+		await init()
+		let protocolHost = utils.protocolHost(url)
+		for (const service in config.services) {
+			if (!all(service, null, options, config, redirects).includes(protocolHost)) continue
 
-					switch (service) {
-						case "instagram":
-							if (url.pathname.startsWith("/p")) return `https://instagram.com${url.pathname.replace("/p", "")}${url.search}`
-							if (url.pathname.startsWith("/u")) return `https://instagram.com${url.pathname.replace("/u", "")}${url.search}`
-							return config.services[service].url + url.pathname + url.search
-						case "youtube":
-						case "imdb":
-						case "imgur":
-						case "tiktok":
-						case "twitter":
-						case "reddit":
-							return config.services[service].url + url.pathname + url.search
-						default:
-							return
-					}
-				}
-			})
-		})
+			switch (service) {
+				case "instagram":
+					if (url.pathname.startsWith("/p")) resolve(`https://instagram.com${url.pathname.replace("/p", "")}${url.search}`)
+					if (url.pathname.startsWith("/u")) resolve(`https://instagram.com${url.pathname.replace("/u", "")}${url.search}`)
+					resolve(config.services[service].url + url.pathname + url.search)
+					return
+				case "youtube":
+				case "imdb":
+				case "imgur":
+				case "tiktok":
+				case "twitter":
+				case "reddit":
+					resolve(config.services[service].url + url.pathname + url.search)
+					return
+				default:
+					resolve()
+					return
+			}
+		}
+		resolve()
+	})
 }
 
-async function unifyPreferences(url, tabId) {
-	fetch("/config/config.json")
-		.then(response => response.text())
-		.then(configData => {
-			const config = JSON.parse(configData)
-			browser.storage.local.get(["options", "reidrects"], r => {
-				const redirects = r.redirects
-				const options = r.options
-				const protocolHost = utils.protocolHost(url)
-				for (const service in config.services) {
-					for (const frontend in config.services[service].frontends) {
-						if (all(service, frontend, options, config, redirects).includes(protocolHost)) {
-							let instancesList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]
-							if (options.networkFallback && options.network != "clearnet") instancesList.push(...options[frontend].clearnet.enabled, ...options[frontend].clearnet.custom)
+function unifyPreferences(url, tabId) {
+	return new Promise(async resolve => {
+		await init()
+		const protocolHost = utils.protocolHost(url)
+		for (const service in config.services) {
+			for (const frontend in config.services[service].frontends) {
+				if (all(service, frontend, options, config, redirects).includes(protocolHost)) {
+					let instancesList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]
+					if (options.networkFallback && options.network != "clearnet") instancesList.push(...options[frontend].clearnet.enabled, ...options[frontend].clearnet.custom)
 
-							const frontend = config.services[service].frontends[frontend]
-							if ("cookies" in frontend.preferences) {
-								for (const cookie of frontend.preferences.cookies) {
-									utils.copyCookie(frontend, url, instancesList, cookie)
-								}
-							}
-							if ("localstorage" in frontend.preferences) {
-								browser.storage.local.set({ tmp: [frontend, frontend.preferences.localstorage] })
-								browser.tabs.executeScript(tabId, {
-									file: "/assets/javascripts/get-localstorage.js",
-									runAt: "document_start",
-								})
-								for (const instance of instancesList)
-									browser.tabs.create({ url: instance }, tab =>
-										browser.tabs.executeScript(tab.id, {
-											file: "/assets/javascripts/set-localstorage.js",
-											runAt: "document_start",
-										})
-									)
-							}
-							if ("indexeddb" in frontend.preferences) {
-							}
-							if ("token" in frontend.preferences) {
-							}
-							return true
+					const frontendObject = config.services[service].frontends[frontend]
+					if ("cookies" in frontendObject.preferences) {
+						for (const cookie of frontendObject.preferences.cookies) {
+							utils.copyCookie(frontendObject, url, instancesList, cookie)
 						}
 					}
+					if ("localstorage" in frontendObject.preferences) {
+						browser.storage.local.set({ tmp: [frontend, frontendObject.preferences.localstorage] })
+						browser.tabs.executeScript(tabId, {
+							file: "/assets/javascripts/get-localstorage.js",
+							runAt: "document_start",
+						})
+						for (const instance of instancesList)
+							browser.tabs.create({ url: instance }, tab =>
+								browser.tabs.executeScript(tab.id, {
+									file: "/assets/javascripts/set-localstorage.js",
+									runAt: "document_start",
+								})
+							)
+					}
+					/*
+					if ("indexeddb" in frontendObject.preferences) {
+					}
+					if ("token" in frontendObject.preferences) {
+					}
+					*/
+					resolve(true)
+					return
 				}
-			})
-		})
+			}
+		}
+	})
 }
 
 async function setRedirects(redirects) {
@@ -612,46 +604,67 @@ function upgradeOptions() {
 		fetch("/config/config.json")
 			.then(response => response.text())
 			.then(configData => {
-				browser.storage.local.get(["options", "exceptions", "theme", "popupFrontends", "autoRedirect", "firstPartyIsolate"], r => {
+				browser.storage.local.get(null, r => {
 					let options = r.options
 					let latency = {}
 					const config = JSON.parse(configData)
 					options.exceptions = r.exceptions
 					if (r.theme != "DEFAULT") options.theme = r.theme
 					options.popupServices = r.popupFrontends
+					let tmp = options.popupServices.indexOf("tikTok")
+					if (tmp > -1) {
+						options.popupServices.splice(tmp, 1)
+						options.popupServices.push("tiktok")
+					}
+					tmp = options.popupServices.indexOf("sendTarget")
+					if (tmp > -1) {
+						options.popupServices.splice(tmp, 1)
+						options.popupServices.push("sendFiles")
+					}
 					options.firstPartyIsolate = r.firstPartyIsolate
 					options.autoRedirect = r.autoRedirect
+					switch (r.onlyEmbeddedVideo) {
+						case "onlyNotEmbedded":
+							options.youtube.redirectType = "main_frame"
+						case "onlyEmbedded":
+							options.youtube.redirectType = "sub_frame"
+						case "both":
+							options.youtube.redirectType = "both"
+					}
 					for (const service in config.services) {
-						browser.storage.local.get([`disable${utils.camelCase(service)}`, `${service}RedirectType`, `${service}Frontend`, `${service}Latency`, `${service}EmbedFrontend`], r => {
-							if (r) {
-								options[service].enabled = !r["disable" + utils.camelCase(service)]
-								if (r[service + "Frontend"]) {
-									if (r[service + "Frontend"] == "yatte") options[service].frontend = "yattee"
-									else options[service].frontend = r[service + "Frontend"]
-								}
-								if (r[service + "RedirectType"]) options[service].redirectType = r[service + "RedirectType"]
-								if (r[service + "EmbedFrontend"] && (service != "youtube" || r[service + "EmbedFrontend"] == "invidious" || "piped")) options[service].embedFrontend = r[service + "EmbedFrontend"]
-								for (const frontend in config.services[service].frontends) {
-									browser.local.storage.get(`${frontend}Latency`, r => {
-										if (r) latency[frontend] = r[frontend + "Latency"]
-										for (const network in config.networks) {
-											let protocol
-											if (network == "clearnet") protocol = "normal"
-											else protocol = network
-											browser.storage.local.get([`${frontend}${utils.camelCase(protocol)}RedirectsChecks`, `${frontend}${utils.camelCase(protocol)}CustomRedirects`], r => {
-												if (r) {
-													options[frontend][network].checks = r[frontend + utils.camelCase(protocol) + "RedirectsChecks"]
-													options[frontend][network].custom = r[frontend + utils.camelCase(protocol) + "CustomRedirects"]
-												}
-											})
-										}
-									})
+						let oldService
+						switch (service) {
+							case "tiktok":
+								oldService = "tikTok"
+								break
+							case "sendFiles":
+								oldService = "sendTarget"
+								break
+							default:
+								oldService = service
+						}
+						options[service].enabled = !r["disable" + utils.camelCase(oldService)]
+						if (r[oldService + "Frontend"]) {
+							if (r[oldService + "Frontend"] == "yatte") options[service].frontend = "yattee"
+							else options[service].frontend = r[oldService + "Frontend"]
+						}
+						if (r[oldService + "RedirectType"]) options[service].redirectType = r[oldService + "RedirectType"]
+						if (r[oldService + "EmbedFrontend"] && (service != "youtube" || r[oldService + "EmbedFrontend"] == "invidious" || r[oldService + "EmbedFrontend"] == "piped"))
+							options[service].embedFrontend = r[oldService + "EmbedFrontend"]
+						for (const frontend in config.services[service].frontends) {
+							if (r[frontend + "Latency"]) latency[frontend] = r[frontend + "Latency"]
+							for (const network in config.networks) {
+								let protocol
+								if (network == "clearnet") protocol = "normal"
+								else protocol = network
+								if (r[frontend + utils.camelCase(protocol) + "RedirectsChecks"]) {
+									options[frontend][network].enabled = r[frontend + utils.camelCase(protocol) + "RedirectsChecks"]
+									options[frontend][network].custom = r[frontend + utils.camelCase(protocol) + "CustomRedirects"]
 								}
 							}
-						})
+						}
 					}
-					browser.storage.local.set({ options, latency })
-					resolve()
+					browser.storage.local.set({ options, latency }, () => resolve())
 				})
 			})
 	})

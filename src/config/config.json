@@ -22,7 +22,8 @@
 			"frontends": {
 				"invidious": {
 					"preferences": {
-						"cookies": ["PREFS"]
+						"cookies": ["PREFS"],
+						"localstorage": ["dark_mode"]
 					},
 					"name": "Invidious",
 					"embeddable": true,
@@ -529,7 +530,7 @@
 			"embeddable": false,
 			"url": "https://maps.libredirect.invalid"
 		},
-		"uploadFiles": {
+		"sendFiles": {
 			"frontends": {
 				"send": {
 					"name": "Send",

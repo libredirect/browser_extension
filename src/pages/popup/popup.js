@@ -26,7 +26,7 @@ utils.switchInstance(true).then(r => {
 	else document.getElementById("change_instance").addEventListener("click", () => utils.switchInstance(false))
 })
 
-utils.copyRaw(true, null, config).then(r => {
+utils.copyRaw(true).then(r => {
 	if (!r) document.getElementById("copy_raw_div").style.display = "none"
 	else {
 		const copy_raw = document.getElementById("copy_raw")
@@ -81,13 +81,13 @@ browser.storage.local.get("options", r => {
 		let service = await serviceHelper.computeService(url, true)
 		let frontend
 		if (service) {
-			if (service[1]) {
+			if (service[0]) {
 				frontend = service[1]
 				service = service[0]
 			}
 			divs[service].current.classList.remove("hide")
 			divs[service].all.classList.add("hide")
-			if (config.services[service].frontends[frontend].preferences && !config.services[service].frontends[frontend].preferences.token) {
+			if (frontend && config.services[service].frontends[frontend].preferences && !config.services[service].frontends[frontend].preferences.token) {
 				const unify = document.getElementById("unify")
 				const textElement = document.getElementById("unify").getElementsByTagName("h4")[0]
 				unify.addEventListener("click", () => {
