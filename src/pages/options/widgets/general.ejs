@@ -92,7 +92,7 @@
   <% } else { _%>
   <%- include ('src/assets/images/' + service + '-icon.svg') %>
   <% } _%>
-  <x data-localise="__MSG_<%= service %>__" label="<%= service %>"><%= config.services[service].name %></x>
+  <label data-localise="__MSG_<%= service %>__" for="<%= service %>"><%= config.services[service].name %></label>
       </div>
       <input id="<%= service %>" type="checkbox">
     </div>
