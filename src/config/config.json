@@ -279,7 +279,7 @@
 			"options": { "enabled": false },
 			"imageType": "svg",
 			"embeddable": false,
-			"url": "https://wikipedia.com"
+			"url": "https://wikipedia.org"
 		},
 		"medium": {
 			"frontends": {

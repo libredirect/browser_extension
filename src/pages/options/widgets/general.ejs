@@ -21,7 +21,7 @@
   </div>
   <div id="network-fallback">
     <div class="some-block option-block">
-      <h4 data-localise="__MSG_networkFallback__">Fallback to normal if no instances are available for the current network</h4>
+      <h4 data-localise="__MSG_networkFallback__">Fallback to clearnet if no instances are available for the current network</h4>
       <input id="network-fallback-checkbox" type="checkbox">
     </div>
   </div>
@@ -92,7 +92,7 @@
   <% } else { _%>
   <%- include ('src/assets/images/' + service + '-icon.svg') %>
   <% } _%>
-  <x data-localise="__MSG_<%= service %>__"><%= config.services[service].name %></x>
+  <x data-localise="__MSG_<%= service %>__" label="<%= service %>"><%= config.services[service].name %></x>
       </div>
       <input id="<%= service %>" type="checkbox">
     </div>

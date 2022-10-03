@@ -28,7 +28,7 @@ async function getConfig() {
 	})
 }
 
-function setOption(option, multiChoice, event) {
+function setOption(option, type, event) {
 	browser.storage.local.get("options", r => {
 		let options = r.options
 		browser.storage.local.set({ options })
@@ -36,13 +36,15 @@ function setOption(option, multiChoice, event) {
 
 	browser.storage.local.get("options", r => {
 		let options = r.options
-		if (multiChoice) {
+		if (type == "select") {
 			options[option] = event.target.options[event.target.options.selectedIndex].value
-		} else {
+		} else if (type == "checkbox") {
 			options[option] = event.target.checked
+		} else if (type == "range") {
+			options[option] = event.target.value
 		}
+
 		browser.storage.local.set({ options })
-		location.reload()
 	})
 }
 
@@ -120,30 +122,30 @@ resetSettings.addEventListener("click", async () => {
 
 let autoRedirectElement = document.getElementById("auto-redirect")
 autoRedirectElement.addEventListener("change", event => {
-	setOption("autoRedirect", false, event)
+	setOption("autoRedirect", "checkbox", event)
 })
 
 let themeElement = document.getElementById("theme")
 themeElement.addEventListener("change", event => {
-	setOption("theme", true, event)
+	setOption("theme", "select", event)
 	location.reload()
 })
 
 let networkElement = document.getElementById("network")
 networkElement.addEventListener("change", event => {
-	setOption("network", true, event)
+	setOption("network", "select", event)
 	location.reload()
 })
 
 let networkFallbackCheckbox = document.getElementById("network-fallback-checkbox")
 networkFallbackCheckbox.addEventListener("change", event => {
-	setOption("networkFallback", false, event)
+	setOption("networkFallback", "checkbox", event)
 })
 
 let latencyOutput = document.getElementById("latency-output")
 let latencyInput = document.getElementById("latency-input")
 latencyInput.addEventListener("change", event => {
-	setOption("latencyThreshold", false, event)
+	setOption("latencyThreshold", "range", event)
 })
 latencyInput.addEventListener("input", event => {
 	latencyOutput.value = event.target.value
@@ -153,18 +155,19 @@ let nameCustomInstanceInput = document.getElementById("exceptions-custom-instanc
 let instanceTypeElement = document.getElementById("exceptions-custom-instance-type")
 let instanceType = "url"
 
-let popupServices
-
 await getConfig()
 
 for (const service in config.services) {
 	document.getElementById(service).addEventListener("change", event => {
-		if (event.target.checked && !popupServices.includes(service)) popupServices.push(service)
-		else if (popupServices.includes(service)) {
-			var index = popupServices.indexOf(service)
-			if (index !== -1) popupServices.splice(index, 1)
-		}
-		browser.storage.local.set({ popupServices })
+		browser.storage.local.get("options", r => {
+			let options = r.options
+			if (event.target.checked && !options.popupServices.includes(service)) options.popupServices.push(service)
+			else if (options.popupServices.includes(service)) {
+				var index = options.popupServices.indexOf(service)
+				if (index !== -1) options.popupServices.splice(index, 1)
+			}
+			browser.storage.local.set({ options })
+		})
 	})
 }
 // const firstPartyIsolate = document.getElementById('firstPartyIsolate');
@@ -176,13 +179,14 @@ browser.storage.local.get("options", r => {
 	networkElement.value = r.options.network
 	networkFallbackCheckbox.checked = r.options.networkFallback
 	latencyOutput.value = r.options.latencyThreshold
+	let options = r.options
 	// firstPartyIsolate.checked = r.firstPartyIsolate;
 
-	let networkFallbackElement = document.getElementById("network-fallback")
+	//let networkFallbackElement = document.getElementById("network-fallback")
 	if (networkElement.value == "clearnet") {
-		networkFallbackElement.style.display = "none"
+		networkFallbackCheckbox.disabled = true
 	} else {
-		networkFallbackElement.style.display = "block"
+		networkFallbackCheckbox.disabled = false
 	}
 
 	instanceTypeElement.addEventListener("change", event => {
@@ -251,6 +255,5 @@ browser.storage.local.get("options", r => {
 		calcExceptionsCustomInstances()
 	})
 
-	popupServices = r.options.popupServices
-	for (const service in config.services) document.getElementById(service).checked = popupServices.includes(service)
+	for (const service in config.services) document.getElementById(service).checked = options.popupServices.includes(service)
 })

@@ -25,16 +25,33 @@ with open('./src/config/config.json', 'rt') as tmp:
 
 def filterLastSlash(urlList):
     tmp = {}
-    for x in urlList:
-        tmp[x] = {}
-        for y in urlList[x]:
-            tmp[x][y] = []
-            for z in urlList[x][y]:
-                if z.endswith('/'):
-                    tmp[x][y].append(z[:-1])
-                    print(Fore.YELLOW + "Fixed " + Style.RESET_ALL + z)
+    for frontend in urlList:
+        tmp[frontend] = {}
+        for network in urlList[frontend]:
+            tmp[frontend][network] = []
+            for url in urlList[frontend][network]:
+                if url.endswith('/'):
+                    tmp[frontend][network].append(url[:-1])
+                    print(Fore.YELLOW + "Fixed " + Style.RESET_ALL + url)
                 else:
-                    tmp[x][y].append(z)
+                    tmp[frontend][network].append(url)
+    return tmp
+
+
+def idnaEncode(urlList):
+    tmp = {}
+    for frontend in urlList:
+        tmp[frontend] = {}
+        for network in urlList[frontend]:
+            tmp[frontend][network] = []
+            for url in urlList[frontend][network]:
+                try:
+                    encodedUrl = url.encode("idna").decode("utf8")
+                    tmp[frontend][network].append(encodedUrl)
+                    if (encodedUrl != url):
+                        print(Fore.YELLOW + "Fixed " + Style.RESET_ALL + url)
+                except Exception:
+                    tmp[frontend][network].append(url)
     return tmp
 
 
@@ -247,7 +264,7 @@ def piped():
         _list['loki'] = []
         r = requests.get(
             'https://raw.githubusercontent.com/wiki/TeamPiped/Piped/Instances.md')
-    
+
         tmp = re.findall(
             r'(?:[^\s\/]+\.)+[a-zA-Z]+ (?:\(Official\) )?\| (https:\/{2}(?:[^\s\/]+\.)+[a-zA-Z]+) \| ', r.text)
         for item in tmp:
@@ -431,7 +448,6 @@ def peertube():
 
 def isValid(url):  # This code is contributed by avanitrachhadiya2155
     try:
-        url.encode('ascii')
         result = urlparse(url)
         return all([result.scheme, result.netloc])
     except Exception:
@@ -465,6 +481,7 @@ hyperpipe()
 facil()
 simpleertube()
 mightyList = filterLastSlash(mightyList)
+mightyList = idnaEncode(mightyList)
 
 cloudflare = []
 authenticate = []

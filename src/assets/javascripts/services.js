@@ -76,7 +76,7 @@ function redirect(url, type, initiator) {
 		}
 
 		if (Object.keys(config.services[service].frontends).length > 1) {
-			if (type == "sub_frame") frontend = options[service].embedFrontend
+			if (type == "sub_frame" && config.services[service].embeddable && !config.services[service].frontends[options[service].frontend].embeddable) frontend = options[service].embedFrontend
 			else frontend = options[service].frontend
 		} else frontend = Object.keys(config.services[service].frontends)[0]
 
