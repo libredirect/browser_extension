@@ -36,7 +36,7 @@ Send Files => [Send](https://gitlab.com/timvisee/send)
 
 **Note**: The Extension will be using random instances by default. You can modify this and add custom instances too.
 
-# Please read the [FAQ](https://libredirect.github.io/faq.html) if you have any questions!
+# Please read the [FAQ](https://libredirect.codeberg.page/faq.html) if you have any questions!
 
 ## Donate
 
@@ -69,7 +69,7 @@ npm update
 npm install
 ```
 
-If you are modifying any files ending with .ejs, you need to run the following command to render html:
+If you are modifying `config.json` or any files ending with .ejs, you need to run the following command to render html:
 
 ```
 npm run ejs

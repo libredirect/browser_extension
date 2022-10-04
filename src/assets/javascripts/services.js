@@ -140,13 +140,23 @@ function redirect(url, type, initiator) {
 		case "send":
 			return randomInstance
 		case "nitter":
+			let search = new URLSearchParams(url.search)
+
+			search.delete("ref_src")
+			search.delete("ref_url")
+
+			search = search.toString()
+			if (search !== "") search = `?${search}`
+
 			if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video") {
 				const [, id, format, extra] = url.search.match(/(.*)\?format=(.*)&(.*)/)
 				const query = encodeURIComponent(`${id}.${format}?${extra}`)
-				return `${randomInstance}/pic${url.pathname}${query}`
-			} else if (url.pathname.split("/").includes("tweets")) return `${randomInstance}${url.pathname.replace("/tweets", "")}${url.search}`
-			else if (url.host == "t.co") return `${randomInstance}/t.co${url.pathname}`
-			else return `${randomInstance}${url.pathname}${url.search}`
+				return `${randomInstance}/pic${search}${query}`
+			}
+
+			if (url.pathname.split("/").includes("tweets")) return `${randomInstance}${url.pathname.replace("/tweets", "")}${search}`
+			if (url.host == "t.co") return `${randomInstance}/t.co${url.pathname}`
+			return `${randomInstance}${url.pathname}${search}`
 		case "yattee":
 			return url.href.replace(/^https?:\/{2}/, "yattee://")
 		case "freetube":
