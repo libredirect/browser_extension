@@ -20,17 +20,6 @@ function initDefaults() {
 }
 
 browser.runtime.onInstalled.addListener(details => {
-	// if (details.reason == 'install' || (details.reason == "update" && details.previousVersion != browser.runtime.getManifest().version)) {
-	//   if (details.reason == "update")
-	//     browser.storage.local.get(null, r => {
-	//       if (r.theme) {
-	//         const old = encodeURIComponent(JSON.stringify(r))
-	//         browser.tabs.create({ url: browser.runtime.getURL(`/pages/background/reset_warning.html?data=${old}`) });
-	//       }
-	//       initDefaults();
-	//     })
-	//   else initDefaults();
-	// }
 	switch (details.reason) {
 		case "install":
 			initDefaults()

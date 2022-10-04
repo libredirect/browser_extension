@@ -309,7 +309,7 @@ def bibliogram():
 
 
 def libreddit():
-    fetchRegexList('libreddit', 'Libreddit', 'https://raw.githubusercontent.com/spikecodes/libreddit/master/README.md', r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|")
+    fetchJsonList('libreddit', 'Libreddit', 'https://github.com/libbacon/libreddit-instances/raw/master/instances.json', {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, True)
 
 
 def teddit():
@@ -433,6 +433,10 @@ def facil():
     fetchFromFile('facil', 'FacilMap')
 
 
+def libreTranslate():
+    fetchRegexList('libreTranslate', 'LibreTranslate', 'https://raw.githubusercontent.com/LibreTranslate/LibreTranslate/main/README.md', r"\[(?:[^\s\/]+\.)+[a-zA-Z0-9]+\]\((https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+)\/?\)\|")
+
+
 def peertube():
     r = requests.get(
         'https://instances.joinpeertube.org/api/v1/instances?start=0&count=1045&sort=-createdAt')
@@ -470,6 +474,7 @@ quetre()
 libremdb()
 simplytranslate()
 linvgatranslate()
+libreTranslate()
 searx_searxng()
 whoogle()
 librex()

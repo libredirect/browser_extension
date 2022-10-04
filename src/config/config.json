@@ -496,6 +496,10 @@
 					},
 					"name": "Lingva Translate",
 					"instanceList": true
+				},
+				"libreTranslate": {
+					"name": "LibreTranslate",
+					"instanceList": true
 				}
 			},
 			"targets": ["^https?:\\/{2}translate\\.google(\\.[a-z]{2,3}){1,2}\\/", "^https?:\\/{2}translate\\.libredirect\\.invalid"],

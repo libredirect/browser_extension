@@ -163,6 +163,11 @@ function redirect(url, type, initiator) {
 			return `freetube://https://youtu.be${url.pathname}${url.search}`.replace(/watch\?v=/, "")
 		case "simplyTranslate":
 			return `${randomInstance}/${url.search}`
+		case "libreTranslate":
+			return `${randomInstance}/${url.search}`
+				.replace(/(?<=\/?)sl/, "source")
+				.replace(/(?<=&)tl/, "target")
+				.replace(/(?<=&)text/, "q")
 		case "osm": {
 			if (initiator && initiator.host === "earth.google.com") return
 			const travelModes = {
