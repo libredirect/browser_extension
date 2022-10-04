@@ -1,13 +1,23 @@
 <section class="links" id="links">
-  <div class="title"><%- include ('src/assets/images/general-icon.svg') %><a href="#general" data-localise="__MSG_general__">General</a></div>
+  <div class="title">
+  <a href="#general">
+  <%- include ('src/assets/images/general-icon.svg') %>
+  <span data-localise="__MSG_general__">General</span>
+  </a></div>
   <% for (const service in services) { -%>
   <div class="title">
+  <a href="#<%= service %>">
   <% if (services[service].imageType != "svgMono") { _%>
   <img src="../../../assets/images/<%= service %>-icon.<%= services[service].imageType %>">
   <% } else { _%>
   <%- include ('src/assets/images/' + service + '-icon.svg') %>
   <% } _%>
-  <a href="#<%= service %>" data-localise="__MSG_<%= service %>__"><%= services[service].name %></a></div>
+  <span data-localise="__MSG_<%= service %>__"><%= services[service].name %></span>
+  </a></div>
   <% }; -%>
-  <div class="title"><%- include ('src/assets/images/about-icon.svg') %><a href="#about" data-localise="__MSG_about__">About</a></div>
+  <div class="title">
+  <a href="#about">
+  <%- include ('src/assets/images/about-icon.svg') %>
+  <span data-localise="__MSG_about__">About</span>
+  </a></div>
 </section>

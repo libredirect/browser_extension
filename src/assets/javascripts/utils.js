@@ -112,10 +112,11 @@ async function processDefaultCustomInstances(service, frontend, network, documen
 			const offline = offlineBlackList.includes(x) ? ' <span style="color:grey;">offline</span>' : ""
 
 			let ms = instancesLatency[x]
-			let latencyColor = ms <= 1000 ? "green" : ms <= 2000 ? "orange" : "red"
+			let latencyColor = ms == -1 ? "red" : ms <= 1000 ? "green" : ms <= 2000 ? "orange" : "red"
 			let latencyLimit
 			if (ms == 5000) latencyLimit = "5000ms+"
 			else if (ms > 5000) latencyLimit = `ERROR: ${ms - 5000}`
+			else if (ms == -1) latencyLimit = "Server not found"
 			else latencyLimit = ms + "ms"
 
 			const latency = x in instancesLatency ? '<span style="color:' + latencyColor + ';">' + latencyLimit + "</span>" : ""
@@ -267,6 +268,7 @@ async function testLatency(element, instances, frontend) {
 					else text = `${time}ms`
 					element.innerHTML = `${href}:&nbsp;<span style="color:${color};">${text}</span>`
 				} else {
+					myList[href] = -1
 					color = "red"
 					element.innerHTML = `${href}:&nbsp;<span style="color:${color};">Server not found</span>`
 					if (options[frontend].clearnet.enabled.includes(href)) options[frontend].clearnet.enabled.splice(options[frontend].clearnet.enabled.indexOf(href), 1)
