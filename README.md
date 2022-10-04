@@ -26,7 +26,7 @@ Imgur => [Rimgo](https://codeberg.org/video-prize-ranch/rimgo)\
 Wikipedia => [Wikiless](https://codeberg.org/orenom/wikiless)\
 Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)\
 Quora => [Quetre](https://github.com/zyachel/quetre)\
-IMDb => [Libremdb](https://github.com/zyachel/libremdb)\
+IMDb => [libremdb](https://github.com/zyachel/libremdb)\
 PeerTube => [SimpleerTube](https://git.sr.ht/~metalune/simpleweb_peertube)\
 LBRY/Odysee => [Librarian](https://codeberg.org/librarian/librarian), [LBRY Desktop](https://lbry.com/get)\
 Search => [SearXNG](https://github.com/searxng/searxng), [SearX](https://searx.github.io/searx/), [Whoogle](https://benbusby.com/projects/whoogle-search/), [LibreX](https://github.com/hnhx/librex/)\
@@ -69,21 +69,19 @@ npm update
 npm install
 ```
 
-If you are modifying any files ending with .pug, the pug cli needs to be installed with the following command (with root privileges):
+If you are modifying any files ending with .ejs, you need to run the following command to render html:
 
 ```
-npm install -g pug-cli
+npm run ejs
 ```
 
-and then run `npm run pug` to generate pages in the background.
-
-### Build
+### Build the extention zip archive:
 
 ```
 npm run build
 ```
 
-### Test
+### Run automated tests
 
 ```
 npm run test
@@ -117,4 +115,4 @@ select `load unpacked extension`\
 select `src` folder
 
 [Privacy Policy](Privacy-Policy.md)\
-Credits: [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)
+Forked from [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)

@@ -1,5 +1,5 @@
 {
-	"normal": ["https://neuters.de"],
+	"clearnet": ["https://neuters.de"],
 	"tor": [],
 	"i2p": [],
 	"loki": []

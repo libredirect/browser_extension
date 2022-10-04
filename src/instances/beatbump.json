@@ -1,6 +1,6 @@
 {
-	"normal": ["https://beatbump.ml", "https://beatbump.esmailelbob.xyz"],
-	"tor": ["http://beatbump.esmail5pdn24shtvieloeedh7ehz3nrwcdivnfhfcedl7gf4kwddhkqd.onion"],
+	"clearnet": ["https://beatbump.ml", "https://beatbump.esmailelbob.xyz"],
+	"tor": ["http://beatbump.lqs5fjmajyp7rvp4qvyubwofzi6d4imua7vs237rkc4m5qogitqwrgyd.onion"],
 	"i2p": [],
 	"loki": []
 }
