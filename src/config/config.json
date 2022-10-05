@@ -254,14 +254,18 @@
 			"frontends": {
 				"rimgo": {
 					"name": "rimgo",
+					"embeddable": true,
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}([im]\\.)?imgur\\.(com|io)(\\/|$)"],
+			"targets": ["^https?:\\/{2}([im]\\.)?(stack\\.)?imgur\\.(com|io)(\\/|$)"],
 			"name": "Imgur",
-			"options": { "enabled": true },
+			"options": {
+				"enabled": true,
+				"redirectType": "both"
+			},
 			"imageType": "png",
-			"embeddable": false,
+			"embeddable": true,
 			"url": "https://imgur.com"
 		},
 		"wikipedia": {

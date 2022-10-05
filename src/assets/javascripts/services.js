@@ -61,6 +61,7 @@ function regexArray(service, url, config) {
 }
 
 function redirect(url, type, initiator) {
+	if (type != "main_frame" && type != "sub_frame") return
 	let randomInstance
 	let frontend
 	for (const service in config.services) {
@@ -392,6 +393,9 @@ function redirect(url, type, initiator) {
 			else wiki = "/" + wiki
 			if (url.href.search(/Special:Search\?query/) > -1) return `${randomInstance}${wiki}${url.pathname}${url.search}`.replace(/Special:Search\?query/, "search?q").replace(/\/wiki/, "")
 			else return `${randomInstance}${wiki}${url.pathname}${url.search}`
+		case "rimgo":
+			if (url.href.search(/^https?:\/{2}(?:[im]\.)?stack\./) > -1) return `${randomInstance}/stack${url.pathname}${url.search}`
+			else return `${randomInstance}${url.pathname}${url.search}`
 		default:
 			return `${randomInstance}${url.pathname}${url.search}`
 	}
@@ -440,8 +444,16 @@ function switchInstance(url) {
 		for (const service in config.services) {
 			if (!all(service, null, options, config, redirects).includes(protocolHost)) continue
 
-			let instancesList = [...options[options[service].frontend][options.network].enabled, ...options[options[service].frontend][options.network].custom]
-			if (instancesList.length === 0 && options.networkFallback) instancesList = [...options[options[service].frontend].clearnet.enabled, ...options[options[service].frontend].clearnet.custom]
+			let instancesList
+			if (Object.keys(config.services[service].frontends).length == 1) {
+				const frontend = Object.keys(config.services[service].frontends)[0]
+				instancesList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]
+				if (instancesList.length === 0 && options.networkFallback) instancesList = [...options[frontend].clearnet.enabled, ...options[frontend].clearnet.custom]
+			} else {
+				const frontend = options[service].frontend
+				instancesList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]
+				if (instancesList.length === 0 && options.networkFallback) instancesList = [...options[frontend].clearnet.enabled, ...options[frontend].clearnet.custom]
+			}
 
 			let oldInstance
 			const i = instancesList.indexOf(protocolHost)
