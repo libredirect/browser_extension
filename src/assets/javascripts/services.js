@@ -390,7 +390,8 @@ function redirect(url, type, initiator) {
 			let wiki = url.hostname.match(/^[a-zA-Z0-9]+(?=\.fandom\.com)/)
 			if (wiki == "www" || !wiki) wiki = ""
 			else wiki = "/" + wiki
-			return `${randomInstance}${wiki}${url.pathname}${url.search}`.replace(/Special:Search\?query/, "search?q")
+			if (url.href.search(/Special:Search\?query/) > -1) return `${randomInstance}${wiki}${url.pathname}${url.search}`.replace(/Special:Search\?query/, "search?q").replace(/\/wiki/, "")
+			else return `${randomInstance}${wiki}${url.pathname}${url.search}`
 		default:
 			return `${randomInstance}${url.pathname}${url.search}`
 	}
