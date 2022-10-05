@@ -30,11 +30,14 @@ browser.runtime.onInstalled.addListener(details => {
 				.then(async data => {
 					browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
 						switch (details.previousVersion) {
+							case "2.2.0":
 							case "2.2.1":
 								await generalHelper.initDefaults()
 								await servicesHelper.initDefaults()
 								await servicesHelper.upgradeOptions()
 								break
+							default:
+								await servicesHelper.processUpdate()
 						}
 					})
 				})

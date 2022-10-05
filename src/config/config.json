@@ -362,6 +362,20 @@
 			"embeddable": false,
 			"url": "https://reuters.com"
 		},
+		"fandom": {
+			"frontends": {
+				"breezeWiki": {
+					"name": "BreezeWiki",
+					"instanceList": true
+				}
+			},
+			"targets": ["^https?:\\/{2}(?:[a-zA-Z0-9]+\\.)?fandom\\.com(?=(?:\\/wiki)|(?:\\/?$))"],
+			"name": "Fandom",
+			"options": { "enabled": true },
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://fandom.com"
+		},
 		"peertube": {
 			"frontends": {
 				"simpleertube": {

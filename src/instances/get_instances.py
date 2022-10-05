@@ -437,6 +437,10 @@ def libreTranslate():
     fetchRegexList('libreTranslate', 'LibreTranslate', 'https://raw.githubusercontent.com/LibreTranslate/LibreTranslate/main/README.md', r"\[(?:[^\s\/]+\.)+[a-zA-Z0-9]+\]\((https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+)\/?\)\|")
 
 
+def breezeWiki():
+    fetchRegexList('breezeWiki', 'BreezeWiki', 'https://gitdab.com/cadence/breezewiki-docs/raw/branch/main/docs.scrbl', r"\(\"[^\n\s\r\t\f\v\"]+\" \"https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+(?:\/[^\s\/]+)*\" \"(https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+(?:\/[^\s\/]+)*)\"\)")
+
+
 def peertube():
     r = requests.get(
         'https://instances.joinpeertube.org/api/v1/instances?start=0&count=1045&sort=-createdAt')
@@ -485,6 +489,7 @@ beatbump()
 hyperpipe()
 facil()
 simpleertube()
+breezeWiki()
 mightyList = filterLastSlash(mightyList)
 mightyList = idnaEncode(mightyList)
 

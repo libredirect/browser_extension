@@ -386,6 +386,11 @@ function redirect(url, type, initiator) {
 				return `${randomInstance}/${params.sl}/${params.tl}/${params.text}`
 			}
 			return randomInstance
+		case "breezeWiki":
+			let wiki = url.hostname.match(/^[a-zA-Z0-9]+(?=\.fandom\.com)/)
+			if (wiki == "www" || !wiki) wiki = ""
+			else wiki = "/" + wiki
+			return `${randomInstance}${wiki}${url.pathname}${url.search}`.replace(/Special:Search\?query/, "search?q")
 		default:
 			return `${randomInstance}${url.pathname}${url.search}`
 	}
@@ -685,6 +690,56 @@ function upgradeOptions() {
 	})
 }
 
+function processUpdate() {
+	return new Promise(resolve => {
+		fetch("/instances/data.json")
+			.then(response => response.text())
+			.then(data => {
+				fetch("/config/config.json")
+					.then(response => response.text())
+					.then(configData => {
+						browser.storage.local.get(["options", "blacklists", "targets"], r => {
+							let redirects = JSON.parse(data)
+							let options = r.options
+							let targets = r.targets
+							let config = JSON.parse(configData)
+							for (const service in config.services) {
+								if (!options[service]) {
+									options[service] = {}
+									if (config.services[service].targets == "datajson") {
+										targets[service] = redirects[service]
+									}
+									for (const defaultOption in config.services[service].options) {
+										options[service][defaultOption] = config.services[service].options[defaultOption]
+									}
+								}
+								for (const frontend in config.services[service].frontends) {
+									if (!options[service][frontend]) {
+										if (config.services[service].frontends[frontend].instanceList) {
+											options[frontend] = {}
+											for (const network in config.networks) {
+												options[frontend][network] = {}
+												options[frontend][network].enabled = JSON.parse(data)[frontend][network]
+												options[frontend][network].custom = []
+											}
+											for (const blacklist in r.blacklists) {
+												for (const instance of r.blacklists[blacklist]) {
+													let i = options[frontend].clearnet.enabled.indexOf(instance)
+													if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
+												}
+											}
+										}
+									}
+								}
+							}
+							browser.storage.local.set({ redirects, options, targets })
+							resolve()
+						})
+					})
+			})
+	})
+}
+
 export default {
 	redirect,
 	computeService,
@@ -694,4 +749,5 @@ export default {
 	setRedirects,
 	initDefaults,
 	upgradeOptions,
+	processUpdate,
 }
