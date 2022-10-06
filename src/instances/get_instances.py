@@ -442,16 +442,19 @@ def breezeWiki():
 
 
 def peertube():
-    r = requests.get(
-        'https://instances.joinpeertube.org/api/v1/instances?start=0&count=1045&sort=-createdAt')
-    rJson = json.loads(r.text)
+    try:
+        r = requests.get(
+            'https://instances.joinpeertube.org/api/v1/instances?start=0&count=1045&sort=-createdAt')
+        rJson = json.loads(r.text)
 
-    myList = ['https://search.joinpeertube.org']
-    for k in rJson['data']:
-        myList.append('https://'+k['host'])
+        myList = ['https://search.joinpeertube.org']
+        for k in rJson['data']:
+            myList.append('https://'+k['host'])
 
-    mightyList['peertube'] = myList
-    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'PeerTube')
+        mightyList['peertube'] = myList
+        print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'PeerTube')
+    except Exception:
+        fetchCache('peertube', 'PeerTube')
 
 
 def isValid(url):  # This code is contributed by avanitrachhadiya2155
