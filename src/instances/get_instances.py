@@ -141,6 +141,8 @@ def fetchJsonList(frontend, name, url, urlItem, jsonObject):
     try:
         r = requests.get(url)
         rJson = json.loads(r.text)
+        if jsonObject:
+            rJson = rJson['instances']
         _list = {}
         for network in config['networks']:
             _list[network] = []
@@ -148,12 +150,10 @@ def fetchJsonList(frontend, name, url, urlItem, jsonObject):
             for item in rJson:
                 for network in config['networks']:
                     if urlItem[network] is not None:
-                        if urlItem[network] in item:
+                        if urlItem[network] in item and item[urlItem[network]] is not None:
                             if item[urlItem[network]].strip() != '':
                                 _list[network].append(item[urlItem[network]])
         else:
-            if jsonObject:
-                rJson = rJson['instances']
             for item in rJson:
                 tmpItem = item
                 if urlItem is not None:
