@@ -81,7 +81,7 @@ browser.storage.local.get("options", r => {
 		let service = await serviceHelper.computeService(url, true)
 		let frontend
 		if (service) {
-			if (service[0]) {
+			if (typeof service != "string") {
 				frontend = service[1]
 				service = service[0]
 			}

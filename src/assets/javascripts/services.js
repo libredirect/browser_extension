@@ -73,7 +73,7 @@ function redirect(url, type, initiator) {
 		if (!regexArray(service, url, config)) continue
 		if (initiator) {
 			if (targets.test(initiator.host)) continue
-			if (all(service, null, options, config, redirects).includes(initiator.origin)) return "BYPASSTAB"
+			if (all(service, null, options, config, redirects).includes(initiator.origin) && reverse(initiator) == url) return "BYPASSTAB"
 		}
 
 		if (Object.keys(config.services[service].frontends).length > 1) {
@@ -715,19 +715,19 @@ function processUpdate() {
 								for (const defaultOption in config.services[service].options) if (!options[service][defaultOption]) options[service][defaultOption] = config.services[service].options[defaultOption]
 								for (const frontend in config.services[service].frontends) {
 									if (config.services[service].frontends[frontend].instanceList) {
+										if (!options[frontend]) options[frontend] = {}
 										for (const network in config.networks) {
 											if (!options[frontend][network]) {
 												options[frontend][network] = {}
 												options[frontend][network].enabled = JSON.parse(data)[frontend][network]
 												options[frontend][network].custom = []
-											}
-										}
-										if (!options[service][frontend]) {
-											options[frontend] = {}
-											for (const blacklist in r.blacklists) {
-												for (const instance of r.blacklists[blacklist]) {
-													let i = options[frontend].clearnet.enabled.indexOf(instance)
-													if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
+												if (network == "clearnet") {
+													for (const blacklist in r.blacklists) {
+														for (const instance of r.blacklists[blacklist]) {
+															let i = options[frontend].clearnet.enabled.indexOf(instance)
+															if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
+														}
+													}
 												}
 											}
 										}
