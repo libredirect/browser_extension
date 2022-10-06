@@ -150,9 +150,13 @@ function redirect(url, type, initiator) {
 			if (search !== "") search = `?${search}`
 
 			if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video") {
-				const [, id, format, extra] = url.search.match(/(.*)\?format=(.*)&(.*)/)
-				const query = encodeURIComponent(`${id}.${format}?${extra}`)
-				return `${randomInstance}/pic${search}${query}`
+				try {
+					const [, id, format, extra] = search.match(/(.*)\?format=(.*)&(.*)/)
+					const query = encodeURIComponent(`${id}.${format}?${extra}`)
+					return `${randomInstance}/pic${url.pathname}${query}`
+				} catch {
+					return `${randomInstance}/pic${url.pathname}${search}`
+				}
 			}
 
 			if (url.pathname.split("/").includes("tweets")) return `${randomInstance}${url.pathname.replace("/tweets", "")}${search}`
@@ -412,20 +416,13 @@ function computeService(url, returnFrontend) {
 					const options = r.options
 					for (const service in config.services) {
 						if (regexArray(service, url, config)) {
-							if (returnFrontend) {
-								resolve([service, null])
-							} else {
-								resolve(service)
-							}
+							resolve(service)
 							return
 						} else {
 							for (const frontend in config.services[service].frontends) {
 								if (all(service, frontend, options, config, redirects).includes(utils.protocolHost(url))) {
-									if (returnFrontend) {
-										resolve([service, frontend])
-									} else {
-										resolve(service)
-									}
+									if (returnFrontend) resolve([service, frontend, url.hostname])
+									else resolve(service)
 									return
 								}
 							}
@@ -601,12 +598,8 @@ function initDefaults() {
 							const latency = {}
 							for (const service in config.services) {
 								options[service] = {}
-								if (config.services[service].targets == "datajson") {
-									targets[service] = redirects[service]
-								}
-								for (const defaultOption in config.services[service].options) {
-									options[service][defaultOption] = config.services[service].options[defaultOption]
-								}
+								if (config.services[service].targets == "datajson") targets[service] = redirects[service]
+								for (const defaultOption in config.services[service].options) options[service][defaultOption] = config.services[service].options[defaultOption]
 								for (const frontend in config.services[service].frontends) {
 									if (config.services[service].frontends[frontend].instanceList) {
 										options[frontend] = {}
@@ -717,24 +710,20 @@ function processUpdate() {
 							let targets = r.targets
 							let config = JSON.parse(configData)
 							for (const service in config.services) {
-								if (!options[service]) {
-									options[service] = {}
-									if (config.services[service].targets == "datajson") {
-										targets[service] = redirects[service]
-									}
-									for (const defaultOption in config.services[service].options) {
-										options[service][defaultOption] = config.services[service].options[defaultOption]
-									}
-								}
+								if (!options[service]) options[service] = {}
+								if (config.services[service].targets == "datajson") targets[service] = redirects[service]
+								for (const defaultOption in config.services[service].options) if (!options[service][defaultOption]) options[service][defaultOption] = config.services[service].options[defaultOption]
 								for (const frontend in config.services[service].frontends) {
-									if (!options[service][frontend]) {
-										if (config.services[service].frontends[frontend].instanceList) {
-											options[frontend] = {}
-											for (const network in config.networks) {
+									if (config.services[service].frontends[frontend].instanceList) {
+										for (const network in config.networks) {
+											if (!options[frontend][network]) {
 												options[frontend][network] = {}
 												options[frontend][network].enabled = JSON.parse(data)[frontend][network]
 												options[frontend][network].custom = []
 											}
+										}
+										if (!options[service][frontend]) {
+											options[frontend] = {}
 											for (const blacklist in r.blacklists) {
 												for (const instance of r.blacklists[blacklist]) {
 													let i = options[frontend].clearnet.enabled.indexOf(instance)
