@@ -246,6 +246,8 @@ def invidious():
                 _list['clearnet'].append(instance[1]['uri'])
             elif instance[1]['type'] == 'onion':
                 _list['tor'].append(instance[1]['uri'])
+            elif instance[1]['type'] == 'i2p':
+                _list['i2p'].append(instance[1]['uri'])
         mightyList[frontend] = _list
         print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + name)
     except Exception:
