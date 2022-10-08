@@ -69,11 +69,11 @@ browser.webRequest.onBeforeRequest.addListener(
 				console.log(`Canceled ${url}`)
 				return { cancel: true }
 			}
-			if (newUrl === "BYPASSTAB") {
-				console.log(`Bypassed ${details.tabId} ${url}`)
-				if (!BYPASSTABs.includes(details.tabId)) BYPASSTABs.push(details.tabId)
-				return null
-			}
+			// if (newUrl === "BYPASSTAB") {
+			// 	console.log(`Bypassed ${details.tabId} ${url}`)
+			// 	if (!BYPASSTABs.includes(details.tabId)) BYPASSTABs.push(details.tabId)
+			// 	return null
+			// }
 			console.info("Redirecting", url.href, "=>", newUrl)
 			return { redirectUrl: newUrl }
 		}
@@ -90,18 +90,6 @@ browser.tabs.onRemoved.addListener(tabId => {
 		console.log("Removed BYPASSTABs", tabId)
 	}
 })
-
-/*
-browser.webRequest.onHeadersReceived.addListener(
-	e => {
-		let response = youtubeHelper.removeXFrameOptions(e)
-		if (!response) response = twitterHelper.removeXFrameOptions(e)
-		return response
-	},
-	{ urls: ["<all_urls>"] },
-	["blocking", "responseHeaders"]
-)
-*/
 
 async function redirectOfflineInstance(url, tabId) {
 	let newUrl = await servicesHelper.switchInstance(url, true)
@@ -170,11 +158,46 @@ browser.contextMenus.create({
 	contexts: ["browser_action"],
 })
 
-browser.contextMenus.onClicked.addListener(info => {
-	if (info.menuItemId == "switchInstance") utils.switchInstance()
-	else if (info.menuItemId == "settings") browser.runtime.openOptionsPage()
-	else if (info.menuItemId == "copyRaw") utils.copyRaw()
-	else if (info.menuItemId == "unify") utils.unify()
+browser.contextMenus.create({
+	id: "bypassTab",
+	title: browser.i18n.getMessage("bypassTab"),
+	contexts: ["page", "tab"],
+})
+
+browser.contextMenus.onClicked.addListener((info, tab) => {
+	return new Promise(async resolve => {
+		switch (info.menuItemId) {
+			case "switchInstance":
+				utils.switchInstance()
+				resolve()
+				return
+			case "settings":
+				browser.runtime.openOptionsPage()
+				resolve()
+				return
+			case "copyRaw":
+				utils.copyRaw()
+				resolve()
+				return
+			case "unify":
+				utils.unify()
+				resolve()
+				return
+			case "bypassTab":
+				if (!BYPASSTABs.includes(tab.id)) {
+					BYPASSTABs.push(tab.id)
+					let newUrl = await servicesHelper.reverse(tab.url, true)
+					if (newUrl) browser.tabs.update(tab.id, { url: newUrl })
+					resolve()
+					return
+				} else {
+					BYPASSTABs.splice(BYPASSTABs.indexOf(tab.id), 1)
+					browser.tabs.reload(tab.id)
+					resolve()
+					return
+				}
+		}
+	})
 })
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {

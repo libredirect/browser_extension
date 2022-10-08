@@ -68,13 +68,14 @@ function redirect(url, type, initiator) {
 		if (!options[service].enabled) continue
 		if (config.services[service].embeddable && type != options[service].redirectType && options[service].redirectType != "both") continue
 		if (!config.services[service].embeddable && type != "main_frame") continue
-		let targets = new RegExp(config.services[service].targets.join("|"), "i")
+		// let targets = new RegExp(config.services[service].targets.join("|"), "i")
 
 		if (!regexArray(service, url, config)) continue
-		if (initiator) {
-			if (targets.test(initiator.host)) continue
-			if (all(service, null, options, config, redirects).includes(initiator.origin) && reverse(initiator) == url) return "BYPASSTAB"
-		}
+		// if (initiator) {
+		// 	console.log(initiator.host)
+		// 	if (targets.test(initiator.host)) continue
+		// 	//if (all(service, null, options, config, redirects).includes(initiator.origin) && reverse(initiator) == url) return "BYPASSTAB"
+		// }
 
 		if (Object.keys(config.services[service].frontends).length > 1) {
 			if (type == "sub_frame" && config.services[service].embeddable && !config.services[service].frontends[options[service].frontend].embeddable) frontend = options[service].embedFrontend
@@ -473,26 +474,29 @@ function switchInstance(url) {
 	})
 }
 
-function reverse(url) {
+function reverse(url, urlString) {
 	return new Promise(async resolve => {
 		await init()
-		let protocolHost = utils.protocolHost(url)
+		let protocolHost
+		if (!urlString) protocolHost = utils.protocolHost(url)
+		else protocolHost = url.match(/https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+/)[0]
 		for (const service in config.services) {
 			if (!all(service, null, options, config, redirects).includes(protocolHost)) continue
 
 			switch (service) {
 				case "instagram":
-					if (url.pathname.startsWith("/p")) resolve(`https://instagram.com${url.pathname.replace("/p", "")}${url.search}`)
-					if (url.pathname.startsWith("/u")) resolve(`https://instagram.com${url.pathname.replace("/u", "")}${url.search}`)
-					resolve(config.services[service].url + url.pathname + url.search)
-					return
 				case "youtube":
 				case "imdb":
 				case "imgur":
 				case "tiktok":
 				case "twitter":
 				case "reddit":
-					resolve(config.services[service].url + url.pathname + url.search)
+				case "imdb":
+				case "reuters":
+				case "quora":
+				case "medium":
+					if (!urlString) resolve(config.services[service].url + url.pathname + url.search)
+					else resolve(url.replace(/https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+/, config.services[service].url))
 					return
 				default:
 					resolve()
