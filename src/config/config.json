@@ -188,7 +188,9 @@
 			},
 			"targets": ["^https?:\\/{2}(www\\.)?instagram\\.com\\/p\\/"],
 			"name": "Instagram",
-			"options": { "enabled": true },
+			"options": {
+				"enabled": true
+			},
 			"imageType": "png",
 			"embeddable": false,
 			"url": "https://instagram.com"
@@ -205,7 +207,9 @@
 			},
 			"targets": ["^https?:\\/{2}(www\\.|)tiktok\\.com.*"],
 			"name": "TikTok",
-			"options": { "enabled": true },
+			"options": {
+				"enabled": true
+			},
 			"imageType": "png",
 			"embeddable": false,
 			"url": "https://tiktok.com"
@@ -223,6 +227,7 @@
 					"preferences": {
 						"cookies": [
 							"collapse_child_comments",
+							"default_comment_sort",
 							"domain_instagram",
 							"domain_twitter",
 							"domain_youtube",
@@ -230,8 +235,11 @@
 							"highlight_controversial",
 							"nsfw_enabled",
 							"post_media_max_height",
+							"prefer_frontpage",
+							"show_large_gallery_images",
 							"show_upvoted_percentage",
 							"show_upvotes",
+							"subbed_subreddits",
 							"theme",
 							"videos_muted"
 						]
@@ -280,7 +288,9 @@
 			},
 			"targets": ["^https?:\\/{2}(?:[a-z]+\\.)*wikipedia\\.org"],
 			"name": "Wikipedia",
-			"options": { "enabled": false },
+			"options": {
+				"enabled": false
+			},
 			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://wikipedia.org"
@@ -313,7 +323,9 @@
 				"^writingcooperative\\.com"
 			],
 			"name": "Medium",
-			"options": { "enabled": true },
+			"options": {
+				"enabled": true
+			},
 			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://medium.com"
@@ -330,7 +342,9 @@
 			},
 			"targets": ["^https?:\\/{2}([a-z]+\\.)*quora\\.com.*"],
 			"name": "Quora",
-			"options": { "enabled": true },
+			"options": {
+				"enabled": true
+			},
 			"imageType": "png",
 			"embeddable": false,
 			"url": "https://quora.com"
@@ -345,9 +359,11 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(?:www\\.|)imdb\\.com.*"],
+			"targets": ["^https?:\\/{2}(?:www\\.|)imdb\\.com\\/title"],
 			"name": "IMDb",
-			"options": { "enabled": false },
+			"options": {
+				"enabled": true
+			},
 			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://imdb.com"
@@ -361,7 +377,9 @@
 			},
 			"targets": ["^https?:\\/{2}(www\\.|)reuters\\.com.*"],
 			"name": "Reuters",
-			"options": { "enabled": false },
+			"options": {
+				"enabled": false
+			},
 			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://reuters.com"
@@ -375,7 +393,9 @@
 			},
 			"targets": ["^https?:\\/{2}(?:[a-zA-Z0-9]+\\.)?fandom\\.com(?=(?:\\/wiki)|(?:\\/?$))"],
 			"name": "Fandom",
-			"options": { "enabled": true },
+			"options": {
+				"enabled": true
+			},
 			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://fandom.com"
@@ -389,7 +409,9 @@
 			},
 			"targets": "datajson",
 			"name": "PeerTube",
-			"options": { "enabled": false },
+			"options": {
+				"enabled": false
+			},
 			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://search.joinpeertube.org"
@@ -414,7 +436,7 @@
 			"targets": ["^https?:\\/{2}odysee\\.com", "^https?:\\/{2}lbry\\.tv"],
 			"name": "LBRY",
 			"options": {
-				"enabled": false,
+				"enabled": true,
 				"frontend": "librarian",
 				"redirectType": "both",
 				"embedFrontend": "librarian"
@@ -455,6 +477,7 @@
 						"cookies": [
 							"autocomplete",
 							"categories",
+							"center_alignment",
 							"disabled_engines",
 							"disabled_plugins",
 							"doi_resolver",
@@ -561,15 +584,23 @@
 			},
 			"targets": ["^https?:\\/{2}send\\.libredirect\\.invalid", "^https?:\\/{2}send\\.firefox\\.com\\/?$", "^https?:\\/{2}sendfiles\\.online\\/?$"],
 			"name": "Send Files",
-			"options": { "enabled": true },
+			"options": {
+				"enabled": true
+			},
 			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://send.libredirect.invalid"
 		}
 	},
 	"blacklist": {
-		"cloudflare": { "color": "red" },
-		"authenticate": { "color": "orange" },
-		"offline": { "color": "grey" }
+		"cloudflare": {
+			"color": "red"
+		},
+		"authenticate": {
+			"color": "orange"
+		},
+		"offline": {
+			"color": "grey"
+		}
 	}
 }

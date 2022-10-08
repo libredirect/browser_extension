@@ -20,6 +20,7 @@ function initDefaults() {
 }
 
 browser.runtime.onInstalled.addListener(details => {
+	if (details.previousVersion != browser.runtime.getManifest().version) {
 	switch (details.reason) {
 		case "install":
 			initDefaults()
@@ -42,9 +43,11 @@ browser.runtime.onInstalled.addListener(details => {
 					})
 				})
 	}
+	}
 })
 
-let BYPASSTABs = []
+let tabIdRedirects = {}
+// true == Always redirect, false == Never redirect, null/undefined == follow options for services
 browser.webRequest.onBeforeRequest.addListener(
 	details => {
 		const url = new URL(details.url)
@@ -57,23 +60,23 @@ browser.webRequest.onBeforeRequest.addListener(
 			return null
 		}
 
-		let newUrl = servicesHelper.redirect(url, details.type, initiator)
+		if (tabIdRedirects[details.tabId] == false) return null
+		let newUrl = servicesHelper.redirect(url, details.type, initiator, tabIdRedirects[details.tabId])
 
 		if (details.frameAncestors && details.frameAncestors.length > 0 && generalHelper.isException(new URL(details.frameAncestors[0].url))) newUrl = null
 
 		if (generalHelper.isException(url)) newUrl = "BYPASSTAB"
-		if (BYPASSTABs.includes(details.tabId)) newUrl = null
 
 		if (newUrl) {
 			if (newUrl === "CANCEL") {
 				console.log(`Canceled ${url}`)
 				return { cancel: true }
 			}
-			// if (newUrl === "BYPASSTAB") {
-			// 	console.log(`Bypassed ${details.tabId} ${url}`)
-			// 	if (!BYPASSTABs.includes(details.tabId)) BYPASSTABs.push(details.tabId)
-			// 	return null
-			// }
+			if (newUrl === "BYPASSTAB") {
+				console.log(`Bypassed ${details.tabId} ${url}`)
+				if (tabIdRedirects[details.tabId] != false) tabIdRedirects[details.tabId] = false
+				return null
+			}
 			console.info("Redirecting", url.href, "=>", newUrl)
 			return { redirectUrl: newUrl }
 		}
@@ -84,10 +87,9 @@ browser.webRequest.onBeforeRequest.addListener(
 )
 
 browser.tabs.onRemoved.addListener(tabId => {
-	const i = BYPASSTABs.indexOf(tabId)
-	if (i > -1) {
-		BYPASSTABs.splice(i, 1)
-		console.log("Removed BYPASSTABs", tabId)
+	if (tabIdRedirects[tabId] != undefined) {
+		delete tabIdRedirects[tabId]
+		console.log("Removed tab " + tabId + " from tabIdRedirects")
 	}
 })
 
@@ -159,10 +161,29 @@ browser.contextMenus.create({
 })
 
 browser.contextMenus.create({
-	id: "bypassTab",
-	title: browser.i18n.getMessage("bypassTab"),
+	id: "toggleTab",
+	title: browser.i18n.getMessage("toggleTab"),
 	contexts: ["page", "tab"],
 })
+
+function handleToggleTab(tab) {
+	return new Promise(async resolve => {
+	console.log(tabIdRedirects[tab.id])
+		switch (tabIdRedirects[tab.id]) {
+			case false:
+				console.log("kj")
+				const newUrl = await servicesHelper.reverse(tab.url, true)
+				if (newUrl) browser.tabs.update(tab.id, { url: newUrl })
+				resolve()
+				return
+			case true:
+				console.log("lsad")
+				browser.tabs.reload(tab.id)
+				resolve()
+				return
+		}
+	})
+}
 
 browser.contextMenus.onClicked.addListener((info, tab) => {
 	return new Promise(async resolve => {
@@ -183,18 +204,33 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 				utils.unify()
 				resolve()
 				return
-			case "bypassTab":
-				if (!BYPASSTABs.includes(tab.id)) {
-					BYPASSTABs.push(tab.id)
-					let newUrl = await servicesHelper.reverse(tab.url, true)
-					if (newUrl) browser.tabs.update(tab.id, { url: newUrl })
+			case "toggleTab":
+				if (tabIdRedirects[tab.id] != undefined) {
+					tabIdRedirects[tab.id] = !tabIdRedirects[tab.id]
+					await handleToggleTab(tab)
 					resolve()
 					return
 				} else {
-					BYPASSTABs.splice(BYPASSTABs.indexOf(tab.id), 1)
-					browser.tabs.reload(tab.id)
-					resolve()
-					return
+					console.log("n")
+					const url = new URL(tab.url)
+					const service = await servicesHelper.computeService(url)
+					console.log(service)
+					if (service) {
+						console.log("h")
+						browser.storage.local.get("options", async r => {
+							console.log(r.options[service])
+							if (r.options[service].enabled) tabIdRedirects[tab.id] = false
+							else tabIdRedirects[tab.id] = true
+							await handleToggleTab(tab)
+							resolve()
+							return
+						})
+					} else {
+						tabIdRedirects[tab.id] = false
+						await handleToggleTab(tab)
+						resolve()
+						return
+					}
 				}
 		}
 	})

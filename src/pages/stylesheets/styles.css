@@ -477,3 +477,8 @@ input:disabled {
 	opacity: 0.6;
 	cursor: not-allowed;
 }
+
+div.about a {
+	width: 500px;
+	display: inline-block;
+}

@@ -60,12 +60,12 @@ function regexArray(service, url, config) {
 	return false
 }
 
-function redirect(url, type, initiator) {
+function redirect(url, type, initiator, forceRedirection) {
 	if (type != "main_frame" && type != "sub_frame") return
 	let randomInstance
 	let frontend
 	for (const service in config.services) {
-		if (!options[service].enabled) continue
+		if (!forceRedirection && !options[service].enabled) continue
 		if (config.services[service].embeddable && type != options[service].redirectType && options[service].redirectType != "both") continue
 		if (!config.services[service].embeddable && type != "main_frame") continue
 		// let targets = new RegExp(config.services[service].targets.join("|"), "i")
@@ -407,6 +407,7 @@ function redirect(url, type, initiator) {
 }
 
 function computeService(url, returnFrontend) {
+	console.log(url)
 	return new Promise(resolve => {
 		fetch("/config/config.json")
 			.then(response => response.text())
