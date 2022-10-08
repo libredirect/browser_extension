@@ -414,7 +414,7 @@
 			},
 			"imageType": "svg",
 			"embeddable": false,
-			"url": "https://search.joinpeertube.org"
+			"url": "https://joinpeertube.org"
 		},
 		"lbry": {
 			"frontends": {

@@ -21,28 +21,28 @@ function initDefaults() {
 
 browser.runtime.onInstalled.addListener(details => {
 	if (details.previousVersion != browser.runtime.getManifest().version) {
-	switch (details.reason) {
-		case "install":
-			initDefaults()
-			break
-		case "update":
-			fetch("/instances/blacklist.json")
-				.then(response => response.text())
-				.then(async data => {
-					browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
-						switch (details.previousVersion) {
-							case "2.2.0":
-							case "2.2.1":
-								await generalHelper.initDefaults()
-								await servicesHelper.initDefaults()
-								await servicesHelper.upgradeOptions()
-								break
-							default:
-								await servicesHelper.processUpdate()
-						}
+		switch (details.reason) {
+			case "install":
+				initDefaults()
+				break
+			case "update":
+				fetch("/instances/blacklist.json")
+					.then(response => response.text())
+					.then(async data => {
+						browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
+							switch (details.previousVersion) {
+								case "2.2.0":
+								case "2.2.1":
+									await generalHelper.initDefaults()
+									await servicesHelper.initDefaults()
+									await servicesHelper.upgradeOptions()
+									break
+								default:
+									await servicesHelper.processUpdate()
+							}
+						})
 					})
-				})
-	}
+		}
 	}
 })
 
@@ -166,18 +166,21 @@ browser.contextMenus.create({
 	contexts: ["page", "tab"],
 })
 
+browser.contextMenus.create({
+	id: "redirectLink",
+	title: browser.i18n.getMessage("redirectLink"),
+	contexts: ["link"],
+})
+
 function handleToggleTab(tab) {
 	return new Promise(async resolve => {
-	console.log(tabIdRedirects[tab.id])
 		switch (tabIdRedirects[tab.id]) {
 			case false:
-				console.log("kj")
 				const newUrl = await servicesHelper.reverse(tab.url, true)
 				if (newUrl) browser.tabs.update(tab.id, { url: newUrl })
 				resolve()
 				return
 			case true:
-				console.log("lsad")
 				browser.tabs.reload(tab.id)
 				resolve()
 				return
@@ -211,14 +214,10 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 					resolve()
 					return
 				} else {
-					console.log("n")
 					const url = new URL(tab.url)
 					const service = await servicesHelper.computeService(url)
-					console.log(service)
 					if (service) {
-						console.log("h")
 						browser.storage.local.get("options", async r => {
-							console.log(r.options[service])
 							if (r.options[service].enabled) tabIdRedirects[tab.id] = false
 							else tabIdRedirects[tab.id] = true
 							await handleToggleTab(tab)
@@ -232,6 +231,13 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 						return
 					}
 				}
+			case "redirectLink":
+				console.log(info.linkUrl)
+				const tmpUrl = new URL(info.linkUrl)
+				const newUrl = servicesHelper.redirect(tmpUrl, "main_frame", null, true)
+				if (newUrl) browser.tabs.create({ url: newUrl })
+				resolve()
+				return
 		}
 	})
 })

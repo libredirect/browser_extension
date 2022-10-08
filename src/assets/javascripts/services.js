@@ -407,7 +407,6 @@ function redirect(url, type, initiator, forceRedirection) {
 }
 
 function computeService(url, returnFrontend) {
-	console.log(url)
 	return new Promise(resolve => {
 		fetch("/config/config.json")
 			.then(response => response.text())
