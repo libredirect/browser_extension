@@ -175,7 +175,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "This instance is offline, you'll be redirected after&nbsp;",
+        "message": "This instance is offline, you'll be redirected after",
         "description": "used in instance_offline.html"
     },
     "cancel": {
@@ -207,5 +207,16 @@
     },
     "protocolFallback": {
         "message": "Fallback to normal if no instances are available for the current protocol"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Desktop"
+    },
+    "toggleTab": {
+        "message": "Toggle redirects in this tab",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "redirectLink": {
+        "message": "Attempt to redirect this hyperlink",
+        "description": "Used in context menus when right clicking on a hyperlink"
     }
 }

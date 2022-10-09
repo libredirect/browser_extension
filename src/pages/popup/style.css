@@ -22,3 +22,43 @@ body {
 .space {
 	height: 10px;
 }
+
+input {
+	height: 23px;
+	width: 46px;
+}
+
+#instance {
+	max-width: 110px;
+	max-height: 22px;
+	overflow-x: scroll;
+	white-space: nowrap;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+#instance::-webkit-scrollbar {
+	display: none;
+}
+
+#instance::before {
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+	position: absolute;
+	width: 5px;
+	height: 22px;
+	content: "";
+	display: block;
+	pointer-events: none;
+}
+
+#end::before {
+	background-image: linear-gradient(to left, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+	position: absolute;
+	width: 5px;
+	height: 22px;
+	content: "";
+	display: block;
+	pointer-events: none;
+	top: 14px;
+	left: 156px;
+}

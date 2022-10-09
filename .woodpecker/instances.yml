@@ -1,0 +1,21 @@
+pipeline:
+  instancefetch:
+    image: python:3.8
+    secrets: [token, mail]
+    when:
+      event: cron
+    commands:
+      - python -m pip install --upgrade pip
+      - pip install requests colorama
+      - python src/instances/get_instances.py
+      # SSH configuration
+      - mkdir ~/.ssh
+      - ssh-keyscan -t ed25519 codeberg.org >> ~/.ssh/known_hosts
+      - eval `ssh-agent`
+      - echo "$TOKEN" | tr -d '\r' | ssh-add -
+      # Git configuration
+      - git config --global user.email $MAIL
+      - git config --global user.name "Woodpecker CI"
+      - git commit -am "updated instances"
+      - git remote set-url origin git@codeberg.org:libredirect/libredirect.git
+      - git push --set-upstream origin master

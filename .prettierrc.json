@@ -8,7 +8,6 @@
 		{
 			"files": ["*.js", "*.json"],
 			"options": {
-				"tabWidth": 2,
 				"singleQuote": false
 			}
 		},

@@ -4,8 +4,8 @@ import localise from "../../assets/javascripts/localise.js"
 
 function changeTheme() {
 	return new Promise(resolve => {
-		browser.storage.local.get("theme", r => {
-			switch (r.theme) {
+		browser.storage.local.get("options", r => {
+			switch (r.options.theme) {
 				case "dark":
 					document.body.classList.add("dark-theme")
 					document.body.classList.remove("light-theme")

@@ -1,12 +1,4 @@
-import requests
 import json
-from urllib.parse import urlparse
-from bs4 import BeautifulSoup
-import re
-from colorama import Fore, Back, Style
-from urllib.parse import urlparse
-import socket
-import subprocess
 
 
 ar_json = {}

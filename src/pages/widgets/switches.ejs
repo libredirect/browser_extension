@@ -1,0 +1,11 @@
+<% for (const service in services) { -%>
+<div class="<%= service %> some-block"><a class="title" href="<%= services[service].url %>">
+  <% if (services[service].imageType != "svgMono") { _%>
+  <img src="../../assets/images/<%= service %>-icon.<%= services[service].imageType %>"/>
+  <% } else { _%>
+  <%- include ('src/assets/images/' + service + '-icon.svg') %>
+  <% } _%>
+  <h4 data-localise="__MSG_<%= service %>__"><%= services[service].name %></h4></a>
+  <input class="<%= service %>-enabled" type="checkbox"/>
+</div>
+<% } %>

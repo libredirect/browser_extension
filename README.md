@@ -2,14 +2,11 @@
 
 A web extension that redirects YouTube, Twitter, Instagram... requests to alternative privacy friendly frontends and backends.
 
-[![Matrix Badge](https://img.shields.io/matrix/libredirect:matrix.org?label=matrix%20chat)](https://matrix.to/#/#libredirect:tokhmi.xyz)
+[![Matrix Badge](https://img.shields.io/matrix/libredirect:matrix.org?label=matrix%20chat)](https://matrix.to/#/#libredirect:matrix.org)
 [![Firefox users Badge](https://img.shields.io/amo/users/libredirect?label=Firefox%20users)](https://addons.mozilla.org/firefox/addon/libredirect/)
-[![Matrix Badge](https://img.shields.io/liberapay/gives/libredirect?label=Liberapay)](https://liberapay.com/LibRedirect)
+[![LibrePay Badge](https://img.shields.io/liberapay/gives/libredirect?label=Liberapay)](https://liberapay.com/LibRedirect)
 
 [![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)&nbsp;
-<a href="https://microsoftedge.microsoft.com/addons/detail/libredirect/aodffkeankebfonljgbcfbbaljopcpdb">
-<img src="./img/badge-ms.png" height=60>
-</a>&nbsp;
 <a href="./chromium.md">
 <img src ="./img/badge-chromium.png" height=60 >
 </a>
@@ -19,8 +16,8 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 <img src ="./img/3.png" width=350>&nbsp;
 <img src ="./img/4.png" width=350>&nbsp;
 
-Youtube => [Invidious](https://github.com/iv-org/invidious), [Piped](https://github.com/TeamPiped/Piped), [Piped-Material](https://github.com/mmjee/Piped-Material), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee)\
-Youtube Music => [Beatbump](https://github.com/snuffyDev/Beatbump)\
+Youtube => [Invidious](https://github.com/iv-org/invidious), [Piped](https://github.com/TeamPiped/Piped), [Piped-Material](https://github.com/mmjee/Piped-Material), [CloudTube](https://sr.ht/~cadence/tube/), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee)\
+Youtube Music => [Beatbump](https://github.com/snuffyDev/Beatbump), [Hyperpipe](https://codeberg.org/Hyperpipe/Hyperpipe)\
 Twitter => [Nitter](https://github.com/zedeus/nitter)\
 Instagram => [Bibliogram](https://sr.ht/~cadence/bibliogram/)\
 TikTok => [ProxiTok](https://github.com/pablouser1/ProxiTok)\
@@ -29,23 +26,24 @@ Imgur => [Rimgo](https://codeberg.org/video-prize-ranch/rimgo)\
 Wikipedia => [Wikiless](https://codeberg.org/orenom/wikiless)\
 Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)\
 Quora => [Quetre](https://github.com/zyachel/quetre)\
-IMDb => [Libremdb](https://github.com/zyachel/libremdb)\
+IMDb => [libremdb](https://github.com/zyachel/libremdb)\
 PeerTube => [SimpleerTube](https://git.sr.ht/~metalune/simpleweb_peertube)\
-LBRY/Odysee => [Librarian](https://codeberg.org/librarian/librarian)\
-Search => [SearXNG](https://github.com/searxng/searxng), [SearX](https://searx.github.io/searx/), [Whoogle](https://benbusby.com/projects/whoogle-search/), [Librex](https://github.com/hnhx/librex/)\
+LBRY/Odysee => [Librarian](https://codeberg.org/librarian/librarian), [LBRY Desktop](https://lbry.com/get)\
+Search => [SearXNG](https://github.com/searxng/searxng), [SearX](https://searx.github.io/searx/), [Whoogle](https://benbusby.com/projects/whoogle-search/), [LibreX](https://github.com/hnhx/librex/)\
 Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web), [LingvaTranslate](https://github.com/TheDavidDelta/lingva-translate)\
 Maps => [OpenStreetMap](https://www.openstreetmap.org/), [FacilMap](https://github.com/FacilMap/facilmap)\
 Send Files => [Send](https://gitlab.com/timvisee/send)
 
 **Note**: The Extension will be using random instances by default. You can modify this and add custom instances too.
 
-[FAQ](https://libredirect.github.io/faq.html)
+# Please read the [FAQ](https://libredirect.codeberg.page/faq.html) if you have any questions!
 
 ## Donate
 
 [![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)&nbsp;
 [![Patreon](./img/patreon.svg)](https://patreon.com/LibRedirect)&nbsp;
-[![Buy me a coffee](./img/bmc.svg)](https://www.buymeacoffee.com/libredirect)
+[![Buy me a coffee](./img/bmc.svg)](https://www.buymeacoffee.com/libredirect)&nbsp;
+<a href="https://opencollective.com/libredirect"><img src = ./img/Open-Collective.png width=17% height=17%></a>
 
 BTC: bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q\
 BCH: qqz5vfnrngk0tjy73q2688qzw4wnllnuzqfndflhl8\
@@ -54,8 +52,9 @@ XMR: 4AM5CVfaGsnEXQQjZSzJvaWufe7pT86ubcZPr83fCjb2Hn3iwcForTWFy2Z3ugXcufUwHaGcucf
 
 ## Mirror Repos
 
-[![GitHub](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/github.svg)](https://github.com/libredirect/libredirect/)&nbsp;&nbsp;
 [![Codeberg](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/codeberg.svg)](https://codeberg.org/LibRedirect/libredirect)&nbsp;&nbsp;
+[![GitHub](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/github.svg)](https://github.com/libredirect/libredirect/)&nbsp;&nbsp;
+
 
 ## Translate
 
@@ -72,21 +71,19 @@ npm update
 npm install
 ```
 
-If you are modifying any files ending with .pug, the pug cli needs to be installed with the following command (with root privileges):
+If you are modifying `config.json` or any files ending with .ejs, you need to run the following command to render html:
 
 ```
-npm install -g pug-cli
+npm run ejs
 ```
 
-and then run `npm run pug` to generate pages in the background.
-
-### Build
+### Build the extention zip archive:
 
 ```
 npm run build
 ```
 
-### Test
+### Run automated tests
 
 ```
 npm run test
@@ -101,7 +98,7 @@ npm run start
 ### Install temporarily
 
 open `about:addons`\
-click on the settings button below the addon search bar and select `debug add-on`\
+type in the address bar `about:debugging`\
 press `load temporarily addon`
 
 ### Install in Firefox ESR, Developer Edition, Nightly
@@ -120,4 +117,4 @@ select `load unpacked extension`\
 select `src` folder
 
 [Privacy Policy](Privacy-Policy.md)\
-Credits: [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)
+Forked from [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)

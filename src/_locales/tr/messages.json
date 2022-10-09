@@ -119,7 +119,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "Bu örnek çevrim dışı, yeniden yönlendirileceksiniz&nbsp;",
+        "message": "Bu örnek çevrim dışı, yeniden yönlendirileceksiniz",
         "description": "used in instance_offline.html"
     },
     "cancel": {
@@ -211,5 +211,11 @@
     "normal": {
         "message": "Normal",
         "description": "used in the settings page"
+    },
+    "loki": {
+        "message": "Lokinet"
+    },
+    "protocolFallback": {
+        "message": "Geçerli protokol için hiçbir örnek kullanılabilir değilse normale geri dön"
     }
 }

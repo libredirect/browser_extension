@@ -168,7 +168,7 @@
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "Denne instansen er nede. Du vil bli videresendt etter&nbsp;",
+        "message": "Denne instansen er nede. Du vil bli videresendt etter",
         "description": "used in instance_offline.html"
     },
     "copyRaw": {
