@@ -397,7 +397,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}([a-z]+\\.)*quora\\.com.*"
+				"^https?:\\/{2}([a-z]+\\.)*quora\\.com"
 			],
 			"name": "Quora",
 			"options": {
