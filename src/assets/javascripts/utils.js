@@ -1,26 +1,14 @@
 window.browser = window.browser || window.chrome
-import twitterHelper from "./twitter.js"
-import youtubeHelper from "./youtube/youtube.js"
-import instagramHelper from "./instagram.js"
-import mediumHelper from "./medium.js"
-import redditHelper from "./reddit.js"
-import searchHelper from "./search.js"
-import translateHelper from "./translate/translate.js"
-import wikipediaHelper from "./wikipedia.js"
-import peertubeHelper from "./peertube.js"
-import lbryHelper from "./lbry.js"
-import sendTargetsHelper from "./sendTargets.js"
-import tiktokHelper from "./tiktok.js"
-import quoraHelper from "./quora.js"
-import libremdbHelper from "./imdb.js"
-import imgurHelper from "./imgur.js"
-import reutersHelper from "./reuters.js"
-import youtubeMusicHelper from "./youtubeMusic.js"
-import mapsHelper from "./maps.js"
+
 import localise from "./localise.js"
+import servicesHelper from "./services.js"
 
 function getRandomInstance(instances) {
 	return instances[~~(instances.length * Math.random())]
+}
+
+function camelCase(str) {
+	return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 let cloudflareBlackList = []
@@ -28,48 +16,14 @@ let authenticateBlackList = []
 let offlineBlackList = []
 async function initBlackList() {
 	return new Promise(resolve => {
-		browser.storage.local.get(["cloudflareBlackList", "authenticateBlackList", "offlineBlackList"], r => {
-			cloudflareBlackList = r.cloudflareBlackList
-			authenticateBlackList = r.authenticateBlackList
-			offlineBlackList = r.offlineBlackList
-		})
-		if (cloudflareBlackList.length == 0) {
-			fetch("/instances/blacklist.json")
-				.then(response => response.text())
-				.then(data => {
-					cloudflareBlackList = JSON.parse(data).cloudflare
-					authenticateBlackList = JSON.parse(data).authenticate
-					offlineBlackList = JSON.parse(data).offline
-				})
-		}
-		resolve()
-	})
-}
-
-function updateBlackList() {
-	return new Promise(async resolve => {
-		let http = new XMLHttpRequest()
-		let fallback = new XMLHttpRequest()
-		http.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/blacklist.json", false)
-		http.send(null)
-		if (http.status != 200) {
-			fallback.open("GET", "https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/blacklist.json", false)
-			fallback.send(null)
-			if (fallback.status === 200) {
-				http = fallback
-			} else {
+		fetch("/instances/blacklist.json")
+			.then(response => response.text())
+			.then(data => {
+				cloudflareBlackList = JSON.parse(data).cloudflare
+				authenticateBlackList = JSON.parse(data).authenticate
+				offlineBlackList = JSON.parse(data).offline
 				resolve()
-				return
-			}
-		}
-		const blackList = JSON.parse(http.responseText)
-		browser.storage.local.set({
-			cloudflareBlackList: blackList.cloudflare,
-			authenticateBlackList: blackList.authenticate,
-			offlineBlackList: blackList.offline,
-		})
-		;(cloudflareBlackList = blackList.cloudflare), (authenticateBlackList = blackList.authenticate), (offlineBlackList = blackList.offline)
-		resolve()
+			})
 	})
 }
 
@@ -77,10 +31,10 @@ function updateInstances() {
 	return new Promise(async resolve => {
 		let http = new XMLHttpRequest()
 		let fallback = new XMLHttpRequest()
-		http.open("GET", "https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json", false)
+		http.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/data.json", false)
 		http.send(null)
 		if (http.status != 200) {
-			fallback.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/data.json", false)
+			fallback.open("GET", "https://raw.githubusercontent.com/libredirect/libredirect/master/src/instances/data.json", false)
 			fallback.send(null)
 			if (fallback.status === 200) {
 				http = fallback
@@ -89,45 +43,10 @@ function updateInstances() {
 				return
 			}
 		}
-		await updateBlackList()
+		await initBlackList()
 		const instances = JSON.parse(http.responseText)
 
-		await youtubeHelper.setRedirects({
-			invidious: instances.invidious,
-			piped: instances.piped,
-			pipedMaterial: instances.pipedMaterial,
-			cloudtube: instances.cloudtube,
-		})
-		await twitterHelper.setRedirects(instances.nitter)
-		await instagramHelper.setRedirects(instances.bibliogram)
-		await redditHelper.setRedirects({
-			libreddit: instances.libreddit,
-			teddit: instances.teddit,
-		})
-		await translateHelper.setRedirects({
-			simplyTranslate: instances.simplyTranslate,
-			lingva: instances.lingva,
-		})
-		await searchHelper.setRedirects({
-			searx: instances.searx,
-			searxng: instances.searxng,
-			whoogle: instances.whoogle,
-			librex: instances.librex,
-		})
-		await wikipediaHelper.setRedirects(instances.wikiless)
-		await mediumHelper.setRedirects(instances.scribe)
-		await quoraHelper.setRedirects(instances.quetre)
-		await libremdbHelper.setRedirects(instances.libremdb)
-		await sendTargetsHelper.setRedirects(instances.send)
-		await tiktokHelper.setRedirects(instances.proxiTok)
-		await lbryHelper.setRedirects(instances.librarian)
-		await reutersHelper.setRedirects(instances.neuters)
-		await youtubeMusicHelper.setRedirects({
-			beatbump: instances.beatbump,
-			hyperpipe: instances.hyperpipe,
-		})
-		await mapsHelper.setRedirects(instances.facil)
-		await peertubeHelper.setRedirects(instances.simpleertube)
+		servicesHelper.setRedirects(instances)
 
 		console.info("Successfully updated Instances")
 		resolve(true)
@@ -140,72 +59,64 @@ function protocolHost(url) {
 	return `${url.protocol}//${url.host}`
 }
 
-async function processDefaultCustomInstances(target, name, protocol, document) {
-	function camelCase(str) {
-		return str.charAt(0).toUpperCase() + str.slice(1)
-	}
-	let latencyKey = `${name}Latency`
+async function processDefaultCustomInstances(service, frontend, network, document) {
 	let instancesLatency
-	let nameProtocolElement = document.getElementById(name).getElementsByClassName(protocol)[0]
+	let frontendNetworkElement = document.getElementById(frontend).getElementsByClassName(network)[0]
 
-	let nameCustomInstances = []
-	let nameCheckListElement = nameProtocolElement.getElementsByClassName("checklist")[0]
+	let frontendCustomInstances = []
+	let frontendCheckListElement = frontendNetworkElement.getElementsByClassName("checklist")[0]
 
 	await initBlackList()
 
-	let nameDefaultRedirects
+	let frontendDefaultRedirects
 
-	let redirectsChecks = `${name}${camelCase(protocol)}RedirectsChecks`
-	let customRedirects = `${name}${camelCase(protocol)}CustomRedirects`
-	let redirectsKey = `${target}Redirects`
-
-	let redirects
+	let redirects, options
 
 	async function getFromStorage() {
 		return new Promise(async resolve =>
-			browser.storage.local.get([redirectsChecks, customRedirects, redirectsKey, latencyKey], r => {
-				nameDefaultRedirects = r[redirectsChecks]
-				nameCustomInstances = r[customRedirects]
-				instancesLatency = r[latencyKey] ?? []
-				redirects = r[redirectsKey]
+			browser.storage.local.get(["options", "redirects", "latency"], r => {
+				frontendDefaultRedirects = r.options[frontend][network].enabled
+				frontendCustomInstances = r.options[frontend][network].custom
+				options = r.options
+				instancesLatency = r.latency[frontend] ?? []
+				redirects = r.redirects
 				resolve()
 			})
 		)
 	}
 
 	await getFromStorage()
-	if (nameCustomInstances === undefined) console.log(customRedirects)
 
-	function calcNameCheckBoxes() {
+	function calcFrontendCheckBoxes() {
 		let isTrue = true
-		for (const item of redirects[name][protocol]) {
-			if (nameDefaultRedirects === undefined) console.log(name + protocol + " is undefined")
-			if (!nameDefaultRedirects.includes(item)) {
+		for (const item of redirects[frontend][network]) {
+			if (!frontendDefaultRedirects.includes(item)) {
 				isTrue = false
 				break
 			}
 		}
-		for (const element of nameCheckListElement.getElementsByTagName("input")) {
-			element.checked = nameDefaultRedirects.includes(element.className)
+		for (const element of frontendCheckListElement.getElementsByTagName("input")) {
+			element.checked = frontendDefaultRedirects.includes(element.className)
 		}
-		if (nameDefaultRedirects.length == 0) isTrue = false
-		nameProtocolElement.getElementsByClassName("toggle-all")[0].checked = isTrue
+		if (frontendDefaultRedirects.length == 0) isTrue = false
+		frontendNetworkElement.getElementsByClassName("toggle-all")[0].checked = isTrue
 	}
-	nameCheckListElement.innerHTML = [
+	frontendCheckListElement.innerHTML = [
 		`<div>
         <x data-localise="__MSG_toggleAll__">Toggle All</x>
         <input type="checkbox" class="toggle-all"/>
       </div>`,
-		...redirects[name][protocol].map(x => {
+		...redirects[frontend][network].map(x => {
 			const cloudflare = cloudflareBlackList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ""
 			const authenticate = authenticateBlackList.includes(x) ? ' <span style="color:orange;">authenticate</span>' : ""
 			const offline = offlineBlackList.includes(x) ? ' <span style="color:grey;">offline</span>' : ""
 
 			let ms = instancesLatency[x]
-			let latencyColor = ms <= 1000 ? "green" : ms <= 2000 ? "orange" : "red"
+			let latencyColor = ms == -1 ? "red" : ms <= 1000 ? "green" : ms <= 2000 ? "orange" : "red"
 			let latencyLimit
 			if (ms == 5000) latencyLimit = "5000ms+"
 			else if (ms > 5000) latencyLimit = `ERROR: ${ms - 5000}`
+			else if (ms == -1) latencyLimit = "Server not found"
 			else latencyLimit = ms + "ms"
 
 			const latency = x in instancesLatency ? '<span style="color:' + latencyColor + ';">' + latencyLimit + "</span>" : ""
@@ -220,32 +131,33 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
 
 	localise.localisePage()
 
-	calcNameCheckBoxes()
-	nameProtocolElement.getElementsByClassName("toggle-all")[0].addEventListener("change", async event => {
-		if (event.target.checked) nameDefaultRedirects = [...redirects[name][protocol]]
-		else nameDefaultRedirects = []
+	calcFrontendCheckBoxes()
+	frontendNetworkElement.getElementsByClassName("toggle-all")[0].addEventListener("change", async event => {
+		if (event.target.checked) frontendDefaultRedirects = [...redirects[frontend][network]]
+		else frontendDefaultRedirects = []
 
-		browser.storage.local.set({ [redirectsChecks]: nameDefaultRedirects })
-		calcNameCheckBoxes()
+		options[frontend][network].enabled = frontendDefaultRedirects
+		browser.storage.local.set({ options })
+		calcFrontendCheckBoxes()
 	})
 
-	for (let element of nameCheckListElement.getElementsByTagName("input")) {
+	for (let element of frontendCheckListElement.getElementsByTagName("input")) {
 		if (element.className != "toggle-all")
-			nameProtocolElement.getElementsByClassName(element.className)[0].addEventListener("change", async event => {
-				if (event.target.checked) nameDefaultRedirects.push(element.className)
+			frontendNetworkElement.getElementsByClassName(element.className)[0].addEventListener("change", async event => {
+				if (event.target.checked) frontendDefaultRedirects.push(element.className)
 				else {
-					let index = nameDefaultRedirects.indexOf(element.className)
-					if (index > -1) nameDefaultRedirects.splice(index, 1)
+					let index = frontendDefaultRedirects.indexOf(element.className)
+					if (index > -1) frontendDefaultRedirects.splice(index, 1)
 				}
-				browser.storage.local.set({
-					[redirectsChecks]: nameDefaultRedirects,
-				})
-				calcNameCheckBoxes()
+
+				options[frontend][network].enabled = frontendDefaultRedirects
+				browser.storage.local.set({ options })
+				calcFrontendCheckBoxes()
 			})
 	}
 
-	function calcNameCustomInstances() {
-		nameProtocolElement.getElementsByClassName("custom-checklist")[0].innerHTML = nameCustomInstances
+	function calcFrontendCustomInstances() {
+		frontendNetworkElement.getElementsByClassName("custom-checklist")[0].innerHTML = frontendCustomInstances
 			.map(
 				x => `<div>
                 ${x}
@@ -259,28 +171,30 @@ async function processDefaultCustomInstances(target, name, protocol, document) {
 			)
 			.join("\n")
 
-		for (const item of nameCustomInstances) {
-			nameProtocolElement.getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
-				let index = nameCustomInstances.indexOf(item)
-				if (index > -1) nameCustomInstances.splice(index, 1)
-				browser.storage.local.set({ [customRedirects]: nameCustomInstances })
-				calcNameCustomInstances()
+		for (const item of frontendCustomInstances) {
+			frontendNetworkElement.getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
+				let index = frontendCustomInstances.indexOf(item)
+				if (index > -1) frontendCustomInstances.splice(index, 1)
+				options[frontend][network].custom = frontendCustomInstances
+				browser.storage.local.set({ options })
+				calcFrontendCustomInstances()
 			})
 		}
 	}
-	calcNameCustomInstances()
-	nameProtocolElement.getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
+	calcFrontendCustomInstances()
+	frontendNetworkElement.getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
 		event.preventDefault()
-		let nameCustomInstanceInput = nameProtocolElement.getElementsByClassName("custom-instance")[0]
-		let url = new URL(nameCustomInstanceInput.value)
+		let frontendCustomInstanceInput = frontendNetworkElement.getElementsByClassName("custom-instance")[0]
+		let url = new URL(frontendCustomInstanceInput.value)
 		let protocolHostVar = protocolHost(url)
-		if (nameCustomInstanceInput.validity.valid && !redirects[name][protocol].includes(protocolHostVar)) {
-			if (!nameCustomInstances.includes(protocolHostVar)) {
-				nameCustomInstances.push(protocolHostVar)
-				browser.storage.local.set({ [customRedirects]: nameCustomInstances })
-				nameCustomInstanceInput.value = ""
+		if (frontendCustomInstanceInput.validity.valid && !redirects[frontend][network].includes(protocolHostVar)) {
+			if (!frontendCustomInstances.includes(protocolHostVar)) {
+				frontendCustomInstances.push(protocolHostVar)
+				options[frontend][network].custom = frontendCustomInstances
+				browser.storage.local.set({ options })
+				frontendCustomInstanceInput.value = ""
 			}
-			calcNameCustomInstances()
+			calcFrontendCustomInstances()
 		}
 	})
 }
@@ -330,43 +244,47 @@ function pingOnce(href) {
 async function testLatency(element, instances, frontend) {
 	return new Promise(async resolve => {
 		let myList = {}
-		let latencyThreshold
-		let redirectsChecks = []
-		browser.storage.local.get(["latencyThreshold", `${frontend}NormalRedirectsChecks`], r => {
-			latencyThreshold = r.latencyThreshold
-			redirectsChecks = r[`${frontend}NormalRedirectsChecks`]
+		let latencyThreshold, options
+		browser.storage.local.get(["options"], r => {
+			latencyThreshold = r.options.latencyThreshold
+			options = r.options
 		})
-		for (const href of instances)
+		for (const href of instances) {
 			await ping(href).then(time => {
+				let color
 				if (time) {
 					myList[href] = time
-					let color
 					if (time <= 1000) color = "green"
 					else if (time <= 2000) color = "orange"
 					else color = "red"
 
-					if (time > latencyThreshold) {
-						redirectsChecks.splice(redirectsChecks.indexOf(href), 1)
+					if (time > latencyThreshold && options[frontend].clearnet.enabled.includes(href)) {
+						options[frontend].clearnet.enabled.splice(options[frontend].clearnet.enabled.indexOf(href), 1)
 					}
-
-					browser.storage.local.set({ [`${frontend}NormalRedirectsChecks`]: redirectsChecks })
 
 					let text
 					if (time == 5000) text = "5000ms+"
 					else if (time > 5000) text = `ERROR: ${time - 5000}`
 					else text = `${time}ms`
 					element.innerHTML = `${href}:&nbsp;<span style="color:${color};">${text}</span>`
+				} else {
+					myList[href] = -1
+					color = "red"
+					element.innerHTML = `${href}:&nbsp;<span style="color:${color};">Server not found</span>`
+					if (options[frontend].clearnet.enabled.includes(href)) options[frontend].clearnet.enabled.splice(options[frontend].clearnet.enabled.indexOf(href), 1)
 				}
 			})
+		}
+		browser.storage.local.set({ options })
 		resolve(myList)
 	})
 }
 
 function copyCookie(frontend, targetUrl, urls, name) {
 	return new Promise(resolve => {
-		browser.storage.local.get("firstPartyIsolate", r => {
+		browser.storage.local.get("options", r => {
 			let query
-			if (!r.firstPartyIsolate)
+			if (!r.options.firstPartyIsolate)
 				query = {
 					url: protocolHost(targetUrl),
 					name: name,
@@ -381,7 +299,7 @@ function copyCookie(frontend, targetUrl, urls, name) {
 				for (const cookie of cookies)
 					if (cookie.name == name) {
 						for (const url of urls) {
-							const setQuery = r.firstPartyIsolate
+							const setQuery = r.options.firstPartyIsolate
 								? {
 										url: url,
 										name: name,
@@ -408,23 +326,21 @@ function copyCookie(frontend, targetUrl, urls, name) {
 
 function getPreferencesFromToken(frontend, targetUrl, urls, name, endpoint) {
 	return new Promise(resolve => {
-		browser.storage.local.get("firstPartyIsolate", r => {
+		const http = new XMLHttpRequest()
+		const url = `${targetUrl}${endpoint}`
+		http.open("GET", url, false)
+		//http.setRequestHeader("Cookie", `${name}=${cookie.value}`)
+		http.send(null)
+		const preferences = JSON.parse(http.responseText)
+		let formdata = new FormData()
+		for (var key in preferences) formdata.append(key, preferences[key])
+		for (const url of urls) {
 			const http = new XMLHttpRequest()
-			const url = `${targetUrl}${endpoint}`
-			http.open("GET", url, false)
-			http.setRequestHeader("Cookie", `${name}=${cookie.value}`)
+			http.open("POST", `${url}/settings/stay`, false)
 			http.send(null)
-			const preferences = JSON.parse(http.responseText)
-			let formdata = new FormData()
-			for (var key in preferences) formdata.append(key, preferences[key])
-			for (const url of urls) {
-				const http = new XMLHttpRequest()
-				http.open("POST", `${url}/settings/stay`, false)
-				http.send(null)
-			}
-			resolve()
-			return
-		})
+		}
+		resolve()
+		return
 	})
 }
 
@@ -441,13 +357,7 @@ function copyRaw(test, copyRawElement) {
 					return
 				}
 
-				let newUrl = await youtubeHelper.reverse(url)
-				if (!newUrl) newUrl = await twitterHelper.reverse(url)
-				if (!newUrl) newUrl = await instagramHelper.reverse(url)
-				if (!newUrl) newUrl = await tiktokHelper.reverse(url)
-				if (!newUrl) newUrl = await quoraHelper.reverse(url)
-				if (!newUrl) newUrl = await libremdbHelper.reverse(url)
-				if (!newUrl) newUrl = await imgurHelper.reverse(url)
+				const newUrl = await servicesHelper.reverse(url)
 
 				if (newUrl) {
 					resolve(newUrl)
@@ -466,7 +376,7 @@ function copyRaw(test, copyRawElement) {
 	})
 }
 
-function unify(test) {
+function unify() {
 	return new Promise(resolve => {
 		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 			let currTab = tabs[0]
@@ -479,23 +389,7 @@ function unify(test) {
 					return
 				}
 
-				let result = await youtubeHelper.copyPasteInvidiousCookies(test, url)
-				if (!result) result = await youtubeHelper.copyPastePipedLocalStorage(test, url, currTab.id)
-				if (!result) result = await youtubeHelper.copyPastePipedMaterialLocalStorage(test, url, currTab.id)
-
-				if (!result) result = await twitterHelper.initNitterCookies(test, url)
-				if (!result) result = await redditHelper.initLibredditCookies(test, url)
-				if (!result) result = await redditHelper.initTedditCookies(test, url)
-				if (!result) result = await searchHelper.initSearxCookies(test, url)
-				if (!result) result = await searchHelper.initSearxngCookies(test, url)
-				if (!result) result = await searchHelper.initLibrexCookies(test, url)
-				if (!result) result = await tiktokHelper.initProxiTokCookies(test, url)
-				if (!result) result = await wikipediaHelper.initWikilessCookies(test, url)
-				if (!result) result = await translateHelper.copyPasteSimplyTranslateCookies(test, url)
-				if (!result) result = await translateHelper.copyPasteLingvaLocalStorage(test, url)
-				if (!result) result = await instagramHelper.initBibliogramPreferences(test, url)
-
-				resolve(result)
+				resolve(await servicesHelper.unifyPreferences(url, currTab.id))
 			}
 		})
 	})
@@ -513,22 +407,7 @@ function switchInstance(test) {
 					resolve()
 					return
 				}
-				let newUrl = await youtubeHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await twitterHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await instagramHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await redditHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await searchHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await translateHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await mediumHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await quoraHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await libremdbHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await tiktokHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await sendTargetsHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await peertubeHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await lbryHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await imgurHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url, true)
-				if (!newUrl) newUrl = await youtubeMusicHelper.switchInstance(url, true)
+				const newUrl = await servicesHelper.switchInstance(url)
 
 				if (newUrl) {
 					if (!test) browser.tabs.update({ url: newUrl })
@@ -539,22 +418,26 @@ function switchInstance(test) {
 	})
 }
 
-function latency(name, frontend, document, location) {
+function latency(service, frontend, document, location) {
 	let latencyElement = document.getElementById(`latency-${frontend}`)
 	let latencyLabel = document.getElementById(`latency-${frontend}-label`)
 	latencyElement.addEventListener("click", async () => {
 		let reloadWindow = () => location.reload()
 		latencyElement.addEventListener("click", reloadWindow)
-		let key = `${name}Redirects`
-		browser.storage.local.get(key, r => {
-			let redirects = r[key]
+		browser.storage.local.get("redirects", r => {
+			let redirects = r.redirects
 			const oldHtml = latencyLabel.innerHTML
 			latencyLabel.innerHTML = "..."
-			testLatency(latencyLabel, redirects[frontend].normal, frontend).then(r => {
-				browser.storage.local.set({ [`${frontend}Latency`]: r })
-				latencyLabel.innerHTML = oldHtml
-				processDefaultCustomInstances(name, frontend, "normal", document)
-				latencyElement.removeEventListener("click", reloadWindow)
+			testLatency(latencyLabel, redirects[frontend].clearnet, frontend).then(r => {
+				const frontendLatency = r
+				browser.storage.local.get("latency", r => {
+					let latency = r.latency
+					latency[frontend] = frontendLatency
+					browser.storage.local.set({ latency })
+					latencyLabel.innerHTML = oldHtml
+					processDefaultCustomInstances(service, frontend, "clearnet", document)
+					latencyElement.removeEventListener("click", reloadWindow)
+				})
 			})
 		})
 	})
@@ -571,4 +454,5 @@ export default {
 	switchInstance,
 	copyRaw,
 	unify,
+	camelCase,
 }

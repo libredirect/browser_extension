@@ -2,80 +2,52 @@
 
 import generalHelper from "../../assets/javascripts/general.js"
 import utils from "../../assets/javascripts/utils.js"
-
-import youtubeHelper from "../../assets/javascripts/youtube/youtube.js"
-import youtubeMusicHelper from "../../assets/javascripts/youtubeMusic.js"
-import twitterHelper from "../../assets/javascripts/twitter.js"
-import instagramHelper from "../../assets/javascripts/instagram.js"
-import redditHelper from "../../assets/javascripts/reddit.js"
-import searchHelper from "../../assets/javascripts/search.js"
-import translateHelper from "../../assets/javascripts/translate/translate.js"
-import mapsHelper from "../../assets/javascripts/maps.js"
-import wikipediaHelper from "../../assets/javascripts/wikipedia.js"
-import mediumHelper from "../../assets/javascripts/medium.js"
-import quoraHelper from "../../assets/javascripts/quora.js"
-import libremdbHelper from "../../assets/javascripts/imdb.js"
-import reutersHelper from "../../assets/javascripts/reuters.js"
-import imgurHelper from "../../assets/javascripts/imgur.js"
-import tiktokHelper from "../../assets/javascripts/tiktok.js"
-import sendTargetsHelper from "../../assets/javascripts/sendTargets.js"
-import peertubeHelper from "../../assets/javascripts/peertube.js"
-import lbryHelper from "../../assets/javascripts/lbry.js"
-
-import frontend from "../../assets/javascripts/frontend.js"
+import servicesHelper from "../../assets/javascripts/services.js"
 
 window.browser = window.browser || window.chrome
 
-browser.runtime.onInstalled.addListener(details => {
-	function initDefaults() {
+function initDefaults() {
+	browser.storage.local.clear(() => {
 		fetch("/instances/blacklist.json")
 			.then(response => response.text())
 			.then(async data => {
-				browser.storage.local.clear(() => {
-					browser.storage.local.set({ cloudflareBlackList: JSON.parse(data).cloudflare }, () => {
-						browser.storage.local.set({ authenticateBlackList: JSON.parse(data).authenticate }, () => {
-							browser.storage.local.set({ offlineBlackList: JSON.parse(data).offline }, () => {
-								generalHelper.initDefaults()
-								youtubeHelper.initDefaults()
-								youtubeMusicHelper.initDefaults()
-								twitterHelper.initDefaults()
-								instagramHelper.initDefaults()
-								mapsHelper.initDefaults()
-								searchHelper.initDefaults()
-								translateHelper.initDefaults()
-								mediumHelper.initDefaults()
-								quoraHelper.initDefaults()
-								libremdbHelper.initDefaults()
-								reutersHelper.initDefaults()
-								redditHelper.initDefaults()
-								wikipediaHelper.initDefaults()
-								imgurHelper.initDefaults()
-								tiktokHelper.initDefaults()
-								sendTargetsHelper.initDefaults()
-								peertubeHelper.initDefaults()
-								lbryHelper.initDefaults()
-							})
-						})
-					})
+				browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
+					await generalHelper.initDefaults()
+					await servicesHelper.initDefaults()
 				})
 			})
-	}
-	if (details.reason == "install") initDefaults()
+	})
+}
 
-	// if (details.reason == 'install' || (details.reason == "update" && details.previousVersion != browser.runtime.getManifest().version)) {
-	//   if (details.reason == "update")
-	//     browser.storage.local.get(null, r => {
-	//       if (r.theme) {
-	//         const old = encodeURIComponent(JSON.stringify(r))
-	//         browser.tabs.create({ url: browser.runtime.getURL(`/pages/background/reset_warning.html?data=${old}`) });
-	//       }
-	//       initDefaults();
-	//     })
-	//   else initDefaults();
-	// }
+browser.runtime.onInstalled.addListener(details => {
+	if (details.previousVersion != browser.runtime.getManifest().version) {
+		switch (details.reason) {
+			case "install":
+				initDefaults()
+				break
+			case "update":
+				fetch("/instances/blacklist.json")
+					.then(response => response.text())
+					.then(async data => {
+						browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
+							switch (details.previousVersion) {
+								case "2.2.0":
+								case "2.2.1":
+									await generalHelper.initDefaults()
+									await servicesHelper.initDefaults()
+									await servicesHelper.upgradeOptions()
+									break
+								default:
+									await servicesHelper.processUpdate()
+							}
+						})
+					})
+		}
+	}
 })
 
-let BYPASSTABs = []
+let tabIdRedirects = {}
+// true == Always redirect, false == Never redirect, null/undefined == follow options for services
 browser.webRequest.onBeforeRequest.addListener(
 	details => {
 		const url = new URL(details.url)
@@ -88,29 +60,12 @@ browser.webRequest.onBeforeRequest.addListener(
 			return null
 		}
 
-		let newUrl = youtubeMusicHelper.redirect(url, details.type)
-		if (!newUrl) newUrl = youtubeHelper.redirect(url, details.type, details.tabId, initiator)
-		if (!newUrl) newUrl = twitterHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = instagramHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = mapsHelper.redirect(url, initiator)
-		if (!newUrl) newUrl = redditHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = mediumHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = quoraHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = libremdbHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = reutersHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = imgurHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = tiktokHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = sendTargetsHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = peertubeHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = lbryHelper.redirect(url, details.type, initiator)
-		if (!newUrl) newUrl = translateHelper.redirect(url)
-		if (!newUrl) newUrl = searchHelper.redirect(url)
-		if (!newUrl) newUrl = wikipediaHelper.redirect(url)
+		if (tabIdRedirects[details.tabId] == false) return null
+		let newUrl = servicesHelper.redirect(url, details.type, initiator, tabIdRedirects[details.tabId])
 
 		if (details.frameAncestors && details.frameAncestors.length > 0 && generalHelper.isException(new URL(details.frameAncestors[0].url))) newUrl = null
 
 		if (generalHelper.isException(url)) newUrl = "BYPASSTAB"
-		if (BYPASSTABs.includes(details.tabId)) newUrl = null
 
 		if (newUrl) {
 			if (newUrl === "CANCEL") {
@@ -119,7 +74,7 @@ browser.webRequest.onBeforeRequest.addListener(
 			}
 			if (newUrl === "BYPASSTAB") {
 				console.log(`Bypassed ${details.tabId} ${url}`)
-				if (!BYPASSTABs.includes(details.tabId)) BYPASSTABs.push(details.tabId)
+				if (tabIdRedirects[details.tabId] != false) tabIdRedirects[details.tabId] = false
 				return null
 			}
 			console.info("Redirecting", url.href, "=>", newUrl)
@@ -132,39 +87,14 @@ browser.webRequest.onBeforeRequest.addListener(
 )
 
 browser.tabs.onRemoved.addListener(tabId => {
-	const i = BYPASSTABs.indexOf(tabId)
-	if (i > -1) {
-		BYPASSTABs.splice(i, 1)
-		console.log("Removed BYPASSTABs", tabId)
+	if (tabIdRedirects[tabId] != undefined) {
+		delete tabIdRedirects[tabId]
+		console.log("Removed tab " + tabId + " from tabIdRedirects")
 	}
 })
 
-browser.webRequest.onHeadersReceived.addListener(
-	e => {
-		let response = youtubeHelper.removeXFrameOptions(e)
-		if (!response) response = twitterHelper.removeXFrameOptions(e)
-		return response
-	},
-	{ urls: ["<all_urls>"] },
-	["blocking", "responseHeaders"]
-)
-
 async function redirectOfflineInstance(url, tabId) {
-	let newUrl = await youtubeHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await twitterHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await instagramHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await redditHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await searchHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await translateHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await mediumHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await quoraHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await libremdbHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await tiktokHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await imgurHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await wikipediaHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await peertubeHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await lbryHelper.switchInstance(url, true)
-	if (!newUrl) newUrl = await youtubeMusicHelper.switchInstance(url, true)
+	let newUrl = await servicesHelper.switchInstance(url, true)
 
 	if (newUrl) {
 		if (counter >= 5) {
@@ -181,7 +111,7 @@ async function redirectOfflineInstance(url, tabId) {
 let counter = 0
 
 function isAutoRedirect() {
-	return new Promise(resolve => browser.storage.local.get("autoRedirect", r => resolve(r.autoRedirect == true)))
+	return new Promise(resolve => browser.storage.local.get("options", r => resolve(r.options.autoRedirect == true)))
 }
 
 browser.webRequest.onResponseStarted.addListener(
@@ -230,16 +160,88 @@ browser.contextMenus.create({
 	contexts: ["browser_action"],
 })
 
-browser.contextMenus.onClicked.addListener(info => {
-	if (info.menuItemId == "switchInstance") utils.switchInstance()
-	else if (info.menuItemId == "settings") browser.runtime.openOptionsPage()
-	else if (info.menuItemId == "copyRaw") utils.copyRaw()
-	else if (info.menuItemId == "unify") utils.unify()
+browser.contextMenus.create({
+	id: "toggleTab",
+	title: browser.i18n.getMessage("toggleTab"),
+	contexts: ["page", "tab"],
+})
+
+browser.contextMenus.create({
+	id: "redirectLink",
+	title: browser.i18n.getMessage("redirectLink"),
+	contexts: ["link"],
+})
+
+function handleToggleTab(tab) {
+	return new Promise(async resolve => {
+		switch (tabIdRedirects[tab.id]) {
+			case false:
+				const newUrl = await servicesHelper.reverse(tab.url, true)
+				if (newUrl) browser.tabs.update(tab.id, { url: newUrl })
+				resolve()
+				return
+			case true:
+				browser.tabs.reload(tab.id)
+				resolve()
+				return
+		}
+	})
+}
+
+browser.contextMenus.onClicked.addListener((info, tab) => {
+	return new Promise(async resolve => {
+		switch (info.menuItemId) {
+			case "switchInstance":
+				utils.switchInstance()
+				resolve()
+				return
+			case "settings":
+				browser.runtime.openOptionsPage()
+				resolve()
+				return
+			case "copyRaw":
+				utils.copyRaw()
+				resolve()
+				return
+			case "unify":
+				utils.unify()
+				resolve()
+				return
+			case "toggleTab":
+				if (tabIdRedirects[tab.id] != undefined) {
+					tabIdRedirects[tab.id] = !tabIdRedirects[tab.id]
+					await handleToggleTab(tab)
+					resolve()
+					return
+				} else {
+					const url = new URL(tab.url)
+					const service = await servicesHelper.computeService(url)
+					if (service) {
+						browser.storage.local.get("options", async r => {
+							if (r.options[service].enabled) tabIdRedirects[tab.id] = false
+							else tabIdRedirects[tab.id] = true
+							await handleToggleTab(tab)
+							resolve()
+							return
+						})
+					} else {
+						tabIdRedirects[tab.id] = false
+						await handleToggleTab(tab)
+						resolve()
+						return
+					}
+				}
+			case "redirectLink":
+				const tmpUrl = new URL(info.linkUrl)
+				const newUrl = servicesHelper.redirect(tmpUrl, "main_frame", null, true)
+				if (newUrl) browser.tabs.create({ url: newUrl })
+				resolve()
+				return
+		}
+	})
 })
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	if (message.function === "unify") utils.unify(false).then(r => sendResponse({ response: r }))
 	return true
 })
-
-browser.storage.local.set({ version: browser.runtime.getManifest().version })

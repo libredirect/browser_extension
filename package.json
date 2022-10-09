@@ -9,23 +9,22 @@
 		"start": "web-ext run --browser-console --source-dir ./src/",
 		"build": "web-ext build --overwrite-dest --source-dir ./src/",
 		"test": "web-ext lint --source-dir ./src/ || true",
-		"pug": "pug ./src/pages/options/*.pug ./src/pages/popup/ -P -w",
-		"prettier": "npx prettier --write .",
-		"instances": "python3 src/instances/get_instances.py; git update-index --assume-unchanged src/instances/blacklist.json src/instances/data.json"
+		"instances": "python3 src/instances/get_instances.py; git update-index --assume-unchanged src/instances/blacklist.json src/instances/data.json",
+		"ejs": "npx ejs src/pages/options/index.ejs -f src/config/config.json -o src/pages/options/index.html; npx ejs src/pages/popup/popup.ejs -f src/config/config.json -o src/pages/popup/popup.html"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/LibRedirect/LibRedirect.git"
+		"url": "git+https://codeberg.org/LibRedirect/LibRedirect.git"
 	},
 	"author": "LibRedirect",
 	"license": "GPL-3.0-only",
 	"bugs": {
-		"url": "https://github.com/LibRedirect/LibRedirect/issues"
+		"url": "https://codeberg.org/LibRedirect/LibRedirect/issues"
 	},
-	"homepage": "https://libredirect.github.io",
+	"homepage": "https://libredirect.codeberg.page",
 	"devDependencies": {
 		"prettier": "2.7.1",
-		"web-ext": "^6.7.0"
+		"web-ext": "^7.2.0"
 	},
 	"dependencies": {
 		"buffer": "^6.0.3",

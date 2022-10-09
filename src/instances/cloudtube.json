@@ -1,5 +1,5 @@
 {
-	"normal": ["https://tube.cadence.moe"],
+	"clearnet": ["https://tube.cadence.moe"],
 	"tor": [],
 	"i2p": [],
 	"loki": []

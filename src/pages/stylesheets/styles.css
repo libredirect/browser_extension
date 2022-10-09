@@ -80,11 +80,13 @@ select {
 	margin: 0;
 	max-width: 500px;
 	border-radius: 3px;
+	cursor: pointer;
 }
 
 input[type="url"],
 input[type="text"] {
 	width: 400px;
+	cursor: text;
 }
 
 input:invalid {
@@ -141,6 +143,7 @@ input[type="range"] {
 	height: 7px;
 	border-radius: 50px;
 	background: var(--text);
+	cursor: ew-resize;
 }
 
 input[type="range"]:hover {
@@ -463,4 +466,19 @@ div.about > div {
 
 div.about h4 {
 	width: auto;
+}
+
+select:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+input:disabled {
+	opacity: 0.6;
+	cursor: not-allowed;
+}
+
+div.about a {
+	width: 500px;
+	display: inline-block;
 }
