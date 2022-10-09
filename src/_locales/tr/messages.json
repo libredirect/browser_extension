@@ -220,5 +220,13 @@
     },
     "lbryDesktop": {
         "message": "LBRY Masaüstü"
+    },
+    "toggleTab": {
+        "message": "Bu sekmede yönlendirmeleri aç/kapat",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "redirectLink": {
+        "message": "Bu köprüyü yeniden yönlendirmeyi dene",
+        "description": "Used in context menus when right clicking on a hyperlink"
     }
 }
