@@ -217,5 +217,8 @@
     },
     "protocolFallback": {
         "message": "Geçerli protokol için hiçbir örnek kullanılabilir değilse normale geri dön"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Masaüstü"
     }
 }

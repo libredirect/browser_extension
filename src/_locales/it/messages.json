@@ -214,5 +214,11 @@
     },
     "loki": {
         "message": "Lokinet"
+    },
+    "protocolFallback": {
+        "message": "Usa il protocollo normale se non sono disponibili istanze per quello corrente"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Desktop"
     }
 }

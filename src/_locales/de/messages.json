@@ -210,5 +210,8 @@
     },
     "testInstancesLatency": {
         "message": "Teste Latenz der Instanzen"
+    },
+    "protocolFallback": {
+        "message": "Auf normalen Modus zurückfallen, wenn keine Instanzen für das aktuelle Protokoll verfügbar sind"
     }
 }

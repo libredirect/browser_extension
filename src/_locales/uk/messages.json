@@ -1,0 +1,214 @@
+{
+    "exceptions": {
+        "message": "Винятки",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "Експортувати налаштування",
+        "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "Скинути налаштування",
+        "description": "used in the settings page"
+    },
+    "defaultInstances": {
+        "message": "Типові сервери",
+        "description": "used in the settings page"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "used in the settings page"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "used in the settings page"
+    },
+    "reddit": {
+        "message": "Reddit",
+        "description": "used in the settings page"
+    },
+    "tiktok": {
+        "message": "TikTok",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "Світла",
+        "description": "used in the settings page"
+    },
+    "imgur": {
+        "message": "Imgur",
+        "description": "used in the settings page"
+    },
+    "wikipedia": {
+        "message": "Вікіпедія",
+        "description": "used in the settings page"
+    },
+    "medium": {
+        "message": "Medium",
+        "description": "used in the settings page"
+    },
+    "updateInstances": {
+        "message": "Оновити сервери",
+        "description": "used in the settings page"
+    },
+    "protocol": {
+        "message": "Протокол",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Увімкнути",
+        "description": "used in the settings page"
+    },
+    "normal": {
+        "message": "Звичайний",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "лише вбудовані",
+        "description": "used in the settings page"
+    },
+    "onlyNotEmbedded": {
+        "message": "лише не вбудовані",
+        "description": "used in the settings page"
+    },
+    "instanceOffline": {
+        "message": "Сервер недоступний, до переспрямування",
+        "description": "used in instance_offline.html"
+    },
+    "customInstances": {
+        "message": "Власні сервери",
+        "description": "used in the settings page"
+    },
+    "toggleAll": {
+        "message": "Увімкнути/вимкнути всі",
+        "description": "used in the settings page"
+    },
+    "searchNote": {
+        "message": "Порада: Шукати стане зручніше, якщо оберете LibRedirect типовим пошуковим засобом.",
+        "description": "used in the settings page"
+    },
+    "redirectType": {
+        "message": "Що переспрямовувати",
+        "description": "used in the settings page"
+    },
+    "redirectionCanceled": {
+        "message": "Переспрямування скасовано",
+        "description": "used in instance_offline.js"
+    },
+    "protocolFallback": {
+        "message": "Повертатися до звичайного протоколу, якщо жоден сервер не доступний через обраний"
+    },
+    "unifySettings": {
+        "message": "Єдині налаштування"
+    },
+    "lbry": {
+        "message": "LBRY"
+    },
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "switchInstance": {
+        "message": "Інший сервер",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "settings": {
+        "message": "Налаштування",
+        "description": "used in the popup"
+    },
+    "search": {
+        "message": "Пошук",
+        "description": "used in the settings page"
+    },
+    "sendFiles": {
+        "message": "Надсилання файлів",
+        "description": "used in the settings page"
+    },
+    "youtube": {
+        "message": "YouTube",
+        "description": "used in the settings page"
+    },
+    "ytmusic": {
+        "message": "YT Music",
+        "description": "used in the settings page"
+    },
+    "peertube": {
+        "message": "PeerTube",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "Системна",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Тьмяна",
+        "description": "used in the settings page"
+    },
+    "autoRedirect": {
+        "message": "Автоматично переспрямовувати недоступні сервери на доступні",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "Імпортувати налаштування",
+        "description": "used in the settings page"
+    },
+    "customPopup": {
+        "message": "Вимикач у спливному переліку",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Фронтенд",
+        "description": "used in the settings page"
+    },
+    "notFullyPrivate": {
+        "message": "Цей фронтенд лише частково приватний."
+    },
+    "embeddedVids": {
+        "message": "Фронтенд вбудованих відео",
+        "description": "used in the settings page"
+    },
+    "both": {
+        "message": "і ті, й інші",
+        "description": "used in the settings page"
+    },
+    "cancel": {
+        "message": "Скасувати",
+        "description": "used in instance_offline.html"
+    },
+    "instanceIsOff": {
+        "message": "Сервер недоступний",
+        "description": "used in instance_offline.html"
+    },
+    "copied": {
+        "message": "Скопійовано"
+    },
+    "copyRaw": {
+        "message": "Оригінал посилання"
+    },
+    "testInstancesLatency": {
+        "message": "Випробувати швидкодію серверів"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Desktop"
+    },
+    "extensionDescription": {
+        "message": "Веброзширення, що переспрямовує популярні сайти на альтернативні дружні до приватності фронтенди та бекенди",
+        "description": "description of the extension"
+    },
+    "general": {
+        "message": "Загальні",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "Тема",
+        "description": "used in the settings page"
+    },
+    "translate": {
+        "message": "Переклад",
+        "description": "used in the settings page"
+    },
+    "maps": {
+        "message": "Мапи",
+        "description": "used in the settings page"
+    }
+}

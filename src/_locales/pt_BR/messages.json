@@ -211,5 +211,11 @@
     "instagram": {
         "message": "Instagram",
         "description": "used in the settings page"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Desktop"
+    },
+    "protocolFallback": {
+        "message": "Voltar ao padrão se não houver instâncias disponíveis para o protocolo atual"
     }
 }

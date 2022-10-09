@@ -214,5 +214,11 @@
     },
     "loki": {
         "message": "Lokinet"
+    },
+    "protocolFallback": {
+        "message": "Volvar á versión normal se non hai instancias dispoñibles para o protocolo actual"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Desktop"
     }
 }
