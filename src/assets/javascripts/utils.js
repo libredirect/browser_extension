@@ -424,17 +424,20 @@ function latency(service, frontend, document, location) {
 	latencyElement.addEventListener("click", async () => {
 		let reloadWindow = () => location.reload()
 		latencyElement.addEventListener("click", reloadWindow)
-		browser.storage.local.get(["redirects", "latency"], r => {
+		browser.storage.local.get("redirects", r => {
 			let redirects = r.redirects
-			let latency = r.latency
 			const oldHtml = latencyLabel.innerHTML
 			latencyLabel.innerHTML = "..."
 			testLatency(latencyLabel, redirects[frontend].clearnet, frontend).then(r => {
-				latency[frontend] = r
-				browser.storage.local.set({ latency })
-				latencyLabel.innerHTML = oldHtml
-				processDefaultCustomInstances(service, frontend, "clearnet", document)
-				latencyElement.removeEventListener("click", reloadWindow)
+				const frontendLatency = r
+				browser.storage.local.get("latency", r => {
+					let latency = r.latency
+					latency[frontend] = frontendLatency
+					browser.storage.local.set({ latency })
+					latencyLabel.innerHTML = oldHtml
+					processDefaultCustomInstances(service, frontend, "clearnet", document)
+					latencyElement.removeEventListener("click", reloadWindow)
+				})
 			})
 		})
 	})

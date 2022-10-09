@@ -22,8 +22,12 @@
 			"frontends": {
 				"invidious": {
 					"preferences": {
-						"cookies": ["PREFS"],
-						"localstorage": ["dark_mode"]
+						"cookies": [
+							"PREFS"
+						],
+						"localstorage": [
+							"dark_mode"
+						]
 					},
 					"name": "Invidious",
 					"embeddable": true,
@@ -59,7 +63,9 @@
 				},
 				"pipedMaterial": {
 					"preferences": {
-						"localstorage": ["PREFERENCES"]
+						"localstorage": [
+							"PREFERENCES"
+						]
 					},
 					"name": "Piped-Material",
 					"embeddable": false,
@@ -109,7 +115,9 @@
 			"frontends": {
 				"beatbump": {
 					"preferences": {
-						"localstorage": ["settings"],
+						"localstorage": [
+							"settings"
+						],
 						"indexeddb": "beatbump"
 					},
 					"name": "Beatbump",
@@ -117,14 +125,26 @@
 				},
 				"hyperpipe": {
 					"preferences": {
-						"localstorage": ["api", "authapi", "codec", "locale", "next", "pipedapi", "quality", "theme", "vol"],
+						"localstorage": [
+							"api",
+							"authapi",
+							"codec",
+							"locale",
+							"next",
+							"pipedapi",
+							"quality",
+							"theme",
+							"vol"
+						],
 						"indexeddb": "hyperpipedb"
 					},
 					"name": "HyperPipe",
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}music\\.youtube\\.com(\\/.*|$)"],
+			"targets": [
+				"^https?:\\/{2}music\\.youtube\\.com(\\/.*|$)"
+			],
 			"name": "YT Music",
 			"options": {
 				"enabled": true,
@@ -139,24 +159,23 @@
 				"nitter": {
 					"preferences": {
 						"cookies": [
-							"theme",
-							"infiniteScroll",
-							"stickyProfile",
+							"autoplayGifs",
 							"bidiSupport",
-							"hideTweetStats",
 							"hideBanner",
 							"hidePins",
 							"hideReplies",
-							"squareAvatars",
-							"mp4Playback",
+							"hideTweetStats",
 							"hlsPlayback",
-							"proxyVideos",
+							"infiniteScroll",
+							"mp4Playback",
 							"muteVideos",
-							"autoplayGifs",
+							"proxyVideos",
 							"replaceInstagram",
 							"replaceReddit",
 							"replaceTwitter",
-							"replaceYouTube"
+							"replaceYouTube",
+							"squareAvatars",
+							"theme"
 						]
 					},
 					"name": "Nitter",
@@ -164,7 +183,12 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(www\\.|mobile\\.|)twitter\\.com", "^https?:\\/{2}(pbs\\.|video\\.|)twimg\\.com", "^https?:\\/{2}platform\\.twitter\\.com/embed", "^https?:\\/{2}t\\.co"],
+			"targets": [
+				"^https?:\\/{2}(www\\.|mobile\\.|)twitter\\.com",
+				"^https?:\\/{2}(pbs\\.|video\\.|)twimg\\.com",
+				"^https?:\\/{2}platform\\.twitter\\.com/embed",
+				"^https?:\\/{2}t\\.co"
+			],
 			"name": "Twitter",
 			"options": {
 				"enabled": true,
@@ -186,7 +210,9 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(www\\.)?instagram\\.com\\/p\\/"],
+			"targets": [
+				"^https?:\\/{2}(www\\.)?instagram\\.com\\/p\\/"
+			],
 			"name": "Instagram",
 			"options": {
 				"enabled": true
@@ -199,13 +225,18 @@
 			"frontends": {
 				"proxiTok": {
 					"preferences": {
-						"cookies": ["api-test_endpoints", "theme"]
+						"cookies": [
+							"api-test_endpoints",
+							"theme"
+						]
 					},
 					"name": "ProxiTok",
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(www\\.|)tiktok\\.com.*"],
+			"targets": [
+				"^https?:\\/{2}(www\\.|)tiktok\\.com.*"
+			],
 			"name": "TikTok",
 			"options": {
 				"enabled": true
@@ -218,7 +249,20 @@
 			"frontends": {
 				"libreddit": {
 					"preferences": {
-						"cookies": ["theme", "front_page", "layout", "wide", "post_sort", "comment_sort", "show_nsfw", "autoplay_videos", "use_hls", "hide_hls_notification", "subscriptions", "filters"]
+						"cookies": [
+							"theme",
+							"front_page",
+							"layout",
+							"wide",
+							"post_sort",
+							"comment_sort",
+							"show_nsfw",
+							"autoplay_videos",
+							"use_hls",
+							"hide_hls_notification",
+							"subscriptions",
+							"filters"
+						]
 					},
 					"name": "Libreddit",
 					"instanceList": true
@@ -248,7 +292,10 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com", "^https?:\\/{2}(i\\.|preview\\.)redd\\.it"],
+			"targets": [
+				"^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com",
+				"^https?:\\/{2}(i\\.|preview\\.)redd\\.it"
+			],
 			"name": "Reddit",
 			"options": {
 				"enabled": true,
@@ -266,7 +313,9 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}([im]\\.)?(stack\\.)?imgur\\.(com|io)(\\/|$)"],
+			"targets": [
+				"^https?:\\/{2}([im]\\.)?(stack\\.)?imgur\\.(com|io)(\\/|$)"
+			],
 			"name": "Imgur",
 			"options": {
 				"enabled": true,
@@ -280,13 +329,18 @@
 			"frontends": {
 				"wikiless": {
 					"preferences": {
-						"cookies": ["theme", "default_lang"]
+						"cookies": [
+							"theme",
+							"default_lang"
+						]
 					},
 					"name": "Wikiless",
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(?:[a-z]+\\.)*wikipedia\\.org"],
+			"targets": [
+				"^https?:\\/{2}(?:[a-z]+\\.)*wikipedia\\.org"
+			],
 			"name": "Wikipedia",
 			"options": {
 				"enabled": false
@@ -334,13 +388,17 @@
 			"frontends": {
 				"quetre": {
 					"preferences": {
-						"localstorage": ["theme"]
+						"localstorage": [
+							"theme"
+						]
 					},
 					"name": "Quetre",
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}([a-z]+\\.)*quora\\.com.*"],
+			"targets": [
+				"^https?:\\/{2}([a-z]+\\.)*quora\\.com.*"
+			],
 			"name": "Quora",
 			"options": {
 				"enabled": true
@@ -353,13 +411,17 @@
 			"frontends": {
 				"libremdb": {
 					"preferences": {
-						"localstorage": ["theme"]
+						"localstorage": [
+							"theme"
+						]
 					},
 					"name": "libremdb",
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(?:www\\.|)imdb\\.com\\/title"],
+			"targets": [
+				"^https?:\\/{2}(?:www\\.|)imdb\\.com\\/title"
+			],
 			"name": "IMDb",
 			"options": {
 				"enabled": true
@@ -375,7 +437,9 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(www\\.|)reuters\\.com.*"],
+			"targets": [
+				"^https?:\\/{2}(www\\.|)reuters\\.com.*"
+			],
 			"name": "Reuters",
 			"options": {
 				"enabled": false
@@ -391,7 +455,9 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(?:[a-zA-Z0-9]+\\.)?fandom\\.com(?=(?:\\/wiki)|(?:\\/?$))"],
+			"targets": [
+				"^https?:\\/{2}(?:[a-zA-Z0-9]+\\.)?fandom\\.com(?=(?:\\/wiki)|(?:\\/?$))"
+			],
 			"name": "Fandom",
 			"options": {
 				"enabled": true
@@ -420,8 +486,18 @@
 			"frontends": {
 				"librarian": {
 					"preferences": {
-						"cookies": ["nsfw", "theme"],
-						"localstorage": ["autoplay", "autoplayNextVid", "collapseComments", "plyr", "sb_categories", "showRelated"]
+						"cookies": [
+							"nsfw",
+							"theme"
+						],
+						"localstorage": [
+							"autoplay",
+							"autoplayNextVid",
+							"collapseComments",
+							"plyr",
+							"sb_categories",
+							"showRelated"
+						]
 					},
 					"name": "Librarian",
 					"embeddable": true,
@@ -433,7 +509,10 @@
 					"instanceList": false
 				}
 			},
-			"targets": ["^https?:\\/{2}odysee\\.com", "^https?:\\/{2}lbry\\.tv"],
+			"targets": [
+				"^https?:\\/{2}odysee\\.com",
+				"^https?:\\/{2}lbry\\.tv"
+			],
 			"name": "LBRY",
 			"options": {
 				"enabled": true,
@@ -506,13 +585,26 @@
 				},
 				"librex": {
 					"preferences": {
-						"cookies": ["bibliogram", "disable_frontends", " disable_special", "invidious", "libreddit", "nitter", "proxitok", "save", "theme", "wikiless"]
+						"cookies": [
+							"bibliogram",
+							"disable_frontends",
+							" disable_special",
+							"invidious",
+							"libreddit",
+							"nitter",
+							"proxitok",
+							"save",
+							"theme",
+							"wikiless"
+						]
 					},
 					"name": "LibreX",
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}search\\.libredirect\\.invalid"],
+			"targets": [
+				"^https?:\\/{2}search\\.libredirect\\.invalid"
+			],
 			"name": "Search",
 			"options": {
 				"enabled": true,
@@ -526,14 +618,24 @@
 			"frontends": {
 				"simplyTranslate": {
 					"preferences": {
-						"cookies": ["from_lang", "to_lang", "tts_enabled", "use_text_fields"]
+						"cookies": [
+							"from_lang",
+							"to_lang",
+							"tts_enabled",
+							"use_text_fields"
+						]
 					},
 					"name": "SimplyTranslate",
 					"instanceList": true
 				},
 				"lingva": {
 					"preferences": {
-						"localstorage": ["isauto", "source", "target", "chakra-ui-color-mode"]
+						"localstorage": [
+							"isauto",
+							"source",
+							"target",
+							"chakra-ui-color-mode"
+						]
 					},
 					"name": "Lingva Translate",
 					"instanceList": true
@@ -543,7 +645,10 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}translate\\.google(\\.[a-z]{2,3}){1,2}\\/", "^https?:\\/{2}translate\\.libredirect\\.invalid"],
+			"targets": [
+				"^https?:\\/{2}translate\\.google(\\.[a-z]{2,3}){1,2}\\/",
+				"^https?:\\/{2}translate\\.libredirect\\.invalid"
+			],
 			"name": "Translate",
 			"options": {
 				"enabled": true,
@@ -565,7 +670,10 @@
 					"singleInstance": "https://www.openstreetmap.org"
 				}
 			},
-			"targets": ["^https?:\\/{2}maps\\.libredirect\\.invalid", "^https?:\\/{2}(((www|maps)\\.)?(google\\.).*(\\/maps)|maps\\.(google\\.).*)"],
+			"targets": [
+				"^https?:\\/{2}maps\\.libredirect\\.invalid",
+				"^https?:\\/{2}(((www|maps)\\.)?(google\\.).*(\\/maps)|maps\\.(google\\.).*)"
+			],
 			"name": "Maps",
 			"options": {
 				"enabled": true,
@@ -582,7 +690,11 @@
 					"instanceList": "true"
 				}
 			},
-			"targets": ["^https?:\\/{2}send\\.libredirect\\.invalid", "^https?:\\/{2}send\\.firefox\\.com\\/?$", "^https?:\\/{2}sendfiles\\.online\\/?$"],
+			"targets": [
+				"^https?:\\/{2}send\\.libredirect\\.invalid",
+				"^https?:\\/{2}send\\.firefox\\.com\\/?$",
+				"^https?:\\/{2}sendfiles\\.online\\/?$"
+			],
 			"name": "Send Files",
 			"options": {
 				"enabled": true

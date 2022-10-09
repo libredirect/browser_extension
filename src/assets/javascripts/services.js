@@ -422,7 +422,7 @@ function computeService(url, returnFrontend) {
 						} else {
 							for (const frontend in config.services[service].frontends) {
 								if (all(service, frontend, options, config, redirects).includes(utils.protocolHost(url))) {
-									if (returnFrontend) resolve([service, frontend, url.hostname])
+									if (returnFrontend) resolve([service, frontend, utils.protocolHost(url)])
 									else resolve(service)
 									return
 								}
@@ -520,7 +520,7 @@ function unifyPreferences(url, tabId) {
 					const frontendObject = config.services[service].frontends[frontend]
 					if ("cookies" in frontendObject.preferences) {
 						for (const cookie of frontendObject.preferences.cookies) {
-							utils.copyCookie(frontendObject, url, instancesList, cookie)
+							await utils.copyCookie(frontendObject, url, instancesList, cookie)
 						}
 					}
 					if ("localstorage" in frontendObject.preferences) {

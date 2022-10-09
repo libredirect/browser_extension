@@ -8,6 +8,12 @@
   </head>
   <body dir="auto">
     <div class="current_site">
+      <div class="some-block" id="instance-div"><a class="title prevent">
+          <%- include('src/assets/images/instance-icon.svg', {services: services}) -%>
+          <h4 id="instance"></h4>
+        </a>
+        <span id="end"><input type="checkbox" id="instance-enabled"/></span>
+      </div>
       <%- include('src/pages/widgets/switches', {services: services}) -%>
       <div id="current_site_divider">
         <hr>

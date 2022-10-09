@@ -232,7 +232,6 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 					}
 				}
 			case "redirectLink":
-				console.log(info.linkUrl)
 				const tmpUrl = new URL(info.linkUrl)
 				const newUrl = servicesHelper.redirect(tmpUrl, "main_frame", null, true)
 				if (newUrl) browser.tabs.create({ url: newUrl })

@@ -2,7 +2,6 @@
 window.browser = window.browser || window.chrome
 
 import utils from "../../assets/javascripts/utils.js"
-// import generalHelper from "../../assets/javascripts/general.js"
 import serviceHelper from "../../assets/javascripts/services.js"
 
 let config,
@@ -40,6 +39,7 @@ const currSite = document.getElementsByClassName("current_site")[0]
 
 function setDivs() {
 	return new Promise(resolve => {
+		divs.instance = document.getElementById("instance")
 		for (const service in config.services) {
 			divs[service] = {}
 			divs[service].toggle = {}
@@ -56,8 +56,9 @@ await setDivs()
 
 const currentSiteIsFrontend = document.getElementById("current_site_divider")
 
-browser.storage.local.get("options", r => {
+browser.storage.local.get(["options", "redirects"], r => {
 	browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+		document.getElementById("instance-div").classList.add("hide")
 		for (const service in config.services) {
 			if (!r.options.popupServices.includes(service)) allSites.getElementsByClassName(service)[0].classList.add("hide")
 			else allSites.getElementsByClassName(service)[0].classList.remove("hide")
@@ -80,10 +81,36 @@ browser.storage.local.get("options", r => {
 
 		let service = await serviceHelper.computeService(url, true)
 		let frontend
+		let instance
 		if (service) {
 			if (typeof service != "string") {
+				instance = service[2]
 				frontend = service[1]
 				service = service[0]
+				divs.instance.innerHTML = instance.replace(/https?:\/{2}/, "")
+				let tmp
+				let instanceNetwork
+				for (const network in config.networks) {
+					tmp = r.redirects[frontend][network].indexOf(instance)
+					if (tmp > -1) {
+						const instanceDiv = document.getElementById("instance-enabled")
+						tmp = r.options[frontend][network].enabled.indexOf(instance)
+						if (tmp > -1) instanceDiv.checked = true
+						else instanceDiv.checked = false
+						instanceNetwork = network
+						instanceDiv.addEventListener("change", () => {
+							browser.storage.local.get("options", r => {
+								// Although options would be avaliable in this context, it is fetched again to make sure it is up to date
+								let options = r.options
+								if (instanceDiv.checked) options[frontend][instanceNetwork].enabled.push(instance)
+								else options[frontend][instanceNetwork].enabled.splice(options[frontend][instanceNetwork].enabled.indexOf(instance), 1)
+								browser.storage.local.set({ options })
+							})
+						})
+						break
+					}
+				}
+				document.getElementById("instance-div").classList.remove("hide")
 			}
 			divs[service].current.classList.remove("hide")
 			divs[service].all.classList.add("hide")
