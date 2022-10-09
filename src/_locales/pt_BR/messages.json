@@ -19,8 +19,8 @@
         "description": "Utilizado na página de configurações"
     },
     "extensionDescription": {
-        "message": "Uma extensão para os navegadores de internet que redireciona os sítios/sites populares para interfaces gráficas e interfaces de textos alternativos e amigáveis ​​à sua privacidade",
-        "description": "Descrição da extensão"
+        "message": "Uma extensão para os navegadores de internet que redireciona os sítios/sites populares para interfaces gráficas e interfaces de textos alternativas e amigáveis que respeitam sua privacidade",
+        "description": "Descrição da Extensão"
     },
     "switchInstance": {
         "message": "Trocar a Instância",
@@ -50,16 +50,8 @@
         "message": "Enviar Arquivos",
         "description": "Utilizado na página de configurações"
     },
-    "youtube": {
-        "message": "YouTube",
-        "description": "Utilizado na página de configurações"
-    },
     "instagram": {
         "message": "Instagram",
-        "description": "Utilizado na página de configurações"
-    },
-    "twitter": {
-        "message": "Twitter",
         "description": "Utilizado na página de configurações"
     },
     "reddit": {
@@ -211,18 +203,11 @@
     "copied": {
         "message": "Copiado"
     },
-    "unifySettings": {
-        "message": "Unificar as Configurações"
-    },
     "lbry": {
         "message": "LBRY"
     },
     "testInstancesLatency": {
         "message": "Testar a Latência das Instâncias"
-    },
-    "extensionDescription": {
-        "message": "Uma extensão para os navegadores de internet que redireciona os sítios/sites populares para interfaces gráficas e interfaces de textos alternativas e amigáveis que respeitam sua privacidade",
-        "description": "Descrição da Extensão"
     },
     "protocolFallback": {
         "message": "Retornar ao normal se não houver outras instâncias disponíveis para o protocolo atual"
