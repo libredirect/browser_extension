@@ -43,7 +43,7 @@ Send Files => [Send](https://gitlab.com/timvisee/send)
 [![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)&nbsp;
 [![Patreon](./img/patreon.svg)](https://patreon.com/LibRedirect)&nbsp;
 [![Buy me a coffee](./img/bmc.svg)](https://www.buymeacoffee.com/libredirect)&nbsp;
-<a href="https://opencollective.com/libredirect"><img src = ./img/Open-collective.png width=15% height=15%></a>
+<a href="https://opencollective.com/libredirect"><img src = ./img/Open-Collective.png width=17% height=17%></a>
 
 BTC: bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q\
 BCH: qqz5vfnrngk0tjy73q2688qzw4wnllnuzqfndflhl8\
