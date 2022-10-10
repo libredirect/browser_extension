@@ -456,7 +456,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:[a-zA-Z0-9]+\\.)?fandom\\.com(?=(?:\\/wiki)|(?:\\/?$))"
+				"^https?:\\/{2}(?:[a-zA-Z0-9-]+\\.)?fandom\\.com(?=(?:\\/wiki)|(?:\\/?$))"
 			],
 			"name": "Fandom",
 			"options": {
