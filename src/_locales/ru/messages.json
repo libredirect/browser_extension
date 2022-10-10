@@ -214,5 +214,9 @@
     "searchNote": {
         "message": "Примечание: Используйте поиск в полной мере, сделав LibRedirect поисковой системой по умолчанию.",
         "description": "used in the settings page"
+    },
+    "redirectLink": {
+        "message": "Попробовать перенаправить эту ссылку",
+        "description": "Used in context menus when right clicking on a hyperlink"
     }
 }
