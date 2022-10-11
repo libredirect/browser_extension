@@ -33,9 +33,13 @@ browser.runtime.onInstalled.addListener(details => {
 							switch (details.previousVersion) {
 								case "2.2.0":
 								case "2.2.1":
-									await generalHelper.initDefaults()
-									await servicesHelper.initDefaults()
-									await servicesHelper.upgradeOptions()
+									browser.storage.local.get("options", async r => {
+										if (!r.options) {
+											await generalHelper.initDefaults()
+											await servicesHelper.initDefaults()
+											await servicesHelper.upgradeOptions()
+										}
+									})
 									break
 								default:
 									await servicesHelper.processUpdate()
