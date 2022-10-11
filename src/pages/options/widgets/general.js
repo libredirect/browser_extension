@@ -87,9 +87,8 @@ importSettingsElement.addEventListener("change", () => {
 						})
 				})
 			)
-		} else if ("version" in data) {
-			browser.storage.local.clear(() => browser.storage.local.set({ options: data }, () => location.reload()))
-		} else {
+		} else if ("version" in data) browser.storage.local.set({ options: data }, () => location.reload())
+		else {
 			console.log("incompatible settings")
 			importError()
 		}
