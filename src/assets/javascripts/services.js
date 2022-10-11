@@ -2,13 +2,14 @@ window.browser = window.browser || window.chrome
 
 import utils from "./utils.js"
 
-let config, options, redirects
+let config, options, redirects, targets
 
 function init() {
 	return new Promise(async resolve => {
-		browser.storage.local.get(["options", "redirects"], r => {
+		browser.storage.local.get(["options", "redirects", "targets"], r => {
 			options = r.options
 			redirects = r.redirects
+			targets = r.targets
 			fetch("/config/config.json")
 				.then(response => response.text())
 				.then(configData => {
@@ -45,16 +46,11 @@ function all(service, frontend, options, config, redirects) {
 }
 
 function regexArray(service, url, config) {
-	let targets
-	if (config.services[service].targets == "datajson") {
-		browser.storage.local.get("targets", r => {
-			targets = r.targets[service]
-		})
-	} else {
-		targets = config.services[service].targets
-	}
-	for (const targetString in targets) {
-		const target = new RegExp(targets[targetString])
+	let targetList
+	if (config.services[service].targets == "datajson") targetList = targets[service]
+	else targetList = config.services[service].targets
+	for (const targetString in targetList) {
+		const target = new RegExp(targetList[targetString])
 		if (target.test(url.href)) return true
 	}
 	return false
