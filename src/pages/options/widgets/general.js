@@ -152,6 +152,13 @@ latencyInput.addEventListener("input", event => {
 	latencyOutput.value = event.target.value
 })
 
+//implement support for "fallback-to-fastest" option - if none of the instances matches the set latency threshold, redirect to the fastest one
+let fallbackToFastestCheckbox = document.getElementById("fallback-to-fastest")
+fallbackToFastestCheckbox.addEventListener("change", event => {
+  setOption("fallbackToFastest", "checkbox", event)
+})
+
+
 let nameCustomInstanceInput = document.getElementById("exceptions-custom-instance")
 let instanceTypeElement = document.getElementById("exceptions-custom-instance-type")
 let instanceType = "url"
@@ -180,6 +187,7 @@ browser.storage.local.get("options", r => {
 	networkElement.value = r.options.network
 	networkFallbackCheckbox.checked = r.options.networkFallback
 	latencyOutput.value = r.options.latencyThreshold
+  fallbackToFastest.checked = r.options.fallbackToFastest
 	let options = r.options
 	// firstPartyIsolate.checked = r.firstPartyIsolate;
 
@@ -189,6 +197,28 @@ browser.storage.local.get("options", r => {
 	} else {
 		networkFallbackCheckbox.disabled = false
 	}
+
+  if (fallbackToFastest.checked) {
+    //get the fastest instance, and set the latency threshold to the latency of that instance
+    let fastestInstance = await getFastestInstance()
+    latencyInput.value = fastestInstance.latency
+    latencyOutput.value = fastestInstance.latency
+  }
+
+  async function getFastestInstance() {
+    let fastestInstance = null
+    //get the fastest instance, and set the latency threshold to the latency of that instance
+    for (const service in config.services) {
+      let instances = await servicesHelper.getInstances(service)
+      for (const instance of instances) {
+        if (fastestInstance == null || instance.latency < fastestInstance.latency) {
+          fastestInstance = instance
+        }
+      }
+    }
+    return fastestInstance
+  }
+
 
 	instanceTypeElement.addEventListener("change", event => {
 		instanceType = event.target.options[instanceTypeElement.selectedIndex].value
