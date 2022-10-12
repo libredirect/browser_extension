@@ -101,6 +101,8 @@ async function processDefaultCustomInstances(service, frontend, network, documen
 		if (frontendDefaultRedirects.length == 0) isTrue = false
 		frontendNetworkElement.getElementsByClassName("toggle-all")[0].checked = isTrue
 	}
+  //refactor the assignment below to not use dynamic assignment to innerHTML
+  //this is a security risk
 	frontendCheckListElement.innerHTML = [
 		`<div>
         <x data-localise="__MSG_toggleAll__">Toggle All</x>
@@ -283,12 +285,12 @@ async function testLatency(element, instances, frontend) {
 function copyCookie(frontend, targetUrl, urls, name) {
 	return new Promise(resolve => {
 		browser.storage.local.get("options", r => {
-			let query
+			let query;
 			if (!r.options.firstPartyIsolate)
 				query = {
 					url: protocolHost(targetUrl),
 					name: name,
-				}
+				};
 			else
 				query = {
 					url: protocolHost(targetUrl),
