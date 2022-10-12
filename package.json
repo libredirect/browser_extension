@@ -23,6 +23,7 @@
 	},
 	"homepage": "https://libredirect.codeberg.page",
 	"devDependencies": {
+		"eslint": "^8.25.0",
 		"prettier": "2.7.1",
 		"web-ext": "^7.2.0"
 	},

@@ -197,13 +197,22 @@ browser.storage.local.get("options", r => {
 	} else {
 		networkFallbackCheckbox.disabled = false
 	}
-
-  if (fallbackToFastest.checked) {
-    //get the fastest instance, and set the latency threshold to the latency of that instance
+async function fallbackFastest() {
+  if (options.fallbackToFastest) {
     let fastestInstance = await getFastestInstance()
-    latencyInput.value = fastestInstance.latency
-    latencyOutput.value = fastestInstance.latency
+    if (fastestInstance) {
+      latencyInput.value = fastestInstance.latency
+      latencyOutput.value = fastestInstance.latency
+      let instance = fastestInstance.instance
+      let service = fastestInstance.service
+      let url = servicesHelper.getRedirectUrl(service, instance)
+      browser.tabs.query({ active: true, currentWindow: true }, tabs => {
+        browser.tabs.update(tabs[0].id, { url: url })
+      })
+    }
   }
+}
+
 
   async function getFastestInstance() {
     let fastestInstance = null
