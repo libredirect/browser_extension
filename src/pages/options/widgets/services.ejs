@@ -56,7 +56,7 @@
       </div>
       <form class="custom-instance-form">
         <div class="some-block option-block">
-          <input class="custom-instance" placeholder="http://<%= frontend %>.<%= config.networks[network].tld %>" type="url">
+          <input class="custom-instance" placeholder="https://<%= frontend %>.<%= config.networks[network].tld %>" type="url">
           <button class="add add-instance" type="submit">
             <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
               <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
@@ -68,7 +68,7 @@
       <% if (network == "clearnet") { _%>
       <div class="buttons buttons-inline">
         <label class="button button-inline" id="latency-<%= frontend %>-label" for="latency-<%= frontend %>"> 
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
+          <svg xmlns="https://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor">
             <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"></path>
           </svg>&nbsp;
           <x data-localise="__MSG_testInstancesLatency__">Test Instances Latency</x>
