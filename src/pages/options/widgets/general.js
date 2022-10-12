@@ -240,7 +240,7 @@ browser.storage.local.get("options", r => {
 		if (instanceType == "url") {
 			if (nameCustomInstanceInput.validity.valid) {
 				let url = new URL(nameCustomInstanceInput.value)
-				val = `${url.network}//${url.host}`
+				val = `${url.protocol}//${url.host}`
 				if (!exceptionsCustomInstances.url.includes(val)) exceptionsCustomInstances.url.push(val)
 			}
 		} else if (instanceType == "regex") {

@@ -30,7 +30,6 @@ body {
 	font-family: "Inter";
 	background-color: var(--bg-main);
 	color: var(--text);
-	overflow-x: hidden;
 }
 
 body.rtl {
