@@ -245,6 +245,16 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 	})
 })
 
+browser.webRequest.onHeadersReceived.addListener(
+	e => {
+		let response = servicesHelper.modifyContentSecurityPolicy(e)
+		if (!response) response = servicesHelper.modifyContentSecurityPolicy(e)
+		return response
+	},
+	{ urls: ["<all_urls>"] },
+	["blocking", "responseHeaders"]
+)
+
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	if (message.function === "unify") utils.unify(false).then(r => sendResponse({ response: r }))
 	return true
