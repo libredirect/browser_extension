@@ -280,46 +280,28 @@ async function testLatency(element, instances, frontend) {
 	})
 }
 
-function copyCookie(frontend, targetUrl, urls, name) {
+function copyCookie(targetUrl, urls, name) {
 	return new Promise(resolve => {
-		browser.storage.local.get("options", r => {
-			let query
-			if (!r.options.firstPartyIsolate)
-				query = {
-					url: protocolHost(targetUrl),
-					name: name,
-				}
-			else
-				query = {
-					url: protocolHost(targetUrl),
-					name: name,
-					firstPartyDomain: null,
-				}
-			browser.cookies.getAll(query, async cookies => {
-				for (const cookie of cookies)
-					if (cookie.name == name) {
-						for (const url of urls) {
-							const setQuery = r.options.firstPartyIsolate
-								? {
-										url: url,
-										name: name,
-										value: cookie.value,
-										secure: true,
-										firstPartyDomain: new URL(url).hostname,
-								  }
-								: {
-										url: url,
-										name: name,
-										value: cookie.value,
-										secure: true,
-										expirationDate: cookie.expirationDate,
-								  }
-							browser.cookies.set(setQuery)
+		const query = {
+			url: protocolHost(targetUrl),
+			name: name,
+		}
+		browser.cookies.getAll(query, async cookies => {
+			for (const cookie of cookies)
+				if (cookie.name == name) {
+					for (const url of urls) {
+						const setQuery = {
+							url: url,
+							name: name,
+							value: cookie.value,
+							secure: true,
+							expirationDate: cookie.expirationDate,
 						}
-						break
+						browser.cookies.set(setQuery)
 					}
-				resolve()
-			})
+					break
+				}
+			resolve()
 		})
 	})
 }

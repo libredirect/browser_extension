@@ -521,7 +521,7 @@ function unifyPreferences(url, tabId) {
 					const frontendObject = config.services[service].frontends[frontend]
 					if ("cookies" in frontendObject.preferences) {
 						for (const cookie of frontendObject.preferences.cookies) {
-							await utils.copyCookie(frontendObject, url, instancesList, cookie)
+							await utils.copyCookie(url, instancesList, cookie)
 						}
 					}
 					if ("localstorage" in frontendObject.preferences) {
@@ -652,7 +652,6 @@ function upgradeOptions() {
 						options.popupServices.splice(tmp, 1)
 						options.popupServices.push("sendFiles")
 					}
-					options.firstPartyIsolate = r.firstPartyIsolate
 					options.autoRedirect = r.autoRedirect
 					switch (r.onlyEmbeddedVideo) {
 						case "onlyNotEmbedded":

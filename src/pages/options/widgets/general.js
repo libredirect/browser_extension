@@ -170,8 +170,6 @@ for (const service in config.services) {
 		})
 	})
 }
-// const firstPartyIsolate = document.getElementById('firstPartyIsolate');
-// firstPartyIsolate.addEventListener("change", () => browser.storage.local.set({ firstPartyIsolate: firstPartyIsolate.checked }))
 
 browser.storage.local.get("options", r => {
 	autoRedirectElement.checked = r.options.autoRedirect
@@ -180,7 +178,6 @@ browser.storage.local.get("options", r => {
 	networkFallbackCheckbox.checked = r.options.networkFallback
 	latencyOutput.value = r.options.latencyThreshold
 	let options = r.options
-	// firstPartyIsolate.checked = r.firstPartyIsolate;
 
 	//let networkFallbackElement = document.getElementById("network-fallback")
 	if (networkElement.value == "clearnet") {
