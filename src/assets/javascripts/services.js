@@ -397,6 +397,11 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "rimgo":
 			if (url.href.search(/^https?:\/{2}(?:[im]\.)?stack\./) > -1) return `${randomInstance}/stack${url.pathname}${url.search}`
 			else return `${randomInstance}${url.pathname}${url.search}`
+		case "libreddit":
+			if (url.hostname.match(/^(i|preview)\.redd\.it/)) {
+				return `${randomInstance}/img${url.pathname}`
+			}
+			return `${randomInstance}${url.pathname}${url.search}`
 		default:
 			return `${randomInstance}${url.pathname}${url.search}`
 	}
