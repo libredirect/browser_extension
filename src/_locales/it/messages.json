@@ -222,11 +222,11 @@
         "message": "LBRY Desktop"
     },
     "toggleTab": {
-        "message": "Attiva/disattiva i reindirizzamenti in questa scheda",
+        "message": "Attiva/disattiva reindirizzamenti in questa scheda",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Tenta di reindirizzare questo collegamento ipertestuale",
+        "message": "Prova a reindirizzare questo collegamento",
         "description": "Used in context menus when right clicking on a hyperlink"
     }
 }
