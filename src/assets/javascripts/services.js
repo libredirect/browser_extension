@@ -134,7 +134,7 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "searxng":
 			return `${randomInstance}/?q=${encodeURIComponent(url.searchParams.get("q"))}`
 		case "whoogle":
-			return `${randomInstance}/search${encodeURIComponent(url.searchParams.get("q"))}`
+			return `${randomInstance}/search?q=${encodeURIComponent(url.searchParams.get("q"))}`
 		case "librex":
 			return `${randomInstance}/search.php?q=${encodeURIComponent(url.searchParams.get("q"))}`
 		case "send":
