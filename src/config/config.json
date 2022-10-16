@@ -93,7 +93,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.|m\\.|)youtube.com(?!(?:iframe_api\\/.*)|(?:\/redirect))",
+				"^https?:\\/{2}(?:www\\.|m\\.|)youtube.com(?!(?:iframe_api\\/.*)|(?:\\/redirect))",
 				"^https?:\\/{2}img\\.youtube.com\\/vi\\/.*\\/..*",
 				"^https?:\\/{2}(?:i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
 				"^https?:\\/{2}(?:www\\.|music\\.|)youtube.com\\/watch?v=..*",
@@ -293,7 +293,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com",
+				"^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com(?!\\/(gallery)|(rpan)|(settings)|(topics)|(dev))",
 				"^https?:\\/{2}(i\\.|preview\\.)redd\\.it"
 			],
 			"name": "Reddit",

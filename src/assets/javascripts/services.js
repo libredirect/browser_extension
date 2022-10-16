@@ -46,12 +46,14 @@ function all(service, frontend, options, config, redirects) {
 }
 
 function regexArray(service, url, config) {
-	let targetList
-	if (config.services[service].targets == "datajson") targetList = targets[service]
-	else targetList = config.services[service].targets
-	for (const targetString in targetList) {
-		const target = new RegExp(targetList[targetString])
-		if (target.test(url.href)) return true
+	if (config.services[service].targets == "datajson") {
+		if (targets[service].includes(utils.protocolHost(url))) return true
+	} else {
+		const targetList = config.services[service].targets
+		for (const targetString in targetList) {
+			const target = new RegExp(targetList[targetString])
+			if (target.test(url.href)) return true
+		}
 	}
 	return false
 }
@@ -398,9 +400,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.href.search(/^https?:\/{2}(?:[im]\.)?stack\./) > -1) return `${randomInstance}/stack${url.pathname}${url.search}`
 			else return `${randomInstance}${url.pathname}${url.search}`
 		case "libreddit":
-			if (url.hostname.match(/^(i|preview)\.redd\.it/)) {
-				return `${randomInstance}/img${url.pathname}`
-			}
+			if (url.hostname.match(/^(i|preview)\.redd\.it/)) return `${randomInstance}/img${url.pathname}`
 			return `${randomInstance}${url.pathname}${url.search}`
 		default:
 			return `${randomInstance}${url.pathname}${url.search}`
