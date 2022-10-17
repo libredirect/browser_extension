@@ -31,11 +31,6 @@ async function getConfig() {
 function setOption(option, type, event) {
 	browser.storage.local.get("options", r => {
 		let options = r.options
-		browser.storage.local.set({ options })
-	})
-
-	browser.storage.local.get("options", r => {
-		let options = r.options
 		if (type == "select") {
 			options[option] = event.target.options[event.target.options.selectedIndex].value
 		} else if (type == "checkbox") {
@@ -82,13 +77,20 @@ importSettingsElement.addEventListener("change", () => {
 								await generalHelper.initDefaults()
 								await servicesHelper.initDefaults()
 								await servicesHelper.upgradeOptions()
+								await servicesHelper.processEnabledInstanceList()
 								location.reload()
 							})
 						})
 				})
 			)
-		} else if ("version" in data) browser.storage.local.set({ options: data }, () => location.reload())
-		else {
+		} else if ("version" in data) {
+			let options = data
+			delete options.version
+			browser.storage.local.set({ options: data }, async () => {
+				await servicesHelper.processEnabledInstanceList()
+				location.reload()
+			})
+		} else {
 			console.log("incompatible settings")
 			importError()
 		}

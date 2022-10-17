@@ -46,7 +46,8 @@ function updateInstances() {
 		await initBlackList()
 		const instances = JSON.parse(http.responseText)
 
-		servicesHelper.setRedirects(instances)
+		await servicesHelper.setRedirects(instances)
+		await servicesHelper.processEnabledInstanceList()
 
 		console.info("Successfully updated Instances")
 		resolve(true)

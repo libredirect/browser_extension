@@ -38,11 +38,13 @@ browser.runtime.onInstalled.addListener(details => {
 											await generalHelper.initDefaults()
 											await servicesHelper.initDefaults()
 											await servicesHelper.upgradeOptions()
+											await servicesHelper.processEnabledInstanceList()
 										}
 									})
 									break
 								default:
 									await servicesHelper.processUpdate()
+									await servicesHelper.processEnabledInstanceList()
 							}
 						})
 					})

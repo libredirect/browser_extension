@@ -784,6 +784,34 @@ function modifyContentSecurityPolicy(details) {
 	}
 }
 
+function processEnabledInstanceList() {
+	return new Promise(resolve => {
+		fetch("/config/config.json")
+			.then(response => response.text())
+			.then(configData => {
+				const config = JSON.parse(configData)
+				browser.storage.local.get(["redirects", "options"], r => {
+					let options = r.options
+					for (const service in config.services) {
+						for (const frontend in config.services[service].frontends) {
+							if (config.services[service].frontends[frontend].instanceList) {
+								for (const network in config.networks) {
+									for (const instance of options[frontend][network].enabled) {
+										let i = redirects[frontend][network].indexOf(instance)
+										if (i < 0) options[frontend][network].enabled.splice(i, 1)
+									}
+								}
+							}
+						}
+					}
+					browser.storage.local.set({ options }, () => {
+						resolve()
+					})
+				})
+			})
+	})
+}
+
 export default {
 	redirect,
 	computeService,
@@ -795,4 +823,5 @@ export default {
 	upgradeOptions,
 	processUpdate,
 	modifyContentSecurityPolicy,
+	processEnabledInstanceList,
 }
