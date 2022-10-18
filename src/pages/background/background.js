@@ -6,30 +6,23 @@ import servicesHelper from "../../assets/javascripts/services.js"
 
 window.browser = window.browser || window.chrome
 
-function initDefaults() {
-	browser.storage.local.clear(() => {
+browser.runtime.onInstalled.addListener(details => {
+	if (details.previousVersion != browser.runtime.getManifest().version) {
+		// ^Used to prevent this running when debugging with auto-reload
 		fetch("/instances/blacklist.json")
 			.then(response => response.text())
 			.then(async data => {
 				browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
-					await generalHelper.initDefaults()
-					await servicesHelper.initDefaults()
-				})
-			})
-	})
-}
-
-browser.runtime.onInstalled.addListener(details => {
-	if (details.previousVersion != browser.runtime.getManifest().version) {
-		switch (details.reason) {
-			case "install":
-				initDefaults()
-				break
-			case "update":
-				fetch("/instances/blacklist.json")
-					.then(response => response.text())
-					.then(async data => {
-						browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
+					switch (details.reason) {
+						case "install":
+							browser.storage.local.get("options", async r => {
+								if (!r.options) {
+									await generalHelper.initDefaults()
+									await servicesHelper.initDefaults()
+								}
+							})
+							break
+						case "update":
 							switch (details.previousVersion) {
 								case "2.2.0":
 								case "2.2.1":
@@ -46,9 +39,9 @@ browser.runtime.onInstalled.addListener(details => {
 									await servicesHelper.processUpdate()
 									await servicesHelper.processEnabledInstanceList()
 							}
-						})
-					})
-		}
+					}
+				})
+			})
 	}
 })
 
