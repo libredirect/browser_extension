@@ -30,7 +30,7 @@ IMDb => [libremdb](https://github.com/zyachel/libremdb)\
 PeerTube => [SimpleerTube](https://git.sr.ht/~metalune/simpleweb_peertube)\
 LBRY/Odysee => [Librarian](https://codeberg.org/librarian/librarian), [LBRY Desktop](https://lbry.com/get)\
 Search => [SearXNG](https://github.com/searxng/searxng), [SearX](https://searx.github.io/searx/), [Whoogle](https://benbusby.com/projects/whoogle-search/), [LibreX](https://github.com/hnhx/librex/)\
-Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web), [LingvaTranslate](https://github.com/TheDavidDelta/lingva-translate)\
+Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web), [LingvaTranslate](https://github.com/TheDavidDelta/lingva-translate), [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)\
 Maps => [OpenStreetMap](https://www.openstreetmap.org/), [FacilMap](https://github.com/FacilMap/facilmap)\
 Send Files => [Send](https://gitlab.com/timvisee/send)
 
