@@ -210,5 +210,13 @@
     },
     "protocolFallback": {
         "message": "Návrat k normálnímu protokolu, pokud pro současný nebudou dostupné žádné instance"
+    },
+    "toggleTab": {
+        "message": "Přepnout přesměrovánív této kartě",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "redirectLink": {
+        "message": "Pokusit se přesměrovat tento odkaz",
+        "description": "Used in context menus when right clicking on a hyperlink"
     }
 }

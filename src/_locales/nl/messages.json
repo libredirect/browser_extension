@@ -1,30 +1,30 @@
 {
     "light": {
-        "message": "Licht thema",
+        "message": "Licht",
         "description": "used in the settings page"
     },
     "system": {
-        "message": "Systeemthema",
+        "message": "Systeem",
         "description": "used in the settings page"
     },
     "customInstances": {
-        "message": "Aangepaste servers",
+        "message": "Aangepaste instanties",
         "description": "used in the settings page"
     },
     "dark": {
-        "message": "Donker thema",
+        "message": "Donker",
         "description": "used in the settings page"
     },
     "updateInstances": {
-        "message": "Serverlijst bijwerken",
+        "message": "Instantielijst bijwerken",
         "description": "used in the settings page"
     },
     "resetSettings": {
-        "message": "Standaardwaarden",
+        "message": "Instellingen herstarten",
         "description": "used in the settings page"
     },
     "customPopup": {
-        "message": "Pop-upvenster instellen",
+        "message": "Pop-up venster aanpassen",
         "description": "used in the settings page"
     },
     "normal": {
@@ -32,19 +32,19 @@
         "description": "used in the settings page"
     },
     "defaultInstances": {
-        "message": "Standaardservers",
+        "message": "Standaardinstanties",
         "description": "used in the settings page"
     },
     "toggleAll": {
-        "message": "Alles aan/uit",
+        "message": "Alles schakelen",
         "description": "used in the settings page"
     },
     "frontend": {
-        "message": "Frontend",
+        "message": "Front-end",
         "description": "used in the settings page"
     },
     "autoRedirect": {
-        "message": "Automatisch overschakelen naar online-servers",
+        "message": "Offline instanties automatisch doorverwijzen naar online instanties",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -60,7 +60,7 @@
         "description": "name of the extension"
     },
     "switchInstance": {
-        "message": "Andere server kiezen",
+        "message": "Schakelen tussen instanties",
         "description": "used in manifest.json as shortcut description"
     },
     "settings": {
@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "sendFiles": {
-        "message": "Bestanden versturen",
+        "message": "Bestanden Verzenden",
         "description": "used in the settings page"
     },
     "youtube": {
@@ -132,7 +132,7 @@
         "description": "used in the settings page"
     },
     "extensionDescription": {
-        "message": "Een browserextensie die je automatisch doorstuurt naar privacy-respecterende alternatieven voor populaire sites",
+        "message": "Een webextensie die populaire sites doorverwijst naar alternatieve privacy-vriendelijke frontends en backends",
         "description": "description of the extension"
     },
     "copied": {
@@ -146,34 +146,34 @@
         "description": "used in the settings page"
     },
     "notFullyPrivate": {
-        "message": "Dit frontend is niet volledig privaat."
+        "message": "Dit is geen volledig privé front-end."
     },
     "searchNote": {
-        "message": "Tip: benut de extensie optimaal door LibRedirect in te stellen als de standaard zoekmachine.",
+        "message": "Tip: gebruik de zoekfunctie ten volle door van LibRedirect uw standaardzoekmachine te maken.",
         "description": "used in the settings page"
     },
     "redirectType": {
-        "message": "Soort doorverwijzing",
+        "message": "Omleidingstype",
         "description": "used in the settings page"
     },
     "embeddedVids": {
-        "message": "Ingesloten video's-frontend",
+        "message": "Ingesloten Video's Front-end",
         "description": "used in the settings page"
     },
     "both": {
-        "message": "Beide",
+        "message": "beide",
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
-        "message": "Alleen ingesloten",
+        "message": "alleen ingesloten",
         "description": "used in the settings page"
     },
     "onlyNotEmbedded": {
-        "message": "Alleen niet-ingesloten",
+        "message": "alleen niet-ingesloten",
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "Deze server is offline - je wordt doorgestuurd over",
+        "message": "Deze instantie is offline, u wordt doorverwezen nadat",
         "description": "used in instance_offline.html"
     },
     "cancel": {
@@ -181,11 +181,11 @@
         "description": "used in instance_offline.html"
     },
     "instanceIsOff": {
-        "message": "Server is offline",
+        "message": "Instantie is offline",
         "description": "used in instance_offline.html"
     },
     "protocolFallback": {
-        "message": "Terugvallen op reguliere server als er geen servers met het huidige protocol beschikbaar zijn"
+        "message": "Val terug naar de normale site als er geen instanties beschikbaar zijn voor het huidige protocol"
     },
     "exportSettings": {
         "message": "Instellingen exporteren",
@@ -196,19 +196,27 @@
         "description": "used in the settings page"
     },
     "testInstancesLatency": {
-        "message": "Controleren op serververtragingen"
+        "message": "Controleren op instantievertragingen"
     },
     "copyRaw": {
         "message": "Onbewerkte code kopiëren"
     },
     "redirectionCanceled": {
-        "message": "Doorverwijzen afgebroken",
+        "message": "Doorverwijzing geannuleerd",
         "description": "used in instance_offline.js"
     },
     "unifySettings": {
-        "message": "Globale instellingen"
+        "message": "Instellingen verenigen"
     },
     "lbryDesktop": {
         "message": "LBRY Desktop"
+    },
+    "toggleTab": {
+        "message": "Schakel omleidingen in dit tabblad",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "redirectLink": {
+        "message": "Probeer deze hyperlink door te verwijzen",
+        "description": "Used in context menus when right clicking on a hyperlink"
     }
 }

@@ -46,7 +46,8 @@ function updateInstances() {
 		await initBlackList()
 		const instances = JSON.parse(http.responseText)
 
-		servicesHelper.setRedirects(instances)
+		await servicesHelper.setRedirects(instances)
+		await servicesHelper.processEnabledInstanceList()
 
 		console.info("Successfully updated Instances")
 		resolve(true)
@@ -282,7 +283,7 @@ async function testLatency(element, instances, frontend) {
 	})
 }
 
-function copyCookie(frontend, targetUrl, urls, name) {
+function copyCookie(targetUrl, urls, name) {
 	return new Promise(resolve => {
 		browser.storage.local.get("options", r => {
 			let query;
@@ -317,11 +318,26 @@ function copyCookie(frontend, targetUrl, urls, name) {
 										expirationDate: cookie.expirationDate,
 								  }
 							browser.cookies.set(setQuery)
+		const query = {
+			url: protocolHost(targetUrl),
+			name: name,
+		}
+		browser.cookies.getAll(query, async cookies => {
+			for (const cookie of cookies)
+				if (cookie.name == name) {
+					for (const url of urls) {
+						const setQuery = {
+							url: url,
+							name: name,
+							value: cookie.value,
+							secure: true,
+							expirationDate: cookie.expirationDate,
 						}
-						break
+						browser.cookies.set(setQuery)
 					}
-				resolve()
-			})
+					break
+				}
+			resolve()
 		})
 	})
 }

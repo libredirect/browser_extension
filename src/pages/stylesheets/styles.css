@@ -30,7 +30,6 @@ body {
 	font-family: "Inter";
 	background-color: var(--bg-main);
 	color: var(--text);
-	overflow-x: hidden;
 }
 
 body.rtl {
@@ -226,7 +225,7 @@ div.option-block div {
 
 div.some-block input[type="checkbox"] {
 	width: 46px;
-	height: 23px;
+	height: 24px;
 	background-color: var(--light-grey);
 	border-radius: 50px;
 	transition: 0.4s;

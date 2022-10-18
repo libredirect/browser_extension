@@ -31,11 +31,6 @@ async function getConfig() {
 function setOption(option, type, event) {
 	browser.storage.local.get("options", r => {
 		let options = r.options
-		browser.storage.local.set({ options })
-	})
-
-	browser.storage.local.get("options", r => {
-		let options = r.options
 		if (type == "select") {
 			options[option] = event.target.options[event.target.options.selectedIndex].value
 		} else if (type == "checkbox") {
@@ -82,13 +77,19 @@ importSettingsElement.addEventListener("change", () => {
 								await generalHelper.initDefaults()
 								await servicesHelper.initDefaults()
 								await servicesHelper.upgradeOptions()
+								await servicesHelper.processEnabledInstanceList()
 								location.reload()
 							})
 						})
 				})
 			)
 		} else if ("version" in data) {
-			browser.storage.local.clear(() => browser.storage.local.set({ options: data }, () => location.reload()))
+			let options = data
+			delete options.version
+			browser.storage.local.set({ options: data }, async () => {
+				await servicesHelper.processEnabledInstanceList()
+				location.reload()
+			})
 		} else {
 			console.log("incompatible settings")
 			importError()
@@ -178,8 +179,6 @@ for (const service in config.services) {
 		})
 	})
 }
-// const firstPartyIsolate = document.getElementById('firstPartyIsolate');
-// firstPartyIsolate.addEventListener("change", () => browser.storage.local.set({ firstPartyIsolate: firstPartyIsolate.checked }))
 
 browser.storage.local.get("options", r => {
 	autoRedirectElement.checked = r.options.autoRedirect
@@ -189,7 +188,6 @@ browser.storage.local.get("options", r => {
 	latencyOutput.value = r.options.latencyThreshold
   fallbackToFastest.checked = r.options.fallbackToFastest
 	let options = r.options
-	// firstPartyIsolate.checked = r.firstPartyIsolate;
 
 	//let networkFallbackElement = document.getElementById("network-fallback")
 	if (networkElement.value == "clearnet") {
@@ -280,7 +278,7 @@ async function fallbackFastest() {
 		if (instanceType == "url") {
 			if (nameCustomInstanceInput.validity.valid) {
 				let url = new URL(nameCustomInstanceInput.value)
-				val = `${url.network}//${url.host}`
+				val = `${url.protocol}//${url.host}`
 				if (!exceptionsCustomInstances.url.includes(val)) exceptionsCustomInstances.url.push(val)
 			}
 		} else if (instanceType == "regex") {

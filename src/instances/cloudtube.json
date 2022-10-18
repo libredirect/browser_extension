@@ -1,5 +1,5 @@
 {
-	"clearnet": ["https://tube.cadence.moe"],
+	"clearnet": ["https://tube.cadence.moe", "https://tube.boritsch.de"],
 	"tor": [],
 	"i2p": [],
 	"loki": []

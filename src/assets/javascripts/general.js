@@ -33,7 +33,6 @@ async function initDefaults() {
 					theme: "detect",
 					popupServices: ["youtube", "twitter", "instagram", "tiktok", "imgur", "reddit", "quora", "translate", "maps"],
 					autoRedirect: false,
-					firstPartyIsolate: false,
 					network: "clearnet",
 					networkFallback: true,
 					latencyThreshold: 1000,

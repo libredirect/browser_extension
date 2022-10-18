@@ -206,12 +206,23 @@
         "message": "I2P"
     },
     "instanceOffline": {
-        "message": "Diese Instanz ist offline , du wirst weitergeleitet nach "
+        "message": "Diese Instanz ist offline , du wirst weitergeleitet nach"
     },
     "testInstancesLatency": {
         "message": "Teste Latenz der Instanzen"
     },
     "protocolFallback": {
         "message": "Auf normalen Modus zurückfallen, wenn keine Instanzen für das aktuelle Protokoll verfügbar sind"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Desktop"
+    },
+    "toggleTab": {
+        "message": "Umleitungen auf dieser Registerkarte umschalten",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "redirectLink": {
+        "message": "Versuch, diesen Hyperlink umzuleiten",
+        "description": "Used in context menus when right clicking on a hyperlink"
     }
 }

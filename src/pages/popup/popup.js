@@ -87,30 +87,34 @@ browser.storage.local.get(["options", "redirects"], r => {
 				instance = service[2]
 				frontend = service[1]
 				service = service[0]
-				divs.instance.innerHTML = instance.replace(/https?:\/{2}/, "")
-				let tmp
-				let instanceNetwork
-				for (const network in config.networks) {
-					tmp = r.redirects[frontend][network].indexOf(instance)
-					if (tmp > -1) {
-						const instanceDiv = document.getElementById("instance-enabled")
-						tmp = r.options[frontend][network].enabled.indexOf(instance)
-						if (tmp > -1) instanceDiv.checked = true
-						else instanceDiv.checked = false
-						instanceNetwork = network
-						instanceDiv.addEventListener("change", () => {
-							browser.storage.local.get("options", r => {
-								// Although options would be avaliable in this context, it is fetched again to make sure it is up to date
-								let options = r.options
-								if (instanceDiv.checked) options[frontend][instanceNetwork].enabled.push(instance)
-								else options[frontend][instanceNetwork].enabled.splice(options[frontend][instanceNetwork].enabled.indexOf(instance), 1)
-								browser.storage.local.set({ options })
+				let isCustom = false
+				for (const network in config.networks) if (r.options[frontend][network].custom.indexOf(instance) > -1) isCustom = true
+				if (!isCustom) {
+					divs.instance.innerHTML = instance.replace(/https?:\/{2}/, "")
+					let tmp
+					let instanceNetwork
+					for (const network in config.networks) {
+						tmp = r.redirects[frontend][network].indexOf(instance)
+						if (tmp > -1) {
+							const instanceDiv = document.getElementById("instance-enabled")
+							tmp = r.options[frontend][network].enabled.indexOf(instance)
+							if (tmp > -1) instanceDiv.checked = true
+							else instanceDiv.checked = false
+							instanceNetwork = network
+							instanceDiv.addEventListener("change", () => {
+								browser.storage.local.get("options", r => {
+									// Although options would be available in this context, it is fetched again to make sure it is up to date
+									let options = r.options
+									if (instanceDiv.checked) options[frontend][instanceNetwork].enabled.push(instance)
+									else options[frontend][instanceNetwork].enabled.splice(options[frontend][instanceNetwork].enabled.indexOf(instance), 1)
+									browser.storage.local.set({ options })
+								})
 							})
-						})
-						break
+							break
+						}
 					}
+					document.getElementById("instance-div").classList.remove("hide")
 				}
-				document.getElementById("instance-div").classList.remove("hide")
 			}
 			divs[service].current.classList.remove("hide")
 			divs[service].all.classList.add("hide")

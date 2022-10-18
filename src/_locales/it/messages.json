@@ -220,5 +220,13 @@
     },
     "lbryDesktop": {
         "message": "LBRY Desktop"
+    },
+    "toggleTab": {
+        "message": "Attiva/disattiva reindirizzamenti in questa scheda",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "redirectLink": {
+        "message": "Prova a reindirizzare questo collegamento",
+        "description": "Used in context menus when right clicking on a hyperlink"
     }
 }

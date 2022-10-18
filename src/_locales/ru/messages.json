@@ -132,7 +132,7 @@
         "description": "used in the settings page"
     },
     "embeddedVids": {
-        "message": "Фронтенд со встроенным видео",
+        "message": "Фронтенд для встроенных видео",
         "description": "used in the settings page"
     },
     "copied": {
@@ -151,7 +151,7 @@
         "message": "Тестирование задержки экземпляров"
     },
     "copyRaw": {
-        "message": "Скопировать напрямую"
+        "message": "Копировать оригинал"
     },
     "unifySettings": {
         "message": "Унифицировать настройки"
@@ -214,5 +214,19 @@
     "searchNote": {
         "message": "Примечание: Используйте поиск в полной мере, сделав LibRedirect поисковой системой по умолчанию.",
         "description": "used in the settings page"
+    },
+    "redirectLink": {
+        "message": "Попробовать перенаправить эту ссылку",
+        "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "lbryDesktop": {
+        "message": ""
+    },
+    "toggleTab": {
+        "message": "Переключить перенаправление в этой вкладке",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "protocolFallback": {
+        "message": "Вернуться к обычному протоколу если для текущего нет доступных экземпляров"
     }
 }

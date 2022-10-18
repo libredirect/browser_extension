@@ -6,43 +6,42 @@ import servicesHelper from "../../assets/javascripts/services.js"
 
 window.browser = window.browser || window.chrome
 
-function initDefaults() {
-	browser.storage.local.clear(() => {
+browser.runtime.onInstalled.addListener(details => {
+	if (details.previousVersion != browser.runtime.getManifest().version) {
+		// ^Used to prevent this running when debugging with auto-reload
 		fetch("/instances/blacklist.json")
 			.then(response => response.text())
 			.then(async data => {
 				browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
-					await generalHelper.initDefaults()
-					await servicesHelper.initDefaults()
-				})
-			})
-	})
-}
-
-browser.runtime.onInstalled.addListener(details => {
-	if (details.previousVersion != browser.runtime.getManifest().version) {
-		switch (details.reason) {
-			case "install":
-				initDefaults()
-				break
-			case "update":
-				fetch("/instances/blacklist.json")
-					.then(response => response.text())
-					.then(async data => {
-						browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
+					switch (details.reason) {
+						case "install":
+							browser.storage.local.get("options", async r => {
+								if (!r.options) {
+									await generalHelper.initDefaults()
+									await servicesHelper.initDefaults()
+								}
+							})
+							break
+						case "update":
 							switch (details.previousVersion) {
 								case "2.2.0":
 								case "2.2.1":
-									await generalHelper.initDefaults()
-									await servicesHelper.initDefaults()
-									await servicesHelper.upgradeOptions()
+									browser.storage.local.get("options", async r => {
+										if (!r.options) {
+											await generalHelper.initDefaults()
+											await servicesHelper.initDefaults()
+											await servicesHelper.upgradeOptions()
+											await servicesHelper.processEnabledInstanceList()
+										}
+									})
 									break
 								default:
 									await servicesHelper.processUpdate()
+									await servicesHelper.processEnabledInstanceList()
 							}
-						})
-					})
-		}
+					}
+				})
+			})
 	}
 })
 
@@ -160,11 +159,19 @@ browser.contextMenus.create({
 	contexts: ["browser_action"],
 })
 
-browser.contextMenus.create({
-	id: "toggleTab",
-	title: browser.i18n.getMessage("toggleTab"),
-	contexts: ["page", "tab"],
-})
+try {
+	browser.contextMenus.create({
+		id: "toggleTab",
+		title: browser.i18n.getMessage("toggleTab"),
+		contexts: ["page", "tab"],
+	})
+} catch {
+	browser.contextMenus.create({
+		id: "toggleTab",
+		title: browser.i18n.getMessage("toggleTab"),
+		contexts: ["page"],
+	})
+}
 
 browser.contextMenus.create({
 	id: "redirectLink",
@@ -240,6 +247,16 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 		}
 	})
 })
+
+browser.webRequest.onHeadersReceived.addListener(
+	e => {
+		let response = servicesHelper.modifyContentSecurityPolicy(e)
+		if (!response) response = servicesHelper.modifyContentSecurityPolicy(e)
+		return response
+	},
+	{ urls: ["<all_urls>"] },
+	["blocking", "responseHeaders"]
+)
 
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	if (message.function === "unify") utils.unify(false).then(r => sendResponse({ response: r }))

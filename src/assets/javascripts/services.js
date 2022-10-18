@@ -2,13 +2,14 @@ window.browser = window.browser || window.chrome
 
 import utils from "./utils.js"
 
-let config, options, redirects
+let config, options, redirects, targets
 
 function init() {
 	return new Promise(async resolve => {
-		browser.storage.local.get(["options", "redirects"], r => {
+		browser.storage.local.get(["options", "redirects", "targets"], r => {
 			options = r.options
 			redirects = r.redirects
+			targets = r.targets
 			fetch("/config/config.json")
 				.then(response => response.text())
 				.then(configData => {
@@ -45,17 +46,14 @@ function all(service, frontend, options, config, redirects) {
 }
 
 function regexArray(service, url, config) {
-	let targets
 	if (config.services[service].targets == "datajson") {
-		browser.storage.local.get("targets", r => {
-			targets = r.targets[service]
-		})
+		if (targets[service].includes(utils.protocolHost(url))) return true
 	} else {
-		targets = config.services[service].targets
-	}
-	for (const targetString in targets) {
-		const target = new RegExp(targets[targetString])
-		if (target.test(url.href)) return true
+		const targetList = config.services[service].targets
+		for (const targetString in targetList) {
+			const target = new RegExp(targetList[targetString])
+			if (target.test(url.href)) return true
+		}
 	}
 	return false
 }
@@ -136,7 +134,7 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "searxng":
 			return `${randomInstance}/?q=${encodeURIComponent(url.searchParams.get("q"))}`
 		case "whoogle":
-			return `${randomInstance}/search${encodeURIComponent(url.searchParams.get("q"))}`
+			return `${randomInstance}/search?q=${encodeURIComponent(url.searchParams.get("q"))}`
 		case "librex":
 			return `${randomInstance}/search.php?q=${encodeURIComponent(url.searchParams.get("q"))}`
 		case "send":
@@ -393,7 +391,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return randomInstance
 		case "breezeWiki":
-			let wiki = url.hostname.match(/^[a-zA-Z0-9]+(?=\.fandom\.com)/)
+			let wiki = url.hostname.match(/^[a-zA-Z0-9-]+(?=\.fandom\.com)/)
 			if (wiki == "www" || !wiki) wiki = ""
 			else wiki = "/" + wiki
 			if (url.href.search(/Special:Search\?query/) > -1) return `${randomInstance}${wiki}${url.pathname}${url.search}`.replace(/Special:Search\?query/, "search?q").replace(/\/wiki/, "")
@@ -401,6 +399,9 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "rimgo":
 			if (url.href.search(/^https?:\/{2}(?:[im]\.)?stack\./) > -1) return `${randomInstance}/stack${url.pathname}${url.search}`
 			else return `${randomInstance}${url.pathname}${url.search}`
+		case "libreddit":
+			if (url.hostname.match(/^(i|preview)\.redd\.it/)) return `${randomInstance}/img${url.pathname}`
+			return `${randomInstance}${url.pathname}${url.search}`
 		default:
 			return `${randomInstance}${url.pathname}${url.search}`
 	}
@@ -520,7 +521,7 @@ function unifyPreferences(url, tabId) {
 					const frontendObject = config.services[service].frontends[frontend]
 					if ("cookies" in frontendObject.preferences) {
 						for (const cookie of frontendObject.preferences.cookies) {
-							await utils.copyCookie(frontendObject, url, instancesList, cookie)
+							await utils.copyCookie(url, instancesList, cookie)
 						}
 					}
 					if ("localstorage" in frontendObject.preferences) {
@@ -651,7 +652,6 @@ function upgradeOptions() {
 						options.popupServices.splice(tmp, 1)
 						options.popupServices.push("sendFiles")
 					}
-					options.firstPartyIsolate = r.firstPartyIsolate
 					options.autoRedirect = r.autoRedirect
 					switch (r.onlyEmbeddedVideo) {
 						case "onlyNotEmbedded":
@@ -746,6 +746,72 @@ function processUpdate() {
 	})
 }
 
+// For websites that have a strict policy that would not normally allow these frontends to be embedded within the website.
+function modifyContentSecurityPolicy(details) {
+	let isChanged = false
+	if (details.type == "main_frame") {
+		for (const header in details.responseHeaders) {
+			if (details.responseHeaders[header].name == "content-security-policy") {
+				let instancesList = []
+				for (const service in config.services) {
+					if (config.services[service].embeddable) {
+						for (const frontend in config.services[service].frontends) {
+							if (config.services[service].frontends[frontend].embeddable) {
+								for (const network in config.networks) {
+									instancesList.push(...options[frontend][network].enabled, ...options[frontend][network].custom)
+								}
+							}
+						}
+					}
+				}
+				let securityPolicyList = details.responseHeaders[header].value.split(";")
+				for (const i in securityPolicyList) securityPolicyList[i] = securityPolicyList[i].trim()
+				let newSecurity = ""
+				for (const item of securityPolicyList) {
+					if (item.trim() == "") continue
+					let regex = item.match(/([a-z-]{0,}) (.*)/)
+					if (regex == null) continue
+					let [, key, vals] = regex
+					if (key == "frame-src") vals = vals + " " + instancesList.join(" ")
+					newSecurity += key + " " + vals + "; "
+				}
+
+				details.responseHeaders[header].value = newSecurity
+				isChanged = true
+			}
+		}
+		if (isChanged) return { responseHeaders: details.responseHeaders }
+	}
+}
+
+function processEnabledInstanceList() {
+	return new Promise(resolve => {
+		fetch("/config/config.json")
+			.then(response => response.text())
+			.then(configData => {
+				const config = JSON.parse(configData)
+				browser.storage.local.get(["redirects", "options"], r => {
+					let options = r.options
+					for (const service in config.services) {
+						for (const frontend in config.services[service].frontends) {
+							if (config.services[service].frontends[frontend].instanceList) {
+								for (const network in config.networks) {
+									for (const instance of options[frontend][network].enabled) {
+										let i = redirects[frontend][network].indexOf(instance)
+										if (i < 0) options[frontend][network].enabled.splice(i, 1)
+									}
+								}
+							}
+						}
+					}
+					browser.storage.local.set({ options }, () => {
+						resolve()
+					})
+				})
+			})
+	})
+}
+
 export default {
 	redirect,
 	computeService,
@@ -756,4 +822,6 @@ export default {
 	initDefaults,
 	upgradeOptions,
 	processUpdate,
+	modifyContentSecurityPolicy,
+	processEnabledInstanceList,
 }

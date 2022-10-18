@@ -1,0 +1,222 @@
+{
+    "tiktok": {
+        "message": "TikTok",
+        "description": "used in the settings page"
+    },
+    "wikipedia": {
+        "message": "Wikipedija",
+        "description": "used in the settings page"
+    },
+    "ytmusic": {
+        "message": "YT Muzika",
+        "description": "used in the settings page"
+    },
+    "medium": {
+        "message": "Medium",
+        "description": "used in the settings page"
+    },
+    "lbry": {
+        "message": "LBRY"
+    },
+    "theme": {
+        "message": "Tema",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "Sustav",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "Svjetla",
+        "description": "used in the settings page"
+    },
+    "updateInstances": {
+        "message": "Ažurirajte instance",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "Izvozne Postavke",
+        "description": "used in the settings page"
+    },
+    "protocol": {
+        "message": "Protokol",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "Uvozne Postavke",
+        "description": "used in the settings page"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Desktop"
+    },
+    "redirectLink": {
+        "message": "Pokušaj preusmjeriti ovu hipervezu",
+        "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "protocolFallback": {
+        "message": "Vratite se na normalnu stranicu ako nijedna instanca za trenutni protokol nije dostupna"
+    },
+    "settings": {
+        "message": "Postavke",
+        "description": "used in the popup"
+    },
+    "peertube": {
+        "message": "PeerTube",
+        "description": "used in the settings page"
+    },
+    "redirectionCanceled": {
+        "message": "Preusmjeravanje je otkazano",
+        "description": "used in instance_offline.js"
+    },
+    "maps": {
+        "message": "Karte",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Sučelje",
+        "description": "used in the settings page"
+    },
+    "translate": {
+        "message": "Prijevod",
+        "description": "used in the settings page"
+    },
+    "onlyNotEmbedded": {
+        "message": "samo neugrađeno",
+        "description": "used in the settings page"
+    },
+    "embeddedVids": {
+        "message": "Sučelje Ugrađenih Videozapisa",
+        "description": "used in the settings page"
+    },
+    "both": {
+        "message": "oba",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "samo ugrađeno",
+        "description": "used in the settings page"
+    },
+    "instanceOffline": {
+        "message": "Ova instanca je nedostupna, bit ćete preusmjereni nakon",
+        "description": "used in instance_offline.html"
+    },
+    "cancel": {
+        "message": "Otkaži",
+        "description": "used in instance_offline.html"
+    },
+    "instanceIsOff": {
+        "message": "Instanca je nedostupna",
+        "description": "used in instance_offline.html"
+    },
+    "copied": {
+        "message": "Kopirano"
+    },
+    "extensionDescription": {
+        "message": "Web proširenje koje preusmjerava popularne web stranice na alternativna sučelja i pozadine prilagođene privatnosti",
+        "description": "description of the extension"
+    },
+    "youtube": {
+        "message": "YouTube",
+        "description": "used in the settings page"
+    },
+    "imgur": {
+        "message": "Imgur",
+        "description": "used in the settings page"
+    },
+    "search": {
+        "message": "Pretraga",
+        "description": "used in the settings page"
+    },
+    "switchInstance": {
+        "message": "Prebaci instancu",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "reddit": {
+        "message": "Reddit",
+        "description": "used in the settings page"
+    },
+    "autoRedirect": {
+        "message": "Automatsko preusmjeravanje nedostupnih instancih na dostupne",
+        "description": "used in the settings page"
+    },
+    "exceptions": {
+        "message": "Iznimke",
+        "description": "used in the settings page"
+    },
+    "toggleAll": {
+        "message": "Uključi/isključi sve",
+        "description": "used in the settings page"
+    },
+    "general": {
+        "message": "Općenito",
+        "description": "used in the settings page"
+    },
+    "sendFiles": {
+        "message": "Pošalji datoteke",
+        "description": "used in the settings page"
+    },
+    "toggleTab": {
+        "message": "Uključite/isključite preusmjeravanja na ovoj kartici",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "used in the settings page"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "used in the settings page"
+    },
+    "copyRaw": {
+        "message": "Kopirajte neobrađenu kodu"
+    },
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "customPopup": {
+        "message": "Prilagodite skočni prozor",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Mračna",
+        "description": "used in the settings page"
+    },
+    "notFullyPrivate": {
+        "message": "Ovo nije potpuno privatno sučelje."
+    },
+    "testInstancesLatency": {
+        "message": "Testirajte Latenciju Instancih"
+    },
+    "resetSettings": {
+        "message": "Obnovite Postavke",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Omogući",
+        "description": "used in the settings page"
+    },
+    "normal": {
+        "message": "Normalan",
+        "description": "used in the settings page"
+    },
+    "redirectType": {
+        "message": "Vrsta Preusmjeravanja",
+        "description": "used in the settings page"
+    },
+    "defaultInstances": {
+        "message": "Zadane instance",
+        "description": "used in the settings page"
+    },
+    "customInstances": {
+        "message": "Prilagođene instance",
+        "description": "used in the settings page"
+    },
+    "searchNote": {
+        "message": "Savjet: Iskoristite puni potencijal pretraživanja tako što ćete LibRedirect postaviti kao zadani pretražnik.",
+        "description": "used in the settings page"
+    },
+    "unifySettings": {
+        "message": "Objedinite postavke"
+    }
+}

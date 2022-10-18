@@ -20,7 +20,7 @@
         "description": "used in the settings page"
     },
     "translate": {
-        "message": "Penerjemahan",
+        "message": "Terjemahan",
         "description": "used in the settings page"
     },
     "maps": {
@@ -48,7 +48,7 @@
         "description": "used in the settings page"
     },
     "ytmusic": {
-        "message": "YT Musik",
+        "message": "YT Music",
         "description": "used in the settings page"
     },
     "wikipedia": {
@@ -72,7 +72,7 @@
         "description": "used in the settings page"
     },
     "light": {
-        "message": "Cerah",
+        "message": "Terang",
         "description": "used in the settings page"
     },
     "dark": {
@@ -88,7 +88,7 @@
         "description": "used in the settings page"
     },
     "updateInstances": {
-        "message": "Perbarui Instansi-Instansi",
+        "message": "Perbarui Instansi",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -100,7 +100,7 @@
         "description": "used in the settings page"
     },
     "customPopup": {
-        "message": "Sesuaikan Popup",
+        "message": "Sesuaikan Munculan",
         "description": "used in the settings page"
     },
     "tor": {
@@ -139,7 +139,7 @@
         "description": "description of the extension"
     },
     "instanceIsOff": {
-        "message": "Instansi luring",
+        "message": "Instansi sedang luring",
         "description": "used in instance_offline.html"
     },
     "redirectionCanceled": {
@@ -174,5 +174,56 @@
     "protocol": {
         "message": "Protokol",
         "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "Atur Ulang Pengaturan",
+        "description": "used in the settings page"
+    },
+    "toggleAll": {
+        "message": "Saklar semua",
+        "description": "used in the settings page"
+    },
+    "embeddedVids": {
+        "message": "Frontend Video Tersemat",
+        "description": "used in the settings page"
+    },
+    "copyRaw": {
+        "message": "Salin Mentah"
+    },
+    "unifySettings": {
+        "message": "Satukan Pengaturan"
+    },
+    "testInstancesLatency": {
+        "message": "Uji Coba Latensi Instansi"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Desktop"
+    },
+    "protocolFallback": {
+        "message": "Kembali ke biasa jika tidak ada instansi yang tersedia untuk protokol saat ini"
+    },
+    "redirectLink": {
+        "message": "Coba mengalihkan hyperlink ini",
+        "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "both": {
+        "message": "keduanya",
+        "description": "used in the settings page"
+    },
+    "searchNote": {
+        "message": "Catatan: Gunakan penelusuran ke potensial yang penuh dengan menetapkan LibRedirrect sebagai mesin pencarian Anda.",
+        "description": "used in the settings page"
+    },
+    "onlyNotEmbedded": {
+        "message": "hanya tidak tersemat",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "hanya tersemat",
+        "description": "used in the settings page"
+    },
+    "toggleTab": {
+        "message": "Saklar pengalihan di tab ini",
+        "description": "Used in context menus when right clicking on a page/tab"
     }
 }
