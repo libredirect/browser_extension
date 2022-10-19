@@ -87,10 +87,10 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.|m\\.|)youtube.com(?!(?:iframe_api\\/.*)|(?:\\/redirect))",
+				"^https?:\\/{2}(?:www\\.|m\\.|)youtube.com(\\/|$)(?!(?:iframe_api\\/)|(?:redirect\\/))",
 				"^https?:\\/{2}img\\.youtube.com\\/vi\\/.*\\/..*",
 				"^https?:\\/{2}(?:i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
-				"^https?:\\/{2}(?:www\\.|music\\.|)youtube.com\\/watch?v=..*",
+				"^https?:\\/{2}(?:www\\.|)youtube.com\\/watch?v=..*",
 				"^https?:\\/{2}youtu\\.be\\/..*",
 				"^https?:\\/{2}(?:www\\.|)(youtube|youtube-nocookie)\\.com\\/embed\\/..*"
 			],
@@ -124,7 +124,7 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}music\\.youtube\\.com(\\/.*|$)"],
+			"targets": ["^https?:\\/{2}music\\.youtube\\.com(\\/|$)"],
 			"name": "YT Music",
 			"options": {
 				"enabled": true,
@@ -163,7 +163,7 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(www\\.|mobile\\.|)twitter\\.com", "^https?:\\/{2}(pbs\\.|video\\.|)twimg\\.com", "^https?:\\/{2}platform\\.twitter\\.com/embed", "^https?:\\/{2}t\\.co"],
+			"targets": ["^https?:\\/{2}(www\\.|mobile\\.|)twitter\\.com(\\/|$)", "^https?:\\/{2}(pbs\\.|video\\.|)twimg\\.com(\\/|$)", "^https?:\\/{2}platform\\.twitter\\.com/embed(\\/|$)", "^https?:\\/{2}t\\.co(\\/|$)"],
 			"name": "Twitter",
 			"options": {
 				"enabled": true,
@@ -204,7 +204,7 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(www\\.|)tiktok\\.com.*"],
+			"targets": ["^https?:\\/{2}(www\\.|)tiktok\\.com(\\/|$)"],
 			"name": "TikTok",
 			"options": {
 				"enabled": true
@@ -285,7 +285,7 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(?:[a-z]+\\.)*wikipedia\\.org"],
+			"targets": ["^https?:\\/{2}(?:[a-z]+\\.)*wikipedia\\.org(\\/|$)"],
 			"name": "Wikipedia",
 			"options": {
 				"enabled": false
@@ -303,23 +303,23 @@
 			},
 			"targets": [
 				"(?:.*\\.)*(?<!(link\\.|cdn\\-images\\-\\d+\\.))medium\\.com(\\/.*)?$",
-				"^towardsdatascience\\.com",
-				"^uxdesign\\.cc",
-				"^uxplanet\\.org",
-				"^betterprogramming\\.pub",
-				"^aninjusticemag\\.com",
-				"^betterhumans\\.pub",
-				"^psiloveyou\\.xyz",
-				"^entrepreneurshandbook\\.co",
-				"^blog\\.coinbase\\.com",
-				"^levelup\\.gitconnected\\.com",
-				"^javascript\\.plainenglish\\.io",
-				"^blog\\.bitsrc\\.io",
-				"^itnext\\.io",
-				"^codeburst\\.io",
-				"^infosecwriteups\\.com",
-				"^blog\\.devgenius\\.io",
-				"^writingcooperative\\.com"
+				"^https?:\\/{2}towardsdatascience\\.com(\\/|$)",
+				"^https?:\\/{2}uxdesign\\.cc(\\/|$)",
+				"^https?:\\/{2}uxplanet\\.org(\\/|$)",
+				"^https?:\\/{2}betterprogramming\\.pub(\\/|$)",
+				"^https?:\\/{2}aninjusticemag\\.com(\\/|$)",
+				"^https?:\\/{2}betterhumans\\.pub(\\/|$)",
+				"^https?:\\/{2}psiloveyou\\.xyz(\\/|$)",
+				"^https?:\\/{2}entrepreneurshandbook\\.co(\\/|$)",
+				"^https?:\\/{2}blog\\.coinbase\\.com(\\/|$)",
+				"^https?:\\/{2}levelup\\.gitconnected\\.com(\\/|$)",
+				"^https?:\\/{2}javascript\\.plainenglish\\.io(\\/|$)",
+				"^https?:\\/{2}blog\\.bitsrc\\.io(\\/|$)",
+				"^https?:\\/{2}itnext\\.io(\\/|$)",
+				"^https?:\\/{2}codeburst\\.io(\\/|$)",
+				"^https?:\\/{2}infosecwriteups\\.com(\\/|$)",
+				"^https?:\\/{2}blog\\.devgenius\\.io(\\/|$)",
+				"^https?:\\/{2}writingcooperative\\.com(\\/|$)"
 			],
 			"name": "Medium",
 			"options": {
@@ -339,7 +339,7 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}([a-zA-Z0-9-]+\\.)*quora\\.com"],
+			"targets": ["^https?:\\/{2}([a-zA-Z0-9-]+\\.)*quora\\.com(\\/|$)"],
 			"name": "Quora",
 			"options": {
 				"enabled": true
@@ -374,7 +374,7 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(www\\.|)reuters\\.com.*"],
+			"targets": ["^https?:\\/{2}(www\\.|)reuters\\.com(\\/|$)"],
 			"name": "Reuters",
 			"options": {
 				"enabled": false
@@ -432,7 +432,7 @@
 					"instanceList": false
 				}
 			},
-			"targets": ["^https?:\\/{2}odysee\\.com", "^https?:\\/{2}lbry\\.tv"],
+			"targets": ["^https?:\\/{2}odysee\\.com(\\/|$)", "^https?:\\/{2}lbry\\.tv(\\/|$)"],
 			"name": "LBRY",
 			"options": {
 				"enabled": true,
