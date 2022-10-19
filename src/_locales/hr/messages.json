@@ -8,7 +8,7 @@
         "description": "used in the settings page"
     },
     "ytmusic": {
-        "message": "YT Muzika",
+        "message": "YT Music",
         "description": "used in the settings page"
     },
     "medium": {
@@ -31,11 +31,11 @@
         "description": "used in the settings page"
     },
     "updateInstances": {
-        "message": "Ažurirajte instance",
+        "message": "Ažuriraj instance",
         "description": "used in the settings page"
     },
     "exportSettings": {
-        "message": "Izvozne Postavke",
+        "message": "Izvezi postavke",
         "description": "used in the settings page"
     },
     "protocol": {
@@ -43,18 +43,18 @@
         "description": "used in the settings page"
     },
     "importSettings": {
-        "message": "Uvozne Postavke",
+        "message": "Uvezi postavke",
         "description": "used in the settings page"
     },
     "lbryDesktop": {
         "message": "LBRY Desktop"
     },
     "redirectLink": {
-        "message": "Pokušaj preusmjeriti ovu hipervezu",
+        "message": "Pokušaj preusmjeriti ovu hiperpoveznicu",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "protocolFallback": {
-        "message": "Vratite se na normalnu stranicu ako nijedna instanca za trenutni protokol nije dostupna"
+        "message": "Koristi normalni protokol ako nijedna instanca nije dostupna za trenutačni protokol"
     },
     "settings": {
         "message": "Postavke",
@@ -81,23 +81,23 @@
         "description": "used in the settings page"
     },
     "onlyNotEmbedded": {
-        "message": "samo neugrađeno",
+        "message": "samo neugrađena",
         "description": "used in the settings page"
     },
     "embeddedVids": {
-        "message": "Sučelje Ugrađenih Videozapisa",
+        "message": "Sučelje ugrađenih videa",
         "description": "used in the settings page"
     },
     "both": {
-        "message": "oba",
+        "message": "obje",
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
-        "message": "samo ugrađeno",
+        "message": "samo ugrađena",
         "description": "used in the settings page"
     },
     "instanceOffline": {
-        "message": "Ova instanca je nedostupna, bit ćete preusmjereni nakon",
+        "message": "Ova instanca je nedostupna, bit ćeš preusmjeren/a nakon",
         "description": "used in instance_offline.html"
     },
     "cancel": {
@@ -105,14 +105,14 @@
         "description": "used in instance_offline.html"
     },
     "instanceIsOff": {
-        "message": "Instanca je nedostupna",
+        "message": "Instanca nije dostupna",
         "description": "used in instance_offline.html"
     },
     "copied": {
         "message": "Kopirano"
     },
     "extensionDescription": {
-        "message": "Web proširenje koje preusmjerava popularne web stranice na alternativna sučelja i pozadine prilagođene privatnosti",
+        "message": "Web proširenje koje preusmjerava popularne web stranice na alternativna sučelja i pozadinske sustave prilagođene privatnosti",
         "description": "description of the extension"
     },
     "youtube": {
@@ -128,7 +128,7 @@
         "description": "used in the settings page"
     },
     "switchInstance": {
-        "message": "Prebaci instancu",
+        "message": "Zamijeni instancu",
         "description": "used in manifest.json as shortcut description"
     },
     "reddit": {
@@ -136,7 +136,7 @@
         "description": "used in the settings page"
     },
     "autoRedirect": {
-        "message": "Automatsko preusmjeravanje nedostupnih instancih na dostupne",
+        "message": "Automatsko preusmjeravanje nedostupnih instanci na dostupne",
         "description": "used in the settings page"
     },
     "exceptions": {
@@ -148,7 +148,7 @@
         "description": "used in the settings page"
     },
     "general": {
-        "message": "Općenito",
+        "message": "Opće",
         "description": "used in the settings page"
     },
     "sendFiles": {
@@ -156,7 +156,7 @@
         "description": "used in the settings page"
     },
     "toggleTab": {
-        "message": "Uključite/isključite preusmjeravanja na ovoj kartici",
+        "message": "Uključi/isključi preusmjeravanja u ovoj kartici",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "instagram": {
@@ -168,14 +168,14 @@
         "description": "used in the settings page"
     },
     "copyRaw": {
-        "message": "Kopirajte neobrađenu kodu"
+        "message": "Kopiraj original"
     },
     "extensionName": {
         "message": "LibRedirect",
         "description": "name of the extension"
     },
     "customPopup": {
-        "message": "Prilagodite skočni prozor",
+        "message": "Prilagodi skočni prozor",
         "description": "used in the settings page"
     },
     "dark": {
@@ -186,14 +186,14 @@
         "message": "Ovo nije potpuno privatno sučelje."
     },
     "testInstancesLatency": {
-        "message": "Testirajte Latenciju Instancih"
+        "message": "Testiraj latenciju instanci"
     },
     "resetSettings": {
-        "message": "Obnovite Postavke",
+        "message": "Obnovi postavke",
         "description": "used in the settings page"
     },
     "enable": {
-        "message": "Omogući",
+        "message": "Aktiviraj",
         "description": "used in the settings page"
     },
     "normal": {
@@ -201,7 +201,7 @@
         "description": "used in the settings page"
     },
     "redirectType": {
-        "message": "Vrsta Preusmjeravanja",
+        "message": "Vrsta preusmjeravanja",
         "description": "used in the settings page"
     },
     "defaultInstances": {
@@ -213,10 +213,10 @@
         "description": "used in the settings page"
     },
     "searchNote": {
-        "message": "Savjet: Iskoristite puni potencijal pretraživanja tako što ćete LibRedirect postaviti kao zadani pretražnik.",
+        "message": "Savjet: Koristi sav potencijal pretrage postavljanjem LibRedirecta kao zadane tražilice.",
         "description": "used in the settings page"
     },
     "unifySettings": {
-        "message": "Objedinite postavke"
+        "message": "Sjedini postavke"
     }
 }
