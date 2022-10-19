@@ -27,7 +27,7 @@
         "description": "used in the settings page"
     },
     "light": {
-        "message": "Svjetla",
+        "message": "Svijetla",
         "description": "used in the settings page"
     },
     "updateInstances": {
@@ -179,7 +179,7 @@
         "description": "used in the settings page"
     },
     "dark": {
-        "message": "Mračna",
+        "message": "Tamna",
         "description": "used in the settings page"
     },
     "notFullyPrivate": {
