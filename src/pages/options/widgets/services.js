@@ -85,10 +85,13 @@ for (const service in config.services) {
 		else divs[service][option].value = options[service][option]
 
 		divs[service][option].addEventListener("change", () => {
-			if (typeof config.services[service].options[option] == "boolean") options[service][option] = divs[service][option].checked
-			else options[service][option] = divs[service][option].value
-			browser.storage.local.set({ options })
-			changeFrontendsSettings(service)
+			browser.storage.local.get("options", r => {
+				let options = r.options
+				if (typeof config.services[service].options[option] == "boolean") options[service][option] = divs[service][option].checked
+				else options[service][option] = divs[service][option].value
+				browser.storage.local.set({ options })
+				changeFrontendsSettings(service)
+			})
 		})
 	}
 

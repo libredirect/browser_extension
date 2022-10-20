@@ -134,26 +134,32 @@ async function processDefaultCustomInstances(service, frontend, network, documen
 
 	calcFrontendCheckBoxes()
 	frontendNetworkElement.getElementsByClassName("toggle-all")[0].addEventListener("change", async event => {
-		if (event.target.checked) frontendDefaultRedirects = [...redirects[frontend][network]]
-		else frontendDefaultRedirects = []
+		browser.storage.local.get("options", r => {
+			let options = r.options
+			if (event.target.checked) frontendDefaultRedirects = [...redirects[frontend][network]]
+			else frontendDefaultRedirects = []
 
-		options[frontend][network].enabled = frontendDefaultRedirects
-		browser.storage.local.set({ options })
-		calcFrontendCheckBoxes()
+			options[frontend][network].enabled = frontendDefaultRedirects
+			browser.storage.local.set({ options })
+			calcFrontendCheckBoxes()
+		})
 	})
 
 	for (let element of frontendCheckListElement.getElementsByTagName("input")) {
 		if (element.className != "toggle-all")
 			frontendNetworkElement.getElementsByClassName(element.className)[0].addEventListener("change", async event => {
-				if (event.target.checked) frontendDefaultRedirects.push(element.className)
-				else {
-					let index = frontendDefaultRedirects.indexOf(element.className)
-					if (index > -1) frontendDefaultRedirects.splice(index, 1)
-				}
+				browser.storage.local.get("options", r => {
+					let options = r.options
+					if (event.target.checked) frontendDefaultRedirects.push(element.className)
+					else {
+						let index = frontendDefaultRedirects.indexOf(element.className)
+						if (index > -1) frontendDefaultRedirects.splice(index, 1)
+					}
 
-				options[frontend][network].enabled = frontendDefaultRedirects
-				browser.storage.local.set({ options })
-				calcFrontendCheckBoxes()
+					options[frontend][network].enabled = frontendDefaultRedirects
+					browser.storage.local.set({ options })
+					calcFrontendCheckBoxes()
+				})
 			})
 	}
 
@@ -174,29 +180,35 @@ async function processDefaultCustomInstances(service, frontend, network, documen
 
 		for (const item of frontendCustomInstances) {
 			frontendNetworkElement.getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
-				let index = frontendCustomInstances.indexOf(item)
-				if (index > -1) frontendCustomInstances.splice(index, 1)
-				options[frontend][network].custom = frontendCustomInstances
-				browser.storage.local.set({ options })
-				calcFrontendCustomInstances()
+				browser.storage.local.get("options", r => {
+					let options = r.options
+					let index = frontendCustomInstances.indexOf(item)
+					if (index > -1) frontendCustomInstances.splice(index, 1)
+					options[frontend][network].custom = frontendCustomInstances
+					browser.storage.local.set({ options })
+					calcFrontendCustomInstances()
+				})
 			})
 		}
 	}
 	calcFrontendCustomInstances()
 	frontendNetworkElement.getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
-		event.preventDefault()
-		let frontendCustomInstanceInput = frontendNetworkElement.getElementsByClassName("custom-instance")[0]
-		let url = new URL(frontendCustomInstanceInput.value)
-		let protocolHostVar = protocolHost(url)
-		if (frontendCustomInstanceInput.validity.valid && !redirects[frontend][network].includes(protocolHostVar)) {
-			if (!frontendCustomInstances.includes(protocolHostVar)) {
-				frontendCustomInstances.push(protocolHostVar)
-				options[frontend][network].custom = frontendCustomInstances
-				browser.storage.local.set({ options })
-				frontendCustomInstanceInput.value = ""
+		browser.storage.local.get("options", r => {
+			let options = r.options
+			event.preventDefault()
+			let frontendCustomInstanceInput = frontendNetworkElement.getElementsByClassName("custom-instance")[0]
+			let url = new URL(frontendCustomInstanceInput.value)
+			let protocolHostVar = protocolHost(url)
+			if (frontendCustomInstanceInput.validity.valid && !redirects[frontend][network].includes(protocolHostVar)) {
+				if (!frontendCustomInstances.includes(protocolHostVar)) {
+					frontendCustomInstances.push(protocolHostVar)
+					options[frontend][network].custom = frontendCustomInstances
+					browser.storage.local.set({ options })
+					frontendCustomInstanceInput.value = ""
+				}
+				calcFrontendCustomInstances()
 			}
-			calcFrontendCustomInstances()
-		}
+		})
 	})
 }
 
