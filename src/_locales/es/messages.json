@@ -219,7 +219,7 @@
         "message": "Vuelta a la normalidad si no hay instancias disponibles para el protocolo actual"
     },
     "toggleTab": {
-        "message": "Alternar los redireccionamientos en esta pestaña",
+        "message": "Alternar redirecciones en esta pestaña",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
