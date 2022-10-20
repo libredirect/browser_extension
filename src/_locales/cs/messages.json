@@ -132,7 +132,7 @@
         "description": "used in instance_offline.html"
     },
     "extensionDescription": {
-        "message": "Webové rozšíření, které přesměrovává oblíbené weby na alternativní frontendy a backendy respektující soukromí",
+        "message": "Webové rozšíření, které přesměrovává oblíbené weby na alternativní ‘frontends‘ a ‘backends‘ respektující soukromí",
         "description": "description of the extension"
     },
     "general": {
