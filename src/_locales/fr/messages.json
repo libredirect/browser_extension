@@ -217,5 +217,16 @@
     },
     "protocolFallback": {
         "message": "Retour au mode normal si aucune instance n’est disponible pour le protocole sélectionné"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Bureau"
+    },
+    "toggleTab": {
+        "message": "Activer les redirections dans cet onglet",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "redirectLink": {
+        "message": "Essayer de rediriger ce lien",
+        "description": "Used in context menus when right clicking on a hyperlink"
     }
 }
