@@ -87,12 +87,13 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.|m\\.|)youtube.com(\\/|$)(?!(?:iframe_api\\/)|(?:redirect\\/))",
+				"^https?:\\/{2}(?:www\\.|m\\.|)youtube.com(\\/|$)(?!iframe_api\\/|redirect\\/)",
 				"^https?:\\/{2}img\\.youtube.com\\/vi\\/.*\\/..*",
 				"^https?:\\/{2}(?:i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
 				"^https?:\\/{2}(?:www\\.|)youtube.com\\/watch?v=..*",
 				"^https?:\\/{2}youtu\\.be\\/..*",
-				"^https?:\\/{2}(?:www\\.|)(youtube|youtube-nocookie)\\.com\\/embed\\/..*"
+				"^https?:\\/{2}(?:www\\.|)(youtube|youtube-nocookie)\\.com\\/embed\\/..*",
+				"^https?:\\/{2}redirect\\.invidious\\.io"
 			],
 			"name": "Youtube",
 			"options": {
@@ -190,7 +191,7 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(www\\.)?instagram\\.com\\/p\\/"],
+			"targets": ["^https?:\\/{2}(www\\.)?instagram\\.com\\/?(p\\/|$)"],
 			"name": "Instagram",
 			"options": {
 				"enabled": true
@@ -252,7 +253,7 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com(?=(\\/u(ser)?\\/)|(\\/r\\/)|(\\/?$))", "^https?:\\/{2}(i\\.|preview\\.)redd\\.it"],
+			"targets": ["^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com(?=\\/u(ser)?\\/|\\/r\\/|\\/?$)", "^https?:\\/{2}(i\\.|preview\\.)redd\\.it"],
 			"name": "Reddit",
 			"options": {
 				"enabled": true,
@@ -395,7 +396,7 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(?:[a-zA-Z0-9-]+\\.)?fandom\\.com(?=(?:\\/wiki)|(?:\\/?$))"],
+			"targets": ["^https?:\\/{2}(?:[a-zA-Z0-9-]+\\.)?fandom\\.com(?=\\/wiki|\\/?$)"],
 			"name": "Fandom",
 			"options": {
 				"enabled": true
