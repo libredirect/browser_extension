@@ -4,6 +4,7 @@
 	"useTabs": true,
 	"arrowParens": "avoid",
 	"printWidth": 200,
+	"bracketSameLine": true,
 	"overrides": [
 		{
 			"files": ["*.js", "*.json"],

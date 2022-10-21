@@ -37,7 +37,6 @@ browser.runtime.onInstalled.addListener(details => {
 									break
 								default:
 									await servicesHelper.processUpdate()
-									await servicesHelper.processEnabledInstanceList()
 							}
 					}
 				})

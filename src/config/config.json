@@ -163,7 +163,12 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(www\\.|mobile\\.|)twitter\\.com(\\/|$)", "^https?:\\/{2}(pbs\\.|video\\.|)twimg\\.com(\\/|$)", "^https?:\\/{2}platform\\.twitter\\.com/embed(\\/|$)", "^https?:\\/{2}t\\.co(\\/|$)"],
+			"targets": [
+				"^https?:\\/{2}(www\\.|mobile\\.|)twitter\\.com(\\/|$)",
+				"^https?:\\/{2}(pbs\\.|video\\.|)twimg\\.com(\\/|$)",
+				"^https?:\\/{2}platform\\.twitter\\.com/embed(\\/|$)",
+				"^https?:\\/{2}t\\.co(\\/|$)"
+			],
 			"name": "Twitter",
 			"options": {
 				"enabled": true,
