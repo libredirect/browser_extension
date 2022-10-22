@@ -20,3 +20,13 @@ pipeline:
       - git commit -am "updated instances"
       - git remote set-url origin git@codeberg.org:libredirect/libredirect.git
       - git push --set-upstream origin master
+  lint:
+    image: node:lts-alpine
+    when:
+      event: [push, pull_request]
+      path:
+        exclude: ["src/instances/**"]
+        include: ["src/"]
+    commands:
+      - npm i
+      - npx web-ext lint --source-dir ./src/
