@@ -1,9 +1,10 @@
 pipeline:
   instancefetch:
-    image: python:3.8
+    image: python:alpine
     secrets: [token, mail]
     when:
-      event: cron
+      - event: cron
+        cron: instance_updater
     commands:
       - python -m pip install --upgrade pip
       - pip install requests colorama
@@ -19,3 +20,13 @@ pipeline:
       - git commit -am "updated instances"
       - git remote set-url origin git@codeberg.org:libredirect/libredirect.git
       - git push --set-upstream origin master
+  lint:
+    image: node:lts-alpine
+    when:
+      event: [push, pull_request]
+      path:
+        exclude: ["src/instances/**"]
+        include: ["src/"]
+    commands:
+      - npm i
+      - npx web-ext lint --source-dir ./src/
