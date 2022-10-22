@@ -253,7 +253,7 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com(?=\\/u(ser)?\\/|\\/r\\/|\\/?$)", "^https?:\\/{2}(i\\.|preview\\.)redd\\.it"],
+			"targets": ["^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com(?=\\/u(ser)?\\/|\\/r\\/|\\/?$)", "^https?:\\/{2}(i\\.|(external-)?preview\\.|)redd\\.it"],
 			"name": "Reddit",
 			"options": {
 				"enabled": true,

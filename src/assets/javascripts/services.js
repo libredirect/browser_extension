@@ -400,7 +400,21 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.href.search(/^https?:\/{2}(?:[im]\.)?stack\./) > -1) return `${randomInstance}/stack${url.pathname}${url.search}`
 			else return `${randomInstance}${url.pathname}${url.search}`
 		case "libreddit":
-			if (url.hostname.match(/^(i|preview)\.redd\.it/)) return `${randomInstance}/img${url.pathname}`
+			const subdomain = url.hostname.match(/^(?:(?:external-)?preview|i)(?=\.redd\.it)/)
+			if (!subdomain) return `${randomInstance}${url.pathname}${url.search}`
+			switch (subdomain[0]) {
+				case "preview":
+					return `${randomInstance}/preview/pre${url.pathname}${url.search}`
+				case "external-preview":
+					return `${randomInstance}/preview/external-pre${url.pathname}${url.search}`
+				case "i":
+					return `${randomInstance}/img${url.pathname}`
+			}
+		case "teddit":
+			if (/^(?:(?:external-)?preview|i)\.redd\.it/.test(url.hostname)) {
+				if (url.search == "") return `${randomInstance}${url.pathname}?teddit_proxy=${url.hostname}`
+				else return `${randomInstance}${url.pathname}${url.search}&teddit_proxy=${url.hostname}`
+			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		default:
 			return `${randomInstance}${url.pathname}${url.search}`
