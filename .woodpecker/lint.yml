@@ -1,0 +1,10 @@
+pipeline:
+  lint:
+    image: node:lts-alpine
+    when:
+      event: [push, pull_request]
+      path:
+        exclude: [ '.*', '*.md', 'src/instances/**']
+    commands:
+      - npm i
+      - npx web-ext lint --source-dir ./src/

@@ -1,9 +1,10 @@
 pipeline:
   instancefetch:
-    image: python:3.8
+    image: python:alpine
     secrets: [token, mail]
     when:
-      event: cron
+      - event: cron
+        cron: instance_updater
     commands:
       - python -m pip install --upgrade pip
       - pip install requests colorama
