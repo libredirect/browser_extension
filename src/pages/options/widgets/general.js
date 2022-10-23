@@ -77,7 +77,6 @@ importSettingsElement.addEventListener("change", () => {
 								await generalHelper.initDefaults()
 								await servicesHelper.initDefaults()
 								await servicesHelper.upgradeOptions()
-								await servicesHelper.processEnabledInstanceList()
 								location.reload()
 							})
 						})
@@ -87,7 +86,7 @@ importSettingsElement.addEventListener("change", () => {
 			let options = data
 			delete options.version
 			browser.storage.local.set({ options: data }, async () => {
-				await servicesHelper.processEnabledInstanceList()
+				await servicesHelper.processUpdate()
 				location.reload()
 			})
 		} else {

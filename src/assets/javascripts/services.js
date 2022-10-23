@@ -727,6 +727,10 @@ function upgradeOptions() {
 								if (r[frontend + utils.camelCase(protocol) + "RedirectsChecks"]) {
 									options[frontend][network].enabled = r[frontend + utils.camelCase(protocol) + "RedirectsChecks"]
 									options[frontend][network].custom = r[frontend + utils.camelCase(protocol) + "CustomRedirects"]
+									for (const instance of options[frontend][network].enabled) {
+										let i = r.redirects[frontend][network].indexOf(instance)
+										if (i < 0) options[frontend][network].enabled.splice(i, 1)
+									}
 								}
 							}
 						}
