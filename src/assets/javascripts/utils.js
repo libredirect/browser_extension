@@ -47,7 +47,6 @@ function updateInstances() {
 		const instances = JSON.parse(http.responseText)
 
 		await servicesHelper.setRedirects(instances)
-		await servicesHelper.processEnabledInstanceList()
 
 		console.info("Successfully updated Instances")
 		resolve(true)

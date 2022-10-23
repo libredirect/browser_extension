@@ -566,38 +566,58 @@ function unifyPreferences(url, tabId) {
 	})
 }
 
-async function setRedirects(redirects) {
-	fetch("/config/config.json")
-		.then(response => response.text())
-		.then(configData => {
-			//browser.storage.local.get(["options", "blacklists"], async r => {
-			//const options = r.options
-			const config = JSON.parse(configData)
-			let targets = {}
-			for (const service in config.services) {
-				if (config.services[service].targets == "datajson") {
-					targets[service] = redirects[service]
-				}
-				/*
-					for (const frontend in config.services[service].frontends) {
-						if (config.services[service].frontends[frontend].instanceList) {
-							for (const network in config.networks) {
-								options[frontend][network].enabled = redirects[frontend][network]
-							}
-							for (const blacklist in r.blacklists) {
-								for (const instance of blacklist) {
-									let i = options[frontend].clearnet.enabled.indexOf(instance)
-									if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
+function setRedirects(passedRedirects) {
+	return new Promise(resolve => {
+		fetch("/config/config.json")
+			.then(response => response.text())
+			.then(configData => {
+				browser.storage.local.get(/* [ */ "options" /* , "blacklists"] */, async r => {
+					let redirects = passedRedirects
+					let options = r.options
+					const config = JSON.parse(configData)
+					let targets = {}
+					for (const service in config.services) {
+						if (config.services[service].targets == "datajson") {
+							targets[service] = redirects[service]
+							delete redirects[service]
+						}
+						for (const frontend in config.services[service].frontends) {
+							if (config.services[service].frontends[frontend].instanceList) {
+								for (const network in config.networks) {
+									for (const instance of options[frontend][network].enabled) {
+										let i = redirects[frontend][network].indexOf(instance)
+										if (i < 0) options[frontend][network].enabled.splice(i, 1)
+									}
 								}
 							}
 						}
+						/*
+						for (const frontend in config.services[service].frontends) {
+							if (config.services[service].frontends[frontend].instanceList) {
+								for (const network in config.networks) {
+									options[frontend][network].enabled = redirects[frontend][network]
+								}
+								for (const blacklist in r.blacklists) {
+									for (const instance of blacklist) {
+										let i = options[frontend].clearnet.enabled.indexOf(instance)
+										if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
+									}
+								}
+							}
+						}
+						*/
+						// The above will be implemented with https://github.com/libredirect/libredirect/issues/334
 					}
-					*/
-				// The above will be implemented with https://github.com/libredirect/libredirect/issues/334
-			}
-			browser.storage.local.set({ redirects, targets /*, options*/ })
-			//})
-		})
+					for (const frontend in redirects) {
+						let exists = false
+						for (const service in config.services) if (config.services[service].frontends[frontend]) exists = true
+						if (!exists) delete redirects[frontend]
+						else for (const network in redirects[frontend]) if (!config.networks[network]) delete redirects[frontend][network]
+					}
+					browser.storage.local.set({ redirects, targets, options }, () => resolve())
+				})
+			})
+	})
 }
 
 function initDefaults() {
@@ -617,7 +637,10 @@ function initDefaults() {
 							const latency = {}
 							for (const service in config.services) {
 								options[service] = {}
-								if (config.services[service].targets == "datajson") targets[service] = redirects[service]
+								if (config.services[service].targets == "datajson") {
+									targets[service] = redirects[service]
+									delete redirects[service]
+								}
 								for (const defaultOption in config.services[service].options) options[service][defaultOption] = config.services[service].options[defaultOption]
 								for (const frontend in config.services[service].frontends) {
 									if (config.services[service].frontends[frontend].instanceList) {
@@ -729,7 +752,10 @@ function processUpdate() {
 							let config = JSON.parse(configData)
 							for (const service in config.services) {
 								if (!options[service]) options[service] = {}
-								if (config.services[service].targets == "datajson") targets[service] = redirects[service]
+								if (config.services[service].targets == "datajson") {
+									targets[service] = redirects[service]
+									delete redirects[service]
+								}
 								for (const defaultOption in config.services[service].options) {
 									if (options[service][defaultOption] === undefined) {
 										options[service][defaultOption] = config.services[service].options[defaultOption]
