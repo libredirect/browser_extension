@@ -23,11 +23,11 @@
 	},
 	"homepage": "https://libredirect.codeberg.page",
 	"devDependencies": {
-		"prettier": "2.7.1",
+		"ejs": "^3.1.8",
+		"prettier": "^2.7.1",
 		"web-ext": "^7.2.0"
 	},
 	"dependencies": {
-		"buffer": "^6.0.3",
-		"ejs": "^3.1.8"
+		"buffer": "^6.0.3"
 	}
 }
