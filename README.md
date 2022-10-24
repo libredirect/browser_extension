@@ -71,11 +71,11 @@ npm update
 npm install
 ```
 
-If you are modifying `config.json` or any files ending with .ejs, you need to run the following command to render html:
-
+To generate html that uses `config.json` (needed to develop/build the extention), run:
 ```
 npm run ejs
 ```
+Afterwards, you will need to run it if you modify `config.json` or any files ending with .ejs.
 
 ### Build the extention zip archive:
 

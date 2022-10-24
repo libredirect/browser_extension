@@ -5,7 +5,5 @@ node_modules
 package-lock.json
 src/instances/data.json
 src/instances/blacklist.json
-src/pages/options/*.html
-src/pages/popup/*.html
 src/_locales/
 .vscode

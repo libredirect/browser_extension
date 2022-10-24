@@ -10,7 +10,7 @@
 		"build": "web-ext build",
 		"test": "web-ext lint",
 		"instances": "python3 src/instances/get_instances.py && git update-index --assume-unchanged src/instances/blacklist.json src/instances/data.json",
-		"ejs": "npx ejs src/pages/options/index.ejs -f src/config/config.json -o src/pages/options/index.html && npx ejs src/pages/popup/popup.ejs -f src/config/config.json -o src/pages/popup/popup.html"
+		"ejs": "ejs src/pages/options/index.ejs -f src/config/config.json -o src/pages/options/index.html && ejs src/pages/popup/popup.ejs -f src/config/config.json -o src/pages/popup/popup.html && prettier -w src/pages/options/index.html src/pages/popup/popup.html"
 	},
 	"repository": {
 		"type": "git",
