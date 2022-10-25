@@ -3,7 +3,7 @@
 - Download the latest `.crx` file: [libredirect-2.3.4.crx](https://github.com/libredirect/libredirect/releases/download/v2.3.4/libredirect-2.3.4.crx)
 - Open `chrome://extensions`
 - Enable `dev mode`
-- Rerfesh the page
+- Refresh the page
 - Drag and drop the `.crx` file to the page
 
 Updates are automatic
