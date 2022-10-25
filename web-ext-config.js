@@ -5,6 +5,6 @@ module.exports = {
 		browserConsole: true,
 	},
 	build: {
-		overwriteDest: true
-	}
+		overwriteDest: true,
+	},
 }

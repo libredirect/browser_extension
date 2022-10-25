@@ -12,12 +12,15 @@ import socket
 mightyList = {}
 config = {}
 
-startRegex = r"https?:\/{2}(?:[^\s\/]+\.)+"
+startRegex = r"https?:\/{2}(?:[^\s\/]+\.)*"
 endRegex = "(?:\/[^\s\/]+)*\/?"
 torRegex = startRegex + "onion" + endRegex
 i2pRegex = startRegex + "i2p" + endRegex
 lokiRegex = startRegex + "loki" + endRegex
-authRegex = r"https?:\/{2}\S+:\S+@(?:[^\s\/]+\.)+[a-zA-Z0-9]+" + endRegex
+authRegex = r"https?:\/{2}\S+:\S+@(?:[^\s\/]+\.)*[a-zA-Z0-9]+" + endRegex
+
+# 2.0 because Libredirect is currently on version 2.x.x
+headers = {'User-Agent': 'Libredirect-instance-fetcher/2.0'}
 
 with open('./src/config/config.json', 'rt') as tmp:
     config['networks'] = json.load(tmp)['networks']
@@ -92,7 +95,8 @@ def is_cloudflare(url):
         instance_bin_masked = instance_bin[:mask]
 
         if cloudflare_bin_masked == instance_bin_masked:
-            print(url + ' is behind ' + Fore.RED + 'cloudflare' + Style.RESET_ALL)
+            print(url + ' is behind ' + Fore.RED +
+                  'cloudflare' + Style.RESET_ALL)
             return True
     return False
 
@@ -100,11 +104,13 @@ def is_cloudflare(url):
 def is_authenticate(url):
     try:
         if re.match(authRegex, url):
-            print(url + ' requires ' + Fore.RED + 'authentication' + Style.RESET_ALL)
+            print(url + ' requires ' + Fore.RED +
+                  'authentication' + Style.RESET_ALL)
             return True
-        r = requests.get(url, timeout=5)
+        r = requests.get(url, timeout=5, headers=headers)
         if 'www-authenticate' in r.headers:
-            print(url + ' requires ' + Fore.RED + 'authentication' + Style.RESET_ALL)
+            print(url + ' requires ' + Fore.RED +
+                  'authentication' + Style.RESET_ALL)
             return True
     except Exception:
         return False
@@ -113,7 +119,7 @@ def is_authenticate(url):
 
 def is_offline(url):
     try:
-        r = requests.get(url, timeout=5)
+        r = requests.get(url, timeout=5, headers=headers)
         if r.status_code >= 400:
             print(url + ' is ' + Fore.RED + 'offline' + Style.RESET_ALL)
             print("Status code")
@@ -126,9 +132,12 @@ def is_offline(url):
 
 
 def fetchCache(frontend, name):
-    with open('./src/instances/data.json') as file:
-        mightyList[frontend] = json.load(file)[frontend]
-    print(Fore.YELLOW + 'Failed' + Style.RESET_ALL + ' to fetch ' + name)
+    try:
+        with open('./src/instances/data.json') as file:
+            mightyList[frontend] = json.load(file)[frontend]
+        print(Fore.YELLOW + 'Failed' + Style.RESET_ALL + ' to fetch ' + name)
+    except Exception:
+        print(Fore.RED + 'Failed' + Style.RESET_ALL + ' to get cached ' + name)
 
 
 def fetchFromFile(frontend, name):
@@ -139,7 +148,7 @@ def fetchFromFile(frontend, name):
 
 def fetchJsonList(frontend, name, url, urlItem, jsonObject):
     try:
-        r = requests.get(url)
+        r = requests.get(url, headers=headers)
         rJson = json.loads(r.text)
         if jsonObject:
             rJson = rJson['instances']
@@ -178,7 +187,7 @@ def fetchJsonList(frontend, name, url, urlItem, jsonObject):
 
 def fetchRegexList(frontend, name, url, regex):
     try:
-        r = requests.get(url)
+        r = requests.get(url, headers=headers)
         _list = {}
         for network in config['networks']:
             _list[network] = []
@@ -205,23 +214,32 @@ def fetchRegexList(frontend, name, url, regex):
 
 def fetchTextList(frontend, name, url, prepend):
     try:
-        r = requests.get(url)
-        tmp = r.text.strip().split('\n')
-
         _list = {}
         for network in config['networks']:
             _list[network] = []
 
-        for item in tmp:
-            item = prepend + item
-            if re.search(torRegex, item):
-                _list['tor'].append(item)
-            elif re.search(i2pRegex, item):
-                _list['i2p'].append(item)
-            elif re.search(lokiRegex, item):
-                _list['loki'].append(item)
-            else:
-                _list['clearnet'].append(item)
+        if type(url) == dict:
+            for network in config['networks']:
+                if url[network] is not None:
+                    r = requests.get(url[network], headers=headers)
+                    tmp = r.text.strip().split('\n')
+                    for item in tmp:
+                        item = prepend[network] + item
+                        _list[network].append(item)
+        else:
+            r = requests.get(url, headers=headers)
+            tmp = r.text.strip().split('\n')
+
+            for item in tmp:
+                item = prepend + item
+                if re.search(torRegex, item):
+                    _list['tor'].append(item)
+                elif re.search(i2pRegex, item):
+                    _list['i2p'].append(item)
+                elif re.search(lokiRegex, item):
+                    _list['loki'].append(item)
+                else:
+                    _list['clearnet'].append(item)
         mightyList[frontend] = _list
         print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + name)
     except Exception:
@@ -239,7 +257,7 @@ def invidious():
         _list['tor'] = []
         _list['i2p'] = []
         _list['loki'] = []
-        r = requests.get(url)
+        r = requests.get(url, headers=headers)
         rJson = json.loads(r.text)
         for instance in rJson:
             if instance[1]['type'] == 'https':
@@ -265,13 +283,13 @@ def piped():
         _list['i2p'] = []
         _list['loki'] = []
         r = requests.get(
-            'https://raw.githubusercontent.com/wiki/TeamPiped/Piped/Instances.md')
+            'https://raw.githubusercontent.com/wiki/TeamPiped/Piped/Instances.md', headers=headers)
 
         tmp = re.findall(
             r'(?:[^\s\/]+\.)+[a-zA-Z]+ (?:\(Official\) )?\| (https:\/{2}(?:[^\s\/]+\.)+[a-zA-Z]+) \| ', r.text)
         for item in tmp:
             try:
-                url = requests.get(item, timeout=5).url
+                url = requests.get(item, timeout=5, headers=headers).url
                 if url.strip("/") == item:
                     continue
                 else:
@@ -287,7 +305,8 @@ def piped():
 
 
 def pipedMaterial():
-    fetchRegexList('pipedMaterial', 'Piped-Material', 'https://raw.githubusercontent.com/mmjee/Piped-Material/master/README.md', r"\| (https?:\/{2}(?:\S+\.)+[a-zA-Z0-9]*) +\| Production")
+    fetchRegexList('pipedMaterial', 'Piped-Material', 'https://raw.githubusercontent.com/mmjee/Piped-Material/master/README.md',
+                   r"\| (https?:\/{2}(?:\S+\.)+[a-zA-Z0-9]*) +\| Production")
 
 
 def cloudtube():
@@ -295,15 +314,18 @@ def cloudtube():
 
 
 def proxitok():
-    fetchRegexList('proxiTok', 'ProxiTok', 'https://raw.githubusercontent.com/wiki/pablouser1/ProxiTok/Public-instances.md', r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)(?: \(Official\))? +\|(?:(?: [A-Z]*.*\|.*\|)|(?:$))")
+    fetchRegexList('proxiTok', 'ProxiTok', 'https://raw.githubusercontent.com/wiki/pablouser1/ProxiTok/Public-instances.md',
+                   r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)(?: \(Official\))? +\|(?:(?: [A-Z]*.*\|.*\|)|(?:$))")
 
 
 def send():
-    fetchRegexList('send', 'Send', 'https://gitlab.com/timvisee/send-instances/-/raw/master/README.md', r"- ([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z0-9]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}")
+    fetchRegexList('send', 'Send', 'https://gitlab.com/timvisee/send-instances/-/raw/master/README.md',
+                   r"- ([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z0-9]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}")
 
 
 def nitter():
-    fetchRegexList('nitter', 'Nitter', 'https://raw.githubusercontent.com/wiki/zedeus/nitter/Instances.md', r"(?:(?:\| )|(?:-   ))\[(?:(?:\S+\.)+[a-zA-Z0-9]+)\/?\]\((https?:\/{2}(?:\S+\.)+[a-zA-Z0-9]+)\/?\)(?:(?: (?:\((?:\S+ ?\S*)\) )? *\| [^❌]{1,4} +\|(?:(?:\n)|(?: ❌)|(?: ✅)|(?: ❓)|(?: \[)))|(?:\n))")
+    fetchRegexList('nitter', 'Nitter', 'https://raw.githubusercontent.com/wiki/zedeus/nitter/Instances.md',
+                   r"(?:(?:\| )|(?:-   ))\[(?:(?:\S+\.)+[a-zA-Z0-9]+)\/?\]\((https?:\/{2}(?:\S+\.)+[a-zA-Z0-9]+)\/?\)(?:(?: (?:\((?:\S+ ?\S*)\) )? *\| [^❌]{1,4} +\|(?:(?:\n)|(?: ❌)|(?: ✅)|(?: ❓)|(?: \[)))|(?:\n))")
 
 
 def bibliogram():
@@ -311,65 +333,53 @@ def bibliogram():
 
 
 def libreddit():
-    fetchJsonList('libreddit', 'Libreddit', 'https://github.com/ferritreader/libreddit-instances/raw/master/instances.json', {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, True)
+    fetchJsonList('libreddit', 'Libreddit', 'https://github.com/ferritreader/libreddit-instances/raw/master/instances.json',
+                  {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, True)
 
 
 def teddit():
-    fetchJsonList('teddit', 'Teddit', 'https://codeberg.org/teddit/teddit/raw/branch/main/instances.json', {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, False)
+    fetchJsonList('teddit', 'Teddit', 'https://codeberg.org/teddit/teddit/raw/branch/main/instances.json',
+                  {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, False)
 
 
 def wikiless():
-    fetchJsonList('wikiless', 'Wikiless', 'https://wikiless.org/instances.json', {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, False)
+    fetchJsonList('wikiless', 'Wikiless', 'https://wikiless.org/instances.json',
+                  {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, False)
 
 
 def scribe():
-    fetchJsonList('scribe', 'Scribe', 'https://git.sr.ht/~edwardloveall/scribe/blob/main/docs/instances.json', None, False)
+    fetchJsonList('scribe', 'Scribe',
+                  'https://git.sr.ht/~edwardloveall/scribe/blob/main/docs/instances.json', None, False)
 
 
 def quetre():
-    fetchRegexList('quetre', 'Quetre', 'https://raw.githubusercontent.com/zyachel/quetre/main/README.md', r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z0-9]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|")
+    fetchRegexList('quetre', 'Quetre', 'https://raw.githubusercontent.com/zyachel/quetre/main/README.md',
+                   r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z0-9]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|")
 
 
 def libremdb():
-    fetchRegexList('libremdb', 'libremdb', 'https://raw.githubusercontent.com/zyachel/libremdb/main/README.md', r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z0-9]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|")
+    fetchRegexList('libremdb', 'libremdb', 'https://raw.githubusercontent.com/zyachel/libremdb/main/README.md',
+                   r"\| \[.*\]\(([-a-zA-Z0-9@:%_\+.~#?&//=]{2,}\.[a-z0-9]{2,}\b(?:\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)\)*\|*[A-Z]{0,}.*\|.*\|")
 
 
 def simpleertube():
-    fetchTextList('simpleertube', 'SimpleerTube', 'https://simple-web.org/instances/simpleertube', 'https://')
+    fetchTextList('simpleertube', 'SimpleerTube', {'clearnet': 'https://simple-web.org/instances/simpleertube', 'tor': 'https://simple-web.org/instances/simpleertube_onion',
+                  'i2p': 'https://simple-web.org/instances/simpleertube_i2p', 'loki': None}, {'clearnet': 'https://', 'tor': 'http://', 'i2p': 'http://', 'loki': 'http://'})
 
 
 def simplytranslate():
-    r = requests.get('https://simple-web.org/instances/simplytranslate')
-    simplyTranslateList = {}
-    simplyTranslateList['clearnet'] = []
-    for item in r.text.strip().split('\n'):
-        simplyTranslateList['clearnet'].append('https://' + item)
-
-    r = requests.get('https://simple-web.org/instances/simplytranslate_onion')
-    simplyTranslateList['tor'] = []
-    for item in r.text.strip().split('\n'):
-        simplyTranslateList['tor'].append('http://' + item)
-
-    r = requests.get('https://simple-web.org/instances/simplytranslate_i2p')
-    simplyTranslateList['i2p'] = []
-    for item in r.text.strip().split('\n'):
-        simplyTranslateList['i2p'].append('http://' + item)
-
-    r = requests.get('https://simple-web.org/instances/simplytranslate_loki')
-    simplyTranslateList['loki'] = []
-    for item in r.text.strip().split('\n'):
-        simplyTranslateList['loki'].append('http://' + item)
-
-    mightyList['simplyTranslate'] = simplyTranslateList
-    print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'SimplyTranslate')
+    fetchTextList('simplyTranslate', 'SimplyTranslate', {'clearnet': 'https://simple-web.org/instances/simplytranslate', 'tor': 'https://simple-web.org/instances/simplytranslate_onion',
+                  'i2p': 'https://simple-web.org/instances/simplytranslate_i2p', 'loki': 'https://simple-web.org/instances/simplytranslate_loki'}, {'clearnet': 'https://', 'tor': 'http://', 'i2p': 'http://', 'loki': 'http://'})
 
 
 def linvgatranslate():
-    fetchJsonList('lingva', 'LingvaTranslate', 'https://raw.githubusercontent.com/TheDavidDelta/lingva-translate/main/instances.json', None, False)
+    fetchJsonList('lingva', 'LingvaTranslate',
+                  'https://raw.githubusercontent.com/TheDavidDelta/lingva-translate/main/instances.json', None, False)
 
 
 def searx_searxng():
-    r = requests.get('https://searx.space/data/instances.json')
+    r = requests.get(
+        'https://searx.space/data/instances.json', headers=headers)
     rJson = json.loads(r.text)
     searxList = {}
     searxList['clearnet'] = []
@@ -404,19 +414,23 @@ def searx_searxng():
 
 
 def whoogle():
-    fetchTextList('whoogle', 'Whoogle', 'https://raw.githubusercontent.com/benbusby/whoogle-search/main/misc/instances.txt', '')
+    fetchRegexList('whoogle', 'Whoogle', 'https://raw.githubusercontent.com/benbusby/whoogle-search/main/README.md',
+                   r"\| \[https?:\/{2}(?:[^\s\/]+\.)*(?:[^\s\/]+\.)+[a-zA-Z0-9]+\]\((https?:\/{2}(?:[^\s\/]+\.)*(?:[^\s\/]+\.)+[a-zA-Z0-9]+)\/?\) \| ")
 
 
 def librex():
-    fetchJsonList('librex', 'LibreX', 'https://raw.githubusercontent.com/hnhx/librex/main/instances.json', {'clearnet': 'clearnet', 'tor': 'tor', 'i2p': 'i2p', 'loki': None}, True)
+    fetchJsonList('librex', 'LibreX', 'https://raw.githubusercontent.com/hnhx/librex/main/instances.json',
+                  {'clearnet': 'clearnet', 'tor': 'tor', 'i2p': 'i2p', 'loki': None}, True)
 
 
 def rimgo():
-    fetchJsonList('rimgo', 'rimgo', 'https://codeberg.org/video-prize-ranch/rimgo/raw/branch/main/instances.json', {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, False)
+    fetchJsonList('rimgo', 'rimgo', 'https://codeberg.org/video-prize-ranch/rimgo/raw/branch/main/instances.json',
+                  {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, False)
 
 
 def librarian():
-    fetchJsonList('librarian', 'Librarian', 'https://codeberg.org/librarian/librarian/raw/branch/main/instances.json', 'url', True)
+    fetchJsonList('librarian', 'Librarian',
+                  'https://codeberg.org/librarian/librarian/raw/branch/main/instances.json', 'url', True)
 
 
 def neuters():
@@ -428,7 +442,8 @@ def beatbump():
 
 
 def hyperpipe():
-    fetchJsonList('hyperpipe', 'Hyperpipe', 'https://codeberg.org/Hyperpipe/pages/raw/branch/main/api/frontend.json', 'url', False)
+    fetchJsonList('hyperpipe', 'Hyperpipe',
+                  'https://codeberg.org/Hyperpipe/pages/raw/branch/main/api/frontend.json', 'url', False)
 
 
 def facil():
@@ -436,17 +451,19 @@ def facil():
 
 
 def libreTranslate():
-    fetchRegexList('libreTranslate', 'LibreTranslate', 'https://raw.githubusercontent.com/LibreTranslate/LibreTranslate/main/README.md', r"\[(?:[^\s\/]+\.)+[a-zA-Z0-9]+\]\((https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+)\/?\)\|")
+    fetchRegexList('libreTranslate', 'LibreTranslate', 'https://raw.githubusercontent.com/LibreTranslate/LibreTranslate/main/README.md',
+                   r"\[(?:[^\s\/]+\.)+[a-zA-Z0-9]+\]\((https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+)\/?\)\|")
 
 
 def breezeWiki():
-    fetchRegexList('breezeWiki', 'BreezeWiki', 'https://gitdab.com/cadence/breezewiki-docs/raw/branch/main/docs.scrbl', r"\(\"[^\n\s\r\t\f\v\"]+\" \"https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+(?:\/[^\s\/]+)*\" \"(https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+(?:\/[^\s\/]+)*)\"\)")
+    fetchRegexList('breezeWiki', 'BreezeWiki', 'https://gitdab.com/cadence/breezewiki-docs/raw/branch/main/docs.scrbl',
+                   r"\(\"[^\n\s\r\t\f\v\"]+\" \"https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+(?:\/[^\s\/]+)*\" \"(https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+(?:\/[^\s\/]+)*)\"\)")
 
 
 def peertube():
     try:
         r = requests.get(
-            'https://instances.joinpeertube.org/api/v1/instances?start=0&count=1045&sort=-createdAt')
+            'https://instances.joinpeertube.org/api/v1/instances?start=0&count=1045&sort=-createdAt', headers=headers)
         rJson = json.loads(r.text)
 
         myList = ['https://search.joinpeertube.org']

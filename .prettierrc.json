@@ -5,6 +5,7 @@
 	"arrowParens": "avoid",
 	"printWidth": 200,
 	"bracketSameLine": true,
+	"endOfLine": "lf",
 	"overrides": [
 		{
 			"files": ["*.js", "*.json"],

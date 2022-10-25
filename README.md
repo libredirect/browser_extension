@@ -55,7 +55,6 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 [![Codeberg](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/codeberg.svg)](https://codeberg.org/LibRedirect/libredirect)&nbsp;&nbsp;
 [![GitHub](https://raw.githubusercontent.com/ManeraKai/manerakai/main/icons/github.svg)](https://github.com/libredirect/libredirect/)&nbsp;&nbsp;
 
-
 ## Translate
 
 [![Weblate](./img/weblate.svg)](https://hosted.weblate.org/projects/libredirect/extension)
@@ -72,9 +71,11 @@ npm install
 ```
 
 To generate html that uses `config.json` (needed to develop/build the extention), run:
+
 ```
 npm run ejs
 ```
+
 Afterwards, you will need to run it if you modify `config.json` or any files ending with .ejs.
 
 ### Build the extention zip archive:
