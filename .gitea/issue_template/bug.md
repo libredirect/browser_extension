@@ -27,6 +27,6 @@ Libredirect version:
 <!--Just drag and drop any screenshots or videos you have of the issue below-->
 
 <br>
-<!--Put an "x" inbetween the brackets to confirm-->
+<!--Put an "x" between the brackets to confirm-->
 
 - [ ] I have checked on codeberg and github and can confirm this issue is not a duplicate.

@@ -70,7 +70,7 @@ npm update
 npm install
 ```
 
-To generate html that uses `config.json` (needed to develop/build the extention), run:
+To generate HTML that uses `config.json` (needed to develop/build the extension), run:
 
 ```
 npm run ejs
@@ -78,7 +78,7 @@ npm run ejs
 
 Afterwards, you will need to run it if you modify `config.json` or any files ending with .ejs.
 
-### Build the extention zip archive:
+### Build the extension zip archive:
 
 ```
 npm run build
