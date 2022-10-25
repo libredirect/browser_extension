@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # Note: Run this script from the root of the repo
 
 import traceback

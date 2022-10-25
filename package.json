@@ -27,7 +27,31 @@
 		"prettier": "^2.7.1",
 		"web-ext": "^7.2.0"
 	},
-	"dependencies": {
-		"buffer": "^6.0.3"
+	"prettier": {
+		"semi": false,
+		"tabWidth": 2,
+		"useTabs": true,
+		"arrowParens": "avoid",
+		"printWidth": 200,
+		"bracketSameLine": true,
+		"endOfLine": "lf",
+		"singleQuote": false
+	},
+	"webExt": {
+		"ignoreFiles": [
+			"instances/get_instances.py",
+			"instances/beatbump.json",
+			"instances/bibliogram.json",
+			"instances/cloudtube.json",
+			"instances/facil.json",
+			"instances/neuters.json"
+		],
+		"sourceDir": "./src/",
+		"run": {
+			"browserConsole": true
+		},
+		"build": {
+			"overwriteDest": true
+		}
 	}
 }
