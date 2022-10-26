@@ -391,11 +391,23 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return randomInstance
 		case "breezeWiki":
-			let wiki = url.hostname.match(/^[a-zA-Z0-9-]+(?=\.fandom\.com)/)
-			if (wiki == "www" || !wiki) wiki = ""
-			else wiki = "/" + wiki
-			if (url.href.search(/Special:Search\?query/) > -1) return `${randomInstance}${wiki}${url.pathname}${url.search}`.replace(/Special:Search\?query/, "search?q").replace(/\/wiki/, "")
-			else return `${randomInstance}${wiki}${url.pathname}${url.search}`
+			let wiki,
+				urlpath = ""
+			if (url.hostname.match(/^[a-zA-Z0-9-]+\.fandom\.com/)) {
+				wiki = url.hostname.match(/^[a-zA-Z0-9-]+(?=\.fandom\.com)/)
+				if (wiki == "www" || !wiki) wiki = ""
+				else wiki = "/" + wiki
+				urlpath = url.pathname
+			} else {
+				wiki = url.pathname.match(/(?<=wiki\/w:c:)[a-zA-Z0-9-]+(?=:)/)
+				if (!wiki) wiki = ""
+				else {
+					wiki = "/" + wiki + "/wiki/"
+					urlpath = url.pathname.match(/(?<=wiki\/w:c:[a-zA-Z0-9-]+:).+/)
+				}
+			}
+			if (url.href.search(/Special:Search\?query/) > -1) return `${randomInstance}${wiki}${urlpath}${url.search}`.replace(/Special:Search\?query/, "search?q").replace(/\/wiki/, "")
+			else return `${randomInstance}${wiki}${urlpath}${url.search}`
 		case "rimgo":
 			if (url.href.search(/^https?:\/{2}(?:[im]\.)?stack\./) > -1) return `${randomInstance}/stack${url.pathname}${url.search}`
 			else return `${randomInstance}${url.pathname}${url.search}`

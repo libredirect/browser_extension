@@ -395,7 +395,7 @@
 					"instanceList": true
 				}
 			},
-			"targets": ["^https?:\\/{2}(?:[a-zA-Z0-9-]+\\.)?fandom\\.com(?=\\/wiki|\\/?$)"],
+			"targets": ["^https?:\\/{2}(?:[a-zA-Z0-9-]+\\.)?(?:fandom|wikia)\\.com(?=\\/wiki|\\/?$)"],
 			"name": "Fandom",
 			"options": {
 				"enabled": true
