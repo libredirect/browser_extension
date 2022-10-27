@@ -522,6 +522,7 @@ function reverse(url, urlString) {
 				case "reuters":
 				case "quora":
 				case "medium":
+				case "wikipedia":
 					if (!urlString) resolve(config.services[service].url + url.pathname + url.search)
 					else resolve(url.replace(/https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+/, config.services[service].url))
 					return
