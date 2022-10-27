@@ -343,6 +343,11 @@ def teddit():
                   {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, False)
 
 
+def ferrit():
+    fetchJsonList('ferrit', 'Ferrit', 'https://raw.githubusercontent.com/ferritreader/ferrit-instances/master/instances.json',
+                  {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, True)
+
+
 def wikiless():
     fetchJsonList('wikiless', 'Wikiless', 'https://wikiless.org/instances.json',
                   {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, False)
@@ -495,6 +500,7 @@ nitter()
 bibliogram()
 libreddit()
 teddit()
+ferrit()
 wikiless()
 scribe()
 quetre()

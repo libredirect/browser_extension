@@ -250,13 +250,20 @@
 					},
 					"name": "Teddit",
 					"instanceList": true
+				},
+				"ferrit": {
+					"preferences": {
+						"cookies": ["theme", "front_page", "layout", "wide", "post_sort", "comment_sort", "show_nsfw", "autoplay_videos", "use_hls", "hide_hls_notification", "subscriptions", "filters"]
+					},
+					"name": "Ferrit",
+					"instanceList": true
 				}
 			},
 			"targets": ["^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com(?=\\/u(ser)?\\/|\\/r\\/|\\/?$)", "^https?:\\/{2}(i|(external-)?preview)\\.redd\\.it"],
 			"name": "Reddit",
 			"options": {
 				"enabled": true,
-				"frontend": "libreddit"
+				"frontend": "ferrit"
 			},
 			"imageType": "png",
 			"embeddable": false,
