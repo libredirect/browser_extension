@@ -466,6 +466,11 @@ def breezeWiki():
                    r"\(\"[^\n\s\r\t\f\v\"]+\" \"https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+(?:\/[^\s\/]+)*\" \"(https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+(?:\/[^\s\/]+)*)\"\)")
 
 
+def privateBin():
+    fetchJsonList('privateBin', 'PrivateBin',
+                  'https://privatebin.info/directory/api?top=100&https_redirect=true&min_rating=A&csp_header=true&min_uptime=100&attachments=true', 'url', False)
+
+
 def peertube():
     try:
         r = requests.get(
@@ -519,6 +524,7 @@ hyperpipe()
 facil()
 simpleertube()
 breezeWiki()
+privateBin()
 mightyList = filterLastSlash(mightyList)
 mightyList = idnaEncode(mightyList)
 

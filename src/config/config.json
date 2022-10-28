@@ -601,6 +601,22 @@
 			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://send.libredirect.invalid"
+		},
+		"textStorage": {
+			"frontends": {
+				"privateBin": {
+					"name": "PrivateBin",
+					"instanceList": true
+				}
+			},
+			"targets": ["^https?:\\/{2}paste\\.libredirect\\.invalid"],
+			"name": "Paste Text",
+			"options": {
+				"enabled": true
+			},
+			"imageType": "svgMono",
+			"embeddable": false,
+			"url": "https://paste.libredirect.invalid"
 		}
 	},
 	"blacklist": {
