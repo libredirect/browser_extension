@@ -1,6 +1,6 @@
 pipeline:
   instancefetch:
-    image: python:slim
+    image: python:bullseye
     secrets: [token, mail]
     when:
       - event: cron
