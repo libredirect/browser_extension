@@ -203,5 +203,15 @@
     "searchNote": {
         "message": "ملاحظة: استعمل خاصية البحث بكامل إمكانيتها عبر وضع LibRedirect محرك البحث الافتراضي.",
         "description": "used in the settings page"
+    },
+    "lbryDesktop": {
+        "message": "سطح المكتب LBRY"
+    },
+    "redirectLink": {
+        "message": "محاولة إعادة توجيه هذا الارتباط التشعبي",
+        "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "protocolFallback": {
+        "message": "الرجوع إلى الوضع الطبيعي إذا لم تتوفر مثيلات للبروتوكول الحالي"
     }
 }
