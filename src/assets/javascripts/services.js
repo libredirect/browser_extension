@@ -183,16 +183,25 @@ function redirect(url, type, initiator, forceRedirection) {
 
 			function addressToLatLng(address) {
 				const xmlhttp = new XMLHttpRequest()
-				xmlhttp.open("GET", `https://nominatim.openstreetmap.org/search/${address}?format=json&limit=1`, false)
-				xmlhttp.send()
-				if (xmlhttp.status === 200) {
-					const json = JSON.parse(xmlhttp.responseText)[0]
-					if (json) {
-						console.log("json", json)
-						return [`${json.lat},${json.lon}`, `${json.boundingbox[2]},${json.boundingbox[1]},${json.boundingbox[3]},${json.boundingbox[0]}`]
-					}
+				xmlhttp.timeout = 5000
+				http.ontimeout = () => {
+					return
 				}
-				console.info("Error: Status is " + xmlhttp.status)
+				http.onerror = () => {
+					return
+				}
+				xmlhttp.send()
+				http.onreadystatechange = () => {
+					if (xmlhttp.status === 200) {
+						const json = JSON.parse(xmlhttp.responseText)[0]
+						if (json) {
+							console.log("json", json)
+							return [`${json.lat},${json.lon}`, `${json.boundingbox[2]},${json.boundingbox[1]},${json.boundingbox[3]},${json.boundingbox[0]}`]
+						}
+					}
+					console.info("Error: Status is " + xmlhttp.status)
+				}
+				xmlhttp.open("GET", `https://nominatim.openstreetmap.org/search/${address}?format=json&limit=1`, false)
 			}
 
 			let mapCentre = "#"

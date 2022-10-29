@@ -579,7 +579,7 @@
 			"targets": ["^https?:\\/{2}maps\\.libredirect\\.invalid", "^https?:\\/{2}(((www|maps)\\.)?(google\\.).*(\\/maps)|maps\\.(google\\.).*)"],
 			"name": "Maps",
 			"options": {
-				"enabled": true,
+				"enabled": false,
 				"frontend": "osm"
 			},
 			"imageType": "svgMono",
