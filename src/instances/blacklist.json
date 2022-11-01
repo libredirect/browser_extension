@@ -1,7 +1,7 @@
 {
   "cloudflare": [
-    "https://invidious.kavin.rocks",
     "https://invidious.rhyshl.live",
+    "https://invidious.kavin.rocks",
     "https://piped.kavin.rocks",
     "https://piped.tokhmi.xyz",
     "https://piped.moomoo.me",
@@ -58,29 +58,27 @@
     "https://rimgo.encrypted-data.xyz",
     "https://beatbump.ml",
     "https://listen.whatever.social",
+    "https://bonus01.hwb0307.com",
+    "https://paste.oelrichsgarcia.de",
     "https://privatebin.io",
+    "https://paste.yeahnet.dev",
     "https://luckvintage.com",
-    "https://bin.klowdee.host",
-    "https://0.klowdee.host",
     "https://sendpass.ru",
+    "https://0.klowdee.host",
     "https://0a0bin.klowdee.host",
-    "https://0.0g.gg",
-    "https://p.darklab.sh",
-    "https://paste.oelrichsgarcia.de"
+    "https://bin.klowdee.host"
   ],
   "authenticate": [
     "https://nitter:nitter@nitter.nixnet.services"
   ],
   "offline": [
+    "https://invidious.kavin.rocks",
     "https://send.mni.li",
     "https://nitter.privacy.com.de",
     "https://libreddit.privacy.com.de",
     "https://teddit.ggc-project.de",
     "https://teddit.tokhmi.xyz",
-    "https://teddit.privacytools.io",
     "https://wiki.604kph.xyz",
-    "https://quetreus.herokuapp.com",
-    "https://libremdbeu.herokuapp.com",
     "https://translate.northboot.xyz",
     "https://gowogle.voring.me",
     "https://i.bcow.xyz",
