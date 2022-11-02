@@ -8,6 +8,8 @@
 
 Updates are automatic
 
+**NOTE:** If this way failed. Then try the Windows, MacOS way.
+
 ## Windows, MacOS
 
 - Download the latest release [libredirect-2.3.4.zip](https://github.com/libredirect/libredirect/releases/download/v2.3.4/libredirect-2.3.4.zip)
