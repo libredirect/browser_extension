@@ -334,7 +334,7 @@ def bibliogram():
 
 
 def libreddit():
-    fetchJsonList('libreddit', 'Libreddit', 'https://github.com/ferritreader/libreddit-instances/raw/master/instances.json',
+    fetchJsonList('libreddit', 'Libreddit', 'https://github.com/libreddit/libreddit-instances/raw/master/instances.json',
                   {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, True)
 
 
