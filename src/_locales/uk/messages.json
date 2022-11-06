@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "searchNote": {
-        "message": "Порада: Шукати стане зручніше, якщо оберете LibRedirect типовим пошуковим засобом.",
+        "message": "Порада: Шукати стане зручніше, якщо оберете LibRedirect типовим засобом пошуку.",
         "description": "used in the settings page"
     },
     "redirectType": {
@@ -141,7 +141,7 @@
         "description": "used in the settings page"
     },
     "dark": {
-        "message": "Тьмяна",
+        "message": "Темна",
         "description": "used in the settings page"
     },
     "autoRedirect": {
@@ -161,7 +161,7 @@
         "description": "used in the settings page"
     },
     "notFullyPrivate": {
-        "message": "Цей фронтенд лише частково приватний."
+        "message": "Цей фронтенд приватний лише частково."
     },
     "embeddedVids": {
         "message": "Фронтенд вбудованих відео",
@@ -183,10 +183,10 @@
         "message": "Скопійовано"
     },
     "copyRaw": {
-        "message": "Оригінал посилання"
+        "message": "Копіювати оригінал посилання"
     },
     "testInstancesLatency": {
-        "message": "Випробувати швидкодію серверів"
+        "message": "Випробувати затримку серверів"
     },
     "lbryDesktop": {
         "message": "LBRY Desktop"
@@ -210,5 +210,13 @@
     "maps": {
         "message": "Мапи",
         "description": "used in the settings page"
+    },
+    "redirectLink": {
+        "message": "Спроба перенаправлення за цим гіперпосиланням",
+        "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "toggleTab": {
+        "message": "Перемикнути перенаправлення на цій вкладці",
+        "description": "Used in context menus when right clicking on a page/tab"
     }
 }
