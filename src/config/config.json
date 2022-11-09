@@ -290,26 +290,6 @@
 					},
 					"name": "Teddit",
 					"instanceList": true
-				},
-				"ferrit": {
-					"preferences": {
-						"cookies": [
-							"theme",
-							"front_page",
-							"layout",
-							"wide",
-							"post_sort",
-							"comment_sort",
-							"show_nsfw",
-							"autoplay_videos",
-							"use_hls",
-							"hide_hls_notification",
-							"subscriptions",
-							"filters"
-						]
-					},
-					"name": "Ferrit",
-					"instanceList": true
 				}
 			},
 			"targets": [
@@ -319,7 +299,7 @@
 			"name": "Reddit",
 			"options": {
 				"enabled": true,
-				"frontend": "ferrit"
+				"frontend": "libreddit"
 			},
 			"imageType": "png",
 			"embeddable": false,
