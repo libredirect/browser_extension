@@ -47,7 +47,7 @@ function all(service, frontend, options, config, redirects) {
 
 function regexArray(service, url, config) {
 	if (config.services[service].targets == "datajson") {
-		if (targets[service].includes(utils.protocolHost(url))) return true
+		if (targets[service].startsWith(utils.protocolHost(url))) return true
 	} else {
 		const targetList = config.services[service].targets
 		for (const targetString in targetList) {
