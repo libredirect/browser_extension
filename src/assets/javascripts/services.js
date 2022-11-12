@@ -45,11 +45,15 @@ function all(service, frontend, options, config, redirects) {
 	return instances
 }
 
-function regexArray(service, url, config) {
+function regexArray(service, url, config, frontend) {
 	if (config.services[service].targets == "datajson") {
 		if (targets[service].startsWith(utils.protocolHost(url))) return true
 	} else {
 		const targetList = config.services[service].targets
+		if (frontend && config.services[service].frontends[frontend].excludeTargets)
+			for (const i in config.services[service].frontends[frontend].excludeTargets) {
+				targetList = targetList.splice(i, 1)
+			}
 		for (const targetString in targetList) {
 			const target = new RegExp(targetList[targetString])
 			if (target.test(url.href)) return true
@@ -69,15 +73,6 @@ function redirect(url, type, initiator, forceRedirection) {
 		if (config.services[service].embeddable && type != options[service].redirectType && options[service].redirectType != "both") continue
 		if (!config.services[service].embeddable && type != "main_frame") continue
 
-		// let targets = new RegExp(config.services[service].targets.join("|"), "i")
-		if (!regexArray(service, url, config)) continue
-		// if (initiator) {
-		// 	console.log(initiator.host)
-		// 	if (targets.test(initiator.host)) continue
-		// 	//if (all(service, null, options, config, redirects).includes(initiator.origin) && reverse(initiator) == url) return "BYPASSTAB"
-		// }
-
-
 		if (Object.keys(config.services[service].frontends).length > 1) {
 			if (
 				type == "sub_frame" && config.services[service].embeddable
@@ -86,6 +81,14 @@ function redirect(url, type, initiator, forceRedirection) {
 			) frontend = options[service].embedFrontend
 			else frontend = options[service].frontend
 		} else frontend = Object.keys(config.services[service].frontends)[0]
+
+		// let targets = new RegExp(config.services[service].targets.join("|"), "i")
+		if (!regexArray(service, url, config, frontend)) continue
+		// if (initiator) {
+		// 	console.log(initiator.host)
+		// 	if (targets.test(initiator.host)) continue
+		// 	//if (all(service, null, options, config, redirects).includes(initiator.origin) && reverse(initiator) == url) return "BYPASSTAB"
+		// }
 
 
 		if (config.services[service].frontends[frontend].instanceList) {

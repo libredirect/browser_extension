@@ -34,6 +34,10 @@
 					"instanceList": true
 				},
 				"piped": {
+					"excludeTargets": [
+						1,
+						2
+					],
 					"preferences": {
 						"localstorage": [
 							"bufferGoal",
@@ -62,6 +66,10 @@
 					"instanceList": true
 				},
 				"pipedMaterial": {
+					"excludeTargets": [
+						1,
+						2
+					],
 					"preferences": {
 						"localstorage": [
 							"PREFERENCES"
@@ -82,11 +90,19 @@
 					"instanceList": true
 				},
 				"freetube": {
+					"excludeTargets": [
+						1,
+						2
+					],
 					"name": "FreeTube",
 					"embeddable": false,
 					"instanceList": false
 				},
 				"yattee": {
+					"excludeTargets": [
+						1,
+						2
+					],
 					"name": "Yattee",
 					"embeddable": false,
 					"instanceList": false
