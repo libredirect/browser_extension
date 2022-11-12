@@ -1,9 +1,0 @@
-web-ext-artifacts/
-.DS_Store
-nod
-node_modules
-package-lock.json
-src/instances/data.json
-src/instances/blacklist.json
-src/_locales/
-.vscode

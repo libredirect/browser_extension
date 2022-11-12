@@ -31,28 +31,32 @@ function changeFrontendsSettings(service) {
 	for (const frontend in config.services[service].frontends) {
 		if (config.services[service].frontends[frontend].instanceList) {
 			const frontendDiv = document.getElementById(frontend)
-			if (frontend == divs[service].frontend.value) {
-				frontendDiv.style.display = "block"
-			} else {
-				frontendDiv.style.display = "none"
+			if (typeof divs[service].frontend !== "undefined") {
+				if (frontend == divs[service].frontend.value) {
+					frontendDiv.style.display = "block"
+				} else {
+					frontendDiv.style.display = "none"
+				}
 			}
 		}
 	}
 
 	if (config.services[service].embeddable) {
-		if (!config.services[service].frontends[divs[service].frontend.value].embeddable) {
-			divs[service].embedFrontend.disabled = false
-			for (const frontend in config.services[service].frontends) {
-				if (config.services[service].frontends[frontend].embeddable) {
-					const frontendDiv = document.getElementById(frontend)
-					if (frontend == divs[service].embedFrontend.value) {
-						frontendDiv.style.display = "block"
-					} else {
-						frontendDiv.style.display = "none"
+		if (typeof divs[service].frontend !== "undefined") {
+			if (!config.services[service].frontends[divs[service].frontend.value].embeddable) {
+				divs[service].embedFrontend.disabled = false
+				for (const frontend in config.services[service].frontends) {
+					if (config.services[service].frontends[frontend].embeddable) {
+						const frontendDiv = document.getElementById(frontend)
+						if (frontend == divs[service].embedFrontend.value) {
+							frontendDiv.style.display = "block"
+						} else {
+							frontendDiv.style.display = "none"
+						}
 					}
 				}
-			}
-		} else if (Object.keys(config.services[service].frontends).length > 1) divs[service].embedFrontend.disabled = true
+			} else if (Object.keys(config.services[service].frontends).length > 1) divs[service].embedFrontend.disabled = true
+		}
 	}
 }
 

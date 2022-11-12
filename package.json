@@ -10,7 +10,7 @@
 		"build": "web-ext build",
 		"test": "web-ext lint",
 		"instances": "python3 src/instances/get_instances.py && git update-index --assume-unchanged src/instances/blacklist.json src/instances/data.json",
-		"ejs": "ejs src/pages/options/index.ejs -f src/config/config.json -o src/pages/options/index.html && ejs src/pages/popup/popup.ejs -f src/config/config.json -o src/pages/popup/popup.html && prettier -w src/pages/options/index.html src/pages/popup/popup.html"
+		"ejs": "ejs src/pages/options/index.ejs -f src/config/config.json -o src/pages/options/index.html && ejs src/pages/popup/popup.ejs -f src/config/config.json -o src/pages/popup/popup.html"
 	},
 	"repository": {
 		"type": "git",
@@ -24,18 +24,7 @@
 	"homepage": "https://libredirect.codeberg.page",
 	"devDependencies": {
 		"ejs": "^3.1.8",
-		"prettier": "^2.7.1",
 		"web-ext": "^7.2.0"
-	},
-	"prettier": {
-		"semi": false,
-		"tabWidth": 2,
-		"useTabs": true,
-		"arrowParens": "avoid",
-		"printWidth": 200,
-		"bracketSameLine": true,
-		"endOfLine": "lf",
-		"singleQuote": false
 	},
 	"webExt": {
 		"ignoreFiles": [

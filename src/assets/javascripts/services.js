@@ -59,15 +59,17 @@ function regexArray(service, url, config) {
 }
 
 function redirect(url, type, initiator, forceRedirection) {
-	if (type != "main_frame" && type != "sub_frame") return
+	if (type != "main_frame" && type != "sub_frame" && type != "image") return
 	let randomInstance
 	let frontend
 	for (const service in config.services) {
+
 		if (!forceRedirection && !options[service].enabled) continue
+
 		if (config.services[service].embeddable && type != options[service].redirectType && options[service].redirectType != "both") continue
 		if (!config.services[service].embeddable && type != "main_frame") continue
-		// let targets = new RegExp(config.services[service].targets.join("|"), "i")
 
+		// let targets = new RegExp(config.services[service].targets.join("|"), "i")
 		if (!regexArray(service, url, config)) continue
 		// if (initiator) {
 		// 	console.log(initiator.host)
@@ -75,10 +77,16 @@ function redirect(url, type, initiator, forceRedirection) {
 		// 	//if (all(service, null, options, config, redirects).includes(initiator.origin) && reverse(initiator) == url) return "BYPASSTAB"
 		// }
 
+
 		if (Object.keys(config.services[service].frontends).length > 1) {
-			if (type == "sub_frame" && config.services[service].embeddable && !config.services[service].frontends[options[service].frontend].embeddable) frontend = options[service].embedFrontend
+			if (
+				type == "sub_frame" && config.services[service].embeddable
+				&&
+				!config.services[service].frontends[options[service].frontend].embeddable
+			) frontend = options[service].embedFrontend
 			else frontend = options[service].frontend
 		} else frontend = Object.keys(config.services[service].frontends)[0]
+
 
 		if (config.services[service].frontends[frontend].instanceList) {
 			let instanceList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]

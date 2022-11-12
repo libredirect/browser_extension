@@ -309,7 +309,6 @@
 			"frontends": {
 				"rimgo": {
 					"name": "rimgo",
-					"embeddable": true,
 					"instanceList": true
 				}
 			},

@@ -56,7 +56,6 @@ browser.webRequest.onBeforeRequest.addListener(
 		} catch {
 			return null
 		}
-
 		if (tabIdRedirects[details.tabId] == false) return null
 		let newUrl = servicesHelper.redirect(url, details.type, initiator, tabIdRedirects[details.tabId])
 
