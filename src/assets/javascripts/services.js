@@ -45,11 +45,15 @@ function all(service, frontend, options, config, redirects) {
 	return instances
 }
 
-function regexArray(service, url, config) {
+function regexArray(service, url, config, frontend) {
 	if (config.services[service].targets == "datajson") {
-		if (targets[service].includes(utils.protocolHost(url))) return true
+		if (targets[service].startsWith(utils.protocolHost(url))) return true
 	} else {
 		const targetList = config.services[service].targets
+		if (frontend && config.services[service].frontends[frontend].excludeTargets)
+			for (const i in config.services[service].frontends[frontend].excludeTargets) {
+				targetList = targetList.splice(i, 1)
+			}
 		for (const targetString in targetList) {
 			const target = new RegExp(targetList[targetString])
 			if (target.test(url.href)) return true
@@ -59,26 +63,28 @@ function regexArray(service, url, config) {
 }
 
 function redirect(url, type, initiator, forceRedirection) {
-	if (type != "main_frame" && type != "sub_frame") return
+	if (type != "main_frame" && type != "sub_frame" && type != "image") return
 	let randomInstance
 	let frontend
 	for (const service in config.services) {
+
 		if (!forceRedirection && !options[service].enabled) continue
+
 		if (config.services[service].embeddable && type != options[service].redirectType && options[service].redirectType != "both") continue
 		if (!config.services[service].embeddable && type != "main_frame") continue
-		// let targets = new RegExp(config.services[service].targets.join("|"), "i")
-
-		if (!regexArray(service, url, config)) continue
-		// if (initiator) {
-		// 	console.log(initiator.host)
-		// 	if (targets.test(initiator.host)) continue
-		// 	//if (all(service, null, options, config, redirects).includes(initiator.origin) && reverse(initiator) == url) return "BYPASSTAB"
-		// }
 
 		if (Object.keys(config.services[service].frontends).length > 1) {
-			if (type == "sub_frame" && config.services[service].embeddable && !config.services[service].frontends[options[service].frontend].embeddable) frontend = options[service].embedFrontend
+			if (
+				type == "sub_frame" && config.services[service].embeddable
+				&&
+				!config.services[service].frontends[options[service].frontend].embeddable
+			) frontend = options[service].embedFrontend
 			else frontend = options[service].frontend
 		} else frontend = Object.keys(config.services[service].frontends)[0]
+
+		if (!regexArray(service, url, config, frontend)) continue
+
+		if (initiator && all(service, null, options, config, redirects).includes(initiator.origin)) return "BYPASSTAB"
 
 		if (config.services[service].frontends[frontend].instanceList) {
 			let instanceList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]
@@ -88,7 +94,7 @@ function redirect(url, type, initiator, forceRedirection) {
 		} else if (config.services[service].frontends[frontend].singleInstance) randomInstance = config.services[service].frontends[frontend].singleInstance
 		break
 	}
-	if (!frontend) return
+	if (!frontend || !randomInstance) return
 
 	// Here is a (temperory) space for defining constants required in 2 or more switch cases.
 	// When possible, try have the two switch cases share all their code as done with searx and searxng.
@@ -108,7 +114,7 @@ function redirect(url, type, initiator, forceRedirection) {
 		}
 		return [zoom, lon, lat]
 	}
-
+	console.log(frontend)
 	switch (frontend) {
 		// This is where all instance-specific code must be ran to convert the service url to one that can be understood by the frontend.
 		case "beatbump":

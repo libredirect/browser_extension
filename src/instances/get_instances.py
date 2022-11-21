@@ -334,18 +334,13 @@ def bibliogram():
 
 
 def libreddit():
-    fetchJsonList('libreddit', 'Libreddit', 'https://github.com/ferritreader/libreddit-instances/raw/master/instances.json',
+    fetchJsonList('libreddit', 'Libreddit', 'https://github.com/libreddit/libreddit-instances/raw/master/instances.json',
                   {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, True)
 
 
 def teddit():
     fetchJsonList('teddit', 'Teddit', 'https://codeberg.org/teddit/teddit/raw/branch/main/instances.json',
                   {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, False)
-
-
-def ferrit():
-    fetchJsonList('ferrit', 'Ferrit', 'https://raw.githubusercontent.com/ferritreader/ferrit-instances/master/instances.json',
-                  {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, True)
 
 
 def wikiless():
@@ -505,7 +500,6 @@ nitter()
 bibliogram()
 libreddit()
 teddit()
-ferrit()
 wikiless()
 scribe()
 quetre()
