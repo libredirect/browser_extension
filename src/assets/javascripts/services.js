@@ -82,14 +82,9 @@ function redirect(url, type, initiator, forceRedirection) {
 			else frontend = options[service].frontend
 		} else frontend = Object.keys(config.services[service].frontends)[0]
 
-		// let targets = new RegExp(config.services[service].targets.join("|"), "i")
 		if (!regexArray(service, url, config, frontend)) continue
-		// if (initiator) {
-		// 	console.log(initiator.host)
-		// 	if (targets.test(initiator.host)) continue
-		// 	//if (all(service, null, options, config, redirects).includes(initiator.origin) && reverse(initiator) == url) return "BYPASSTAB"
-		// }
 
+		if (initiator && all(service, null, options, config, redirects).includes(initiator.origin)) return "BYPASSTAB"
 
 		if (config.services[service].frontends[frontend].instanceList) {
 			let instanceList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]
@@ -99,7 +94,7 @@ function redirect(url, type, initiator, forceRedirection) {
 		} else if (config.services[service].frontends[frontend].singleInstance) randomInstance = config.services[service].frontends[frontend].singleInstance
 		break
 	}
-	if (!frontend) return
+	if (!frontend || !randomInstance) return
 
 	// Here is a (temperory) space for defining constants required in 2 or more switch cases.
 	// When possible, try have the two switch cases share all their code as done with searx and searxng.
@@ -119,7 +114,7 @@ function redirect(url, type, initiator, forceRedirection) {
 		}
 		return [zoom, lon, lat]
 	}
-
+	console.log(frontend)
 	switch (frontend) {
 		// This is where all instance-specific code must be ran to convert the service url to one that can be understood by the frontend.
 		case "beatbump":
