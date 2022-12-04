@@ -212,7 +212,7 @@
         "message": "Návrat k normálnímu protokolu, pokud pro současný nebudou dostupné žádné instance"
     },
     "toggleTab": {
-        "message": "Přepnout přesměrovánív této kartě",
+        "message": "Přepnout přesměrování v této kartě",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
