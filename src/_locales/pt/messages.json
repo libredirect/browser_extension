@@ -1,1 +1,222 @@
-{}
+{
+    "extensionDescription": {
+        "message": "Uma extensão para os navegadores de Internet que redireciona sites populares para interfaces gráficas e interfaces de textos alternativas e amigáveis que respeitam a privacidade",
+        "description": "description of the extension"
+    },
+    "tiktok": {
+        "message": "TikTok",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "Exportar configurações",
+        "description": "used in the settings page"
+    },
+    "searchNote": {
+        "message": "Nota: utilize a pesquisa do LibRedirect com todo o seu potencial para torná-lo o seu motor de busca padrão.",
+        "description": "used in the settings page"
+    },
+    "redirectionCanceled": {
+        "message": "Redirecionamento cancelado",
+        "description": "used in instance_offline.js"
+    },
+    "embeddedVids": {
+        "message": "Interface gráfica para vídeos embutidos",
+        "description": "used in the settings page"
+    },
+    "redirectType": {
+        "message": "Tipo de redirecionamento",
+        "description": "used in the settings page"
+    },
+    "redirectLink": {
+        "message": "Tentar redirecionar esta hiperligação",
+        "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "onlyNotEmbedded": {
+        "message": "apenas os não embutidos",
+        "description": "used in the settings page"
+    },
+    "instanceOffline": {
+        "message": "Esta instância está desligada (off-line), será redirecionada após",
+        "description": "used in instance_offline.html"
+    },
+    "unifySettings": {
+        "message": "Unificar configurações"
+    },
+    "notFullyPrivate": {
+        "message": "Esta não é uma interface gráfica totalmente privada."
+    },
+    "both": {
+        "message": "ambos",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "só embutidos",
+        "description": "used in the settings page"
+    },
+    "cancel": {
+        "message": "Cancelar",
+        "description": "used in instance_offline.html"
+    },
+    "copyRaw": {
+        "message": "Copiar URL original"
+    },
+    "testInstancesLatency": {
+        "message": "Testar latência das instâncias"
+    },
+    "lbryDesktop": {
+        "message": "LBRY Desktop"
+    },
+    "toggleTab": {
+        "message": "Alternar redirecionamentos neste separador",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "general": {
+        "message": "Geral",
+        "description": "used in the settings page"
+    },
+    "switchInstance": {
+        "message": "Trocar de instância",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "settings": {
+        "message": "Configurações",
+        "description": "used in the popup"
+    },
+    "search": {
+        "message": "Pesquisar",
+        "description": "used in the settings page"
+    },
+    "translate": {
+        "message": "Traduzir",
+        "description": "used in the settings page"
+    },
+    "maps": {
+        "message": "Mapas",
+        "description": "used in the settings page"
+    },
+    "sendFiles": {
+        "message": "Enviar ficheiros",
+        "description": "used in the settings page"
+    },
+    "youtube": {
+        "message": "YouTube",
+        "description": "used in the settings page"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "used in the settings page"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "used in the settings page"
+    },
+    "reddit": {
+        "message": "Reddit",
+        "description": "used in the settings page"
+    },
+    "ytmusic": {
+        "message": "YT Music",
+        "description": "used in the settings page"
+    },
+    "imgur": {
+        "message": "Imgur",
+        "description": "used in the settings page"
+    },
+    "wikipedia": {
+        "message": "Wikipédia",
+        "description": "used in the settings page"
+    },
+    "peertube": {
+        "message": "PeerTube",
+        "description": "used in the settings page"
+    },
+    "medium": {
+        "message": "Medium",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "Tema",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "Sistema",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "Claro",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Escuro",
+        "description": "used in the settings page"
+    },
+    "autoRedirect": {
+        "message": "Redirecionar automaticamente das instâncias que estão desligadas (off-line) para as que estão ligadas (on-line)",
+        "description": "used in the settings page"
+    },
+    "exceptions": {
+        "message": "Exceções",
+        "description": "used in the settings page"
+    },
+    "updateInstances": {
+        "message": "Atualizar as instâncias",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "Importar configurações",
+        "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "Repor configurações",
+        "description": "used in the settings page"
+    },
+    "customPopup": {
+        "message": "Personalizar janela popup",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Ativar",
+        "description": "used in the settings page"
+    },
+    "protocol": {
+        "message": "Protocolo",
+        "description": "used in the settings page"
+    },
+    "normal": {
+        "message": "Normal",
+        "description": "used in the settings page"
+    },
+    "defaultInstances": {
+        "message": "Instâncias predefinidas",
+        "description": "used in the settings page"
+    },
+    "customInstances": {
+        "message": "Instâncias personalizadas",
+        "description": "used in the settings page"
+    },
+    "toggleAll": {
+        "message": "Ativar ou desativar tudo",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Interface",
+        "description": "used in the settings page"
+    },
+    "instanceIsOff": {
+        "message": "Esta instância está desligada (off-line)",
+        "description": "used in instance_offline.html"
+    },
+    "copied": {
+        "message": "Copiado"
+    },
+    "lbry": {
+        "message": "LBRY"
+    },
+    "protocolFallback": {
+        "message": "Retornar ao normal se não houver outras instâncias disponíveis para o protocolo atual"
+    }
+}
