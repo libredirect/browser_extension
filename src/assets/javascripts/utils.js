@@ -103,6 +103,11 @@ async function processDefaultCustomInstances(service, frontend, network, documen
         <input type="checkbox" class="toggle-all"/>
       </div>`,
 		...redirects[frontend][network]
+			.sort((a, b) =>
+				(cloudflareBlackList.includes(a) && !cloudflareBlackList.includes(b))
+				||
+				(authenticateBlackList.includes(a) && !authenticateBlackList.includes(b))
+			)
 			.map(x => {
 				const cloudflare = cloudflareBlackList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ""
 				const authenticate = authenticateBlackList.includes(x) ? ' <span style="color:orange;">authenticate</span>' : ""
