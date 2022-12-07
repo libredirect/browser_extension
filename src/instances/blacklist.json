@@ -1,6 +1,5 @@
 {
   "cloudflare": [
-    "https://invidious.rhyshl.live",
     "https://piped.video",
     "https://piped.tokhmi.xyz",
     "https://piped.moomoo.me",
@@ -62,41 +61,45 @@
     "https://rimgo.encrypted-data.xyz",
     "https://rimgo.marcopisco.com",
     "https://beatbump.ml",
-    "https://paste.yeahnet.dev",
+    "https://0a0bin.klowdee.host",
     "https://sendpass.ru",
-    "https://luckvintage.com",
-    "https://0.klowdee.host",
-    "https://p.darklab.sh",
     "https://0.0g.gg",
-    "https://privatebin.io",
-    "https://andoc.yateam.cc",
     "https://paste.oelrichsgarcia.de",
+    "https://privatebin.io",
+    "https://p.darklab.sh",
+    "https://paste.yeahnet.dev",
     "https://bonus01.hwb0307.com",
-    "https://bin.klowdee.host",
-    "https://0a0bin.klowdee.host"
+    "https://0.klowdee.host",
+    "https://luckvintage.com",
+    "https://andoc.yateam.cc",
+    "https://bin.klowdee.host"
   ],
   "authenticate": [
     "https://nitter:nitter@nitter.nixnet.services"
   ],
   "offline": [
+    "https://piped-material.xn--17b.net",
+    "https://piped-material.ftp.sh",
     "https://proxitok.odyssey346.dev",
     "https://proxitok.mha.fi",
     "https://send.mni.li",
+    "https://nitter.hu",
     "https://nitter.grimneko.de",
     "https://twtr.bch.bar",
-    "https://nitter.foss.wtf",
     "https://twt.funami.tech",
-    "https://nitter.platypush.tech",
     "https://bibliogram.1d4.us",
-    "https://lr.4201337.xyz",
     "https://teddit.ggc-project.de",
+    "https://teddit.tokhmi.xyz",
     "https://wikiless.sethforprivacy.com",
     "https://quetreus.herokuapp.com",
     "https://libremdbeu.herokuapp.com",
+    "https://st.tokhmi.xyz",
     "https://st.odyssey346.dev",
+    "https://search.vidhukant.xyz",
     "https://gowogle.voring.me",
     "https://i.bcow.xyz",
     "https://i.actionsack.com",
-    "https://lbry.bcow.xyz"
+    "https://lbry.bcow.xyz",
+    "https://stube.tokhmi.xyz"
   ]
 }
