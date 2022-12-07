@@ -117,21 +117,6 @@ def is_authenticate(url):
         return False
     return False
 
-
-def is_offline(url):
-    try:
-        r = requests.get(url, timeout=5, headers=headers)
-        if r.status_code >= 400:
-            print(url + ' is ' + Fore.RED + 'offline' + Style.RESET_ALL)
-            print("Status code")
-            print(r.status_code)
-            return True
-        else:
-            return False
-    except Exception:
-        return False
-
-
 def fetchCache(frontend, name):
     try:
         with open('./src/instances/data.json') as file:
@@ -524,7 +509,6 @@ mightyList = idnaEncode(mightyList)
 
 cloudflare = []
 authenticate = []
-offline = []
 for k1, v1 in mightyList.items():
     if type(mightyList[k1]) is dict:
         for k2, v2 in mightyList[k1].items():
@@ -537,15 +521,12 @@ for k1, v1 in mightyList.items():
                         cloudflare.append(instance)
                     if not instance.endswith('.onion') and not instance.endswith('.i2p') and not instance.endswith('.loki') and is_authenticate(instance):
                         authenticate.append(instance)
-                    elif not instance.endswith('.onion') and not instance.endswith('.i2p') and not instance.endswith('.loki') and is_offline(instance):
-                        offline.append(instance)
 
 peertube()
 
 blacklist = {
     'cloudflare': cloudflare,
     'authenticate': authenticate,
-    'offline': offline
 }
 
 # Writing to file

@@ -550,50 +550,6 @@ function reverse(url, urlString) {
 	})
 }
 
-function unifyPreferences(url, tabId) {
-	return new Promise(async resolve => {
-		await init()
-		const protocolHost = utils.protocolHost(url)
-		for (const service in config.services) {
-			for (const frontend in config.services[service].frontends) {
-				if (all(service, frontend, options, config, redirects).includes(protocolHost)) {
-					let instancesList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]
-					if (options.networkFallback && options.network != "clearnet") instancesList.push(...options[frontend].clearnet.enabled, ...options[frontend].clearnet.custom)
-
-					const frontendObject = config.services[service].frontends[frontend]
-					if ("cookies" in frontendObject.preferences) {
-						for (const cookie of frontendObject.preferences.cookies) {
-							await utils.copyCookie(url, instancesList, cookie)
-						}
-					}
-					if ("localstorage" in frontendObject.preferences) {
-						browser.storage.local.set({ tmp: [frontend, frontendObject.preferences.localstorage] })
-						browser.tabs.executeScript(tabId, {
-							file: "/assets/javascripts/get-localstorage.js",
-							runAt: "document_start",
-						})
-						for (const instance of instancesList)
-							browser.tabs.create({ url: instance }, tab =>
-								browser.tabs.executeScript(tab.id, {
-									file: "/assets/javascripts/set-localstorage.js",
-									runAt: "document_start",
-								})
-							)
-					}
-					/*
-					if ("indexeddb" in frontendObject.preferences) {
-					}
-					if ("token" in frontendObject.preferences) {
-					}
-					*/
-					resolve(true)
-					return
-				}
-			}
-		}
-	})
-}
-
 function setRedirects(passedRedirects) {
 	return new Promise(resolve => {
 		fetch("/config/config.json")
@@ -662,7 +618,6 @@ function initDefaults() {
 							let targets = {}
 							let config = JSON.parse(configData)
 							const localstorage = {}
-							const latency = {}
 							for (const service in config.services) {
 								options[service] = {}
 								if (config.services[service].targets == "datajson") {
@@ -687,7 +642,7 @@ function initDefaults() {
 									}
 								}
 							}
-							browser.storage.local.set({ redirects, options, targets, latency, localstorage })
+							browser.storage.local.set({ redirects, options, targets, localstorage })
 							resolve()
 						})
 					})
@@ -702,7 +657,6 @@ function upgradeOptions() {
 			.then(configData => {
 				browser.storage.local.get(null, r => {
 					let options = r.options
-					let latency = {}
 					const config = JSON.parse(configData)
 					options.exceptions = r.exceptions
 					if (r.theme != "DEFAULT") options.theme = r.theme
@@ -717,7 +671,6 @@ function upgradeOptions() {
 						options.popupServices.splice(tmp, 1)
 						options.popupServices.push("sendFiles")
 					}
-					options.autoRedirect = r.autoRedirect
 					switch (r.onlyEmbeddedVideo) {
 						case "onlyNotEmbedded":
 							options.youtube.redirectType = "main_frame"
@@ -747,7 +700,6 @@ function upgradeOptions() {
 						if (r[oldService + "EmbedFrontend"] && (service != "youtube" || r[oldService + "EmbedFrontend"] == "invidious" || r[oldService + "EmbedFrontend"] == "piped"))
 							options[service].embedFrontend = r[oldService + "EmbedFrontend"]
 						for (const frontend in config.services[service].frontends) {
-							if (r[frontend + "Latency"]) latency[frontend] = r[frontend + "Latency"]
 							for (const network in config.networks) {
 								let protocol
 								if (network == "clearnet") protocol = "normal"
@@ -763,7 +715,7 @@ function upgradeOptions() {
 							}
 						}
 					}
-					browser.storage.local.set({ options, latency }, () => resolve())
+					browser.storage.local.set({ options }, () => resolve())
 				})
 			})
 	})
@@ -870,7 +822,6 @@ export default {
 	computeService,
 	switchInstance,
 	reverse,
-	unifyPreferences,
 	setRedirects,
 	initDefaults,
 	upgradeOptions,

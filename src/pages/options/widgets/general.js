@@ -121,35 +121,10 @@ resetSettings.addEventListener("click", async () => {
 	})
 })
 
-let autoRedirectElement = document.getElementById("auto-redirect")
-autoRedirectElement.addEventListener("change", event => {
-	setOption("autoRedirect", "checkbox", event)
-})
-
 let themeElement = document.getElementById("theme")
 themeElement.addEventListener("change", event => {
 	setOption("theme", "select", event)
 	location.reload()
-})
-
-let networkElement = document.getElementById("network")
-networkElement.addEventListener("change", event => {
-	setOption("network", "select", event)
-	location.reload()
-})
-
-let networkFallbackCheckbox = document.getElementById("network-fallback-checkbox")
-networkFallbackCheckbox.addEventListener("change", event => {
-	setOption("networkFallback", "checkbox", event)
-})
-
-let latencyOutput = document.getElementById("latency-output")
-let latencyInput = document.getElementById("latency-input")
-latencyInput.addEventListener("change", event => {
-	setOption("latencyThreshold", "range", event)
-})
-latencyInput.addEventListener("input", event => {
-	latencyOutput.value = event.target.value
 })
 
 let nameCustomInstanceInput = document.getElementById("exceptions-custom-instance")
@@ -173,19 +148,8 @@ for (const service in config.services) {
 }
 
 browser.storage.local.get("options", r => {
-	autoRedirectElement.checked = r.options.autoRedirect
 	themeElement.value = r.options.theme
-	networkElement.value = r.options.network
-	networkFallbackCheckbox.checked = r.options.networkFallback
-	latencyOutput.value = r.options.latencyThreshold
 	let options = r.options
-
-	//let networkFallbackElement = document.getElementById("network-fallback")
-	if (networkElement.value == "clearnet") {
-		networkFallbackCheckbox.disabled = true
-	} else {
-		networkFallbackCheckbox.disabled = false
-	}
 
 	instanceTypeElement.addEventListener("change", event => {
 		instanceType = event.target.options[instanceTypeElement.selectedIndex].value
