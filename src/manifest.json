@@ -39,7 +39,7 @@
 	"chrome_settings_overrides": {
 		"search_provider": {
 			"name": "__MSG_extensionName__",
-			"keyword": "libredirect",
+			"keyword": "@libredirect",
 			"favicon_url": "https://raw.githubusercontent.com/libredirect/libredirect/master/src/assets/images/libredirect-16.png",
 			"search_url": "https://search.libredirect.invalid/?q={searchTerms}",
 			"encoding": "UTF-8",
