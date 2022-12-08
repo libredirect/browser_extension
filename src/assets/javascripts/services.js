@@ -138,11 +138,11 @@ function redirect(url, type, initiator, forceRedirection) {
 			else return `${randomInstance}${url.pathname}/`
 		case "searx":
 		case "searxng":
-			return `${randomInstance}/?q=${encodeURIComponent(url.searchParams.get("q"))}`
+			return `${randomInstance}/${url.search}`
 		case "whoogle":
-			return `${randomInstance}/search?q=${encodeURIComponent(url.searchParams.get("q"))}`
+			return `${randomInstance}/search${url.search}`
 		case "librex":
-			return `${randomInstance}/search.php?q=${encodeURIComponent(url.searchParams.get("q"))}`
+			return `${randomInstance}/search.php${url.search}`
 		case "send":
 			return randomInstance
 		case "nitter":
