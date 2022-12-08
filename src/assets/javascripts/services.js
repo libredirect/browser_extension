@@ -47,7 +47,9 @@ function all(service, frontend, options, config, redirects) {
 
 function regexArray(service, url, config, frontend) {
 	if (config.services[service].targets == "datajson") {
-		if (targets[service].startsWith(utils.protocolHost(url))) return true
+		for (const instance of targets[service]) {
+			if (instance.startsWith(utils.protocolHost(url))) return true
+		}
 	} else {
 		const targetList = config.services[service].targets
 		if (frontend && config.services[service].frontends[frontend].excludeTargets)
@@ -443,8 +445,10 @@ function redirect(url, type, initiator, forceRedirection) {
 				else return `${randomInstance}${url.pathname}${url.search}&teddit_proxy=${url.hostname}`
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
+		case "simpleertube":
+			return `${randomInstance}/${url.hostname}${url.pathname}${url.search}`
 		default:
-			return `${randomInstance}${url.pathname}${url.search}`
+			return `${randomInstance}${url.pathname}${url.search} `
 	}
 }
 
@@ -506,7 +510,7 @@ function switchInstance(url) {
 				return
 			}
 			const randomInstance = utils.getRandomInstance(instancesList)
-			const oldUrl = `${oldInstance}${url.pathname}${url.search}`
+			const oldUrl = `${oldInstance}${url.pathname}${url.search} `
 			// This is to make instance switching work when the instance depends on the pathname, eg https://darmarit.org/searx
 			// Doesn't work because of .includes array method, not a top priotiry atm
 			resolve(oldUrl.replace(oldInstance, randomInstance))
