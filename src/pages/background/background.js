@@ -112,20 +112,6 @@ browser.contextMenus.create({
 	contexts: ["browser_action"],
 })
 
-try {
-	browser.contextMenus.create({
-		id: "toggleTab",
-		title: browser.i18n.getMessage("toggleTab"),
-		contexts: ["page", "tab"],
-	})
-} catch {
-	browser.contextMenus.create({
-		id: "toggleTab",
-		title: browser.i18n.getMessage("toggleTab"),
-		contexts: ["page"],
-	})
-}
-
 browser.contextMenus.create({
 	id: "redirectLink",
 	title: browser.i18n.getMessage("redirectLink"),
