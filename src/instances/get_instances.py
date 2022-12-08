@@ -442,9 +442,7 @@ def libreTranslate():
 
 
 def breezeWiki():
-    fetchRegexList('breezeWiki', 'BreezeWiki', 'https://gitdab.com/cadence/breezewiki-docs/raw/branch/main/docs.scrbl',
-                   r"\(\"[^\n\s\r\t\f\v\"]+\" \"https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+(?:\/[^\s\/]+)*\" \"(https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+(?:\/[^\s\/]+)*)\"\)")
-
+    fetchJsonList('breezeWiki', 'BreezeWiki', 'https://docs.breezewiki.com/files/instances.json', 'instance', False)
 
 def privateBin():
     fetchJsonList('privateBin', 'PrivateBin',
