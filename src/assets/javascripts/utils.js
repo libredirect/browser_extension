@@ -188,7 +188,7 @@ async function processDefaultCustomInstances(service, frontend, network, documen
 			event.preventDefault()
 			let frontendCustomInstanceInput = frontendNetworkElement.getElementsByClassName("custom-instance")[0]
 			let url = new URL(frontendCustomInstanceInput.value)
-			let protocolHostVar = url.href
+			let protocolHostVar = protocolHost(url)
 			if (frontendCustomInstanceInput.validity.valid && !redirects[frontend][network].includes(protocolHostVar)) {
 				if (!frontendCustomInstances.includes(protocolHostVar)) {
 					frontendCustomInstances.push(protocolHostVar)

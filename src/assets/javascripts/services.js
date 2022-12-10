@@ -97,9 +97,6 @@ function redirect(url, type, initiator, forceRedirection) {
 		break
 	}
 	if (!frontend || !randomInstance) return
-	let randomInstanceURL = new URL(randomInstance);
-	let allParams = randomInstanceURL.searchParams
-	url.searchParams.forEach((value, key) => allParams.append(key, value))
 
 	// Here is a (temperory) space for defining constants required in 2 or more switch cases.
 	// When possible, try have the two switch cases share all their code as done with searx and searxng.
@@ -119,6 +116,7 @@ function redirect(url, type, initiator, forceRedirection) {
 		}
 		return [zoom, lon, lat]
 	}
+	console.log(frontend)
 	switch (frontend) {
 		// This is where all instance-specific code must be ran to convert the service url to one that can be understood by the frontend.
 		case "beatbump":
@@ -449,11 +447,8 @@ function redirect(url, type, initiator, forceRedirection) {
 			return `${randomInstance}${url.pathname}${url.search}`
 		case "simpleertube":
 			return `${randomInstance}/${url.hostname}${url.pathname}${url.search}`
-		case "invidious":
-		case "piped":
-			return `${utils.protocolHost(randomInstanceURL)}${url.pathname}?${allParams.toString()}`
 		default:
-			return `${randomInstance}${url.pathname}${url.search}`
+			return `${randomInstance}${url.pathname}${url.search} `
 	}
 }
 
