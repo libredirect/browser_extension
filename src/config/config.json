@@ -140,7 +140,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.)?instagram\\.com\\/?(p\\/|$)"
+				"^https?:\\/{2}(www\\.)?instagram\\.com\\/?(p\\/|reel\\/|$)"
 			],
 			"name": "Instagram",
 			"options": {
