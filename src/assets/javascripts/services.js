@@ -413,7 +413,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.hostname.match(/^[a-zA-Z0-9-]+\.fandom\.com/)) {
 				wiki = url.hostname.match(/^[a-zA-Z0-9-]+(?=\.fandom\.com)/)
 				if (wiki == "www" || !wiki) wiki = ""
-				else wiki = "/" + wiki
+				else wiki = `/${wiki}`;
 				urlpath = url.pathname
 			} else {
 				wiki = url.pathname.match(/(?<=wiki\/w:c:)[a-zA-Z0-9-]+(?=:)/)
@@ -544,6 +544,14 @@ function reverse(url, urlString) {
 				case "wikipedia":
 					if (!urlString) resolve(config.services[service].url + url.pathname + url.search)
 					else resolve(url.replace(/https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+/, config.services[service].url))
+					return
+				case "fandom":
+					let regex = url.pathname.match(/^\/([a-zA-Z0-9-]+)\/wiki\/([a-zA-Z0-9-]+)/)
+					if (regex) {
+						resolve(`https://${regex[1]}.fandom.com/wiki/${regex[2]}`)
+						return
+					}
+					resolve()
 					return
 				default:
 					resolve()
