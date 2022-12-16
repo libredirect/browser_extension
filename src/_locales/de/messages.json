@@ -12,7 +12,7 @@
         "description": "used in manifest.json as shortcut description"
     },
     "settings": {
-        "message": "Optionen",
+        "message": "Einstellungen",
         "description": "used in the popup"
     },
     "general": {
