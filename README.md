@@ -45,7 +45,7 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 [![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)&nbsp;
 [![Patreon](./img/patreon.svg)](https://patreon.com/LibRedirect)&nbsp;
 [![Buy me a coffee](./img/bmc.svg)](https://www.buymeacoffee.com/libredirect)&nbsp;
-<a href="https://opencollective.com/libredirect"><img src = ./img/Open-Collective.png width=26% height=27%></a>
+<a href="https://opencollective.com/libredirect"><img src = ./img/Open-Collective.png width=20% height=21%></a>
 
 - ETH: `0x896E5796Da76E49A400A9186E1c459CD2C64b4E8`
 - XMR: `4AM5CVfaGsnEXQQjZSzJvaWufe7pT86ubcZPr83fCjb2Hn3iwcForTWFy2Z3ugXcufUwHaGcucfPMFgPXBFSYGFvNrmV5XR`
