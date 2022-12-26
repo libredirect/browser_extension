@@ -6,6 +6,8 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 [![Firefox users Badge](https://img.shields.io/amo/users/libredirect?label=Firefox%20users)](https://addons.mozilla.org/firefox/addon/libredirect/)
 [![LibrePay Badge](https://img.shields.io/liberapay/gives/libredirect?label=Liberapay)](https://liberapay.com/LibRedirect)
 
+[![OpenCollective Badge](https://opencollective.com/libredirect/tiers/badge.svg)](https://opencollective.com/libredirect#category-CONTRIBUTE)
+
 [![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)&nbsp;
 <a href="./chromium.md">
 <img src ="./img/badge-chromium.png" height=60 >
@@ -31,7 +33,7 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 - LBRY/Odysee => [Librarian](https://codeberg.org/librarian/librarian), [LBRY Desktop](https://lbry.com/get)
 - Search => [SearXNG](https://github.com/searxng/searxng), [SearX](https://searx.github.io/searx/), [Whoogle](https://benbusby.com/projects/whoogle-search/), [LibreX](https://github.com/hnhx/librex/)
 - Translate => [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web), [LingvaTranslate](https://github.com/TheDavidDelta/lingva-translate), [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
-- Maps => [OpenStreetMap](https://www.openstreetmap.org/), [FacilMap](https://github.com/FacilMap/facilmap)
+- Google Maps => [OpenStreetMap](https://www.openstreetmap.org/), [FacilMap](https://github.com/FacilMap/facilmap)
 - Send Files => [Send](https://gitlab.com/timvisee/send)
 
 **Note**: The Extension will be using random instances by default. You can modify this and add custom instances too.
@@ -43,10 +45,8 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 [![Liberapay](./img/liberapay.svg)](https://liberapay.com/LibRedirect)&nbsp;
 [![Patreon](./img/patreon.svg)](https://patreon.com/LibRedirect)&nbsp;
 [![Buy me a coffee](./img/bmc.svg)](https://www.buymeacoffee.com/libredirect)&nbsp;
-<a href="https://opencollective.com/libredirect"><img src = ./img/Open-Collective.png width=17% height=17%></a>
+<a href="https://opencollective.com/libredirect"><img src = ./img/Open-Collective.png width=35% height=27%></a>
 
-- BTC: `bc1qrhue0frps6p2vkg978u9ayethnwprtmfug827q`
-- BCH: `qqz5vfnrngk0tjy73q2688qzw4wnllnuzqfndflhl8`
 - ETH: `0x896E5796Da76E49A400A9186E1c459CD2C64b4E8`
 - XMR: `4AM5CVfaGsnEXQQjZSzJvaWufe7pT86ubcZPr83fCjb2Hn3iwcForTWFy2Z3ugXcufUwHaGcucfPMFgPXBFSYGFvNrmV5XR`
 
@@ -117,5 +117,8 @@ npm run start
 3. select `load unpacked extension`
 4. select `src` folder
 
+---
+
 [Privacy Policy](Privacy-Policy.md)\
 Forked from [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)
+
