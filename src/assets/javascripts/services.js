@@ -47,7 +47,9 @@ function all(service, frontend, options, config, redirects) {
 
 function regexArray(service, url, config, frontend) {
 	if (config.services[service].targets == "datajson") {
-		if (targets[service].startsWith(utils.protocolHost(url))) return true
+		for (const instance of targets[service]) {
+			if (instance.startsWith(utils.protocolHost(url))) return true
+		}
 	} else {
 		const targetList = config.services[service].targets
 		if (frontend && config.services[service].frontends[frontend].excludeTargets)
@@ -128,7 +130,8 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "bibliogram":
 			const reservedPaths = ["u", "p", "privacy"]
 			if (url.pathname === "/" || reservedPaths.includes(url.pathname.split("/")[1])) return `${randomInstance}${url.pathname}${url.search}`
-			if (url.pathname.startsWith("/reel") || url.pathname.startsWith("/tv")) return `${randomInstance}/p${url.pathname.replace(/\/reel|\/tv/i, "")}${url.search}`
+			if (url.pathname.startsWith("/reel")) return `${randomInstance}${url.pathname}`
+			if (url.pathname.startsWith("/tv")) return `${randomInstance}/p${url.pathname.replace(/\/tv/i, "")}${url.search}`
 			else return `${randomInstance}/u${url.pathname}${url.search}` // Likely a user profile, redirect to '/u/...'
 		case "lbryDesktop":
 			return url.href.replace(/^https?:\/{2}odysee\.com\//, "lbry://").replace(/:(?=[a-zA-Z0-9])/g, "#")
@@ -138,11 +141,11 @@ function redirect(url, type, initiator, forceRedirection) {
 			else return `${randomInstance}${url.pathname}/`
 		case "searx":
 		case "searxng":
-			return `${randomInstance}/?q=${encodeURIComponent(url.searchParams.get("q"))}`
+			return `${randomInstance}/${url.search}`
 		case "whoogle":
-			return `${randomInstance}/search?q=${encodeURIComponent(url.searchParams.get("q"))}`
+			return `${randomInstance}/search${url.search}`
 		case "librex":
-			return `${randomInstance}/search.php?q=${encodeURIComponent(url.searchParams.get("q"))}`
+			return `${randomInstance}/search.php${url.search}`
 		case "send":
 			return randomInstance
 		case "nitter":
@@ -411,7 +414,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.hostname.match(/^[a-zA-Z0-9-]+\.fandom\.com/)) {
 				wiki = url.hostname.match(/^[a-zA-Z0-9-]+(?=\.fandom\.com)/)
 				if (wiki == "www" || !wiki) wiki = ""
-				else wiki = "/" + wiki
+				else wiki = `/${wiki}`;
 				urlpath = url.pathname
 			} else {
 				wiki = url.pathname.match(/(?<=wiki\/w:c:)[a-zA-Z0-9-]+(?=:)/)
@@ -443,8 +446,10 @@ function redirect(url, type, initiator, forceRedirection) {
 				else return `${randomInstance}${url.pathname}${url.search}&teddit_proxy=${url.hostname}`
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
+		case "simpleertube":
+			return `${randomInstance}/${url.hostname}${url.pathname}${url.search}`
 		default:
-			return `${randomInstance}${url.pathname}${url.search}`
+			return `${randomInstance}${url.pathname}${url.search} `
 	}
 }
 
@@ -506,7 +511,7 @@ function switchInstance(url) {
 				return
 			}
 			const randomInstance = utils.getRandomInstance(instancesList)
-			const oldUrl = `${oldInstance}${url.pathname}${url.search}`
+			const oldUrl = `${oldInstance}${url.pathname}${url.search} `
 			// This is to make instance switching work when the instance depends on the pathname, eg https://darmarit.org/searx
 			// Doesn't work because of .includes array method, not a top priotiry atm
 			resolve(oldUrl.replace(oldInstance, randomInstance))
@@ -541,56 +546,20 @@ function reverse(url, urlString) {
 					if (!urlString) resolve(config.services[service].url + url.pathname + url.search)
 					else resolve(url.replace(/https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+/, config.services[service].url))
 					return
+				case "fandom":
+					let regex = url.pathname.match(/^\/([a-zA-Z0-9-]+)\/wiki\/([a-zA-Z0-9-]+)/)
+					if (regex) {
+						resolve(`https://${regex[1]}.fandom.com/wiki/${regex[2]}`)
+						return
+					}
+					resolve()
+					return
 				default:
 					resolve()
 					return
 			}
 		}
 		resolve()
-	})
-}
-
-function unifyPreferences(url, tabId) {
-	return new Promise(async resolve => {
-		await init()
-		const protocolHost = utils.protocolHost(url)
-		for (const service in config.services) {
-			for (const frontend in config.services[service].frontends) {
-				if (all(service, frontend, options, config, redirects).includes(protocolHost)) {
-					let instancesList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]
-					if (options.networkFallback && options.network != "clearnet") instancesList.push(...options[frontend].clearnet.enabled, ...options[frontend].clearnet.custom)
-
-					const frontendObject = config.services[service].frontends[frontend]
-					if ("cookies" in frontendObject.preferences) {
-						for (const cookie of frontendObject.preferences.cookies) {
-							await utils.copyCookie(url, instancesList, cookie)
-						}
-					}
-					if ("localstorage" in frontendObject.preferences) {
-						browser.storage.local.set({ tmp: [frontend, frontendObject.preferences.localstorage] })
-						browser.tabs.executeScript(tabId, {
-							file: "/assets/javascripts/get-localstorage.js",
-							runAt: "document_start",
-						})
-						for (const instance of instancesList)
-							browser.tabs.create({ url: instance }, tab =>
-								browser.tabs.executeScript(tab.id, {
-									file: "/assets/javascripts/set-localstorage.js",
-									runAt: "document_start",
-								})
-							)
-					}
-					/*
-					if ("indexeddb" in frontendObject.preferences) {
-					}
-					if ("token" in frontendObject.preferences) {
-					}
-					*/
-					resolve(true)
-					return
-				}
-			}
-		}
 	})
 }
 
@@ -662,7 +631,6 @@ function initDefaults() {
 							let targets = {}
 							let config = JSON.parse(configData)
 							const localstorage = {}
-							const latency = {}
 							for (const service in config.services) {
 								options[service] = {}
 								if (config.services[service].targets == "datajson") {
@@ -687,7 +655,7 @@ function initDefaults() {
 									}
 								}
 							}
-							browser.storage.local.set({ redirects, options, targets, latency, localstorage })
+							browser.storage.local.set({ redirects, options, targets, localstorage })
 							resolve()
 						})
 					})
@@ -702,7 +670,6 @@ function upgradeOptions() {
 			.then(configData => {
 				browser.storage.local.get(null, r => {
 					let options = r.options
-					let latency = {}
 					const config = JSON.parse(configData)
 					options.exceptions = r.exceptions
 					if (r.theme != "DEFAULT") options.theme = r.theme
@@ -717,7 +684,6 @@ function upgradeOptions() {
 						options.popupServices.splice(tmp, 1)
 						options.popupServices.push("sendFiles")
 					}
-					options.autoRedirect = r.autoRedirect
 					switch (r.onlyEmbeddedVideo) {
 						case "onlyNotEmbedded":
 							options.youtube.redirectType = "main_frame"
@@ -747,7 +713,6 @@ function upgradeOptions() {
 						if (r[oldService + "EmbedFrontend"] && (service != "youtube" || r[oldService + "EmbedFrontend"] == "invidious" || r[oldService + "EmbedFrontend"] == "piped"))
 							options[service].embedFrontend = r[oldService + "EmbedFrontend"]
 						for (const frontend in config.services[service].frontends) {
-							if (r[frontend + "Latency"]) latency[frontend] = r[frontend + "Latency"]
 							for (const network in config.networks) {
 								let protocol
 								if (network == "clearnet") protocol = "normal"
@@ -763,7 +728,7 @@ function upgradeOptions() {
 							}
 						}
 					}
-					browser.storage.local.set({ options, latency }, () => resolve())
+					browser.storage.local.set({ options }, () => resolve())
 				})
 			})
 	})
@@ -870,7 +835,6 @@ export default {
 	computeService,
 	switchInstance,
 	reverse,
-	unifyPreferences,
 	setRedirects,
 	initDefaults,
 	upgradeOptions,

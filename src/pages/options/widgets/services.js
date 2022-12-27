@@ -108,7 +108,6 @@ for (const service in config.services) {
 			for (const network in config.networks) {
 				utils.processDefaultCustomInstances(service, frontend, network, document)
 			}
-			utils.latency(service, frontend, document, location)
 		}
 	}
 }

@@ -89,47 +89,9 @@ browser.tabs.onRemoved.addListener(tabId => {
 	}
 })
 
-async function redirectOfflineInstance(url, tabId) {
-	let newUrl = await servicesHelper.switchInstance(url, true)
-
-	if (newUrl) {
-		if (counter >= 5) {
-			browser.tabs.update(tabId, {
-				url: `/pages/errors/instance_offline.html?url=${encodeURIComponent(newUrl)}`,
-			})
-			counter = 0
-		} else {
-			browser.tabs.update(tabId, { url: newUrl })
-			counter++
-		}
-	}
-}
-let counter = 0
-
-function isAutoRedirect() {
-	return new Promise(resolve => browser.storage.local.get("options", r => resolve(r.options.autoRedirect == true)))
-}
-
-browser.webRequest.onResponseStarted.addListener(
-	async details => {
-		if (!(await isAutoRedirect())) return null
-		if (details.type == "main_frame" && details.statusCode >= 500) redirectOfflineInstance(new URL(details.url), details.tabId)
-	},
-	{ urls: ["<all_urls>"] }
-)
-
-browser.webRequest.onErrorOccurred.addListener(
-	async details => {
-		if (!(await isAutoRedirect())) return
-		if (details.type == "main_frame") redirectOfflineInstance(new URL(details.url), details.tabId)
-	},
-	{ urls: ["<all_urls>"] }
-)
-
 browser.commands.onCommand.addListener(command => {
 	if (command === "switchInstance") utils.switchInstance()
 	else if (command == "copyRaw") utils.copyRaw()
-	else if (command == "unify") utils.unify()
 })
 
 browser.contextMenus.create({
@@ -149,26 +111,6 @@ browser.contextMenus.create({
 	title: browser.i18n.getMessage("copyRaw"),
 	contexts: ["browser_action"],
 })
-
-browser.contextMenus.create({
-	id: "unify",
-	title: browser.i18n.getMessage("unifySettings"),
-	contexts: ["browser_action"],
-})
-
-try {
-	browser.contextMenus.create({
-		id: "toggleTab",
-		title: browser.i18n.getMessage("toggleTab"),
-		contexts: ["page", "tab"],
-	})
-} catch {
-	browser.contextMenus.create({
-		id: "toggleTab",
-		title: browser.i18n.getMessage("toggleTab"),
-		contexts: ["page"],
-	})
-}
 
 browser.contextMenus.create({
 	id: "redirectLink",
@@ -205,10 +147,6 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 				return
 			case "copyRaw":
 				utils.copyRaw()
-				resolve()
-				return
-			case "unify":
-				utils.unify()
 				resolve()
 				return
 			case "toggleTab":
@@ -254,8 +192,3 @@ browser.webRequest.onHeadersReceived.addListener(
 	{ urls: ["<all_urls>"] },
 	["blocking", "responseHeaders"]
 )
-
-browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
-	if (message.function === "unify") utils.unify(false).then(r => sendResponse({ response: r }))
-	return true
-})

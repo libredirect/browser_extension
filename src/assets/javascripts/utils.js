@@ -13,7 +13,6 @@ function camelCase(str) {
 
 let cloudflareBlackList = []
 let authenticateBlackList = []
-let offlineBlackList = []
 async function initBlackList() {
 	return new Promise(resolve => {
 		fetch("/instances/blacklist.json")
@@ -21,7 +20,6 @@ async function initBlackList() {
 			.then(data => {
 				cloudflareBlackList = JSON.parse(data).cloudflare
 				authenticateBlackList = JSON.parse(data).authenticate
-				offlineBlackList = JSON.parse(data).offline
 				resolve()
 			})
 	})
@@ -60,7 +58,6 @@ function protocolHost(url) {
 }
 
 async function processDefaultCustomInstances(service, frontend, network, document) {
-	let instancesLatency
 	let frontendNetworkElement = document.getElementById(frontend).getElementsByClassName(network)[0]
 
 	let frontendCustomInstances = []
@@ -74,11 +71,10 @@ async function processDefaultCustomInstances(service, frontend, network, documen
 
 	async function getFromStorage() {
 		return new Promise(async resolve =>
-			browser.storage.local.get(["options", "redirects", "latency"], r => {
+			browser.storage.local.get(["options", "redirects",], r => {
 				frontendDefaultRedirects = r.options[frontend][network].enabled
 				frontendCustomInstances = r.options[frontend][network].custom
 				options = r.options
-				instancesLatency = r.latency[frontend] ?? []
 				redirects = r.redirects
 				resolve()
 			})
@@ -106,27 +102,22 @@ async function processDefaultCustomInstances(service, frontend, network, documen
         <x data-localise="__MSG_toggleAll__">Toggle All</x>
         <input type="checkbox" class="toggle-all"/>
       </div>`,
-		...redirects[frontend][network].map(x => {
-			const cloudflare = cloudflareBlackList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ""
-			const authenticate = authenticateBlackList.includes(x) ? ' <span style="color:orange;">authenticate</span>' : ""
-			const offline = offlineBlackList.includes(x) ? ' <span style="color:grey;">offline</span>' : ""
+		...redirects[frontend][network]
+			.sort((a, b) =>
+				(cloudflareBlackList.includes(a) && !cloudflareBlackList.includes(b))
+				||
+				(authenticateBlackList.includes(a) && !authenticateBlackList.includes(b))
+			)
+			.map(x => {
+				const cloudflare = cloudflareBlackList.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ""
+				const authenticate = authenticateBlackList.includes(x) ? ' <span style="color:orange;">authenticate</span>' : ""
 
-			let ms = instancesLatency[x]
-			let latencyColor = ms == -1 ? "red" : ms <= 1000 ? "green" : ms <= 2000 ? "orange" : "red"
-			let latencyLimit
-			if (ms == 5000) latencyLimit = "5000ms+"
-			else if (ms > 5000) latencyLimit = `ERROR: ${ms - 5000}`
-			else if (ms == -1) latencyLimit = "Server not found"
-			else latencyLimit = ms + "ms"
-
-			const latency = x in instancesLatency ? '<span style="color:' + latencyColor + ';">' + latencyLimit + "</span>" : ""
-
-			let warnings = [cloudflare, authenticate, offline, latency].join(" ")
-			return `<div>
+				let warnings = [cloudflare, authenticate].join(" ")
+				return `<div>
                     <x><a href="${x}" target="_blank">${x}</a>${warnings}</x>
                     <input type="checkbox" class="${x}"/>
                   </div>`
-		}),
+			}),
 	].join("\n<hr>\n")
 
 	localise.localisePage()
@@ -168,7 +159,7 @@ async function processDefaultCustomInstances(service, frontend, network, documen
 				x => `<div>
                 ${x}
                 <button class="add clear-${x}">
-                  <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                  <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
                     <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
                   </svg>
                 </button>
@@ -211,133 +202,6 @@ async function processDefaultCustomInstances(service, frontend, network, documen
 	})
 }
 
-function ping(href) {
-	return new Promise(async resolve => {
-		let average = 0
-		let time
-		for (let i = 0; i < 3; i++) {
-			time = await pingOnce(href)
-			if (i == 0) continue
-			if (time >= 5000) {
-				resolve(time)
-				return
-			}
-			average += time
-		}
-		average = parseInt(average / 3)
-		resolve(average)
-	})
-}
-
-function pingOnce(href) {
-	return new Promise(async resolve => {
-		let started
-		let http = new XMLHttpRequest()
-		http.timeout = 5000
-		http.ontimeout = () => resolve(5000)
-		http.onerror = () => resolve()
-		http.onreadystatechange = () => {
-			if (http.readyState == 2) {
-				if (http.status == 200) {
-					let ended = new Date().getTime()
-					http.abort()
-					resolve(ended - started)
-				} else {
-					resolve(5000 + http.status)
-				}
-			}
-		}
-		http.open("GET", `${href}?_=${new Date().getTime()}`, true)
-		started = new Date().getTime()
-		http.send(null)
-	})
-}
-
-async function testLatency(element, instances, frontend) {
-	return new Promise(async resolve => {
-		let myList = {}
-		let latencyThreshold, options
-		browser.storage.local.get(["options"], r => {
-			latencyThreshold = r.options.latencyThreshold
-			options = r.options
-		})
-		for (const href of instances) {
-			await ping(href).then(time => {
-				let color
-				if (time) {
-					myList[href] = time
-					if (time <= 1000) color = "green"
-					else if (time <= 2000) color = "orange"
-					else color = "red"
-
-					if (time > latencyThreshold && options[frontend].clearnet.enabled.includes(href)) {
-						options[frontend].clearnet.enabled.splice(options[frontend].clearnet.enabled.indexOf(href), 1)
-					}
-
-					let text
-					if (time == 5000) text = "5000ms+"
-					else if (time > 5000) text = `ERROR: ${time - 5000}`
-					else text = `${time}ms`
-					element.innerHTML = `${href}:&nbsp;<span style="color:${color};">${text}</span>`
-				} else {
-					myList[href] = -1
-					color = "red"
-					element.innerHTML = `${href}:&nbsp;<span style="color:${color};">Server not found</span>`
-					if (options[frontend].clearnet.enabled.includes(href)) options[frontend].clearnet.enabled.splice(options[frontend].clearnet.enabled.indexOf(href), 1)
-				}
-			})
-		}
-		browser.storage.local.set({ options })
-		resolve(myList)
-	})
-}
-
-function copyCookie(targetUrl, urls, name) {
-	return new Promise(resolve => {
-		const query = {
-			url: protocolHost(targetUrl),
-			name: name,
-		}
-		browser.cookies.getAll(query, async cookies => {
-			for (const cookie of cookies)
-				if (cookie.name == name) {
-					for (const url of urls) {
-						const setQuery = {
-							url: url,
-							name: name,
-							value: cookie.value,
-							secure: true,
-							expirationDate: cookie.expirationDate,
-						}
-						browser.cookies.set(setQuery)
-					}
-					break
-				}
-			resolve()
-		})
-	})
-}
-
-function getPreferencesFromToken(frontend, targetUrl, urls, name, endpoint) {
-	return new Promise(resolve => {
-		const http = new XMLHttpRequest()
-		const url = `${targetUrl}${endpoint}`
-		http.open("GET", url, false)
-		//http.setRequestHeader("Cookie", `${name}=${cookie.value}`)
-		http.send(null)
-		const preferences = JSON.parse(http.responseText)
-		let formdata = new FormData()
-		for (var key in preferences) formdata.append(key, preferences[key])
-		for (const url of urls) {
-			const http = new XMLHttpRequest()
-			http.open("POST", `${url}/settings/stay`, false)
-			http.send(null)
-		}
-		resolve()
-		return
-	})
-}
-
 function copyRaw(test, copyRawElement) {
 	return new Promise(resolve => {
 		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
@@ -370,25 +234,6 @@ function copyRaw(test, copyRawElement) {
 	})
 }
 
-function unify() {
-	return new Promise(resolve => {
-		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
-			let currTab = tabs[0]
-			if (currTab) {
-				let url
-				try {
-					url = new URL(currTab.url)
-				} catch {
-					resolve()
-					return
-				}
-
-				resolve(await servicesHelper.unifyPreferences(url, currTab.id))
-			}
-		})
-	})
-}
-
 function switchInstance(test) {
 	return new Promise(resolve => {
 		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
@@ -412,41 +257,12 @@ function switchInstance(test) {
 	})
 }
 
-function latency(service, frontend, document, location) {
-	let latencyElement = document.getElementById(`latency-${frontend}`)
-	let latencyLabel = document.getElementById(`latency-${frontend}-label`)
-	latencyElement.addEventListener("click", async () => {
-		let reloadWindow = () => location.reload()
-		latencyElement.addEventListener("click", reloadWindow)
-		browser.storage.local.get("redirects", r => {
-			let redirects = r.redirects
-			const oldHtml = latencyLabel.innerHTML
-			latencyLabel.innerHTML = "..."
-			testLatency(latencyLabel, redirects[frontend].clearnet, frontend).then(r => {
-				const frontendLatency = r
-				browser.storage.local.get("latency", r => {
-					let latency = r.latency
-					latency[frontend] = frontendLatency
-					browser.storage.local.set({ latency })
-					latencyLabel.innerHTML = oldHtml
-					processDefaultCustomInstances(service, frontend, "clearnet", document)
-					latencyElement.removeEventListener("click", reloadWindow)
-				})
-			})
-		})
-	})
-}
-
 export default {
 	getRandomInstance,
 	updateInstances,
 	protocolHost,
 	processDefaultCustomInstances,
-	latency,
-	copyCookie,
-	getPreferencesFromToken,
 	switchInstance,
 	copyRaw,
-	unify,
 	camelCase,
 }

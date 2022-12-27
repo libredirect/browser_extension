@@ -14,37 +14,6 @@
   </div>
 
   <div class="some-block option-block">
-    <h4 data-localise="__MSG_network__">Network</h4>
-    <select id="network">
-      <% for (const network in config.networks) { -%>
-      <option value="<%= network %>"><%= config.networks[network].name %></option>
-      <% }; %>
-    </select>
-  </div>
-
-  <div id="network-fallback">
-    <div class="some-block option-block">
-      <h4 data-localise="__MSG_networkFallback__">Fallback to clearnet if no instances are available for the current network</h4>
-      <input id="network-fallback-checkbox" type="checkbox" />
-    </div>
-  </div>
-
-  <div class="some-block option-block">
-    <h4 data-localise="__MSG_autoRedirect__"></h4>
-    <input id="auto-redirect" type="checkbox" />
-  </div>
-
-  <form>
-    <div class="some-block option-block">
-      <h4 data-localise="__MSG_latencyThreshold">Latency Threshold</h4>
-      <output id="latency-output" for="latencyInput" name="latencyOutput"></output>
-      <input id="latency-input" type="range" min="50" max="5000" value="1000" name="latencyInput" step="50" />
-    </div>
-  </form>
-
-  <hr>
-
-  <div class="some-block option-block">
     <h4 data-localise="__MSG_exclude_from_redirecting_">Excluded from redirecting</h4>
   </div>
 

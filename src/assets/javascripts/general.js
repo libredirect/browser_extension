@@ -32,10 +32,8 @@ async function initDefaults() {
 					},
 					theme: "detect",
 					popupServices: ["youtube", "twitter", "instagram", "tiktok", "imgur", "reddit", "quora", "translate", "maps"],
-					autoRedirect: false,
 					network: "clearnet",
 					networkFallback: true,
-					latencyThreshold: 1000,
 				},
 			},
 			() => resolve()

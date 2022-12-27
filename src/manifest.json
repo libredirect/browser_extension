@@ -19,7 +19,7 @@
 		"48": "assets/images/libredirect-48.png",
 		"128": "assets/images/libredirect-128.png"
 	},
-	"permissions": ["webRequest", "webRequestBlocking", "storage", "unlimitedStorage", "cookies", "clipboardWrite", "contextMenus", "<all_urls>"],
+	"permissions": ["webRequest", "webRequestBlocking", "storage", "unlimitedStorage", "clipboardWrite", "contextMenus", "<all_urls>"],
 	"browser_action": {
 		"default_title": "__MSG_extensionName__",
 		"browser_style": false,
@@ -39,7 +39,7 @@
 	"chrome_settings_overrides": {
 		"search_provider": {
 			"name": "__MSG_extensionName__",
-			"keyword": "libredirect",
+			"keyword": "@libredirect",
 			"favicon_url": "https://raw.githubusercontent.com/libredirect/libredirect/master/src/assets/images/libredirect-16.png",
 			"search_url": "https://search.libredirect.invalid/?q={searchTerms}",
 			"encoding": "UTF-8",
@@ -58,12 +58,6 @@
 				"default": "Alt+Shift+C"
 			},
 			"description": "Copies the original link. Ex: Copies the original twitter link while in the nitter website"
-		},
-		"unify": {
-			"suggested_key": {
-				"default": "Alt+Shift+U"
-			},
-			"description": "Copies the preferences (cookies, localStorage) from the current opened instance and copy them to all the other selected instances"
 		}
 	},
 	"default_locale": "en",

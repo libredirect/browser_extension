@@ -121,35 +121,10 @@ resetSettings.addEventListener("click", async () => {
 	})
 })
 
-let autoRedirectElement = document.getElementById("auto-redirect")
-autoRedirectElement.addEventListener("change", event => {
-	setOption("autoRedirect", "checkbox", event)
-})
-
 let themeElement = document.getElementById("theme")
 themeElement.addEventListener("change", event => {
 	setOption("theme", "select", event)
 	location.reload()
-})
-
-let networkElement = document.getElementById("network")
-networkElement.addEventListener("change", event => {
-	setOption("network", "select", event)
-	location.reload()
-})
-
-let networkFallbackCheckbox = document.getElementById("network-fallback-checkbox")
-networkFallbackCheckbox.addEventListener("change", event => {
-	setOption("networkFallback", "checkbox", event)
-})
-
-let latencyOutput = document.getElementById("latency-output")
-let latencyInput = document.getElementById("latency-input")
-latencyInput.addEventListener("change", event => {
-	setOption("latencyThreshold", "range", event)
-})
-latencyInput.addEventListener("input", event => {
-	latencyOutput.value = event.target.value
 })
 
 let nameCustomInstanceInput = document.getElementById("exceptions-custom-instance")
@@ -173,19 +148,8 @@ for (const service in config.services) {
 }
 
 browser.storage.local.get("options", r => {
-	autoRedirectElement.checked = r.options.autoRedirect
 	themeElement.value = r.options.theme
-	networkElement.value = r.options.network
-	networkFallbackCheckbox.checked = r.options.networkFallback
-	latencyOutput.value = r.options.latencyThreshold
 	let options = r.options
-
-	//let networkFallbackElement = document.getElementById("network-fallback")
-	if (networkElement.value == "clearnet") {
-		networkFallbackCheckbox.disabled = true
-	} else {
-		networkFallbackCheckbox.disabled = false
-	}
 
 	instanceTypeElement.addEventListener("change", event => {
 		instanceType = event.target.options[instanceTypeElement.selectedIndex].value
@@ -204,7 +168,7 @@ browser.storage.local.get("options", r => {
 				x => `<div>
                       ${x}
                       <button class="add" id="clear-${x}">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
+                        <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
                         fill="currentColor">
                           <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
                         </svg>
