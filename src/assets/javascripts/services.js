@@ -169,7 +169,7 @@ function redirect(url, type, initiator, forceRedirection) {
 
 			if (url.pathname.split("/").includes("tweets")) return `${randomInstance}${url.pathname.replace("/tweets", "")}${search}`
 			if (url.host == "t.co") return `${randomInstance}/t.co${url.pathname}`
-			return `${randomInstance}${url.pathname}${search}`
+			return `${randomInstance}${url.pathname}${search}#m`
 		case "yattee":
 			return url.href.replace(/^https?:\/{2}/, "yattee://")
 		case "freetube":
