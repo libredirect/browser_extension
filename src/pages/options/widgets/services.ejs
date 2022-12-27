@@ -46,28 +46,29 @@
     <% for (const network in config.networks) { -%>
     <div class="<%= network %>">
       <div class="some-block option-block">
-        <h4 data-localise="__MSG_defaultInstances__">Default Instances</h4>
+        <h4><%= network.charAt(0).toUpperCase() + network.slice(1) %></h4>
       </div>
       <div class="checklist"></div>
       <hr />
-      <div class="some-block option-block">
-        <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
-      </div>
-      <form class="custom-instance-form">
-        <div class="some-block option-block">
-          <input class="custom-instance" placeholder="http://<%= frontend %>.<%= config.networks[network].tld %>" type="url" />
-          <button class="add add-instance" type="submit">
-            <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
-              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
-            </svg>
-          </button>
-        </div>
-      </form>
+
       <div class="checklist custom-checklist"></div>
       <% if (network=="clearnet" ) { _%>
       <% } _%>
     </div>
     <% } %>
+    <div class="some-block option-block">
+      <h4 data-localise="__MSG_customInstances__">Custom Instances</h4>
+    </div>
+    <form class="custom-instance-form">
+      <div class="some-block option-block">
+        <input class="custom-instance" placeholder="http://<%= frontend %>.com" type="url" />
+        <button class="add add-instance" type="submit">
+          <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"></path>
+          </svg>
+        </button>
+      </div>
+    </form>
   </div>
   <% } _%> <% } %>
 </section>

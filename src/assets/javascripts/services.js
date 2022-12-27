@@ -89,8 +89,10 @@ function redirect(url, type, initiator, forceRedirection) {
 		if (initiator && all(service, null, options, config, redirects).includes(initiator.origin)) return "BYPASSTAB"
 
 		if (config.services[service].frontends[frontend].instanceList) {
-			let instanceList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]
-			if (instanceList.length === 0 && options.networkFallback) instanceList = [...options[frontend].clearnet.enabled, ...options[frontend].clearnet.custom]
+			let instanceList = []
+			for (const network in options[frontend]) {
+				instanceList.push(...[...options[frontend][network].enabled, ...options[frontend][network].custom])
+			}
 			if (instanceList.length === 0) return
 			randomInstance = utils.getRandomInstance(instanceList)
 		} else if (config.services[service].frontends[frontend].singleInstance) randomInstance = config.services[service].frontends[frontend].singleInstance
@@ -489,15 +491,17 @@ function switchInstance(url) {
 		for (const service in config.services) {
 			if (!all(service, null, options, config, redirects).includes(protocolHost)) continue
 
-			let instancesList
+			let instancesList = []
 			if (Object.keys(config.services[service].frontends).length == 1) {
 				const frontend = Object.keys(config.services[service].frontends)[0]
-				instancesList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]
-				if (instancesList.length === 0 && options.networkFallback) instancesList = [...options[frontend].clearnet.enabled, ...options[frontend].clearnet.custom]
+				for (const network in options[frontend]) {
+					instancesList.push(...[...options[frontend][network].enabled, ...options[frontend][network].custom])
+				}
 			} else {
 				const frontend = options[service].frontend
-				instancesList = [...options[frontend][options.network].enabled, ...options[frontend][options.network].custom]
-				if (instancesList.length === 0 && options.networkFallback) instancesList = [...options[frontend].clearnet.enabled, ...options[frontend].clearnet.custom]
+				for (const network in options[frontend]) {
+					instancesList.push(...[...options[frontend][network].enabled, ...options[frontend][network].custom])
+				}
 			}
 
 			let oldInstance

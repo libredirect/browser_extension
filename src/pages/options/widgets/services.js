@@ -60,25 +60,6 @@ function changeFrontendsSettings(service) {
 	}
 }
 
-function changeNetworkSettings() {
-	for (const service in config.services) {
-		for (const frontend in config.services[service].frontends) {
-			if (config.services[service].frontends[frontend].instanceList) {
-				const frontendDiv = document.getElementById(frontend)
-				for (const network in config.networks) {
-					const networkDiv = frontendDiv.getElementsByClassName(network)[0]
-					if (network == options.network) {
-						networkDiv.style.display = "block"
-					} else {
-						networkDiv.style.display = "none"
-					}
-				}
-			}
-		}
-	}
-}
-
-changeNetworkSettings()
 for (const service in config.services) {
 	divs[service] = {}
 	//divs[service].page = document.getElementById(`${service}_page`)
