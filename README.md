@@ -26,7 +26,7 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 - Reddit => [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances)
 - Imgur => [Rimgo](https://codeberg.org/video-prize-ranch/rimgo)
 - Wikipedia => [Wikiless](https://codeberg.org/orenom/wikiless)
-- Medium => [Scribe](https://sr.ht/~edwardloveall/scribe/)
+- Medium => [Scribe](https://sr.ht/~edwardloveall/Scribe/)
 - Quora => [Quetre](https://github.com/zyachel/quetre)
 - IMDb => [libremdb](https://github.com/zyachel/libremdb)
 - PeerTube => [SimpleerTube](https://git.sr.ht/~metalune/simpleweb_peertube)
