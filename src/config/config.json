@@ -447,8 +447,7 @@
 				},
 				"osm": {
 					"name": "OpenStreetMap",
-					"instanceList": false,
-					"singleInstance": "https://www.openstreetmap.org"
+					"instanceList": true
 				}
 			},
 			"targets": [

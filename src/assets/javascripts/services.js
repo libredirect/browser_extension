@@ -29,7 +29,7 @@ function fetchFrontendInstanceList(service, frontend, redirects, options, config
 		for (const network in config.networks) {
 			tmp.push(...redirects[network], ...options[frontend][network].custom)
 		}
-	} else if (config.services[service].frontends[frontend].singleInstance) tmp = config.services[service].frontends[frontend].singleInstance
+	}
 	return tmp
 }
 
@@ -69,7 +69,6 @@ function redirect(url, type, initiator, forceRedirection) {
 	let randomInstance
 	let frontend
 	for (const service in config.services) {
-
 		if (!forceRedirection && !options[service].enabled) continue
 
 		if (config.services[service].embeddable && type != options[service].redirectType && options[service].redirectType != "both") continue
@@ -95,7 +94,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			if (instanceList.length === 0) return
 			randomInstance = utils.getRandomInstance(instanceList)
-		} else if (config.services[service].frontends[frontend].singleInstance) randomInstance = config.services[service].frontends[frontend].singleInstance
+		}
 		break
 	}
 	if (!frontend || !randomInstance) return

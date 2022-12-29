@@ -117,6 +117,7 @@ def is_authenticate(url):
         return False
     return False
 
+
 def fetchCache(frontend, name):
     try:
         with open('./src/instances/data.json') as file:
@@ -436,13 +437,19 @@ def facil():
     fetchFromFile('facil', 'FacilMap')
 
 
+def osm():
+    fetchFromFile('osm', 'OpenStreetMap')
+
+
 def libreTranslate():
     fetchRegexList('libreTranslate', 'LibreTranslate', 'https://raw.githubusercontent.com/LibreTranslate/LibreTranslate/main/README.md',
                    r"\[(?:[^\s\/]+\.)+[a-zA-Z0-9]+\]\((https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+)\/?\)\|")
 
 
 def breezeWiki():
-    fetchJsonList('breezeWiki', 'BreezeWiki', 'https://docs.breezewiki.com/files/instances.json', 'instance', False)
+    fetchJsonList('breezeWiki', 'BreezeWiki',
+                  'https://docs.breezewiki.com/files/instances.json', 'instance', False)
+
 
 def privateBin():
     fetchJsonList('privateBin', 'PrivateBin',
@@ -499,6 +506,7 @@ neuters()
 beatbump()
 hyperpipe()
 facil()
+osm()
 simpleertube()
 breezeWiki()
 privateBin()
