@@ -1,5 +1,8 @@
 {
     "clearnet": [
         "https://www.openstreetmap.org"
-    ]
+    ],
+    "tor": [],
+    "i2p": [],
+    "loki": []
 }

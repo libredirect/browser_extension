@@ -40,24 +40,6 @@ function changeFrontendsSettings(service) {
 			}
 		}
 	}
-
-	if (config.services[service].embeddable) {
-		if (typeof divs[service].frontend !== "undefined") {
-			if (!config.services[service].frontends[divs[service].frontend.value].embeddable) {
-				divs[service].embedFrontend.disabled = false
-				for (const frontend in config.services[service].frontends) {
-					if (config.services[service].frontends[frontend].embeddable) {
-						const frontendDiv = document.getElementById(frontend)
-						if (frontend == divs[service].embedFrontend.value) {
-							frontendDiv.style.display = "block"
-						} else {
-							frontendDiv.style.display = "none"
-						}
-					}
-				}
-			} else if (Object.keys(config.services[service].frontends).length > 1) divs[service].embedFrontend.disabled = true
-		}
-	}
 }
 
 for (const service in config.services) {

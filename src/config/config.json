@@ -79,8 +79,7 @@
 			"options": {
 				"enabled": true,
 				"redirectType": "both",
-				"frontend": "invidious",
-				"embedFrontend": "invidious"
+				"frontend": "invidious"
 			},
 			"imageType": "png",
 			"embeddable": true,
@@ -260,7 +259,7 @@
 			"options": {
 				"enabled": true
 			},
-			"imageType": "svgMono",
+			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://medium.com"
 		},
@@ -373,8 +372,7 @@
 			"options": {
 				"enabled": true,
 				"frontend": "librarian",
-				"redirectType": "both",
-				"embedFrontend": "librarian"
+				"redirectType": "both"
 			},
 			"imageType": "png",
 			"embeddable": true,
@@ -407,7 +405,7 @@
 				"enabled": true,
 				"frontend": "searxng"
 			},
-			"imageType": "svgMono",
+			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://search.libredirect.invalid"
 		},
@@ -435,7 +433,7 @@
 				"enabled": true,
 				"frontend": "simplyTranslate"
 			},
-			"imageType": "svgMono",
+			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://translate.libredirect.invalid"
 		},
@@ -459,7 +457,7 @@
 				"enabled": false,
 				"frontend": "osm"
 			},
-			"imageType": "svgMono",
+			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://maps.libredirect.invalid"
 		},
@@ -479,7 +477,7 @@
 			"options": {
 				"enabled": true
 			},
-			"imageType": "svgMono",
+			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://send.libredirect.invalid"
 		},
@@ -497,7 +495,7 @@
 			"options": {
 				"enabled": true
 			},
-			"imageType": "svgMono",
+			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://paste.libredirect.invalid"
 		}

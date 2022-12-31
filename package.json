@@ -10,7 +10,8 @@
 		"build": "web-ext build",
 		"test": "web-ext lint",
 		"instances": "python3 src/instances/get_instances.py && git update-index --assume-unchanged src/instances/blacklist.json src/instances/data.json",
-		"ejs": "ejs src/pages/options/index.ejs -f src/config/config.json -o src/pages/options/index.html && ejs src/pages/popup/popup.ejs -f src/config/config.json -o src/pages/popup/popup.html"
+		"ejs": "ejs src/pages/options/index.ejs -f src/config/config.json -o src/pages/options/index.html && ejs src/pages/popup/popup.ejs -f src/config/config.json -o src/pages/popup/popup.html",
+		"pug": "pug --pretty --basedir ./ --obj ./src/config/config.json src/pages/options/index.pug --out src/pages/options/ src/pages/popup/popup.pug --out src/pages/popup/"
 	},
 	"repository": {
 		"type": "git",
@@ -21,9 +22,9 @@
 	"bugs": {
 		"url": "https://codeberg.org/LibRedirect/LibRedirect/issues"
 	},
-	"homepage": "https://libredirect.codeberg.page",
+	"homepage": "https://libredirect.github.io",
 	"devDependencies": {
-		"ejs": "^3.1.8",
+		"pug": "^2.0.4",
 		"web-ext": "^7.2.0"
 	},
 	"webExt": {

@@ -38,7 +38,7 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 
 **Note**: The Extension will be using random instances by default. You can modify this and add custom instances too.
 
-# Please read the [FAQ](https://libredirect.codeberg.page/faq.html) if you have any questions!
+# Please read the [FAQ](https://libredirect.github.io/faq.html) if you have any questions!
 
 ## Donate
 

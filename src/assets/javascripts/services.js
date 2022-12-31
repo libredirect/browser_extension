@@ -51,7 +51,7 @@ function regexArray(service, url, config, frontend) {
 			if (instance.startsWith(utils.protocolHost(url))) return true
 		}
 	} else {
-		const targetList = config.services[service].targets
+		let targetList = config.services[service].targets
 		if (frontend && config.services[service].frontends[frontend].excludeTargets)
 			for (const i in config.services[service].frontends[frontend].excludeTargets) {
 				targetList = targetList.splice(i, 1)
@@ -74,35 +74,23 @@ function redirect(url, type, initiator, forceRedirection) {
 		if (config.services[service].embeddable && type != options[service].redirectType && options[service].redirectType != "both") continue
 		if (!config.services[service].embeddable && type != "main_frame") continue
 
-		if (Object.keys(config.services[service].frontends).length > 1) {
-			if (
-				type == "sub_frame" && config.services[service].embeddable
-				&&
-				!config.services[service].frontends[options[service].frontend].embeddable
-			) frontend = options[service].embedFrontend
-			else frontend = options[service].frontend
-		} else frontend = Object.keys(config.services[service].frontends)[0]
+		frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
 
 		if (!regexArray(service, url, config, frontend)) continue
 
 		if (initiator && all(service, null, options, config, redirects).includes(initiator.origin)) return "BYPASSTAB"
 
-		if (config.services[service].frontends[frontend].instanceList) {
-			let instanceList = []
-			for (const network in options[frontend]) {
-				instanceList.push(...[...options[frontend][network].enabled, ...options[frontend][network].custom])
-			}
-			if (instanceList.length === 0) return
-			randomInstance = utils.getRandomInstance(instanceList)
+		let instanceList = []
+		for (const network in options[frontend]) {
+			instanceList.push(...[...options[frontend][network].enabled, ...options[frontend][network].custom])
 		}
+		if (instanceList.length === 0) return
+		randomInstance = utils.getRandomInstance(instanceList)
 		break
 	}
 	if (!frontend || !randomInstance) return
 
 	// Here is a (temperory) space for defining constants required in 2 or more switch cases.
-	// When possible, try have the two switch cases share all their code as done with searx and searxng.
-	// Do not do that when they do not share 100% of their code.
-
 	const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/
 	const dataLatLngRegex = /!3d(-?[0-9]{1,}.[0-9]{1,})!4d(-?[0-9]{1,}.[0-9]{1,})/
 	const placeRegex = /\/place\/(.*)\//
@@ -396,7 +384,6 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			for (let i = 0; i < GETArguments.length; i++) link += (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1]
 			return link
-
 		case "lingva":
 			let params_arr = url.search.split("&")
 			params_arr[0] = params_arr[0].substring(1)
@@ -713,8 +700,6 @@ function upgradeOptions() {
 							else options[service].frontend = r[oldService + "Frontend"]
 						}
 						if (r[oldService + "RedirectType"]) options[service].redirectType = r[oldService + "RedirectType"]
-						if (r[oldService + "EmbedFrontend"] && (service != "youtube" || r[oldService + "EmbedFrontend"] == "invidious" || r[oldService + "EmbedFrontend"] == "piped"))
-							options[service].embedFrontend = r[oldService + "EmbedFrontend"]
 						for (const frontend in config.services[service].frontends) {
 							for (const network in config.networks) {
 								let protocol

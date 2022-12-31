@@ -154,7 +154,8 @@ async function processDefaultCustomInstances(service, frontend, network, documen
 	}
 
 	function calcFrontendCustomInstances() {
-		frontendNetworkElement.getElementsByClassName("custom-checklist")[0].innerHTML = frontendCustomInstances
+		console.log('calcFrontendCustomInstances()')
+		document.getElementById(frontend).getElementsByClassName("custom-checklist")[0].innerHTML = frontendCustomInstances
 			.map(
 				x => `<div>
                 ${x}
@@ -169,7 +170,7 @@ async function processDefaultCustomInstances(service, frontend, network, documen
 			.join("\n")
 
 		for (const item of frontendCustomInstances) {
-			frontendNetworkElement.getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
+			document.getElementById(frontend).getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
 				browser.storage.local.get("options", r => {
 					let options = r.options
 					let index = frontendCustomInstances.indexOf(item)
@@ -182,12 +183,18 @@ async function processDefaultCustomInstances(service, frontend, network, documen
 		}
 	}
 	calcFrontendCustomInstances()
-	frontendNetworkElement.getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
-		browser.storage.local.get("options", r => {
+	document.getElementById(frontend).getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
+		event.preventDefault();
+		browser.storage.local.get("options", async r => {
 			let options = r.options
 			event.preventDefault()
-			let frontendCustomInstanceInput = frontendNetworkElement.getElementsByClassName("custom-instance")[0]
-			let url = new URL(frontendCustomInstanceInput.value)
+			let frontendCustomInstanceInput = document.getElementById(frontend).getElementsByClassName("custom-instance")[0]
+			let url
+			try {
+				url = new URL(frontendCustomInstanceInput.value)
+			} catch (error) {
+				return
+			}
 			let protocolHostVar = protocolHost(url)
 			if (frontendCustomInstanceInput.validity.valid && !redirects[frontend][network].includes(protocolHostVar)) {
 				if (!frontendCustomInstances.includes(protocolHostVar)) {

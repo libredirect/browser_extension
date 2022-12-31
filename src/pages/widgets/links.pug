@@ -1,0 +1,16 @@
+section(class="links" id="links")
+    div(class="title")
+        a(href="#general") 
+            include /src/assets/images/general-icon.svg
+            span(data-localise="__MSG_general__") General
+
+    each val, key in services
+        div(class="title")
+            a(href="#"+key)
+                img(src=`/assets/images/${key}-icon.${services[key].imageType}`)
+                span(data-localise="__MSG_"+key+"__")=services[key].name
+
+    div(class="title")
+        a(href="#about")
+            img(src="/assets/images/about-icon.svg")
+            span(data-localise="__MSG_about__") About
