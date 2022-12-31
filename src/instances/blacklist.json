@@ -1,6 +1,6 @@
 {
   "cloudflare": [
-    "https://invidious.drivet.xyz",
+    "https://invidious.marcopisco.com",
     "https://piped.video",
     "https://piped.tokhmi.xyz",
     "https://piped.moomoo.me",
@@ -42,7 +42,6 @@
     "https://lr.aeong.one",
     "https://teddit.domain.glass",
     "https://teddit.httpjames.space",
-    "https://teddit.encrypted-data.xyz",
     "https://teddit.garudalinux.org",
     "https://tedd.it",
     "https://teddit.privacytools.io",
@@ -57,21 +56,23 @@
     "https://libretranslate.com",
     "https://search.garudalinux.org",
     "https://search.dr460nf1r3.org",
+    "https://whoogle.lunar.icu",
     "https://i.actionsack.com",
     "https://rimgo.marcopisco.com",
     "https://beatbump.ml",
-    "https://privload.com",
+    "https://p.darklab.sh",
+    "https://paste.oelrichsgarcia.de",
+    "https://paste.yeahnet.dev",
+    "https://bonus01.hwb0307.com",
     "https://andoc.yateam.cc",
+    "https://0.klowdee.host",
+    "https://sendpass.ru",
+    "https://0a0bin.klowdee.host",
+    "https://privload.com",
     "https://bin.klowdee.host",
     "https://privatebin.io",
-    "https://paste.yeahnet.dev",
-    "https://luckvintage.com",
     "https://0.0g.gg",
-    "https://paste.oelrichsgarcia.de",
-    "https://0a0bin.klowdee.host",
-    "https://p.darklab.sh",
-    "https://sendpass.ru",
-    "https://0.klowdee.host"
+    "https://luckvintage.com"
   ],
   "authenticate": [
     "https://nitter:nitter@nitter.nixnet.services"
