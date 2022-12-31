@@ -5,21 +5,11 @@ import utils from "../../../assets/javascripts/utils.js"
 import generalHelper from "../../../assets/javascripts/general.js"
 import servicesHelper from "../../../assets/javascripts/services.js"
 
-let updateInstancesElement = document.getElementById("update-instances")
-updateInstancesElement.addEventListener("click", async () => {
-	let oldHtml = updateInstancesElement.innerHTML
-	updateInstancesElement.innerHTML = "..."
-	if (await utils.updateInstances()) {
-		updateInstancesElement.innerHTML = oldHtml
-		location.reload()
-	} else updateInstancesElement.innerHTML = "Failed Miserabely"
-})
-
 let config
 
 async function getConfig() {
 	return new Promise(resolve => {
-		fetch("/config/config.json")
+		fetch("/config.json")
 			.then(response => response.text())
 			.then(data => {
 				config = JSON.parse(data)

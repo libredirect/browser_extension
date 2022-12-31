@@ -23,7 +23,7 @@ authRegex = r"https?:\/{2}\S+:\S+@(?:[^\s\/]+\.)*[a-zA-Z0-9]+" + endRegex
 # 2.0 because Libredirect is currently on version 2.x.x
 headers = {'User-Agent': 'Libredirect-instance-fetcher/2.0'}
 
-with open('./src/config/config.json', 'rt') as tmp:
+with open('./src/config.json', 'rt') as tmp:
     config['networks'] = json.load(tmp)['networks']
 
 
@@ -328,12 +328,6 @@ def teddit():
     fetchJsonList('teddit', 'Teddit', 'https://codeberg.org/teddit/teddit/raw/branch/main/instances.json',
                   {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, False)
 
-
-def wikiless():
-    fetchJsonList('wikiless', 'Wikiless', 'https://wikiless.org/instances.json',
-                  {'clearnet': 'url', 'tor': 'onion', 'i2p': 'i2p', 'loki': None}, False)
-
-
 def scribe():
     fetchJsonList('scribe', 'Scribe',
                   'https://git.sr.ht/~edwardloveall/scribe/blob/main/docs/instances.json', None, False)
@@ -490,7 +484,6 @@ nitter()
 bibliogram()
 libreddit()
 teddit()
-wikiless()
 scribe()
 quetre()
 libremdb()

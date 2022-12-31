@@ -210,24 +210,6 @@
 			"embeddable": true,
 			"url": "https://imgur.com"
 		},
-		"wikipedia": {
-			"frontends": {
-				"wikiless": {
-					"name": "Wikiless",
-					"instanceList": true
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(?:[a-z]+\\.)*wikipedia\\.org(\\/|$)"
-			],
-			"name": "Wikipedia",
-			"options": {
-				"enabled": false
-			},
-			"imageType": "svg",
-			"embeddable": false,
-			"url": "https://wikipedia.org"
-		},
 		"medium": {
 			"frontends": {
 				"scribe": {
@@ -298,24 +280,6 @@
 			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://imdb.com"
-		},
-		"reuters": {
-			"frontends": {
-				"neuters": {
-					"name": "Neuters",
-					"instanceList": true
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.|)reuters\\.com(\\/|$)"
-			],
-			"name": "Reuters",
-			"options": {
-				"enabled": false
-			},
-			"imageType": "svg",
-			"embeddable": false,
-			"url": "https://reuters.com"
 		},
 		"fandom": {
 			"frontends": {

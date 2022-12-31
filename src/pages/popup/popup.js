@@ -9,7 +9,7 @@ let config,
 
 async function getConfig() {
 	return new Promise(resolve => {
-		fetch("/config/config.json")
+		fetch("/config.json")
 			.then(response => response.text())
 			.then(data => {
 				config = JSON.parse(data)

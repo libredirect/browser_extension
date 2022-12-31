@@ -10,7 +10,7 @@ function init() {
 			options = r.options
 			redirects = r.redirects
 			targets = r.targets
-			fetch("/config/config.json")
+			fetch("/config.json")
 				.then(response => response.text())
 				.then(configData => {
 					config = JSON.parse(configData)
@@ -124,10 +124,6 @@ function redirect(url, type, initiator, forceRedirection) {
 			else return `${randomInstance}/u${url.pathname}${url.search}` // Likely a user profile, redirect to '/u/...'
 		case "lbryDesktop":
 			return url.href.replace(/^https?:\/{2}odysee\.com\//, "lbry://").replace(/:(?=[a-zA-Z0-9])/g, "#")
-		case "neuters":
-			if (url.pathname.startsWith("/article/") || url.pathname.startsWith("/pf/") || url.pathname.startsWith("/arc/") || url.pathname.startsWith("/resizer/")) return null
-			else if (url.pathname.endsWith("/")) return `${randomInstance}${url.pathname}`
-			else return `${randomInstance}${url.pathname}/`
 		case "searx":
 		case "searxng":
 			return `${randomInstance}/${url.search}`
@@ -363,27 +359,6 @@ function redirect(url, type, initiator, forceRedirection) {
 				if (query) return `${randomInstance}/${mapCentre}/Mpnk/${query}`
 			}
 		}
-		case "wikiless":
-			let GETArguments = []
-			if (url.search.length > 0) {
-				let search = url.search.substring(1) //get rid of '?'
-				let argstrings = search.split("&")
-				for (let i = 0; i < argstrings.length; i++) {
-					let args = argstrings[i].split("=")
-					GETArguments.push([args[0], args[1]])
-				}
-			}
-
-			let link = `${randomInstance}${url.pathname}`
-			let urlSplit = url.host.split(".")
-			if (urlSplit[0] != "wikipedia" && urlSplit[0] != "www") {
-				if (urlSplit[0] == "m") GETArguments.push(["mobileaction", "toggle_view_mobile"])
-				else GETArguments.push(["lang", urlSplit[0]])
-				if (urlSplit[1] == "m") GETArguments.push(["mobileaction", "toggle_view_mobile"])
-				// wikiless doesn't have mobile view support yet
-			}
-			for (let i = 0; i < GETArguments.length; i++) link += (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1]
-			return link
 		case "lingva":
 			let params_arr = url.search.split("&")
 			params_arr[0] = params_arr[0].substring(1)
@@ -443,7 +418,7 @@ function redirect(url, type, initiator, forceRedirection) {
 
 function computeService(url, returnFrontend) {
 	return new Promise(resolve => {
-		fetch("/config/config.json")
+		fetch("/config.json")
 			.then(response => response.text())
 			.then(configData => {
 				const config = JSON.parse(configData)
@@ -529,13 +504,8 @@ function reverse(url, urlString) {
 				case "twitter":
 				case "reddit":
 				case "imdb":
-				case "reuters":
 				case "quora":
 				case "medium":
-				case "wikipedia":
-					if (!urlString) resolve(config.services[service].url + url.pathname + url.search)
-					else resolve(url.replace(/https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+/, config.services[service].url))
-					return
 				case "fandom":
 					let regex = url.pathname.match(/^\/([a-zA-Z0-9-]+)\/wiki\/([a-zA-Z0-9-]+)/)
 					if (regex) {
@@ -555,7 +525,7 @@ function reverse(url, urlString) {
 
 function setRedirects(passedRedirects) {
 	return new Promise(resolve => {
-		fetch("/config/config.json")
+		fetch("/config.json")
 			.then(response => response.text())
 			.then(configData => {
 				browser.storage.local.get(/* [ */ "options" /* , "blacklists"] */, async r => {
@@ -612,7 +582,7 @@ function initDefaults() {
 		fetch("/instances/data.json")
 			.then(response => response.text())
 			.then(data => {
-				fetch("/config/config.json")
+				fetch("/config.json")
 					.then(response => response.text())
 					.then(configData => {
 						browser.storage.local.get(["options", "blacklists"], r => {
@@ -655,7 +625,7 @@ function initDefaults() {
 
 function upgradeOptions() {
 	return new Promise(resolve => {
-		fetch("/config/config.json")
+		fetch("/config.json")
 			.then(response => response.text())
 			.then(configData => {
 				browser.storage.local.get(null, r => {
@@ -727,7 +697,7 @@ function processUpdate() {
 		fetch("/instances/data.json")
 			.then(response => response.text())
 			.then(data => {
-				fetch("/config/config.json")
+				fetch("/config.json")
 					.then(response => response.text())
 					.then(configData => {
 						browser.storage.local.get(["options", "blacklists", "targets"], r => {
