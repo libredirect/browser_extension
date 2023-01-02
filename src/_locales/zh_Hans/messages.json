@@ -210,5 +210,13 @@
     },
     "lbryDesktop": {
         "message": "LBRY Desktop"
+    },
+    "toggleTab": {
+        "message": "在此标签页中切换重定向",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "redirectLink": {
+        "message": "尝试重定向此超链接",
+        "description": "Used in context menus when right clicking on a hyperlink"
     }
 }
