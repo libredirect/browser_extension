@@ -7,7 +7,10 @@ section(class="links" id="links")
     each val, key in services
         div(class="title")
             a(href="#"+key)
-                img(src=`/assets/images/${key}-icon.${services[key].imageType}`)
+                if services[key].imageType == 'svgMono'
+                    img(src=`/assets/images/${key}-icon.svg`)
+                else
+                    img(src=`/assets/images/${key}-icon.${services[key].imageType}`)
                 span(data-localise="__MSG_"+key+"__")=services[key].name
 
     div(class="title")

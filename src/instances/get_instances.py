@@ -414,10 +414,6 @@ def librarian():
                   'https://codeberg.org/librarian/librarian/raw/branch/main/instances.json', 'url', True)
 
 
-def neuters():
-    fetchFromFile('neuters', 'Neuters')
-
-
 def beatbump():
     fetchFromFile('beatbump', 'Beatbump')
 
@@ -449,23 +445,6 @@ def privateBin():
     fetchJsonList('privateBin', 'PrivateBin',
                   'https://privatebin.info/directory/api?top=100&https_redirect=true&min_rating=A&csp_header=true&min_uptime=100&attachments=true', 'url', False)
 
-
-def peertube():
-    try:
-        r = requests.get(
-            'https://instances.joinpeertube.org/api/v1/instances?start=0&count=1045&sort=-createdAt', headers=headers)
-        rJson = json.loads(r.text)
-
-        myList = ['https://search.joinpeertube.org']
-        for k in rJson['data']:
-            myList.append('https://'+k['host'])
-
-        mightyList['peertube'] = myList
-        print(Fore.GREEN + 'Fetched ' + Style.RESET_ALL + 'PeerTube')
-    except Exception:
-        fetchCache('peertube', 'PeerTube')
-
-
 def isValid(url):  # This code is contributed by avanitrachhadiya2155
     try:
         result = urlparse(url)
@@ -495,7 +474,6 @@ whoogle()
 librex()
 rimgo()
 librarian()
-neuters()
 beatbump()
 hyperpipe()
 facil()
@@ -520,9 +498,6 @@ for k1, v1 in mightyList.items():
                         cloudflare.append(instance)
                     if not instance.endswith('.onion') and not instance.endswith('.i2p') and not instance.endswith('.loki') and is_authenticate(instance):
                         authenticate.append(instance)
-
-peertube()
-
 blacklist = {
     'cloudflare': cloudflare,
     'authenticate': authenticate,

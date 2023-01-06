@@ -8,7 +8,6 @@ function init() {
 	return new Promise(async resolve => {
 		browser.storage.local.get(["options", "redirects", "targets"], r => {
 			options = r.options
-			redirects = r.redirects
 			targets = r.targets
 			fetch("/config.json")
 				.then(response => response.text())
@@ -27,7 +26,7 @@ function fetchFrontendInstanceList(service, frontend, redirects, options, config
 	let tmp = []
 	if (config.services[service].frontends[frontend].instanceList) {
 		for (const network in config.networks) {
-			tmp.push(...redirects[network], ...options[frontend][network].custom)
+			tmp.push(...options[frontend])
 		}
 	}
 	return tmp
@@ -82,7 +81,7 @@ function redirect(url, type, initiator, forceRedirection) {
 
 		let instanceList = []
 		for (const network in options[frontend]) {
-			instanceList.push(...[...options[frontend][network].enabled, ...options[frontend][network].custom])
+			instanceList.push(...options[frontend])
 		}
 		if (instanceList.length === 0) return
 		randomInstance = utils.getRandomInstance(instanceList)
@@ -105,7 +104,6 @@ function redirect(url, type, initiator, forceRedirection) {
 		}
 		return [zoom, lon, lat]
 	}
-	console.log(frontend)
 	switch (frontend) {
 		// This is where all instance-specific code must be ran to convert the service url to one that can be understood by the frontend.
 		case "beatbump":
@@ -189,7 +187,6 @@ function redirect(url, type, initiator, forceRedirection) {
 					if (xmlhttp.status === 200) {
 						const json = JSON.parse(xmlhttp.responseText)[0]
 						if (json) {
-							console.log("json", json)
 							return [`${json.lat},${json.lon}`, `${json.boundingbox[2]},${json.boundingbox[1]},${json.boundingbox[3]},${json.boundingbox[0]}`]
 						}
 					}
@@ -280,9 +277,9 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 
 			let prefsEncoded = new URLSearchParams(prefs).toString()
-			console.log("mapCentre", mapCentre)
-			console.log("prefs", prefs)
-			console.log("prefsEncoded", prefsEncoded)
+			// console.log("mapCentre", mapCentre)
+			// console.log("prefs", prefs)
+			// console.log("prefsEncoded", prefsEncoded)
 			return `${randomInstance}/${mapCentre}&${prefsEncoded}`
 		}
 		case "facil": {
@@ -423,7 +420,6 @@ function computeService(url, returnFrontend) {
 			.then(configData => {
 				const config = JSON.parse(configData)
 				browser.storage.local.get(["redirects", "options"], r => {
-					const redirects = r.redirects
 					const options = r.options
 					for (const service in config.services) {
 						if (regexArray(service, url, config)) {
@@ -456,12 +452,12 @@ function switchInstance(url) {
 			if (Object.keys(config.services[service].frontends).length == 1) {
 				const frontend = Object.keys(config.services[service].frontends)[0]
 				for (const network in options[frontend]) {
-					instancesList.push(...[...options[frontend][network].enabled, ...options[frontend][network].custom])
+					instancesList.push(...options[frontend])
 				}
 			} else {
 				const frontend = options[service].frontend
 				for (const network in options[frontend]) {
-					instancesList.push(...[...options[frontend][network].enabled, ...options[frontend][network].custom])
+					instancesList.push(...options[frontend])
 				}
 			}
 
@@ -523,102 +519,32 @@ function reverse(url, urlString) {
 	})
 }
 
-function setRedirects(passedRedirects) {
+function initDefaults() {
 	return new Promise(resolve => {
 		fetch("/config.json")
 			.then(response => response.text())
 			.then(configData => {
-				browser.storage.local.get(/* [ */ "options" /* , "blacklists"] */, async r => {
-					let redirects = passedRedirects
+				browser.storage.local.get(["options"], r => {
 					let options = r.options
-					const config = JSON.parse(configData)
 					let targets = {}
+					let config = JSON.parse(configData)
+					const localstorage = {}
 					for (const service in config.services) {
-						if (config.services[service].targets == "datajson") {
-							targets[service] = redirects[service]
-							delete redirects[service]
+						options[service] = {}
+						for (const defaultOption in config.services[service].options) {
+							options[service][defaultOption] = config.services[service].options[defaultOption]
 						}
 						for (const frontend in config.services[service].frontends) {
 							if (config.services[service].frontends[frontend].instanceList) {
-								for (const network in config.networks) {
-									for (const instance of options[frontend][network].enabled) {
-										let i = redirects[frontend][network].indexOf(instance)
-										if (i < 0) options[frontend][network].enabled.splice(i, 1)
-									}
-								}
+								options[frontend] = []
 							}
 						}
-						/*
-						for (const frontend in config.services[service].frontends) {
-							if (config.services[service].frontends[frontend].instanceList) {
-								for (const network in config.networks) {
-									options[frontend][network].enabled = redirects[frontend][network]
-								}
-								for (const blacklist in r.blacklists) {
-									for (const instance of blacklist) {
-										let i = options[frontend].clearnet.enabled.indexOf(instance)
-										if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
-									}
-								}
-							}
-						}
-						*/
-						// The above will be implemented with https://github.com/libredirect/libredirect/issues/334
 					}
-					for (const frontend in redirects) {
-						let exists = false
-						for (const service in config.services) if (config.services[service].frontends[frontend]) exists = true
-						if (!exists) delete redirects[frontend]
-						else for (const network in redirects[frontend]) if (!config.networks[network]) delete redirects[frontend][network]
-					}
-					browser.storage.local.set({ redirects, targets, options }, () => resolve())
+					browser.storage.local.set(
+						{ options, targets, localstorage },
+						() => resolve()
+					)
 				})
-			})
-	})
-}
-
-function initDefaults() {
-	return new Promise(resolve => {
-		fetch("/instances/data.json")
-			.then(response => response.text())
-			.then(data => {
-				fetch("/config.json")
-					.then(response => response.text())
-					.then(configData => {
-						browser.storage.local.get(["options", "blacklists"], r => {
-							let redirects = JSON.parse(data)
-							let options = r.options
-							let targets = {}
-							let config = JSON.parse(configData)
-							const localstorage = {}
-							for (const service in config.services) {
-								options[service] = {}
-								if (config.services[service].targets == "datajson") {
-									targets[service] = redirects[service]
-									delete redirects[service]
-								}
-								for (const defaultOption in config.services[service].options) options[service][defaultOption] = config.services[service].options[defaultOption]
-								for (const frontend in config.services[service].frontends) {
-									if (config.services[service].frontends[frontend].instanceList) {
-										options[frontend] = {}
-										for (const network in config.networks) {
-											options[frontend][network] = {}
-											options[frontend][network].enabled = JSON.parse(data)[frontend][network]
-											options[frontend][network].custom = []
-										}
-										for (const blacklist in r.blacklists) {
-											for (const instance of r.blacklists[blacklist]) {
-												let i = options[frontend].clearnet.enabled.indexOf(instance)
-												if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
-											}
-										}
-									}
-								}
-							}
-							browser.storage.local.set({ redirects, options, targets, localstorage })
-							resolve()
-						})
-					})
 			})
 	})
 }
@@ -675,14 +601,6 @@ function upgradeOptions() {
 								let protocol
 								if (network == "clearnet") protocol = "normal"
 								else protocol = network
-								if (r[frontend + utils.camelCase(protocol) + "RedirectsChecks"]) {
-									options[frontend][network].enabled = r[frontend + utils.camelCase(protocol) + "RedirectsChecks"]
-									options[frontend][network].custom = r[frontend + utils.camelCase(protocol) + "CustomRedirects"]
-									for (const instance of options[frontend][network].enabled) {
-										let i = r.redirects[frontend][network].indexOf(instance)
-										if (i < 0) options[frontend][network].enabled.splice(i, 1)
-									}
-								}
 							}
 						}
 					}
@@ -700,7 +618,7 @@ function processUpdate() {
 				fetch("/config.json")
 					.then(response => response.text())
 					.then(configData => {
-						browser.storage.local.get(["options", "blacklists", "targets"], r => {
+						browser.storage.local.get(["options", "targets"], r => {
 							let redirects = JSON.parse(data)
 							let options = r.options
 							let targets = r.targets
@@ -720,22 +638,15 @@ function processUpdate() {
 									if (config.services[service].frontends[frontend].instanceList) {
 										if (!options[frontend]) options[frontend] = {}
 										for (const network in config.networks) {
-											if (!options[frontend][network]) {
-												options[frontend][network] = {}
-												options[frontend][network].enabled = JSON.parse(data)[frontend][network]
-												options[frontend][network].custom = []
+											if (!options[frontend]) {
+												options[frontend] = []
 												if (network == "clearnet") {
-													for (const blacklist in r.blacklists) {
-														for (const instance of r.blacklists[blacklist]) {
+													for (const blacklist of getBlacklist()) {
+														for (const instance of blacklist) {
 															let i = options[frontend].clearnet.enabled.indexOf(instance)
 															if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
 														}
 													}
-												}
-											} else {
-												for (const instance of options[frontend][network].enabled) {
-													let i = redirects[frontend][network].indexOf(instance)
-													if (i < 0) options[frontend][network].enabled.splice(i, 1)
 												}
 											}
 										}
@@ -762,7 +673,7 @@ function modifyContentSecurityPolicy(details) {
 						for (const frontend in config.services[service].frontends) {
 							if (config.services[service].frontends[frontend].embeddable) {
 								for (const network in config.networks) {
-									instancesList.push(...options[frontend][network].enabled, ...options[frontend][network].custom)
+									instancesList.push(...options[frontend])
 								}
 							}
 						}
@@ -793,7 +704,6 @@ export default {
 	computeService,
 	switchInstance,
 	reverse,
-	setRedirects,
 	initDefaults,
 	upgradeOptions,
 	processUpdate,

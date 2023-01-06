@@ -28,18 +28,22 @@ each val, service in services
                     option(value="sub_frame" data-localise="__MSG_onlyEmbedded__") Only Embedded
                     option(value="main_frame" data-localise="__MSG_onlyNotEmbedded__") Only Not Embedded
 
+        hr
+
         each val, frontend in services[service].frontends
             if services[service].frontends[frontend].instanceList
                 div(id=frontend)
-                    each val, network in networks
-                        div(class=network)
-                            div(class="checklist")
                     div(class="some-block option-block")
-                        h4(data-localise="__MSG_customInstances__") Custom Instances
+                        h4(data-localise="__MSG_instances__") Add your favorite instances
+                    
                     form(class="custom-instance-form")
                         div(class="some-block option-block")
                             input(class="custom-instance" placeholder=`http://${frontend}.com` type="url" )
                             button(class="add add-instance" type="submit")
                                 svg(xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor")
                                     path(d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z")
-                    div(class="checklist custom-checklist")
+                    
+                    div(class="checklist custom-checklist")                    
+                    each val, network in networks
+                        div(class=network)
+                            div(class="checklist")

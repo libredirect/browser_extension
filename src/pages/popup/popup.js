@@ -85,7 +85,7 @@ browser.storage.local.get(["options", "redirects"], r => {
 				frontend = service[1]
 				service = service[0]
 				let isCustom = false
-				for (const network in config.networks) if (r.options[frontend][network].custom.indexOf(instance) > -1) isCustom = true
+				for (const network in config.networks) if (r.options[frontend].indexOf(instance) > -1) isCustom = true
 			}
 			divs[service].current.classList.remove("hide")
 			divs[service].all.classList.add("hide")

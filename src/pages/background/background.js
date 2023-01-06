@@ -6,40 +6,34 @@ import servicesHelper from "../../assets/javascripts/services.js"
 
 window.browser = window.browser || window.chrome
 
-browser.runtime.onInstalled.addListener(details => {
+browser.runtime.onInstalled.addListener(async details => {
 	if (details.previousVersion != browser.runtime.getManifest().version) {
 		// ^Used to prevent this running when debugging with auto-reload
-		fetch("/instances/blacklist.json")
-			.then(response => response.text())
-			.then(async data => {
-				browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
-					switch (details.reason) {
-						case "install":
-							browser.storage.local.get("options", async r => {
-								if (!r.options) {
-									await generalHelper.initDefaults()
-									await servicesHelper.initDefaults()
-								}
-							})
-							break
-						case "update":
-							switch (details.previousVersion) {
-								case "2.2.0":
-								case "2.2.1":
-									browser.storage.local.get("options", async r => {
-										if (!r.options) {
-											await generalHelper.initDefaults()
-											await servicesHelper.initDefaults()
-											await servicesHelper.upgradeOptions()
-										}
-									})
-									break
-								default:
-									await servicesHelper.processUpdate()
-							}
+		switch (details.reason) {
+			case "install":
+				browser.storage.local.get("options", async r => {
+					if (!r.options) {
+						await generalHelper.initDefaults()
+						await servicesHelper.initDefaults()
 					}
 				})
-			})
+				break
+			case "update":
+				switch (details.previousVersion) {
+					case "2.2.0":
+					case "2.2.1":
+						browser.storage.local.get("options", async r => {
+							if (!r.options) {
+								await generalHelper.initDefaults()
+								await servicesHelper.initDefaults()
+								await servicesHelper.upgradeOptions()
+							}
+						})
+						break
+					default:
+						await servicesHelper.processUpdate()
+				}
+		}
 	}
 })
 

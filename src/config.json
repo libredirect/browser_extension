@@ -299,22 +299,6 @@
 			"embeddable": false,
 			"url": "https://fandom.com"
 		},
-		"peertube": {
-			"frontends": {
-				"simpleertube": {
-					"name": "SimpleerTube",
-					"instanceList": true
-				}
-			},
-			"targets": "datajson",
-			"name": "PeerTube",
-			"options": {
-				"enabled": false
-			},
-			"imageType": "svg",
-			"embeddable": false,
-			"url": "https://joinpeertube.org"
-		},
 		"lbry": {
 			"frontends": {
 				"librarian": {
@@ -369,7 +353,7 @@
 				"enabled": true,
 				"frontend": "searxng"
 			},
-			"imageType": "svg",
+			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://search.libredirect.invalid"
 		},
@@ -397,7 +381,7 @@
 				"enabled": true,
 				"frontend": "simplyTranslate"
 			},
-			"imageType": "svg",
+			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://translate.libredirect.invalid"
 		},
@@ -421,7 +405,7 @@
 				"enabled": false,
 				"frontend": "osm"
 			},
-			"imageType": "svg",
+			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://maps.libredirect.invalid"
 		},
@@ -441,7 +425,7 @@
 			"options": {
 				"enabled": true
 			},
-			"imageType": "svg",
+			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://send.libredirect.invalid"
 		},
@@ -459,7 +443,7 @@
 			"options": {
 				"enabled": true
 			},
-			"imageType": "svg",
+			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://paste.libredirect.invalid"
 		}

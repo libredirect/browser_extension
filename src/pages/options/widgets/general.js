@@ -58,20 +58,12 @@ importSettingsElement.addEventListener("change", () => {
 	reader.onload = async () => {
 		const data = JSON.parse(reader.result)
 		if ("theme" in data && "disableImgur" in data && "imgurRedirects" in data) {
-			browser.storage.local.clear(() =>
-				browser.storage.local.set({ ...data }, () => {
-					fetch("/instances/blacklist.json")
-						.then(response => response.text())
-						.then(async data => {
-							browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
-								await generalHelper.initDefaults()
-								await servicesHelper.initDefaults()
-								await servicesHelper.upgradeOptions()
-								location.reload()
-							})
-						})
-				})
-			)
+			browser.storage.local.clear(async () => {
+				await generalHelper.initDefaults()
+				await servicesHelper.initDefaults()
+				await servicesHelper.upgradeOptions()
+				location.reload()
+			})
 		} else if ("version" in data) {
 			let options = data
 			delete options.version
@@ -98,16 +90,10 @@ function importError() {
 const resetSettings = document.getElementById("reset-settings")
 resetSettings.addEventListener("click", async () => {
 	resetSettings.innerHTML = "..."
-	browser.storage.local.clear(() => {
-		fetch("/instances/blacklist.json")
-			.then(response => response.text())
-			.then(async data => {
-				browser.storage.local.set({ blacklists: JSON.parse(data) }, async () => {
-					await generalHelper.initDefaults()
-					await servicesHelper.initDefaults()
-					location.reload()
-				})
-			})
+	browser.storage.local.clear(async () => {
+		await generalHelper.initDefaults()
+		await servicesHelper.initDefaults()
+		location.reload()
 	})
 })
 
@@ -170,7 +156,6 @@ browser.storage.local.get("options", r => {
 
 		for (const x of [...exceptionsCustomInstances.url, ...exceptionsCustomInstances.regex]) {
 			document.getElementById(`clear-${x}`).addEventListener("click", () => {
-				console.log(x)
 				let index
 				index = exceptionsCustomInstances.url.indexOf(x)
 				if (index > -1) exceptionsCustomInstances.url.splice(index, 1)

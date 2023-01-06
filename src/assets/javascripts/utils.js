@@ -70,10 +70,26 @@ function switchInstance(test) {
 	})
 }
 
+function getBlacklist() {
+	let http = new XMLHttpRequest()
+	http.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/blacklist.json", false)
+	http.send(null)
+	return JSON.parse(http.responseText)
+}
+
+function getList() {
+	let http = new XMLHttpRequest()
+	http.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/data.json", false)
+	http.send(null)
+	return JSON.parse(http.responseText)
+}
+
 export default {
 	getRandomInstance,
 	protocolHost,
 	switchInstance,
 	copyRaw,
+	getList,
+	getBlacklist,
 	camelCase,
 }
