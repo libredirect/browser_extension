@@ -38,6 +38,14 @@ browser.runtime.onInstalled.addListener(async details => {
 })
 
 let tabIdRedirects = {}
+
+browser.storage.onChanged.addListener(() => {
+	browser.storage.local.get(["embedTabs"], r => {
+		embedTabs = r.embedTabs
+	})
+})
+let embedTabs = {}
+
 // true == Always redirect, false == Never redirect, null/undefined == follow options for services
 browser.webRequest.onBeforeRequest.addListener(
 	details => {
@@ -51,7 +59,7 @@ browser.webRequest.onBeforeRequest.addListener(
 			return null
 		}
 		if (tabIdRedirects[details.tabId] == false) return null
-		let newUrl = servicesHelper.redirect(url, details.type, initiator, tabIdRedirects[details.tabId])
+		let newUrl = servicesHelper.redirect(url, details.type, initiator, tabIdRedirects[details.tabId], details.tabId)
 
 		if (details.frameAncestors && details.frameAncestors.length > 0 && generalHelper.isException(new URL(details.frameAncestors[0].url))) newUrl = null
 
@@ -80,6 +88,11 @@ browser.tabs.onRemoved.addListener(tabId => {
 	if (tabIdRedirects[tabId] != undefined) {
 		delete tabIdRedirects[tabId]
 		console.log("Removed tab " + tabId + " from tabIdRedirects")
+	}
+	if (embedTabs[tab] != undefined) {
+		delete embedTabs[tabId]
+		browser.storage.local.set(embedTabs)
+		console.log("Removed tab " + tabId + " from embedTabs")
 	}
 })
 

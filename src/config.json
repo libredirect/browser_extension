@@ -479,13 +479,5 @@
 			"embeddable": false,
 			"url": "https://paste.libredirect.invalid"
 		}
-	},
-	"blacklist": {
-		"cloudflare": {
-			"color": "red"
-		},
-		"authenticate": {
-			"color": "orange"
-		}
 	}
 }

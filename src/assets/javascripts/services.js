@@ -2,13 +2,14 @@ window.browser = window.browser || window.chrome
 
 import utils from "./utils.js"
 
-let config, options, redirects, targets
+let config, options, targets
 
 function init() {
 	return new Promise(async resolve => {
-		browser.storage.local.get(["options", "redirects", "targets"], r => {
+		browser.storage.local.get(["options", "targets", "embedTabs"], r => {
 			options = r.options
 			targets = r.targets
+			embedTabs = r.embedTabs
 			fetch("/config.json")
 				.then(response => response.text())
 				.then(configData => {
@@ -55,7 +56,8 @@ function regexArray(service, url, config, frontend) {
 	return false
 }
 
-function redirect(url, type, initiator, forceRedirection) {
+let embedTabs = {}
+function redirect(url, type, initiator, forceRedirection, tabId) {
 	if (type != "main_frame" && type != "sub_frame" && type != "image") return
 	let randomInstance
 	let frontend
@@ -76,7 +78,19 @@ function redirect(url, type, initiator, forceRedirection) {
 			instanceList.push(...options[frontend])
 		}
 		if (instanceList.length === 0) return
-		randomInstance = utils.getRandomInstance(instanceList)
+
+		if ((type == "sub_frame" || type == "image") && embedTabs[tabId] && embedTabs[tabId][frontend] !== undefined) {
+			randomInstance = embedTabs[tabId][frontend]
+		} else {
+			randomInstance = utils.getRandomInstance(instanceList)
+		}
+
+		if ((type == "sub_frame" || type == "image") && embedTabs[tabId] === undefined) {
+			embedTabs[tabId] = {}
+			embedTabs[tabId][frontend] = randomInstance
+			browser.storage.local.set(embedTabs)
+		}
+
 		break
 	}
 	if (!frontend || !randomInstance) return
@@ -533,7 +547,7 @@ function initDefaults() {
 						}
 					}
 					browser.storage.local.set(
-						{ options, targets, localstorage },
+						{ options, targets, localstorage, embedTabs: {} },
 						() => resolve()
 					)
 				})

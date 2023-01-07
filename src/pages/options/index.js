@@ -103,39 +103,41 @@ async function processDefaultCustomInstances(frontend, networks, document) {
 		})
 	)
 
-	const blacklist = utils.getBlacklist()
-	const redirects = utils.getList()
+	!async function () {
+		const blacklist = utils.getBlacklist()
+		const redirects = utils.getList()
 
-	for (const network in networks) {
-		if (redirects[frontend][network].length > 0) {
-			document.getElementById(frontend).getElementsByClassName(network)[0].getElementsByClassName("checklist")[0].innerHTML = [
-				`
-			<div class="some-block option-block">
-				<h4>${utils.camelCase(network)}</h4>
-			</div>
-			`,
-				...redirects[frontend][network]
-					.sort((a, b) =>
-						(blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
-						||
-						(blacklist.authenticate.includes(a) && !blacklist.authenticate.includes(b))
-					)
-					.map(x => {
-						const cloudflare = blacklist.cloudflare.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ""
-						const authenticate = blacklist.authenticate.includes(x) ? ' <span style="color:orange;">authenticate</span>' : ""
+		for (const network in networks) {
+			if (redirects[frontend][network].length > 0) {
+				document.getElementById(frontend).getElementsByClassName(network)[0].getElementsByClassName("checklist")[0].innerHTML = [
+					`
+				<div class="some-block option-block">
+					<h4>${utils.camelCase(network)}</h4>
+				</div>
+				`,
+					...redirects[frontend][network]
+						.sort((a, b) =>
+							(blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
+							||
+							(blacklist.authenticate.includes(a) && !blacklist.authenticate.includes(b))
+						)
+						.map(x => {
+							const cloudflare = blacklist.cloudflare.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ""
+							const authenticate = blacklist.authenticate.includes(x) ? ' <span style="color:orange;">authenticate</span>' : ""
 
-						let warnings = [cloudflare, authenticate].join(" ")
-						return `
-					<div>
-						<x>
-							<a href="${x}" target="_blank">${x}</a>${warnings}
-						</x>
-                  	</div>`
-					}),
-				'<br>'
-			].join("\n<hr>\n")
+							let warnings = [cloudflare, authenticate].join(" ")
+							return `
+						<div>
+							<x>
+								<a href="${x}" target="_blank">${x}</a>${warnings}
+							</x>
+						  </div>`
+						}),
+					'<br>'
+				].join("\n<hr>\n")
+			}
 		}
-	}
+	}()
 
 	localise.localisePage()
 
