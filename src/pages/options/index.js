@@ -73,6 +73,13 @@ function loadPage(path) {
 			})
 		}
 
+		const frontend_name_element = document.getElementById(`${service}_page`).getElementsByClassName("frontend_name")[0]
+		if (divs[service].frontend) {
+			frontend_name_element.href = config.services[service].frontends[divs[service].frontend.value].url
+		} else {
+			frontend_name_element.href = Object.values(config.services[service].frontends)[0].url
+		}
+
 		if (Object.keys(config.services[service].frontends).length > 1) {
 			changeFrontendsSettings(service)
 		}
@@ -84,7 +91,6 @@ function loadPage(path) {
 		}
 	}
 }
-
 
 async function processDefaultCustomInstances(frontend, networks, document) {
 	let customInstances = []

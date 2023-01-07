@@ -1,7 +1,8 @@
 each val, service in services
     section(class="option-block" id=service+"_page")
         div(class="some-block option-block")
-            h1(data-localise="__MSG_"+service+"__")=services[service].name
+            h1
+                a(href=services[service].url)=services[service].name
 
         hr
 
@@ -15,10 +16,15 @@ each val, service in services
 
         if Object.keys(services[service].frontends).length> 1
             div(class="some-block option-block")
-                h4(data-localise="__MSG_frontend__") Frontend
+                h4
+                    a(class="frontend_name" target="_blank" data-localise="__MSG_frontend__") Frontend
                 select(id=service+"-frontend")
                     each val, frontend in services[service].frontends
                         option(value=frontend)=services[service].frontends[frontend].name
+        else 
+            div(class="some-block option-block")
+                h4
+                    a(class="frontend_name" target="_blank" data-localise="__MSG_frontend__") Frontend
 
         if services[service].embeddable
             div(class="some-block option-block")
@@ -35,14 +41,14 @@ each val, service in services
                 div(id=frontend)
                     div(class="some-block option-block")
                         h4(data-localise="__MSG_instances__") Add your favorite instances
-                    
+
                     form(class="custom-instance-form")
                         div(class="some-block option-block")
                             input(class="custom-instance" placeholder=`http://${frontend}.com` type="url" )
                             button(class="add add-instance" type="submit")
                                 svg(xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor")
                                     path(d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z")
-                    
+
                     div(class="checklist custom-checklist")                    
                     each val, network in networks
                         div(class=network)

@@ -1,6 +1,6 @@
 each val, service in services    
     div(class=service + " some-block")
-        a(class="title" href=services[service].url)
+        a(class="title" href=`/pages/options/index.html#${services[service].name.toLowerCase()}`)
             if services[service].imageType == 'svgMono'
                 img(src=`../../assets/images/${service}-icon.svg`)
             else

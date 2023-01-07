@@ -22,24 +22,16 @@ function init() {
 init()
 browser.storage.onChanged.addListener(init)
 
-function fetchFrontendInstanceList(service, frontend, redirects, options, config) {
-	let tmp = []
-	if (config.services[service].frontends[frontend].instanceList) {
-		for (const network in config.networks) {
-			tmp.push(...options[frontend])
-		}
-	}
-	return tmp
-}
-
-function all(service, frontend, options, config, redirects) {
+function all(service, frontend, options, config) {
 	let instances = []
 	if (!frontend) {
 		for (const frontend in config.services[service].frontends) {
-			instances.push(...fetchFrontendInstanceList(service, frontend, redirects[frontend], options, config))
+			if (options[frontend]) {
+				instances.push(...options[frontend])
+			}
 		}
 	} else {
-		instances.push(...fetchFrontendInstanceList(service, frontend, redirects[frontend], options, config))
+		instances.push(...options[frontend])
 	}
 	return instances
 }
@@ -77,7 +69,7 @@ function redirect(url, type, initiator, forceRedirection) {
 
 		if (!regexArray(service, url, config, frontend)) continue
 
-		if (initiator && all(service, null, options, config, redirects).includes(initiator.origin)) return "BYPASSTAB"
+		if (initiator && all(service, null, options, config).includes(initiator.origin)) return "BYPASSTAB"
 
 		let instanceList = []
 		for (const network in options[frontend]) {
@@ -427,7 +419,7 @@ function computeService(url, returnFrontend) {
 							return
 						} else {
 							for (const frontend in config.services[service].frontends) {
-								if (all(service, frontend, options, config, redirects).includes(utils.protocolHost(url))) {
+								if (all(service, frontend, options, config).includes(utils.protocolHost(url))) {
 									if (returnFrontend) resolve([service, frontend, utils.protocolHost(url)])
 									else resolve(service)
 									return
@@ -446,7 +438,7 @@ function switchInstance(url) {
 		await init()
 		const protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
-			if (!all(service, null, options, config, redirects).includes(protocolHost)) continue
+			if (!all(service, null, options, config).includes(protocolHost)) continue
 
 			let instancesList = []
 			if (Object.keys(config.services[service].frontends).length == 1) {
@@ -489,7 +481,7 @@ function reverse(url, urlString) {
 		if (!urlString) protocolHost = utils.protocolHost(url)
 		else protocolHost = url.match(/https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+/)[0]
 		for (const service in config.services) {
-			if (!all(service, null, options, config, redirects).includes(protocolHost)) continue
+			if (!all(service, null, options, config).includes(protocolHost)) continue
 
 			switch (service) {
 				case "instagram":

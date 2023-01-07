@@ -126,6 +126,12 @@ section.links div {
 }
 
 a {
+	text-decoration: none;
+	color: var(--text);
+	transition: 0.1s;
+}
+
+a:hover {
 	color: var(--active);
 }
 
