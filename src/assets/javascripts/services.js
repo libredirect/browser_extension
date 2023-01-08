@@ -624,7 +624,7 @@ function processUpdate() {
 				fetch("/config.json")
 					.then(response => response.text())
 					.then(configData => {
-						browser.storage.local.get(["options", "targets"], r => {
+						browser.storage.local.get(["options", "targets"], async r => {
 							let redirects = JSON.parse(data)
 							let options = r.options
 							let targets = r.targets
@@ -647,7 +647,7 @@ function processUpdate() {
 											if (!options[frontend]) {
 												options[frontend] = []
 												if (network == "clearnet") {
-													for (const blacklist of getBlacklist()) {
+													for (const blacklist of await utils.getBlacklist()) {
 														for (const instance of blacklist) {
 															let i = options[frontend].clearnet.enabled.indexOf(instance)
 															if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)

@@ -71,17 +71,32 @@ function switchInstance(test) {
 }
 
 function getBlacklist() {
-	let http = new XMLHttpRequest()
-	http.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/blacklist.json", false)
-	http.send(null)
-	return JSON.parse(http.responseText)
+	return new Promise(resolve => {
+		const http = new XMLHttpRequest()
+		http.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/blacklist.json", true)
+		http.onreadystatechange = () => {
+			if (http.status === 200 && http.readyState == XMLHttpRequest.DONE) {
+				resolve(JSON.parse(http.responseText))
+				return
+			}
+		}
+		http.send(null)
+	})
 }
 
 function getList() {
-	let http = new XMLHttpRequest()
-	http.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/data.json", false)
-	http.send(null)
-	return JSON.parse(http.responseText)
+	return new Promise(resolve => {
+		const http = new XMLHttpRequest()
+		http.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/data.json", true)
+		http.onreadystatechange = () => {
+			if (http.status === 200 && http.readyState == XMLHttpRequest.DONE) {
+				resolve(JSON.parse(http.responseText))
+				return
+			}
+		}
+		http.send(null)
+	})
+
 }
 
 export default {

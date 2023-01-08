@@ -86,13 +86,23 @@ function loadPage(path) {
 
 		for (const frontend in config.services[service].frontends) {
 			if (config.services[service].frontends[frontend].instanceList) {
-				processDefaultCustomInstances(frontend, config.networks, document)
+				processDefaultCustomInstances(frontend, document)
 			}
 		}
+
+		!async function () {
+			const blacklist = await utils.getBlacklist()
+			const redirects = await utils.getList()
+			for (const frontend in config.services[service].frontends) {
+				if (config.services[service].frontends[frontend].instanceList) {
+					createList(frontend, config.networks, document, redirects, blacklist)
+				}
+			}
+		}()
 	}
 }
 
-async function processDefaultCustomInstances(frontend, networks, document) {
+async function processDefaultCustomInstances(frontend, document) {
 	let customInstances = []
 	let options
 	await new Promise(async resolve =>
@@ -102,42 +112,6 @@ async function processDefaultCustomInstances(frontend, networks, document) {
 			resolve()
 		})
 	)
-
-	!async function () {
-		const blacklist = utils.getBlacklist()
-		const redirects = utils.getList()
-
-		for (const network in networks) {
-			if (redirects[frontend][network].length > 0) {
-				document.getElementById(frontend).getElementsByClassName(network)[0].getElementsByClassName("checklist")[0].innerHTML = [
-					`
-				<div class="some-block option-block">
-					<h4>${utils.camelCase(network)}</h4>
-				</div>
-				`,
-					...redirects[frontend][network]
-						.sort((a, b) =>
-							(blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
-							||
-							(blacklist.authenticate.includes(a) && !blacklist.authenticate.includes(b))
-						)
-						.map(x => {
-							const cloudflare = blacklist.cloudflare.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ""
-							const authenticate = blacklist.authenticate.includes(x) ? ' <span style="color:orange;">authenticate</span>' : ""
-
-							let warnings = [cloudflare, authenticate].join(" ")
-							return `
-						<div>
-							<x>
-								<a href="${x}" target="_blank">${x}</a>${warnings}
-							</x>
-						  </div>`
-						}),
-					'<br>'
-				].join("\n<hr>\n")
-			}
-		}
-	}()
 
 	localise.localisePage()
 
@@ -190,6 +164,40 @@ async function processDefaultCustomInstances(frontend, networks, document) {
 		}
 	})
 }
+
+function createList(frontend, networks, document, redirects, blacklist) {
+	for (const network in networks) {
+		if (redirects[frontend][network].length > 0) {
+			document.getElementById(frontend).getElementsByClassName(network)[0].getElementsByClassName("checklist")[0].innerHTML = [
+				`
+			<div class="some-block option-block">
+				<h4>${utils.camelCase(network)}</h4>
+			</div>
+			`,
+				...redirects[frontend][network]
+					.sort((a, b) =>
+						(blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
+						||
+						(blacklist.authenticate.includes(a) && !blacklist.authenticate.includes(b))
+					)
+					.map(x => {
+						const cloudflare = blacklist.cloudflare.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ""
+						const authenticate = blacklist.authenticate.includes(x) ? ' <span style="color:orange;">authenticate</span>' : ""
+
+						let warnings = [cloudflare, authenticate].join(" ")
+						return `
+					<div>
+						<x>
+							<a href="${x}" target="_blank">${x}</a>${warnings}
+						</x>
+					  </div>`
+					}),
+				'<br>'
+			].join("\n<hr>\n")
+		}
+	}
+}
+
 
 const r = window.location.href.match(/#(.*)/)
 if (r) loadPage(r[1])
