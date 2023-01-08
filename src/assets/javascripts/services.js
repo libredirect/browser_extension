@@ -412,8 +412,6 @@ function redirect(url, type, initiator, forceRedirection, tabId) {
 				else return `${randomInstance}${url.pathname}${url.search}&teddit_proxy=${url.hostname}`
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
-		case "simpleertube":
-			return `${randomInstance}/${url.hostname}${url.pathname}${url.search}`
 		default:
 			return `${randomInstance}${url.pathname}${url.search} `
 	}

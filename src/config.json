@@ -193,7 +193,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com(?=\\/u(ser)?\\/|\\/r\\/|\\/search|\\/?$)",
+				"^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)reddit\\.com(?=\\/u(ser)?\\/|\\/r\\/|\\/search|\\/new|\\/?$)",
 				"^https?:\\/{2}(i|(external-)?preview)\\.redd\\.it"
 			],
 			"name": "Reddit",
