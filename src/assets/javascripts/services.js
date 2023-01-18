@@ -101,12 +101,6 @@ function redirect(url, type, initiator, forceRedirection, tabId) {
 				.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/") + "?filter=all")
 		case "hyperpipe":
 			return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/"))
-		case "bibliogram":
-			const reservedPaths = ["u", "p", "privacy"]
-			if (url.pathname === "/" || reservedPaths.includes(url.pathname.split("/")[1])) return `${randomInstance}${url.pathname}${url.search}`
-			if (url.pathname.startsWith("/reel")) return `${randomInstance}${url.pathname}`
-			if (url.pathname.startsWith("/tv")) return `${randomInstance}/p${url.pathname.replace(/\/tv/i, "")}${url.search}`
-			else return `${randomInstance}/u${url.pathname}${url.search}` // Likely a user profile, redirect to '/u/...'
 		case "lbryDesktop":
 			return url.href.replace(/^https?:\/{2}odysee\.com\//, "lbry://").replace(/:(?=[a-zA-Z0-9])/g, "#")
 		case "searx":
@@ -477,7 +471,6 @@ function reverse(url, urlString) {
 			if (!all(service, null, options, config).includes(protocolHost)) continue
 
 			switch (service) {
-				case "instagram":
 				case "youtube":
 				case "imdb":
 				case "imgur":

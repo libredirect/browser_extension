@@ -31,7 +31,7 @@ async function initDefaults() {
 						regex: [],
 					},
 					theme: "detect",
-					popupServices: ["youtube", "twitter", "instagram", "tiktok", "imgur", "reddit", "quora", "translate", "maps"],
+					popupServices: ["youtube", "twitter", "tiktok", "imgur", "reddit", "quora", "translate", "maps"],
 				},
 			},
 			() => resolve()

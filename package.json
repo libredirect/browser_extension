@@ -1,6 +1,6 @@
 {
 	"name": "libredirect",
-	"description": "Redirects YouTube, Twitter, Instagram and more to privacy friendly frontends.",
+	"description": "Redirects YouTube, Twitter, TikTok and more to privacy friendly frontends.",
 	"engines": {
 		"node": ">=16.13.1",
 		"npm": ">=8.1.2"
@@ -26,14 +26,6 @@
 		"web-ext": "^7.2.0"
 	},
 	"webExt": {
-		"ignoreFiles": [
-			"instances/get_instances.py",
-			"instances/beatbump.json",
-			"instances/bibliogram.json",
-			"instances/cloudtube.json",
-			"instances/facil.json",
-			"instances/neuters.json"
-		],
 		"sourceDir": "./src/",
 		"run": {
 			"browserConsole": true

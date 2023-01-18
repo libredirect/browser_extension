@@ -141,25 +141,6 @@
 			"embeddable": true,
 			"url": "https://twitter.com"
 		},
-		"instagram": {
-			"frontends": {
-				"bibliogram": {
-					"name": "Bibliogram",
-					"instanceList": true,
-					"url": "https://sr.ht/~cadence/bibliogram/"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.)?instagram\\.com\\/?(p\\/|reel\\/|$)"
-			],
-			"name": "Instagram",
-			"options": {
-				"enabled": true
-			},
-			"imageType": "png",
-			"embeddable": false,
-			"url": "https://instagram.com"
-		},
 		"tiktok": {
 			"frontends": {
 				"proxiTok": {

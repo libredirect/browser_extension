@@ -1,6 +1,6 @@
 <img src="./img/libredirect_full.svg" height="50"/>
 
-A web extension that redirects YouTube, Twitter, Instagram... requests to alternative privacy friendly frontends and backends.
+A web extension that redirects YouTube, Twitter, TikTok... requests to alternative privacy friendly frontends and backends.
 
 [![Matrix Badge](https://img.shields.io/matrix/libredirect:matrix.org?label=matrix%20chat)](https://matrix.to/#/#libredirect:matrix.org)
 [![Firefox users Badge](https://img.shields.io/amo/users/libredirect?label=Firefox%20users)](https://addons.mozilla.org/firefox/addon/libredirect/)
@@ -21,7 +21,6 @@ A web extension that redirects YouTube, Twitter, Instagram... requests to altern
 - Youtube <span>&#8594;</span> [Invidious](https://github.com/iv-org/invidious), [Piped](https://github.com/TeamPiped/Piped), [Piped-Material](https://github.com/mmjee/Piped-Material), [CloudTube](https://sr.ht/~cadence/tube/), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee)
 - Youtube Music <span>&#8594;</span> [Beatbump](https://github.com/snuffyDev/Beatbump), [Hyperpipe](https://codeberg.org/Hyperpipe/Hyperpipe)
 - Twitter <span>&#8594;</span> [Nitter](https://github.com/zedeus/nitter)
-- Instagram <span>&#8594;</span> [Bibliogram](https://sr.ht/~cadence/bibliogram/)
 - TikTok <span>&#8594;</span> [ProxiTok](https://github.com/pablouser1/ProxiTok)
 - Reddit <span>&#8594;</span> [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances)
 - Imgur <span>&#8594;</span> [Rimgo](https://codeberg.org/video-prize-ranch/rimgo)
