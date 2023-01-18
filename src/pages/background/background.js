@@ -9,6 +9,10 @@ window.browser = window.browser || window.chrome
 browser.runtime.onInstalled.addListener(async details => {
 	if (details.previousVersion != browser.runtime.getManifest().version) {
 		// ^Used to prevent this running when debugging with auto-reload
+		browser.tabs.create({
+			url: browser.runtime.getURL("/pages/options/new_release.html")
+		});
+
 		switch (details.reason) {
 			case "install":
 				browser.storage.local.get("options", async r => {
@@ -20,10 +24,10 @@ browser.runtime.onInstalled.addListener(async details => {
 				break
 			case "update":
 				switch (details.previousVersion) {
-					case "2.2.0":
-					case "2.2.1":
+					case "2.3.4":
 						browser.storage.local.get("options", async r => {
 							if (!r.options) {
+								await servicesHelper.backupOptions()
 								await generalHelper.initDefaults()
 								await servicesHelper.initDefaults()
 								await servicesHelper.upgradeOptions()
@@ -38,13 +42,6 @@ browser.runtime.onInstalled.addListener(async details => {
 })
 
 let tabIdRedirects = {}
-
-browser.storage.onChanged.addListener(() => {
-	browser.storage.local.get(["embedTabs"], r => {
-		embedTabs = r.embedTabs
-	})
-})
-let embedTabs = {}
 
 // true == Always redirect, false == Never redirect, null/undefined == follow options for services
 browser.webRequest.onBeforeRequest.addListener(
@@ -88,11 +85,6 @@ browser.tabs.onRemoved.addListener(tabId => {
 	if (tabIdRedirects[tabId] != undefined) {
 		delete tabIdRedirects[tabId]
 		console.log("Removed tab " + tabId + " from tabIdRedirects")
-	}
-	if (embedTabs[tab] != undefined) {
-		delete embedTabs[tabId]
-		browser.storage.local.set(embedTabs)
-		console.log("Removed tab " + tabId + " from embedTabs")
 	}
 })
 

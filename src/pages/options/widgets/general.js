@@ -57,19 +57,16 @@ importSettingsElement.addEventListener("change", () => {
 	reader.readAsText(file)
 	reader.onload = async () => {
 		const data = JSON.parse(reader.result)
-		if ("theme" in data && "disableImgur" in data && "imgurRedirects" in data) {
+		if (
+			"theme" in data
+			&& data.version == browser.runtime.getManifest().version
+		) {
 			browser.storage.local.clear(async () => {
 				await generalHelper.initDefaults()
 				await servicesHelper.initDefaults()
-				await servicesHelper.upgradeOptions()
-				location.reload()
-			})
-		} else if ("version" in data) {
-			let options = data
-			delete options.version
-			browser.storage.local.set({ options: data }, async () => {
-				await servicesHelper.processUpdate()
-				location.reload()
+				browser.storage.local.set({ options: data }, () => {
+					location.reload()
+				})
 			})
 		} else {
 			console.log("incompatible settings")

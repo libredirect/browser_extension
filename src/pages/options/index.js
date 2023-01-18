@@ -65,8 +65,10 @@ function loadPage(path) {
 			divs[service][option].addEventListener("change", () => {
 				browser.storage.local.get("options", r => {
 					let options = r.options
-					if (typeof config.services[service].options[option] == "boolean") options[service][option] = divs[service][option].checked
-					else options[service][option] = divs[service][option].value
+					if (typeof config.services[service].options[option] == "boolean")
+						options[service][option] = divs[service][option].checked
+					else
+						options[service][option] = divs[service][option].value
 					browser.storage.local.set({ options })
 					changeFrontendsSettings(service)
 				})
@@ -167,37 +169,40 @@ async function processDefaultCustomInstances(frontend, document) {
 
 function createList(frontend, networks, document, redirects, blacklist) {
 	for (const network in networks) {
-		if (redirects[frontend][network].length > 0) {
-			document.getElementById(frontend).getElementsByClassName(network)[0].getElementsByClassName("checklist")[0].innerHTML = [
-				`
-			<div class="some-block option-block">
-				<h4>${utils.camelCase(network)}</h4>
-			</div>
-			`,
-				...redirects[frontend][network]
-					.sort((a, b) =>
-						(blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
-						||
-						(blacklist.authenticate.includes(a) && !blacklist.authenticate.includes(b))
-					)
-					.map(x => {
-						const cloudflare = blacklist.cloudflare.includes(x) ? ' <span style="color:red;">cloudflare</span>' : ""
-						const authenticate = blacklist.authenticate.includes(x) ? ' <span style="color:orange;">authenticate</span>' : ""
+		if (redirects[frontend]) {
+			if (redirects[frontend][network].length > 0) {
+				document.getElementById(frontend).getElementsByClassName(network)[0].getElementsByClassName("checklist")[0].innerHTML = [
+					`
+				<div class="some-block option-block">
+					<h4>${utils.camelCase(network)}</h4>
+				</div>
+				`,
+					...redirects[frontend][network]
+						.sort((a, b) =>
+							(blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
+						)
+						.map(x => {
+							const cloudflare = blacklist.cloudflare.includes(x) ? ' <a target="_blank" href="https://libredirect.github.io/docs.html#instances"><span style="color:red;">cloudflare</span></a>' : ""
 
-						let warnings = [cloudflare, authenticate].join(" ")
-						return `
-					<div>
-						<x>
-							<a href="${x}" target="_blank">${x}</a>${warnings}
-						</x>
-					  </div>`
-					}),
-				'<br>'
-			].join("\n<hr>\n")
+							let warnings = [cloudflare].join(" ")
+							return `
+						<div>
+							<x>
+								<a href="${x}" target="_blank">${x}</a>${warnings}
+							</x>
+						  </div>`
+						}),
+					'<br>'
+				].join("\n<hr>\n")
+			}
+		} else {
+			document.getElementById(frontend).getElementsByClassName(network)[0].getElementsByClassName("checklist")[0].innerHTML =
+				`<div class="some-block option-block">No instances found...</div>`
+			break
 		}
+
 	}
 }
-
 
 const r = window.location.href.match(/#(.*)/)
 if (r) loadPage(r[1])

@@ -73,7 +73,7 @@ function switchInstance(test) {
 function getBlacklist() {
 	return new Promise(resolve => {
 		const http = new XMLHttpRequest()
-		http.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/blacklist.json", true)
+		http.open("GET", "https://raw.githubusercontent.com/libredirect/instances/main/blacklist.json", true)
 		http.onreadystatechange = () => {
 			if (http.status === 200 && http.readyState == XMLHttpRequest.DONE) {
 				resolve(JSON.parse(http.responseText))
@@ -87,7 +87,7 @@ function getBlacklist() {
 function getList() {
 	return new Promise(resolve => {
 		const http = new XMLHttpRequest()
-		http.open("GET", "https://codeberg.org/LibRedirect/libredirect/raw/branch/master/src/instances/data.json", true)
+		http.open("GET", "https://raw.githubusercontent.com/libredirect/instances/main/data.json", true)
 		http.onreadystatechange = () => {
 			if (http.status === 200 && http.readyState == XMLHttpRequest.DONE) {
 				resolve(JSON.parse(http.responseText))

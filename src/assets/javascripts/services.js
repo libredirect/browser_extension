@@ -2,14 +2,12 @@ window.browser = window.browser || window.chrome
 
 import utils from "./utils.js"
 
-let config, options, targets
+let config, options
 
 function init() {
 	return new Promise(async resolve => {
-		browser.storage.local.get(["options", "targets", "embedTabs"], r => {
+		browser.storage.local.get(["options"], r => {
 			options = r.options
-			targets = r.targets
-			embedTabs = r.embedTabs
 			fetch("/config.json")
 				.then(response => response.text())
 				.then(configData => {
@@ -38,25 +36,18 @@ function all(service, frontend, options, config) {
 }
 
 function regexArray(service, url, config, frontend) {
-	if (config.services[service].targets == "datajson") {
-		for (const instance of targets[service]) {
-			if (instance.startsWith(utils.protocolHost(url))) return true
+	let targetList = config.services[service].targets
+	if (frontend && config.services[service].frontends[frontend].excludeTargets)
+		for (const i in config.services[service].frontends[frontend].excludeTargets) {
+			targetList = targetList.splice(i, 1)
 		}
-	} else {
-		let targetList = config.services[service].targets
-		if (frontend && config.services[service].frontends[frontend].excludeTargets)
-			for (const i in config.services[service].frontends[frontend].excludeTargets) {
-				targetList = targetList.splice(i, 1)
-			}
-		for (const targetString in targetList) {
-			const target = new RegExp(targetList[targetString])
-			if (target.test(url.href)) return true
-		}
+	for (const targetString in targetList) {
+		const target = new RegExp(targetList[targetString])
+		if (target.test(url.href)) return true
 	}
 	return false
 }
 
-let embedTabs = {}
 function redirect(url, type, initiator, forceRedirection, tabId) {
 	if (type != "main_frame" && type != "sub_frame" && type != "image") return
 	let randomInstance
@@ -79,17 +70,7 @@ function redirect(url, type, initiator, forceRedirection, tabId) {
 		}
 		if (instanceList.length === 0) return
 
-		if ((type == "sub_frame" || type == "image") && embedTabs[tabId] && embedTabs[tabId][frontend] !== undefined) {
-			randomInstance = embedTabs[tabId][frontend]
-		} else {
-			randomInstance = utils.getRandomInstance(instanceList)
-		}
-
-		if ((type == "sub_frame" || type == "image") && embedTabs[tabId] === undefined) {
-			embedTabs[tabId] = {}
-			embedTabs[tabId][frontend] = randomInstance
-			browser.storage.local.set(embedTabs)
-		}
+		randomInstance = utils.getRandomInstance(instanceList)
 
 		break
 	}
@@ -491,7 +472,7 @@ function reverse(url, urlString) {
 		await init()
 		let protocolHost
 		if (!urlString) protocolHost = utils.protocolHost(url)
-		else protocolHost = url.match(/https?:\/{2}(?:[^\s\/]+\.)+[a-zA-Z0-9]+/)[0]
+		else protocolHost = url.match(/^https?:\/{2}/)[0]
 		for (const service in config.services) {
 			if (!all(service, null, options, config).includes(protocolHost)) continue
 
@@ -530,9 +511,7 @@ function initDefaults() {
 			.then(configData => {
 				browser.storage.local.get(["options"], r => {
 					let options = r.options
-					let targets = {}
 					let config = JSON.parse(configData)
-					const localstorage = {}
 					for (const service in config.services) {
 						options[service] = {}
 						for (const defaultOption in config.services[service].options) {
@@ -545,10 +524,25 @@ function initDefaults() {
 						}
 					}
 					browser.storage.local.set(
-						{ options, targets, localstorage, embedTabs: {} },
+						{ options },
 						() => resolve()
 					)
 				})
+			})
+	})
+}
+
+function backupOptions() {
+	return new Promise(resolve => {
+		browser.storage.local.get(
+			"options", r => {
+				const oldOptions = r.options
+				browser.storage.local.clear(() => {
+					browser.storage.local.set({ oldOptions },
+						() => resolve()
+					)
+				})
+
 			})
 	})
 }
@@ -558,57 +552,31 @@ function upgradeOptions() {
 		fetch("/config.json")
 			.then(response => response.text())
 			.then(configData => {
-				browser.storage.local.get(null, r => {
+				browser.storage.local.get(["oldOptions", "options"], r => {
+					const oldOptions = r.oldOptions
 					let options = r.options
 					const config = JSON.parse(configData)
-					options.exceptions = r.exceptions
-					if (r.theme != "DEFAULT") options.theme = r.theme
-					options.popupServices = r.popupFrontends
-					let tmp = options.popupServices.indexOf("tikTok")
-					if (tmp > -1) {
-						options.popupServices.splice(tmp, 1)
-						options.popupServices.push("tiktok")
-					}
-					tmp = options.popupServices.indexOf("sendTarget")
-					if (tmp > -1) {
-						options.popupServices.splice(tmp, 1)
-						options.popupServices.push("sendFiles")
-					}
-					switch (r.onlyEmbeddedVideo) {
-						case "onlyNotEmbedded":
-							options.youtube.redirectType = "main_frame"
-						case "onlyEmbedded":
-							options.youtube.redirectType = "sub_frame"
-						case "both":
-							options.youtube.redirectType = "both"
-					}
+
+					options.exceptions = oldOptions.exceptions
+					options.theme = oldOptions.theme
+					options.popupServices = oldOptions.popupServices
+
 					for (const service in config.services) {
-						let oldService
-						switch (service) {
-							case "tiktok":
-								oldService = "tikTok"
-								break
-							case "sendFiles":
-								oldService = "sendTarget"
-								break
-							default:
-								oldService = service
-						}
-						options[service].enabled = !r["disable" + utils.camelCase(oldService)]
-						if (r[oldService + "Frontend"]) {
-							if (r[oldService + "Frontend"] == "yatte") options[service].frontend = "yattee"
-							else options[service].frontend = r[oldService + "Frontend"]
-						}
-						if (r[oldService + "RedirectType"]) options[service].redirectType = r[oldService + "RedirectType"]
-						for (const frontend in config.services[service].frontends) {
-							for (const network in config.networks) {
-								let protocol
-								if (network == "clearnet") protocol = "normal"
-								else protocol = network
-							}
+						options[service] = oldOptions[service]
+						options[service].remove("embedFrontend")
+
+						for (const frontend in network.services[service].frontends) {
+							options[frontend] = [
+								...oldOptions[frontend].clearnet.enabled,
+								...oldOptions[frontend].clearnet.custom
+							]
 						}
 					}
-					browser.storage.local.set({ options }, () => resolve())
+					browser.storage.local.set({ options }, () => {
+						browser.storage.local.remove("oldOptions", () => {
+							resolve()
+						})
+					})
 				})
 			})
 	})
@@ -616,51 +584,23 @@ function upgradeOptions() {
 
 function processUpdate() {
 	return new Promise(resolve => {
-		fetch("/instances/data.json")
+		fetch("/config.json")
 			.then(response => response.text())
-			.then(data => {
-				fetch("/config.json")
-					.then(response => response.text())
-					.then(configData => {
-						browser.storage.local.get(["options", "targets"], async r => {
-							let redirects = JSON.parse(data)
-							let options = r.options
-							let targets = r.targets
-							let config = JSON.parse(configData)
-							for (const service in config.services) {
-								if (!options[service]) options[service] = {}
-								if (config.services[service].targets == "datajson") {
-									targets[service] = redirects[service]
-									delete redirects[service]
-								}
-								for (const defaultOption in config.services[service].options) {
-									if (options[service][defaultOption] === undefined) {
-										options[service][defaultOption] = config.services[service].options[defaultOption]
-									}
-								}
-								for (const frontend in config.services[service].frontends) {
-									if (config.services[service].frontends[frontend].instanceList) {
-										if (!options[frontend]) options[frontend] = {}
-										for (const network in config.networks) {
-											if (!options[frontend]) {
-												options[frontend] = []
-												if (network == "clearnet") {
-													for (const blacklist of await utils.getBlacklist()) {
-														for (const instance of blacklist) {
-															let i = options[frontend].clearnet.enabled.indexOf(instance)
-															if (i > -1) options[frontend].clearnet.enabled.splice(i, 1)
-														}
-													}
-												}
-											}
-										}
-									}
-								}
+			.then(configJson => {
+				let config = JSON.parse(configJson)
+				browser.storage.local.get(["options"], async r => {
+					let options = r.options
+					for (const service in config.services) {
+						if (!options[service]) options[service] = {}
+						for (const defaultOption in config.services[service].options) {
+							if (options[service][defaultOption] === undefined) {
+								options[service][defaultOption] = config.services[service].options[defaultOption]
 							}
-							browser.storage.local.set({ redirects, options, targets })
-							resolve()
-						})
-					})
+						}
+					}
+					browser.storage.local.set({ options })
+					resolve()
+				})
 			})
 	})
 }
@@ -710,6 +650,7 @@ export default {
 	reverse,
 	initDefaults,
 	upgradeOptions,
+	backupOptions,
 	processUpdate,
 	modifyContentSecurityPolicy,
 }
