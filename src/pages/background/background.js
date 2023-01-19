@@ -9,10 +9,7 @@ window.browser = window.browser || window.chrome
 browser.runtime.onInstalled.addListener(async details => {
 	if (details.previousVersion != browser.runtime.getManifest().version) {
 		// ^Used to prevent this running when debugging with auto-reload
-		browser.tabs.create({
-			url: browser.runtime.getURL("/pages/options/new_release.html")
-		});
-
+		browser.runtime.openOptionsPage()
 		switch (details.reason) {
 			case "install":
 				browser.storage.local.get("options", async r => {

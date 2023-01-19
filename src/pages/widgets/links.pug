@@ -8,12 +8,15 @@ section(class="links" id="links")
         div(class="title")
             a(href="#"+key)
                 if services[key].imageType == 'svgMono'
-                    img(src=`/assets/images/${key}-icon.svg`)
+                    img(class='dark' src=`/assets/images/${key}-icon.svg`)
+                    img(class='light' src=`/assets/images/${key}-icon-light.svg`)
                 else
                     img(src=`/assets/images/${key}-icon.${services[key].imageType}`)
                 span(data-localise="__MSG_"+key+"__")=services[key].name
 
     div(class="title")
         a(href="#about")
-            img(src="/assets/images/about-icon.svg")
+            img(class='dark' src="/assets/images/about-icon.svg")
+            img(class='light' src="/assets/images/about-icon-light.svg")
+
             span(data-localise="__MSG_about__") About

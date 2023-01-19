@@ -84,7 +84,7 @@
 			],
 			"name": "Youtube",
 			"options": {
-				"enabled": true,
+				"enabled": false,
 				"redirectType": "both",
 				"frontend": "invidious"
 			},
@@ -110,7 +110,7 @@
 			],
 			"name": "YT Music",
 			"options": {
-				"enabled": true,
+				"enabled": false,
 				"frontend": "beatbump"
 			},
 			"imageType": "png",
@@ -134,7 +134,7 @@
 			],
 			"name": "Twitter",
 			"options": {
-				"enabled": true,
+				"enabled": false,
 				"redirectType": "both"
 			},
 			"imageType": "png",
@@ -154,7 +154,7 @@
 			],
 			"name": "TikTok",
 			"options": {
-				"enabled": true
+				"enabled": false
 			},
 			"imageType": "png",
 			"embeddable": false,
@@ -179,7 +179,7 @@
 			],
 			"name": "Reddit",
 			"options": {
-				"enabled": true,
+				"enabled": false,
 				"frontend": "libreddit"
 			},
 			"imageType": "png",
@@ -199,7 +199,7 @@
 			],
 			"name": "Imgur",
 			"options": {
-				"enabled": true,
+				"enabled": false,
 				"redirectType": "both"
 			},
 			"imageType": "png",
@@ -236,7 +236,7 @@
 			],
 			"name": "Medium",
 			"options": {
-				"enabled": true
+				"enabled": false
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -255,7 +255,7 @@
 			],
 			"name": "Quora",
 			"options": {
-				"enabled": true
+				"enabled": false
 			},
 			"imageType": "png",
 			"embeddable": false,
@@ -274,7 +274,7 @@
 			],
 			"name": "IMDb",
 			"options": {
-				"enabled": true
+				"enabled": false
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -293,7 +293,7 @@
 			],
 			"name": "Fandom",
 			"options": {
-				"enabled": true
+				"enabled": false
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -320,7 +320,7 @@
 			],
 			"name": "LBRY",
 			"options": {
-				"enabled": true,
+				"enabled": false,
 				"frontend": "librarian",
 				"redirectType": "both"
 			},
@@ -356,7 +356,7 @@
 			],
 			"name": "Search",
 			"options": {
-				"enabled": true,
+				"enabled": false,
 				"frontend": "searxng"
 			},
 			"imageType": "svgMono",
@@ -387,7 +387,7 @@
 			],
 			"name": "Translate",
 			"options": {
-				"enabled": true,
+				"enabled": false,
 				"frontend": "simplyTranslate"
 			},
 			"imageType": "svgMono",
@@ -435,7 +435,7 @@
 			],
 			"name": "Send Files",
 			"options": {
-				"enabled": true
+				"enabled": false
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -454,7 +454,7 @@
 			],
 			"name": "Paste Text",
 			"options": {
-				"enabled": true
+				"enabled": false
 			},
 			"imageType": "svgMono",
 			"embeddable": false,

@@ -14,12 +14,12 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://codeberg.org/LibRedirect/LibRedirect.git"
+		"url": "git+https://github.com/libredirect/libredirect.git"
 	},
 	"author": "LibRedirect",
 	"license": "GPL-3.0-only",
 	"bugs": {
-		"url": "https://codeberg.org/LibRedirect/LibRedirect/issues"
+		"url": "https://github.com/libredirect/libredirect/issues"
 	},
 	"homepage": "https://libredirect.github.io",
 	"devDependencies": {
