@@ -188,5 +188,13 @@
     "autoRedirect": {
         "message": "Tự động chuyển hướng instance đang ngoại tuyến sang instance đang trực tuyến",
         "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "Nhập cài đặt",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "Xuất cài đặt",
+        "description": "used in the settings page"
     }
 }
