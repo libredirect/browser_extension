@@ -18,6 +18,16 @@ config = await utils.getConfig()
 options = await utils.getOptions()
 
 function changeFrontendsSettings(service) {
+	const opacityDiv = document.getElementById(`${service}-opacity`)
+	if (document.getElementById(`${service}-enabled`).checked) {
+		opacityDiv.style.pointerEvents = 'auto'
+		opacityDiv.style.opacity = 1
+		opacityDiv.style.userSelect = 'auto'
+	} else {
+		opacityDiv.style.pointerEvents = 'none'
+		opacityDiv.style.opacity = 0.4
+		opacityDiv.style.userSelect = 'none'
+	}
 	for (const frontend in config.services[service].frontends) {
 		if (config.services[service].frontends[frontend].instanceList) {
 			const frontendDiv = document.getElementById(frontend)
@@ -32,7 +42,7 @@ function changeFrontendsSettings(service) {
 	}
 }
 
-function loadPage(path) {
+async function loadPage(path) {
 	for (const section of document.getElementById("pages").getElementsByTagName("section")) section.style.display = "none"
 	document.getElementById(`${path}_page`).style.display = "block"
 
@@ -50,6 +60,7 @@ function loadPage(path) {
 		const service = path;
 
 		divs[service] = {}
+		options = await utils.getOptions()
 		for (const option in config.services[service].options) {
 			divs[service][option] = document.getElementById(`${service}-${option}`)
 			if (typeof config.services[service].options[option] == "boolean") divs[service][option].checked = options[service][option]
@@ -62,7 +73,7 @@ function loadPage(path) {
 				else
 					options[service][option] = divs[service][option].value
 				browser.storage.local.set({ options })
-				changeFrontendsSettings(service)
+				changeFrontendsSettings(service)	
 			})
 		}
 
@@ -73,9 +84,8 @@ function loadPage(path) {
 			frontend_name_element.href = Object.values(config.services[service].frontends)[0].url
 		}
 
-		if (Object.keys(config.services[service].frontends).length > 1) {
-			changeFrontendsSettings(service)
-		}
+		changeFrontendsSettings(service)
+
 
 		for (const frontend in config.services[service].frontends) {
 			if (config.services[service].frontends[frontend].instanceList) {
@@ -95,38 +105,39 @@ function loadPage(path) {
 	}
 }
 
+async function calcCustomInstances(frontend) {
+	let options = await utils.getOptions()
+	let customInstances = options[frontend]
+	document.getElementById(frontend).getElementsByClassName("custom-checklist")[0].innerHTML = customInstances
+		.map(
+			x => `
+			<div>
+				${x}
+				<button class="add clear-${x}">
+					<svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+						<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+					</svg>
+				</button>
+			  </div>
+			  <hr>`
+		)
+		.join("\n")
+	for (const item of customInstances) {
+		document.getElementById(frontend).getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
+			const index = customInstances.indexOf(item)
+			if (index > -1) customInstances.splice(index, 1)
+			options = await utils.getOptions()
+			options[frontend] = customInstances
+			browser.storage.local.set({ options }, () => calcCustomInstances(frontend))
+		})
+	}
+}
+
 async function processCustomInstances(frontend, document) {
 	let options = await utils.getOptions()
 	let customInstances = options[frontend]
 
-	function calcCustomInstances() {
-		document.getElementById(frontend).getElementsByClassName("custom-checklist")[0].innerHTML = customInstances
-			.map(
-				x => `
-				<div>
-                	${x}
-					<button class="add clear-${x}">
-						<svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
-							<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
-						</svg>
-					</button>
-              	</div>
-              	<hr>`
-			)
-			.join("\n")
-
-		customInstances = options[frontend]
-		for (const item of customInstances) {
-			document.getElementById(frontend).getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
-				let index = customInstances.indexOf(item)
-				if (index > -1) customInstances.splice(index, 1)
-				options = await utils.getOptions()
-				options[frontend] = customInstances
-				browser.storage.local.set({ options }, () => calcCustomInstances())
-			})
-		}
-	}
-	calcCustomInstances()
+	calcCustomInstances(frontend)
 	document.getElementById(frontend).getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
 		event.preventDefault()
 		let frontendCustomInstanceInput = document.getElementById(frontend).getElementsByClassName("custom-instance")[0]
@@ -144,7 +155,7 @@ async function processCustomInstances(frontend, document) {
 				options[frontend] = customInstances
 				browser.storage.local.set({ options }, () => {
 					frontendCustomInstanceInput.value = ""
-					calcCustomInstances()
+					calcCustomInstances(frontend)
 				})
 			}
 		}
@@ -155,29 +166,56 @@ function createList(frontend, networks, document, redirects, blacklist) {
 	for (const network in networks) {
 		if (redirects[frontend]) {
 			if (redirects[frontend][network].length > 0) {
-				document.getElementById(frontend).getElementsByClassName(network)[0].getElementsByClassName("checklist")[0].innerHTML = [
-					`<div class="some-block option-block">
+				document.getElementById(frontend)
+					.getElementsByClassName(network)[0]
+					.getElementsByClassName("checklist")[0]
+					.innerHTML = [
+						`<div class="some-block option-block">
 						<h4>${utils.camelCase(network)}</h4>
 					</div>`,
-					...redirects[frontend][network]
-						.sort((a, b) =>
-							(blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
-						)
-						.map(x => {
-							const cloudflare = blacklist.cloudflare.includes(x) ?
-								` <a target="_blank" href="https://libredirect.github.io/docs.html#instances">
+						...redirects[frontend][network]
+							.sort((a, b) =>
+								(blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
+							)
+							.map(x => {
+								const cloudflare = blacklist.cloudflare.includes(x) ?
+									` <a target="_blank" href="https://libredirect.github.io/docs.html#instances">
 							 		<span style="color:red;">cloudflare</span>
 								</a>` : ""
 
-							const warnings = [cloudflare].join(" ")
-							return `<div>
+								const warnings = [cloudflare].join(" ")
+								return `<div>
 										<x>
 											<a href="${x}" target="_blank">${x}</a>${warnings}
 										</x>
+										<button class="add add-${x}">
+											<svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+												<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+											</svg>
+										</button>
 						  			</div>`
-						}),
-					'<br>'
-				].join("\n<hr>\n")
+							}),
+						'<br>'
+					].join("\n<hr>\n")
+
+				for (const x of redirects[frontend][network]) {
+					document.getElementById(frontend)
+						.getElementsByClassName(network)[0]
+						.getElementsByClassName("checklist")[0]
+						.getElementsByClassName(`add-${x}`)[0]
+						.addEventListener("click", async () => {
+							let options = await utils.getOptions()
+							let customInstances = options[frontend]
+							if (!customInstances.includes(x)) {
+								customInstances.push(x)
+								options = await utils.getOptions()
+								options[frontend] = customInstances
+								browser.storage.local.set({ options }, () => {
+									calcCustomInstances(frontend)
+								})
+							}
+						})
+				}
 			}
 		} else {
 			document.getElementById(frontend).getElementsByClassName(network)[0].getElementsByClassName("checklist")[0].innerHTML =

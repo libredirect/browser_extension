@@ -2,10 +2,7 @@
 window.browser = window.browser || window.chrome
 
 import utils from "../../../assets/javascripts/utils.js"
-import generalHelper from "../../../assets/javascripts/general.js"
 import servicesHelper from "../../../assets/javascripts/services.js"
-
-
 
 async function setOption(option, type, event) {
 	let options = await utils.getOptions()
@@ -70,10 +67,8 @@ function importError() {
 const resetSettings = document.getElementById("reset-settings")
 resetSettings.addEventListener("click", async () => {
 	resetSettings.innerHTML = "..."
-	browser.storage.local.clear(async () => {
-		await servicesHelper.initDefaults()
-		location.reload()
-	})
+	await servicesHelper.initDefaults()
+	location.reload()
 })
 
 let themeElement = document.getElementById("theme")
