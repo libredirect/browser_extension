@@ -1,4 +1,7 @@
 "use strict"
+
+import utils from "./utils.js"
+
 window.browser = window.browser || window.chrome
 
 let exceptions
@@ -10,36 +13,16 @@ function isException(url) {
 }
 
 function init() {
-	return new Promise(resolve => {
-		browser.storage.local.get("options", r => {
-			if (r.options) exceptions = r.options.exceptions
-			resolve()
-		})
+	return new Promise(async resolve => {
+		const options = await utils.getOptions()
+		if (options) exceptions = options.exceptions
+		resolve()
 	})
 }
 
 init()
 browser.storage.onChanged.addListener(init)
 
-async function initDefaults() {
-	return new Promise(resolve =>
-		browser.storage.local.set(
-			{
-				options: {
-					exceptions: {
-						url: [],
-						regex: [],
-					},
-					theme: "detect",
-					popupServices: ["youtube", "twitter", "tiktok", "imgur", "reddit", "quora", "translate", "maps"],
-				},
-			},
-			() => resolve()
-		)
-	)
-}
-
 export default {
 	isException,
-	initDefaults,
 }

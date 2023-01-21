@@ -1,35 +1,24 @@
 "use strict"
 window.browser = window.browser || window.chrome
 
+import servicesHelper from "../../assets/javascripts/services.js"
 import utils from "../../assets/javascripts/utils.js"
-import serviceHelper from "../../assets/javascripts/services.js"
 
 let config,
 	divs = {}
 
-async function getConfig() {
-	return new Promise(resolve => {
-		fetch("/config.json")
-			.then(response => response.text())
-			.then(data => {
-				config = JSON.parse(data)
-				resolve()
-			})
-	})
-}
+config = await utils.getConfig()
 
-await getConfig()
-
-utils.switchInstance(true).then(r => {
+servicesHelper.switchInstance(true).then(r => {
 	if (!r) document.getElementById("change_instance_div").style.display = "none"
-	else document.getElementById("change_instance").addEventListener("click", () => utils.switchInstance(false))
+	else document.getElementById("change_instance").addEventListener("click", () => servicesHelper.switchInstance(false))
 })
 
-utils.copyRaw(true).then(r => {
+servicesHelper.copyRaw(true).then(r => {
 	if (!r) document.getElementById("copy_raw_div").style.display = "none"
 	else {
 		const copy_raw = document.getElementById("copy_raw")
-		copy_raw.addEventListener("click", () => utils.copyRaw(false, copy_raw))
+		copy_raw.addEventListener("click", () => servicesHelper.copyRaw(false, copy_raw))
 	}
 })
 document.getElementById("more-options").addEventListener("click", () => browser.runtime.openOptionsPage())
@@ -55,7 +44,7 @@ await setDivs()
 
 const currentSiteIsFrontend = document.getElementById("current_site_divider")
 
-browser.storage.local.get(["options", "redirects"], r => {
+browser.storage.local.get(["options"], r => {
 	browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 		for (const service in config.services) {
 			if (!r.options.popupServices.includes(service)) allSites.getElementsByClassName(service)[0].classList.add("hide")
@@ -76,7 +65,7 @@ browser.storage.local.get(["options", "redirects"], r => {
 			return
 		}
 
-		let service = await serviceHelper.computeService(url, true)
+		let service = await servicesHelper.computeService(url, true)
 		let frontend
 		let instance
 		if (service) {

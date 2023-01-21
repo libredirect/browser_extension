@@ -9,33 +9,17 @@ window.browser = window.browser || window.chrome
 browser.runtime.onInstalled.addListener(async details => {
 	if (details.previousVersion != browser.runtime.getManifest().version) {
 		// ^Used to prevent this running when debugging with auto-reload
-		browser.runtime.openOptionsPage()
-		switch (details.reason) {
-			case "install":
-				browser.storage.local.get("options", async r => {
-					if (!r.options) {
-						await generalHelper.initDefaults()
-						await servicesHelper.initDefaults()
-					}
-				})
-				break
-			case "update":
-				switch (details.previousVersion) {
-					case "2.3.4":
-						browser.storage.local.get("options", async r => {
-							if (!r.options) {
-								await servicesHelper.backupOptions()
-								await generalHelper.initDefaults()
-								await servicesHelper.initDefaults()
-								await servicesHelper.upgradeOptions()
-							}
-						})
-						break
-					default:
-						await servicesHelper.processUpdate()
-				}
+		if (details.reason == "install") {
+			if (!(await utils.getOptions())) {
+				await servicesHelper.initDefaults()
+			}
+		}
+		else if (details.reason == "update") {
+			await servicesHelper.upgradeOptions()
+			// await servicesHelper.processUpdate()
 		}
 	}
+	browser.runtime.openOptionsPage()
 })
 
 let tabIdRedirects = {}
@@ -86,8 +70,8 @@ browser.tabs.onRemoved.addListener(tabId => {
 })
 
 browser.commands.onCommand.addListener(command => {
-	if (command === "switchInstance") utils.switchInstance()
-	else if (command == "copyRaw") utils.copyRaw()
+	if (command === "switchInstance") servicesHelper.switchInstance()
+	else if (command == "copyRaw") servicesHelper.copyRaw()
 })
 
 browser.contextMenus.create({
@@ -134,7 +118,7 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 	return new Promise(async resolve => {
 		switch (info.menuItemId) {
 			case "switchInstance":
-				utils.switchInstance()
+				servicesHelper.switchInstance()
 				resolve()
 				return
 			case "settings":
@@ -142,7 +126,7 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 				resolve()
 				return
 			case "copyRaw":
-				utils.copyRaw()
+				servicesHelper.copyRaw()
 				resolve()
 				return
 			case "toggleTab":
@@ -155,13 +139,11 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 					const url = new URL(tab.url)
 					const service = await servicesHelper.computeService(url)
 					if (service) {
-						browser.storage.local.get("options", async r => {
-							if (r.options[service].enabled) tabIdRedirects[tab.id] = false
-							else tabIdRedirects[tab.id] = true
-							await handleToggleTab(tab)
-							resolve()
-							return
-						})
+						if ((await utils.getOptions())[service].enabled) tabIdRedirects[tab.id] = false
+						else tabIdRedirects[tab.id] = true
+						await handleToggleTab(tab)
+						resolve()
+						return
 					} else {
 						tabIdRedirects[tab.id] = false
 						await handleToggleTab(tab)

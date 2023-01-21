@@ -1,7 +1,5 @@
 window.browser = window.browser || window.chrome
 
-import servicesHelper from "./services.js"
-
 function getRandomInstance(instances) {
 	return instances[~~(instances.length * Math.random())]
 }
@@ -15,59 +13,23 @@ function protocolHost(url) {
 	return `${url.protocol}//${url.host}`
 }
 
-function copyRaw(test, copyRawElement) {
+function getConfig() {
 	return new Promise(resolve => {
-		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
-			let currTab = tabs[0]
-			if (currTab) {
-				let url
-				try {
-					url = new URL(currTab.url)
-				} catch {
-					resolve()
-					return
-				}
-
-				const newUrl = await servicesHelper.reverse(url)
-
-				if (newUrl) {
-					resolve(newUrl)
-					if (test) return
-					navigator.clipboard.writeText(newUrl)
-					if (copyRawElement) {
-						const textElement = copyRawElement.getElementsByTagName("h4")[0]
-						const oldHtml = textElement.innerHTML
-						textElement.innerHTML = browser.i18n.getMessage("copied")
-						setTimeout(() => (textElement.innerHTML = oldHtml), 1000)
-					}
-				}
-			}
-			resolve()
-		})
+		fetch("/config.json")
+			.then(response => response.text())
+			.then(json => {
+				resolve(JSON.parse(json))
+				return
+			})
 	})
 }
 
-function switchInstance(test) {
-	return new Promise(resolve => {
-		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
-			let currTab = tabs[0]
-			if (currTab) {
-				let url
-				try {
-					url = new URL(currTab.url)
-				} catch {
-					resolve()
-					return
-				}
-				const newUrl = await servicesHelper.switchInstance(url)
-
-				if (newUrl) {
-					if (!test) browser.tabs.update({ url: newUrl })
-					resolve(true)
-				} else resolve()
-			}
+function getOptions() {
+	return new Promise(resolve =>
+		browser.storage.local.get("options", r => {
+			resolve(r.options)
 		})
-	})
+	)
 }
 
 function getBlacklist() {
@@ -102,9 +64,9 @@ function getList() {
 export default {
 	getRandomInstance,
 	protocolHost,
-	switchInstance,
-	copyRaw,
 	getList,
 	getBlacklist,
 	camelCase,
+	getConfig,
+	getOptions
 }

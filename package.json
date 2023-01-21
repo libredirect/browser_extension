@@ -9,7 +9,6 @@
 		"start": "web-ext run",
 		"build": "web-ext build",
 		"test": "web-ext lint",
-		"instances": "python3 src/instances/get_instances.py && git update-index --assume-unchanged src/instances/blacklist.json src/instances/data.json",
 		"pug": "pug --pretty --basedir ./ --obj ./src/config.json src/pages/options/index.pug --out src/pages/options/ && pug --pretty --basedir ./ --obj ./src/config.json src/pages/popup/popup.pug --out src/pages/popup/"
 	},
 	"repository": {

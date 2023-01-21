@@ -1,20 +1,14 @@
-window.browser = window.browser || window.chrome
-
 import utils from "./utils.js"
+
+window.browser = window.browser || window.chrome
 
 let config, options
 
 function init() {
 	return new Promise(async resolve => {
-		browser.storage.local.get(["options"], r => {
-			options = r.options
-			fetch("/config.json")
-				.then(response => response.text())
-				.then(configData => {
-					config = JSON.parse(configData)
-					resolve()
-				})
-		})
+		options = await utils.getOptions()
+		config = await utils.getConfig()
+		resolve()
 	})
 }
 
@@ -29,8 +23,8 @@ function all(service, frontend, options, config) {
 				instances.push(...options[frontend])
 			}
 		}
-	} else {
-		instances.push(...options[frontend])
+	} else if (options[frontend]) {
+		instances = options[frontend]
 	}
 	return instances
 }
@@ -393,34 +387,28 @@ function redirect(url, type, initiator, forceRedirection, tabId) {
 }
 
 function computeService(url, returnFrontend) {
-	return new Promise(resolve => {
-		fetch("/config.json")
-			.then(response => response.text())
-			.then(configData => {
-				const config = JSON.parse(configData)
-				browser.storage.local.get(["redirects", "options"], r => {
-					const options = r.options
-					for (const service in config.services) {
-						if (regexArray(service, url, config)) {
-							resolve(service)
-							return
-						} else {
-							for (const frontend in config.services[service].frontends) {
-								if (all(service, frontend, options, config).includes(utils.protocolHost(url))) {
-									if (returnFrontend) resolve([service, frontend, utils.protocolHost(url)])
-									else resolve(service)
-									return
-								}
-							}
-						}
+	return new Promise(async resolve => {
+		const config = await utils.getConfig()
+		const options = await utils.getOptions()
+		for (const service in config.services) {
+			if (regexArray(service, url, config)) {
+				resolve(service)
+				return
+			} else {
+				for (const frontend in config.services[service].frontends) {
+					if (all(service, frontend, options, config).includes(utils.protocolHost(url))) {
+						if (returnFrontend) resolve([service, frontend, utils.protocolHost(url)])
+						else resolve(service)
+						return
 					}
-					resolve()
-				})
-			})
+				}
+			}
+		}
+		resolve()
 	})
 }
 
-function switchInstance(url) {
+function _switchInstance(url) {
 	return new Promise(async resolve => {
 		await init()
 		const protocolHost = utils.protocolHost(url)
@@ -499,102 +487,109 @@ function reverse(url, urlString) {
 
 function initDefaults() {
 	return new Promise(resolve => {
-		fetch("/config.json")
-			.then(response => response.text())
-			.then(configData => {
-				browser.storage.local.get(["options"], r => {
-					let options = r.options
-					let config = JSON.parse(configData)
-					for (const service in config.services) {
-						options[service] = {}
-						for (const defaultOption in config.services[service].options) {
-							options[service][defaultOption] = config.services[service].options[defaultOption]
-						}
-						for (const frontend in config.services[service].frontends) {
-							if (config.services[service].frontends[frontend].instanceList) {
-								options[frontend] = []
-							}
-						}
+		browser.storage.local.clear(async () => {
+			let config = await utils.getConfig()
+			let options = {}
+			for (const service in config.services) {
+				options[service] = {}
+				for (const defaultOption in config.services[service].options) {
+					options[service][defaultOption] = config.services[service].options[defaultOption]
+				}
+				for (const frontend in config.services[service].frontends) {
+					if (config.services[service].frontends[frontend].instanceList) {
+						options[frontend] = []
 					}
-					browser.storage.local.set(
-						{ options },
-						() => resolve()
-					)
-				})
-			})
-	})
-}
+				}
+			}
+			options['exceptions'] = {
+				url: [],
+				regex: [],
+			}
+			options['theme'] = "detect"
+			options['popupServices'] = ["youtube", "twitter", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
 
-function backupOptions() {
-	return new Promise(resolve => {
-		browser.storage.local.get(
-			"options", r => {
-				const oldOptions = r.options
-				browser.storage.local.clear(() => {
-					browser.storage.local.set({ oldOptions },
-						() => resolve()
-					)
-				})
-
-			})
+			browser.storage.local.set({ options },
+				() => resolve()
+			)
+		})
 	})
 }
 
 function upgradeOptions() {
-	return new Promise(resolve => {
-		fetch("/config.json")
-			.then(response => response.text())
-			.then(configData => {
-				browser.storage.local.get(["oldOptions", "options"], r => {
-					const oldOptions = r.oldOptions
-					let options = r.options
-					const config = JSON.parse(configData)
+	return new Promise(async resolve => {
+		const oldOptions = await utils.getOptions()
+		const config = await utils.getConfig()
 
-					options.exceptions = oldOptions.exceptions
-					options.theme = oldOptions.theme
-					options.popupServices = oldOptions.popupServices
+		let options = {}
 
-					for (const service in config.services) {
-						options[service] = oldOptions[service]
-						options[service].remove("embedFrontend")
+		options.exceptions = oldOptions.exceptions
+		options.theme = oldOptions.theme
+		options.popupServices = oldOptions.popupServices
 
-						for (const frontend in network.services[service].frontends) {
-							options[frontend] = [
-								...oldOptions[frontend].clearnet.enabled,
-								...oldOptions[frontend].clearnet.custom
-							]
-						}
+		for (const service in config.services) {
+			if (service in oldOptions) {
+				options[service] = oldOptions[service]
+				delete options[service].embedFrontend
+			}
+			else {
+				options[service] = {}
+				for (const defaultOption in config.services[service].options) {
+					options[service][defaultOption] = config.services[service].options[defaultOption]
+				}
+				for (const frontend in config.services[service].frontends) {
+					if (config.services[service].frontends[frontend].instanceList) {
+						options[frontend] = []
 					}
-					browser.storage.local.set({ options }, () => {
-						browser.storage.local.remove("oldOptions", () => {
-							resolve()
-						})
-					})
-				})
+				}
+			}
+
+			for (const frontend in config.services[service].frontends) {
+				if (config.services[service].frontends[frontend].instanceList) {
+					if (frontend in oldOptions) {
+						options[frontend] = [
+							...oldOptions[frontend].clearnet.enabled,
+							...oldOptions[frontend].clearnet.custom
+						]
+					}
+					else {
+						options[frontend] = []
+					}
+				}
+			}
+		}
+
+		browser.storage.local.clear(() => {
+			browser.storage.local.set({ options }, () => {
+				resolve()
 			})
+		})
 	})
 }
 
 function processUpdate() {
-	return new Promise(resolve => {
-		fetch("/config.json")
-			.then(response => response.text())
-			.then(configJson => {
-				let config = JSON.parse(configJson)
-				browser.storage.local.get(["options"], async r => {
-					let options = r.options
-					for (const service in config.services) {
-						if (!options[service]) options[service] = {}
-						for (const defaultOption in config.services[service].options) {
-							if (options[service][defaultOption] === undefined) {
-								options[service][defaultOption] = config.services[service].options[defaultOption]
-							}
-						}
-					}
-					browser.storage.local.set({ options })
-					resolve()
-				})
-			})
+	return new Promise(async resolve => {
+		let config = await utils.getConfig()
+		let options = await utils.getOptions()
+		for (const service in config.services) {
+			if (!options[service]) options[service] = {}
+			for (const defaultOption in config.services[service].options) {
+				if (options[service][defaultOption] === undefined) {
+					options[service][defaultOption] = config.services[service].options[defaultOption]
+				}
+			}
+
+			for (const frontend in config.services[service].frontends) {
+				if (options[frontend] === undefined && config.services[service].frontends[frontend].instanceList) {
+					options[frontend] = []
+				}
+				else if (frontend in options && frontend in !config.services[service].frontends) {
+					delete options[frontend]
+				}
+			}
+		}
+		browser.storage.local.set({ options }, () => {
+			resolve()
+		})
 	})
 }
 
@@ -636,14 +631,69 @@ function modifyContentSecurityPolicy(details) {
 	}
 }
 
+function copyRaw(test, copyRawElement) {
+	return new Promise(resolve => {
+		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+			let currTab = tabs[0]
+			if (currTab) {
+				let url
+				try {
+					url = new URL(currTab.url)
+				} catch {
+					resolve()
+					return
+				}
+
+				const newUrl = await reverse(url)
+
+				if (newUrl) {
+					resolve(newUrl)
+					if (test) return
+					navigator.clipboard.writeText(newUrl)
+					if (copyRawElement) {
+						const textElement = copyRawElement.getElementsByTagName("h4")[0]
+						const oldHtml = textElement.innerHTML
+						textElement.innerHTML = browser.i18n.getMessage("copied")
+						setTimeout(() => (textElement.innerHTML = oldHtml), 1000)
+					}
+				}
+			}
+			resolve()
+		})
+	})
+}
+
+function switchInstance(test) {
+	return new Promise(resolve => {
+		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+			let currTab = tabs[0]
+			if (currTab) {
+				let url
+				try {
+					url = new URL(currTab.url)
+				} catch {
+					resolve()
+					return
+				}
+				const newUrl = await _switchInstance(url)
+
+				if (newUrl) {
+					if (!test) browser.tabs.update({ url: newUrl })
+					resolve(true)
+				} else resolve()
+			}
+		})
+	})
+}
+
 export default {
 	redirect,
 	computeService,
-	switchInstance,
 	reverse,
 	initDefaults,
 	upgradeOptions,
-	backupOptions,
 	processUpdate,
 	modifyContentSecurityPolicy,
+	copyRaw,
+	switchInstance
 }

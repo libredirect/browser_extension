@@ -13,19 +13,9 @@ for (const a of document.getElementById("links").getElementsByTagName("a")) {
 	})
 }
 
-await new Promise(resolve => {
-	fetch("/config.json").then(response => response.text())
-		.then(data => {
-			config = JSON.parse(data)
-			resolve()
-		})
-})
-await new Promise(resolve => {
-	browser.storage.local.get("options", r => {
-		options = r.options
-		resolve()
-	})
-})
+
+config = await utils.getConfig()
+options = await utils.getOptions()
 
 function changeFrontendsSettings(service) {
 	for (const frontend in config.services[service].frontends) {
@@ -46,12 +36,15 @@ function loadPage(path) {
 	for (const section of document.getElementById("pages").getElementsByTagName("section")) section.style.display = "none"
 	document.getElementById(`${path}_page`).style.display = "block"
 
-	for (const a of document.getElementById("links").getElementsByTagName("a"))
-		if (a.getAttribute("href") == `#${path}`) a.classList.add("selected")
-		else a.classList.remove("selected")
+	for (const a of document.getElementById("links").getElementsByTagName("a")) {
+		if (a.getAttribute("href") == `#${path}`) {
+			a.classList.add("selected")
+		} else {
+			a.classList.remove("selected")
+		}
+	}
 
-	let stateObj = { id: "100" }
-	window.history.pushState(stateObj, "Page 2", `/pages/options/index.html#${path}`)
+	window.history.pushState({ id: "100" }, "Page 2", `/pages/options/index.html#${path}`)
 
 	if (path != 'general' && path != 'about') {
 		const service = path;
@@ -62,16 +55,14 @@ function loadPage(path) {
 			if (typeof config.services[service].options[option] == "boolean") divs[service][option].checked = options[service][option]
 			else divs[service][option].value = options[service][option]
 
-			divs[service][option].addEventListener("change", () => {
-				browser.storage.local.get("options", r => {
-					let options = r.options
-					if (typeof config.services[service].options[option] == "boolean")
-						options[service][option] = divs[service][option].checked
-					else
-						options[service][option] = divs[service][option].value
-					browser.storage.local.set({ options })
-					changeFrontendsSettings(service)
-				})
+			divs[service][option].addEventListener("change", async () => {
+				let options = await utils.getOptions()
+				if (typeof config.services[service].options[option] == "boolean")
+					options[service][option] = divs[service][option].checked
+				else
+					options[service][option] = divs[service][option].value
+				browser.storage.local.set({ options })
+				changeFrontendsSettings(service)
 			})
 		}
 
@@ -88,7 +79,7 @@ function loadPage(path) {
 
 		for (const frontend in config.services[service].frontends) {
 			if (config.services[service].frontends[frontend].instanceList) {
-				processDefaultCustomInstances(frontend, document)
+				processCustomInstances(frontend, document)
 			}
 		}
 
@@ -104,18 +95,9 @@ function loadPage(path) {
 	}
 }
 
-async function processDefaultCustomInstances(frontend, document) {
-	let customInstances = []
-	let options
-	await new Promise(async resolve =>
-		browser.storage.local.get(["options"], r => {
-			customInstances = r.options[frontend]
-			options = r.options
-			resolve()
-		})
-	)
-
-	localise.localisePage()
+async function processCustomInstances(frontend, document) {
+	let options = await utils.getOptions()
+	let customInstances = options[frontend]
 
 	function calcCustomInstances() {
 		document.getElementById(frontend).getElementsByClassName("custom-checklist")[0].innerHTML = customInstances
@@ -133,10 +115,12 @@ async function processDefaultCustomInstances(frontend, document) {
 			)
 			.join("\n")
 
+		customInstances = options[frontend]
 		for (const item of customInstances) {
 			document.getElementById(frontend).getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
 				let index = customInstances.indexOf(item)
 				if (index > -1) customInstances.splice(index, 1)
+				options = await utils.getOptions()
 				options[frontend] = customInstances
 				browser.storage.local.set({ options }, () => calcCustomInstances())
 			})
@@ -144,7 +128,6 @@ async function processDefaultCustomInstances(frontend, document) {
 	}
 	calcCustomInstances()
 	document.getElementById(frontend).getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
-		event.preventDefault();
 		event.preventDefault()
 		let frontendCustomInstanceInput = document.getElementById(frontend).getElementsByClassName("custom-instance")[0]
 		let url
@@ -157,6 +140,7 @@ async function processDefaultCustomInstances(frontend, document) {
 		if (frontendCustomInstanceInput.validity.valid) {
 			if (!customInstances.includes(protocolHostVar)) {
 				customInstances.push(protocolHostVar)
+				options = await utils.getOptions()
 				options[frontend] = customInstances
 				browser.storage.local.set({ options }, () => {
 					frontendCustomInstanceInput.value = ""
@@ -172,32 +156,32 @@ function createList(frontend, networks, document, redirects, blacklist) {
 		if (redirects[frontend]) {
 			if (redirects[frontend][network].length > 0) {
 				document.getElementById(frontend).getElementsByClassName(network)[0].getElementsByClassName("checklist")[0].innerHTML = [
-					`
-				<div class="some-block option-block">
-					<h4>${utils.camelCase(network)}</h4>
-				</div>
-				`,
+					`<div class="some-block option-block">
+						<h4>${utils.camelCase(network)}</h4>
+					</div>`,
 					...redirects[frontend][network]
 						.sort((a, b) =>
 							(blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
 						)
 						.map(x => {
-							const cloudflare = blacklist.cloudflare.includes(x) ? ' <a target="_blank" href="https://libredirect.github.io/docs.html#instances"><span style="color:red;">cloudflare</span></a>' : ""
+							const cloudflare = blacklist.cloudflare.includes(x) ?
+								` <a target="_blank" href="https://libredirect.github.io/docs.html#instances">
+							 		<span style="color:red;">cloudflare</span>
+								</a>` : ""
 
-							let warnings = [cloudflare].join(" ")
-							return `
-						<div>
-							<x>
-								<a href="${x}" target="_blank">${x}</a>${warnings}
-							</x>
-						  </div>`
+							const warnings = [cloudflare].join(" ")
+							return `<div>
+										<x>
+											<a href="${x}" target="_blank">${x}</a>${warnings}
+										</x>
+						  			</div>`
 						}),
 					'<br>'
 				].join("\n<hr>\n")
 			}
 		} else {
 			document.getElementById(frontend).getElementsByClassName(network)[0].getElementsByClassName("checklist")[0].innerHTML =
-				`<div class="some-block option-block">No instances found...</div>`
+				`<div class="some-block option-block">No instances found.</div>`
 			break
 		}
 

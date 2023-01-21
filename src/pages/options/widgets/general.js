@@ -5,44 +5,29 @@ import utils from "../../../assets/javascripts/utils.js"
 import generalHelper from "../../../assets/javascripts/general.js"
 import servicesHelper from "../../../assets/javascripts/services.js"
 
-let config
 
-async function getConfig() {
-	return new Promise(resolve => {
-		fetch("/config.json")
-			.then(response => response.text())
-			.then(data => {
-				config = JSON.parse(data)
-				resolve()
-			})
-	})
-}
 
-function setOption(option, type, event) {
-	browser.storage.local.get("options", r => {
-		let options = r.options
-		if (type == "select") {
-			options[option] = event.target.options[event.target.options.selectedIndex].value
-		} else if (type == "checkbox") {
-			options[option] = event.target.checked
-		} else if (type == "range") {
-			options[option] = event.target.value
-		}
-
-		browser.storage.local.set({ options })
-	})
+async function setOption(option, type, event) {
+	let options = await utils.getOptions()
+	if (type == "select") {
+		options[option] = event.target.options[event.target.options.selectedIndex].value
+	} else if (type == "checkbox") {
+		options[option] = event.target.checked
+	} else if (type == "range") {
+		options[option] = event.target.value
+	}
+	browser.storage.local.set({ options })
 }
 
 let exportSettingsElement = document.getElementById("export-settings")
 
-function exportSettings() {
-	browser.storage.local.get("options", result => {
-		result.options.version = browser.runtime.getManifest().version
-		let resultString = JSON.stringify(result.options, null, "  ")
-		exportSettingsElement.href = "data:application/json;base64," + btoa(resultString)
-		exportSettingsElement.download = "libredirect-settings.json"
-		return
-	})
+async function exportSettings() {
+	const options = await utils.getOptions()
+	options.version = browser.runtime.getManifest().version
+	let resultString = JSON.stringify(options, null, "  ")
+	exportSettingsElement.href = "data:application/json;base64," + btoa(resultString)
+	exportSettingsElement.download = "libredirect-settings.json"
+	return
 }
 exportSettings()
 
@@ -62,8 +47,6 @@ importSettingsElement.addEventListener("change", () => {
 			&& data.version == browser.runtime.getManifest().version
 		) {
 			browser.storage.local.clear(async () => {
-				await generalHelper.initDefaults()
-				await servicesHelper.initDefaults()
 				browser.storage.local.set({ options: data }, () => {
 					location.reload()
 				})
@@ -88,7 +71,6 @@ const resetSettings = document.getElementById("reset-settings")
 resetSettings.addEventListener("click", async () => {
 	resetSettings.innerHTML = "..."
 	browser.storage.local.clear(async () => {
-		await generalHelper.initDefaults()
 		await servicesHelper.initDefaults()
 		location.reload()
 	})
@@ -104,25 +86,23 @@ let nameCustomInstanceInput = document.getElementById("exceptions-custom-instanc
 let instanceTypeElement = document.getElementById("exceptions-custom-instance-type")
 let instanceType = "url"
 
-await getConfig()
+let config = await utils.getConfig()
 
 for (const service in config.services) {
-	document.getElementById(service).addEventListener("change", event => {
-		browser.storage.local.get("options", r => {
-			let options = r.options
-			if (event.target.checked && !options.popupServices.includes(service)) options.popupServices.push(service)
-			else if (options.popupServices.includes(service)) {
-				var index = options.popupServices.indexOf(service)
-				if (index !== -1) options.popupServices.splice(index, 1)
-			}
-			browser.storage.local.set({ options })
-		})
+	document.getElementById(service).addEventListener("change", async event => {
+		let options = await utils.getOptions()
+		if (event.target.checked && !options.popupServices.includes(service)) options.popupServices.push(service)
+		else if (options.popupServices.includes(service)) {
+			var index = options.popupServices.indexOf(service)
+			if (index !== -1) options.popupServices.splice(index, 1)
+		}
+		browser.storage.local.set({ options })
 	})
 }
 
-browser.storage.local.get("options", r => {
-	themeElement.value = r.options.theme
-	let options = r.options
+!async function () {
+	const options = await utils.getOptions()
+	themeElement.value = options.theme
 
 	instanceTypeElement.addEventListener("change", event => {
 		instanceType = event.target.options[instanceTypeElement.selectedIndex].value
@@ -134,7 +114,7 @@ browser.storage.local.get("options", r => {
 			nameCustomInstanceInput.setAttribute("placeholder", "https?://(www.|)youtube.com/")
 		}
 	})
-	let exceptionsCustomInstances = r.options.exceptions
+	let exceptionsCustomInstances = options.exceptions
 	function calcExceptionsCustomInstances() {
 		document.getElementById("exceptions-custom-checklist").innerHTML = [...exceptionsCustomInstances.url, ...exceptionsCustomInstances.regex]
 			.map(
@@ -190,4 +170,4 @@ browser.storage.local.get("options", r => {
 	})
 
 	for (const service in config.services) document.getElementById(service).checked = options.popupServices.includes(service)
-})
+}

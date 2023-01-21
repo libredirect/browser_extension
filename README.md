@@ -67,24 +67,16 @@ npm update
 npm install
 ```
 
-To generate HTML that uses `config.json` (needed to develop/build the extension), run:
+Generate the HTML pages:
 
 ```
-npm run ejs
+npm run pug
 ```
-
-Afterwards, you will need to run it if you modify `config.json` or any files ending with .ejs.
 
 ### Build the extension zip archive:
 
 ```
 npm run build
-```
-
-### Run automated tests
-
-```
-npm run test
 ```
 
 ### Test in Firefox

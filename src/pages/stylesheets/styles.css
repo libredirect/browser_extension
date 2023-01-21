@@ -411,6 +411,10 @@ body.light-theme a {
 	color: black;
 }
 
+body.light-theme a:hover {
+	color: var(--active)
+}
+
 section.general {
 	display: flex;
 	flex-wrap: wrap;
