@@ -67,7 +67,7 @@ npm update
 npm install
 ```
 
-Generate the HTML pages:
+Generate the HTML pages (you should install [pug-cli](https://www.npmjs.com/package/pug-cli) first globally):
 
 ```
 npm run pug
@@ -87,24 +87,23 @@ npm run start
 
 ### Install temporarily
 
-1. open `about:addons`
-2. type in the address bar `about:debugging`
-3. press `load temporarily addon`
+1. Type in the address bar: `about:debugging#/runtime/this-firefox`
+3. Press `Load Temporary Add-on...`
 
 ### Install in Firefox ESR, Developer Edition, Nightly
 
-1. open `about:config`
-2. set `xpinstall.signatures.required` to `false`
-3. open `about:addons`
-4. click on the gear shaped `settings` button and select `Install Add-on From File...`
-5. select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
+1. Type in the address bar: `about:config`
+2. Set `xpinstall.signatures.required` to `false`
+3. Type in the address bar: `about:addons`
+4. Click on the gear shaped `settings` button and select `Install Add-on From File...`
+5. Select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
 
 ### Install in Chromium browsers
 
-1. open `chrome://extensions`
-2. enable `dev mode`
-3. select `load unpacked extension`
-4. select `src` folder
+1. Open `chrome://extensions`
+2. Enable `dev mode`
+3. Select `load unpacked extension`
+4. Select `src` folder
 
 ---
 

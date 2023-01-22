@@ -9,9 +9,11 @@ let config,
 
 config = await utils.getConfig()
 
-servicesHelper.switchInstance(true).then(r => {
+servicesHelper.switchInstance().then(r => {
 	if (!r) document.getElementById("change_instance_div").style.display = "none"
-	else document.getElementById("change_instance").addEventListener("click", () => servicesHelper.switchInstance(false))
+	else document.getElementById("change_instance").addEventListener("click", async () => {
+		browser.tabs.update({ url: await servicesHelper.switchInstance() })
+	})
 })
 
 servicesHelper.copyRaw(true).then(r => {

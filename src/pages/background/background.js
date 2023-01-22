@@ -18,8 +18,8 @@ browser.runtime.onInstalled.addListener(async details => {
 			await servicesHelper.upgradeOptions()
 			// await servicesHelper.processUpdate()
 		}
+		browser.runtime.openOptionsPage()
 	}
-	browser.runtime.openOptionsPage()
 })
 
 let tabIdRedirects = {}
@@ -41,7 +41,12 @@ browser.webRequest.onBeforeRequest.addListener(
 
 		if (details.frameAncestors && details.frameAncestors.length > 0 && generalHelper.isException(new URL(details.frameAncestors[0].url))) newUrl = null
 
-		if (generalHelper.isException(url)) newUrl = "BYPASSTAB"
+		if (generalHelper.isException(url)) {
+			if (details.type == "main_frame")
+				newUrl = "BYPASSTAB"
+			else
+				return null
+		}
 
 		if (newUrl) {
 			if (newUrl === "CANCEL") {
@@ -69,8 +74,11 @@ browser.tabs.onRemoved.addListener(tabId => {
 	}
 })
 
-browser.commands.onCommand.addListener(command => {
-	if (command === "switchInstance") servicesHelper.switchInstance()
+browser.commands.onCommand.addListener(async command => {
+	if (command === "switchInstance") {
+		const newUrl = await servicesHelper.switchInstance()
+		if (newUrl) browser.tabs.update({ url: newUrl })
+	}
 	else if (command == "copyRaw") servicesHelper.copyRaw()
 })
 
@@ -93,71 +101,42 @@ browser.contextMenus.create({
 })
 
 browser.contextMenus.create({
+	id: "redirectToOriginal",
+	title: 'Redirect to original',
+	contexts: ["browser_action"],
+})
+
+browser.contextMenus.create({
 	id: "redirectLink",
 	title: browser.i18n.getMessage("redirectLink"),
 	contexts: ["link"],
 })
 
-function handleToggleTab(tab) {
-	return new Promise(async resolve => {
-		switch (tabIdRedirects[tab.id]) {
-			case false:
-				const newUrl = await servicesHelper.reverse(tab.url, true)
-				if (newUrl) browser.tabs.update(tab.id, { url: newUrl })
-				resolve()
-				return
-			case true:
-				browser.tabs.reload(tab.id)
-				resolve()
-				return
-		}
-	})
-}
-
 browser.contextMenus.onClicked.addListener((info, tab) => {
 	return new Promise(async resolve => {
-		switch (info.menuItemId) {
-			case "switchInstance":
-				servicesHelper.switchInstance()
-				resolve()
-				return
-			case "settings":
-				browser.runtime.openOptionsPage()
-				resolve()
-				return
-			case "copyRaw":
-				servicesHelper.copyRaw()
-				resolve()
-				return
-			case "toggleTab":
-				if (tabIdRedirects[tab.id] != undefined) {
-					tabIdRedirects[tab.id] = !tabIdRedirects[tab.id]
-					await handleToggleTab(tab)
-					resolve()
-					return
-				} else {
-					const url = new URL(tab.url)
-					const service = await servicesHelper.computeService(url)
-					if (service) {
-						if ((await utils.getOptions())[service].enabled) tabIdRedirects[tab.id] = false
-						else tabIdRedirects[tab.id] = true
-						await handleToggleTab(tab)
-						resolve()
-						return
-					} else {
-						tabIdRedirects[tab.id] = false
-						await handleToggleTab(tab)
-						resolve()
-						return
-					}
-				}
-			case "redirectLink":
-				const tmpUrl = new URL(info.linkUrl)
-				const newUrl = servicesHelper.redirect(tmpUrl, "main_frame", null, true)
-				if (newUrl) browser.tabs.create({ url: newUrl })
-				resolve()
-				return
+		if (info.menuItemId == 'switchInstance') {
+			servicesHelper.switchInstance()
 		}
+		else if (info.menuItemId == 'settings') {
+			browser.runtime.openOptionsPage()
+		}
+		else if (info.menuItemId == 'copyRaw') {
+			servicesHelper.copyRaw()
+		}
+		else if (info.menuItemId == 'redirectToOriginal') {
+			const newUrl = await servicesHelper.reverse(tab.url)
+			if (newUrl) {
+				tabIdRedirects[tab.id] = false
+				browser.tabs.update(tab.id, { url: newUrl })
+			}
+		}
+		else if (info.menuItemId == 'redirectLink') {
+			const url = new URL(info.linkUrl)
+			const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
+			if (newUrl) browser.tabs.create({ url: newUrl })
+		}
+		resolve()
+		return
 	})
 })
 

@@ -31,10 +31,11 @@ function all(service, frontend, options, config) {
 
 function regexArray(service, url, config, frontend) {
 	let targetList = config.services[service].targets
-	if (frontend && config.services[service].frontends[frontend].excludeTargets)
-		for (const i in config.services[service].frontends[frontend].excludeTargets) {
-			targetList = targetList.splice(i, 1)
-		}
+	if (frontend && config.services[service].frontends[frontend].excludeTargets) {
+		targetList = targetList.filter(val =>
+			!config.services[service].frontends[frontend].excludeTargets.includes(targetList.indexOf(val))
+		)
+	}
 	for (const targetString in targetList) {
 		const target = new RegExp(targetList[targetString])
 		if (target.test(url.href)) return true
@@ -42,7 +43,7 @@ function regexArray(service, url, config, frontend) {
 	return false
 }
 
-function redirect(url, type, initiator, forceRedirection, tabId) {
+function redirect(url, type, initiator, forceRedirection) {
 	if (type != "main_frame" && type != "sub_frame" && type != "image") return
 	let randomInstance
 	let frontend
@@ -62,6 +63,8 @@ function redirect(url, type, initiator, forceRedirection, tabId) {
 		for (const network in options[frontend]) {
 			instanceList.push(...options[frontend])
 		}
+
+		console.log(frontend, instanceList)
 		if (instanceList.length === 0) return
 
 		randomInstance = utils.getRandomInstance(instanceList)
@@ -396,9 +399,11 @@ function computeService(url, returnFrontend) {
 				return
 			} else {
 				for (const frontend in config.services[service].frontends) {
-					if (all(service, frontend, options, config).includes(utils.protocolHost(url))) {
-						if (returnFrontend) resolve([service, frontend, utils.protocolHost(url)])
-						else resolve(service)
+					if (all(service, frontend, options, config).some(val => val.includes(utils.protocolHost(url)))) {
+						if (returnFrontend)
+							resolve([service, frontend, utils.protocolHost(url)])
+						else
+							resolve(service)
 						return
 					}
 				}
@@ -413,36 +418,30 @@ function _switchInstance(url) {
 		await init()
 		const protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
-			if (!all(service, null, options, config).includes(protocolHost)) continue
+			if (!all(service, undefined, options, config).some(val => val.includes(protocolHost))) continue
 
 			let instancesList = []
-			if (Object.keys(config.services[service].frontends).length == 1) {
-				const frontend = Object.keys(config.services[service].frontends)[0]
-				for (const network in options[frontend]) {
-					instancesList.push(...options[frontend])
-				}
-			} else {
-				const frontend = options[service].frontend
-				for (const network in options[frontend]) {
-					instancesList.push(...options[frontend])
-				}
-			}
+			let frontend
+			if (!options[service].frontend)
+				frontend = Object.keys(config.services[service].frontends)[0]
+			else
+				frontend = options[service].frontend
+
+			instancesList = [...options[frontend]]
 
 			let oldInstance
 			const i = instancesList.indexOf(protocolHost)
 			if (i > -1) {
-				oldInstance = instancesList[i]
 				instancesList.splice(i, 1)
 			}
 			if (instancesList.length === 0) {
 				resolve()
 				return
 			}
+			console.log(instancesList)
 			const randomInstance = utils.getRandomInstance(instancesList)
-			const oldUrl = `${oldInstance}${url.pathname}${url.search} `
-			// This is to make instance switching work when the instance depends on the pathname, eg https://darmarit.org/searx
-			// Doesn't work because of .includes array method, not a top priotiry atm
-			resolve(oldUrl.replace(oldInstance, randomInstance))
+			const newUrl = `${randomInstance}${url.pathname}${url.search}`
+			resolve(newUrl)
 			return
 		}
 		resolve()
@@ -452,11 +451,12 @@ function _switchInstance(url) {
 function reverse(url, urlString) {
 	return new Promise(async resolve => {
 		await init()
+		url = new URL(url)
 		let protocolHost
-		if (!urlString) protocolHost = utils.protocolHost(url)
-		else protocolHost = url.match(/^https?:\/{2}/)[0]
+		protocolHost = utils.protocolHost(url)
+
 		for (const service in config.services) {
-			if (!all(service, null, options, config).includes(protocolHost)) continue
+			if (!all(service, undefined, options, config).some(val => val.includes(protocolHost))) continue
 
 			switch (service) {
 				case "youtube":
@@ -468,6 +468,8 @@ function reverse(url, urlString) {
 				case "imdb":
 				case "quora":
 				case "medium":
+					resolve(config.services[service].url + url.pathname + url.search)
+					return
 				case "fandom":
 					let regex = url.pathname.match(/^\/([a-zA-Z0-9-]+)\/wiki\/([a-zA-Z0-9-]+)/)
 					if (regex) {
@@ -482,6 +484,7 @@ function reverse(url, urlString) {
 			}
 		}
 		resolve()
+		return
 	})
 }
 
@@ -507,6 +510,30 @@ function initDefaults() {
 			}
 			options['theme'] = "detect"
 			options['popupServices'] = ["youtube", "twitter", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
+
+			options['invidious'] = ['https://inv.vern.cc/']
+			options['piped'] = ['https://piped.video']
+			options['pipedMaterial'] = ['https://piped-material.xn--17b.net']
+			options['cloudtube'] = ['https://tube.cadence.moe']
+			options['proxitok'] = ['https://proxitok.pabloferreiro.es']
+			options['send'] = ['https://send.vis.ee']
+			options['nitter'] = ['https://nitter.net']
+			options['libreddit'] = ['https://libreddit.spike.codes']
+			options['teddit'] = ['https://teddit.net']
+			options['scribe'] = ['https://scribe.rip']
+			options['quetre'] = ['https://quetre.iket.me']
+			options['libremdb'] = ['https://libremdb.iket.me']
+			options['simplytranslate'] = ['https://simplytranslate.org']
+			options['linvgatranslate'] = ['https://lingva.ml']
+			options['searxng'] = ['https://sx.vern.cc/']
+			options['rimgo'] = ['https://rimgo.vern.cc']
+			options['librarian'] = ['https://lbry.vern.cc']
+			options['beatbump'] = ['https://beatbump.ml']
+			options['hyperpipe'] = ['https://hyperpipe.surge.sh']
+			options['facil'] = [' https://facilmap.org ']
+			options['osm'] = ['https://www.openstreetmap.org']
+			options['breezeWiki'] = ['https://breezewiki.com']
+
 
 			browser.storage.local.set({ options },
 				() => resolve()
@@ -663,7 +690,7 @@ function copyRaw(test, copyRawElement) {
 	})
 }
 
-function switchInstance(test) {
+function switchInstance() {
 	return new Promise(resolve => {
 		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 			let currTab = tabs[0]
@@ -676,11 +703,7 @@ function switchInstance(test) {
 					return
 				}
 				const newUrl = await _switchInstance(url)
-
-				if (newUrl) {
-					if (!test) browser.tabs.update({ url: newUrl })
-					resolve(true)
-				} else resolve()
+				resolve(newUrl)
 			}
 		})
 	})

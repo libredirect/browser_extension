@@ -28,8 +28,8 @@
 				},
 				"piped": {
 					"excludeTargets": [
-						1,
-						2
+						2,
+						3
 					],
 					"name": "Piped",
 					"embeddable": true,
@@ -38,8 +38,8 @@
 				},
 				"pipedMaterial": {
 					"excludeTargets": [
-						1,
-						2
+						2,
+						3
 					],
 					"name": "Piped-Material",
 					"embeddable": false,
@@ -54,8 +54,8 @@
 				},
 				"freetube": {
 					"excludeTargets": [
-						1,
-						2
+						2,
+						3
 					],
 					"name": "FreeTube",
 					"embeddable": false,
@@ -64,8 +64,8 @@
 				},
 				"yattee": {
 					"excludeTargets": [
-						1,
-						2
+						2,
+						3
 					],
 					"name": "Yattee",
 					"embeddable": false,

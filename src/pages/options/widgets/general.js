@@ -95,25 +95,27 @@ for (const service in config.services) {
 	})
 }
 
-!async function () {
-	const options = await utils.getOptions()
-	themeElement.value = options.theme
 
-	instanceTypeElement.addEventListener("change", event => {
-		instanceType = event.target.options[instanceTypeElement.selectedIndex].value
-		if (instanceType == "url") {
-			nameCustomInstanceInput.setAttribute("type", "url")
-			nameCustomInstanceInput.setAttribute("placeholder", "https://www.google.com")
-		} else if (instanceType == "regex") {
-			nameCustomInstanceInput.setAttribute("type", "text")
-			nameCustomInstanceInput.setAttribute("placeholder", "https?://(www.|)youtube.com/")
-		}
-	})
-	let exceptionsCustomInstances = options.exceptions
-	function calcExceptionsCustomInstances() {
-		document.getElementById("exceptions-custom-checklist").innerHTML = [...exceptionsCustomInstances.url, ...exceptionsCustomInstances.regex]
-			.map(
-				x => `<div>
+let options = await utils.getOptions()
+themeElement.value = options.theme
+for (const service in config.services) document.getElementById(service).checked = options.popupServices.includes(service)
+
+instanceTypeElement.addEventListener("change", event => {
+	instanceType = event.target.options[instanceTypeElement.selectedIndex].value
+	if (instanceType == "url") {
+		nameCustomInstanceInput.setAttribute("type", "url")
+		nameCustomInstanceInput.setAttribute("placeholder", "https://www.google.com")
+	} else if (instanceType == "regex") {
+		nameCustomInstanceInput.setAttribute("type", "text")
+		nameCustomInstanceInput.setAttribute("placeholder", "https?://(www.|)youtube.com/")
+	}
+})
+
+let exceptionsCustomInstances = options.exceptions
+function calcExceptionsCustomInstances() {
+	document.getElementById("exceptions-custom-checklist").innerHTML = [...exceptionsCustomInstances.url, ...exceptionsCustomInstances.regex]
+		.map(
+			x => `<div>
                       ${x}
                       <button class="add" id="clear-${x}">
                         <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px"
@@ -123,46 +125,47 @@ for (const service in config.services) {
                       </button>
                     </div>
                     <hr>`
-			)
-			.join("\n")
+		)
+		.join("\n")
 
-		for (const x of [...exceptionsCustomInstances.url, ...exceptionsCustomInstances.regex]) {
-			document.getElementById(`clear-${x}`).addEventListener("click", () => {
-				let index
-				index = exceptionsCustomInstances.url.indexOf(x)
-				if (index > -1) exceptionsCustomInstances.url.splice(index, 1)
-				else {
-					index = exceptionsCustomInstances.regex.indexOf(x)
-					if (index > -1) exceptionsCustomInstances.regex.splice(index, 1)
-				}
-				options.exceptions = exceptionsCustomInstances
-				browser.storage.local.set({ options })
-				calcExceptionsCustomInstances()
-			})
-		}
-	}
-	calcExceptionsCustomInstances()
-	document.getElementById("custom-exceptions-instance-form").addEventListener("submit", event => {
-		event.preventDefault()
-
-		let val
-		if (instanceType == "url") {
-			if (nameCustomInstanceInput.validity.valid) {
-				let url = new URL(nameCustomInstanceInput.value)
-				val = `${url.protocol}//${url.host}`
-				if (!exceptionsCustomInstances.url.includes(val)) exceptionsCustomInstances.url.push(val)
+	for (const x of [...exceptionsCustomInstances.url, ...exceptionsCustomInstances.regex]) {
+		document.getElementById(`clear-${x}`).addEventListener("click", async () => {
+			let index
+			index = exceptionsCustomInstances.url.indexOf(x)
+			if (index > -1) exceptionsCustomInstances.url.splice(index, 1)
+			else {
+				index = exceptionsCustomInstances.regex.indexOf(x)
+				if (index > -1) exceptionsCustomInstances.regex.splice(index, 1)
 			}
-		} else if (instanceType == "regex") {
-			val = nameCustomInstanceInput.value
-			if (val.trim() != "" && !exceptionsCustomInstances.regex.includes(val)) exceptionsCustomInstances.regex.push(val)
-		}
-		if (val) {
+			options = await utils.getOptions()
 			options.exceptions = exceptionsCustomInstances
 			browser.storage.local.set({ options })
-			nameCustomInstanceInput.value = ""
-		}
-		calcExceptionsCustomInstances()
-	})
-
-	for (const service in config.services) document.getElementById(service).checked = options.popupServices.includes(service)
+			calcExceptionsCustomInstances()
+		})
+	}
 }
+calcExceptionsCustomInstances()
+document.getElementById("custom-exceptions-instance-form").addEventListener("submit", async event => {
+	event.preventDefault()
+
+	let val
+	if (instanceType == "url") {
+		if (nameCustomInstanceInput.validity.valid) {
+			val = nameCustomInstanceInput.value
+			if (!exceptionsCustomInstances.url.includes(val)) exceptionsCustomInstances.url.push(val)
+		}
+	} else if (instanceType == "regex") {
+		val = nameCustomInstanceInput.value
+		if (val.trim() != "" && !exceptionsCustomInstances.regex.includes(val)) exceptionsCustomInstances.regex.push(val)
+	}
+	if (val) {
+		options = await utils.getOptions()
+		options.exceptions = exceptionsCustomInstances
+		console.log(options.exceptions)
+		browser.storage.local.set({ options }, () =>
+			nameCustomInstanceInput.value = ""
+		)
+
+	}
+	calcExceptionsCustomInstances()
+})
