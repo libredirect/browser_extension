@@ -49,7 +49,6 @@ function redirect(url, type, initiator, forceRedirection) {
 	let frontend
 	for (const service in config.services) {
 		if (!forceRedirection && !options[service].enabled) continue
-
 		if (config.services[service].embeddable && type != options[service].redirectType && options[service].redirectType != "both") continue
 		if (!config.services[service].embeddable && type != "main_frame") continue
 
@@ -57,21 +56,20 @@ function redirect(url, type, initiator, forceRedirection) {
 
 		if (!regexArray(service, url, config, frontend)) continue
 
-		if (initiator && all(service, null, options, config).includes(initiator.origin)) return "BYPASSTAB"
+		if (
+			initiator
+			&&
+			options[frontend].includes(initiator.origin)
+		) return "BYPASSTAB"
 
-		let instanceList = []
-		for (const network in options[frontend]) {
-			instanceList.push(...options[frontend])
-		}
-
-		console.log(frontend, instanceList)
+		let instanceList = options[frontend]
 		if (instanceList.length === 0) return
 
 		randomInstance = utils.getRandomInstance(instanceList)
 
 		break
 	}
-	if (!frontend || !randomInstance) return
+	if (!randomInstance) return
 
 	// Here is a (temperory) space for defining constants required in 2 or more switch cases.
 	const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/
@@ -399,7 +397,7 @@ function computeService(url, returnFrontend) {
 				return
 			} else {
 				for (const frontend in config.services[service].frontends) {
-					if (all(service, frontend, options, config).some(val => val.includes(utils.protocolHost(url)))) {
+					if (all(service, frontend, options, config).includes(utils.protocolHost(url))) {
 						if (returnFrontend)
 							resolve([service, frontend, utils.protocolHost(url)])
 						else
@@ -418,27 +416,16 @@ function _switchInstance(url) {
 		await init()
 		const protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
-			if (!all(service, undefined, options, config).some(val => val.includes(protocolHost))) continue
-
-			let instancesList = []
-			let frontend
-			if (!options[service].frontend)
-				frontend = Object.keys(config.services[service].frontends)[0]
-			else
-				frontend = options[service].frontend
-
-			instancesList = [...options[frontend]]
-
-			let oldInstance
-			const i = instancesList.indexOf(protocolHost)
-			if (i > -1) {
-				instancesList.splice(i, 1)
-			}
+			let frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
+			let instancesList = [...options[frontend]]
+			if (!instancesList.includes(protocolHost)) continue
+			
+			instancesList.splice(instancesList.indexOf(protocolHost), 1)
 			if (instancesList.length === 0) {
 				resolve()
 				return
 			}
-			console.log(instancesList)
+
 			const randomInstance = utils.getRandomInstance(instancesList)
 			const newUrl = `${randomInstance}${url.pathname}${url.search}`
 			resolve(newUrl)
@@ -452,11 +439,10 @@ function reverse(url, urlString) {
 	return new Promise(async resolve => {
 		await init()
 		url = new URL(url)
-		let protocolHost
-		protocolHost = utils.protocolHost(url)
-
+		let protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
-			if (!all(service, undefined, options, config).some(val => val.includes(protocolHost))) continue
+			let frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
+			if (options[frontend].includes(protocolHost)) continue
 
 			switch (service) {
 				case "youtube":
@@ -511,7 +497,7 @@ function initDefaults() {
 			options['theme'] = "detect"
 			options['popupServices'] = ["youtube", "twitter", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
 
-			options['invidious'] = ['https://inv.vern.cc/']
+			options['invidious'] = ['https://inv.vern.cc']
 			options['piped'] = ['https://piped.video']
 			options['pipedMaterial'] = ['https://piped-material.xn--17b.net']
 			options['cloudtube'] = ['https://tube.cadence.moe']
@@ -525,7 +511,7 @@ function initDefaults() {
 			options['libremdb'] = ['https://libremdb.iket.me']
 			options['simplytranslate'] = ['https://simplytranslate.org']
 			options['linvgatranslate'] = ['https://lingva.ml']
-			options['searxng'] = ['https://sx.vern.cc/']
+			options['searxng'] = ['https://sx.vern.cc']
 			options['rimgo'] = ['https://rimgo.vern.cc']
 			options['librarian'] = ['https://lbry.vern.cc']
 			options['beatbump'] = ['https://beatbump.ml']

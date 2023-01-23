@@ -15,7 +15,9 @@ browser.runtime.onInstalled.addListener(async details => {
 			}
 		}
 		else if (details.reason == "update") {
-			await servicesHelper.upgradeOptions()
+			if (details.previousVersion == '2.3.4') {
+				await servicesHelper.upgradeOptions()
+			}
 			// await servicesHelper.processUpdate()
 		}
 		browser.runtime.openOptionsPage()
