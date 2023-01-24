@@ -419,7 +419,7 @@ function _switchInstance(url) {
 			let frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
 			let instancesList = [...options[frontend]]
 			if (!instancesList.includes(protocolHost)) continue
-			
+
 			instancesList.splice(instancesList.indexOf(protocolHost), 1)
 			if (instancesList.length === 0) {
 				resolve()
@@ -435,14 +435,14 @@ function _switchInstance(url) {
 	})
 }
 
-function reverse(url, urlString) {
+function reverse(url) {
 	return new Promise(async resolve => {
 		await init()
 		url = new URL(url)
 		let protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
 			let frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
-			if (options[frontend].includes(protocolHost)) continue
+			if (!options[frontend].includes(protocolHost)) continue
 
 			switch (service) {
 				case "youtube":
@@ -501,7 +501,7 @@ function initDefaults() {
 			options['piped'] = ['https://piped.video']
 			options['pipedMaterial'] = ['https://piped-material.xn--17b.net']
 			options['cloudtube'] = ['https://tube.cadence.moe']
-			options['proxitok'] = ['https://proxitok.pabloferreiro.es']
+			options['proxiTok'] = ['https://proxitok.pabloferreiro.es']
 			options['send'] = ['https://send.vis.ee']
 			options['nitter'] = ['https://nitter.net']
 			options['libreddit'] = ['https://libreddit.spike.codes']
@@ -509,8 +509,8 @@ function initDefaults() {
 			options['scribe'] = ['https://scribe.rip']
 			options['quetre'] = ['https://quetre.iket.me']
 			options['libremdb'] = ['https://libremdb.iket.me']
-			options['simplytranslate'] = ['https://simplytranslate.org']
-			options['linvgatranslate'] = ['https://lingva.ml']
+			options['simplyTranslate'] = ['https://simplytranslate.org']
+			options['lingva'] = ['https://lingva.ml']
 			options['searxng'] = ['https://sx.vern.cc']
 			options['rimgo'] = ['https://rimgo.vern.cc']
 			options['librarian'] = ['https://lbry.vern.cc']
