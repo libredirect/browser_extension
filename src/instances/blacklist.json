@@ -4,6 +4,7 @@
     "https://invidious.epicsite.xyz",
     "https://yt.oelrichsgarcia.de",
     "https://piped.video",
+    "https://piped.tokhmi.xyz",
     "https://piped.moomoo.me",
     "https://piped.mha.fi",
     "https://piped.garudalinux.org",
@@ -65,17 +66,15 @@
     "https://i.actionsack.com",
     "https://rimgo.marcopisco.com",
     "https://beatbump.ml",
-    "https://privatebin.io",
-    "https://0.0g.gg",
-    "https://bin.klowdee.host",
-    "https://andoc.yateam.cc",
-    "https://p.darklab.sh",
-    "https://sendpass.ru",
-    "https://0a0bin.klowdee.host",
-    "https://privload.com",
-    "https://luckvintage.com",
     "https://bonus01.hwb0307.com",
-    "https://0.klowdee.host"
+    "https://andoc.yateam.cc",
+    "https://0a0bin.klowdee.host",
+    "https://privatebin.io",
+    "https://0.klowdee.host",
+    "https://privload.com",
+    "https://bin.klowdee.host",
+    "https://0.0g.gg",
+    "https://luckvintage.com"
   ],
   "authenticate": [
     "https://nitter:nitter@nitter.nixnet.services"
