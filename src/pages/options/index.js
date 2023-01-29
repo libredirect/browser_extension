@@ -13,7 +13,6 @@ for (const a of document.getElementById("links").getElementsByTagName("a")) {
 	})
 }
 
-
 config = await utils.getConfig()
 options = await utils.getOptions()
 

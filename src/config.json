@@ -85,7 +85,7 @@
 			"name": "Youtube",
 			"options": {
 				"enabled": false,
-				"redirectType": "both",
+				"redirectType": "main_frame",
 				"frontend": "invidious"
 			},
 			"imageType": "png",
@@ -135,7 +135,7 @@
 			"name": "Twitter",
 			"options": {
 				"enabled": false,
-				"redirectType": "both"
+				"redirectType": "main_frame"
 			},
 			"imageType": "png",
 			"embeddable": true,
@@ -200,7 +200,7 @@
 			"name": "Imgur",
 			"options": {
 				"enabled": false,
-				"redirectType": "both"
+				"redirectType": "main_frame"
 			},
 			"imageType": "png",
 			"embeddable": true,
@@ -322,7 +322,7 @@
 			"options": {
 				"enabled": false,
 				"frontend": "librarian",
-				"redirectType": "both"
+				"redirectType": "main_frame"
 			},
 			"imageType": "png",
 			"embeddable": true,

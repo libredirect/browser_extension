@@ -19,7 +19,14 @@
 		"48": "assets/images/libredirect-48.png",
 		"128": "assets/images/libredirect-128.png"
 	},
-	"permissions": ["webRequest", "webRequestBlocking", "storage", "unlimitedStorage", "clipboardWrite", "contextMenus", "<all_urls>"],
+	"permissions": [
+		"webRequest",
+		"webRequestBlocking",
+		"storage",
+		"clipboardWrite",
+		"contextMenus",
+		"<all_urls>"
+	],
 	"browser_action": {
 		"default_title": "__MSG_extensionName__",
 		"browser_style": false,
