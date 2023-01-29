@@ -254,7 +254,8 @@
 				"^https?:\\/{2}codeburst\\.io(\\/|$)",
 				"^https?:\\/{2}infosecwriteups\\.com(\\/|$)",
 				"^https?:\\/{2}blog\\.devgenius\\.io(\\/|$)",
-				"^https?:\\/{2}writingcooperative\\.com(\\/|$)"
+				"^https?:\\/{2}writingcooperative\\.com(\\/|$)",
+				"^https?:\\/{2}proandroiddev\\.com(\\/|$)"
 			],
 			"name": "Medium",
 			"options": {
