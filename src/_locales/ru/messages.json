@@ -1,6 +1,6 @@
 {
     "extensionDescription": {
-        "message": "Веб-расширение, которое перенаправляет популярные сайты на альтернативные фронтенды и бэкенды, обеспечивающие конфиденциальность",
+        "message": "Сетевое расширение, которое перенаправляет известные сайты на иные интерфейсы и движки, обеспечивающие конфиденциальность",
         "description": "description of the extension"
     },
     "extensionName": {
@@ -132,7 +132,7 @@
         "description": "used in the settings page"
     },
     "embeddedVids": {
-        "message": "Фронтенд для встроенных видео",
+        "message": "Интерфейс для встроенных видео",
         "description": "used in the settings page"
     },
     "copied": {
@@ -151,7 +151,7 @@
         "message": "Тестирование задержки экземпляров"
     },
     "copyRaw": {
-        "message": "Копировать оригинал"
+        "message": "Скопировать оригинал"
     },
     "unifySettings": {
         "message": "Унифицировать настройки"
@@ -205,18 +205,18 @@
         "description": "used in the settings page"
     },
     "notFullyPrivate": {
-        "message": "Это не полностью приватный фронтенд."
+        "message": "Это не полностью приватный интерфейс."
     },
     "frontend": {
-        "message": "Фронтенд",
+        "message": "Интерфейс",
         "description": "used in the settings page"
     },
     "searchNote": {
-        "message": "Примечание: Используйте поиск в полной мере, сделав LibRedirect поисковой системой по умолчанию.",
+        "message": "Примечание: используйте поиск в полной мере, сделав LibRedirect поисковой системой по умолчанию.",
         "description": "used in the settings page"
     },
     "redirectLink": {
-        "message": "Попробовать перенаправить эту ссылку",
+        "message": "Попытаться перенаправить эту ссылку",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "lbryDesktop": {
