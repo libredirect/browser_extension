@@ -4,31 +4,31 @@
         "description": "name of the extension"
     },
     "extensionDescription": {
-        "message": "Web proširenje koje preusmjerava popularne web stranice na alternativna sučelja i pozadinske sustave prilagođene privatnosti",
+        "message": "O extensie web care redirecționează site-urile populare către frontend-uri și backend-uri alternative prietenoase cu confidențialitatea",
         "description": "description of the extension"
     },
     "switchInstance": {
-        "message": "Zamijeni instancu",
+        "message": "Comutare Instanță",
         "description": "used in manifest.json as shortcut description"
     },
     "settings": {
-        "message": "Postavke",
+        "message": "Setări",
         "description": "used in the popup"
     },
     "general": {
-        "message": "Opće",
+        "message": "General",
         "description": "used in the settings page"
     },
     "theme": {
-        "message": "Tema",
+        "message": "Temă",
         "description": "used in the settings page"
     },
     "light": {
-        "message": "Svijetla",
+        "message": "Luminat",
         "description": "used in the settings page"
     },
     "dark": {
-        "message": "Tamna",
+        "message": "Întunecat",
         "description": "used in the settings page"
     },
     "auto": {
@@ -40,23 +40,23 @@
         "description": "used in the settings page"
     },
     "updateInstances": {
-        "message": "Ažuriraj instance",
+        "message": "Actualizați Instanțele",
         "description": "used in the settings page"
     },
     "importSettings": {
-        "message": "Uvezi postavke",
+        "message": "Import setări",
         "description": "used in the settings page"
     },
     "exportSettings": {
-        "message": "Izvezi postavke",
+        "message": "Exportul setărilor",
         "description": "used in the settings page"
     },
     "resetSettings": {
-        "message": "Obnovi postavke",
+        "message": "Resetează setarile",
         "description": "used in the settings page"
     },
     "enable": {
-        "message": "Aktiviraj",
+        "message": "Activează",
         "description": "used in the settings page"
     },
     "showInPopup": {
@@ -64,27 +64,27 @@
         "description": "used in the settings page"
     },
     "frontend": {
-        "message": "Sučelje",
+        "message": "Frontend",
         "description": "used in the settings page"
     },
     "searchNote": {
-        "message": "Savjet: Koristi sav potencijal pretrage postavljanjem LibRedirecta kao zadane tražilice.",
+        "message": "Notă: Utilizați căutarea la potențialul său maxim, făcând LibRedirect motorul de căutare implicit.",
         "description": "used in the settings page"
     },
     "redirectType": {
-        "message": "Vrsta preusmjeravanja",
+        "message": "Tip redirecționare",
         "description": "used in the settings page"
     },
     "both": {
-        "message": "obje",
+        "message": "ambele",
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
-        "message": "samo ugrađena",
+        "message": "numai încorporat",
         "description": "used in the settings page"
     },
     "onlyNotEmbedded": {
-        "message": "samo neugrađena",
+        "message": "numai încorporat",
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
@@ -92,17 +92,17 @@
         "description": "used in the settings page"
     },
     "copyRaw": {
-        "message": "Kopiraj original"
+        "message": "Copiați Raw"
     },
     "copied": {
-        "message": "Kopirano"
+        "message": "Copiat"
     },
     "redirectToOriginal": {
         "message": "Redirect to original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Pokušaj preusmjeriti ovu hiperpoveznicu",
+        "message": "Încercați să redirecționați acest hyperlink",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {

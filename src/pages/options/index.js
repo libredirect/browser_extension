@@ -6,11 +6,13 @@ let config,
 	divs = {}
 
 for (const a of document.getElementById("links").getElementsByTagName("a")) {
-	a.addEventListener("click", e => {
-		const path = a.getAttribute("href").replace("#", "")
-		loadPage(path)
-		e.preventDefault()
-	})
+	if (!a.href.includes("https://")) {
+		a.addEventListener("click", e => {
+			const path = a.getAttribute("href").replace("#", "")
+			loadPage(path)
+			e.preventDefault()
+		})
+	}
 }
 
 config = await utils.getConfig()
@@ -55,7 +57,7 @@ async function loadPage(path) {
 
 	window.history.pushState({ id: "100" }, "Page 2", `/pages/options/index.html#${path}`)
 
-	if (path != 'general' && path != 'about') {
+	if (path != 'general') {
 		const service = path;
 
 		divs[service] = {}
@@ -72,7 +74,7 @@ async function loadPage(path) {
 				else
 					options[service][option] = divs[service][option].value
 				browser.storage.local.set({ options })
-				changeFrontendsSettings(service)	
+				changeFrontendsSettings(service)
 			})
 		}
 

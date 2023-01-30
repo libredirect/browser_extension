@@ -7,48 +7,36 @@
         "message": "Popüler siteleri alternatif gizlilik dostu ön uçlara ve arka uçlara yönlendiren bir web uzantısı",
         "description": "description of the extension"
     },
-    "search": {
-        "message": "Ara",
-        "description": "used in the settings page"
+    "switchInstance": {
+        "message": "Örneği Değiştir",
+        "description": "used in manifest.json as shortcut description"
     },
-    "translate": {
-        "message": "Çevir",
-        "description": "used in the settings page"
+    "settings": {
+        "message": "Ayarlar",
+        "description": "used in the popup"
     },
-    "maps": {
-        "message": "Haritalar",
-        "description": "used in the settings page"
-    },
-    "instagram": {
-        "message": "Instagram",
-        "description": "used in the settings page"
-    },
-    "reddit": {
-        "message": "Reddit",
-        "description": "used in the settings page"
-    },
-    "ytmusic": {
-        "message": "YT Müzik",
-        "description": "used in the settings page"
-    },
-    "imgur": {
-        "message": "Imgur",
-        "description": "used in the settings page"
-    },
-    "tor": {
-        "message": "Tor",
+    "general": {
+        "message": "Genel",
         "description": "used in the settings page"
     },
     "theme": {
         "message": "Tema",
         "description": "used in the settings page"
     },
-    "autoRedirect": {
-        "message": "Çevrim dışı örnekleri çevrim içi örneklere otomatik yönlendir",
+    "light": {
+        "message": "Açık",
         "description": "used in the settings page"
     },
-    "exceptions": {
-        "message": "İstisnalar",
+    "dark": {
+        "message": "Koyu",
+        "description": "used in the settings page"
+    },
+    "auto": {
+        "message": "Auto",
+        "description": "used in the settings page"
+    },
+    "excludeFromRedirecting": {
+        "message": "Excluded from redirecting",
         "description": "used in the settings page"
     },
     "updateInstances": {
@@ -67,16 +55,17 @@
         "message": "Ayarları Sıfırla",
         "description": "used in the settings page"
     },
-    "customPopup": {
-        "message": "Açılır Pencereyi Özelleştir",
+    "enable": {
+        "message": "Etkinleştir",
+        "description": "used in the settings page"
+    },
+    "showInPopup": {
+        "message": "Show in popup",
         "description": "used in the settings page"
     },
     "frontend": {
         "message": "Ön Uç",
         "description": "used in the settings page"
-    },
-    "notFullyPrivate": {
-        "message": "Bu tamamen özel bir ön uç değil."
     },
     "searchNote": {
         "message": "Not: LibRedirect'i öntanımlı arama motorunuz yaparak aramayı tüm özellikleriyle kullanın.",
@@ -84,26 +73,6 @@
     },
     "redirectType": {
         "message": "Yönlendirme Türü",
-        "description": "used in the settings page"
-    },
-    "settings": {
-        "message": "Ayarlar",
-        "description": "used in the popup"
-    },
-    "defaultInstances": {
-        "message": "Öntanımlı Örnekler",
-        "description": "used in the settings page"
-    },
-    "customInstances": {
-        "message": "Özel Örnekler",
-        "description": "used in the settings page"
-    },
-    "toggleAll": {
-        "message": "Tümünü değiştir",
-        "description": "used in the settings page"
-    },
-    "embeddedVids": {
-        "message": "Gömülü Videolar Ön Ucu",
         "description": "used in the settings page"
     },
     "both": {
@@ -118,21 +87,9 @@
         "message": "yalnızca gömülü olmayan",
         "description": "used in the settings page"
     },
-    "instanceOffline": {
-        "message": "Bu örnek çevrim dışı, yeniden yönlendirileceksiniz",
-        "description": "used in instance_offline.html"
-    },
-    "cancel": {
-        "message": "İptal",
-        "description": "used in instance_offline.html"
-    },
-    "instanceIsOff": {
-        "message": "Örnek çevrim dışı",
-        "description": "used in instance_offline.html"
-    },
-    "redirectionCanceled": {
-        "message": "Yeniden yönlendirme iptal edildi",
-        "description": "used in instance_offline.js"
+    "addYourFavoriteInstances": {
+        "message": "Add your favorite instances",
+        "description": "used in the settings page"
     },
     "copyRaw": {
         "message": "Ham Kopyala"
@@ -140,93 +97,15 @@
     "copied": {
         "message": "Kopyalandı"
     },
-    "unifySettings": {
-        "message": "Ayarları Birleştir"
-    },
-    "lbry": {
-        "message": "LBRY"
-    },
-    "i2p": {
-        "message": "I2P"
-    },
-    "testInstancesLatency": {
-        "message": "Örneklerin Gecikmesini Test Et"
-    },
-    "switchInstance": {
-        "message": "Örneği Değiştir",
-        "description": "used in manifest.json as shortcut description"
-    },
-    "sendFiles": {
-        "message": "Dosya Gönder",
-        "description": "used in the settings page"
-    },
-    "wikipedia": {
-        "message": "Wikipedia",
-        "description": "used in the settings page"
-    },
-    "peertube": {
-        "message": "PeerTube",
-        "description": "used in the settings page"
-    },
-    "dark": {
-        "message": "Koyu",
-        "description": "used in the settings page"
-    },
-    "tiktok": {
-        "message": "TikTok",
-        "description": "used in the settings page"
-    },
-    "general": {
-        "message": "Genel",
-        "description": "used in the settings page"
-    },
-    "youtube": {
-        "message": "YouTube",
-        "description": "used in the settings page"
-    },
-    "twitter": {
-        "message": "Twitter",
-        "description": "used in the settings page"
-    },
-    "medium": {
-        "message": "Medium",
-        "description": "used in the settings page"
-    },
-    "system": {
-        "message": "Sistem",
-        "description": "used in the settings page"
-    },
-    "light": {
-        "message": "Açık",
-        "description": "used in the settings page"
-    },
-    "enable": {
-        "message": "Etkinleştir",
-        "description": "used in the settings page"
-    },
-    "protocol": {
-        "message": "Protokol",
-        "description": "used in the settings page"
-    },
-    "normal": {
-        "message": "Normal",
-        "description": "used in the settings page"
-    },
-    "loki": {
-        "message": "Lokinet"
-    },
-    "protocolFallback": {
-        "message": "Geçerli protokol için hiçbir örnek kullanılabilir değilse normale geri dön"
-    },
-    "lbryDesktop": {
-        "message": "LBRY Masaüstü"
-    },
-    "toggleTab": {
-        "message": "Bu sekmede yönlendirmeleri aç/kapat",
+    "redirectToOriginal": {
+        "message": "Redirect to original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
         "message": "Bu köprüyü yeniden yönlendirmeyi dene",
         "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "about": {
+        "message": "About"
     }
 }

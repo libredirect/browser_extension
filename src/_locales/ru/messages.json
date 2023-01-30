@@ -1,19 +1,15 @@
 {
-    "extensionDescription": {
-        "message": "Веб-расширение, которое перенаправляет популярные сайты на альтернативные фронтенды и бэкенды, обеспечивающие конфиденциальность",
-        "description": "description of the extension"
-    },
     "extensionName": {
         "message": "LibRedirect",
         "description": "name of the extension"
     },
-    "protocol": {
-        "message": "Протокол",
-        "description": "used in the settings page"
+    "extensionDescription": {
+        "message": "Веб-расширение, которое перенаправляет популярные сайты на альтернативные фронтенды и бэкенды, обеспечивающие конфиденциальность",
+        "description": "description of the extension"
     },
-    "normal": {
-        "message": "Нормальный",
-        "description": "used in the settings page"
+    "switchInstance": {
+        "message": "Переключить экземпляр",
+        "description": "used in manifest.json as shortcut description"
     },
     "settings": {
         "message": "Настройки",
@@ -23,44 +19,28 @@
         "message": "Общее",
         "description": "used in the settings page"
     },
-    "search": {
-        "message": "Поиск",
+    "theme": {
+        "message": "Тема",
         "description": "used in the settings page"
     },
-    "translate": {
-        "message": "Перевод",
+    "light": {
+        "message": "Светлая",
         "description": "used in the settings page"
     },
-    "maps": {
-        "message": "Карты",
+    "dark": {
+        "message": "Тёмная",
         "description": "used in the settings page"
     },
-    "sendFiles": {
-        "message": "Отправка файлов",
+    "auto": {
+        "message": "Auto",
         "description": "used in the settings page"
     },
-    "youtube": {
-        "message": "YouTube",
+    "excludeFromRedirecting": {
+        "message": "Excluded from redirecting",
         "description": "used in the settings page"
     },
-    "tiktok": {
-        "message": "TikTok",
-        "description": "used in the settings page"
-    },
-    "ytmusic": {
-        "message": "YT Music",
-        "description": "used in the settings page"
-    },
-    "imgur": {
-        "message": "Imgur",
-        "description": "used in the settings page"
-    },
-    "wikipedia": {
-        "message": "Wikipedia",
-        "description": "used in the settings page"
-    },
-    "peertube": {
-        "message": "PeerTube",
+    "updateInstances": {
+        "message": "Обновить экземпляры",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -75,8 +55,20 @@
         "message": "Сброс настроек",
         "description": "used in the settings page"
     },
-    "customPopup": {
-        "message": "Настроить всплывающее окно",
+    "enable": {
+        "message": "Включить",
+        "description": "used in the settings page"
+    },
+    "showInPopup": {
+        "message": "Show in popup",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Фронтенд",
+        "description": "used in the settings page"
+    },
+    "searchNote": {
+        "message": "Примечание: Используйте поиск в полной мере, сделав LibRedirect поисковой системой по умолчанию.",
         "description": "used in the settings page"
     },
     "redirectType": {
@@ -95,138 +87,25 @@
         "message": "только не встроеные",
         "description": "used in the settings page"
     },
-    "instanceOffline": {
-        "message": "Этот экземпляр находится в автономном режиме, вы будете перенаправлены после",
-        "description": "used in instance_offline.html"
-    },
-    "cancel": {
-        "message": "Отмена",
-        "description": "used in instance_offline.html"
-    },
-    "instanceIsOff": {
-        "message": "Экземпляр не в сети",
-        "description": "used in instance_offline.html"
-    },
-    "redirectionCanceled": {
-        "message": "Перенаправление отменено",
-        "description": "used in instance_offline.js"
-    },
-    "switchInstance": {
-        "message": "Переключить экземпляр",
-        "description": "used in manifest.json as shortcut description"
-    },
-    "autoRedirect": {
-        "message": "Автоматическое перенаправление на экземпляров находящихся в сети",
+    "addYourFavoriteInstances": {
+        "message": "Add your favorite instances",
         "description": "used in the settings page"
-    },
-    "updateInstances": {
-        "message": "Обновить экземпляры",
-        "description": "used in the settings page"
-    },
-    "defaultInstances": {
-        "message": "Экземпляры по умолчанию",
-        "description": "used in the settings page"
-    },
-    "customInstances": {
-        "message": "Пользовательские экземпляры",
-        "description": "used in the settings page"
-    },
-    "embeddedVids": {
-        "message": "Фронтенд для встроенных видео",
-        "description": "used in the settings page"
-    },
-    "copied": {
-        "message": "Скопировано"
-    },
-    "lbry": {
-        "message": "LBRY"
-    },
-    "i2p": {
-        "message": "I2P"
-    },
-    "loki": {
-        "message": "Lokinet"
-    },
-    "testInstancesLatency": {
-        "message": "Тестирование задержки экземпляров"
     },
     "copyRaw": {
         "message": "Копировать оригинал"
     },
-    "unifySettings": {
-        "message": "Унифицировать настройки"
+    "copied": {
+        "message": "Скопировано"
     },
-    "instagram": {
-        "message": "Instagram",
-        "description": "used in the settings page"
-    },
-    "enable": {
-        "message": "Включить",
-        "description": "used in the settings page"
-    },
-    "twitter": {
-        "message": "Twitter",
-        "description": "used in the settings page"
-    },
-    "system": {
-        "message": "Системная",
-        "description": "used in the settings page"
-    },
-    "exceptions": {
-        "message": "Исключения",
-        "description": "used in the settings page"
-    },
-    "reddit": {
-        "message": "Reddit",
-        "description": "used in the settings page"
-    },
-    "tor": {
-        "message": "Tor",
-        "description": "used in the settings page"
-    },
-    "medium": {
-        "message": "Medium",
-        "description": "used in the settings page"
-    },
-    "theme": {
-        "message": "Тема",
-        "description": "used in the settings page"
-    },
-    "light": {
-        "message": "Светлая",
-        "description": "used in the settings page"
-    },
-    "dark": {
-        "message": "Тёмная",
-        "description": "used in the settings page"
-    },
-    "toggleAll": {
-        "message": "Переключить все",
-        "description": "used in the settings page"
-    },
-    "notFullyPrivate": {
-        "message": "Это не полностью приватный фронтенд."
-    },
-    "frontend": {
-        "message": "Фронтенд",
-        "description": "used in the settings page"
-    },
-    "searchNote": {
-        "message": "Примечание: Используйте поиск в полной мере, сделав LibRedirect поисковой системой по умолчанию.",
-        "description": "used in the settings page"
+    "redirectToOriginal": {
+        "message": "Redirect to original",
+        "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
         "message": "Попробовать перенаправить эту ссылку",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
-    "lbryDesktop": {
-        "message": ""
-    },
-    "toggleTab": {
-        "message": "Переключить перенаправление в этой вкладке",
-        "description": "Used in context menus when right clicking on a page/tab"
-    },
-    "protocolFallback": {
-        "message": "Вернуться к обычному протоколу если для текущего нет доступных экземпляров"
+    "about": {
+        "message": "About"
     }
 }

@@ -1,106 +1,26 @@
 {
-    "settings": {
-        "message": "设置",
-        "description": "used in the popup"
-    },
-    "translate": {
-        "message": "翻译",
-        "description": "used in the settings page"
-    },
-    "wikipedia": {
-        "message": "Wikipedia",
-        "description": "used in the settings page"
-    },
-    "switchInstance": {
-        "message": "切换实例",
-        "description": "used in manifest.json as shortcut description"
-    },
-    "sendFiles": {
-        "message": "发送文件",
-        "description": "used in the settings page"
-    },
-    "instagram": {
-        "message": "Instagram",
-        "description": "used in the settings page"
-    },
-    "twitter": {
-        "message": "Twitter",
-        "description": "used in the settings page"
-    },
     "extensionName": {
         "message": "LibRedirect",
         "description": "name of the extension"
-    },
-    "peertube": {
-        "message": "PeerTube",
-        "description": "used in the settings page"
-    },
-    "youtube": {
-        "message": "YouTube",
-        "description": "used in the settings page"
-    },
-    "general": {
-        "message": "通用",
-        "description": "used in the settings page"
-    },
-    "maps": {
-        "message": "地图",
-        "description": "used in the settings page"
-    },
-    "reddit": {
-        "message": "Reddit",
-        "description": "used in the settings page"
-    },
-    "tiktok": {
-        "message": "TikTok",
-        "description": "used in the settings page"
-    },
-    "search": {
-        "message": "搜索",
-        "description": "used in the settings page"
-    },
-    "imgur": {
-        "message": "Imgur",
-        "description": "used in the settings page"
-    },
-    "ytmusic": {
-        "message": "YT Music",
-        "description": "used in the settings page"
-    },
-    "medium": {
-        "message": "Medium",
-        "description": "used in the settings page"
     },
     "extensionDescription": {
         "message": "一个可将热门网站重定向到其替代隐私友好型前端和后端的 Web 扩展程序",
         "description": "description of the extension"
     },
+    "switchInstance": {
+        "message": "切换实例",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "settings": {
+        "message": "设置",
+        "description": "used in the popup"
+    },
+    "general": {
+        "message": "通用",
+        "description": "used in the settings page"
+    },
     "theme": {
         "message": "主题",
-        "description": "used in the settings page"
-    },
-    "redirectType": {
-        "message": "重定向类型",
-        "description": "used in the settings page"
-    },
-    "instanceOffline": {
-        "message": "此实例已离线，将重定向于",
-        "description": "used in instance_offline.html"
-    },
-    "copied": {
-        "message": "已复制"
-    },
-    "unifySettings": {
-        "message": "统一设置"
-    },
-    "lbry": {
-        "message": "LBRY"
-    },
-    "testInstancesLatency": {
-        "message": "测试实例延时"
-    },
-    "system": {
-        "message": "系统",
         "description": "used in the settings page"
     },
     "light": {
@@ -111,16 +31,20 @@
         "message": "黑暗",
         "description": "used in the settings page"
     },
+    "auto": {
+        "message": "Auto",
+        "description": "used in the settings page"
+    },
+    "excludeFromRedirecting": {
+        "message": "Excluded from redirecting",
+        "description": "used in the settings page"
+    },
     "updateInstances": {
         "message": "更新实例",
         "description": "used in the settings page"
     },
     "importSettings": {
         "message": "导入设置",
-        "description": "used in the settings page"
-    },
-    "exceptions": {
-        "message": "排除",
         "description": "used in the settings page"
     },
     "exportSettings": {
@@ -131,43 +55,24 @@
         "message": "重置设置",
         "description": "used in the settings page"
     },
-    "customPopup": {
-        "message": "自定义弹出菜单",
-        "description": "used in the settings page"
-    },
     "enable": {
         "message": "启用",
         "description": "used in the settings page"
     },
-    "protocol": {
-        "message": "协议",
-        "description": "used in the settings page"
-    },
-    "normal": {
-        "message": "常规",
-        "description": "used in the settings page"
-    },
-    "defaultInstances": {
-        "message": "默认实例",
-        "description": "used in the settings page"
-    },
-    "customInstances": {
-        "message": "自定义实例",
-        "description": "used in the settings page"
-    },
-    "toggleAll": {
-        "message": "全选",
+    "showInPopup": {
+        "message": "Show in popup",
         "description": "used in the settings page"
     },
     "frontend": {
         "message": "前端",
         "description": "used in the settings page"
     },
-    "notFullyPrivate": {
-        "message": "这并不是一个完全私有的前端。"
+    "searchNote": {
+        "message": "注意：请将 LibRedirect 作为你的默认搜索引擎以充分发挥搜索的潜力。",
+        "description": "used in the settings page"
     },
-    "embeddedVids": {
-        "message": "嵌入式视频前端",
+    "redirectType": {
+        "message": "重定向类型",
         "description": "used in the settings page"
     },
     "both": {
@@ -182,33 +87,25 @@
         "message": "仅当非嵌入时",
         "description": "used in the settings page"
     },
-    "cancel": {
-        "message": "取消",
-        "description": "used in instance_offline.html"
-    },
-    "instanceIsOff": {
-        "message": "实例已离线",
-        "description": "used in instance_offline.html"
+    "addYourFavoriteInstances": {
+        "message": "Add your favorite instances",
+        "description": "used in the settings page"
     },
     "copyRaw": {
         "message": "复制原始链接"
     },
-    "protocolFallback": {
-        "message": "如果当前协议没有实例可用，则回退到常规状态"
+    "copied": {
+        "message": "已复制"
     },
-    "autoRedirect": {
-        "message": "自动重定向离线实例至在线实例",
-        "description": "used in the settings page"
+    "redirectToOriginal": {
+        "message": "Redirect to original",
+        "description": "Used in context menus when right clicking on a page/tab"
     },
-    "searchNote": {
-        "message": "注意：请将 LibRedirect 作为你的默认搜索引擎以充分发挥搜索的潜力。",
-        "description": "used in the settings page"
+    "redirectLink": {
+        "message": "尝试重定向此超链接",
+        "description": "Used in context menus when right clicking on a hyperlink"
     },
-    "redirectionCanceled": {
-        "message": "已取消重定向",
-        "description": "used in instance_offline.js"
-    },
-    "lbryDesktop": {
-        "message": "LBRY Desktop"
+    "about": {
+        "message": "About"
     }
 }

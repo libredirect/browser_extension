@@ -1,50 +1,26 @@
 {
-    "ytmusic": {
-        "message": "YT Music",
-        "description": "used in the settings page"
-    },
     "extensionName": {
         "message": "LibRedirect",
         "description": "name of the extension"
+    },
+    "extensionDescription": {
+        "message": "Un complemento do navegador que redirixe o tráfico cara alternativas amigables e respetuosas",
+        "description": "description of the extension"
+    },
+    "switchInstance": {
+        "message": "Cambiar de Instancia",
+        "description": "used in manifest.json as shortcut description"
     },
     "settings": {
         "message": "Axustes",
         "description": "used in the popup"
     },
-    "maps": {
-        "message": "Mapas",
+    "general": {
+        "message": "Xeral",
         "description": "used in the settings page"
     },
-    "sendFiles": {
-        "message": "Enviar Ficheiros",
-        "description": "used in the settings page"
-    },
-    "youtube": {
-        "message": "YouTube",
-        "description": "used in the settings page"
-    },
-    "instagram": {
-        "message": "Instagram",
-        "description": "used in the settings page"
-    },
-    "twitter": {
-        "message": "Twitter",
-        "description": "used in the settings page"
-    },
-    "imgur": {
-        "message": "Imgur",
-        "description": "used in the settings page"
-    },
-    "wikipedia": {
-        "message": "Wikipedia",
-        "description": "used in the settings page"
-    },
-    "peertube": {
-        "message": "PeerTube",
-        "description": "used in the settings page"
-    },
-    "system": {
-        "message": "Sistema",
+    "theme": {
+        "message": "Decorado",
         "description": "used in the settings page"
     },
     "light": {
@@ -55,12 +31,12 @@
         "message": "Escuro",
         "description": "used in the settings page"
     },
-    "autoRedirect": {
-        "message": "Auto-redirixir cando unha instancia está caída",
+    "auto": {
+        "message": "Auto",
         "description": "used in the settings page"
     },
-    "exceptions": {
-        "message": "Excepcións",
+    "excludeFromRedirecting": {
+        "message": "Excluded from redirecting",
         "description": "used in the settings page"
     },
     "updateInstances": {
@@ -75,28 +51,16 @@
         "message": "Exportar Axustes",
         "description": "used in the settings page"
     },
-    "customPopup": {
-        "message": "Personalizar Emerxente",
+    "resetSettings": {
+        "message": "Restablecer Axustes",
         "description": "used in the settings page"
     },
     "enable": {
         "message": "Activar",
         "description": "used in the settings page"
     },
-    "protocol": {
-        "message": "Protocolo",
-        "description": "used in the settings page"
-    },
-    "normal": {
-        "message": "Normal",
-        "description": "used in the settings page"
-    },
-    "defaultInstances": {
-        "message": "Instancias por defecto",
-        "description": "used in the settings page"
-    },
-    "toggleAll": {
-        "message": "Activar todo",
+    "showInPopup": {
+        "message": "Show in popup",
         "description": "used in the settings page"
     },
     "frontend": {
@@ -107,69 +71,12 @@
         "message": "Nota: usa a busca con todo o seu potencial facendo que LibRedirect sexa o teu buscador por defecto.",
         "description": "used in the settings page"
     },
-    "embeddedVids": {
-        "message": "Interface para Vídeos incrustados",
+    "redirectType": {
+        "message": "Tipo de Redirección",
         "description": "used in the settings page"
     },
     "both": {
         "message": "ambos",
-        "description": "used in the settings page"
-    },
-    "instanceIsOff": {
-        "message": "Instancia caída",
-        "description": "used in instance_offline.html"
-    },
-    "redirectionCanceled": {
-        "message": "Redirección cancelada",
-        "description": "used in instance_offline.js"
-    },
-    "copyRaw": {
-        "message": "Copiar en crú"
-    },
-    "copied": {
-        "message": "Copiado"
-    },
-    "extensionDescription": {
-        "message": "Un complemento do navegador que redirixe o tráfico cara alternativas amigables e respetuosas",
-        "description": "description of the extension"
-    },
-    "general": {
-        "message": "Xeral",
-        "description": "used in the settings page"
-    },
-    "search": {
-        "message": "Buscar",
-        "description": "used in the settings page"
-    },
-    "translate": {
-        "message": "Traducir",
-        "description": "used in the settings page"
-    },
-    "tiktok": {
-        "message": "TikTok",
-        "description": "used in the settings page"
-    },
-    "lbry": {
-        "message": "LBRY"
-    },
-    "switchInstance": {
-        "message": "Cambiar de Instancia",
-        "description": "used in manifest.json as shortcut description"
-    },
-    "reddit": {
-        "message": "Reddit",
-        "description": "used in the settings page"
-    },
-    "medium": {
-        "message": "Medium",
-        "description": "used in the settings page"
-    },
-    "theme": {
-        "message": "Decorado",
-        "description": "used in the settings page"
-    },
-    "redirectType": {
-        "message": "Tipo de Redirección",
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
@@ -180,53 +87,25 @@
         "message": "non só incrustados",
         "description": "used in the settings page"
     },
-    "tor": {
-        "message": "Tor",
+    "addYourFavoriteInstances": {
+        "message": "Add your favorite instances",
         "description": "used in the settings page"
     },
-    "resetSettings": {
-        "message": "Restablecer Axustes",
-        "description": "used in the settings page"
+    "copyRaw": {
+        "message": "Copiar en crú"
     },
-    "customInstances": {
-        "message": "Instancias personalizadas",
-        "description": "used in the settings page"
+    "copied": {
+        "message": "Copiado"
     },
-    "notFullyPrivate": {
-        "message": "Esta interface non é totalmente privada."
-    },
-    "instanceOffline": {
-        "message": "Esta instancia está caída, ímoste redirixir após",
-        "description": "used in instance_offline.html"
-    },
-    "cancel": {
-        "message": "Cancelar",
-        "description": "used in instance_offline.html"
-    },
-    "testInstancesLatency": {
-        "message": "Comprobar Latencia das instancias"
-    },
-    "i2p": {
-        "message": "I2P"
-    },
-    "unifySettings": {
-        "message": "Unificar Axustes"
-    },
-    "loki": {
-        "message": "Lokinet"
-    },
-    "protocolFallback": {
-        "message": "Volvar á versión normal se non hai instancias dispoñibles para o protocolo actual"
-    },
-    "lbryDesktop": {
-        "message": "LBRY Desktop"
-    },
-    "toggleTab": {
-        "message": "Alterna as redireccións nesta pestana",
+    "redirectToOriginal": {
+        "message": "Redirect to original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
         "message": "Tenta redirixir a ista hiperligazón",
         "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "about": {
+        "message": "About"
     }
 }

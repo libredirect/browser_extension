@@ -104,7 +104,7 @@ browser.contextMenus.create({
 
 browser.contextMenus.create({
 	id: "redirectToOriginal",
-	title: 'Redirect to original',
+	title: browser.i18n.getMessage("redirectToOriginal"),
 	contexts: ["browser_action"],
 })
 

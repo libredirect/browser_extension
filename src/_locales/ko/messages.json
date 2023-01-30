@@ -3,6 +3,10 @@
         "message": "LibRedirect",
         "description": "name of the extension"
     },
+    "extensionDescription": {
+        "message": "A web extension that redirects popular sites to alternative privacy-friendly frontends and backends",
+        "description": "description of the extension"
+    },
     "switchInstance": {
         "message": "인스턴스 바꾸기",
         "description": "used in manifest.json as shortcut description"
@@ -15,48 +19,24 @@
         "message": "일반",
         "description": "used in the settings page"
     },
-    "search": {
-        "message": "검색",
-        "description": "used in the settings page"
-    },
-    "translate": {
-        "message": "번역",
-        "description": "used in the settings page"
-    },
-    "ytmusic": {
-        "message": "YT Music",
-        "description": "used in the settings page"
-    },
-    "imgur": {
-        "message": "Imgur",
-        "description": "used in the settings page"
-    },
-    "wikipedia": {
-        "message": "Wikipedia",
-        "description": "used in the settings page"
-    },
-    "peertube": {
-        "message": "PeerTube",
-        "description": "used in the settings page"
-    },
-    "medium": {
-        "message": "Medium",
-        "description": "used in the settings page"
-    },
-    "tor": {
-        "message": "Tor",
-        "description": "used in the settings page"
-    },
     "theme": {
         "message": "테마",
         "description": "used in the settings page"
     },
-    "system": {
-        "message": "시스템",
-        "description": "used in the settings page"
-    },
     "light": {
         "message": "밝음",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "어두움",
+        "description": "used in the settings page"
+    },
+    "auto": {
+        "message": "Auto",
+        "description": "used in the settings page"
+    },
+    "excludeFromRedirecting": {
+        "message": "Excluded from redirecting",
         "description": "used in the settings page"
     },
     "updateInstances": {
@@ -71,39 +51,32 @@
         "message": "설정 내보내기",
         "description": "used in the settings page"
     },
+    "resetSettings": {
+        "message": "설정 초기화",
+        "description": "used in the settings page"
+    },
     "enable": {
         "message": "활성화",
         "description": "used in the settings page"
     },
-    "protocol": {
-        "message": "프로토콜",
-        "description": "used in the settings page"
-    },
-    "normal": {
-        "message": "일반",
-        "description": "used in the settings page"
-    },
-    "defaultInstances": {
-        "message": "기본 인스턴스",
-        "description": "used in the settings page"
-    },
-    "customInstances": {
-        "message": "사용자 인스턴스",
+    "showInPopup": {
+        "message": "Show in popup",
         "description": "used in the settings page"
     },
     "frontend": {
         "message": "프론트엔드",
         "description": "used in the settings page"
     },
-    "youtube": {
-        "message": "YouTube",
+    "searchNote": {
+        "message": "안내: LibRedirect를 기본 검색 엔진으로 만들면 완벽히 사용할 수 있습니다.",
         "description": "used in the settings page"
-    },
-    "testInstancesLatency": {
-        "message": "인스턴스 지연 시간 시험"
     },
     "redirectType": {
         "message": "리다이렉트 종류",
+        "description": "used in the settings page"
+    },
+    "both": {
+        "message": "둘 다",
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
@@ -114,86 +87,25 @@
         "message": "임베디드 안된 것만",
         "description": "used in the settings page"
     },
-    "instanceOffline": {
-        "message": "이 인스턴스는 오프라인입니다, 다음 초 후에 리다이렉트됩니다:",
-        "description": "used in instance_offline.html"
-    },
-    "notFullyPrivate": {
-        "message": "완전한 개인 프론트엔드가 아닙니다."
-    },
-    "searchNote": {
-        "message": "안내: LibRedirect를 기본 검색 엔진으로 만들면 완벽히 사용할 수 있습니다.",
+    "addYourFavoriteInstances": {
+        "message": "Add your favorite instances",
         "description": "used in the settings page"
-    },
-    "both": {
-        "message": "둘 다",
-        "description": "used in the settings page"
-    },
-    "embeddedVids": {
-        "message": "임베디드된 동영상 프론트엔드",
-        "description": "used in the settings page"
-    },
-    "unifySettings": {
-        "message": "설정 통일하기"
-    },
-    "maps": {
-        "message": "지도",
-        "description": "used in the settings page"
-    },
-    "sendFiles": {
-        "message": "파일 전송",
-        "description": "used in the settings page"
-    },
-    "instagram": {
-        "message": "Instagram",
-        "description": "used in the settings page"
-    },
-    "exceptions": {
-        "message": "예외",
-        "description": "used in the settings page"
-    },
-    "resetSettings": {
-        "message": "설정 초기화",
-        "description": "used in the settings page"
-    },
-    "customPopup": {
-        "message": "팝업 사용자 설정",
-        "description": "used in the settings page"
-    },
-    "dark": {
-        "message": "어두움",
-        "description": "used in the settings page"
-    },
-    "autoRedirect": {
-        "message": "오프라인 인스터스를 온라인으로 자동 리다이렉트",
-        "description": "used in the settings page"
-    },
-    "toggleAll": {
-        "message": "전체 전환",
-        "description": "used in the settings page"
-    },
-    "instanceIsOff": {
-        "message": "인스턴스 오프라인",
-        "description": "used in instance_offline.html"
-    },
-    "lbry": {
-        "message": "LBRY"
-    },
-    "i2p": {
-        "message": "I2P"
-    },
-    "cancel": {
-        "message": "취소",
-        "description": "used in instance_offline.html"
-    },
-    "redirectionCanceled": {
-        "message": "리다이렉션 취소됨",
-        "description": "used in instance_offline.js"
     },
     "copyRaw": {
         "message": "Raw 복사"
     },
     "copied": {
         "message": "복사됨"
+    },
+    "redirectToOriginal": {
+        "message": "Redirect to original",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "redirectLink": {
+        "message": "Attempt to redirect this hyperlink",
+        "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "about": {
+        "message": "About"
     }
 }

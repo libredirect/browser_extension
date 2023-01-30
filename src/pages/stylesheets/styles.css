@@ -28,6 +28,7 @@ body {
 	margin: auto;
 	padding: 0;
 	font-family: "Inter";
+	font-size: 16px;
 	background-color: var(--bg-main);
 	color: var(--text);
 }
@@ -325,10 +326,6 @@ button svg {
 	color: var(--text);
 }
 
-div.checklist {
-	direction: ltr;
-}
-
 div.checklist div {
 	justify-content: space-between;
 	margin: 5px 15px;
@@ -390,7 +387,7 @@ div.disabled {
 body.light-theme {
 	--text: black;
 	--bg-main: white;
-	--bg-secondary: #fff;
+	--bg-secondary: #e4e4e4;
 	--active: #fb9817;
 }
 

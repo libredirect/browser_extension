@@ -4,19 +4,19 @@
         "description": "name of the extension"
     },
     "extensionDescription": {
-        "message": "Web proširenje koje preusmjerava popularne web stranice na alternativna sučelja i pozadinske sustave prilagođene privatnosti",
+        "message": "Uma extensão para os navegadores de Internet que redireciona sites populares para interfaces gráficas e interfaces de textos alternativas e amigáveis que respeitam a privacidade",
         "description": "description of the extension"
     },
     "switchInstance": {
-        "message": "Zamijeni instancu",
+        "message": "Trocar de instância",
         "description": "used in manifest.json as shortcut description"
     },
     "settings": {
-        "message": "Postavke",
+        "message": "Configurações",
         "description": "used in the popup"
     },
     "general": {
-        "message": "Opće",
+        "message": "Geral",
         "description": "used in the settings page"
     },
     "theme": {
@@ -24,11 +24,11 @@
         "description": "used in the settings page"
     },
     "light": {
-        "message": "Svijetla",
+        "message": "Claro",
         "description": "used in the settings page"
     },
     "dark": {
-        "message": "Tamna",
+        "message": "Escuro",
         "description": "used in the settings page"
     },
     "auto": {
@@ -40,23 +40,23 @@
         "description": "used in the settings page"
     },
     "updateInstances": {
-        "message": "Ažuriraj instance",
+        "message": "Atualizar as instâncias",
         "description": "used in the settings page"
     },
     "importSettings": {
-        "message": "Uvezi postavke",
+        "message": "Importar configurações",
         "description": "used in the settings page"
     },
     "exportSettings": {
-        "message": "Izvezi postavke",
+        "message": "Exportar configurações",
         "description": "used in the settings page"
     },
     "resetSettings": {
-        "message": "Obnovi postavke",
+        "message": "Repor configurações",
         "description": "used in the settings page"
     },
     "enable": {
-        "message": "Aktiviraj",
+        "message": "Ativar",
         "description": "used in the settings page"
     },
     "showInPopup": {
@@ -64,27 +64,27 @@
         "description": "used in the settings page"
     },
     "frontend": {
-        "message": "Sučelje",
+        "message": "Interface",
         "description": "used in the settings page"
     },
     "searchNote": {
-        "message": "Savjet: Koristi sav potencijal pretrage postavljanjem LibRedirecta kao zadane tražilice.",
+        "message": "Nota: utilize a pesquisa do LibRedirect com todo o seu potencial para torná-lo o seu motor de busca padrão.",
         "description": "used in the settings page"
     },
     "redirectType": {
-        "message": "Vrsta preusmjeravanja",
+        "message": "Tipo de redirecionamento",
         "description": "used in the settings page"
     },
     "both": {
-        "message": "obje",
+        "message": "ambos",
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
-        "message": "samo ugrađena",
+        "message": "só embutidos",
         "description": "used in the settings page"
     },
     "onlyNotEmbedded": {
-        "message": "samo neugrađena",
+        "message": "apenas os não embutidos",
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
@@ -92,17 +92,17 @@
         "description": "used in the settings page"
     },
     "copyRaw": {
-        "message": "Kopiraj original"
+        "message": "Copiar URL original"
     },
     "copied": {
-        "message": "Kopirano"
+        "message": "Copiado"
     },
     "redirectToOriginal": {
         "message": "Redirect to original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Pokušaj preusmjeriti ovu hiperpoveznicu",
+        "message": "Tentar redirecionar esta hiperligação",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {

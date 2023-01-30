@@ -1,33 +1,46 @@
 {
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
     "extensionDescription": {
         "message": "Веб проширница која преусмерава познате сајтове на према алтернативним сучељима и позадинским страницама прилагођенима приватности",
         "description": "description of the extension"
     },
-    "sendFiles": {
-        "message": "Пошаљите датотеке",
-        "description": "used in the settings page"
+    "switchInstance": {
+        "message": "Пребаци инстанцу",
+        "description": "used in manifest.json as shortcut description"
     },
-    "toggleAll": {
-        "message": "Укључите/Искључите све",
-        "description": "used in the settings page"
+    "settings": {
+        "message": "Подешавања",
+        "description": "used in the popup"
     },
-    "imgur": {
-        "message": "Imgur",
+    "general": {
+        "message": "Општенито",
         "description": "used in the settings page"
     },
     "theme": {
         "message": "Тема",
         "description": "used in the settings page"
     },
-    "embeddedVids": {
-        "message": "Сучеље Уграђених Видеозаписа",
+    "light": {
+        "message": "Светла",
         "description": "used in the settings page"
     },
-    "unifySettings": {
-        "message": "Уједините подешавања"
+    "dark": {
+        "message": "Мрачна",
+        "description": "used in the settings page"
     },
-    "system": {
-        "message": "Сустав",
+    "auto": {
+        "message": "Auto",
+        "description": "used in the settings page"
+    },
+    "excludeFromRedirecting": {
+        "message": "Excluded from redirecting",
+        "description": "used in the settings page"
+    },
+    "updateInstances": {
+        "message": "Ажурирајте инстанце",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -38,31 +51,20 @@
         "message": "Извозна Подешавања",
         "description": "used in the settings page"
     },
-    "onlyEmbedded": {
-        "message": "само уграђено",
+    "resetSettings": {
+        "message": "Обновите Подешавања",
         "description": "used in the settings page"
     },
-    "onlyNotEmbedded": {
-        "message": "само неуграђено",
+    "enable": {
+        "message": "Омогући",
         "description": "used in the settings page"
     },
-    "general": {
-        "message": "Општенито",
-        "description": "used in the settings page"
-    },
-    "customInstances": {
-        "message": "Прилагођене инстанце",
+    "showInPopup": {
+        "message": "Show in popup",
         "description": "used in the settings page"
     },
     "frontend": {
         "message": "Сучеље",
-        "description": "used in the settings page"
-    },
-    "notFullyPrivate": {
-        "message": "Ово није потпуно приватно сучеље."
-    },
-    "defaultInstances": {
-        "message": "Подразумеване инстанце",
         "description": "used in the settings page"
     },
     "searchNote": {
@@ -77,146 +79,33 @@
         "message": "оба",
         "description": "used in the settings page"
     },
-    "cancel": {
-        "message": "Откажите",
-        "description": "used in instance_offline.html"
+    "onlyEmbedded": {
+        "message": "само уграђено",
+        "description": "used in the settings page"
     },
-    "testInstancesLatency": {
-        "message": "Тестирајте Кашњење Инстанцих"
+    "onlyNotEmbedded": {
+        "message": "само неуграђено",
+        "description": "used in the settings page"
     },
-    "protocolFallback": {
-        "message": "Вратите се на нормалну страницу ако ниједна инстанца није доступна за тренутни протокол"
+    "addYourFavoriteInstances": {
+        "message": "Add your favorite instances",
+        "description": "used in the settings page"
+    },
+    "copyRaw": {
+        "message": "Копирајте необрађену коду"
     },
     "copied": {
         "message": "Копирано"
     },
-    "lbry": {
-        "message": "LBRY"
-    },
-    "toggleTab": {
-        "message": "Укључите/Искључите преусмеравања на овој картици",
+    "redirectToOriginal": {
+        "message": "Redirect to original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
         "message": "Покушајте да преусмерите ову хипервезу",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
-    "autoRedirect": {
-        "message": "Аутоматски преусмерите недоступне инстанце на доступне",
-        "description": "used in the settings page"
-    },
-    "exceptions": {
-        "message": "Изузеци",
-        "description": "used in the settings page"
-    },
-    "updateInstances": {
-        "message": "Ажурирајте инстанце",
-        "description": "used in the settings page"
-    },
-    "normal": {
-        "message": "Нормалан",
-        "description": "used in the settings page"
-    },
-    "resetSettings": {
-        "message": "Обновите Подешавања",
-        "description": "used in the settings page"
-    },
-    "enable": {
-        "message": "Омогући",
-        "description": "used in the settings page"
-    },
-    "translate": {
-        "message": "Превод",
-        "description": "used in the settings page"
-    },
-    "twitter": {
-        "message": "Twitter",
-        "description": "used in the settings page"
-    },
-    "settings": {
-        "message": "Подешавања",
-        "description": "used in the popup"
-    },
-    "instagram": {
-        "message": "Instagram",
-        "description": "used in the settings page"
-    },
-    "reddit": {
-        "message": "Reddit",
-        "description": "used in the settings page"
-    },
-    "tiktok": {
-        "message": "TikTok",
-        "description": "used in the settings page"
-    },
-    "customPopup": {
-        "message": "Прилагодите искачући прозор",
-        "description": "used in the settings page"
-    },
-    "protocol": {
-        "message": "Протокол",
-        "description": "used in the settings page"
-    },
-    "instanceOffline": {
-        "message": "Ова инстанца је недоступна, бићете преусмерени након",
-        "description": "used in instance_offline.html"
-    },
-    "instanceIsOff": {
-        "message": "Инстанца је недоступна",
-        "description": "used in instance_offline.html"
-    },
-    "redirectionCanceled": {
-        "message": "Преусмеравање је отказано",
-        "description": "used in instance_offline.js"
-    },
-    "copyRaw": {
-        "message": "Копирајте необрађену коду"
-    },
-    "wikipedia": {
-        "message": "Википедија",
-        "description": "used in the settings page"
-    },
-    "medium": {
-        "message": "Medium",
-        "description": "used in the settings page"
-    },
-    "switchInstance": {
-        "message": "Пребаци инстанцу",
-        "description": "used in manifest.json as shortcut description"
-    },
-    "search": {
-        "message": "Претрага",
-        "description": "used in the settings page"
-    },
-    "youtube": {
-        "message": "YouTube",
-        "description": "used in the settings page"
-    },
-    "ytmusic": {
-        "message": "YT Музика",
-        "description": "used in the settings page"
-    },
-    "peertube": {
-        "message": "PeerTube",
-        "description": "used in the settings page"
-    },
-    "lbryDesktop": {
-        "message": "LBRY Desktop"
-    },
-    "extensionName": {
-        "message": "LibRedirect",
-        "description": "name of the extension"
-    },
-    "maps": {
-        "message": "Карте",
-        "description": "used in the settings page"
-    },
-    "light": {
-        "message": "Светла",
-        "description": "used in the settings page"
-    },
-    "dark": {
-        "message": "Мрачна",
-        "description": "used in the settings page"
+    "about": {
+        "message": "About"
     }
 }

@@ -1,62 +1,26 @@
 {
-    "settings": {
-        "message": "Impostazioni",
-        "description": "used in the popup"
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "extensionDescription": {
+        "message": "Un'estensione per il browser che reindirizza i siti più popolari verso frontend e backend alternativi rispettosi della privacy",
+        "description": "description of the extension"
     },
     "switchInstance": {
         "message": "Cambia istanza",
         "description": "used in manifest.json as shortcut description"
     },
+    "settings": {
+        "message": "Impostazioni",
+        "description": "used in the popup"
+    },
     "general": {
         "message": "Generali",
         "description": "used in the settings page"
     },
-    "search": {
-        "message": "Ricerca",
-        "description": "used in the settings page"
-    },
-    "translate": {
-        "message": "Traduttore",
-        "description": "used in the settings page"
-    },
-    "maps": {
-        "message": "Mappe",
-        "description": "used in the settings page"
-    },
-    "sendFiles": {
-        "message": "Invio di file",
-        "description": "used in the settings page"
-    },
-    "youtube": {
-        "message": "YouTube",
-        "description": "used in the settings page"
-    },
-    "instagram": {
-        "message": "Instagram",
-        "description": "used in the settings page"
-    },
-    "ytmusic": {
-        "message": "YT Music",
-        "description": "used in the settings page"
-    },
-    "peertube": {
-        "message": "PeerTube",
-        "description": "used in the settings page"
-    },
-    "medium": {
-        "message": "Medium",
-        "description": "used in the settings page"
-    },
-    "tor": {
-        "message": "Tor",
-        "description": "used in the settings page"
-    },
     "theme": {
         "message": "Tema",
-        "description": "used in the settings page"
-    },
-    "system": {
-        "message": "Sistema",
         "description": "used in the settings page"
     },
     "light": {
@@ -67,12 +31,12 @@
         "message": "Scuro",
         "description": "used in the settings page"
     },
-    "autoRedirect": {
-        "message": "Reindirizza automaticamente le istanze offline verso quelle online",
+    "auto": {
+        "message": "Auto",
         "description": "used in the settings page"
     },
-    "exceptions": {
-        "message": "Eccezioni",
+    "excludeFromRedirecting": {
+        "message": "Excluded from redirecting",
         "description": "used in the settings page"
     },
     "updateInstances": {
@@ -91,59 +55,24 @@
         "message": "Ripristina impostazioni",
         "description": "used in the settings page"
     },
-    "customPopup": {
-        "message": "Personalizza popup",
-        "description": "used in the settings page"
-    },
     "enable": {
         "message": "Attiva",
         "description": "used in the settings page"
     },
-    "protocol": {
-        "message": "Protocollo",
+    "showInPopup": {
+        "message": "Show in popup",
         "description": "used in the settings page"
     },
-    "normal": {
-        "message": "Normale",
+    "frontend": {
+        "message": "Frontend",
         "description": "used in the settings page"
-    },
-    "defaultInstances": {
-        "message": "Istanze predefinite",
-        "description": "used in the settings page"
-    },
-    "customInstances": {
-        "message": "Istanze personalizzate",
-        "description": "used in the settings page"
-    },
-    "toggleAll": {
-        "message": "Seleziona o deseleziona tutto",
-        "description": "used in the settings page"
-    },
-    "notFullyPrivate": {
-        "message": "Questo frontend non è completamente privato."
     },
     "searchNote": {
         "message": "Nota: imposta LibRedirect come motore di ricerca predefinito per sfruttare appieno il potenziale della ricerca.",
         "description": "used in the settings page"
     },
-    "extensionName": {
-        "message": "LibRedirect",
-        "description": "name of the extension"
-    },
-    "extensionDescription": {
-        "message": "Un'estensione per il browser che reindirizza i siti più popolari verso frontend e backend alternativi rispettosi della privacy",
-        "description": "description of the extension"
-    },
-    "tiktok": {
-        "message": "TikTok",
-        "description": "used in the settings page"
-    },
     "redirectType": {
         "message": "Tipo di reindirizzamento",
-        "description": "used in the settings page"
-    },
-    "embeddedVids": {
-        "message": "Frontend per video incorporati",
         "description": "used in the settings page"
     },
     "both": {
@@ -158,75 +87,25 @@
         "message": "solo non incorporati",
         "description": "used in the settings page"
     },
-    "instanceOffline": {
-        "message": "Questa istanza è offline, verrai reindirizzato tra",
-        "description": "used in instance_offline.html"
-    },
-    "cancel": {
-        "message": "Annulla",
-        "description": "used in instance_offline.html"
-    },
-    "instanceIsOff": {
-        "message": "L'istanza è offline",
-        "description": "used in instance_offline.html"
-    },
-    "redirectionCanceled": {
-        "message": "Reindirizzamento annullato",
-        "description": "used in instance_offline.js"
-    },
-    "copied": {
-        "message": "Copiato"
-    },
-    "lbry": {
-        "message": "LBRY"
-    },
-    "i2p": {
-        "message": "I2P"
-    },
-    "testInstancesLatency": {
-        "message": "Prova la latenza delle istanze"
+    "addYourFavoriteInstances": {
+        "message": "Add your favorite instances",
+        "description": "used in the settings page"
     },
     "copyRaw": {
         "message": "Copia grezza"
     },
-    "unifySettings": {
-        "message": "Unifica impostazioni"
+    "copied": {
+        "message": "Copiato"
     },
-    "imgur": {
-        "message": "Imgur",
-        "description": "used in the settings page"
-    },
-    "twitter": {
-        "message": "Twitter",
-        "description": "used in the settings page"
-    },
-    "reddit": {
-        "message": "Reddit",
-        "description": "used in the settings page"
-    },
-    "wikipedia": {
-        "message": "Wikipedia",
-        "description": "used in the settings page"
-    },
-    "frontend": {
-        "message": "Frontend",
-        "description": "used in the settings page"
-    },
-    "loki": {
-        "message": "Lokinet"
-    },
-    "protocolFallback": {
-        "message": "Usa il protocollo normale se non sono disponibili istanze per quello corrente"
-    },
-    "lbryDesktop": {
-        "message": "LBRY Desktop"
-    },
-    "toggleTab": {
-        "message": "Attiva/disattiva reindirizzamenti in questa scheda",
+    "redirectToOriginal": {
+        "message": "Redirect to original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
         "message": "Prova a reindirizzare questo collegamento",
         "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "about": {
+        "message": "About"
     }
 }

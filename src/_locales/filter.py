@@ -1,35 +1,28 @@
 import json
 
 
-ar_json = {}
-with open('ar/messages.json') as data:
-    ar_json = json.load(data)
-
-
+langs = ['bs',  'cs',  'de',  'es', 'fr',  'gl',  'hr',  'id',  'it',  'ja',  'ko',
+         'nb_NO',  'nl',  'pl',  'pt',  'pt_BR',  'ro',  'ru',  'sr',  'tr',  'uk',  'vi', 'zh_Hans']
 en_json = {}
-with open('ja/messages.json') as data:
+
+with open('src/_locales/en/messages.json') as data:
     en_json = json.load(data)
 
-
-remove_keys = []
-for item in en_json.keys():
-    if item not in ar_json.keys():
-        remove_keys.append(item)
-
-for item in remove_keys:
-    en_json.pop(item)
-
-add_keys = []
-for item in ar_json.keys():
-    if item not in en_json.keys():
-        print(item)
-        add_keys.append(item)
-
-for item in add_keys:
-    en_json[item] = {
-        "message": "",
-        "description": ""
-    }
-
-with open('ja/messages.json', 'w') as outfile:
-    outfile.write(json.dumps(en_json, ensure_ascii=False, indent=2))
+for lang in langs:
+    lang_json = {}
+    with open('src/_locales/'+lang+'/messages.json') as data:
+        lang_json = json.load(data)
+        lang_json_new = {}
+        for key in en_json:
+            if key in lang_json:
+                lang_json_new[key] = lang_json[key]
+            else:
+                lang_json_new[key] = en_json[key]
+        with open('src/_locales/'+lang+'/messages.json', 'w') as outfile:
+            outfile.write(
+                json.dumps(
+                    lang_json_new,
+                    ensure_ascii=False,
+                    indent=4
+                )
+            )

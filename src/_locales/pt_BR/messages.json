@@ -1,29 +1,14 @@
 {
-    "youtube": {
-        "message": "YouTube",
-        "description": "Utilizado na página de configurações"
-    },
-    "ytmusic": {
-        "message": "Músicas do YouTube",
-        "description": "Utilizado na página de configurações"
-    },
-    "cancel": {
-        "message": "Cancelar",
-        "description": "Utilizado no arquivo instance_offline.html"
-    },
-    "unifySettings": {
-        "message": "Unificar as Configurações"
-    },
-    "twitter": {
-        "message": "Twitter",
-        "description": "Utilizado na página de configurações"
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "Nome da Extensão"
     },
     "extensionDescription": {
         "message": "Uma extensão para os navegadores de internet que redireciona os sítios/sites populares para interfaces gráficas e interfaces de textos alternativas e amigáveis que respeitam sua privacidade",
         "description": "Descrição da Extensão"
     },
     "switchInstance": {
-        "message": "Trocar a Instância",
+        "message": "Trocar a instância",
         "description": "Utilizado no arquivo manifest.json como descrição do atalho"
     },
     "settings": {
@@ -34,64 +19,8 @@
         "message": "Geral",
         "description": "Utilizado na página de configurações"
     },
-    "search": {
-        "message": "Pesquisar",
-        "description": "Utilizado na página de configurações"
-    },
-    "translate": {
-        "message": "Traduzir",
-        "description": "Utilizado na página de configurações"
-    },
-    "maps": {
-        "message": "Mapas",
-        "description": "Utilizado na página de configurações"
-    },
-    "sendFiles": {
-        "message": "Enviar Arquivos",
-        "description": "Utilizado na página de configurações"
-    },
-    "instagram": {
-        "message": "Instagram",
-        "description": "Utilizado na página de configurações"
-    },
-    "reddit": {
-        "message": "Reddit",
-        "description": "Utilizado na página de configurações"
-    },
-    "tiktok": {
-        "message": "TikTok",
-        "description": "Utilizado na página de configurações"
-    },
-    "imgur": {
-        "message": "Imgur",
-        "description": "Utilizado na página de configurações"
-    },
-    "extensionName": {
-        "message": "LibRedirect",
-        "description": "Nome da Extensão"
-    },
-    "wikipedia": {
-        "message": "Wikipédia",
-        "description": "Utilizado na página de configurações"
-    },
-    "peertube": {
-        "message": "PeerTube",
-        "description": "Utilizado na página de configurações"
-    },
-    "medium": {
-        "message": "Medium",
-        "description": "Utilizado na página de configurações"
-    },
-    "tor": {
-        "message": "Tor",
-        "description": "Utilizado na página de configurações"
-    },
     "theme": {
         "message": "Tema",
-        "description": "Utilizado na página de configurações"
-    },
-    "system": {
-        "message": "Sistema",
         "description": "Utilizado na página de configurações"
     },
     "light": {
@@ -102,117 +31,81 @@
         "message": "Escuro",
         "description": "Utilizado na página de configurações"
     },
-    "autoRedirect": {
-        "message": "Redirecionar automaticamente as instâncias que estão desconectadas (off-line) para o estado de conectadas (on-line)",
-        "description": "Utilizado na página de configurações"
+    "auto": {
+        "message": "Auto",
+        "description": "used in the settings page"
     },
-    "exceptions": {
-        "message": "Exceções",
-        "description": "Utilizado na página de configurações"
+    "excludeFromRedirecting": {
+        "message": "Excluded from redirecting",
+        "description": "used in the settings page"
     },
     "updateInstances": {
-        "message": "Atualizar as Instâncias",
+        "message": "Atualizar as instâncias",
         "description": "Utilizado na página de configurações"
     },
     "importSettings": {
-        "message": "Importar as Configurações",
+        "message": "Importar as configurações",
         "description": "Utilizado na página de configurações"
     },
     "exportSettings": {
-        "message": "Exportar as Configurações",
+        "message": "Exportar as configurações",
         "description": "Utilizado na página de configurações"
     },
     "resetSettings": {
-        "message": "Redefinir as Configurações",
-        "description": "Utilizado na página de configurações"
-    },
-    "customPopup": {
-        "message": "Personalizar a Janela",
+        "message": "Redefinir as configurações",
         "description": "Utilizado na página de configurações"
     },
     "enable": {
         "message": "Ativar",
         "description": "Utilizado na página de configurações"
     },
-    "protocol": {
-        "message": "Protocolo",
-        "description": "Utilizado na página de configurações"
-    },
-    "normal": {
-        "message": "Normal",
-        "description": "Utilizado na página de configurações"
-    },
-    "defaultInstances": {
-        "message": "Instâncias Padrão",
-        "description": "Utilizado na página de configurações"
-    },
-    "customInstances": {
-        "message": "Instâncias Personalizadas",
-        "description": "Utilizado na página de configurações"
-    },
-    "toggleAll": {
-        "message": "Ativar Tudo",
-        "description": "Utilizado na página de configurações"
+    "showInPopup": {
+        "message": "Show in popup",
+        "description": "used in the settings page"
     },
     "frontend": {
-        "message": "Interface Gráfica",
+        "message": "Interface gráfica",
         "description": "Utilizado na página de configurações"
     },
-    "notFullyPrivate": {
-        "message": "Esta não é uma interface gráfica totalmente privada."
-    },
     "searchNote": {
-        "message": "Observação: Utilize a pesquisa do LibRedirect com todo o seu potencial para torná-lo o seu mecanismo de pesquisa padrão.",
+        "message": "Observação: utilize a pesquisa do LibRedirect com todo o seu potencial para torná-lo o seu mecanismo de pesquisa padrão.",
         "description": "Utilizado na página de configurações"
     },
     "redirectType": {
-        "message": "Tipo de Redirecionamento",
-        "description": "Utilizado na página de configurações"
-    },
-    "embeddedVids": {
-        "message": "Interface Gráfica para Incorporar os Vídeos",
+        "message": "Tipo de redirecionamento",
         "description": "Utilizado na página de configurações"
     },
     "both": {
-        "message": "Ambos",
+        "message": "ambos",
         "description": "Utilizado na página de configurações"
     },
     "onlyEmbedded": {
-        "message": "Apenas os incorporados",
+        "message": "apenas os incorporados",
         "description": "Utilizado na página de configurações"
     },
     "onlyNotEmbedded": {
-        "message": "Apenas os não incorporados",
+        "message": "apenas os não incorporados",
         "description": "Utilizado na página de configurações"
     },
-    "instanceOffline": {
-        "message": "Esta instância está desconectada (off-line), você será redirecionado após",
-        "description": "Utilizado no arquivo instance_offline.html"
-    },
-    "instanceIsOff": {
-        "message": "Esta instância está desconectada (off-line)",
-        "description": "Utilizado no arquivo instance_offline.html"
-    },
-    "redirectionCanceled": {
-        "message": "O Redirecionamento Foi Cancelado",
-        "description": "Utilizado no arquivo instance_offline.js"
+    "addYourFavoriteInstances": {
+        "message": "Add your favorite instances",
+        "description": "used in the settings page"
     },
     "copyRaw": {
-        "message": "Copiar o URL Original"
+        "message": "Copiar URL original"
     },
     "copied": {
         "message": "Copiado"
     },
-    "lbry": {
-        "message": "LBRY"
+    "redirectToOriginal": {
+        "message": "Redirect to original",
+        "description": "Used in context menus when right clicking on a page/tab"
     },
-    "testInstancesLatency": {
-        "message": "Testar a Latência das Instâncias"
+    "redirectLink": {
+        "message": "Attempt to redirect this hyperlink",
+        "description": "Used in context menus when right clicking on a hyperlink"
     },
-    "protocolFallback": {
-        "message": "Retornar ao normal se não houver outras instâncias disponíveis para o protocolo atual"
-    },
-    "lbryDesktop": {
-        "message": "LBRY Desktop"
+    "about": {
+        "message": "About"
     }
 }

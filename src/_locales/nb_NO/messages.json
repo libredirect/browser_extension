@@ -1,50 +1,42 @@
 {
-    "sendFiles": {
-        "message": "Send filer",
-        "description": "used in the settings page"
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
     },
-    "youtube": {
-        "message": "YouTube",
-        "description": "used in the settings page"
+    "extensionDescription": {
+        "message": "En vev-utvidelse som videresender populære sider til alternative personvernsrespekterende grenseflater og bakender",
+        "description": "description of the extension"
     },
-    "instagram": {
-        "message": "Instagram",
-        "description": "used in the settings page"
+    "switchInstance": {
+        "message": "Bytt instans",
+        "description": "used in manifest.json as shortcut description"
     },
-    "reddit": {
-        "message": "Reddit",
-        "description": "used in the settings page"
+    "settings": {
+        "message": "Innstillinger",
+        "description": "used in the popup"
     },
-    "tiktok": {
-        "message": "TikTok",
-        "description": "used in the settings page"
-    },
-    "wikipedia": {
-        "message": "Wikipedia",
-        "description": "used in the settings page"
-    },
-    "peertube": {
-        "message": "PeerTube",
-        "description": "used in the settings page"
-    },
-    "medium": {
-        "message": "Medium",
-        "description": "used in the settings page"
-    },
-    "tor": {
-        "message": "Tor",
+    "general": {
+        "message": "Generelt",
         "description": "used in the settings page"
     },
     "theme": {
         "message": "Drakt",
         "description": "used in the settings page"
     },
-    "system": {
-        "message": "System",
+    "light": {
+        "message": "Lys",
         "description": "used in the settings page"
     },
-    "exceptions": {
-        "message": "Unntak",
+    "dark": {
+        "message": "Mørk",
+        "description": "used in the settings page"
+    },
+    "auto": {
+        "message": "Auto",
+        "description": "used in the settings page"
+    },
+    "excludeFromRedirecting": {
+        "message": "Excluded from redirecting",
         "description": "used in the settings page"
     },
     "updateInstances": {
@@ -67,97 +59,25 @@
         "message": "Skru på",
         "description": "used in the settings page"
     },
-    "protocol": {
-        "message": "Protokoll",
-        "description": "used in the settings page"
-    },
-    "customInstances": {
-        "message": "Egendefinerte instanser",
-        "description": "used in the settings page"
-    },
-    "defaultInstances": {
-        "message": "Forvalgte instanser",
-        "description": "used in the settings page"
-    },
-    "toggleAll": {
-        "message": "Veksle alle",
+    "showInPopup": {
+        "message": "Show in popup",
         "description": "used in the settings page"
     },
     "frontend": {
         "message": "Grenseflate",
         "description": "used in the settings page"
     },
-    "notFullyPrivate": {
-        "message": "Dette er ikke en helt privat grenseflate."
+    "searchNote": {
+        "message": "Merk: For å bruke søket til dets fulle kan du gjøre LibRedirect til din forvalgte søkemotor",
+        "description": "used in the settings page"
     },
     "redirectType": {
         "message": "Videresendingstype",
         "description": "used in the settings page"
     },
-    "extensionName": {
-        "message": "LibRedirect",
-        "description": "name of the extension"
-    },
-    "switchInstance": {
-        "message": "Bytt instans",
-        "description": "used in manifest.json as shortcut description"
-    },
-    "settings": {
-        "message": "Innstillinger",
-        "description": "used in the popup"
-    },
-    "embeddedVids": {
-        "message": "Grenseflate for innebygde videoer",
-        "description": "used in the settings page"
-    },
     "both": {
         "message": "begge",
         "description": "used in the settings page"
-    },
-    "extensionDescription": {
-        "message": "En vev-utvidelse som videresender populære sider til alternative personvernsrespekterende grenseflater og bakender",
-        "description": "description of the extension"
-    },
-    "ytmusic": {
-        "message": "YT Music",
-        "description": "used in the settings page"
-    },
-    "imgur": {
-        "message": "Imgur",
-        "description": "used in the settings page"
-    },
-    "customPopup": {
-        "message": "Tilpass oppsprett",
-        "description": "used in the settings page"
-    },
-    "normal": {
-        "message": "Normal",
-        "description": "used in the settings page"
-    },
-    "autoRedirect": {
-        "message": "Videresend automatisk fra instanser som er nede",
-        "description": "used in the settings page"
-    },
-    "cancel": {
-        "message": "Avbryt",
-        "description": "used in instance_offline.html"
-    },
-    "instanceIsOff": {
-        "message": "Instansen er nede",
-        "description": "used in instance_offline.html"
-    },
-    "redirectionCanceled": {
-        "message": "Videresending avbrutt",
-        "description": "used in instance_offline.js"
-    },
-    "copied": {
-        "message": "Kopiert"
-    },
-    "testInstancesLatency": {
-        "message": "Test instanssvartid"
-    },
-    "i2p": {
-        "message": "I2P"
     },
     "onlyEmbedded": {
         "message": "kun innebygde",
@@ -167,55 +87,25 @@
         "message": "kun ikke-innebygde",
         "description": "used in the settings page"
     },
-    "instanceOffline": {
-        "message": "Denne instansen er nede. Du vil bli videresendt etter",
-        "description": "used in instance_offline.html"
+    "addYourFavoriteInstances": {
+        "message": "Add your favorite instances",
+        "description": "used in the settings page"
     },
     "copyRaw": {
         "message": "Kopier originallenke"
     },
-    "lbry": {
-        "message": "LBRY"
+    "copied": {
+        "message": "Kopiert"
     },
-    "unifySettings": {
-        "message": "Foren innstillinger"
+    "redirectToOriginal": {
+        "message": "Redirect to original",
+        "description": "Used in context menus when right clicking on a page/tab"
     },
-    "search": {
-        "message": "Søk",
-        "description": "used in the settings page"
+    "redirectLink": {
+        "message": "Attempt to redirect this hyperlink",
+        "description": "Used in context menus when right clicking on a hyperlink"
     },
-    "maps": {
-        "message": "Kart",
-        "description": "used in the settings page"
-    },
-    "general": {
-        "message": "Generelt",
-        "description": "used in the settings page"
-    },
-    "twitter": {
-        "message": "Twitter",
-        "description": "used in the settings page"
-    },
-    "translate": {
-        "message": "Oversett",
-        "description": "used in the settings page"
-    },
-    "light": {
-        "message": "Lys",
-        "description": "used in the settings page"
-    },
-    "dark": {
-        "message": "Mørk",
-        "description": "used in the settings page"
-    },
-    "searchNote": {
-        "message": "Merk: For å bruke søket til dets fulle kan du gjøre LibRedirect til din forvalgte søkemotor",
-        "description": "used in the settings page"
-    },
-    "lbryDesktop": {
-        "message": "LBRY-skrivebord"
-    },
-    "protocolFallback": {
-        "message": "Gå tilbake til normal hvis ingen instanser er tilgjengelige for nåværende protokoll"
+    "about": {
+        "message": "About"
     }
 }

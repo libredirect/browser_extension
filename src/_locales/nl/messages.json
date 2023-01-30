@@ -1,63 +1,11 @@
 {
-    "light": {
-        "message": "Licht",
-        "description": "used in the settings page"
-    },
-    "system": {
-        "message": "Systeem",
-        "description": "used in the settings page"
-    },
-    "customInstances": {
-        "message": "Aangepaste instanties",
-        "description": "used in the settings page"
-    },
-    "dark": {
-        "message": "Donker",
-        "description": "used in the settings page"
-    },
-    "updateInstances": {
-        "message": "Instantielijst bijwerken",
-        "description": "used in the settings page"
-    },
-    "resetSettings": {
-        "message": "Instellingen herstarten",
-        "description": "used in the settings page"
-    },
-    "customPopup": {
-        "message": "Pop-up venster aanpassen",
-        "description": "used in the settings page"
-    },
-    "normal": {
-        "message": "Normaal",
-        "description": "used in the settings page"
-    },
-    "defaultInstances": {
-        "message": "Standaardinstanties",
-        "description": "used in the settings page"
-    },
-    "toggleAll": {
-        "message": "Alles schakelen",
-        "description": "used in the settings page"
-    },
-    "frontend": {
-        "message": "Front-end",
-        "description": "used in the settings page"
-    },
-    "autoRedirect": {
-        "message": "Offline instanties automatisch doorverwijzen naar online instanties",
-        "description": "used in the settings page"
-    },
-    "importSettings": {
-        "message": "Instellingen importeren",
-        "description": "used in the settings page"
-    },
-    "protocol": {
-        "message": "Protocol",
-        "description": "used in the settings page"
-    },
     "extensionName": {
         "message": "LibRedirect",
         "description": "name of the extension"
+    },
+    "extensionDescription": {
+        "message": "Een webextensie die populaire sites doorverwijst naar alternatieve privacy-vriendelijke frontends en backends",
+        "description": "description of the extension"
     },
     "switchInstance": {
         "message": "Schakelen tussen instanties",
@@ -71,82 +19,53 @@
         "message": "Algemeen",
         "description": "used in the settings page"
     },
-    "search": {
-        "message": "Zoeken",
-        "description": "used in the settings page"
-    },
-    "translate": {
-        "message": "Vertalen",
-        "description": "used in the settings page"
-    },
-    "maps": {
-        "message": "Kaarten",
-        "description": "used in the settings page"
-    },
-    "sendFiles": {
-        "message": "Bestanden Verzenden",
-        "description": "used in the settings page"
-    },
-    "youtube": {
-        "message": "YouTube",
-        "description": "used in the settings page"
-    },
-    "instagram": {
-        "message": "Instagram",
-        "description": "used in the settings page"
-    },
-    "twitter": {
-        "message": "Twitter",
-        "description": "used in the settings page"
-    },
-    "reddit": {
-        "message": "Reddit",
-        "description": "used in the settings page"
-    },
-    "tiktok": {
-        "message": "TikTok",
-        "description": "used in the settings page"
-    },
-    "ytmusic": {
-        "message": "YT Music",
-        "description": "used in the settings page"
-    },
-    "imgur": {
-        "message": "Imgur",
-        "description": "used in the settings page"
-    },
-    "wikipedia": {
-        "message": "Wikipedia",
-        "description": "used in the settings page"
-    },
-    "peertube": {
-        "message": "PeerTube",
-        "description": "used in the settings page"
-    },
-    "medium": {
-        "message": "Medium",
-        "description": "used in the settings page"
-    },
     "theme": {
         "message": "Thema",
         "description": "used in the settings page"
     },
-    "extensionDescription": {
-        "message": "Een webextensie die populaire sites doorverwijst naar alternatieve privacy-vriendelijke frontends en backends",
-        "description": "description of the extension"
-    },
-    "copied": {
-        "message": "Gekopieerd"
-    },
-    "lbry": {
-        "message": "LBRY"
-    },
-    "exceptions": {
-        "message": "Uitzonderingen",
+    "light": {
+        "message": "Licht",
         "description": "used in the settings page"
     },
-    "notFullyPrivate": {
-        "message": "Dit is geen volledig privé front-end."
+    "dark": {
+        "message": "Donker",
+        "description": "used in the settings page"
+    },
+    "auto": {
+        "message": "Auto",
+        "description": "used in the settings page"
+    },
+    "excludeFromRedirecting": {
+        "message": "Excluded from redirecting",
+        "description": "used in the settings page"
+    },
+    "updateInstances": {
+        "message": "Instantielijst bijwerken",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "Instellingen importeren",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "Instellingen exporteren",
+        "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "Instellingen herstarten",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Inschakelen",
+        "description": "used in the settings page"
+    },
+    "showInPopup": {
+        "message": "Show in popup",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Front-end",
+        "description": "used in the settings page"
     },
     "searchNote": {
         "message": "Tip: gebruik de zoekfunctie ten volle door van LibRedirect uw standaardzoekmachine te maken.",
@@ -154,10 +73,6 @@
     },
     "redirectType": {
         "message": "Omleidingstype",
-        "description": "used in the settings page"
-    },
-    "embeddedVids": {
-        "message": "Ingesloten Video's Front-end",
         "description": "used in the settings page"
     },
     "both": {
@@ -172,51 +87,25 @@
         "message": "alleen niet-ingesloten",
         "description": "used in the settings page"
     },
-    "instanceOffline": {
-        "message": "Deze instantie is offline, u wordt doorverwezen nadat",
-        "description": "used in instance_offline.html"
-    },
-    "cancel": {
-        "message": "Annuleren",
-        "description": "used in instance_offline.html"
-    },
-    "instanceIsOff": {
-        "message": "Instantie is offline",
-        "description": "used in instance_offline.html"
-    },
-    "protocolFallback": {
-        "message": "Val terug naar de normale site als er geen instanties beschikbaar zijn voor het huidige protocol"
-    },
-    "exportSettings": {
-        "message": "Instellingen exporteren",
+    "addYourFavoriteInstances": {
+        "message": "Add your favorite instances",
         "description": "used in the settings page"
-    },
-    "enable": {
-        "message": "Inschakelen",
-        "description": "used in the settings page"
-    },
-    "testInstancesLatency": {
-        "message": "Controleren op instantievertragingen"
     },
     "copyRaw": {
         "message": "Onbewerkte code kopiëren"
     },
-    "redirectionCanceled": {
-        "message": "Doorverwijzing geannuleerd",
-        "description": "used in instance_offline.js"
+    "copied": {
+        "message": "Gekopieerd"
     },
-    "unifySettings": {
-        "message": "Instellingen verenigen"
-    },
-    "lbryDesktop": {
-        "message": "LBRY Desktop"
-    },
-    "toggleTab": {
-        "message": "Schakel omleidingen in dit tabblad",
+    "redirectToOriginal": {
+        "message": "Redirect to original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
         "message": "Probeer deze hyperlink door te verwijzen",
         "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "about": {
+        "message": "About"
     }
 }

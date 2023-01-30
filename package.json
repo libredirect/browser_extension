@@ -6,7 +6,8 @@
 		"npm": ">=8.1.2"
 	},
 	"scripts": {
-		"start": "web-ext run",
+		"start": "web-ext run --devtools",
+		"start_ar": "web-ext run --firefox=/home/esmail/Downloads/ar/firefox/firefox --pref font.language.group=ar",
 		"build": "web-ext build",
 		"test": "web-ext lint",
 		"pug": "pug --pretty --basedir ./ --obj ./src/config.json src/pages/options/index.pug --out src/pages/options/ && pug --pretty --basedir ./ --obj ./src/config.json src/pages/popup/popup.pug --out src/pages/popup/"

@@ -2,7 +2,7 @@ each val, service in services
     section(class="option-block" id=service+"_page")
         div(class="some-block option-block")
             h1
-                a(target="_blank" href=services[service].url)=services[service].name
+                a(target="_blank" href=services[service].url data-localise=`__MSG_${service}__`)=services[service].name
 
         hr
 
@@ -13,7 +13,7 @@ each val, service in services
         div(id=service+"-opacity")
 
             div(class="some-block option-block")
-                h4(data-localise="__MSG_show_in_popup__") Show in Popup
+                h4(data-localise="__MSG_showInPopup__") Show in popup
                 input(id=service type="checkbox")
 
             if Object.keys(services[service].frontends).length> 1
@@ -40,9 +40,9 @@ each val, service in services
 
             each val, frontend in services[service].frontends
                 if services[service].frontends[frontend].instanceList
-                    div(id=frontend)
-                        div(class="some-block option-block")
-                            h4(data-localise="__MSG_instances__") Add your favorite instances
+                    div(id=frontend dir="ltr")
+                        div(dir="auto" class="some-block option-block")
+                            h4(data-localise="__MSG_addYourFavoriteInstances__") Add your favorite instances
 
                         form(class="custom-instance-form")
                             div(class="some-block option-block")

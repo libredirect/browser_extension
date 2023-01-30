@@ -40,7 +40,10 @@ function changeTheme() {
 }
 
 changeTheme()
-if (["ar", "iw", "ku", "fa", "ur"].includes(browser.i18n.getUILanguage())) document.getElementsByTagName("body")[0].classList.add("rtl")
+if (["ar", "iw", "ku", "fa", "ur"].includes(browser.i18n.getUILanguage())) {
+	document.getElementsByTagName("body")[0].classList.add("rtl")
+	document.getElementsByTagName("body")[0].dir = "rtl"
+}
 localise.localisePage()
 
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", changeTheme)
