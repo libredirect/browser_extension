@@ -16,7 +16,6 @@ A web extension that redirects YouTube, Twitter, TikTok... requests to alternati
 <img src ="./img/1.png" width=350>&nbsp;
 <img src ="./img/2.png" width=350>&nbsp;
 <img src ="./img/3.png" width=350>&nbsp;
-<img src ="./img/4.png" width=350>&nbsp;
 
 - Youtube <span>&#8594;</span> [Invidious](https://github.com/iv-org/invidious), [Piped](https://github.com/TeamPiped/Piped), [Piped-Material](https://github.com/mmjee/Piped-Material), [CloudTube](https://sr.ht/~cadence/tube/), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee)
 - Youtube Music <span>&#8594;</span> [Beatbump](https://github.com/snuffyDev/Beatbump), [Hyperpipe](https://codeberg.org/Hyperpipe/Hyperpipe)
