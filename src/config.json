@@ -478,6 +478,25 @@
 			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://reuters.com"
+		},
+		"genius": {
+			"frontends": {
+				"dump": {
+					"name": "dump",
+					"instanceList": true,
+					"url": "https://github.com/rramiachraf/dumb"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?genius.com\\/"
+			],
+			"name": "Genius",
+			"options": {
+				"enabled": false
+			},
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://genius.com"
 		}
 	}
 }

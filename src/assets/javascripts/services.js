@@ -391,6 +391,9 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return `${randomInstance}${p}`;
 		}
+		case "dump": {
+			if (url.pathname.endsWith('-lyrics')) return `${randomInstance}${url.pathname}`
+		}
 
 	}
 }
@@ -528,7 +531,7 @@ function initDefaults() {
 			options['osm'] = ['https://www.openstreetmap.org']
 			options['breezeWiki'] = ['https://breezewiki.com']
 			options['neuters'] = ['https://neuters.de']
-
+			options['dump'] = ['https://dm.vern.cc']
 
 			browser.storage.local.set({ options },
 				() => resolve()
