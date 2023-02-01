@@ -481,8 +481,8 @@
 		},
 		"genius": {
 			"frontends": {
-				"dump": {
-					"name": "dump",
+				"dumb": {
+					"name": "dumb",
 					"instanceList": true,
 					"url": "https://github.com/rramiachraf/dumb"
 				}
