@@ -77,7 +77,7 @@ browser.tabs.onRemoved.addListener(tabId => {
 })
 
 browser.commands.onCommand.addListener(async command => {
-	if (command === "switchInstance") {
+	if (command == "switchInstance") {
 		const newUrl = await servicesHelper.switchInstance()
 		if (newUrl) browser.tabs.update({ url: newUrl })
 	}
@@ -117,7 +117,8 @@ browser.contextMenus.create({
 browser.contextMenus.onClicked.addListener((info, tab) => {
 	return new Promise(async resolve => {
 		if (info.menuItemId == 'switchInstance') {
-			servicesHelper.switchInstance()
+			const newUrl = await servicesHelper.switchInstance()
+			if (newUrl) browser.tabs.update({ url: newUrl })
 		}
 		else if (info.menuItemId == 'settings') {
 			browser.runtime.openOptionsPage()
