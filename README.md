@@ -23,6 +23,7 @@ A web extension that redirects YouTube, Twitter, TikTok... requests to alternati
 - TikTok <span>&#8594;</span> [ProxiTok](https://github.com/pablouser1/ProxiTok)
 - Reddit <span>&#8594;</span> [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances)
 - Imgur <span>&#8594;</span> [Rimgo](https://codeberg.org/video-prize-ranch/rimgo)
+- Reuters <span>&#8594;</span> [Neuters](https://github.com/HookedBehemoth/neuters)
 - Medium <span>&#8594;</span> [Scribe](https://sr.ht/~edwardloveall/Scribe/)
 - Quora <span>&#8594;</span> [Quetre](https://github.com/zyachel/quetre)
 - IMDb <span>&#8594;</span> [libremdb](https://github.com/zyachel/libremdb)

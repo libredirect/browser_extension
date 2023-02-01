@@ -12,7 +12,7 @@ section(class="links" id="links")
                     img(class='light' src=`/assets/images/${key}-icon-light.svg`)
                 else
                     img(src=`/assets/images/${key}-icon.${services[key].imageType}`)
-                span(data-localise="__MSG_"+key+"__")=services[key].name
+                span=services[key].name
 
     div(class="title")
         a(target="_blank" href="https://libredirect.github.io")

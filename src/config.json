@@ -446,7 +446,7 @@
 				"privateBin": {
 					"name": "PrivateBin",
 					"instanceList": true,
-					"url": "https://privatebin.info/"
+					"url": "https://privatebin.info"
 				}
 			},
 			"targets": [
@@ -459,6 +459,25 @@
 			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://paste.libredirect.invalid"
+		},
+		"reuters": {
+			"frontends": {
+				"neuters": {
+					"name": "Neuters",
+					"instanceList": true,
+					"url": "https://github.com/HookedBehemoth/neuters"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?reuters.com\\/"
+			],
+			"name": "Paste Text",
+			"options": {
+				"enabled": false
+			},
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://reuters.com"
 		}
 	}
 }

@@ -383,7 +383,15 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		default:
-			return `${randomInstance}${url.pathname}${url.search} `
+			return `${randomInstance}${url.pathname}${url.search}`
+		case "neuters": {
+			const p = url.pathname
+			if (p.startsWith('/article/') || p.startsWith('/pf/') || p.startsWith('/arc/') || p.startsWith('/resizer/')) {
+				return null;
+			}
+			return `${randomInstance}${p}`;
+		}
+
 	}
 }
 
@@ -519,6 +527,7 @@ function initDefaults() {
 			options['facil'] = [' https://facilmap.org ']
 			options['osm'] = ['https://www.openstreetmap.org']
 			options['breezeWiki'] = ['https://breezewiki.com']
+			options['neuters'] = ['https://neuters.de']
 
 
 			browser.storage.local.set({ options },

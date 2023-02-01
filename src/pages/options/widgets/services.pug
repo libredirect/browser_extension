@@ -2,7 +2,7 @@ each val, service in services
     section(class="option-block" id=service+"_page")
         div(class="some-block option-block")
             h1
-                a(target="_blank" href=services[service].url data-localise=`__MSG_${service}__`)=services[service].name
+                a(target="_blank" href=services[service].url)=services[service].name
 
         hr
 

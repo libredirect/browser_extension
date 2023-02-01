@@ -6,5 +6,5 @@ each val, service in services
                 img(class='light' src=`/assets/images/${service}-icon-light.svg`)
             else
                 img(src=`/assets/images/${service}-icon.${services[service].imageType}`)
-            h4(data-localise="__MSG_"+service+"__")=services[service].name
+            h4=services[service].name
         input(class=service + "-enabled" type="checkbox")
