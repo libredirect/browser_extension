@@ -2,6 +2,11 @@ window.browser = window.browser || window.chrome
 
 import localise from "../../assets/javascripts/localise.js"
 import utils from "../../assets/javascripts/utils.js"
+import servicesHelper from "../../assets/javascripts/services.js"
+
+if (!(await utils.getOptions())) {
+	await servicesHelper.initDefaults()
+}
 
 function changeTheme() {
 	return new Promise(async resolve => {
