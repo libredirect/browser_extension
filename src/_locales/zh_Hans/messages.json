@@ -104,11 +104,11 @@
         "description": "used in the settings page"
     },
     "light": {
-        "message": "亮色",
+        "message": "浅色",
         "description": "used in the settings page"
     },
     "dark": {
-        "message": "暗色",
+        "message": "深色",
         "description": "used in the settings page"
     },
     "updateInstances": {
