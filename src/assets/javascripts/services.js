@@ -394,6 +394,10 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "dumb": {
 			if (url.pathname.endsWith('-lyrics')) return `${randomInstance}${url.pathname}`
 		}
+		case "ruralDictionary": {
+			if (!url.pathname.endsWith('/define.php') && !url.pathname.endsWith('/random.php') && !url.pathname.endsWith('/')) return
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
 
 	}
 }
@@ -532,6 +536,7 @@ function initDefaults() {
 			options['breezeWiki'] = ['https://breezewiki.com']
 			options['neuters'] = ['https://neuters.de']
 			options['dumb'] = ['https://dm.vern.cc']
+			options['ruralDictionary'] = ['https://rd.vern.cc']
 
 			browser.storage.local.set({ options },
 				() => resolve()
