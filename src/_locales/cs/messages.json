@@ -39,10 +39,6 @@
         "message": "Excluded from redirecting",
         "description": "used in the settings page"
     },
-    "updateInstances": {
-        "message": "Aktualizovat instance",
-        "description": "used in the settings page"
-    },
     "importSettings": {
         "message": "Importovat nastavení",
         "description": "used in the settings page"
@@ -65,10 +61,6 @@
     },
     "frontend": {
         "message": "Frontend",
-        "description": "used in the settings page"
-    },
-    "searchNote": {
-        "message": "Poznámka: Využijte plný potenciál vyhledávání tak, že si jako výchozí vyhledávač nastavíte LibRedirect.",
         "description": "used in the settings page"
     },
     "redirectType": {
@@ -97,8 +89,8 @@
     "copied": {
         "message": "Zkopírováno"
     },
-    "toggleTab": {
-        "message": "Přepnout přesměrování v této kartě",
+    "redirectToOriginal": {
+        "message": "Redirect to original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {

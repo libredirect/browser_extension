@@ -1,192 +1,42 @@
 {
-    "redirectLink": {
-        "message": "Chuyển hướng siêu liên kết này",
-        "description": "Used in context menus when right clicking on a hyperlink"
-    },
-    "copied": {
-        "message": "Đã Sao Chép"
-    },
-    "redirectionCanceled": {
-        "message": "Đã hủy chuyển hướng",
-        "description": "used in instance_offline.js"
-    },
-    "protocolFallback": {
-        "message": "Trở về bình thường nếu không có instance nào cho giao thức hiện tại"
-    },
-    "lbry": {
-        "message": "LBRY"
-    },
-    "lbryDesktop": {
-        "message": "LBRY Desktop"
-    },
-    "instanceIsOff": {
-        "message": "Instance đang ngoại tuyến",
-        "description": "used in instance_offline.html"
-    },
     "extensionName": {
         "message": "LibRedirect",
         "description": "name of the extension"
     },
-    "youtube": {
-        "message": "YouTube",
-        "description": "used in the settings page"
+    "extensionDescription": {
+        "message": "Một tiện ích mở rộng chuyển hướng một số trang web phổ biến đến các frontend và backend khác thân thiện với quyền riêng tư",
+        "description": "description of the extension"
     },
-    "wikipedia": {
-        "message": "Wikipedia",
-        "description": "used in the settings page"
+    "switchInstance": {
+        "message": "Đổi Instance",
+        "description": "used in manifest.json as shortcut description"
     },
-    "reddit": {
-        "message": "Reddit",
-        "description": "used in the settings page"
+    "settings": {
+        "message": "Cài Đặt",
+        "description": "used in the popup"
     },
-    "peertube": {
-        "message": "PeerTube",
+    "general": {
+        "message": "Cài đặt chung",
         "description": "used in the settings page"
     },
     "theme": {
         "message": "Giao diện",
         "description": "used in the settings page"
     },
-    "dark": {
-        "message": "Tối",
-        "description": "used in the settings page"
-    },
-    "imgur": {
-        "message": "Imgur",
-        "description": "used in the settings page"
-    },
-    "general": {
-        "message": "Cài đặt chung",
-        "description": "used in the settings page"
-    },
-    "translate": {
-        "message": "Dịch",
-        "description": "used in the settings page"
-    },
-    "switchInstance": {
-        "message": "Đổi Instance",
-        "description": "used in manifest.json as shortcut description"
-    },
-    "maps": {
-        "message": "Bản đồ",
-        "description": "used in the settings page"
-    },
-    "settings": {
-        "message": "Cài Đặt",
-        "description": "used in the popup"
-    },
-    "sendFiles": {
-        "message": "Gửi tập tin",
-        "description": "used in the settings page"
-    },
-    "instagram": {
-        "message": "Instagram",
-        "description": "used in the settings page"
-    },
-    "twitter": {
-        "message": "Twitter",
-        "description": "used in the settings page"
-    },
-    "medium": {
-        "message": "Medium",
-        "description": "used in the settings page"
-    },
     "light": {
         "message": "Sáng",
         "description": "used in the settings page"
     },
-    "system": {
-        "message": "Hệ thống",
+    "dark": {
+        "message": "Tối",
         "description": "used in the settings page"
     },
-    "resetSettings": {
-        "message": "Đặt lại cài đặt",
+    "auto": {
+        "message": "Auto",
         "description": "used in the settings page"
     },
-    "protocol": {
-        "message": "Giao thức",
-        "description": "used in the settings page"
-    },
-    "normal": {
-        "message": "Bình thường",
-        "description": "used in the settings page"
-    },
-    "toggleAll": {
-        "message": "Bật lên tất cả",
-        "description": "used in the settings page"
-    },
-    "redirectType": {
-        "message": "Loại chuyển hướng",
-        "description": "used in the settings page"
-    },
-    "notFullyPrivate": {
-        "message": "Đây không phải là một frontend hoàn toàn riêng tư."
-    },
-    "customInstances": {
-        "message": "Các Instance Tùy Chỉnh",
-        "description": "used in the settings page"
-    },
-    "frontend": {
-        "message": "Frontend",
-        "description": "used in the settings page"
-    },
-    "searchNote": {
-        "message": "Lưu ý: Sử dụng hết tiềm năng của tìm kiếm bằng cách đặt LibRedirect làm công cụ tìm kiếm mặc định của bạn.",
-        "description": "used in the settings page"
-    },
-    "defaultInstances": {
-        "message": "Các Instance Mặc Định",
-        "description": "used in the settings page"
-    },
-    "both": {
-        "message": "cả hai",
-        "description": "used in the settings page"
-    },
-    "search": {
-        "message": "Tìm kiếm",
-        "description": "used in the settings page"
-    },
-    "updateInstances": {
-        "message": "Cập Nhật Các Instance",
-        "description": "used in the settings page"
-    },
-    "cancel": {
-        "message": "Hủy",
-        "description": "used in instance_offline.html"
-    },
-    "enable": {
-        "message": "Bật",
-        "description": "used in the settings page"
-    },
-    "exceptions": {
-        "message": "Ngoại lệ",
-        "description": "used in the settings page"
-    },
-    "instanceOffline": {
-        "message": "Instance này đang ngoại tuyến, bạn sẽ được chuyển hướng sau",
-        "description": "used in instance_offline.html"
-    },
-    "testInstancesLatency": {
-        "message": "Kiểm tra độ trễ của các instance"
-    },
-    "toggleTab": {
-        "message": "Bật chuyển hướng trong thẻ này",
-        "description": "Used in context menus when right clicking on a page/tab"
-    },
-    "extensionDescription": {
-        "message": "Một tiện ích mở rộng chuyển hướng một số trang web phổ biến đến các frontend và backend khác thân thiện với quyền riêng tư",
-        "description": "description of the extension"
-    },
-    "tiktok": {
-        "message": "TikTok",
-        "description": "used in the settings page"
-    },
-    "ytmusic": {
-        "message": "YT Music",
-        "description": "used in the settings page"
-    },
-    "autoRedirect": {
-        "message": "Tự động chuyển hướng instance đang ngoại tuyến sang instance đang trực tuyến",
+    "excludeFromRedirecting": {
+        "message": "Excluded from redirecting",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -196,5 +46,58 @@
     "exportSettings": {
         "message": "Xuất cài đặt",
         "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "Đặt lại cài đặt",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Bật",
+        "description": "used in the settings page"
+    },
+    "showInPopup": {
+        "message": "Show in popup",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Frontend",
+        "description": "used in the settings page"
+    },
+    "redirectType": {
+        "message": "Loại chuyển hướng",
+        "description": "used in the settings page"
+    },
+    "both": {
+        "message": "cả hai",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "only embedded",
+        "description": "used in the settings page"
+    },
+    "onlyNotEmbedded": {
+        "message": "only not embedded",
+        "description": "used in the settings page"
+    },
+    "addYourFavoriteInstances": {
+        "message": "Add your favorite instances",
+        "description": "used in the settings page"
+    },
+    "copyRaw": {
+        "message": "Copy Raw"
+    },
+    "copied": {
+        "message": "Đã Sao Chép"
+    },
+    "redirectToOriginal": {
+        "message": "Redirect to original",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "redirectLink": {
+        "message": "Chuyển hướng siêu liên kết này",
+        "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "about": {
+        "message": "About"
     }
 }

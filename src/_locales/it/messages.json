@@ -39,10 +39,6 @@
         "message": "Excluded from redirecting",
         "description": "used in the settings page"
     },
-    "updateInstances": {
-        "message": "Aggiorna istanze",
-        "description": "used in the settings page"
-    },
     "importSettings": {
         "message": "Importa impostazioni",
         "description": "used in the settings page"
@@ -65,10 +61,6 @@
     },
     "frontend": {
         "message": "Frontend",
-        "description": "used in the settings page"
-    },
-    "searchNote": {
-        "message": "Nota: imposta LibRedirect come motore di ricerca predefinito per sfruttare appieno il potenziale della ricerca.",
         "description": "used in the settings page"
     },
     "redirectType": {

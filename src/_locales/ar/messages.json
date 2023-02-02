@@ -39,10 +39,6 @@
         "message": "استبعاد من التوجيه",
         "description": "used in the settings page"
     },
-    "updateInstances": {
-        "message": "تحديث قائمة النظراء",
-        "description": "used in the settings page"
-    },
     "importSettings": {
         "message": "استيراد الإعدادات",
         "description": "used in the settings page"
@@ -67,10 +63,6 @@
         "message": "الواجهة الأمامية",
         "description": "used in the settings page"
     },
-    "searchNote": {
-        "message": "ملاحظة: استعمل خاصية البحث بكامل إمكانيتها عبر وضع LibRedirect محرك البحث الافتراضي.",
-        "description": "used in the settings page"
-    },
     "redirectType": {
         "message": "نوع التوجيه",
         "description": "used in the settings page"
@@ -91,14 +83,23 @@
         "message": "أضف نظرائك المفضلين",
         "description": "used in the settings page"
     },
-    "lbryDesktop": {
-        "message": "سطح المكتب LBRY"
+    "copyRaw": {
+        "message": "الرابط الأصلي",
+        "description": "used in the popup"
+    },
+    "copied": {
+        "message": "تم النسخ",
+        "description": "used in the popup"
+    },
+    "redirectToOriginal": {
+        "message": "إعادة التوجيه إلى الأصلي",
+        "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
         "message": "محاولة إعادة توجيه هذا الارتباط التشعبي",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
-    "protocolFallback": {
-        "message": "الرجوع إلى الوضع الطبيعي إذا لم تتوفر مثيلات للبروتوكول الحالي"
+    "about": {
+        "message": "عن"
     }
 }

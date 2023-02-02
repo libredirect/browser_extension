@@ -39,10 +39,6 @@
         "message": "Excluded from redirecting",
         "description": "used in the settings page"
     },
-    "updateInstances": {
-        "message": "Оновити сервери",
-        "description": "used in the settings page"
-    },
     "importSettings": {
         "message": "Імпортувати налаштування",
         "description": "used in the settings page"
@@ -67,88 +63,20 @@
         "message": "Фронтенд",
         "description": "used in the settings page"
     },
-    "searchNote": {
-        "message": "Порада: Шукати стане зручніше, якщо оберете LibRedirect типовим засобом пошуку.",
-        "description": "used in the settings page"
-    },
     "redirectType": {
         "message": "Що переспрямовувати",
         "description": "used in the settings page"
     },
-    "redirectionCanceled": {
-        "message": "Переспрямування скасовано",
-        "description": "used in instance_offline.js"
-    },
-    "protocolFallback": {
-        "message": "Повертатися до звичайного протоколу, якщо жоден сервер не доступний через обраний"
-    },
-    "unifySettings": {
-        "message": "Єдині налаштування"
-    },
-    "lbry": {
-        "message": "LBRY"
-    },
-    "extensionName": {
-        "message": "LibRedirect",
-        "description": "name of the extension"
-    },
-    "switchInstance": {
-        "message": "Інший сервер",
-        "description": "used in manifest.json as shortcut description"
-    },
-    "settings": {
-        "message": "Налаштування",
-        "description": "used in the popup"
-    },
-    "search": {
-        "message": "Пошук",
-        "description": "used in the settings page"
-    },
-    "sendFiles": {
-        "message": "Надсилання файлів",
-        "description": "used in the settings page"
-    },
-    "youtube": {
-        "message": "YouTube",
-        "description": "used in the settings page"
-    },
-    "ytmusic": {
-        "message": "YT Music",
-        "description": "used in the settings page"
-    },
-    "peertube": {
-        "message": "PeerTube",
-        "description": "used in the settings page"
-    },
-    "system": {
-        "message": "Системна",
-        "description": "used in the settings page"
-    },
-    "dark": {
-        "message": "Темна",
-        "description": "used in the settings page"
-    },
-    "autoRedirect": {
-        "message": "Автоматично переспрямовувати недоступні сервери на доступні",
-        "description": "used in the settings page"
-    },
-    "importSettings": {
-        "message": "Імпортувати налаштування",
-        "description": "used in the settings page"
-    },
-    "customPopup": {
-        "message": "Вимикач у спливному переліку",
+    "both": {
+        "message": "both",
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
         "message": "лише вбудовані",
         "description": "used in the settings page"
     },
-    "notFullyPrivate": {
-        "message": "Цей фронтенд приватний лише частково."
-    },
-    "embeddedVids": {
-        "message": "Фронтенд вбудованих відео",
+    "onlyNotEmbedded": {
+        "message": "only not embedded",
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
@@ -161,37 +89,15 @@
     "copied": {
         "message": "Скопійовано"
     },
-    "copyRaw": {
-        "message": "Копіювати оригінал посилання"
-    },
-    "testInstancesLatency": {
-        "message": "Випробувати затримку серверів"
-    },
-    "lbryDesktop": {
-        "message": "LBRY Desktop"
-    },
-    "redirectLink": {
-        "message": "Спроба перенаправлення за цим гіперпосиланням",
-        "description": "Used in context menus when right clicking on a hyperlink"
-    },
-    "theme": {
-        "message": "Тема",
-        "description": "used in the settings page"
-    },
-    "translate": {
-        "message": "Переклад",
-        "description": "used in the settings page"
-    },
-    "maps": {
-        "message": "Мапи",
-        "description": "used in the settings page"
-    },
-    "redirectLink": {
-        "message": "Спроба перенаправлення за цим гіперпосиланням",
-        "description": "Used in context menus when right clicking on a hyperlink"
-    },
-    "toggleTab": {
-        "message": "Перемикнути перенаправлення на цій вкладці",
+    "redirectToOriginal": {
+        "message": "Redirect to original",
         "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "redirectLink": {
+        "message": "Спроба перенаправлення за цим гіперпосиланням",
+        "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "about": {
+        "message": "About"
     }
 }

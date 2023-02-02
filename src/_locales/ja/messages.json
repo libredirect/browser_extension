@@ -39,10 +39,6 @@
         "message": "Excluded from redirecting",
         "description": "used in the settings page"
     },
-    "updateInstances": {
-        "message": "インスタンスのリストを更新",
-        "description": "used in the settings page"
-    },
     "importSettings": {
         "message": "設定のインポート",
         "description": "used in the settings page"
@@ -65,10 +61,6 @@
     },
     "frontend": {
         "message": "フロントエンド",
-        "description": "used in the settings page"
-    },
-    "searchNote": {
-        "message": "注意: 「検索」を利用するには、LibRedirect をデフォルトの検索エンジンとして設定してください。",
         "description": "used in the settings page"
     },
     "redirectType": {

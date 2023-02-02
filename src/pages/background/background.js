@@ -86,7 +86,7 @@ browser.commands.onCommand.addListener(async command => {
 
 browser.contextMenus.create({
 	id: "settings",
-	title: browser.i18n.getMessage("Settings"),
+	title: browser.i18n.getMessage("settings"),
 	contexts: ["browser_action"],
 })
 

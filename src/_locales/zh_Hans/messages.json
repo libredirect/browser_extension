@@ -3,9 +3,9 @@
         "message": "LibRedirect",
         "description": "name of the extension"
     },
-    "wikipedia": {
-        "message": "维基百科",
-        "description": "used in the settings page"
+    "extensionDescription": {
+        "message": "将常用网站按需重定向到隐私友好的替代前端/后端的 Web 扩展程序",
+        "description": "description of the extension"
     },
     "switchInstance": {
         "message": "切换实例",
@@ -19,64 +19,8 @@
         "message": "通用",
         "description": "used in the settings page"
     },
-    "maps": {
-        "message": "地图",
-        "description": "used in the settings page"
-    },
-    "reddit": {
-        "message": "Reddit",
-        "description": "used in the settings page"
-    },
-    "tiktok": {
-        "message": "TikTok",
-        "description": "used in the settings page"
-    },
-    "search": {
-        "message": "搜索",
-        "description": "used in the settings page"
-    },
-    "imgur": {
-        "message": "Imgur",
-        "description": "used in the settings page"
-    },
-    "ytmusic": {
-        "message": "YouTube 音乐",
-        "description": "used in the settings page"
-    },
-    "medium": {
-        "message": "Medium",
-        "description": "used in the settings page"
-    },
-    "extensionDescription": {
-        "message": "将常用网站按需重定向到隐私友好的替代前端/后端的 Web 扩展程序",
-        "description": "description of the extension"
-    },
     "theme": {
         "message": "主题",
-        "description": "used in the settings page"
-    },
-    "redirectType": {
-        "message": "重定向类型",
-        "description": "used in the settings page"
-    },
-    "instanceOffline": {
-        "message": "此实例已离线，将重定向于",
-        "description": "used in instance_offline.html"
-    },
-    "copied": {
-        "message": "已复制"
-    },
-    "unifySettings": {
-        "message": "统一设置"
-    },
-    "lbry": {
-        "message": "LBRY"
-    },
-    "testInstancesLatency": {
-        "message": "测试实例连接延迟"
-    },
-    "system": {
-        "message": "跟随系统",
         "description": "used in the settings page"
     },
     "light": {
@@ -93,10 +37,6 @@
     },
     "excludeFromRedirecting": {
         "message": "Excluded from redirecting",
-        "description": "used in the settings page"
-    },
-    "updateInstances": {
-        "message": "更新实例",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -121,10 +61,6 @@
     },
     "frontend": {
         "message": "前端",
-        "description": "used in the settings page"
-    },
-    "searchNote": {
-        "message": "注意：请将 LibRedirect 作为你的默认搜索引擎以充分发挥搜索的潜力。",
         "description": "used in the settings page"
     },
     "redirectType": {
@@ -153,23 +89,15 @@
     "copied": {
         "message": "已复制"
     },
-    "searchNote": {
-        "message": "备注：将 LibRedirect 设为默认搜索引擎，以充分发挥搜索功能的潜力。",
-        "description": "used in the settings page"
-    },
-    "redirectLink": {
-        "message": "尝试重定向此超链接",
-        "description": "Used in context menus when right clicking on a hyperlink"
-    },
-    "lbryDesktop": {
-        "message": "LBRY 桌面版"
-    },
-    "toggleTab": {
-        "message": "在此标签页中切换重定向",
+    "redirectToOriginal": {
+        "message": "Redirect to original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
         "message": "尝试重定向此链接",
         "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "about": {
+        "message": "About"
     }
 }

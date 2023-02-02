@@ -19,54 +19,6 @@
         "message": "Ogólne",
         "description": "used in the settings page"
     },
-    "sendFiles": {
-        "message": "Wyślij pliki",
-        "description": "used in the settings page"
-    },
-    "youtube": {
-        "message": "YouTube",
-        "description": "used in the settings page"
-    },
-    "instagram": {
-        "message": "Instagram",
-        "description": "used in the settings page"
-    },
-    "twitter": {
-        "message": "Twitter",
-        "description": "used in the settings page"
-    },
-    "reddit": {
-        "message": "Reddit",
-        "description": "used in the settings page"
-    },
-    "tiktok": {
-        "message": "TikTok",
-        "description": "used in the settings page"
-    },
-    "ytmusic": {
-        "message": "YouTube Music",
-        "description": "used in the settings page"
-    },
-    "imgur": {
-        "message": "Imgur",
-        "description": "used in the settings page"
-    },
-    "wikipedia": {
-        "message": "Wikipedia",
-        "description": "used in the settings page"
-    },
-    "peertube": {
-        "message": "PeerTube",
-        "description": "used in the settings page"
-    },
-    "medium": {
-        "message": "Medium",
-        "description": "used in the settings page"
-    },
-    "tor": {
-        "message": "Tor",
-        "description": "used in the settings page"
-    },
     "theme": {
         "message": "Motyw",
         "description": "used in the settings page"
@@ -79,16 +31,12 @@
         "message": "Ciemny",
         "description": "used in the settings page"
     },
-    "autoRedirect": {
-        "message": "Automatyczne przekierowywanie instancji offline do online",
+    "auto": {
+        "message": "Auto",
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
         "message": "Excluded from redirecting",
-        "description": "used in the settings page"
-    },
-    "updateInstances": {
-        "message": "Zaktualizuj instancje",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -99,36 +47,12 @@
         "message": "Eksportuj ustawienia",
         "description": "used in the settings page"
     },
-    "onlyNotEmbedded": {
-        "message": "tylko nieosadzone",
+    "resetSettings": {
+        "message": "Zresetuj ustawienia",
         "description": "used in the settings page"
     },
-    "instanceOffline": {
-        "message": "Ta instancja jest offline, przekierowanie nastąpi po",
-        "description": "used in instance_offline.html"
-    },
-    "cancel": {
-        "message": "Anuluj",
-        "description": "used in instance_offline.html"
-    },
-    "instanceIsOff": {
-        "message": "Instancja jest offline",
-        "description": "used in instance_offline.html"
-    },
-    "redirectionCanceled": {
-        "message": "Przekierowanie anulowane",
-        "description": "used in instance_offline.js"
-    },
-    "normal": {
-        "message": "Normalny",
-        "description": "used in the settings page"
-    },
-    "defaultInstances": {
-        "message": "Domyślne instancje",
-        "description": "used in the settings page"
-    },
-    "customInstances": {
-        "message": "Własne instancje",
+    "enable": {
+        "message": "Enable",
         "description": "used in the settings page"
     },
     "showInPopup": {
@@ -139,16 +63,8 @@
         "message": "Frontend",
         "description": "used in the settings page"
     },
-    "searchNote": {
-        "message": "Uwaga: wykorzystaj w pełni potencjał wyszukiwania, czyniąc LibRedirect swoją domyślną wyszukiwarką.",
-        "description": "used in the settings page"
-    },
     "redirectType": {
         "message": "Typ przekierowania",
-        "description": "used in the settings page"
-    },
-    "embeddedVids": {
-        "message": "Frontend osadzonych filmów",
         "description": "used in the settings page"
     },
     "both": {
@@ -159,74 +75,29 @@
         "message": "tylko osadzone",
         "description": "used in the settings page"
     },
-    "copyRaw": {
-        "message": "Skopiuj nieprzetworzony"
-    },
-    "copied": {
-        "message": "Skopiowano"
-    },
-    "unifySettings": {
-        "message": "Ujednolić ustawienia"
-    },
-    "lbry": {
-        "message": "LBRY"
-    },
-    "i2p": {
-        "message": "I2P"
-    },
-    "testInstancesLatency": {
-        "message": "Testuj opóźnienie instancji"
-    },
-    "translate": {
-        "message": "Przetłumacz",
-        "description": "used in the settings page"
-    },
-    "maps": {
-        "message": "Mapy",
+    "onlyNotEmbedded": {
+        "message": "tylko nieosadzone",
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
         "message": "Add your favorite instances",
         "description": "used in the settings page"
     },
-    "extensionDescription": {
-        "message": "Rozszerzenie, które przekierowuje popularne witryny do alternatywnych, szanujących prywatność frontendów i backendów",
-        "description": "description of the extension"
-    },
-    "resetSettings": {
-        "message": "Zresetuj ustawienia",
-        "description": "used in the settings page"
-    },
-    "protocol": {
-        "message": "Protokół",
-        "description": "used in the settings page"
+    "copyRaw": {
+        "message": "Skopiuj nieprzetworzony"
     },
     "copied": {
         "message": "Skopiowano"
     },
-    "system": {
-        "message": "Systemowy",
-        "description": "used in the settings page"
-    },
-    "customPopup": {
-        "message": "Dostosuj wyskakujące okienko",
-        "description": "used in the settings page"
-    },
-    "loki": {
-        "message": "Lokinet"
-    },
-    "lbryDesktop": {
-        "message": "Aplikacja LBRY"
-    },
-    "toggleTab": {
-        "message": "Przełącz przekierowania na tej karcie",
+    "redirectToOriginal": {
+        "message": "Redirect to original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
         "message": "Spróbuj przekierować to hiperłącze",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
-    "protocolFallback": {
-        "message": "Powróć do normalnego, jeśli żadne instancje nie są dostępne dla bieżącego protokołu"
+    "about": {
+        "message": "About"
     }
 }

@@ -1,12 +1,38 @@
 import json
 
 
-langs = ['bs',  'cs',  'de',  'es', 'fr',  'gl',  'hr',  'id',  'it',  'ja',  'ko',
-         'nb_NO',  'nl',  'pl',  'pt',  'pt_BR',  'ro',  'ru',  'sr',  'tr',  'uk',  'vi', 'zh_Hans']
+langs = [
+    'ar',
+    'bs',
+    'cs',
+    'de',
+    'es',
+    'fr',
+    'gl',
+    'hr',
+    'id',
+    'it',
+    'ja',
+    'ko',
+    'nb_NO',
+    'nl',
+    'pl',
+    'pt',
+    'pt_BR',
+    'ro',
+    'ru',
+    'sr',
+    'tr',
+    'uk',
+    'vi',
+    'zh_Hans',
+]
 en_json = {}
 
 with open('src/_locales/en/messages.json') as data:
     en_json = json.load(data)
+
+
 
 for lang in langs:
     lang_json = {}

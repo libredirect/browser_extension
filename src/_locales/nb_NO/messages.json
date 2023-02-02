@@ -39,10 +39,6 @@
         "message": "Excluded from redirecting",
         "description": "used in the settings page"
     },
-    "updateInstances": {
-        "message": "Oppdater instanser",
-        "description": "used in the settings page"
-    },
     "importSettings": {
         "message": "Importer innstillinger",
         "description": "used in the settings page"
@@ -65,10 +61,6 @@
     },
     "frontend": {
         "message": "Grenseflate",
-        "description": "used in the settings page"
-    },
-    "searchNote": {
-        "message": "Merk: For å bruke søket til dets fulle kan du gjøre LibRedirect til din forvalgte søkemotor",
         "description": "used in the settings page"
     },
     "redirectType": {

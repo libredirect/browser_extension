@@ -39,10 +39,6 @@
         "message": "Excluded from redirecting",
         "description": "used in the settings page"
     },
-    "updateInstances": {
-        "message": "Örnekleri Güncelle",
-        "description": "used in the settings page"
-    },
     "importSettings": {
         "message": "Ayarları İçe Aktar",
         "description": "used in the settings page"
@@ -65,10 +61,6 @@
     },
     "frontend": {
         "message": "Ön Uç",
-        "description": "used in the settings page"
-    },
-    "searchNote": {
-        "message": "Not: LibRedirect'i öntanımlı arama motorunuz yaparak aramayı tüm özellikleriyle kullanın.",
         "description": "used in the settings page"
     },
     "redirectType": {
