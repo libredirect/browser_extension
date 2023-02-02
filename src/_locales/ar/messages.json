@@ -91,23 +91,14 @@
         "message": "أضف نظرائك المفضلين",
         "description": "used in the settings page"
     },
-    "copyRaw": {
-        "message": "الرابط الأصلي",
-        "description": "used in the popup"
-    },
-    "copied": {
-        "message": "تم النسخ",
-        "description": "used in the popup"
-    },
-    "redirectToOriginal": {
-        "message": "إعادة التوجيه إلى الأصلي",
-        "description": "Used in context menus when right clicking on a page/tab"
+    "lbryDesktop": {
+        "message": "سطح المكتب LBRY"
     },
     "redirectLink": {
         "message": "محاولة إعادة توجيه هذا الارتباط التشعبي",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
-    "about": {
-        "message": "عن"
+    "protocolFallback": {
+        "message": "الرجوع إلى الوضع الطبيعي إذا لم تتوفر مثيلات للبروتوكول الحالي"
     }
 }

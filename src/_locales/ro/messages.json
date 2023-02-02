@@ -19,8 +19,68 @@
         "message": "General",
         "description": "used in the settings page"
     },
+    "search": {
+        "message": "Căutare",
+        "description": "used in the settings page"
+    },
+    "translate": {
+        "message": "Traduceți",
+        "description": "used in the settings page"
+    },
+    "maps": {
+        "message": "Hărți",
+        "description": "used in the settings page"
+    },
+    "sendFiles": {
+        "message": "Trimite fișiere",
+        "description": "used in the settings page"
+    },
+    "youtube": {
+        "message": "YouTube",
+        "description": "used in the settings page"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "used in the settings page"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "used in the settings page"
+    },
+    "reddit": {
+        "message": "Reddit",
+        "description": "used in the settings page"
+    },
+    "tiktok": {
+        "message": "TikTok",
+        "description": "used in the settings page"
+    },
+    "ytmusic": {
+        "message": "YT Music",
+        "description": "used in the settings page"
+    },
+    "imgur": {
+        "message": "Imgur",
+        "description": "used in the settings page"
+    },
+    "wikipedia": {
+        "message": "Wikipedia",
+        "description": "used in the settings page"
+    },
+    "peertube": {
+        "message": "PeerTube",
+        "description": "used in the settings page"
+    },
+    "medium": {
+        "message": "Medium",
+        "description": "used in the settings page"
+    },
     "theme": {
         "message": "Temă",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "Sistem",
         "description": "used in the settings page"
     },
     "light": {
@@ -31,12 +91,12 @@
         "message": "Întunecat",
         "description": "used in the settings page"
     },
-    "auto": {
-        "message": "Auto",
+    "autoRedirect": {
+        "message": "Redirecționează automat instanțele offline către cele online",
         "description": "used in the settings page"
     },
-    "excludeFromRedirecting": {
-        "message": "Excluded from redirecting",
+    "exceptions": {
+        "message": "Excepții",
         "description": "used in the settings page"
     },
     "updateInstances": {
@@ -55,24 +115,43 @@
         "message": "Resetează setarile",
         "description": "used in the settings page"
     },
+    "customPopup": {
+        "message": "Personalizați Popup-ul",
+        "description": "used in the settings page"
+    },
     "enable": {
         "message": "Activează",
         "description": "used in the settings page"
     },
-    "showInPopup": {
-        "message": "Show in popup",
+    "protocol": {
+        "message": "Protocol",
+        "description": "used in the settings page"
+    },
+    "normal": {
+        "message": "Normal",
+        "description": "used in the settings page"
+    },
+    "defaultInstances": {
+        "message": "Instanțe implicite",
+        "description": "used in the settings page"
+    },
+    "customInstances": {
+        "message": "Instanțe personalizate",
+        "description": "used in the settings page"
+    },
+    "toggleAll": {
+        "message": "Comutați pe toate",
         "description": "used in the settings page"
     },
     "frontend": {
         "message": "Frontend",
         "description": "used in the settings page"
     },
+    "notFullyPrivate": {
+        "message": "Acesta nu este un frontend complet privat."
+    },
     "searchNote": {
         "message": "Notă: Utilizați căutarea la potențialul său maxim, făcând LibRedirect motorul de căutare implicit.",
-        "description": "used in the settings page"
-    },
-    "redirectType": {
-        "message": "Tip redirecționare",
         "description": "used in the settings page"
     },
     "both": {
@@ -87,9 +166,21 @@
         "message": "numai încorporat",
         "description": "used in the settings page"
     },
-    "addYourFavoriteInstances": {
-        "message": "Add your favorite instances",
-        "description": "used in the settings page"
+    "instanceOffline": {
+        "message": "Această instanță este offline, veți fi redirecționat după",
+        "description": "used in instance_offline.html"
+    },
+    "cancel": {
+        "message": "Anulează",
+        "description": "used in instance_offline.html"
+    },
+    "instanceIsOff": {
+        "message": "Instanța este offline",
+        "description": "used in instance_offline.html"
+    },
+    "redirectionCanceled": {
+        "message": "Redirecționarea a fost anulată",
+        "description": "used in instance_offline.js"
     },
     "copyRaw": {
         "message": "Copiați Raw"
@@ -97,15 +188,35 @@
     "copied": {
         "message": "Copiat"
     },
-    "redirectToOriginal": {
-        "message": "Redirect to original",
+    "unifySettings": {
+        "message": "Unificați setările"
+    },
+    "lbry": {
+        "message": "LBRY"
+    },
+    "testInstancesLatency": {
+        "message": "Testează Latența Instanțelor"
+    },
+    "protocolFallback": {
+        "message": "Revenire la normal dacă nu sunt disponibile instanțe pentru protocolul curent"
+    },
+    "lbryDesktop": {
+        "message": "Desktop LBRY"
+    },
+    "toggleTab": {
+        "message": "Comutați redirecționările în această filă",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
         "message": "Încercați să redirecționați acest hyperlink",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
-    "about": {
-        "message": "About"
+    "redirectType": {
+        "message": "Tip redirecționare",
+        "description": "used in the settings page"
+    },
+    "embeddedVids": {
+        "message": "Videoclipuri încorporate Frontend",
+        "description": "used in the settings page"
     }
 }

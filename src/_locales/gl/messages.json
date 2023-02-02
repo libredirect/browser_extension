@@ -94,8 +94,8 @@
     "copyRaw": {
         "message": "Copiar en crú"
     },
-    "copied": {
-        "message": "Copiado"
+    "lbryDesktop": {
+        "message": "Escritorio LBRY"
     },
     "redirectToOriginal": {
         "message": "Redirect to original",

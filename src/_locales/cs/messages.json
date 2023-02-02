@@ -97,8 +97,8 @@
     "copied": {
         "message": "Zkopírováno"
     },
-    "redirectToOriginal": {
-        "message": "Redirect to original",
+    "toggleTab": {
+        "message": "Přepnout přesměrování v této kartě",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {

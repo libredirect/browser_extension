@@ -1,4 +1,8 @@
 {
+    "extensionDescription": {
+        "message": "Сетевое расширение, которое перенаправляет известные сайты на иные интерфейсы и движки, обеспечивающие конфиденциальность",
+        "description": "description of the extension"
+    },
     "extensionName": {
         "message": "LibRedirect",
         "description": "name of the extension"
@@ -91,18 +95,92 @@
         "message": "Add your favorite instances",
         "description": "used in the settings page"
     },
-    "copyRaw": {
-        "message": "Копировать оригинал"
+    "embeddedVids": {
+        "message": "Интерфейс для встроенных видео",
+        "description": "used in the settings page"
     },
     "copied": {
         "message": "Скопировано"
     },
-    "redirectToOriginal": {
-        "message": "Redirect to original",
-        "description": "Used in context menus when right clicking on a page/tab"
+    "lbry": {
+        "message": "LBRY"
+    },
+    "i2p": {
+        "message": "I2P"
+    },
+    "loki": {
+        "message": "Lokinet"
+    },
+    "testInstancesLatency": {
+        "message": "Тестирование задержки экземпляров"
+    },
+    "copyRaw": {
+        "message": "Скопировать оригинал"
+    },
+    "unifySettings": {
+        "message": "Унифицировать настройки"
+    },
+    "instagram": {
+        "message": "Instagram",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Включить",
+        "description": "used in the settings page"
+    },
+    "twitter": {
+        "message": "Twitter",
+        "description": "used in the settings page"
+    },
+    "system": {
+        "message": "Системная",
+        "description": "used in the settings page"
+    },
+    "exceptions": {
+        "message": "Исключения",
+        "description": "used in the settings page"
+    },
+    "reddit": {
+        "message": "Reddit",
+        "description": "used in the settings page"
+    },
+    "tor": {
+        "message": "Tor",
+        "description": "used in the settings page"
+    },
+    "medium": {
+        "message": "Medium",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "Тема",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "Светлая",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Тёмная",
+        "description": "used in the settings page"
+    },
+    "toggleAll": {
+        "message": "Переключить все",
+        "description": "used in the settings page"
+    },
+    "notFullyPrivate": {
+        "message": "Это не полностью приватный интерфейс."
+    },
+    "frontend": {
+        "message": "Интерфейс",
+        "description": "used in the settings page"
+    },
+    "searchNote": {
+        "message": "Примечание: используйте поиск в полной мере, сделав LibRedirect поисковой системой по умолчанию.",
+        "description": "used in the settings page"
     },
     "redirectLink": {
-        "message": "Попробовать перенаправить эту ссылку",
+        "message": "Попытаться перенаправить эту ссылку",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
