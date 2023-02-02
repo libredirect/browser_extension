@@ -63,13 +63,13 @@ function redirect(url, type, initiator, forceRedirection) {
 		) return "BYPASSTAB"
 
 		let instanceList = options[frontend]
+		if (instanceList === undefined) break
 		if (instanceList.length === 0) return
 
 		randomInstance = utils.getRandomInstance(instanceList)
 
 		break
 	}
-	if (!randomInstance) return
 
 	// Here is a (temperory) space for defining constants required in 2 or more switch cases.
 	const mapCentreRegex = /@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/

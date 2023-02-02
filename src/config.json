@@ -497,6 +497,25 @@
 			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://genius.com"
+		},
+		"urbanDictionary": {
+			"frontends": {
+				"ruralDictionary": {
+					"name": "Rural Dictionary",
+					"instanceList": true,
+					"url": "https://codeberg.org/zortazert/rural-dictionary"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?urbandictionary.com\\/"
+			],
+			"name": "Urban Dictionary",
+			"options": {
+				"enabled": false
+			},
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://genius.com"
 		}
 	}
 }
