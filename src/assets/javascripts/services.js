@@ -512,7 +512,7 @@ function initDefaults() {
 			options['popupServices'] = ["youtube", "twitter", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
 
 			options['invidious'] = ['https://inv.vern.cc']
-			options['piped'] = ['https://piped.video']
+			options['piped'] = ['https://pipedapi-libre.kavin.rocks']
 			options['pipedMaterial'] = ['https://piped-material.xn--17b.net']
 			options['cloudtube'] = ['https://tube.cadence.moe']
 			options['proxiTok'] = ['https://proxitok.pabloferreiro.es']
