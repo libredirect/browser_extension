@@ -345,10 +345,9 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return randomInstance
 		case "breezeWiki":
-			let wiki,
-				urlpath = ""
-			if (url.hostname.match(/^[a-zA-Z0-9-]+\.fandom\.com/)) {
-				wiki = url.hostname.match(/^[a-zA-Z0-9-]+(?=\.fandom\.com)/)
+			let wiki, urlpath = ""
+			if (url.hostname.match(/^[a-zA-Z0-9-]+\.(?:fandom|wikia)\.com/)) {
+				wiki = url.hostname.match(/^[a-zA-Z0-9-]+(?=\.(?:fandom|wikia)\.com)/)
 				if (wiki == "www" || !wiki) wiki = ""
 				else wiki = `/${wiki}`;
 				urlpath = url.pathname
