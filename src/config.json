@@ -470,7 +470,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.)?reuters.com\\/"
+				"^https?:\\/{2}(www\\.)?reuters\\.com\\/"
 			],
 			"name": "Paste Text",
 			"options": {
@@ -489,7 +489,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.)?genius.com\\/"
+				"^https?:\\/{2}(www\\.)?genius\\.com\\/"
 			],
 			"name": "Genius",
 			"options": {
@@ -508,7 +508,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.)?urbandictionary.com\\/"
+				"^https?:\\/{2}(www\\.)?urbandictionary\\.com\\/"
 			],
 			"name": "Urban Dictionary",
 			"options": {
@@ -517,6 +517,25 @@
 			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://urbandictionary.com"
+		},
+		"stackOverflow": {
+			"frontends": {
+				"anonymousOverflow": {
+					"name": "AnonymousOverflow",
+					"instanceList": true,
+					"url": "https://github.com/httpjamesm/AnonymousOverflow"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}stackoverflow\\.com\\/"
+			],
+			"name": "Stack Overflow",
+			"options": {
+				"enabled": false
+			},
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://stackoverflow.com/"
 		}
 	}
 }

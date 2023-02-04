@@ -54,7 +54,10 @@ function redirect(url, type, initiator, forceRedirection) {
 
 		frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
 
-		if (!regexArray(service, url, config, frontend)) continue
+		if (!regexArray(service, url, config, frontend)) {
+			frontend = null
+			continue
+		}
 
 		if (
 			initiator
@@ -86,6 +89,9 @@ function redirect(url, type, initiator, forceRedirection) {
 		}
 		return [zoom, lon, lat]
 	}
+	
+	if (!frontend) return
+
 	switch (frontend) {
 		// This is where all instance-specific code must be ran to convert the service url to one that can be understood by the frontend.
 		case "beatbump":
@@ -381,8 +387,6 @@ function redirect(url, type, initiator, forceRedirection) {
 				else return `${randomInstance}${url.pathname}${url.search}&teddit_proxy=${url.hostname}`
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
-		default:
-			return `${randomInstance}${url.pathname}${url.search}`
 		case "neuters": {
 			const p = url.pathname
 			if (p.startsWith('/article/') || p.startsWith('/pf/') || p.startsWith('/arc/') || p.startsWith('/resizer/')) {
@@ -394,10 +398,15 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.pathname.endsWith('-lyrics')) return `${randomInstance}${url.pathname}`
 		}
 		case "ruralDictionary": {
-			if (!url.pathname.endsWith('/define.php') && !url.pathname.endsWith('/random.php') && !url.pathname.endsWith('/')) return
+			if (!url.pathname.endsWith('/define.php') && !url.pathname.endsWith('/random.php') && url.pathname != '/') return
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
-
+		case "anonymousOverflow": {
+			if (!url.pathname.startsWith('/questions') && url.pathname != '/') return
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
+		default:
+			return `${randomInstance}${url.pathname}${url.search}`
 	}
 }
 
@@ -512,7 +521,7 @@ function initDefaults() {
 			options['popupServices'] = ["youtube", "twitter", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
 
 			options['invidious'] = ['https://inv.vern.cc']
-			options['piped'] = ['https://piped.video']
+			options['piped'] = ['https://pipedapi-libre.kavin.rocks']
 			options['pipedMaterial'] = ['https://piped-material.xn--17b.net']
 			options['cloudtube'] = ['https://tube.cadence.moe']
 			options['proxiTok'] = ['https://proxitok.pabloferreiro.es']
@@ -536,6 +545,7 @@ function initDefaults() {
 			options['neuters'] = ['https://neuters.de']
 			options['dumb'] = ['https://dm.vern.cc']
 			options['ruralDictionary'] = ['https://rd.vern.cc']
+			options['anonymousOverflow'] = ['https://code.whatever.social']
 
 			browser.storage.local.set({ options },
 				() => resolve()
