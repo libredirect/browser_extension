@@ -425,6 +425,28 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (!url.pathname.startsWith('/book/show/') && url.pathname != '/') return
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
+		case "wikiless": {
+			let GETArguments = []
+			if (url.search.length > 0) {
+				let search = url.search.substring(1) //get rid of '?'
+				let argstrings = search.split("&")
+				for (let i = 0; i < argstrings.length; i++) {
+					let args = argstrings[i].split("=")
+					GETArguments.push([args[0], args[1]])
+				}
+			}
+
+			let link = `${randomInstance}${url.pathname}`
+			let urlSplit = url.host.split(".")
+			if (urlSplit[0] != "wikipedia" && urlSplit[0] != "www") {
+				if (urlSplit[0] == "m") GETArguments.push(["mobileaction", "toggle_view_mobile"])
+				else GETArguments.push(["lang", urlSplit[0]])
+				if (urlSplit[1] == "m") GETArguments.push(["mobileaction", "toggle_view_mobile"])
+				// wikiless doesn't have mobile view support yet
+			}
+			for (let i = 0; i < GETArguments.length; i++) link += (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1]
+			return link
+		}
 		default:
 			return `${randomInstance}${url.pathname}${url.search}`
 	}
@@ -568,6 +590,7 @@ function initDefaults() {
 			options['ruralDictionary'] = ['https://rd.vern.cc']
 			options['anonymousOverflow'] = ['https://code.whatever.social']
 			options['biblioReads'] = ['https://biblioreads.ml']
+			options['wikiless'] = ['https://wikiless.org']
 
 			browser.storage.local.set({ options },
 				() => resolve()

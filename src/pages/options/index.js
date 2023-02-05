@@ -41,6 +41,12 @@ function changeFrontendsSettings(service) {
 			}
 		}
 	}
+	const frontend_name_element = document.getElementById(`${service}_page`).getElementsByClassName("frontend_name")[0]
+	if (divs[service].frontend) {
+		frontend_name_element.href = config.services[service].frontends[divs[service].frontend.value].url
+	} else {
+		frontend_name_element.href = Object.values(config.services[service].frontends)[0].url
+	}
 }
 
 async function loadPage(path) {
@@ -76,13 +82,6 @@ async function loadPage(path) {
 				browser.storage.local.set({ options })
 				changeFrontendsSettings(service)
 			})
-		}
-
-		const frontend_name_element = document.getElementById(`${service}_page`).getElementsByClassName("frontend_name")[0]
-		if (divs[service].frontend) {
-			frontend_name_element.href = config.services[service].frontends[divs[service].frontend.value].url
-		} else {
-			frontend_name_element.href = Object.values(config.services[service].frontends)[0].url
 		}
 
 		changeFrontendsSettings(service)

@@ -489,7 +489,7 @@
 		"genius": {
 			"frontends": {
 				"dumb": {
-					"name": "dumb",
+					"name": "Dumb",
 					"instanceList": true,
 					"url": "https://github.com/rramiachraf/dumb"
 				}
@@ -543,10 +543,10 @@
 			"embeddable": false,
 			"url": "https://stackoverflow.com/"
 		},
-		"goodReads": {
+		"goodreads": {
 			"frontends": {
 				"biblioReads": {
-					"name": "goodReads",
+					"name": "BiblioReads",
 					"instanceList": true,
 					"url": "https://github.com/nesaku/BiblioReads"
 				}
@@ -558,9 +558,28 @@
 			"options": {
 				"enabled": false
 			},
-			"imageType": "svg",
+			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://goodreads.com/"
+		},
+		"wikipedia": {
+			"frontends": {
+				"wikiless": {
+					"name": "Wikiless",
+					"instanceList": true,
+					"url": "https://wikiless.org"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(?:[a-z]+\\.)*wikipedia\\.org\\/?"
+			],
+			"name": "Wikipedia",
+			"options": {
+				"enabled": false
+			},
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://wikipedia.org"
 		}
 	}
 }

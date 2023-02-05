@@ -16,17 +16,15 @@ each val, service in services
                 h4(data-localise="__MSG_showInPopup__") Show in popup
                 input(id=service type="checkbox")
 
-            if Object.keys(services[service].frontends).length> 1
-                div(class="some-block option-block")
-                    h4
-                        a(class="frontend_name" target="_blank" data-localise="__MSG_frontend__") Frontend
-                    select(id=service+"-frontend")
+            div(class="some-block option-block")
+                h4
+                    a(class="frontend_name" target="_blank" data-localise="__MSG_frontend__") Frontend
+                select(id=service+"-frontend")
+                    if Object.keys(services[service].frontends).length> 1
                         each val, frontend in services[service].frontends
                             option(value=frontend)=services[service].frontends[frontend].name
-            else 
-                div(class="some-block option-block")
-                    h4
-                        a(class="frontend_name" target="_blank" data-localise="__MSG_frontend__") Frontend
+                    else
+                        option(value=frontend)=Object.values(services[service].frontends)[0].name
 
             if services[service].embeddable
                 div(class="some-block option-block")
