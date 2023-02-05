@@ -89,31 +89,37 @@ function redirect(url, type, initiator, forceRedirection) {
 		}
 		return [zoom, lon, lat]
 	}
-	
+
 	if (!frontend) return
 
 	switch (frontend) {
 		// This is where all instance-specific code must be ran to convert the service url to one that can be understood by the frontend.
-		case "beatbump":
+		case "beatbump": {
 			return `${randomInstance}${url.pathname}${url.search}`
 				.replace("/watch?v=", "/listen?id=")
 				.replace("/channel/", "/artist/")
 				.replace("/playlist?list=", "/playlist/VL")
 				.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/") + "?filter=all")
-		case "hyperpipe":
+		}
+		case "hyperpipe": {
 			return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/"))
-		case "lbryDesktop":
+		}
+		case "lbryDesktop": {
 			return url.href.replace(/^https?:\/{2}odysee\.com\//, "lbry://").replace(/:(?=[a-zA-Z0-9])/g, "#")
+		}
 		case "searx":
 		case "searxng":
 			return `${randomInstance}/${url.search}`
-		case "whoogle":
+		case "whoogle": {
 			return `${randomInstance}/search${url.search}`
-		case "librex":
+		}
+		case "librex": {
 			return `${randomInstance}/search.php${url.search}`
-		case "send":
+		}
+		case "send": {
 			return randomInstance
-		case "nitter":
+		}
+		case "nitter": {
 			let search = new URLSearchParams(url.search)
 
 			search.delete("ref_src")
@@ -135,17 +141,22 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.pathname.split("/").includes("tweets")) return `${randomInstance}${url.pathname.replace("/tweets", "")}${search}`
 			if (url.host == "t.co") return `${randomInstance}/t.co${url.pathname}`
 			return `${randomInstance}${url.pathname}${search}#m`
-		case "yattee":
+		}
+		case "yattee": {
 			return url.href.replace(/^https?:\/{2}/, "yattee://")
-		case "freetube":
+		}
+		case "freetube": {
 			return `freetube://https://youtu.be${url.pathname}${url.search}`.replace(/watch\?v=/, "")
-		case "simplyTranslate":
+		}
+		case "simplyTranslate": {
 			return `${randomInstance}/${url.search}`
-		case "libreTranslate":
+		}
+		case "libreTranslate": {
 			return `${randomInstance}/${url.search}`
 				.replace(/(?<=\/?)sl/, "source")
 				.replace(/(?<=&)tl/, "target")
 				.replace(/(?<=&)text/, "q")
+		}
 		case "osm": {
 			if (initiator && initiator.host === "earth.google.com") return
 			const travelModes = {
@@ -338,7 +349,7 @@ function redirect(url, type, initiator, forceRedirection) {
 				if (query) return `${randomInstance}/${mapCentre}/Mpnk/${query}`
 			}
 		}
-		case "lingva":
+		case "lingva": {
 			let params_arr = url.search.split("&")
 			params_arr[0] = params_arr[0].substring(1)
 			let params = {}
@@ -350,7 +361,8 @@ function redirect(url, type, initiator, forceRedirection) {
 				return `${randomInstance}/${params.sl}/${params.tl}/${params.text}`
 			}
 			return randomInstance
-		case "breezeWiki":
+		}
+		case "breezeWiki": {
 			let wiki, urlpath = ""
 			if (url.hostname.match(/^[a-zA-Z0-9-]+\.(?:fandom|wikia)\.com/)) {
 				wiki = url.hostname.match(/^[a-zA-Z0-9-]+(?=\.(?:fandom|wikia)\.com)/)
@@ -367,10 +379,12 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			if (url.href.search(/Special:Search\?query/) > -1) return `${randomInstance}${wiki}${urlpath}${url.search}`.replace(/Special:Search\?query/, "search?q").replace(/\/wiki/, "")
 			else return `${randomInstance}${wiki}${urlpath}${url.search}`
-		case "rimgo":
+		}
+		case "rimgo": {
 			if (url.href.search(/^https?:\/{2}(?:[im]\.)?stack\./) > -1) return `${randomInstance}/stack${url.pathname}${url.search}`
 			else return `${randomInstance}${url.pathname}${url.search}`
-		case "libreddit":
+		}
+		case "libreddit": {
 			const subdomain = url.hostname.match(/^(?:(?:external-)?preview|i)(?=\.redd\.it)/)
 			if (!subdomain) return `${randomInstance}${url.pathname}${url.search}`
 			switch (subdomain[0]) {
@@ -381,12 +395,14 @@ function redirect(url, type, initiator, forceRedirection) {
 				case "i":
 					return `${randomInstance}/img${url.pathname}`
 			}
-		case "teddit":
+		}
+		case "teddit": {
 			if (/^(?:(?:external-)?preview|i)\.redd\.it/.test(url.hostname)) {
 				if (url.search == "") return `${randomInstance}${url.pathname}?teddit_proxy=${url.hostname}`
 				else return `${randomInstance}${url.pathname}${url.search}&teddit_proxy=${url.hostname}`
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
+		}
 		case "neuters": {
 			const p = url.pathname
 			if (p.startsWith('/article/') || p.startsWith('/pf/') || p.startsWith('/arc/') || p.startsWith('/resizer/')) {
@@ -403,6 +419,10 @@ function redirect(url, type, initiator, forceRedirection) {
 		}
 		case "anonymousOverflow": {
 			if (!url.pathname.startsWith('/questions') && url.pathname != '/') return
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
+		case "biblioReads": {
+			if (!url.pathname.startsWith('/book/show/') && url.pathname != '/') return
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		default:
@@ -547,6 +567,7 @@ function initDefaults() {
 			options['dumb'] = ['https://dm.vern.cc']
 			options['ruralDictionary'] = ['https://rd.vern.cc']
 			options['anonymousOverflow'] = ['https://code.whatever.social']
+			options['biblioReads'] = ['https://biblioreads.ml']
 
 			browser.storage.local.set({ options },
 				() => resolve()

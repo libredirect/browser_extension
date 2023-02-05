@@ -21,10 +21,10 @@ A web extension that redirects YouTube, Twitter, TikTok... requests to alternati
 - Youtube Music <span>&#8594;</span> [Beatbump](https://github.com/snuffyDev/Beatbump), [Hyperpipe](https://codeberg.org/Hyperpipe/Hyperpipe)
 - Twitter <span>&#8594;</span> [Nitter](https://github.com/zedeus/nitter)
 - TikTok <span>&#8594;</span> [ProxiTok](https://github.com/pablouser1/ProxiTok)
-- Reddit <span>&#8594;</span> [Libreddit](https://github.com/spikecodes/libreddit#instances), [Teddit](https://codeberg.org/teddit/teddit#instances)
+- Reddit <span>&#8594;</span> [Libreddit](https://github.com/spikecodes/libreddit), [Teddit](https://codeberg.org/teddit/teddit)
 - Imgur <span>&#8594;</span> [Rimgo](https://codeberg.org/video-prize-ranch/rimgo)
 - Reuters <span>&#8594;</span> [Neuters](https://github.com/HookedBehemoth/neuters)
-- Medium <span>&#8594;</span> [Scribe](https://sr.ht/~edwardloveall/Scribe/)
+- Medium <span>&#8594;</span> [Scribe](https://sr.ht/~edwardloveall/Scribe/), [LibMedium](https://github.com/realaravinth/libmedium)
 - Quora <span>&#8594;</span> [Quetre](https://github.com/zyachel/quetre)
 - IMDb <span>&#8594;</span> [libremdb](https://github.com/zyachel/libremdb)
 - LBRY/Odysee <span>&#8594;</span> [Librarian](https://codeberg.org/librarian/librarian), [LBRY Desktop](https://lbry.com/get)
@@ -32,6 +32,9 @@ A web extension that redirects YouTube, Twitter, TikTok... requests to alternati
 - Translate <span>&#8594;</span> [SimplyTranslate](https://git.sr.ht/~metalune/simplytranslate_web), [LingvaTranslate](https://github.com/TheDavidDelta/lingva-translate), [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)
 - Google Maps <span>&#8594;</span> [OpenStreetMap](https://www.openstreetmap.org/), [FacilMap](https://github.com/FacilMap/facilmap)
 - Send Files <span>&#8594;</span> [Send](https://gitlab.com/timvisee/send)
+- Genius <span>&#8594;</span> [Dumb](https://github.com/rramiachraf/dumb)
+- StackOverflow <span>&#8594;</span> [AnonymousOverflow](https://github.com/httpjamesm/AnonymousOverflow)
+- Goodreads <span>&#8594;</span> [BiblioReads](https://github.com/nesaku/BiblioReads)
 
 **Note**: The Extension will be using random instances by default. You can modify this and add custom instances too.
 

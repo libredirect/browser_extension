@@ -542,6 +542,25 @@
 			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://stackoverflow.com/"
+		},
+		"goodReads": {
+			"frontends": {
+				"biblioReads": {
+					"name": "goodReads",
+					"instanceList": true,
+					"url": "https://github.com/nesaku/BiblioReads"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?goodreads\\.com\\/"
+			],
+			"name": "Goodreads",
+			"options": {
+				"enabled": false
+			},
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://goodreads.com/"
 		}
 	}
 }
