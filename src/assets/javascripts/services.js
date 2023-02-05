@@ -539,6 +539,38 @@ function reverse(url) {
 	})
 }
 
+const defaultInstances = {
+	'invidious': ['https://inv.vern.cc'],
+	'piped': ['https://pipedapi-libre.kavin.rocks'],
+	'pipedMaterial': ['https://piped-material.xn--17b.net'],
+	'cloudtube': ['https://tube.cadence.moe'],
+	'proxiTok': ['https://proxitok.pabloferreiro.es'],
+	'send': ['https://send.vis.ee'],
+	'nitter': ['https://nitter.net'],
+	'libreddit': ['https://libreddit.spike.codes'],
+	'teddit': ['https://teddit.net'],
+	'scribe': ['https://scribe.rip'],
+	'libMedium': ['https://md.vern.cc'],
+	'quetre': ['https://quetre.iket.me'],
+	'libremdb': ['https://libremdb.iket.me'],
+	'simplyTranslate': ['https://simplytranslate.org'],
+	'lingva': ['https://lingva.ml'],
+	'searxng': ['https://sx.vern.cc'],
+	'rimgo': ['https://rimgo.vern.cc'],
+	'librarian': ['https://lbry.vern.cc'],
+	'beatbump': ['https://beatbump.ml'],
+	'hyperpipe': ['https://hyperpipe.surge.sh'],
+	'facil': [' https://facilmap.org '],
+	'osm': ['https://www.openstreetmap.org'],
+	'breezeWiki': ['https://breezewiki.com'],
+	'neuters': ['https://neuters.de'],
+	'dumb': ['https://dm.vern.cc'],
+	'ruralDictionary': ['https://rd.vern.cc'],
+	'anonymousOverflow': ['https://code.whatever.social'],
+	'biblioReads': ['https://biblioreads.ml'],
+	'wikiless': ['https://wikiless.org'],
+}
+
 function initDefaults() {
 	return new Promise(resolve => {
 		browser.storage.local.clear(async () => {
@@ -562,35 +594,7 @@ function initDefaults() {
 			options['theme'] = "detect"
 			options['popupServices'] = ["youtube", "twitter", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
 
-			options['invidious'] = ['https://inv.vern.cc']
-			options['piped'] = ['https://pipedapi-libre.kavin.rocks']
-			options['pipedMaterial'] = ['https://piped-material.xn--17b.net']
-			options['cloudtube'] = ['https://tube.cadence.moe']
-			options['proxiTok'] = ['https://proxitok.pabloferreiro.es']
-			options['send'] = ['https://send.vis.ee']
-			options['nitter'] = ['https://nitter.net']
-			options['libreddit'] = ['https://libreddit.spike.codes']
-			options['teddit'] = ['https://teddit.net']
-			options['scribe'] = ['https://scribe.rip']
-			options['libMedium'] = ['https://md.vern.cc']
-			options['quetre'] = ['https://quetre.iket.me']
-			options['libremdb'] = ['https://libremdb.iket.me']
-			options['simplyTranslate'] = ['https://simplytranslate.org']
-			options['lingva'] = ['https://lingva.ml']
-			options['searxng'] = ['https://sx.vern.cc']
-			options['rimgo'] = ['https://rimgo.vern.cc']
-			options['librarian'] = ['https://lbry.vern.cc']
-			options['beatbump'] = ['https://beatbump.ml']
-			options['hyperpipe'] = ['https://hyperpipe.surge.sh']
-			options['facil'] = [' https://facilmap.org ']
-			options['osm'] = ['https://www.openstreetmap.org']
-			options['breezeWiki'] = ['https://breezewiki.com']
-			options['neuters'] = ['https://neuters.de']
-			options['dumb'] = ['https://dm.vern.cc']
-			options['ruralDictionary'] = ['https://rd.vern.cc']
-			options['anonymousOverflow'] = ['https://code.whatever.social']
-			options['biblioReads'] = ['https://biblioreads.ml']
-			options['wikiless'] = ['https://wikiless.org']
+			options = { ...options, ...defaultInstances }
 
 			browser.storage.local.set({ options },
 				() => resolve()
@@ -636,7 +640,7 @@ function upgradeOptions() {
 						]
 					}
 					else {
-						options[frontend] = []
+						options[frontend] = defaultInstances[frontend]
 					}
 				}
 			}
@@ -664,9 +668,9 @@ function processUpdate() {
 
 			for (const frontend in config.services[service].frontends) {
 				if (options[frontend] === undefined && config.services[service].frontends[frontend].instanceList) {
-					options[frontend] = []
+					options[frontend] = defaultInstances[frontend]
 				}
-				else if (frontend in options && frontend in !config.services[service].frontends) {
+				else if (frontend in options && !(frontend in config.services[service].frontends)) {
 					delete options[frontend]
 				}
 			}
