@@ -37,8 +37,6 @@ A web extension that redirects YouTube, Twitter, TikTok... requests to alternati
 - Goodreads <span>&#8594;</span> [BiblioReads](https://github.com/nesaku/BiblioReads)
 - Wikipedia <span>&#8594;</span> [Wikiless](https://wikiless.org)
 
-**Note**: The Extension will be using random instances by default. You can modify this and add custom instances too.
-
 # Please read the [FAQ](https://libredirect.github.io/faq.html) if you have any questions!
 
 ## Donate
