@@ -530,6 +530,7 @@ function initDefaults() {
 			options['libreddit'] = ['https://libreddit.spike.codes']
 			options['teddit'] = ['https://teddit.net']
 			options['scribe'] = ['https://scribe.rip']
+			options['libMedium'] = ['https://md.vern.cc']
 			options['quetre'] = ['https://quetre.iket.me']
 			options['libremdb'] = ['https://libremdb.iket.me']
 			options['simplyTranslate'] = ['https://simplytranslate.org']

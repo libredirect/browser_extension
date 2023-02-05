@@ -211,11 +211,16 @@
 				"scribe": {
 					"name": "Scribe",
 					"instanceList": true,
-					"url": "https://sr.ht/~edwardloveall/Scribe/"
+					"url": "https://sr.ht/~edwardloveall/Scribe"
+				},
+				"libMedium": {
+					"name": "LibMedium",
+					"instanceList": true,
+					"url": "https://github.com/realaravinth/libmedium"
 				}
 			},
 			"targets": [
-				"^(?:.*\\.)*(?<!(link\\.|cdn\\-images\\-\\d+\\.))medium\\.com(\\/.*)?$",
+				"^https:\\/{2}(link\\.|cdn\\-images\\-\\d+\\.)?medium\\.com",
 				"^https?:\\/{2}towardsdatascience\\.com(\\/|$)",
 				"^https?:\\/{2}uxdesign\\.cc(\\/|$)",
 				"^https?:\\/{2}uxplanet\\.org(\\/|$)",
@@ -237,6 +242,7 @@
 			],
 			"name": "Medium",
 			"options": {
+				"frontend": "scribe",
 				"enabled": false
 			},
 			"imageType": "svg",
@@ -533,7 +539,7 @@
 			"options": {
 				"enabled": false
 			},
-			"imageType": "svg",
+			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://stackoverflow.com/"
 		}
