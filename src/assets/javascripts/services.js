@@ -59,15 +59,15 @@ function redirect(url, type, initiator, forceRedirection) {
 			continue
 		}
 
-		if (
-			initiator
-			&&
-			options[frontend].includes(initiator.origin)
-		) return "BYPASSTAB"
-
 		let instanceList = options[frontend]
 		if (instanceList === undefined) break
 		if (instanceList.length === 0) return
+
+		if (
+			initiator
+			&&
+			instanceList.includes(initiator.origin)
+		) return "BYPASSTAB"
 
 		randomInstance = utils.getRandomInstance(instanceList)
 
@@ -367,7 +367,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.hostname.match(/^[a-zA-Z0-9-]+\.(?:fandom|wikia)\.com/)) {
 				wiki = url.hostname.match(/^[a-zA-Z0-9-]+(?=\.(?:fandom|wikia)\.com)/)
 				if (wiki == "www" || !wiki) wiki = ""
-				else wiki = `/${wiki}`;
+				else wiki = `/${wiki}`
 				urlpath = url.pathname
 			} else {
 				wiki = url.pathname.match(/(?<=wiki\/w:c:)[a-zA-Z0-9-]+(?=:)/)
@@ -406,20 +406,23 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "neuters": {
 			const p = url.pathname
 			if (p.startsWith('/article/') || p.startsWith('/pf/') || p.startsWith('/arc/') || p.startsWith('/resizer/')) {
-				return null;
+				return null
 			}
-			return `${randomInstance}${p}`;
+			return `${randomInstance}${p}`
 		}
 		case "dumb": {
 			if (url.pathname.endsWith('-lyrics')) return `${randomInstance}${url.pathname}`
 		}
 		case "ruralDictionary": {
-			if (!url.pathname.endsWith('/define.php') && !url.pathname.endsWith('/random.php') && url.pathname != '/') return
+			if (!url.pathname.includes('/define.php') && !url.pathname.includes('/random.php') && url.pathname != '/') return
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "anonymousOverflow": {
 			if (!url.pathname.startsWith('/questions') && url.pathname != '/') return
+			const threadID = /\/(\d+)\/?$/.exec(url.pathname)
+			if (threadID) return `${randomInstance}/questions/${threadID[1]}${url.search}`
 			return `${randomInstance}${url.pathname}${url.search}`
+
 		}
 		case "biblioReads": {
 			if (!url.pathname.startsWith('/book/show/') && url.pathname != '/') return
