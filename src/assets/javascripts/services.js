@@ -450,8 +450,12 @@ function redirect(url, type, initiator, forceRedirection) {
 			for (let i = 0; i < GETArguments.length; i++) link += (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1]
 			return link
 		}
-		default:
+		case "suds": {
 			return `${randomInstance}${url.pathname}${url.search}`
+		}
+		default: {
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
 	}
 }
 
@@ -572,6 +576,7 @@ const defaultInstances = {
 	'anonymousOverflow': ['https://code.whatever.social'],
 	'biblioReads': ['https://biblioreads.ml'],
 	'wikiless': ['https://wikiless.org'],
+	'suds': ['https://sd.vern.cc']
 }
 
 function initDefaults() {
