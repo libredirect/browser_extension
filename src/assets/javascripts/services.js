@@ -59,15 +59,15 @@ function redirect(url, type, initiator, forceRedirection) {
 			continue
 		}
 
-		if (
-			initiator
-			&&
-			options[frontend].includes(initiator.origin)
-		) return "BYPASSTAB"
-
 		let instanceList = options[frontend]
 		if (instanceList === undefined) break
 		if (instanceList.length === 0) return
+
+		if (
+			initiator
+			&&
+			instanceList.includes(initiator.origin)
+		) return "BYPASSTAB"
 
 		randomInstance = utils.getRandomInstance(instanceList)
 
@@ -414,13 +414,15 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.pathname.endsWith('-lyrics')) return `${randomInstance}${url.pathname}`
 		}
 		case "ruralDictionary": {
-			if (!url.pathname.endsWith('/define.php') && !url.pathname.endsWith('/random.php') && url.pathname != '/') return
+			if (!url.pathname.includes('/define.php') && !url.pathname.includes('/random.php') && url.pathname != '/') return
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "anonymousOverflow": {
 			if (!url.pathname.startsWith('/questions') && url.pathname != '/') return
-			const threadID = /\/\d+(?=[?&#/]|$)/.exec(url.pathname)?.[0]
-			return `${randomInstance}${threadID ? '/questions' + threadID : url.pathname}${url.search}`
+			const threadID = /\/(\d+)\/?$/.exec(url.pathname)
+			if (threadID) return `${randomInstance}/questions/${threadID[1]}${url.search}`
+			return `${randomInstance}${url.pathname}${url.search}`
+
 		}
 		case "biblioReads": {
 			if (!url.pathname.startsWith('/book/show/') && url.pathname != '/') return
