@@ -367,7 +367,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.hostname.match(/^[a-zA-Z0-9-]+\.(?:fandom|wikia)\.com/)) {
 				wiki = url.hostname.match(/^[a-zA-Z0-9-]+(?=\.(?:fandom|wikia)\.com)/)
 				if (wiki == "www" || !wiki) wiki = ""
-				else wiki = `/${wiki}`;
+				else wiki = `/${wiki}`
 				urlpath = url.pathname
 			} else {
 				wiki = url.pathname.match(/(?<=wiki\/w:c:)[a-zA-Z0-9-]+(?=:)/)
@@ -406,9 +406,9 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "neuters": {
 			const p = url.pathname
 			if (p.startsWith('/article/') || p.startsWith('/pf/') || p.startsWith('/arc/') || p.startsWith('/resizer/')) {
-				return null;
+				return null
 			}
-			return `${randomInstance}${p}`;
+			return `${randomInstance}${p}`
 		}
 		case "dumb": {
 			if (url.pathname.endsWith('-lyrics')) return `${randomInstance}${url.pathname}`
@@ -419,7 +419,8 @@ function redirect(url, type, initiator, forceRedirection) {
 		}
 		case "anonymousOverflow": {
 			if (!url.pathname.startsWith('/questions') && url.pathname != '/') return
-			return `${randomInstance}${url.pathname}${url.search}`
+			const threadID = /\/\d+(?=[?&#/]|$)/.exec(url.pathname)?.[0]
+			return `${randomInstance}${threadID ? '/questions' + threadID : url.pathname}${url.search}`
 		}
 		case "biblioReads": {
 			if (!url.pathname.startsWith('/book/show/') && url.pathname != '/') return
