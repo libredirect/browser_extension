@@ -165,6 +165,7 @@ function createList(frontend, networks, document, redirects, blacklist) {
 	for (const network in networks) {
 		if (redirects[frontend]) {
 			if (redirects[frontend][network].length > 0) {
+				document.getElementById(frontend).getElementsByClassName("custom-instance")[0].placeholder = redirects[frontend].clearnet[0]
 				document.getElementById(frontend)
 					.getElementsByClassName(network)[0]
 					.getElementsByClassName("checklist")[0]
