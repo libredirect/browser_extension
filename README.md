@@ -6,9 +6,12 @@ A web extension that redirects YouTube, Twitter, TikTok... requests to alternati
 [![Firefox users Badge](https://img.shields.io/amo/users/libredirect?label=Firefox%20users)](https://addons.mozilla.org/firefox/addon/libredirect/)
 [![LibrePay Badge](https://img.shields.io/liberapay/gives/libredirect?label=Liberapay)](https://liberapay.com/LibRedirect)
 
-[![OpenCollective Badge](https://opencollective.com/libredirect/tiers/badge.svg)](https://opencollective.com/libredirect#category-CONTRIBUTE)
+[![OpenCollective Badge](https://opencollective.com/libredirect/tiers/badge.svg)](https://opencollective.com/libredirect#category-CONTRIBUTE) 
+
+
 
 [![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)&nbsp;
+
 <a href="./chromium.md">
 <img src ="./img/badge-chromium.png" height=60 >
 </a>
@@ -38,6 +41,10 @@ A web extension that redirects YouTube, Twitter, TikTok... requests to alternati
 - Wikipedia <span>&#8594;</span> [Wikiless](https://wikiless.org)
 
 # Please read the [FAQ](https://libredirect.github.io/faq.html) if you have any questions!
+
+We're now on <a rel="me" href="https://fosstodon.org/@libredirect">Mastodon</a> 
+
+<img src="https://joinmastodon.org/logos/logo-purple.svg" alt="Mastodon" height="30">
 
 ## Donate
 
