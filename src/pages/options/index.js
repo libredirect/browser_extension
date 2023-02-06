@@ -134,12 +134,11 @@ async function calcCustomInstances(frontend) {
 }
 
 async function processCustomInstances(frontend, document) {
-	let options = await utils.getOptions()
-	let customInstances = options[frontend]
-
 	calcCustomInstances(frontend)
 	document.getElementById(frontend).getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
 		event.preventDefault()
+		let options = await utils.getOptions()
+		let customInstances = options[frontend]
 		let frontendCustomInstanceInput = document.getElementById(frontend).getElementsByClassName("custom-instance")[0]
 		let url
 		try {
