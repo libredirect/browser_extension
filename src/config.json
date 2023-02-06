@@ -478,7 +478,7 @@
 			"targets": [
 				"^https?:\\/{2}(www\\.)?reuters\\.com\\/"
 			],
-			"name": "Paste Text",
+			"name": "Reuters",
 			"options": {
 				"enabled": false
 			},
