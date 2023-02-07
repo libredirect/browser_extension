@@ -148,6 +148,19 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "freetube": {
 			return `freetube://https://youtu.be${url.pathname}${url.search}`.replace(/watch\?v=/, "")
 		}
+		case "poketube": {
+			if (url.pathname.startsWith('/channel')) {
+				const reg = /\/channel\/(.*)\/?$/.exec(url.pathname)
+				if (reg) {
+					const id = reg[1]
+					return `${randomInstance}/channel?id=${id}${url.search}`
+				}
+			}
+			if (/\/@[a-z]+\//.exec(url.pathname)) {
+				return randomInstance
+			}
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
 		case "simplyTranslate": {
 			return `${randomInstance}/${url.search}`
 		}
@@ -551,6 +564,7 @@ const defaultInstances = {
 	'piped': ['https://pipedapi-libre.kavin.rocks'],
 	'pipedMaterial': ['https://piped-material.xn--17b.net'],
 	'cloudtube': ['https://tube.cadence.moe'],
+	'poketube': ['https://poketube.fun'],
 	'proxiTok': ['https://proxitok.pabloferreiro.es'],
 	'send': ['https://send.vis.ee'],
 	'nitter': ['https://nitter.net'],

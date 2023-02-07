@@ -5,13 +5,9 @@ A web extension that redirects YouTube, Twitter, TikTok... requests to alternati
 [![Matrix Badge](https://img.shields.io/matrix/libredirect:matrix.org?label=matrix%20chat)](https://matrix.to/#/#libredirect:matrix.org)
 [![Firefox users Badge](https://img.shields.io/amo/users/libredirect?label=Firefox%20users)](https://addons.mozilla.org/firefox/addon/libredirect/)
 [![LibrePay Badge](https://img.shields.io/liberapay/gives/libredirect?label=Liberapay)](https://liberapay.com/LibRedirect)
-
 [![OpenCollective Badge](https://opencollective.com/libredirect/tiers/badge.svg)](https://opencollective.com/libredirect#category-CONTRIBUTE) 
 
-
-
 [![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)&nbsp;
-
 <a href="./chromium.md">
 <img src ="./img/badge-chromium.png" height=60 >
 </a>
@@ -20,7 +16,7 @@ A web extension that redirects YouTube, Twitter, TikTok... requests to alternati
 <img src ="./img/2.png" width=350>&nbsp;
 <img src ="./img/3.png" width=350>&nbsp;
 
-- Youtube <span>&#8594;</span> [Invidious](https://github.com/iv-org/invidious), [Piped](https://github.com/TeamPiped/Piped), [Piped-Material](https://github.com/mmjee/Piped-Material), [CloudTube](https://sr.ht/~cadence/tube/), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee)
+- Youtube <span>&#8594;</span> [Invidious](https://github.com/iv-org/invidious), [Piped](https://github.com/TeamPiped/Piped), [Piped-Material](https://github.com/mmjee/Piped-Material), [CloudTube](https://sr.ht/~cadence/tube/), [PokeTube](https://codeberg.org/Ashley/poketube/), [FreeTube](https://github.com/FreeTubeApp/FreeTube), [Yattee](https://github.com/yattee/yattee)
 - Youtube Music <span>&#8594;</span> [Beatbump](https://github.com/snuffyDev/Beatbump), [Hyperpipe](https://codeberg.org/Hyperpipe/Hyperpipe)
 - Twitter <span>&#8594;</span> [Nitter](https://github.com/zedeus/nitter)
 - TikTok <span>&#8594;</span> [ProxiTok](https://github.com/pablouser1/ProxiTok)
@@ -39,8 +35,9 @@ A web extension that redirects YouTube, Twitter, TikTok... requests to alternati
 - StackOverflow <span>&#8594;</span> [AnonymousOverflow](https://github.com/httpjamesm/AnonymousOverflow)
 - Goodreads <span>&#8594;</span> [BiblioReads](https://github.com/nesaku/BiblioReads)
 - Wikipedia <span>&#8594;</span> [Wikiless](https://wikiless.org)
+- Snopes <span>&#8594;</span> [Suds](https://git.vern.cc/cobra/Suds)
 
-# Please read the [FAQ](https://libredirect.github.io/faq.html) if you have any questions!
+**Please read the [FAQ](https://libredirect.github.io/faq.html) if you have any questions!**
 
 We're now on <a rel="me" href="https://fosstodon.org/@libredirect">Mastodon</a> 
 

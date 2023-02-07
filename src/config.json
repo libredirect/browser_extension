@@ -71,6 +71,16 @@
 					"embeddable": false,
 					"instanceList": false,
 					"url": "https://github.com/yattee/yattee"
+				},
+				"poketube": {
+					"excludeTargets": [
+						2,
+						3
+					],
+					"name": "PokeTube",
+					"embeddable": true,
+					"instanceList": true,
+					"url": "https://codeberg.org/Ashley/poketube/"
 				}
 			},
 			"targets": [
