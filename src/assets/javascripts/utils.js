@@ -58,7 +58,48 @@ function getList() {
 		}
 		http.send(null)
 	})
+}
 
+function pingOnce(href) {
+	return new Promise(async resolve => {
+		let started
+		let http = new XMLHttpRequest()
+		http.timeout = 5000
+		http.ontimeout = () => resolve(5000)
+		http.onerror = () => resolve()
+		http.onreadystatechange = () => {
+			if (http.readyState == 2) {
+				if (http.status == 200) {
+					let ended = new Date().getTime()
+					http.abort()
+					resolve(ended - started)
+				} else {
+					resolve(5000 + http.status)
+				}
+			}
+		}
+		http.open("GET", `${href}?_=${new Date().getTime()}`, true)
+		started = new Date().getTime()
+		http.send(null)
+	})
+}
+
+function ping(href) {
+	return new Promise(async resolve => {
+		let average = 0
+		let time
+		for (let i = 0; i < 3; i++) {
+			time = await pingOnce(href)
+			if (i == 0) continue
+			if (time >= 5000) {
+				resolve(time)
+				return
+			}
+			average += time
+		}
+		average = parseInt(average / 3)
+		resolve(average)
+	})
 }
 
 export default {
@@ -68,5 +109,6 @@ export default {
 	getBlacklist,
 	camelCase,
 	getConfig,
-	getOptions
+	getOptions,
+	ping,
 }

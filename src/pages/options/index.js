@@ -90,6 +90,11 @@ async function loadPage(path) {
 		for (const frontend in config.services[service].frontends) {
 			if (config.services[service].frontends[frontend].instanceList) {
 				processCustomInstances(frontend, document)
+				document.getElementById(`ping-${frontend}`).addEventListener("click", async () => {
+					document.getElementById(`ping-${frontend}`).getElementsByTagName('x')[0].innerHTML = "Pinging..."
+					await ping(frontend)
+					document.getElementById(`ping-${frontend}`).getElementsByTagName('x')[0].innerHTML = "Ping instances"
+				})
 			}
 		}
 
@@ -229,3 +234,43 @@ function createList(frontend, networks, document, redirects, blacklist) {
 const r = window.location.href.match(/#(.*)/)
 if (r) loadPage(r[1])
 else loadPage("general")
+
+async function ping(frontend) {
+	let instanceElements = document.getElementById(frontend)
+		.getElementsByClassName('clearnet')[0]
+		.getElementsByTagName('x')
+	for (const element of instanceElements) {
+		let span = element.getElementsByTagName('span')[0]
+		if (!span) span = document.createElement('span')
+		span.innerHTML = '<span style="color:lightblue">pinging...</span>'
+		element.appendChild(span)
+
+		const href = element.getElementsByTagName('a')[0].href
+		let time = await utils.ping(href)
+
+		let color
+		let text
+
+		if (time < 5000) {
+			text = `${time}ms`
+			if (time <= 1000) { color = "green" }
+			else if (time <= 2000) color = "orange"
+		}
+		else if (time >= 5000) {
+			color = "red"
+			if (time == 5000) {
+				text = "5000ms+"
+			}
+			if (time > 5000) {
+				text = `Error: ${time - 5000}`
+			}
+		}
+		else {
+			color = "red"
+			text = 'Server not found'
+		}
+
+		span.innerHTML = `<span style="color:${color};">${text}</span>`
+
+	}
+}
