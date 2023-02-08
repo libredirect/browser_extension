@@ -71,6 +71,11 @@ resetSettings.addEventListener("click", async () => {
 	location.reload()
 })
 
+document.getElementById('fetch-instances').addEventListener('change', event => {
+	setOption('fetchInstances', 'select', event)
+	location.reload()
+})
+
 let themeElement = document.getElementById("theme")
 themeElement.addEventListener("change", event => {
 	setOption("theme", "select", event)

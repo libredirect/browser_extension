@@ -16,7 +16,7 @@ browser.runtime.onInstalled.addListener(async details => {
 			browser.runtime.openOptionsPage()
 		}
 		else if (details.reason == "update") {
-			if (details.previousVersion == '2.3.4') {
+			if (details.previousVersion == '2.5.2') {
 				await servicesHelper.upgradeOptions()
 			} else {
 				await servicesHelper.processUpdate()
@@ -115,7 +115,7 @@ browser.contextMenus.create({
 })
 
 browser.contextMenus.create({
-	id: "reverse",
+	id: "reverseTab",
 	title: 'Reverse redirect',
 	contexts: ["browser_action"],
 })
@@ -157,7 +157,7 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
 			servicesHelper.copyRaw(url)
 			return
 		}
-		case 'reverse': {
+		case 'reverseTab': {
 			const url = new URL(info.pageUrl)
 			const newUrl = await servicesHelper.reverse(url)
 			if (newUrl) {

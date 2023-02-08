@@ -99,11 +99,25 @@ async function loadPage(path) {
 		}
 
 		!async function () {
-			const blacklist = await utils.getBlacklist()
-			const redirects = await utils.getList()
+			const blacklist = await utils.getBlacklist(options)
+			const redirects = await utils.getList(options)
+
 			for (const frontend in config.services[service].frontends) {
 				if (config.services[service].frontends[frontend].instanceList) {
-					createList(frontend, config.networks, document, redirects, blacklist)
+					if (redirects == 'disabled' || blacklist == 'disabled') {
+						document.getElementById(frontend).getElementsByClassName('clearnet')[0].style.display = 'none'
+						document.getElementById(frontend).getElementsByClassName('ping')[0].style.display = 'none'
+					}
+					else if (!redirects || !blacklist) {
+						document.getElementById(frontend)
+							.getElementsByClassName('clearnet')[0]
+							.getElementsByClassName("checklist")[0]
+							.getElementsByClassName('loading')[0]
+							.innerHTML = 'Could not fetch instances.'
+					}
+					else {
+						createList(frontend, config.networks, document, redirects, blacklist)
+					}
 				}
 			}
 		}()
@@ -240,8 +254,9 @@ async function ping(frontend) {
 		.getElementsByClassName('clearnet')[0]
 		.getElementsByTagName('x')
 	for (const element of instanceElements) {
-		let span = element.getElementsByTagName('span')[0]
+		let span = element.getElementsByClassName('ping')[0]
 		if (!span) span = document.createElement('span')
+		span.classList = ['ping']
 		span.innerHTML = '<span style="color:lightblue">pinging...</span>'
 		element.appendChild(span)
 

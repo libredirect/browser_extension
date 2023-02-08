@@ -11,6 +11,13 @@ section(class="option-block" id="general_page")
             option(value="dark" data-localise="__MSG_dark__") Dark
 
     div(class="some-block option-block")
+        h4 Fetch public instances
+        select(id="fetch-instances")
+            option(value="github") GitHub
+            option(value="codeberg") Codeberg
+            option(value="disable") Disable
+
+    div(class="some-block option-block")
         h4(data-localise="__MSG_excludeFromRedirecting__") Excluded from redirecting
 
     form(id="custom-exceptions-instance-form")

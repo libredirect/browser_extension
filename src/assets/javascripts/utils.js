@@ -32,29 +32,67 @@ function getOptions() {
 	)
 }
 
-function getBlacklist() {
+function getBlacklist(options) {
 	return new Promise(resolve => {
+		let url
+		if (options.fetchInstances == 'github') {
+			url = 'https://raw.githubusercontent.com/libredirect/instances/main/blacklist.json'
+		}
+		else if (options.fetchInstances == 'codeberg') {
+			url = 'https://codeberg.org/LibRedirect/instances/raw/branch/main/blacklist.json'
+		}
+		else {
+			resolve('disabled')
+			return
+		}
 		const http = new XMLHttpRequest()
-		http.open("GET", "https://raw.githubusercontent.com/libredirect/instances/main/blacklist.json", true)
+		http.open("GET", url, true)
 		http.onreadystatechange = () => {
 			if (http.status === 200 && http.readyState == XMLHttpRequest.DONE) {
 				resolve(JSON.parse(http.responseText))
 				return
 			}
 		}
+		http.onerror = () => {
+			resolve()
+			return
+		}
+		http.ontimeout = () => {
+			resolve()
+			return
+		}
 		http.send(null)
 	})
 }
 
-function getList() {
+function getList(options) {
 	return new Promise(resolve => {
+		let url
+		if (options.fetchInstances == 'github') {
+			url = 'https://raw.githubusercontent.com/libredirect/instances/main/data.json'
+		}
+		else if (options.fetchInstances == 'codeberg') {
+			url = 'https://codeberg.org/LibRedirect/instances/raw/branch/main/data.json'
+		}
+		else {
+			resolve('disabled')
+			return
+		}
 		const http = new XMLHttpRequest()
-		http.open("GET", "https://raw.githubusercontent.com/libredirect/instances/main/data.json", true)
+		http.open("GET", url, true)
 		http.onreadystatechange = () => {
 			if (http.status === 200 && http.readyState == XMLHttpRequest.DONE) {
 				resolve(JSON.parse(http.responseText))
 				return
 			}
+		}
+		http.onerror = () => {
+			resolve()
+			return
+		}
+		http.ontimeout = () => {
+			resolve()
+			return
 		}
 		http.send(null)
 	})

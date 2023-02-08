@@ -618,6 +618,7 @@ function initDefaults() {
 			}
 			options['theme'] = "detect"
 			options['popupServices'] = ["youtube", "twitter", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
+			options['fetchInstances'] = 'github'
 
 			options = { ...options, ...defaultInstances }
 
@@ -631,45 +632,10 @@ function initDefaults() {
 function upgradeOptions() {
 	return new Promise(async resolve => {
 		const oldOptions = await utils.getOptions()
-		const config = await utils.getConfig()
 
 		let options = {}
-
-		options.exceptions = oldOptions.exceptions
-		options.theme = oldOptions.theme
-		options.popupServices = oldOptions.popupServices
-
-		for (const service in config.services) {
-			if (service in oldOptions) {
-				options[service] = oldOptions[service]
-				delete options[service].embedFrontend
-			}
-			else {
-				options[service] = {}
-				for (const defaultOption in config.services[service].options) {
-					options[service][defaultOption] = config.services[service].options[defaultOption]
-				}
-				for (const frontend in config.services[service].frontends) {
-					if (config.services[service].frontends[frontend].instanceList) {
-						options[frontend] = []
-					}
-				}
-			}
-
-			for (const frontend in config.services[service].frontends) {
-				if (config.services[service].frontends[frontend].instanceList) {
-					if (frontend in oldOptions) {
-						options[frontend] = [
-							...oldOptions[frontend].clearnet.enabled,
-							...oldOptions[frontend].clearnet.custom
-						]
-					}
-					else {
-						options[frontend] = defaultInstances[frontend]
-					}
-				}
-			}
-		}
+		options = [...oldOptions]
+		options.fetchInstances = 'github'
 
 		browser.storage.local.clear(() => {
 			browser.storage.local.set({ options }, () => {
