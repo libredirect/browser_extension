@@ -13,6 +13,7 @@ browser.runtime.onInstalled.addListener(async details => {
 			if (!(await utils.getOptions())) {
 				await servicesHelper.initDefaults()
 			}
+			browser.runtime.openOptionsPage()
 		}
 		else if (details.reason == "update") {
 			if (details.previousVersion == '2.3.4') {
@@ -21,7 +22,6 @@ browser.runtime.onInstalled.addListener(async details => {
 				await servicesHelper.processUpdate()
 			}
 		}
-		browser.runtime.openOptionsPage()
 	}
 })
 
