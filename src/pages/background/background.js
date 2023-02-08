@@ -78,11 +78,16 @@ browser.tabs.onRemoved.addListener(tabId => {
 })
 
 browser.commands.onCommand.addListener(async command => {
-	if (command == "switchInstance") {
-		const newUrl = await servicesHelper.switchInstance()
-		if (newUrl) browser.tabs.update({ url: newUrl })
-	}
-	else if (command == "copyRaw") servicesHelper.copyRaw()
+	browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+		const url = new URL(tabs[0].url)
+		if (command == "switchInstance") {
+			const newUrl = await servicesHelper.switchInstance(url)
+			if (newUrl) browser.tabs.update({ url: newUrl })
+		}
+		else if (command == "copyRaw") {
+			servicesHelper.copyRaw(url)
+		}
+	})
 })
 
 browser.contextMenus.create({
@@ -98,50 +103,101 @@ browser.contextMenus.create({
 })
 
 browser.contextMenus.create({
-	id: "copyRaw",
-	title: browser.i18n.getMessage("copyRaw"),
+	id: "copyReverse",
+	title: 'Copy reverse',
 	contexts: ["browser_action"],
 })
 
 browser.contextMenus.create({
-	id: "redirectToOriginal",
-	title: browser.i18n.getMessage("redirectToOriginal"),
+	id: "redirectTab",
+	title: 'Redirect',
+	contexts: ["browser_action"],
+})
+
+browser.contextMenus.create({
+	id: "reverse",
+	title: 'Reverse redirect',
 	contexts: ["browser_action"],
 })
 
 browser.contextMenus.create({
 	id: "redirectLink",
-	title: browser.i18n.getMessage("redirectLink"),
+	title: 'Redirect',
 	contexts: ["link"],
 })
 
-browser.contextMenus.onClicked.addListener((info, tab) => {
-	return new Promise(async resolve => {
-		if (info.menuItemId == 'switchInstance') {
-			const newUrl = await servicesHelper.switchInstance()
-			if (newUrl) browser.tabs.update({ url: newUrl })
+browser.contextMenus.create({
+	id: "reverseLink",
+	title: 'Reverse redirect',
+	contexts: ["link"],
+})
+
+browser.contextMenus.create({
+	id: "copyReverseLink",
+	title: 'Copy Reverse',
+	contexts: ["link"],
+})
+
+browser.contextMenus.onClicked.addListener(async (info, tab) => {
+	switch (info.menuItemId) {
+		case 'switchInstance': {
+			const url = new URL(info.pageUrl)
+			const newUrl = await servicesHelper.switchInstance(url)
+			if (newUrl) {
+				browser.tabs.update({ url: newUrl })
+			}
+			return
 		}
-		else if (info.menuItemId == 'settings') {
+		case 'settings': {
 			browser.runtime.openOptionsPage()
+			return
 		}
-		else if (info.menuItemId == 'copyRaw') {
-			servicesHelper.copyRaw()
+		case 'copyReverse': {
+			const url = new URL(info.pageUrl)
+			servicesHelper.copyRaw(url)
+			return
 		}
-		else if (info.menuItemId == 'redirectToOriginal') {
-			const newUrl = await servicesHelper.reverse(tab.url)
+		case 'reverse': {
+			const url = new URL(info.pageUrl)
+			const newUrl = await servicesHelper.reverse(url)
 			if (newUrl) {
 				tabIdRedirects[tab.id] = false
-				browser.tabs.update(tab.id, { url: newUrl })
+				browser.tabs.update({ url: newUrl })
 			}
+			return
 		}
-		else if (info.menuItemId == 'redirectLink') {
+		case 'redirectTab': {
+			const url = new URL(info.pageUrl)
+			const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
+			if (newUrl) {
+				tabIdRedirects[tab.id] = true
+				browser.tabs.update({ url: newUrl })
+			}
+			return
+		}
+
+		case 'copyReverseLink': {
+			const url = new URL(info.linkUrl)
+			servicesHelper.copyRaw(url)
+			return
+		}
+		case 'redirectLink': {
 			const url = new URL(info.linkUrl)
 			const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
 			if (newUrl) browser.tabs.create({ url: newUrl })
+			return
 		}
-		resolve()
-		return
-	})
+		case 'reverseLink': {
+			const url = new URL(info.linkUrl)
+			const newUrl = await servicesHelper.reverse(url)
+			if (newUrl) {
+				tabIdRedirects[tab.id] = false
+				browser.tabs.create({ url: newUrl })
+			}
+			return
+		}
+
+	}
 })
 
 browser.webRequest.onHeadersReceived.addListener(

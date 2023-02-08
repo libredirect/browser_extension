@@ -496,9 +496,11 @@ function computeService(url, returnFrontend) {
 	})
 }
 
-function _switchInstance(url) {
+function switchInstance(url) {
 	return new Promise(async resolve => {
-		await init()
+		let options = await utils.getOptions()
+		let config = await utils.getConfig()
+
 		const protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
 			let frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
@@ -522,8 +524,9 @@ function _switchInstance(url) {
 
 function reverse(url) {
 	return new Promise(async resolve => {
-		await init()
-		url = new URL(url)
+		let options = await utils.getOptions()
+		let config = await utils.getConfig()
+
 		let protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
 			let frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
@@ -741,55 +744,14 @@ function modifyContentSecurityPolicy(details) {
 	}
 }
 
-function copyRaw(test, copyRawElement) {
-	return new Promise(resolve => {
-		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
-			let currTab = tabs[0]
-			if (currTab) {
-				let url
-				try {
-					url = new URL(currTab.url)
-				} catch {
-					resolve()
-					return
-				}
-
-				const newUrl = await reverse(url)
-
-				if (newUrl) {
-					resolve(newUrl)
-					if (test) return
-					navigator.clipboard.writeText(newUrl)
-					if (copyRawElement) {
-						const textElement = copyRawElement.getElementsByTagName("h4")[0]
-						const oldHtml = textElement.innerHTML
-						textElement.innerHTML = browser.i18n.getMessage("copied")
-						setTimeout(() => (textElement.innerHTML = oldHtml), 1000)
-					}
-				}
-			}
-			resolve()
-		})
-	})
-}
-
-function switchInstance() {
-	return new Promise(resolve => {
-		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
-			let currTab = tabs[0]
-			if (currTab) {
-				let url
-				try {
-					url = new URL(currTab.url)
-				} catch {
-					resolve()
-					return
-				}
-				const newUrl = await _switchInstance(url)
-				resolve(newUrl)
-			}
-		})
-	})
+async function copyRaw(url, test) {
+	const newUrl = await reverse(url)
+	if (newUrl) {
+		if (!test) {
+			navigator.clipboard.writeText(newUrl)
+		}
+		return newUrl
+	}
 }
 
 export default {
