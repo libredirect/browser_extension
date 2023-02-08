@@ -49,14 +49,21 @@ function redirect(url, type, initiator, forceRedirection) {
 	let frontend
 	for (const service in config.services) {
 		if (!forceRedirection && !options[service].enabled) continue
-		if (config.services[service].embeddable && type != options[service].redirectType && options[service].redirectType != "both") continue
-		if (!config.services[service].embeddable && type != "main_frame") continue
 
 		frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
 
 		if (!regexArray(service, url, config, frontend)) {
 			frontend = null
 			continue
+		}
+
+		if (
+			(config.services[service].embeddable && type != options[service].redirectType && options[service].redirectType != "both")
+			||
+			(!config.services[service].embeddable && type != "main_frame")
+		) {
+			if (options[service].unsupportedUrls == 'block') return 'CANCEL'
+			return
 		}
 
 		let instanceList = options[frontend]
@@ -390,12 +397,16 @@ function redirect(url, type, initiator, forceRedirection) {
 					urlpath = url.pathname.match(/(?<=wiki\/w:c:[a-zA-Z0-9-]+:).+/)
 				}
 			}
-			if (url.href.search(/Special:Search\?query/) > -1) return `${randomInstance}${wiki}${urlpath}${url.search}`.replace(/Special:Search\?query/, "search?q").replace(/\/wiki/, "")
-			else return `${randomInstance}${wiki}${urlpath}${url.search}`
+			if (url.href.search(/Special:Search\?query/) > -1) {
+				return `${randomInstance}${wiki}${urlpath}${url.search}`.replace(/Special:Search\?query/, "search?q").replace(/\/wiki/, "")
+			}
+			return `${randomInstance}${wiki}${urlpath}${url.search}`
 		}
 		case "rimgo": {
-			if (url.href.search(/^https?:\/{2}(?:[im]\.)?stack\./) > -1) return `${randomInstance}/stack${url.pathname}${url.search}`
-			else return `${randomInstance}${url.pathname}${url.search}`
+			if (url.href.search(/^https?:\/{2}(?:[im]\.)?stack\./) > -1) {
+				return `${randomInstance}/stack${url.pathname}${url.search}`
+			}
+			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "libreddit": {
 			const subdomain = url.hostname.match(/^(?:(?:external-)?preview|i)(?=\.redd\.it)/)
@@ -408,6 +419,7 @@ function redirect(url, type, initiator, forceRedirection) {
 				case "i":
 					return `${randomInstance}/img${url.pathname}`
 			}
+			return randomInstance
 		}
 		case "teddit": {
 			if (/^(?:(?:external-)?preview|i)\.redd\.it/.test(url.hostname)) {
@@ -424,7 +436,9 @@ function redirect(url, type, initiator, forceRedirection) {
 			return `${randomInstance}${p}`
 		}
 		case "dumb": {
-			if (url.pathname.endsWith('-lyrics')) return `${randomInstance}${url.pathname}`
+			if (url.pathname.endsWith('-lyrics')) {
+				return `${randomInstance}${url.pathname}`
+			}
 		}
 		case "ruralDictionary": {
 			if (!url.pathname.includes('/define.php') && !url.pathname.includes('/random.php') && url.pathname != '/') return
@@ -632,10 +646,15 @@ function initDefaults() {
 function upgradeOptions() {
 	return new Promise(async resolve => {
 		const oldOptions = await utils.getOptions()
+		const config = await utils.getConfig()
 
 		let options = {}
 		options = [...oldOptions]
 		options.fetchInstances = 'github'
+
+		for (service in config.services) {
+			options[service].unsupportedUrls = 'bypass'
+		}
 
 		browser.storage.local.clear(() => {
 			browser.storage.local.set({ options }, () => {

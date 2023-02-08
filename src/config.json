@@ -96,7 +96,8 @@
 			"options": {
 				"enabled": false,
 				"redirectType": "main_frame",
-				"frontend": "invidious"
+				"frontend": "invidious",
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "png",
 			"embeddable": true,
@@ -121,7 +122,8 @@
 			"name": "YT Music",
 			"options": {
 				"enabled": false,
-				"frontend": "beatbump"
+				"frontend": "beatbump",
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "png",
 			"embeddable": false,
@@ -145,7 +147,8 @@
 			"name": "Twitter",
 			"options": {
 				"enabled": false,
-				"redirectType": "main_frame"
+				"redirectType": "main_frame",
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "png",
 			"embeddable": true,
@@ -164,7 +167,8 @@
 			],
 			"name": "TikTok",
 			"options": {
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "png",
 			"embeddable": false,
@@ -190,7 +194,8 @@
 			"name": "Reddit",
 			"options": {
 				"enabled": false,
-				"frontend": "libreddit"
+				"frontend": "libreddit",
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "png",
 			"embeddable": false,
@@ -210,7 +215,8 @@
 			"name": "Imgur",
 			"options": {
 				"enabled": false,
-				"redirectType": "main_frame"
+				"redirectType": "main_frame",
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "png",
 			"embeddable": true,
@@ -253,7 +259,8 @@
 			"name": "Medium",
 			"options": {
 				"frontend": "scribe",
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -272,7 +279,8 @@
 			],
 			"name": "Quora",
 			"options": {
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "png",
 			"embeddable": false,
@@ -291,7 +299,8 @@
 			],
 			"name": "IMDb",
 			"options": {
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -310,7 +319,8 @@
 			],
 			"name": "Fandom",
 			"options": {
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -339,7 +349,8 @@
 			"options": {
 				"enabled": false,
 				"frontend": "librarian",
-				"redirectType": "main_frame"
+				"redirectType": "main_frame",
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "png",
 			"embeddable": true,
@@ -374,7 +385,8 @@
 			"name": "Search",
 			"options": {
 				"enabled": false,
-				"frontend": "searxng"
+				"frontend": "searxng",
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -405,7 +417,8 @@
 			"name": "Translate",
 			"options": {
 				"enabled": false,
-				"frontend": "simplyTranslate"
+				"frontend": "simplyTranslate",
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -431,7 +444,8 @@
 			"name": "Maps",
 			"options": {
 				"enabled": false,
-				"frontend": "osm"
+				"frontend": "osm",
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -452,7 +466,8 @@
 			],
 			"name": "Send Files",
 			"options": {
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -471,7 +486,8 @@
 			],
 			"name": "Paste Text",
 			"options": {
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -490,7 +506,8 @@
 			],
 			"name": "Reuters",
 			"options": {
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -509,7 +526,8 @@
 			],
 			"name": "Genius",
 			"options": {
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -528,7 +546,8 @@
 			],
 			"name": "Urban Dictionary",
 			"options": {
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -547,7 +566,8 @@
 			],
 			"name": "Stack Overflow",
 			"options": {
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -566,7 +586,8 @@
 			],
 			"name": "Goodreads",
 			"options": {
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -585,7 +606,8 @@
 			],
 			"name": "Wikipedia",
 			"options": {
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -604,7 +626,8 @@
 			],
 			"name": "Snopes",
 			"options": {
-				"enabled": false
+				"enabled": false,
+				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svg",
 			"embeddable": false,
