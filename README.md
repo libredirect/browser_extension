@@ -8,7 +8,7 @@ A web extension that redirects YouTube, Twitter, TikTok... requests to alternati
 </a>
 
 ## Links
-More info: https://libredirect.github.io/
+More info: https://libredirect.github.io
 
 Donate: https://libredirect.github.io/donate.html
 
