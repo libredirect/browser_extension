@@ -138,7 +138,26 @@ browser.contextMenus.create({
 	contexts: ["link"],
 })
 
-browser.contextMenus.onClicked.addListener(async (info, tab) => {
+browser.contextMenus.create({
+	id: "redirectBookmark",
+	title: 'Redirect',
+	contexts: ["bookmark"],
+})
+
+browser.contextMenus.create({
+	id: "reverseBookmark",
+	title: 'Reverse redirect',
+	contexts: ["bookmark"],
+})
+
+browser.contextMenus.create({
+	id: "copyReverseBookmark",
+	title: 'Copy Reverse',
+	contexts: ["bookmark"],
+})
+
+
+browser.contextMenus.onClicked.addListener(async (info) => {
 	switch (info.menuItemId) {
 		case 'switchInstance': {
 			const url = new URL(info.pageUrl)
@@ -161,8 +180,9 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
 			const url = new URL(info.pageUrl)
 			const newUrl = await servicesHelper.reverse(url)
 			if (newUrl) {
-				tabIdRedirects[tab.id] = false
-				browser.tabs.update({ url: newUrl })
+				browser.tabs.create({ url: newUrl }, tab => {
+					tabIdRedirects[tab.id] = false
+				})
 			}
 			return
 		}
@@ -170,8 +190,9 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
 			const url = new URL(info.pageUrl)
 			const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
 			if (newUrl) {
-				tabIdRedirects[tab.id] = true
-				browser.tabs.update({ url: newUrl })
+				browser.tabs.create({ url: newUrl }, tab => {
+					tabIdRedirects[tab.id] = false
+				})
 			}
 			return
 		}
@@ -191,9 +212,38 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
 			const url = new URL(info.linkUrl)
 			const newUrl = await servicesHelper.reverse(url)
 			if (newUrl) {
-				tabIdRedirects[tab.id] = false
-				browser.tabs.create({ url: newUrl })
+				browser.tabs.create({ url: newUrl }, tab => {
+					tabIdRedirects[tab.id] = false
+				})
 			}
+			return
+		}
+
+		case 'copyReverseBookmark': {
+			browser.bookmarks.get(info.bookmarkId, bookmarks => {
+				const url = new URL(bookmarks[0].url)
+				servicesHelper.copyRaw(url)
+			});
+			return
+		}
+		case 'redirectBookmark': {
+			browser.bookmarks.get(info.bookmarkId, bookmarks => {
+				const url = new URL(bookmarks[0].url)
+				const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
+				if (newUrl) browser.tabs.create({ url: newUrl })
+			})
+			return
+		}
+		case 'reverseBookmark': {
+			browser.bookmarks.get(info.bookmarkId, async bookmarks => {
+				const url = new URL(bookmarks[0].url)
+				const newUrl = await servicesHelper.reverse(url)
+				if (newUrl) {
+					browser.tabs.update({ url: newUrl }, tab => {
+						tabIdRedirects[tab.id] = false
+					})
+				}
+			})
 			return
 		}
 

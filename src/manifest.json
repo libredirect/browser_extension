@@ -25,6 +25,7 @@
 		"storage",
 		"clipboardWrite",
 		"contextMenus",
+		"bookmarks",
 		"<all_urls>"
 	],
 	"browser_action": {
