@@ -477,7 +477,8 @@ function redirect(url, type, initiator, forceRedirection) {
 			for (let i = 0; i < GETArguments.length; i++) link += (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1]
 			return link
 		}
-		case "suds": {
+		case "proxiTok": {
+			if (url.pathname.startsWith('/email')) return
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		default: {
