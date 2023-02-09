@@ -3,10 +3,10 @@
 - Go to `Extension Manager`
 - Enable `dev mode`
 - Run this registery file:
-    - Chrome: [chrome.reg](https://raw.githubusercontent.com/libredirect/libredirect/master/windows_registery/chrome.reg)
-    - Brave: [brave.reg](https://raw.githubusercontent.com/libredirect/libredirect/master/windows_registery/brave.reg)
-    - Edge: [edge.reg](https://raw.githubusercontent.com/libredirect/libredirect/master/windows_registery/edge.reg)
-    - Vivaldi: [vivaldi.reg](https://raw.githubusercontent.com/libredirect/libredirect/master/windows_registery/vivaldi.reg)
+    - Chrome: [chrome.reg](https://raw.githubusercontent.com/libredirect/libredirect/master/windows_registry/chrome.reg)
+    - Brave: [brave.reg](https://raw.githubusercontent.com/libredirect/libredirect/master/windows_registry/brave.reg)
+    - Edge: [edge.reg](https://raw.githubusercontent.com/libredirect/libredirect/master/windows_registry/edge.reg)
+    - Vivaldi: [vivaldi.reg](https://raw.githubusercontent.com/libredirect/libredirect/master/windows_registry/vivaldi.reg)
 - Restart your browser
 - Go to `Extension Manager` again
 - Drag and drop the `.crx` file to it
@@ -18,7 +18,7 @@
 - Refresh the page
 - Drag and drop the `.crx` file to the page
 
-**NOTE:** If this way failed. Then try the Windows, MacOS way.
+**NOTE:** If this way failed. Then try the MacOS way.
 
 ## MacOS
 - Download the latest release [libredirect-2.5.1.zip](https://github.com/libredirect/libredirect/releases/download/v2.5.1/libredirect-2.5.1.zip)
@@ -29,4 +29,4 @@
 
 https://user-images.githubusercontent.com/40805353/159987051-8be73cd3-3fdf-4dd0-99d4-8886674fbdb6.mp4
 
-Updates are NOT automatic
+Updates are NOT automatic when installed using the MacOS way.
