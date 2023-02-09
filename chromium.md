@@ -3,10 +3,10 @@
 - Go to `Extension Manager`
 - Enable `dev mode`
 - Run this registery file:
-    - Chrome: [chrome.reg](./windows_registery/chrome.reg)
-    - Brave: [brave.reg](./windows_registery/brave.reg)
-    - Edge: [edge.reg](./windows_registery/edge.reg)
-    - Vivaldi: [vivaldi.reg](./windows_registery/vivaldi.reg)
+    - Chrome: [chrome.reg](https://raw.githubusercontent.com/libredirect/libredirect/master/windows_registery/chrome.reg)
+    - Brave: [brave.reg](https://raw.githubusercontent.com/libredirect/libredirect/master/windows_registery/brave.reg)
+    - Edge: [edge.reg](https://raw.githubusercontent.com/libredirect/libredirect/master/windows_registery/edge.reg)
+    - Vivaldi: [vivaldi.reg](https://raw.githubusercontent.com/libredirect/libredirect/master/windows_registery/vivaldi.reg)
 - Restart your browser
 - Go to `Extension Manager` again
 - Drag and drop the `.crx` file to it
