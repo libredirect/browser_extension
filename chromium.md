@@ -1,17 +1,26 @@
-## Linux
+## Windows
+- Save the `.crx` file link: [libredirect-2.5.1.crx](https://github.com/libredirect/libredirect/releases/download/v2.5.1/libredirect-2.5.1.crx)
+- Go to `Extension Manager`
+- Enable `dev mode`
+- Run this registery file:
+    - Chrome: [chrome.reg](./windows_registery/chrome.reg)
+    - Brave: [brave.reg](./windows_registery/brave.reg)
+    - Edge: [edge.reg](./windows_registery/edge.reg)
+    - Vivaldi: [vivaldi.reg](./windows_registery/vivaldi.reg)
+- Restart your browser
+- Go to `Extension Manager` again
+- Drag and drop the `.crx` file to it
 
+## Linux
 - Download the latest `.crx` file: [libredirect-2.5.1.crx](https://github.com/libredirect/libredirect/releases/download/v2.5.1/libredirect-2.5.1.crx)
 - Open `chrome://extensions`
 - Enable `dev mode`
 - Refresh the page
 - Drag and drop the `.crx` file to the page
 
-Updates are automatic
-
 **NOTE:** If this way failed. Then try the Windows, MacOS way.
 
-## Windows, MacOS
-
+## MacOS
 - Download the latest release [libredirect-2.5.1.zip](https://github.com/libredirect/libredirect/releases/download/v2.5.1/libredirect-2.5.1.zip)
 - Unzip it with `Auto detect subfolder`
 - Open `chrome://extensions`
