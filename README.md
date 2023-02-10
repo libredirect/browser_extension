@@ -2,8 +2,8 @@
 
 A web extension that redirects YouTube, Twitter, TikTok... requests to alternative privacy friendly frontends and backends.
 
-[![Firefox Add-on](./img/badge-amo.png)](https://libredirect.github.io/download_chromium.html)&nbsp;
-<a href="./chromium.md">
+[![Firefox Add-on](./img/badge-amo.png)](https://addons.mozilla.org/firefox/addon/libredirect/)&nbsp;
+<a href="https://libredirect.github.io/download_chromium.html">
 <img src ="./img/badge-chromium.png" height=60 >
 </a>
 
