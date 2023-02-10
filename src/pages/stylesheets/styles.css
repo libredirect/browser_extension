@@ -48,6 +48,7 @@ div.some-block input[type="checkbox"] {
 	display: flex;
 	align-items: center;
 	text-decoration: none;
+	width: min-content;
 	color: var(--text);
 }
 
@@ -110,7 +111,7 @@ section.option-block h2 {
 body.option {
 	display: flex;
 	padding: 40px;
-	width: 1130px;
+	width: 1150px;
 }
 
 section.links {

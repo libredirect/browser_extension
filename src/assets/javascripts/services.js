@@ -481,6 +481,15 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.pathname.startsWith('/email')) return
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
+		case "waybackClassic": {
+			const regex = /^\/\web\/[0-9]+\*\/(.*)/.exec(url.pathname)
+			console.log('regex', regex)
+			if (regex) {
+				const link = regex[1]
+				return `${randomInstance}/cgi-bin/history.cgi?utf8=✓&q=${encodeURIComponent(link)}`
+			}
+			return `${randomInstance}`
+		}
 		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
@@ -608,7 +617,8 @@ const defaultInstances = {
 	'anonymousOverflow': ['https://code.whatever.social'],
 	'biblioReads': ['https://biblioreads.ml'],
 	'wikiless': ['https://wikiless.org'],
-	'suds': ['https://sd.vern.cc']
+	'suds': ['https://sd.vern.cc'],
+	'waybackClassic': ['https://wayback-classic.net']
 }
 
 function initDefaults() {

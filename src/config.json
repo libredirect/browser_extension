@@ -632,6 +632,26 @@
 			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://www.snopes.com"
+		},
+		"waybackMachine": {
+			"frontends": {
+				"waybackClassic": {
+					"name": "Wayback Classic",
+					"instanceList": true,
+					"url": "https://github.com/ticky/wayback-classic"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}web\\.archive\\.org\\/"
+			],
+			"name": "Wayback Machine",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass"
+			},
+			"imageType": "svgMono",
+			"embeddable": false,
+			"url": "https://web.archive.org"
 		}
 	}
 }
