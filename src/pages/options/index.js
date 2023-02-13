@@ -1,5 +1,4 @@
 import utils from "../../assets/javascripts/utils.js"
-import localise from "../../assets/javascripts/localise.js"
 
 let config,
 	options,
