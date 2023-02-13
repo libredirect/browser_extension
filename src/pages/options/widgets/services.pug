@@ -39,7 +39,12 @@ each val, service in services
                 select(id=service+"-unsupportedUrls")
                     option(value="bypass") bypass
                     option(value="block") block
-            hr
+
+            if (service == 'search')
+                div(class="some-block option-block")
+                    h4 Set LibRedirect as Default Search Engine
+            
+            hr            
 
             each val, frontend in services[service].frontends
                 if services[service].frontends[frontend].instanceList

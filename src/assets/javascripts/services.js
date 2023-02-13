@@ -483,7 +483,6 @@ function redirect(url, type, initiator, forceRedirection) {
 		}
 		case "waybackClassic": {
 			const regex = /^\/\web\/[0-9]+\*\/(.*)/.exec(url.pathname)
-			console.log('regex', regex)
 			if (regex) {
 				const link = regex[1]
 				return `${randomInstance}/cgi-bin/history.cgi?utf8=✓&q=${encodeURIComponent(link)}`
@@ -491,6 +490,17 @@ function redirect(url, type, initiator, forceRedirection) {
 			return `${randomInstance}`
 		}
 		default: {
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
+		case "gothub": {
+			const regex = /^\/(.*)\/(.*)\/(?:blob|tree)\/(.*)\/(.*)/.exec(url.pathname)
+			if (regex) {
+				const user = regex[1]
+				const repo = regex[2]
+				const branch = regex[3]
+				const path = regex[4]
+				return `${randomInstance}/file/${user}/${repo}/${branch}/${path}`
+			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 	}
@@ -618,7 +628,8 @@ const defaultInstances = {
 	'biblioReads': ['https://biblioreads.ml'],
 	'wikiless': ['https://wikiless.org'],
 	'suds': ['https://sd.vern.cc'],
-	'waybackClassic': ['https://wayback-classic.net']
+	'waybackClassic': ['https://wayback-classic.net'],
+	'gothub': ['https://gh.odyssey346.dev']
 }
 
 function initDefaults() {

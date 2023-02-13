@@ -652,6 +652,26 @@
 			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://web.archive.org"
+		},
+		"github": {
+			"frontends": {
+				"gothub": {
+					"name": "Gothub",
+					"instanceList": true,
+					"url": "https://codeberg.org/gothub/gothub"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}github\\.com\\/"
+			],
+			"name": "GitHub",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass"
+			},
+			"imageType": "svgMono",
+			"embeddable": false,
+			"url": "https://web.archive.org"
 		}
 	}
 }
