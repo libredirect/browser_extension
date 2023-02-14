@@ -1,5 +1,4 @@
 import utils from "../../assets/javascripts/utils.js"
-import localise from "../../assets/javascripts/localise.js"
 
 let config,
 	options,
@@ -181,68 +180,69 @@ async function processCustomInstances(frontend, document) {
 }
 
 function createList(frontend, networks, document, redirects, blacklist) {
-	for (const network in networks) {
-		if (redirects[frontend]) {
-			if (redirects[frontend][network].length > 0) {
-				document.getElementById(frontend).getElementsByClassName("custom-instance")[0].placeholder = redirects[frontend].clearnet[0]
-				document.getElementById(frontend)
-					.getElementsByClassName(network)[0]
-					.getElementsByClassName("checklist")[0]
-					.innerHTML = [
-						`<div class="some-block option-block">
-						<h4>${utils.camelCase(network)}</h4>
-					</div>`,
-						...redirects[frontend][network]
-							.sort((a, b) =>
-								(blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
-							)
-							.map(x => {
-								const cloudflare = blacklist.cloudflare.includes(x) ?
-									` <a target="_blank" href="https://libredirect.github.io/docs.html#instances">
-							 		<span style="color:red;">cloudflare</span>
-								</a>` : ""
+    for (const network in networks) {
+        const checklist = document.getElementById(frontend)
+            .getElementsByClassName(network)[0]
+            .getElementsByClassName("checklist")[0]
 
-								const warnings = [cloudflare].join(" ")
-								return `<div>
-										<x>
-											<a href="${x}" target="_blank">${x}</a>${warnings}
-										</x>
-										<button class="add add-${x}">
-											<svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
-												<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
-											</svg>
-										</button>
-						  			</div>`
-							}),
-						'<br>'
-					].join("\n<hr>\n")
+        if (!redirects[frontend]) {
+            checklist.innerHTML = '<div class="some-block option-block">No instances found.</div>'
+            break
+        }
+        const instances = redirects[frontend][network]
+        if (!instances || instances.length === 0) continue
 
-				for (const x of redirects[frontend][network]) {
-					document.getElementById(frontend)
-						.getElementsByClassName(network)[0]
-						.getElementsByClassName("checklist")[0]
-						.getElementsByClassName(`add-${x}`)[0]
-						.addEventListener("click", async () => {
-							let options = await utils.getOptions()
-							let customInstances = options[frontend]
-							if (!customInstances.includes(x)) {
-								customInstances.push(x)
-								options = await utils.getOptions()
-								options[frontend] = customInstances
-								browser.storage.local.set({ options }, () => {
-									calcCustomInstances(frontend)
-								})
-							}
-						})
-				}
-			}
-		} else {
-			document.getElementById(frontend).getElementsByClassName(network)[0].getElementsByClassName("checklist")[0].innerHTML =
-				`<div class="some-block option-block">No instances found.</div>`
-			break
-		}
+        document.getElementById(frontend)
+            .getElementsByClassName("custom-instance")[0]
+            .placeholder = redirects[frontend].clearnet[0]
 
-	}
+        const sortedInstances = instances
+            .sort((a, b) => (blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b)))
+
+        const content = sortedInstances
+            .map(x => {
+                const cloudflare = blacklist.cloudflare.includes(x) ?
+                    `<a target="_blank" href="https://libredirect.github.io/docs.html#instances">
+                        <span style="color:red;">cloudflare</span>
+                    </a>` : ""
+
+                const warnings = [cloudflare].join(" ")
+                return `<div class="frontend">
+                            <x>
+                                <a href="${x}" target="_blank">${x}</a>${warnings}
+                            </x>
+                            <button class="add add-${x}">
+                                <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+                                    <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                                </svg>
+                            </button>
+                        </div>`
+            })
+
+        checklist.innerHTML = [
+            `<div class="some-block option-block">
+                <h4>${utils.camelCase(network)}</h4>
+            </div>`,
+            ...content,
+            "<br>"
+        ].join("\n<hr>\n")
+
+        for (const instance of instances) {
+            checklist.getElementsByClassName(`add-${instance}`)[0]
+                .addEventListener("click", async () => {
+                    let options = await utils.getOptions()
+                    let customInstances = options[frontend]
+                    if (!customInstances.includes(instance)) {
+                        customInstances.push(instance)
+                        options = await utils.getOptions()
+                        options[frontend] = customInstances
+                        browser.storage.local.set({options}, () => {
+                            calcCustomInstances(frontend)
+                        })
+                    }
+                })
+        }
+    }
 }
 
 const r = window.location.href.match(/#(.*)/)
