@@ -489,9 +489,6 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return `${randomInstance}`
 		}
-		default: {
-			return `${randomInstance}${url.pathname}${url.search}`
-		}
 		case "gothub": {
 			const regex = /^\/(.*)\/(.*)\/(?:blob|tree)\/(.*)\/(.*)/.exec(url.pathname)
 			if (regex) {
@@ -501,6 +498,17 @@ function redirect(url, type, initiator, forceRedirection) {
 				const path = regex[4]
 				return `${randomInstance}/file/${user}/${repo}/${branch}/${path}`
 			}
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
+		case "mikuIndividious": {
+			if (url.hostname == "bilibili.com" || url.hostname == "www.bilibili.com" || url.hostname == 'b23.tv') {
+				return `${randomInstance}${url.pathname}${url.search}`
+			}
+			if (url.hostname == "space.bilibili.com") {
+				return `${randomInstance}/space${url.pathname}${url.search}`
+			}
+		}
+		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 	}
@@ -629,7 +637,8 @@ const defaultInstances = {
 	'wikiless': ['https://wikiless.org'],
 	'suds': ['https://sd.vern.cc'],
 	'waybackClassic': ['https://wayback-classic.net'],
-	'gothub': ['https://gh.odyssey346.dev']
+	'gothub': ['https://gh.odyssey346.dev'],
+	'mikuIndividious': ['https://mikuinv.resrv.org'],
 }
 
 function initDefaults() {

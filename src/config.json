@@ -672,6 +672,27 @@
 			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://web.archive.org"
+		},
+		"bilibili": {
+			"frontends": {
+				"mikuIndividious": {
+					"name": "MikuIndividious",
+					"instanceList": true,
+					"url": "https://0xacab.org/johnxina/mikuinvidious"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.|space\\.)?bilibili\\.com\\/",
+				"^https?:\\/{2}b23\\.tv\\/"
+			],
+			"name": "Bilibili",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass"
+			},
+			"imageType": "svgMono",
+			"embeddable": false,
+			"url": "https://bilibili.com/"
 		}
 	}
 }
