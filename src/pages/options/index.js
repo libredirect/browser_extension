@@ -180,34 +180,37 @@ async function processCustomInstances(frontend, document) {
 }
 
 function createList(frontend, networks, document, redirects, blacklist) {
-    for (const network in networks) {
-        const checklist = document.getElementById(frontend)
-            .getElementsByClassName(network)[0]
-            .getElementsByClassName("checklist")[0]
+	for (const network in networks) {
+		const checklist = document.getElementById(frontend)
+			.getElementsByClassName(network)[0]
+			.getElementsByClassName("checklist")[0]
 
-        if (!redirects[frontend]) {
-            checklist.innerHTML = '<div class="some-block option-block">No instances found.</div>'
-            break
-        }
-        const instances = redirects[frontend][network]
-        if (!instances || instances.length === 0) continue
+		if (!redirects[frontend]) {
+			checklist.innerHTML = '<div class="some-block option-block">No instances found.</div>'
+			break
+		}
 
-        document.getElementById(frontend)
-            .getElementsByClassName("custom-instance")[0]
-            .placeholder = redirects[frontend].clearnet[0]
+		const instances = redirects[frontend][network]
+		if (!instances || instances.length === 0) continue
 
-        const sortedInstances = instances
-            .sort((a, b) => (blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b)))
+		document.getElementById(frontend)
+			.getElementsByClassName("custom-instance")[0]
+			.placeholder = redirects[frontend].clearnet[0]
 
-        const content = sortedInstances
-            .map(x => {
-                const cloudflare = blacklist.cloudflare.includes(x) ?
-                    `<a target="_blank" href="https://libredirect.github.io/docs.html#instances">
+		const sortedInstances = instances
+			.sort((a, b) => {
+				return (blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
+			})
+
+		const content = sortedInstances
+			.map(x => {
+				const cloudflare = blacklist.cloudflare.includes(x) ?
+					`<a target="_blank" href="https://libredirect.github.io/docs.html#instances">
                         <span style="color:red;">cloudflare</span>
                     </a>` : ""
 
-                const warnings = [cloudflare].join(" ")
-                return `<div class="frontend">
+				const warnings = [cloudflare].join(" ")
+				return `<div class="frontend">
                             <x>
                                 <a href="${x}" target="_blank">${x}</a>${warnings}
                             </x>
@@ -217,32 +220,27 @@ function createList(frontend, networks, document, redirects, blacklist) {
                                 </svg>
                             </button>
                         </div>`
-            })
+			})
 
-        checklist.innerHTML = [
-            `<div class="some-block option-block">
+		checklist.innerHTML = [
+			`<div class="some-block option-block">
                 <h4>${utils.camelCase(network)}</h4>
             </div>`,
-            ...content,
-            "<br>"
-        ].join("\n<hr>\n")
+			...content,
+			"<br>"
+		].join("\n<hr>\n")
 
-        for (const instance of instances) {
-            checklist.getElementsByClassName(`add-${instance}`)[0]
-                .addEventListener("click", async () => {
-                    let options = await utils.getOptions()
-                    let customInstances = options[frontend]
-                    if (!customInstances.includes(instance)) {
-                        customInstances.push(instance)
-                        options = await utils.getOptions()
-                        options[frontend] = customInstances
-                        browser.storage.local.set({options}, () => {
-                            calcCustomInstances(frontend)
-                        })
-                    }
-                })
-        }
-    }
+		for (const instance of instances) {
+			checklist.getElementsByClassName(`add-${instance}`)[0]
+				.addEventListener("click", async () => {
+					let options = await utils.getOptions()
+					if (!options[frontend].includes(instance)) {
+						options[frontend].push(instance)
+						browser.storage.local.set({ options }, () => calcCustomInstances(frontend))
+					}
+				})
+		}
+	}
 }
 
 const r = window.location.href.match(/#(.*)/)
