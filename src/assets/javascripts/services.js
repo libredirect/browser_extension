@@ -508,6 +508,41 @@ function redirect(url, type, initiator, forceRedirection) {
 				return `${randomInstance}/space${url.pathname}${url.search}`
 			}
 		}
+		case "tent": {
+			if (url.hostname == 'bandcamp.com' && url.pathname == '/search') {
+				const query = url.searchParams.get('q')
+				return `${randomInstance}/search.php?query=${encodeURIComponent(query)}`
+			}
+			if (url.hostname.endsWith('bandcamp.com')) {
+				const regex = /^(.*)\.bandcamp\.com/.exec(url.hostname)
+				const artist = regex[1]
+				if (url.pathname == '/') {
+					return `${randomInstance}/artist.php?name=${artist}`
+				} else {
+					const regex = /^\/(.*)\/(.*)/.exec(url.pathname)
+					if (regex) {
+						const type = regex[1]
+						const name = regex[2]
+						return `${randomInstance}/release.php?artist=${artist}&type=${type}&name=${name}`
+					}
+				}
+			}
+			if (url.hostname == 'f4.bcbits.com') {
+				const regex = /\/img\/(.*)/.exec(url.pathname)
+				const image = regex[1]
+				return `${randomInstance}/image.php?file=${image}`
+			}
+			if (url.hostname == 't4.bcbits.com') {
+				const regex = /\/stream\/(.*)\/(.*)\/(.*)/.exec(url.pathname)
+				if (regex) {
+					const directory = regex[1]
+					const format = regex[2]
+					const file = regex[3]
+					const token = url.searchParams.get('token')
+					return `${randomInstance}/audio.php/?directory=${directory}&format=${format}&file=${file}&token=${encodeURIComponent(token)}`
+				}
+			}
+		}
 		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
@@ -639,6 +674,7 @@ const defaultInstances = {
 	'waybackClassic': ['https://wayback-classic.net'],
 	'gothub': ['https://gh.odyssey346.dev'],
 	'mikuIndividious': ['https://mikuinv.resrv.org'],
+	"tent": ['https://tent.sny.sh']
 }
 
 function initDefaults() {

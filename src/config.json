@@ -675,8 +675,8 @@
 		},
 		"bilibili": {
 			"frontends": {
-				"mikuIndividious": {
-					"name": "MikuIndividious",
+				"mikuInvidious": {
+					"name": "MikuInvidious",
 					"instanceList": true,
 					"url": "https://0xacab.org/johnxina/mikuinvidious"
 				}
@@ -693,6 +693,27 @@
 			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://bilibili.com/"
+		},
+		"bandcamp": {
+			"frontends": {
+				"tent": {
+					"name": "Tent",
+					"instanceList": true,
+					"url": "https://codeberg.org/sun/Tent"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(.*\\.)?bandcamp\\.com\\/",
+				"^https?:\\/{2}(f4|t4)\\.bcbits\\.com\\/"
+			],
+			"name": "Bandcamp",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass"
+			},
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://bandcamp.com/"
 		}
 	}
 }
