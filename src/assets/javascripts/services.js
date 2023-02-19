@@ -674,7 +674,8 @@ const defaultInstances = {
 	'waybackClassic': ['https://wayback-classic.net'],
 	'gothub': ['https://gh.odyssey346.dev'],
 	'mikuIndividious': ['https://mikuinv.resrv.org'],
-	"tent": ['https://tent.sny.sh']
+	"tent": ['https://tent.sny.sh'],
+	"wolfreeAlpha": ['https://gqq.gitlab.io', 'https://uqq.gitlab.io']
 }
 
 function initDefaults() {

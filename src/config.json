@@ -713,7 +713,27 @@
 			},
 			"imageType": "svg",
 			"embeddable": false,
-			"url": "https://bandcamp.com/"
+			"url": "https://bandcamp.com"
+		},
+		"wolframAlpha": {
+			"frontends": {
+				"wolfreeAlpha": {
+					"name": "WolfreeAlpha",
+					"instanceList": true,
+					"url": "https://git.disroot.org/wolfree"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?wolframalpha\\.com\\/"
+			],
+			"name": "WolframAlpha",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass"
+			},
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://www.wolframalpha.com"
 		}
 	}
 }
