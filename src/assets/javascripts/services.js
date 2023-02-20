@@ -475,7 +475,7 @@ function redirect(url, type, initiator, forceRedirection) {
 				// wikiless doesn't have mobile view support yet
 			}
 			for (let i = 0; i < GETArguments.length; i++) link += (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1]
-			return link
+			return link + url.hash
 		}
 		case "proxiTok": {
 			if (url.pathname.startsWith('/email')) return
