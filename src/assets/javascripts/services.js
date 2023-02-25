@@ -159,13 +159,13 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "piped":
 		case "pipedMaterial":
 		case "cloudtube": {
-			if (url.pathname == "/live_chat") {
+			if (url.pathname.startsWith("/live_chat")) {
 				return null;
 			}
 			return `${randomInstance}${url.pathname}${url.search}`;
 		}
 		case "poketube": {
-			if (url.pathname == "/live_chat") {
+			if (url.pathname.startsWith("/live_chat")) {
 				return null;
 			}
 			if (url.pathname.startsWith('/channel')) {
