@@ -155,7 +155,19 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "freetube": {
 			return `freetube://https://youtu.be${url.pathname}${url.search}`.replace(/watch\?v=/, "")
 		}
+		case "invidious":
+		case "piped":
+		case "pipedMaterial":
+		case "cloudtube": {
+			if (url.pathname == "/live_chat") {
+				return null;
+			}
+			return `${randomInstance}${url.pathname}${url.search}`;
+		}
 		case "poketube": {
+			if (url.pathname == "/live_chat") {
+				return null;
+			}
 			if (url.pathname.startsWith('/channel')) {
 				const reg = /\/channel\/(.*)\/?$/.exec(url.pathname)
 				if (reg) {
