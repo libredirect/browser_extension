@@ -673,7 +673,7 @@ const defaultInstances = {
 	'suds': ['https://sd.vern.cc'],
 	'waybackClassic': ['https://wayback-classic.net'],
 	'gothub': ['https://gh.odyssey346.dev'],
-	'mikuIndividious': ['https://mikuinv.resrv.org'],
+	'mikuInvidious': ['https://mikuinv.resrv.org'],
 	"tent": ['https://tent.sny.sh'],
 	"wolfreeAlpha": ['https://gqq.gitlab.io', 'https://uqq.gitlab.io']
 }
