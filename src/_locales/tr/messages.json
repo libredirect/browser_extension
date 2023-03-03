@@ -32,11 +32,11 @@
         "description": "used in the settings page"
     },
     "auto": {
-        "message": "Auto",
+        "message": "Otomatik",
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
-        "message": "Excluded from redirecting",
+        "message": "Yönlendirme dışında bırakılanlar",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -56,7 +56,7 @@
         "description": "used in the settings page"
     },
     "showInPopup": {
-        "message": "Show in popup",
+        "message": "Açılır pencerede göster",
         "description": "used in the settings page"
     },
     "frontend": {
@@ -80,7 +80,7 @@
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
-        "message": "Add your favorite instances",
+        "message": "Sevdiğiniz örnekleri ekleyin",
         "description": "used in the settings page"
     },
     "copyRaw": {
@@ -90,14 +90,14 @@
         "message": "Kopyalandı"
     },
     "redirectToOriginal": {
-        "message": "Redirect to original",
+        "message": "Aslına yönlendir",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Bu köprüyü yeniden yönlendirmeyi dene",
+        "message": "Yeniden yönlendirmeyi dene",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
-        "message": "About"
+        "message": "Hakkında"
     }
 }
