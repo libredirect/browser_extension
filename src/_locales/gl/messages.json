@@ -94,7 +94,7 @@
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Tenta redirixir a ista hiperligazón",
+        "message": "Tenta redirixir",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
