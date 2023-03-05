@@ -94,7 +94,7 @@
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Încercați să redirecționați acest hyperlink",
+        "message": "Încercați să redirecționați",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
