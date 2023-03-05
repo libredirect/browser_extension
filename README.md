@@ -75,5 +75,15 @@ npm run start
 
 ---
 
+## Disclaimer : 
+
+- This extension is just a tool that redirects from sites that are listed within it to Alternative frontends of them.
+
+- We don't have any affliation with the sites that are being redirected.
+
+- The sites that are listed are just the sole properties of Trademark Owners. We don't own any of them.
+
+---
+
 [Privacy Policy](Privacy-Policy.md)\
 Forked from [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)
