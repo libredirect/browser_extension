@@ -17,7 +17,6 @@ async function setOption(option, type, event) {
 }
 
 let exportSettingsElement = document.getElementById("export-settings")
-
 async function exportSettings() {
 	const options = await utils.getOptions()
 	options.version = browser.runtime.getManifest().version
@@ -43,6 +42,7 @@ importSettingsElement.addEventListener("change", () => {
 			"theme" in data
 			&& data.version == browser.runtime.getManifest().version
 		) {
+
 			browser.storage.local.clear(async () => {
 				browser.storage.local.set({ options: data }, () => {
 					location.reload()
@@ -71,7 +71,8 @@ resetSettings.addEventListener("click", async () => {
 	location.reload()
 })
 
-document.getElementById('fetch-instances').addEventListener('change', event => {
+let fetchInstancesElement = document.getElementById('fetch-instances')
+fetchInstancesElement.addEventListener('change', event => {
 	setOption('fetchInstances', 'select', event)
 	location.reload()
 })
@@ -100,9 +101,9 @@ for (const service in config.services) {
 	})
 }
 
-
 let options = await utils.getOptions()
 themeElement.value = options.theme
+fetchInstancesElement.value = options.fetchInstances
 for (const service in config.services) document.getElementById(service).checked = options.popupServices.includes(service)
 
 instanceTypeElement.addEventListener("change", event => {
@@ -166,7 +167,6 @@ document.getElementById("custom-exceptions-instance-form").addEventListener("sub
 	if (val) {
 		options = await utils.getOptions()
 		options.exceptions = exceptionsCustomInstances
-		console.log(options.exceptions)
 		browser.storage.local.set({ options }, () =>
 			nameCustomInstanceInput.value = ""
 		)

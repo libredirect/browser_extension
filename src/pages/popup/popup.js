@@ -5,26 +5,31 @@ import servicesHelper from "../../assets/javascripts/services.js"
 import utils from "../../assets/javascripts/utils.js"
 
 browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
-	const url = new URL(tabs[0].url)
-	servicesHelper.switchInstance(url).then(r => {
-		if (!r) {
-			document.getElementById("change_instance_div").style.display = "none"
-		}
-		else {
-			document.getElementById("change_instance").addEventListener("click",
-				async () => browser.tabs.update({ url: await servicesHelper.switchInstance(url) })
-			)
-		}
-	})
-	servicesHelper.copyRaw(url, true).then(r => {
-		if (!r) {
-			document.getElementById("copy_raw_div").style.display = "none"
-		}
-		else {
-			const copy_raw = document.getElementById("copy_raw")
-			copy_raw.addEventListener("click", () => servicesHelper.copyRaw(url))
-		}
-	})
+	if (tabs[0].url) {
+		const url = new URL(tabs[0].url)
+		servicesHelper.switchInstance(url).then(r => {
+			if (!r) {
+				document.getElementById("change_instance_div").style.display = "none"
+			}
+			else {
+				document.getElementById("change_instance").addEventListener("click",
+					async () => browser.tabs.update({ url: await servicesHelper.switchInstance(url) })
+				)
+			}
+		})
+		servicesHelper.copyRaw(url, true).then(r => {
+			if (!r) {
+				document.getElementById("copy_raw_div").style.display = "none"
+			}
+			else {
+				const copy_raw = document.getElementById("copy_raw")
+				copy_raw.addEventListener("click", () => servicesHelper.copyRaw(url))
+			}
+		})
+	} else {
+		document.getElementById("change_instance_div").style.display = "none"
+		document.getElementById("copy_raw_div").style.display = "none"
+	}
 })
 
 document.getElementById("more-options").addEventListener("click", () => browser.runtime.openOptionsPage())

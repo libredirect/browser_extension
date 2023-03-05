@@ -17,7 +17,8 @@ for (const a of document.getElementById("links").getElementsByTagName("a")) {
 config = await utils.getConfig()
 options = await utils.getOptions()
 
-function changeFrontendsSettings(service) {
+async function changeFrontendsSettings(service) {
+	options = await utils.getOptions()
 	const opacityDiv = document.getElementById(`${service}-opacity`)
 	if (document.getElementById(`${service}-enabled`).checked) {
 		opacityDiv.style.pointerEvents = 'auto'
@@ -39,6 +40,20 @@ function changeFrontendsSettings(service) {
 				}
 			}
 		}
+	}
+	if (config.services[service].frontends[divs[service].frontend.value].embeddable) {
+		document.getElementById(`${service}-redirectType`).innerHTML = `
+		<option value="both" data-localise="__MSG_both__">both</options>
+		<option value="sub_frame" data-localise="__MSG_onlyEmbedded__">Only Embedded</option>
+		<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
+		`
+		document.getElementById(`${service}-redirectType`).value = options[divs[service].frontend.value].redirectType = options[service].redirectType
+	} else {
+		document.getElementById(`${service}-redirectType`).innerHTML = `
+		<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
+		`
+		options[service].redirectType = "main_frame"
+		browser.storage.local.set({ options })
 	}
 	const frontend_name_element = document.getElementById(`${service}_page`).getElementsByClassName("frontend_name")[0]
 	if (divs[service].frontend) {
@@ -71,6 +86,7 @@ async function loadPage(path) {
 			divs[service][option] = document.getElementById(`${service}-${option}`)
 			if (typeof config.services[service].options[option] == "boolean") divs[service][option].checked = options[service][option]
 			else divs[service][option].value = options[service][option]
+
 
 			divs[service][option].addEventListener("change", async () => {
 				let options = await utils.getOptions()

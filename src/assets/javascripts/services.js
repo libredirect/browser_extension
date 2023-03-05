@@ -725,16 +725,10 @@ function initDefaults() {
 
 function upgradeOptions() {
 	return new Promise(async resolve => {
-		const oldOptions = await utils.getOptions()
+		let options = await utils.getOptions()
 		const config = await utils.getConfig()
 
-		let options = {}
-		options = [...oldOptions]
 		options.fetchInstances = 'github'
-
-		for (service in config.services) {
-			options[service].unsupportedUrls = 'bypass'
-		}
 
 		browser.storage.local.clear(() => {
 			browser.storage.local.set({ options }, () => {

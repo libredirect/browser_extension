@@ -18,6 +18,7 @@ browser.runtime.onInstalled.addListener(async details => {
 		else if (details.reason == "update") {
 			if (details.previousVersion == '2.5.2') {
 				await servicesHelper.upgradeOptions()
+				await servicesHelper.processUpdate()
 			} else {
 				await servicesHelper.processUpdate()
 			}
@@ -30,6 +31,7 @@ let tabIdRedirects = {}
 // true == Always redirect, false == Never redirect, null/undefined == follow options for services
 browser.webRequest.onBeforeRequest.addListener(
 	details => {
+		console.log(details.url)
 		const url = new URL(details.url)
 		if (new RegExp(/^chrome-extension:\/{2}.*\/instances\/.*.json$/).test(url.href) && details.type == "xmlhttprequest") return
 		let initiator
@@ -138,23 +140,25 @@ browser.contextMenus.create({
 	contexts: ["link"],
 })
 
-browser.contextMenus.create({
-	id: "redirectBookmark",
-	title: 'Redirect',
-	contexts: ["bookmark"],
-})
+if (!window.chrome) {
+	browser.contextMenus.create({
+		id: "redirectBookmark",
+		title: 'Redirect',
+		contexts: ["bookmark"],
+	})
 
-browser.contextMenus.create({
-	id: "reverseBookmark",
-	title: 'Reverse redirect',
-	contexts: ["bookmark"],
-})
+	browser.contextMenus.create({
+		id: "reverseBookmark",
+		title: 'Reverse redirect',
+		contexts: ["bookmark"],
+	})
 
-browser.contextMenus.create({
-	id: "copyReverseBookmark",
-	title: 'Copy Reverse',
-	contexts: ["bookmark"],
-})
+	browser.contextMenus.create({
+		id: "copyReverseBookmark",
+		title: 'Copy Reverse',
+		contexts: ["bookmark"],
+	})
+}
 
 
 browser.contextMenus.onClicked.addListener(async (info) => {

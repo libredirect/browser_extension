@@ -7,8 +7,10 @@ window.browser = window.browser || window.chrome
 let exceptions
 
 function isException(url) {
-	for (const item of exceptions.url) if (item == url.href) return true
-	for (const item of exceptions.regex) if (new RegExp(item).test(url.href)) return true
+	if (url !== undefined) {
+		for (const item of exceptions.url) if (item == url.href) return true
+		for (const item of exceptions.regex) if (new RegExp(item).test(url.href)) return true
+	}
 	return false
 }
 
