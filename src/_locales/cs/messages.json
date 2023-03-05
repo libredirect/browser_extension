@@ -36,7 +36,7 @@
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
-        "message": "Excluded from redirecting",
+        "message": "Vyloučeno z přesměrování",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -56,7 +56,7 @@
         "description": "used in the settings page"
     },
     "showInPopup": {
-        "message": "Show in popup",
+        "message": "Zobrazit ve vyskakovacím okně",
         "description": "used in the settings page"
     },
     "frontend": {
@@ -80,7 +80,7 @@
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
-        "message": "Add your favorite instances",
+        "message": "Přidejte své oblíbené instance",
         "description": "used in the settings page"
     },
     "copyRaw": {
@@ -90,14 +90,14 @@
         "message": "Zkopírováno"
     },
     "redirectToOriginal": {
-        "message": "Redirect to original",
+        "message": "Přesměrovat na originál",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Pokusit se přesměrovat tento odkaz",
+        "message": "Pokusit se přesměrovat",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
-        "message": "About"
+        "message": "O rozšíření"
     }
 }
