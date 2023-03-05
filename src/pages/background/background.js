@@ -31,7 +31,6 @@ let tabIdRedirects = {}
 // true == Always redirect, false == Never redirect, null/undefined == follow options for services
 browser.webRequest.onBeforeRequest.addListener(
 	details => {
-		console.log(details.url)
 		const url = new URL(details.url)
 		if (new RegExp(/^chrome-extension:\/{2}.*\/instances\/.*.json$/).test(url.href) && details.type == "xmlhttprequest") return
 		let initiator
@@ -93,20 +92,20 @@ browser.commands.onCommand.addListener(async command => {
 })
 
 browser.contextMenus.create({
-	id: "settings",
+	id: "settingsTab",
 	title: browser.i18n.getMessage("settings"),
 	contexts: ["browser_action"],
 })
 
 browser.contextMenus.create({
-	id: "switchInstance",
+	id: "switchInstanceTab",
 	title: browser.i18n.getMessage("switchInstance"),
 	contexts: ["browser_action"],
 })
 
 browser.contextMenus.create({
-	id: "copyReverse",
-	title: 'Copy reverse',
+	id: "copyReverseTab",
+	title: 'Copy Original',
 	contexts: ["browser_action"],
 })
 
@@ -118,7 +117,7 @@ browser.contextMenus.create({
 
 browser.contextMenus.create({
 	id: "reverseTab",
-	title: 'Reverse redirect',
+	title: 'Redirect To Original',
 	contexts: ["browser_action"],
 })
 
@@ -130,13 +129,13 @@ browser.contextMenus.create({
 
 browser.contextMenus.create({
 	id: "reverseLink",
-	title: 'Reverse redirect',
+	title: 'Redirect To Original',
 	contexts: ["link"],
 })
 
 browser.contextMenus.create({
 	id: "copyReverseLink",
-	title: 'Copy Reverse',
+	title: 'Copy Original',
 	contexts: ["link"],
 })
 
@@ -162,8 +161,9 @@ if (!window.chrome) {
 
 
 browser.contextMenus.onClicked.addListener(async (info) => {
+	console.log(info)
 	switch (info.menuItemId) {
-		case 'switchInstance': {
+		case 'switchInstanceTab': {
 			const url = new URL(info.pageUrl)
 			const newUrl = await servicesHelper.switchInstance(url)
 			if (newUrl) {
@@ -171,39 +171,48 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 			}
 			return
 		}
-		case 'settings': {
+		case 'settingsTab': {
 			browser.runtime.openOptionsPage()
 			return
 		}
-		case 'copyReverse': {
+		case 'copyReverseTab': {
 			const url = new URL(info.pageUrl)
 			servicesHelper.copyRaw(url)
 			return
 		}
 		case 'reverseTab': {
-			const url = new URL(info.pageUrl)
-			const newUrl = await servicesHelper.reverse(url)
-			if (newUrl) {
-				browser.tabs.create({ url: newUrl }, tab => {
-					tabIdRedirects[tab.id] = false
-				})
-			}
+			browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+				if (tabs[0].url) {
+					const url = new URL(tabs[0].url)
+					const newUrl = await servicesHelper.reverse(url)
+					if (newUrl) {
+						browser.tabs.update(tabs[0].id, { url: newUrl }, () => {
+							tabIdRedirects[tabs[0].id] = false
+						})
+					}
+				}
+			})
 			return
 		}
 		case 'redirectTab': {
-			const url = new URL(info.pageUrl)
-			const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
-			if (newUrl) {
-				browser.tabs.create({ url: newUrl }, tab => {
-					tabIdRedirects[tab.id] = false
-				})
-			}
+			browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+				if (tabs[0].url) {
+					const url = new URL(tabs[0].url)
+					const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
+					if (newUrl) {
+						browser.tabs.update(tabs[0].id, { url: newUrl }, () => {
+							tabIdRedirects[tabs[0].id] = true
+						})
+					}
+				}
+			})
 			return
 		}
 
 		case 'copyReverseLink': {
 			const url = new URL(info.linkUrl)
-			servicesHelper.copyRaw(url)
+			console.log(url)
+			await servicesHelper.copyRaw(url)
 			return
 		}
 		case 'redirectLink': {
