@@ -176,8 +176,12 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 			return
 		}
 		case 'copyReverseTab': {
-			const url = new URL(info.pageUrl)
-			servicesHelper.copyRaw(url)
+			browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+				if (tabs[0].url) {
+					const url = new URL(tabs[0].url)
+					servicesHelper.copyRaw(url)
+				}
+			})
 			return
 		}
 		case 'reverseTab': {
