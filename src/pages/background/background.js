@@ -4,6 +4,7 @@ import generalHelper from "../../assets/javascripts/general.js"
 import utils from "../../assets/javascripts/utils.js"
 import servicesHelper from "../../assets/javascripts/services.js"
 
+const isChrome = browser.runtime.getBrowserInfo === undefined
 window.browser = window.browser || window.chrome
 
 browser.runtime.onInstalled.addListener(async details => {
@@ -139,7 +140,7 @@ browser.contextMenus.create({
 	contexts: ["link"],
 })
 
-if (window.browser) {
+if (!isChrome) {
 	browser.contextMenus.create({
 		id: "redirectBookmark",
 		title: 'Redirect',

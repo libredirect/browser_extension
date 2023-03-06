@@ -1,5 +1,6 @@
 import utils from "./utils.js"
 
+const isChrome = browser.runtime.getBrowserInfo === undefined
 window.browser = window.browser || window.chrome
 
 let config, options
@@ -807,7 +808,7 @@ async function copyRaw(url, test) {
 	const newUrl = await reverse(url)
 	if (newUrl) {
 		if (!test) {
-			if (window.browser) {
+			if (!isChrome) {
 				navigator.clipboard.writeText(newUrl)
 			} else {
 				var copyFrom = document.createElement("textarea");
