@@ -32,7 +32,7 @@
         "description": "used in the settings page"
     },
     "auto": {
-        "message": "Auto",
+        "message": "自动",
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
