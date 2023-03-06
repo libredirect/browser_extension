@@ -807,7 +807,7 @@ async function copyRaw(url, test) {
 	const newUrl = await reverse(url)
 	if (newUrl) {
 		if (!test) {
-			if (!window.chrome) {
+			if (window.browser) {
 				navigator.clipboard.writeText(newUrl)
 			} else {
 				var copyFrom = document.createElement("textarea");

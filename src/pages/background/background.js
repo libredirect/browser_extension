@@ -139,7 +139,7 @@ browser.contextMenus.create({
 	contexts: ["link"],
 })
 
-if (!window.chrome) {
+if (window.browser) {
 	browser.contextMenus.create({
 		id: "redirectBookmark",
 		title: 'Redirect',
@@ -256,14 +256,13 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 				const url = new URL(bookmarks[0].url)
 				const newUrl = await servicesHelper.reverse(url)
 				if (newUrl) {
-					browser.tabs.update({ url: newUrl }, tab => {
+					browser.tabs.create({ url: newUrl }, tab => {
 						tabIdRedirects[tab.id] = false
 					})
 				}
 			})
 			return
 		}
-
 	}
 })
 
