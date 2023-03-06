@@ -149,13 +149,13 @@ if (!isChrome) {
 
 	browser.contextMenus.create({
 		id: "reverseBookmark",
-		title: 'Reverse redirect',
+		title: 'Redirect To Original',
 		contexts: ["bookmark"],
 	})
 
 	browser.contextMenus.create({
 		id: "copyReverseBookmark",
-		title: 'Copy Reverse',
+		title: 'Copy Original',
 		contexts: ["bookmark"],
 	})
 }
