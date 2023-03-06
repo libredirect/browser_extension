@@ -668,7 +668,7 @@ const defaultInstances = {
 	'libremdb': ['https://libremdb.iket.me'],
 	'simplyTranslate': ['https://simplytranslate.org'],
 	'lingva': ['https://lingva.ml'],
-	'searxng': ['https://sx.vern.cc'],
+	'searxng': ['https://search.bus-hit.me'],
 	'rimgo': ['https://rimgo.vern.cc'],
 	'librarian': ['https://lbry.vern.cc'],
 	'beatbump': ['https://beatbump.ml'],
