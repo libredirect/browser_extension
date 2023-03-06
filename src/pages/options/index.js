@@ -41,19 +41,22 @@ async function changeFrontendsSettings(service) {
 			}
 		}
 	}
-	if (config.services[service].frontends[divs[service].frontend.value].embeddable) {
-		document.getElementById(`${service}-redirectType`).innerHTML = `
-		<option value="both" data-localise="__MSG_both__">both</options>
-		<option value="sub_frame" data-localise="__MSG_onlyEmbedded__">Only Embedded</option>
-		<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
-		`
-		document.getElementById(`${service}-redirectType`).value = options[divs[service].frontend.value].redirectType = options[service].redirectType
-	} else {
-		document.getElementById(`${service}-redirectType`).innerHTML = `
-		<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
-		`
-		options[service].redirectType = "main_frame"
-		browser.storage.local.set({ options })
+	if (document.getElementById(`${service}-redirectType`)) {
+		const frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
+		if (config.services[service].frontends[frontend].embeddable) {
+			document.getElementById(`${service}-redirectType`).innerHTML = `
+			<option value="both" data-localise="__MSG_both__">both</options>
+			<option value="sub_frame" data-localise="__MSG_onlyEmbedded__">Only Embedded</option>
+			<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
+			`
+			document.getElementById(`${service}-redirectType`).value = options[frontend].redirectType = options[service].redirectType
+		} else {
+			document.getElementById(`${service}-redirectType`).innerHTML = `
+			<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
+			`
+			options[service].redirectType = "main_frame"
+			browser.storage.local.set({ options })
+		}
 	}
 	const frontend_name_element = document.getElementById(`${service}_page`).getElementsByClassName("frontend_name")[0]
 	if (divs[service].frontend) {
