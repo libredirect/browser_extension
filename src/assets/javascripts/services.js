@@ -181,6 +181,16 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
+		case "scribe": {
+			const regex = url.hostname.match(/^(link|cdn-images-\d+|.*)\.medium\.com/)
+			if (regex && regex.length > 1) {
+				const subdomain = regex[1]
+				if (subdomain != "link" || !subdomain.startsWith("cdn-images")) {
+					return `${randomInstance}/@${subdomain}${url.pathname}${url.search}`
+				}
+			}
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
 		case "simplyTranslate": {
 			return `${randomInstance}/${url.search}`
 		}
