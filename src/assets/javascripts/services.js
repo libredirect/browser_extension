@@ -132,6 +132,8 @@ function redirect(url, type, initiator, forceRedirection) {
 
 			search.delete("ref_src")
 			search.delete("ref_url")
+			search.delete("s") // type of device that shared the link
+			search.delete("t") // some sort of tracking ID
 
 			search = search.toString()
 			if (search !== "") search = `?${search}`
