@@ -32,7 +32,7 @@
         "description": "used in the settings page"
     },
     "auto": {
-        "message": "Auto",
+        "message": "Tự động",
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
@@ -94,10 +94,10 @@
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Chuyển hướng siêu liên kết này",
+        "message": "Chuyển hướng liên kết này",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
-        "message": "About"
+        "message": "Về tiện ích"
     }
 }

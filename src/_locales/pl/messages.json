@@ -32,11 +32,11 @@
         "description": "used in the settings page"
     },
     "auto": {
-        "message": "Auto",
+        "message": "Automatyczny",
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
-        "message": "Excluded from redirecting",
+        "message": "Wykluczone z przekierowania",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -52,11 +52,11 @@
         "description": "used in the settings page"
     },
     "enable": {
-        "message": "Enable",
+        "message": "Włącz",
         "description": "used in the settings page"
     },
     "showInPopup": {
-        "message": "Show in popup",
+        "message": "Pokaż w wyskakującym okienku",
         "description": "used in the settings page"
     },
     "frontend": {
@@ -80,7 +80,7 @@
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
-        "message": "Add your favorite instances",
+        "message": "Dodaj ulubione instancje",
         "description": "used in the settings page"
     },
     "copyRaw": {
@@ -90,14 +90,14 @@
         "message": "Skopiowano"
     },
     "redirectToOriginal": {
-        "message": "Redirect to original",
+        "message": "Przekieruj do oryginału",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Spróbuj przekierować to hiperłącze",
+        "message": "Spróbuj przekierować",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
-        "message": "About"
+        "message": "Informacje"
     }
 }

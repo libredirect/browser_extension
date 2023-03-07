@@ -36,7 +36,7 @@
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
-        "message": "Excluded from redirecting",
+        "message": "Виключено з перенаправлення",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -56,7 +56,7 @@
         "description": "used in the settings page"
     },
     "showInPopup": {
-        "message": "Show in popup",
+        "message": "Показувати у спливному вікні",
         "description": "used in the settings page"
     },
     "frontend": {
@@ -68,7 +68,7 @@
         "description": "used in the settings page"
     },
     "both": {
-        "message": "both",
+        "message": "обоє",
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
@@ -76,11 +76,11 @@
         "description": "used in the settings page"
     },
     "onlyNotEmbedded": {
-        "message": "only not embedded",
+        "message": "лише не вбудований",
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
-        "message": "Add your favorite instances",
+        "message": "Додати свої улюблені сервери",
         "description": "used in the settings page"
     },
     "copyRaw": {
@@ -90,14 +90,14 @@
         "message": "Скопійовано"
     },
     "redirectToOriginal": {
-        "message": "Redirect to original",
+        "message": "Перенаправити на оригінал",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Спроба перенаправлення за цим гіперпосиланням",
+        "message": "Спроба перенаправлення",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
-        "message": "About"
+        "message": "Про застосунок"
     }
 }

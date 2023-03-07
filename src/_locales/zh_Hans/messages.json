@@ -32,11 +32,11 @@
         "description": "used in the settings page"
     },
     "auto": {
-        "message": "Auto",
+        "message": "自动",
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
-        "message": "Excluded from redirecting",
+        "message": "排除于重定向",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -56,7 +56,7 @@
         "description": "used in the settings page"
     },
     "showInPopup": {
-        "message": "Show in popup",
+        "message": "显示于弹出窗口",
         "description": "used in the settings page"
     },
     "frontend": {
@@ -80,7 +80,7 @@
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
-        "message": "Add your favorite instances",
+        "message": "添加您喜欢的实例",
         "description": "used in the settings page"
     },
     "copyRaw": {
@@ -90,14 +90,14 @@
         "message": "已复制"
     },
     "redirectToOriginal": {
-        "message": "Redirect to original",
+        "message": "重定向至原网址",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "尝试重定向此链接",
+        "message": "尝试重定向",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
-        "message": "About"
+        "message": "关于"
     }
 }

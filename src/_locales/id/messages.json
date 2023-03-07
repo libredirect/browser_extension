@@ -36,7 +36,7 @@
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
-        "message": "Excluded from redirecting",
+        "message": "Tidak disertakan dari pengalihan",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -56,7 +56,7 @@
         "description": "used in the settings page"
     },
     "showInPopup": {
-        "message": "Show in popup",
+        "message": "Tampilkan di sembulan",
         "description": "used in the settings page"
     },
     "frontend": {
@@ -80,7 +80,7 @@
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
-        "message": "Add your favorite instances",
+        "message": "Tambahkan server favorit Anda",
         "description": "used in the settings page"
     },
     "copyRaw": {
@@ -90,14 +90,14 @@
         "message": "Disalin"
     },
     "redirectToOriginal": {
-        "message": "Redirect to original",
+        "message": "Alihkan ke asli",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Coba mengalihkan hyperlink ini",
+        "message": "Coba alihkan",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
-        "message": "About"
+        "message": "Tentang"
     }
 }

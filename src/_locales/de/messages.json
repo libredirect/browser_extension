@@ -4,7 +4,7 @@
         "description": "name of the extension"
     },
     "extensionDescription": {
-        "message": "Eine Erweiterung, die beliebte Websites zu alternativen datenschutzfreundlichen Frontends und Backends weiterleitet",
+        "message": "Eine Erweiterung, die beliebte Websites auf alternative, datenschutzfreundliche Frontends und Backends umleitet",
         "description": "description of the extension"
     },
     "switchInstance": {
@@ -32,11 +32,11 @@
         "description": "used in the settings page"
     },
     "auto": {
-        "message": "Auto",
+        "message": "System",
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
-        "message": "Excluded from redirecting",
+        "message": "Vom Umleiten ausschließen",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -56,7 +56,7 @@
         "description": "used in the settings page"
     },
     "showInPopup": {
-        "message": "Show in popup",
+        "message": "Im Pop-up-Fenster anzeigen",
         "description": "used in the settings page"
     },
     "frontend": {
@@ -64,7 +64,7 @@
         "description": "used in the settings page"
     },
     "redirectType": {
-        "message": "Art der Weiterleitung",
+        "message": "Art der Umleitung",
         "description": "used in the settings page"
     },
     "both": {
@@ -76,11 +76,11 @@
         "description": "used in the settings page"
     },
     "onlyNotEmbedded": {
-        "message": "nur nicht-eingebunden",
+        "message": "nur nicht eingebettet",
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
-        "message": "Add your favorite instances",
+        "message": "Eigene Instanz hinzufügen",
         "description": "used in the settings page"
     },
     "copyRaw": {
@@ -90,14 +90,14 @@
         "message": "Kopiert"
     },
     "redirectToOriginal": {
-        "message": "Redirect to original",
+        "message": "Zur Originalseite umleiten",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Versuch, diesen Hyperlink umzuleiten",
+        "message": "Versuchen umzuleiten",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
-        "message": "About"
+        "message": "Über"
     }
 }
