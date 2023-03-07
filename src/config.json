@@ -562,7 +562,8 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}stackoverflow\\.com\\/"
+				"^https?:\\/{2}?stackoverflow\\.com\\/",
+				"^https?:\\/{2}([a-zA-Z0-9-]+\\.)?stackexchange\\.com\\/"
 			],
 			"name": "Stack Overflow",
 			"options": {

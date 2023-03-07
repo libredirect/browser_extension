@@ -459,10 +459,16 @@ function redirect(url, type, initiator, forceRedirection) {
 		}
 		case "anonymousOverflow": {
 			if (!url.pathname.startsWith('/questions') && url.pathname != '/') return
-			const threadID = /\/(\d+)\/?$/.exec(url.pathname)
-			if (threadID) return `${randomInstance}/questions/${threadID[1]}${url.search}`
-			return `${randomInstance}${url.pathname}${url.search}`
-
+			if (url.hostname == "stackoverflow.com") {
+				const threadID = /\/(\d+)\/?$/.exec(url.pathname)
+				if (threadID) return `${randomInstance}/questions/${threadID[1]}${url.search}`
+				return `${randomInstance}${url.pathname}${url.search}`
+			}
+			const regex = url.href.match(/https?:\/{2}(?:([a-zA-Z0-9-]+)\.)?stackexchange\.com\//)
+			if (regex && regex.length > 1) {
+				const subdomain = regex[1]
+				return `${randomInstance}/exchange/${subdomain}${url.pathname}${url.search}`
+			}
 		}
 		case "biblioReads": {
 			if (!url.pathname.startsWith('/book/show/') && url.pathname != '/') return
