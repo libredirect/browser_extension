@@ -610,7 +610,8 @@ function switchInstance(url) {
 		const protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
 			let frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
-			let instancesList = [...options[frontend]]
+			let instancesList = options[frontend]
+			if (instancesList === undefined) continue
 			if (!instancesList.includes(protocolHost)) continue
 
 			instancesList.splice(instancesList.indexOf(protocolHost), 1)
@@ -636,6 +637,7 @@ function reverse(url) {
 		let protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
 			let frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
+			if (options[frontend] == undefined) continue
 			if (!options[frontend].includes(protocolHost)) continue
 
 			switch (service) {
