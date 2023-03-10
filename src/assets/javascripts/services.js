@@ -44,6 +44,11 @@ function regexArray(service, url, config, frontend) {
 	return false
 }
 
+async function redirectAsync(url, type, initiator, forceRedirection) {
+	await init()
+	return redirect(url, type, initiator, forceRedirection)
+}
+
 function redirect(url, type, initiator, forceRedirection) {
 	if (type != "main_frame" && type != "sub_frame" && type != "image") return
 	let randomInstance
@@ -846,6 +851,7 @@ async function copyRaw(url, test) {
 
 export default {
 	redirect,
+	redirectAsync,
 	computeService,
 	reverse,
 	initDefaults,

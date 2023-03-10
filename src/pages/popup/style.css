@@ -28,6 +28,11 @@ input {
 	width: 46px;
 }
 
+.button h4 {
+	font-size: 16px;
+	max-width: 160px;
+}
+
 #instance {
 	max-width: 110px;
 	max-height: 22px;

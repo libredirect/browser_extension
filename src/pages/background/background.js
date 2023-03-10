@@ -92,72 +92,20 @@ browser.commands.onCommand.addListener(async command => {
 	})
 })
 
-browser.contextMenus.create({
-	id: "settingsTab",
-	title: browser.i18n.getMessage("settings"),
-	contexts: ["browser_action"],
-})
+browser.contextMenus.create({ id: "settingsTab", title: browser.i18n.getMessage("settings"), contexts: ["browser_action"] })
+browser.contextMenus.create({ id: "switchInstanceTab", title: browser.i18n.getMessage("switchInstance"), contexts: ["browser_action"] })
+browser.contextMenus.create({ id: "copyReverseTab", title: 'Copy Original', contexts: ["browser_action"] })
+browser.contextMenus.create({ id: "redirectTab", title: 'Redirect', contexts: ["browser_action"] })
+browser.contextMenus.create({ id: "reverseTab", title: 'Redirect To Original', contexts: ["browser_action"] })
 
-browser.contextMenus.create({
-	id: "switchInstanceTab",
-	title: browser.i18n.getMessage("switchInstance"),
-	contexts: ["browser_action"],
-})
-
-browser.contextMenus.create({
-	id: "copyReverseTab",
-	title: 'Copy Original',
-	contexts: ["browser_action"],
-})
-
-browser.contextMenus.create({
-	id: "redirectTab",
-	title: 'Redirect',
-	contexts: ["browser_action"],
-})
-
-browser.contextMenus.create({
-	id: "reverseTab",
-	title: 'Redirect To Original',
-	contexts: ["browser_action"],
-})
-
-browser.contextMenus.create({
-	id: "redirectLink",
-	title: 'Redirect',
-	contexts: ["link"],
-})
-
-browser.contextMenus.create({
-	id: "reverseLink",
-	title: 'Redirect To Original',
-	contexts: ["link"],
-})
-
-browser.contextMenus.create({
-	id: "copyReverseLink",
-	title: 'Copy Original',
-	contexts: ["link"],
-})
+browser.contextMenus.create({ id: "redirectLink", title: 'Redirect', contexts: ["link"] })
+browser.contextMenus.create({ id: "reverseLink", title: 'Redirect To Original', contexts: ["link"] })
+browser.contextMenus.create({ id: "copyReverseLink", title: 'Copy Original', contexts: ["link"] })
 
 if (!isChrome) {
-	browser.contextMenus.create({
-		id: "redirectBookmark",
-		title: 'Redirect',
-		contexts: ["bookmark"],
-	})
-
-	browser.contextMenus.create({
-		id: "reverseBookmark",
-		title: 'Redirect To Original',
-		contexts: ["bookmark"],
-	})
-
-	browser.contextMenus.create({
-		id: "copyReverseBookmark",
-		title: 'Copy Original',
-		contexts: ["bookmark"],
-	})
+	browser.contextMenus.create({ id: "redirectBookmark", title: 'Redirect', contexts: ["bookmark"] })
+	browser.contextMenus.create({ id: "reverseBookmark", title: 'Redirect To Original', contexts: ["bookmark"] })
+	browser.contextMenus.create({ id: "copyReverseBookmark", title: 'Copy Original', contexts: ["bookmark"] })
 }
 
 
@@ -276,3 +224,33 @@ browser.webRequest.onHeadersReceived.addListener(
 	{ urls: ["<all_urls>"] },
 	["blocking", "responseHeaders"]
 )
+
+
+browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+	if (request == "reverseTab") {
+		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+			if (tabs[0].url) {
+				const url = new URL(tabs[0].url)
+				const newUrl = await servicesHelper.reverse(url)
+				if (newUrl) {
+					browser.tabs.update(tabs[0].id, { url: newUrl }, () => {
+						tabIdRedirects[tabs[0].id] = false
+					})
+				}
+			}
+		})
+	}
+	else if (request == "redirectTab") {
+		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+			if (tabs[0].url) {
+				const url = new URL(tabs[0].url)
+				const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
+				if (newUrl) {
+					browser.tabs.update(tabs[0].id, { url: newUrl }, () => {
+						tabIdRedirects[tabs[0].id] = true
+					})
+				}
+			}
+		})
+	}
+});

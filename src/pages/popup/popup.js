@@ -19,16 +19,37 @@ browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 		})
 		servicesHelper.copyRaw(url, true).then(r => {
 			if (!r) {
-				document.getElementById("copy_raw_div").style.display = "none"
+				document.getElementById("copy_original_div").style.display = "none"
 			}
 			else {
-				const copy_raw = document.getElementById("copy_raw")
-				copy_raw.addEventListener("click", () => servicesHelper.copyRaw(url))
+				document.getElementById("copy_original").addEventListener("click", () => servicesHelper.copyRaw(url))
+			}
+		})
+		servicesHelper.reverse(url).then(r => {
+			if (!r) {
+				document.getElementById("redirect_to_original_div").style.display = "none"
+			} else {
+				document.getElementById("redirect_to_original").addEventListener("click", () => {
+					browser.runtime.sendMessage("reverseTab");
+					calcButtons()
+				})
+			}
+		})
+		servicesHelper.redirectAsync(url, "main_frame", null, true).then(r => {
+			if (!r) {
+				document.getElementById("redirect_div").style.display = "none"
+			} else {
+				document.getElementById("redirect").addEventListener("click", () => {
+					browser.runtime.sendMessage("redirectTab");
+					calcButtons()
+				})
 			}
 		})
 	} else {
 		document.getElementById("change_instance_div").style.display = "none"
-		document.getElementById("copy_raw_div").style.display = "none"
+		document.getElementById("copy_original_div").style.display = "none"
+		document.getElementById("redirect_div").style.display = "none"
+		document.getElementById("redirect_to_original_div").style.display = "none"
 	}
 })
 
