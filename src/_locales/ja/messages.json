@@ -4,7 +4,7 @@
         "description": "name of the extension"
     },
     "extensionDescription": {
-        "message": "人気サイトをプライバシー・フレンドリーな代替のフロントエンドやバックエンドにリダイレクトする Web 拡張機能",
+        "message": "人気サイトを個人情報に配慮した代替のフロントエンド/バックエンドに転送するウェブ拡張機能",
         "description": "description of the extension"
     },
     "switchInstance": {
@@ -32,11 +32,11 @@
         "description": "used in the settings page"
     },
     "auto": {
-        "message": "Auto",
+        "message": "自動",
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
-        "message": "Excluded from redirecting",
+        "message": "転送から除外",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -48,7 +48,7 @@
         "description": "used in the settings page"
     },
     "resetSettings": {
-        "message": "設定をリセット",
+        "message": "設定を初期化",
         "description": "used in the settings page"
     },
     "enable": {
@@ -56,7 +56,7 @@
         "description": "used in the settings page"
     },
     "showInPopup": {
-        "message": "Show in popup",
+        "message": "ポップアップ内に表示",
         "description": "used in the settings page"
     },
     "frontend": {
@@ -64,7 +64,7 @@
         "description": "used in the settings page"
     },
     "redirectType": {
-        "message": "リダイレクトタイプ",
+        "message": "転送の種類",
         "description": "used in the settings page"
     },
     "both": {
@@ -80,24 +80,24 @@
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
-        "message": "Add your favorite instances",
+        "message": "好きなインスタンスを追加",
         "description": "used in the settings page"
     },
     "copyRaw": {
-        "message": "生データをコピー"
+        "message": "元のURIをコピー"
     },
     "copied": {
         "message": "コピーしました"
     },
     "redirectToOriginal": {
-        "message": "Redirect to original",
+        "message": "元のサービスに転送",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Attempt to redirect this hyperlink",
+        "message": "転送する",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
-        "message": "About"
+        "message": "公式サイト"
     }
 }
