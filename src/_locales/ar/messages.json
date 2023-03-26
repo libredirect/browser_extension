@@ -96,7 +96,7 @@
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "محاولة إعادة توجيه هذا الارتباط التشعبي",
+        "message": "محاولة إعادة توجيه",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
