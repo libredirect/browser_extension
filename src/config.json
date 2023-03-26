@@ -92,7 +92,7 @@
 				"^https?:\\/{2}youtu\\.be\\/..*",
 				"^https?:\\/{2}(?:www\\.|)(youtube|youtube-nocookie)\\.com\\/embed\\/..*"
 			],
-			"name": "Youtube",
+			"name": "YouTube",
 			"options": {
 				"enabled": false,
 				"redirectType": "main_frame",
