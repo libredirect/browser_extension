@@ -216,11 +216,7 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 })
 
 browser.webRequest.onHeadersReceived.addListener(
-	e => {
-		let response = servicesHelper.modifyContentSecurityPolicy(e)
-		if (!response) response = servicesHelper.modifyContentSecurityPolicy(e)
-		return response
-	},
+	servicesHelper.modifyContentSecurityPolicy,
 	{ urls: ["<all_urls>"] },
 	["blocking", "responseHeaders"]
 )
