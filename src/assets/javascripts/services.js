@@ -414,7 +414,6 @@ function redirect(url, type, initiator, forceRedirection) {
 				if (query) return `${randomInstance}/${mapCentre}/Mpnk/${query}`
 			}
 		}
-
 		case "breezeWiki": {
 			let wiki, urlpath = ""
 			if (url.hostname.match(/^[a-zA-Z0-9-]+\.(?:fandom|wikia)\.com/)) {
@@ -539,8 +538,10 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
-		case "mikuIndividious": {
+		case "mikuInvidious": {
+			console.log("Hello?")
 			if (url.hostname == "bilibili.com" || url.hostname == "www.bilibili.com" || url.hostname == 'b23.tv') {
+				console.log('wewe')
 				return `${randomInstance}${url.pathname}${url.search}`
 			}
 			if (url.hostname == "space.bilibili.com") {
