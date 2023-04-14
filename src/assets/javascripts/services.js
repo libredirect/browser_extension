@@ -663,7 +663,7 @@ function reverse(url) {
 					resolve(config.services[service].url + url.pathname + url.search)
 					return
 				case "fandom":
-					let regex = url.pathname.match(/^\/([a-zA-Z0-9-]+)\/wiki\/([a-zA-Z0-9-]+)/)
+					let regex = url.pathname.match(/^\/([a-zA-Z0-9-]+)\/wiki\/(.*)/)
 					if (regex) {
 						resolve(`https://${regex[1]}.fandom.com/wiki/${regex[2]}`)
 						return
