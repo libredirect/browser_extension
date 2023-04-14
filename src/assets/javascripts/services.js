@@ -202,10 +202,25 @@ function redirect(url, type, initiator, forceRedirection) {
 			return `${randomInstance}/${url.search}`
 		}
 		case "libreTranslate": {
-			return `${randomInstance}/${url.search}`
-				.replace(/(?<=\/?)sl/, "source")
-				.replace(/(?<=&)tl/, "target")
-				.replace(/(?<=&)text/, "q")
+			let search = url.search
+				.replace("sl", "source")
+				.replace("tl", "target")
+				.replace("text", "q")
+			return `${randomInstance}/${search}`
+
+		}
+		case "lingva": {
+			let params_arr = url.search.split("&")
+			params_arr[0] = params_arr[0].substring(1)
+			let params = {}
+			for (let i = 0; i < params_arr.length; i++) {
+				let pair = params_arr[i].split("=")
+				params[pair[0]] = pair[1]
+			}
+			if (params.sl && params.tl && params.text) {
+				return `${randomInstance}/${params.sl}/${params.tl}/${params.text}`
+			}
+			return randomInstance
 		}
 		case "osm": {
 			if (initiator && initiator.host === "earth.google.com") return
@@ -399,19 +414,7 @@ function redirect(url, type, initiator, forceRedirection) {
 				if (query) return `${randomInstance}/${mapCentre}/Mpnk/${query}`
 			}
 		}
-		case "lingva": {
-			let params_arr = url.search.split("&")
-			params_arr[0] = params_arr[0].substring(1)
-			let params = {}
-			for (let i = 0; i < params_arr.length; i++) {
-				let pair = params_arr[i].split("=")
-				params[pair[0]] = pair[1]
-			}
-			if (params.sl && params.tl && params.text) {
-				return `${randomInstance}/${params.sl}/${params.tl}/${params.text}`
-			}
-			return randomInstance
-		}
+
 		case "breezeWiki": {
 			let wiki, urlpath = ""
 			if (url.hostname.match(/^[a-zA-Z0-9-]+\.(?:fandom|wikia)\.com/)) {
@@ -822,9 +825,10 @@ function modifyContentSecurityPolicy(details) {
 				newSecurity += key + " " + vals + "; "
 			}
 			details.responseHeaders[header].value = newSecurity
-			return { details }
+			isChanged = true
 		}
 	}
+	if (isChanged) return { details }
 }
 
 async function copyRaw(url, test) {

@@ -110,7 +110,6 @@ if (!isChrome) {
 
 
 browser.contextMenus.onClicked.addListener(async (info) => {
-	console.log(info)
 	switch (info.menuItemId) {
 		case 'switchInstanceTab': {
 			const url = new URL(info.pageUrl)
