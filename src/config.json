@@ -135,7 +135,8 @@
 					"name": "Nitter",
 					"embeddable": true,
 					"instanceList": true,
-					"url": "https://github.com/zedeus/nitter"
+					"url": "https://github.com/zedeus/nitter",
+					"localhost": true
 				}
 			},
 			"targets": [
@@ -148,7 +149,8 @@
 			"options": {
 				"enabled": false,
 				"redirectType": "main_frame",
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"instance": "public"
 			},
 			"imageType": "png",
 			"embeddable": true,
@@ -179,7 +181,8 @@
 				"libreddit": {
 					"name": "Libreddit",
 					"instanceList": true,
-					"url": "https://github.com/spikecodes/libreddit"
+					"url": "https://github.com/spikecodes/libreddit",
+					"localhost": true
 				},
 				"teddit": {
 					"name": "Teddit",
@@ -195,7 +198,8 @@
 			"options": {
 				"enabled": false,
 				"frontend": "libreddit",
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"instance": "public"
 			},
 			"imageType": "png",
 			"embeddable": false,
@@ -206,7 +210,8 @@
 				"rimgo": {
 					"name": "rimgo",
 					"instanceList": true,
-					"url": "https://codeberg.org/video-prize-ranch/rimgo"
+					"url": "https://codeberg.org/video-prize-ranch/rimgo",
+					"localhost": true
 				}
 			},
 			"targets": [
@@ -216,7 +221,8 @@
 			"options": {
 				"enabled": false,
 				"redirectType": "main_frame",
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"instance": "public"
 			},
 			"imageType": "png",
 			"embeddable": true,
@@ -311,7 +317,8 @@
 				"breezeWiki": {
 					"name": "BreezeWiki",
 					"instanceList": true,
-					"url": "https://breezewiki.com"
+					"url": "https://breezewiki.com",
+					"localhost": true
 				}
 			},
 			"targets": [
@@ -320,7 +327,8 @@
 			"name": "Fandom",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"instance": "public"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -397,7 +405,8 @@
 				"simplyTranslate": {
 					"name": "SimplyTranslate",
 					"instanceList": true,
-					"url": "https://git.sr.ht/~metalune/simplytranslate_web"
+					"url": "https://git.sr.ht/~metalune/simplytranslate_web",
+					"localhost": true
 				},
 				"lingva": {
 					"name": "Lingva Translate",
@@ -418,7 +427,8 @@
 			"options": {
 				"enabled": false,
 				"frontend": "simplyTranslate",
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"instance": "public"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,

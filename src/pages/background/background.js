@@ -214,13 +214,6 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 	}
 })
 
-browser.webRequest.onHeadersReceived.addListener(
-	servicesHelper.modifyContentSecurityPolicy,
-	{ urls: ["<all_urls>"] },
-	["blocking", "responseHeaders"]
-)
-
-
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	if (request == "reverseTab") {
 		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {

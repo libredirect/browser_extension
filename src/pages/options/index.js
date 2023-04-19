@@ -34,7 +34,15 @@ async function changeFrontendsSettings(service) {
 			const frontendDiv = document.getElementById(frontend)
 			if (typeof divs[service].frontend !== "undefined") {
 				if (frontend == divs[service].frontend.value) {
-					frontendDiv.style.display = "block"
+					frontendDiv.style.display = ""
+					if (config.services[service].frontends[frontend].localhost == true) {
+						document.getElementById(`${service}-instance-div`).style.display = ""
+						if (options[service].instance == "localhost") {
+							frontendDiv.style.display = "none"
+						}
+					} else {
+						document.getElementById(`${service}-instance-div`).style.display = "none"
+					}
 				} else {
 					frontendDiv.style.display = "none"
 				}

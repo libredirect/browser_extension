@@ -83,6 +83,10 @@ function redirect(url, type, initiator, forceRedirection) {
 		) return "BYPASSTAB"
 
 		randomInstance = utils.getRandomInstance(instanceList)
+		console.log(options[service].localhost)
+		if (config.services[service].frontends[frontend].localhost && options[service].instance == "localhost") {
+			randomInstance = `http://${frontend}.localhost:8080`
+		}
 
 		break
 	}
@@ -795,43 +799,6 @@ function processUpdate() {
 	})
 }
 
-// For websites that have a strict policy that would not normally allow these frontends to be embedded within the website.
-function modifyContentSecurityPolicy(details) {
-	let isChanged = false
-	if (details.type != "main_frame") return
-
-	for (const header in details.responseHeaders) {
-		if (details.responseHeaders[header].name == "content-security-policy") {
-			let instancesList = []
-			for (const service in config.services) {
-				if (config.services[service].embeddable) {
-					for (const frontend in config.services[service].frontends) {
-						if (config.services[service].frontends[frontend].embeddable) {
-							for (const network in config.networks) {
-								instancesList.push(...options[frontend])
-							}
-						}
-					}
-				}
-			}
-			let securityPolicyList = details.responseHeaders[header].value.split(";")
-			for (const i in securityPolicyList) securityPolicyList[i] = securityPolicyList[i].trim()
-			let newSecurity = ""
-			for (const item of securityPolicyList) {
-				if (item.trim() == "") continue
-				let regex = item.match(/([a-z-]{0,}) (.*)/)
-				if (regex == null) continue
-				let [, key, vals] = regex
-				if (key == "frame-src") vals = vals + " " + instancesList.join(" ")
-				newSecurity += key + " " + vals + "; "
-			}
-			details.responseHeaders[header].value = newSecurity
-			isChanged = true
-		}
-	}
-	if (isChanged) return { details }
-}
-
 async function copyRaw(url, test) {
 	const newUrl = await reverse(url)
 	if (newUrl) {
@@ -860,7 +827,6 @@ export default {
 	initDefaults,
 	upgradeOptions,
 	processUpdate,
-	modifyContentSecurityPolicy,
 	copyRaw,
 	switchInstance
 }

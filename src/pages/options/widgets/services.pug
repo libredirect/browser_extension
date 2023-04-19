@@ -26,6 +26,12 @@ each val, service in services
                     else
                         option(value=frontend)=Object.values(services[service].frontends)[0].name
 
+            div(class="some-block option-block" id=service+"-instance-div")
+                h4() Instance
+                select(id=service+"-instance")
+                    option(value="localhost") localhost
+                    option(value="public") public instances
+
             if services[service].embeddable
                 div(class="some-block option-block")
                     h4(data-localise="__MSG_redirectType__") Redirect Type
@@ -40,7 +46,7 @@ each val, service in services
             if (service == 'search')
                 div(class="some-block option-block")
                     h4 Set LibRedirect as Default Search Engine
-            
+
             hr            
 
             each val, frontend in services[service].frontends
