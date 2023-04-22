@@ -7,19 +7,6 @@ A web extension that redirects YouTube, Twitter, TikTok... requests to alternati
 <img src ="./img/badge-chromium.png" height=60 >
 </a>
 
-## Links
-More info: https://libredirect.github.io
-
-Donate: https://libredirect.github.io/donate.html
-
-FAQ: https://libredirect.github.io/faq.html
-
-Contact: https://libredirect.github.io/contact.html
-
-Docs: https://libredirect.github.io/docs.html
-
-Mirror Repos: https://libredirect.github.io/source_code.html
-
 ## Translate
 
 [![Weblate](./img/weblate.svg)](https://hosted.weblate.org/projects/libredirect/extension)
@@ -75,15 +62,4 @@ npm run start
 
 ---
 
-## Disclaimer : 
-
-- This extension is just a tool that redirects from sites that are listed within it to Alternative frontends of them.
-
-- We don't have any affliation with the sites that are being redirected.
-
-- The sites that are listed are just the sole properties of Trademark Owners. We don't own any of them.
-
----
-
-[Privacy Policy](Privacy-Policy.md)\
 Forked from [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)
