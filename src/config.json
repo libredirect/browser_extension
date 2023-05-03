@@ -710,7 +710,7 @@
 				"tent": {
 					"name": "Tent",
 					"instanceList": true,
-					"url": "https://codeberg.org/sun/Tent"
+					"url": "https://forgejo.sny.sh/sun/Tent"
 				}
 			},
 			"targets": [
