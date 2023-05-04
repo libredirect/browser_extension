@@ -10,11 +10,11 @@ each val, service in services
             h4(data-localise="__MSG_enable__") Enable
             input(id=`${service}-enabled` type="checkbox")
 
-        div(id=service+"-opacity")
+        div(class="some-block option-block")
+            h4(data-localise="__MSG_showInPopup__") Show in popup
+            input(id=service type="checkbox")
 
-            div(class="some-block option-block")
-                h4(data-localise="__MSG_showInPopup__") Show in popup
-                input(id=service type="checkbox")
+        div(id=service+"-opacity")
 
             div(class="some-block option-block")
                 h4
