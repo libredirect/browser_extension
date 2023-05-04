@@ -8,7 +8,7 @@ html(lang="en")
     body(dir="auto")
         div(class="current_site")
             include /src/pages/widgets/switches
-            div(id="current_site_divider")
+            div(id="current_site_divider" style="display: none")
                 hr
 
         div(class="all_sites")
@@ -16,25 +16,25 @@ html(lang="en")
 
         hr
 
-        div(class="some-block" id="change_instance_div")
+        div(class="some-block" id="change_instance_div" style="display: none")
             a(class="title button prevent" id="change_instance")
                 h4() Switch Instance
                 svg(xmlns="http://www.w3.org/2000/svg" height="26px" width="26px" fill="currentColor")
                     path(d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z")
 
-        div(class="some-block" id="copy_original_div" title="Copy the original redirected link")
+        div(class="some-block" id="copy_original_div" title="Copy the original redirected link" style="display: none")
             a(class="title button prevent" id="copy_original")
                 h4() Copy Original
                 svg(xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="currentColor")
                     path(d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z")
 
-        div(class="some-block" id="redirect_div")
+        div(class="some-block" id="redirect_div" style="display: none")
             a(class="title button prevent" id="redirect")
                 h4 Redirect
                 svg(xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="currentColor")
                     path(d="M7 20v-9q0-.825.588-1.413Q8.175 9 9 9h8.2l-1.6-1.6L17 6l4 4-4 4-1.4-1.4 1.6-1.6H9v9Z")
 
-        div(class="some-block" id="redirect_to_original_div")
+        div(class="some-block" id="redirect_to_original_div" style="display: none")
             a(class="title button prevent" id="redirect_to_original")
                 h4 Redirect To Original
                 svg(xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="currentColor")
