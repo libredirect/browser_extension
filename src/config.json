@@ -350,7 +350,6 @@
 			"name": "LBRY",
 			"options": {
 				"enabled": false,
-				"frontend": "librarian",
 				"redirectType": "main_frame",
 				"unsupportedUrls": "bypass"
 			},
@@ -618,8 +617,26 @@
 			"embeddable": false,
 			"url": "https://wikipedia.org"
 		},
-		
-		}
+		"snopes": {
+			"frontends": {
+				"suds": {
+					"name": "Suds",
+					"instanceList": true,
+					"url": "https://git.vern.cc/cobra/Suds"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?snopes\\.com\\/"
+			],
+			"name": "Snopes",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass"
+			},
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://www.snopes.com"
+		},
 		"waybackMachine": {
 			"frontends": {
 				"waybackClassic": {
