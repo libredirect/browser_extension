@@ -336,12 +336,6 @@
 		},
 		"lbry": {
 			"frontends": {
-				"librarian": {
-					"name": "Librarian",
-					"embeddable": true,
-					"instanceList": true,
-					"url": "https://codeberg.org/librarian/librarian"
-				},
 				"lbryDesktop": {
 					"name": "LBRY Desktop",
 					"embeddable": false,
@@ -356,7 +350,6 @@
 			"name": "LBRY",
 			"options": {
 				"enabled": false,
-				"frontend": "librarian",
 				"redirectType": "main_frame",
 				"unsupportedUrls": "bypass"
 			},
