@@ -1,4 +1,4 @@
-each val, service in services    
+each _, service in services    
     div(class=service + " some-block hide")
         a(class="title" href=services[service].url)
             if services[service].imageType == 'svgMono'

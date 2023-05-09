@@ -6,13 +6,13 @@ html(lang="en")
         link(href="../stylesheets/styles.css" rel="stylesheet")
         link(href="./style.css" rel="stylesheet")
     body(dir="auto")
-        div(class="current_site")
-            include /src/pages/widgets/switches
+        div(id="current_site")
+            include /src/pages/popup/switches
             div(id="current_site_divider" style="display: none")
                 hr
 
-        div(class="all_sites")
-            include /src/pages/widgets/switches
+        div(id="all_sites")
+            include /src/pages/popup/switches
 
         hr
 
