@@ -1,5 +1,5 @@
 each val, service in services    
-    div(class=service + " some-block")
+    div(class=service + " some-block hide")
         a(class="title" href=services[service].url)
             if services[service].imageType == 'svgMono'
                 img(class='dark' src=`/assets/images/${service}-icon.svg`)
