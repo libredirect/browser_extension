@@ -336,12 +336,6 @@
 		},
 		"lbry": {
 			"frontends": {
-				"librarian": {
-					"name": "Librarian",
-					"embeddable": true,
-					"instanceList": true,
-					"url": "https://codeberg.org/librarian/librarian"
-				},
 				"lbryDesktop": {
 					"name": "LBRY Desktop",
 					"embeddable": false,
@@ -624,26 +618,8 @@
 			"embeddable": false,
 			"url": "https://wikipedia.org"
 		},
-		"snopes": {
-			"frontends": {
-				"suds": {
-					"name": "Suds",
-					"instanceList": true,
-					"url": "https://git.vern.cc/cobra/Suds"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.)?snopes\\.com\\/"
-			],
-			"name": "Snopes",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass"
-			},
-			"imageType": "svg",
-			"embeddable": false,
-			"url": "https://www.snopes.com"
-		},
+		
+		}
 		"waybackMachine": {
 			"frontends": {
 				"waybackClassic": {
