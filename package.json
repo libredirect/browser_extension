@@ -10,7 +10,7 @@
 		"start_ar": "web-ext run --firefox=/home/esmail/Downloads/ar/firefox/firefox --pref font.language.group=ar",
 		"build": "web-ext build",
 		"test": "web-ext lint",
-		"pug": "pug --pretty --basedir ./ --obj ./src/config.json src/pages/options/index.pug --out src/pages/options/ && pug --pretty --basedir ./ --obj ./src/config.json src/pages/popup/popup.pug --out src/pages/popup/"
+		"html": "pug --basedir ./ --obj ./src/config.json src/pages/options/index.pug --out src/pages/options/ && pug --basedir ./ --obj ./src/config.json src/pages/popup/popup.pug --out src/pages/popup/"
 	},
 	"repository": {
 		"type": "git",
@@ -23,7 +23,8 @@
 	},
 	"homepage": "https://libredirect.github.io",
 	"devDependencies": {
-		"web-ext": "^7.2.0"
+		"web-ext": "^7.2.0",
+		"pug-cli": "^1.0.0-alpha6"
 	},
 	"webExt": {
 		"sourceDir": "./src/",

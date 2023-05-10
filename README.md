@@ -12,53 +12,36 @@ A web extension that redirects YouTube, Twitter, TikTok... requests to alternati
 [![Weblate](./img/weblate.svg)](https://hosted.weblate.org/projects/libredirect/extension)
 
 ## Development
-
-### Install Dependencies
-
-[Node.js](https://nodejs.org/) latest LTS is recommended
-
-```
-npm update
+Requirements: [Node.js LTS](https://nodejs.org/)
+```bash
+git clone https://github.com/libredirect/browser_extension
+cd browser_extension
 npm install
+npm run html
+npm run start # Runs on firefox using web-ext
 ```
-
-Generate the HTML pages (you should install [pug-cli](https://www.npmjs.com/package/pug-cli) first globally):
-
-```
-npm run pug
-```
-
-### Build the extension zip archive:
-
-```
-npm run build
-```
-
-### Test in Firefox
-
-```
-npm run start
-```
-
-### Install temporarily
-
-1. Type in the address bar: `about:debugging#/runtime/this-firefox`
-3. Press `Load Temporary Add-on...`
-
-### Install in Firefox ESR, Developer Edition, Nightly
-
-1. Type in the address bar: `about:config`
-2. Set `xpinstall.signatures.required` to `false`
-3. Type in the address bar: `about:addons`
-4. Click on the gear shaped `settings` button and select `Install Add-on From File...`
-5. Select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
-
-### Install in Chromium browsers
-
+### Run on Chromium manually
 1. Open `chrome://extensions`
 2. Enable `dev mode`
 3. Select `load unpacked extension`
 4. Select `src` folder
+
+### Build zip package (Firefox)
+```bash
+npm run build
+```
+### Install zip package on Firefox (temporarily)
+3. Type in the address bar: `about:debugging#/runtime/this-firefox`
+4. Press `Load Temporary Add-on...`
+5. Select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
+
+### Install zip package on Firefox ESR, Developer Edition, Nightly
+3. Type in the address bar: `about:config`
+4. Set `xpinstall.signatures.required` to `false`
+5. Type in the address bar: `about:addons`
+6. Click on the gear shaped `settings` button and select `Install Add-on From File...`
+7. Select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
+
 
 ---
 
