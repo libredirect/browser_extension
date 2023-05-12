@@ -1,6 +1,5 @@
 "use strict"
 
-import generalHelper from "../../assets/javascripts/general.js"
 import utils from "../../assets/javascripts/utils.js"
 import servicesHelper from "../../assets/javascripts/services.js"
 
@@ -44,9 +43,10 @@ browser.webRequest.onBeforeRequest.addListener(
 		if (tabIdRedirects[details.tabId] == false) return null
 		let newUrl = servicesHelper.redirect(url, details.type, initiator, tabIdRedirects[details.tabId], details.tabId)
 
-		if (details.frameAncestors && details.frameAncestors.length > 0 && generalHelper.isException(new URL(details.frameAncestors[0].url))) newUrl = null
+		if (details.frameAncestors && details.frameAncestors.length > 0 && servicesHelper.isException(new URL(details.frameAncestors[0].url))) newUrl = null
 
-		if (generalHelper.isException(url)) {
+		console.log(servicesHelper.isException(url))
+		if (servicesHelper.isException(url)) {
 			if (details.type == "main_frame")
 				newUrl = "BYPASSTAB"
 			else

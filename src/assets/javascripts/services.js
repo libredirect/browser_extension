@@ -83,7 +83,6 @@ function redirect(url, type, initiator, forceRedirection) {
 		) return "BYPASSTAB"
 
 		randomInstance = utils.getRandomInstance(instanceList)
-		console.log(options[service].localhost)
 		if (config.services[service].frontends[frontend].localhost && options[service].instance == "localhost") {
 			randomInstance = `http://${frontend}.localhost:8080`
 		}
@@ -819,6 +818,15 @@ async function copyRaw(url, test) {
 	}
 }
 
+function isException(url) {
+	let exceptions = options.exceptions
+	if (exceptions && url) {
+		if (exceptions.url) for (const item of exceptions.url) if (item == url.href) return true
+		if (exceptions.regex) for (const item of exceptions.regex) if (new RegExp(item).test(url.href)) return true
+	}
+	return false
+}
+
 export default {
 	redirect,
 	redirectAsync,
@@ -828,5 +836,6 @@ export default {
 	upgradeOptions,
 	processUpdate,
 	copyRaw,
-	switchInstance
+	switchInstance,
+	isException
 }

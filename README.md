@@ -17,8 +17,8 @@ Requirements: [Node.js LTS](https://nodejs.org/)
 git clone https://github.com/libredirect/browser_extension
 cd browser_extension
 npm install
-npm run html
-npm run start # Runs on firefox using web-ext
+npm run html # Generates html files using Pug
+npm run start # Runs in debug mode in firefox using Web-ext
 ```
 ### Run on Chromium manually
 1. Open `chrome://extensions`

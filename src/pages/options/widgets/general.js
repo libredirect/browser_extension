@@ -152,14 +152,15 @@ function calcExceptionsCustomInstances() {
 }
 calcExceptionsCustomInstances()
 document.getElementById("custom-exceptions-instance-form").addEventListener("submit", async event => {
+	console.log('something plz.... :\')')
 	event.preventDefault()
-
 	let val
-	if (instanceType == "url") {
-		if (nameCustomInstanceInput.validity.valid) {
-			val = nameCustomInstanceInput.value
-			if (!exceptionsCustomInstances.url.includes(val)) exceptionsCustomInstances.url.push(val)
-		}
+	if (instanceType == "url" && nameCustomInstanceInput.validity.valid) {
+		val = nameCustomInstanceInput.value
+		const url = new URL(val)
+		val = url.href
+		val = val.replace(/^http:\/\//, 'https://')
+		if (!exceptionsCustomInstances.url.includes(val)) exceptionsCustomInstances.url.push(val)
 	} else if (instanceType == "regex") {
 		val = nameCustomInstanceInput.value
 		if (val.trim() != "" && !exceptionsCustomInstances.regex.includes(val)) exceptionsCustomInstances.regex.push(val)
