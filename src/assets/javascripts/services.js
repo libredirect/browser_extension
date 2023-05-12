@@ -821,7 +821,14 @@ async function copyRaw(url, test) {
 function isException(url) {
 	let exceptions = options.exceptions
 	if (exceptions && url) {
-		if (exceptions.url) for (const item of exceptions.url) if (item == url.href) return true
+		if (exceptions.url) {
+			for (let item of exceptions.url) {
+				item = new URL(item)
+				item = item.href
+				item = item.replace(/^http:\/\//, 'https://')
+				if (item == url.href) return true
+			}
+		}
 		if (exceptions.regex) for (const item of exceptions.regex) if (new RegExp(item).test(url.href)) return true
 	}
 	return false
