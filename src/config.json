@@ -161,7 +161,8 @@
 				"proxiTok": {
 					"name": "ProxiTok",
 					"instanceList": true,
-					"url": "https://github.com/pablouser1/ProxiTok"
+					"url": "https://github.com/pablouser1/ProxiTok",
+					"localhost": true
 				}
 			},
 			"targets": [
@@ -187,7 +188,8 @@
 				"teddit": {
 					"name": "Teddit",
 					"instanceList": true,
-					"url": "https://codeberg.org/teddit/teddit"
+					"url": "https://codeberg.org/teddit/teddit",
+					"localhost": true
 				}
 			},
 			"targets": [
@@ -277,7 +279,8 @@
 				"quetre": {
 					"name": "Quetre",
 					"instanceList": true,
-					"url": "https://github.com/zyachel/quetre"
+					"url": "https://github.com/zyachel/quetre",
+					"localhost": true
 				}
 			},
 			"targets": [
@@ -297,7 +300,8 @@
 				"libremdb": {
 					"name": "libremdb",
 					"instanceList": true,
-					"url": "https://github.com/zyachel/libremdb"
+					"url": "https://github.com/zyachel/libremdb",
+					"localhost": true
 				}
 			},
 			"targets": [
@@ -317,8 +321,7 @@
 				"breezeWiki": {
 					"name": "BreezeWiki",
 					"instanceList": true,
-					"url": "https://breezewiki.com",
-					"localhost": true
+					"url": "https://breezewiki.com"
 				}
 			},
 			"targets": [
@@ -362,7 +365,8 @@
 				"searxng": {
 					"name": "SearXNG",
 					"instanceList": true,
-					"url": "https://github.com/searxng/searxng"
+					"url": "https://github.com/searxng/searxng",
+					"localhost": true
 				},
 				"searx": {
 					"name": "SearX",
@@ -404,7 +408,8 @@
 				"lingva": {
 					"name": "Lingva Translate",
 					"instanceList": true,
-					"url": "https://github.com/TheDavidDelta/lingva-translate"
+					"url": "https://github.com/TheDavidDelta/lingva-translate",
+					"localhost": true
 				},
 				"libreTranslate": {
 					"name": "LibreTranslate",
@@ -521,7 +526,8 @@
 				"dumb": {
 					"name": "Dumb",
 					"instanceList": true,
-					"url": "https://github.com/rramiachraf/dumb"
+					"url": "https://github.com/rramiachraf/dumb",
+					"localhost": true
 				}
 			},
 			"targets": [
@@ -561,7 +567,8 @@
 				"anonymousOverflow": {
 					"name": "AnonymousOverflow",
 					"instanceList": true,
-					"url": "https://github.com/httpjamesm/AnonymousOverflow"
+					"url": "https://github.com/httpjamesm/AnonymousOverflow",
+					"localhost": true
 				}
 			},
 			"targets": [
@@ -582,7 +589,8 @@
 				"biblioReads": {
 					"name": "BiblioReads",
 					"instanceList": true,
-					"url": "https://github.com/nesaku/BiblioReads"
+					"url": "https://github.com/nesaku/BiblioReads",
+					"localhost": true
 				}
 			},
 			"targets": [

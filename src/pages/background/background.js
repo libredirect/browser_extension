@@ -45,12 +45,20 @@ browser.webRequest.onBeforeRequest.addListener(
 
 		if (details.frameAncestors && details.frameAncestors.length > 0 && servicesHelper.isException(new URL(details.frameAncestors[0].url))) newUrl = null
 
-		console.log(servicesHelper.isException(url))
 		if (servicesHelper.isException(url)) {
 			if (details.type == "main_frame")
 				newUrl = "BYPASSTAB"
 			else
 				return null
+		}
+
+		if (!newUrl) {
+			const match = url.href.match(/^https?:\/{2}(.*)\.libredirect\.invalid.*/)
+			if (match[1]) {
+				browser.tabs.update({
+					url: browser.runtime.getURL(`/pages/messages/no_instance.html`)
+				});
+			}
 		}
 
 		if (newUrl) {
