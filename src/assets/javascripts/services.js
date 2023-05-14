@@ -56,7 +56,7 @@ function redirect(url, type, initiator, forceRedirection) {
 	for (const service in config.services) {
 		if (!forceRedirection && !options[service].enabled) continue
 
-		frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
+		frontend = options[service].frontend
 
 		if (!regexArray(service, url, config, frontend)) {
 			frontend = null
@@ -210,7 +210,6 @@ function redirect(url, type, initiator, forceRedirection) {
 				.replace("tl", "target")
 				.replace("text", "q")
 			return `${randomInstance}/${search}`
-
 		}
 		case "lingva": {
 			let params_arr = url.search.split("&")
@@ -623,7 +622,7 @@ function switchInstance(url) {
 
 		const protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
-			let frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
+			let frontend = options[service].frontend
 			let instancesList = options[frontend]
 			if (instancesList === undefined) continue
 			if (!instancesList.includes(protocolHost)) continue
@@ -650,7 +649,7 @@ function reverse(url) {
 
 		let protocolHost = utils.protocolHost(url)
 		for (const service in config.services) {
-			let frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
+			let frontend = options[service].frontend
 			if (options[frontend] == undefined) continue
 			if (!options[frontend].includes(protocolHost)) continue
 

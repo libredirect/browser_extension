@@ -53,8 +53,8 @@ browser.webRequest.onBeforeRequest.addListener(
 		}
 
 		if (!newUrl) {
-			const match = url.href.match(/^https?:\/{2}(.*)\.libredirect\.invalid.*/)
-			if (match[1]) {
+			const match = url.href.match(/^https?:\/{2}.*\.libredirect\.invalid.*/)
+			if (match) {
 				browser.tabs.update({
 					url: browser.runtime.getURL(`/pages/messages/no_instance.html`)
 				});

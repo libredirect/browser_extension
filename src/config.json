@@ -150,6 +150,7 @@
 				"enabled": false,
 				"redirectType": "main_frame",
 				"unsupportedUrls": "bypass",
+				"frontend": "nitter",
 				"instance": "public"
 			},
 			"imageType": "png",
@@ -171,7 +172,9 @@
 			"name": "TikTok",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "proxiTok",
+				"instance": "public"
 			},
 			"imageType": "png",
 			"embeddable": false,
@@ -224,6 +227,7 @@
 				"enabled": false,
 				"redirectType": "main_frame",
 				"unsupportedUrls": "bypass",
+				"frontend": "rimgo",
 				"instance": "public"
 			},
 			"imageType": "png",
@@ -289,7 +293,9 @@
 			"name": "Quora",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "quetre",
+				"instance": "public"
 			},
 			"imageType": "png",
 			"embeddable": false,
@@ -310,7 +316,9 @@
 			"name": "IMDb",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "libremdb",
+				"instance": "public"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -331,7 +339,8 @@
 			"options": {
 				"enabled": false,
 				"unsupportedUrls": "bypass",
-				"instance": "public"
+				"instance": "public",
+				"frontend": "breezeWiki"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -354,7 +363,8 @@
 			"options": {
 				"enabled": false,
 				"redirectType": "main_frame",
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "lbryDesktop"
 			},
 			"imageType": "png",
 			"embeddable": true,
@@ -391,7 +401,8 @@
 			"options": {
 				"enabled": false,
 				"frontend": "searxng",
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"instance": "public"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -475,7 +486,8 @@
 			"name": "Send Files",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "send"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -495,7 +507,8 @@
 			"name": "Paste Text",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "privateBin"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -515,7 +528,8 @@
 			"name": "Reuters",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "neuters"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -536,7 +550,9 @@
 			"name": "Genius",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "dumb",
+				"instance": "public"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -556,7 +572,8 @@
 			"name": "Urban Dictionary",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "ruralDictionary"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -578,7 +595,9 @@
 			"name": "Stack Overflow",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "anonymousOverflow",
+				"instance": "public"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -599,7 +618,9 @@
 			"name": "Goodreads",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "biblioReads",
+				"instance": "public"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -619,7 +640,8 @@
 			"name": "Wikipedia",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "wikiless"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -639,7 +661,8 @@
 			"name": "Snopes",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "suds"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -659,7 +682,8 @@
 			"name": "Wayback Machine",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "waybackClassic"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -679,7 +703,8 @@
 			"name": "GitHub",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "gothub"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -700,7 +725,8 @@
 			"name": "Bilibili",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "mikuInvidious"
 			},
 			"imageType": "svgMono",
 			"embeddable": false,
@@ -721,7 +747,8 @@
 			"name": "Bandcamp",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "tent"
 			},
 			"imageType": "svg",
 			"embeddable": false,
@@ -741,7 +768,8 @@
 			"name": "WolframAlpha",
 			"options": {
 				"enabled": false,
-				"unsupportedUrls": "bypass"
+				"unsupportedUrls": "bypass",
+				"frontend": "wolfreeAlpha"
 			},
 			"imageType": "svg",
 			"embeddable": false,

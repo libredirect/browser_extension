@@ -35,8 +35,10 @@ async function changeFrontendsSettings(service) {
 			if (typeof divs[service].frontend !== "undefined") {
 				if (frontend == divs[service].frontend.value) {
 					frontendDiv.style.display = ""
-					if (config.services[service].frontends[frontend].localhost == true) {
+					console.log(config.services[service].frontends[frontend].localhost)
+					if (config.services[service].frontends[frontend].localhost === true) {
 						document.getElementById(`${service}-instance-div`).style.display = ""
+
 						if (options[service].instance == "localhost") {
 							frontendDiv.style.display = "none"
 						}
@@ -50,7 +52,8 @@ async function changeFrontendsSettings(service) {
 		}
 	}
 	if (document.getElementById(`${service}-redirectType`)) {
-		const frontend = options[service].frontend ?? Object.keys(config.services[service].frontends)[0]
+		const frontend = options[service].frontend
+		console.log(frontend)
 		if (config.services[service].frontends[frontend].embeddable) {
 			document.getElementById(`${service}-redirectType`).innerHTML = `
 			<option value="both" data-localise="__MSG_both__">both</options>
@@ -59,19 +62,14 @@ async function changeFrontendsSettings(service) {
 			`
 			document.getElementById(`${service}-redirectType`).value = options[frontend].redirectType = options[service].redirectType
 		} else {
-			document.getElementById(`${service}-redirectType`).innerHTML = `
-			<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
-			`
+			document.getElementById(`${service}-redirectType`).innerHTML =
+				'<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>'
 			options[service].redirectType = "main_frame"
 			browser.storage.local.set({ options })
 		}
 	}
 	const frontend_name_element = document.getElementById(`${service}_page`).getElementsByClassName("frontend_name")[0]
-	if (divs[service].frontend) {
-		frontend_name_element.href = config.services[service].frontends[divs[service].frontend.value].url
-	} else {
-		frontend_name_element.href = Object.values(config.services[service].frontends)[0].url
-	}
+	frontend_name_element.href = config.services[service].frontends[divs[service].frontend.value].url
 }
 
 async function loadPage(path) {
