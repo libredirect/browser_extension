@@ -357,7 +357,7 @@ div.checklist-popup div div {
 	margin: 0;
 }
 
-div.custom-checklist {
+div.custom-checklist x a {
 	color: var(--active);
 }
 

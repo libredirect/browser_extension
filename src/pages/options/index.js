@@ -154,7 +154,9 @@ async function calcCustomInstances(frontend) {
 		.map(
 			x => `
 			<div>
-				${x}
+				<x>
+					<a href="${x}" target="_blank">${x}</a>
+				</x>
 				<button class="add clear-${x}">
 					<svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
 						<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
@@ -273,9 +275,11 @@ if (r) loadPage(r[1])
 else loadPage("general")
 
 async function ping(frontend) {
-	let instanceElements = document.getElementById(frontend)
-		.getElementsByClassName('clearnet')[0]
-		.getElementsByTagName('x')
+	const instanceElements = [
+		...document.getElementById(frontend).getElementsByClassName("custom-checklist")[0].getElementsByTagName('x'),
+		...document.getElementById(frontend).getElementsByClassName('clearnet')[0].getElementsByTagName('x')
+	]
+
 	for (const element of instanceElements) {
 		let span = element.getElementsByClassName('ping')[0]
 		if (!span) span = document.createElement('span')
@@ -303,8 +307,6 @@ async function ping(frontend) {
 			color = "red"
 			text = 'Server not found'
 		}
-
 		span.innerHTML = `<span style="color:${color};">${text}</span>`
-
 	}
 }
