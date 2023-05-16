@@ -774,6 +774,29 @@
 			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://www.wolframalpha.com"
+		},
+		"speedTest": {
+			"frontends": {
+				"libreSpeed": {
+					"name": "LibreSpeed",
+					"instanceList": true,
+					"url": "https://github.com/librespeed/speedtest"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}speedtest\\.libredirect\\.invalid",
+				"^https?:\\/{2}(www\\.)?fast\\.com\\/",
+				"^https?:\\/{2}(www\\.)?speedtest\\.net\\/"
+			],
+			"name": "Speed Test",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "libreSpeed"
+			},
+			"imageType": "svgMono",
+			"embeddable": false,
+			"url": "https://speedtest.libredirect.invalid"
 		}
 	}
 }

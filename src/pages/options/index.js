@@ -53,7 +53,6 @@ async function changeFrontendsSettings(service) {
 	}
 	if (document.getElementById(`${service}-redirectType`)) {
 		const frontend = options[service].frontend
-		console.log(frontend)
 		if (config.services[service].frontends[frontend].embeddable) {
 			document.getElementById(`${service}-redirectType`).innerHTML = `
 			<option value="both" data-localise="__MSG_both__">both</options>
@@ -161,8 +160,8 @@ async function calcCustomInstances(frontend) {
 						<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
 					</svg>
 				</button>
-			  </div>
-			  <hr>`
+			</div>
+			<hr>`
 		)
 		.join("\n")
 	for (const item of customInstances) {
@@ -237,7 +236,8 @@ function createList(frontend, networks, document, redirects, blacklist) {
 				const warnings = [cloudflare].join(" ")
 				return `<div class="frontend">
                             <x>
-                                <a href="${x}" target="_blank">${x}</a>${warnings}
+                                <a href="${x}" target="_blank">${x}</a>
+								${warnings}
                             </x>
                             <button class="add add-${x}">
                                 <svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
@@ -291,17 +291,13 @@ async function ping(frontend) {
 
 		if (time < 5000) {
 			text = `${time}ms`
-			if (time <= 1000) { color = "green" }
+			if (time <= 1000) color = "green"
 			else if (time <= 2000) color = "orange"
 		}
 		else if (time >= 5000) {
 			color = "red"
-			if (time == 5000) {
-				text = "5000ms+"
-			}
-			if (time > 5000) {
-				text = `Error: ${time - 5000}`
-			}
+			if (time == 5000) text = "5000ms+"
+			if (time > 5000) text = `Error: ${time - 5000}`
 		}
 		else {
 			color = "red"

@@ -719,7 +719,8 @@ const defaultInstances = {
 	'gothub': ['https://gh.odyssey346.dev'],
 	'mikuInvidious': ['https://mikuinv.resrv.org'],
 	"tent": ['https://tent.sny.sh'],
-	"wolfreeAlpha": ['https://gqq.gitlab.io', 'https://uqq.gitlab.io']
+	"wolfreeAlpha": ['https://gqq.gitlab.io', 'https://uqq.gitlab.io'],
+	"libreSpeed": ['https://librespeed.org']
 }
 
 function initDefaults() {
