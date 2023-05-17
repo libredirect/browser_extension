@@ -784,9 +784,9 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}speedtest\\.libredirect\\.invalid",
-				"^https?:\\/{2}(www\\.)?fast\\.com\\/",
-				"^https?:\\/{2}(www\\.)?speedtest\\.net\\/"
+				"^https?:\\/{2}speedtest\\.libredirect\\.invalid\\/",
+				"^https?:\\/{2}(www\\.)?fast\\.com\\/$",
+				"^https?:\\/{2}(www\\.)?speedtest\\.net\\/$"
 			],
 			"name": "Speed Test",
 			"options": {
@@ -797,6 +797,27 @@
 			"imageType": "svgMono",
 			"embeddable": false,
 			"url": "https://speedtest.libredirect.invalid"
+		},
+		"meet": {
+			"name": "Meet",
+			"frontends": {
+				"jitsi": {
+					"name": "Jitsi",
+					"instanceList": true,
+					"url": "https://jitsi.org"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}meet\\.libredirect\\.invalid\\/"
+			],
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "jitsi"
+			},
+			"imageType": "svgMono",
+			"embeddable": false,
+			"url": "https://meet.libredirect.invalid"
 		}
 	}
 }
