@@ -56,7 +56,7 @@
         "description": "used in the settings page"
     },
     "showInPopup": {
-        "message": "Show in popup",
+        "message": "Hiển thị trong cửa sổ bật lên",
         "description": "used in the settings page"
     },
     "frontend": {
