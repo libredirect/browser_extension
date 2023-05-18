@@ -5,7 +5,7 @@ section(class="links" id="links")
             span(data-localise="__MSG_general__") General
 
     each val, key in services
-        div(class="title")
+        div(class="title" id=`${key}-link`)
             a(href="#"+key)
                 if services[key].imageType == 'svgMono'
                     img(class='dark' src=`/assets/images/${key}-icon.svg`)

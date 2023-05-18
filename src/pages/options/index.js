@@ -35,7 +35,6 @@ async function changeFrontendsSettings(service) {
 			if (typeof divs[service].frontend !== "undefined") {
 				if (frontend == divs[service].frontend.value) {
 					frontendDiv.style.display = ""
-					console.log(config.services[service].frontends[frontend].localhost)
 					if (config.services[service].frontends[frontend].localhost === true) {
 						document.getElementById(`${service}-instance-div`).style.display = ""
 
@@ -72,14 +71,25 @@ async function changeFrontendsSettings(service) {
 }
 
 async function loadPage(path) {
+	options = await utils.getOptions()
 	for (const section of document.getElementById("pages").getElementsByTagName("section")) section.style.display = "none"
 	document.getElementById(`${path}_page`).style.display = "block"
 
-	for (const a of document.getElementById("links").getElementsByTagName("a")) {
+	for (const element of document.getElementsByClassName("title")) {
+		const a = element.getElementsByTagName('a')[0]
 		if (a.getAttribute("href") == `#${path}`) {
-			a.classList.add("selected")
+			element.classList.add("selected")
 		} else {
-			a.classList.remove("selected")
+			element.classList.remove("selected")
+		}
+	}
+
+	for (const service in config.services) {
+		console.log(service, options[service].enabled)
+		if (options[service].enabled) {
+			document.getElementById(`${service}-link`).style.opacity = 1
+		} else {
+			document.getElementById(`${service}-link`).style.opacity = 0.4
 		}
 	}
 
@@ -89,13 +99,11 @@ async function loadPage(path) {
 		const service = path;
 
 		divs[service] = {}
-		options = await utils.getOptions()
+
 		for (const option in config.services[service].options) {
 			divs[service][option] = document.getElementById(`${service}-${option}`)
 			if (typeof config.services[service].options[option] == "boolean") divs[service][option].checked = options[service][option]
 			else divs[service][option].value = options[service][option]
-
-
 			divs[service][option].addEventListener("change", async () => {
 				let options = await utils.getOptions()
 				if (typeof config.services[service].options[option] == "boolean")

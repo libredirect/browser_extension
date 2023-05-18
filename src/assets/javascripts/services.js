@@ -16,6 +16,17 @@ function init() {
 init()
 browser.storage.onChanged.addListener(init)
 
+// function sendEnabledFrontends() {
+// 	return new Promise(resolve => {
+// 		console.log('sendEnabledFrontends')
+// 		let enabledFrontends = []
+// 		for (const service in config.services) {
+// 			if (!options[service].enabled) continue
+// 			enabledFrontends.push(options[service].frontend)
+// 		}
+// 	})
+// }
+
 function all(service, frontend, options, config) {
 	let instances = []
 	if (!frontend) {
@@ -720,7 +731,8 @@ const defaultInstances = {
 	'mikuInvidious': ['https://mikuinv.resrv.org'],
 	"tent": ['https://tent.sny.sh'],
 	"wolfreeAlpha": ['https://gqq.gitlab.io', 'https://uqq.gitlab.io'],
-	"libreSpeed": ['https://librespeed.org']
+	"libreSpeed": ['https://librespeed.org'],
+	'jitsi': ['https://meet.jit.si', 'https://8x8.vc']
 }
 
 function initDefaults() {
