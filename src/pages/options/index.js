@@ -85,7 +85,6 @@ async function loadPage(path) {
 	}
 
 	for (const service in config.services) {
-		console.log(service, options[service].enabled)
 		if (options[service].enabled) {
 			document.getElementById(`${service}-link`).style.opacity = 1
 		} else {
