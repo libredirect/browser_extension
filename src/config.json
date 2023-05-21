@@ -216,7 +216,8 @@
 					"name": "rimgo",
 					"instanceList": true,
 					"url": "https://codeberg.org/video-prize-ranch/rimgo",
-					"localhost": true
+					"localhost": true,
+					"embeddable": true
 				}
 			},
 			"targets": [
@@ -311,7 +312,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.|m\\.|)imdb\\.com\\/title"
+				"^https?:\\/{2}(?:www\\.|m\\.|)imdb\\.com"
 			],
 			"name": "IMDb",
 			"options": {
@@ -765,7 +766,7 @@
 			"targets": [
 				"^https?:\\/{2}(www\\.)?wolframalpha\\.com\\/"
 			],
-			"name": "WolframAlpha",
+			"name": "Wolfram Alpha",
 			"options": {
 				"enabled": false,
 				"unsupportedUrls": "bypass",

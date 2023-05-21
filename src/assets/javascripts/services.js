@@ -9,7 +9,7 @@ function init() {
 	return new Promise(async resolve => {
 		options = await utils.getOptions()
 		config = await utils.getConfig()
-		await sendEnabledFrontends()
+		// await sendEnabledFrontends()
 		resolve()
 	})
 }
@@ -24,11 +24,9 @@ function sendEnabledFrontends() {
 			if (!options[service].enabled) continue
 			enabledFrontends.push(options[service].frontend)
 		}
-		if (enabledFrontends.length > 0) {
-			var port = browser.runtime.connectNative("org.libredirect.stdin_parser");
-			port.postMessage(enabledFrontends);
-			port.disconnect()
-		}
+		var port = browser.runtime.connectNative("org.libredirect.stdin_parser");
+		port.postMessage(JSON.stringify(enabledFrontends));
+		port.disconnect()
 	}
 }
 
@@ -48,7 +46,7 @@ function all(service, frontend, options, config) {
 
 function regexArray(service, url, config, frontend) {
 	let targetList = config.services[service].targets
-	if (frontend && config.services[service].frontends[frontend].excludeTargets) {
+	if (frontend && 'excludeTargets' in config.services[service].frontends[frontend]) {
 		targetList = targetList.filter(val =>
 			!config.services[service].frontends[frontend].excludeTargets.includes(targetList.indexOf(val))
 		)

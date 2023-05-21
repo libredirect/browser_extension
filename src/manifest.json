@@ -28,8 +28,7 @@
 		"<all_urls>"
 	],
 	"optional_permissions": [
-		"bookmarks",
-		"nativeMessaging"
+		"bookmarks"
 	],
 	"browser_action": {
 		"default_title": "__MSG_extensionName__",
