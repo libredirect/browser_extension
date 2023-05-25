@@ -22,7 +22,7 @@ async function exportSettings() {
 	options.version = browser.runtime.getManifest().version
 	let resultString = JSON.stringify(options, null, "  ")
 	exportSettingsElement.href = "data:application/json;base64," + btoa(resultString)
-	exportSettingsElement.download = "libredirect-settings.json"
+	exportSettingsElement.download = `libredirect-settings-v${options.version}.json`
 	return
 }
 exportSettings()
