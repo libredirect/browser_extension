@@ -789,6 +789,12 @@ function processUpdate() {
 		let options = await utils.getOptions()
 		for (const service in config.services) {
 			if (!options[service]) options[service] = {}
+
+			if (!(options[service].frontend in config.services[service].frontends)) {
+				options[service] = config.services[service].options
+				delete options[options[service].frontend]
+			}
+
 			for (const defaultOption in config.services[service].options) {
 				if (options[service][defaultOption] === undefined) {
 					options[service][defaultOption] = config.services[service].options[defaultOption]
