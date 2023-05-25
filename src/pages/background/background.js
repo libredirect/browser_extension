@@ -107,12 +107,16 @@ browser.contextMenus.create({ id: "redirectTab", title: 'Redirect', contexts: ["
 browser.contextMenus.create({ id: "reverseTab", title: 'Redirect To Original', contexts: ["browser_action"] })
 
 browser.contextMenus.create({ id: "redirectLink", title: 'Redirect', contexts: ["link"] })
+browser.contextMenus.create({ id: "redirectLinkInNewTab", title: 'Redirect In New Tab', contexts: ["link"] })
 browser.contextMenus.create({ id: "reverseLink", title: 'Redirect To Original', contexts: ["link"] })
+browser.contextMenus.create({ id: "reverseLinkInNewTab", title: 'Redirect To Original In New Tab', contexts: ["link"] })
 browser.contextMenus.create({ id: "copyReverseLink", title: 'Copy Original', contexts: ["link"] })
 
 if (!isChrome) {
 	browser.contextMenus.create({ id: "redirectBookmark", title: 'Redirect', contexts: ["bookmark"] })
+	browser.contextMenus.create({ id: "redirectBookmarkInNewTab", title: 'Redirect In New Tab', contexts: ["bookmark"] })
 	browser.contextMenus.create({ id: "reverseBookmark", title: 'Redirect To Original', contexts: ["bookmark"] })
+	browser.contextMenus.create({ id: "reverseBookmarkInNewTab", title: 'Redirect To Original In New Tab', contexts: ["bookmark"] })
 	browser.contextMenus.create({ id: "copyReverseBookmark", title: 'Copy Original', contexts: ["bookmark"] })
 }
 
@@ -175,19 +179,30 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 			await servicesHelper.copyRaw(url)
 			return
 		}
-		case 'redirectLink': {
+		case 'redirectLink':
+		case 'redirectLinkInNewTab': {
 			const url = new URL(info.linkUrl)
 			const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
-			if (newUrl) browser.tabs.create({ url: newUrl })
+			if (newUrl) {
+				if (info.menuItemId == "redirectLink") browser.tabs.update({ url: newUrl })
+				else browser.tabs.create({ url: newUrl })
+			}
 			return
 		}
-		case 'reverseLink': {
+		case 'reverseLink':
+		case 'reverseLinkInNewTab': {
 			const url = new URL(info.linkUrl)
 			const newUrl = await servicesHelper.reverse(url)
 			if (newUrl) {
-				browser.tabs.create({ url: newUrl }, tab => {
-					tabIdRedirects[tab.id] = false
-				})
+				if (info.menuItemId == "reverseLink") {
+					browser.tabs.update({ url: newUrl }, tab => {
+						tabIdRedirects[tab.id] = false
+					})
+				} else {
+					browser.tabs.create({ url: newUrl }, tab => {
+						tabIdRedirects[tab.id] = false
+					})
+				}
 			}
 			return
 		}
@@ -199,22 +214,34 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 			});
 			return
 		}
-		case 'redirectBookmark': {
+		case 'redirectBookmark':
+		case 'redirectBookmarkInNewTab': {
 			browser.bookmarks.get(info.bookmarkId, bookmarks => {
 				const url = new URL(bookmarks[0].url)
 				const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
-				if (newUrl) browser.tabs.create({ url: newUrl })
+				if (newUrl) {
+					if (info.menuItemId == 'redirectBookmark') browser.tabs.update({ url: newUrl })
+					else browser.tabs.create({ url: newUrl })
+				}
 			})
+
 			return
 		}
-		case 'reverseBookmark': {
+		case 'reverseBookmark':
+		case 'reverseBookmarkInNewTab': {
 			browser.bookmarks.get(info.bookmarkId, async bookmarks => {
 				const url = new URL(bookmarks[0].url)
 				const newUrl = await servicesHelper.reverse(url)
 				if (newUrl) {
-					browser.tabs.create({ url: newUrl }, tab => {
-						tabIdRedirects[tab.id] = false
-					})
+					if (info.menuItemId == "reverseBookmark") {
+						browser.tabs.update({ url: newUrl }, tab => {
+							tabIdRedirects[tab.id] = false
+						})
+					} else {
+						browser.tabs.create({ url: newUrl }, tab => {
+							tabIdRedirects[tab.id] = false
+						})
+					}
 				}
 			})
 			return

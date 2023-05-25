@@ -774,9 +774,6 @@ function initDefaults() {
 function upgradeOptions() {
 	return new Promise(async resolve => {
 		let options = await utils.getOptions()
-		const config = await utils.getConfig()
-
-		options.fetchInstances = 'github'
 
 		browser.storage.local.clear(() => {
 			browser.storage.local.set({ options }, () => {
