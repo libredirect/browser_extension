@@ -36,7 +36,7 @@ browser.webRequest.onBeforeRequest.addListener(
 		let initiator
 		try {
 			if (details.originUrl) initiator = new URL(details.originUrl)
-			else if (details.initiator) initiator = new URL(details.initiator)
+			else if (details.initiator && details.initiator !== "null") initiator = new URL(details.initiator)
 		} catch {
 			return null
 		}
