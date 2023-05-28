@@ -68,6 +68,12 @@
 				"default": "Alt+Shift+C"
 			},
 			"description": "Copies the original link. Ex: Copies the original twitter link while in the nitter website"
+		},
+		"reverse": {
+			"suggested_key": {
+				"default": "Alt+Shift+R"
+			},
+			"description": "Redirect to the original link. Ex: Redirects to the original twitter link while in the nitter website"
 		}
 	},
 	"default_locale": "en",

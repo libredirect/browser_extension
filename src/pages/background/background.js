@@ -97,6 +97,19 @@ browser.commands.onCommand.addListener(async command => {
 		else if (command == "copyRaw") {
 			servicesHelper.copyRaw(url)
 		}
+		else if (command == "reverse") {
+			browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+				if (tabs[0].url) {
+					const url = new URL(tabs[0].url)
+					const newUrl = await servicesHelper.reverse(url)
+					if (newUrl) {
+						browser.tabs.update(tabs[0].id, { url: newUrl }, () => {
+							tabIdRedirects[tabs[0].id] = false
+						})
+					}
+				}
+			})
+		}
 	})
 })
 
