@@ -497,26 +497,14 @@ function redirect(url, type, initiator, forceRedirection) {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "wikiless": {
-			let GETArguments = []
-			if (url.search.length > 0) {
-				let search = url.search.substring(1) //get rid of '?'
-				let argstrings = search.split("&")
-				for (let i = 0; i < argstrings.length; i++) {
-					let args = argstrings[i].split("=")
-					GETArguments.push([args[0], args[1]])
-				}
-			}
-
-			let link = `${randomInstance}${url.pathname}`
-			let urlSplit = url.host.split(".")
-			if (urlSplit[0] != "wikipedia" && urlSplit[0] != "www") {
-				if (urlSplit[0] == "m") GETArguments.push(["mobileaction", "toggle_view_mobile"])
-				else GETArguments.push(["lang", urlSplit[0]])
-				if (urlSplit[1] == "m") GETArguments.push(["mobileaction", "toggle_view_mobile"])
+			let hostSplit = url.host.split(".")
+			if (hostSplit[0] != "wikipedia" && hostSplit[0] != "www") {
 				// wikiless doesn't have mobile view support yet
+				if (hostSplit[0] == "m") url.searchParams.append("mobileaction", "toggle_view_mobile")
+				else url.searchParams.append("lang", hostSplit[0])
+				if (hostSplit[1] == "m") url.searchParams.append("mobileaction", "toggle_view_mobile")
 			}
-			for (let i = 0; i < GETArguments.length; i++) link += (i == 0 ? "?" : "&") + GETArguments[i][0] + "=" + GETArguments[i][1]
-			return link + url.hash
+			return `${randomInstance}${url.pathname}${GETArguments.toString()}${url.hash}`
 		}
 		case "proxiTok": {
 			if (url.pathname.startsWith('/email')) return

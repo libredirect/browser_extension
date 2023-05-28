@@ -71,9 +71,15 @@
 		},
 		"reverse": {
 			"suggested_key": {
-				"default": "Alt+Shift+R"
+				"default": "Alt+Shift+O"
 			},
 			"description": "Redirect to the original link. Ex: Redirects to the original twitter link while in the nitter website"
+		},
+		"redirect": {
+			"suggested_key": {
+				"default": "Alt+Shift+R"
+			},
+			"description": "Redirect link. Ex: Redirects original twitter link to nitter"
 		}
 	},
 	"default_locale": "en",
