@@ -9,26 +9,12 @@ function init() {
 	return new Promise(async resolve => {
 		options = await utils.getOptions()
 		config = await utils.getConfig()
-		// await sendEnabledFrontends()
 		resolve()
 	})
 }
 
 init()
 browser.storage.onChanged.addListener(init)
-
-function sendEnabledFrontends() {
-	let enabledFrontends = []
-	if (options) {
-		for (const service in config.services) {
-			if (!options[service].enabled) continue
-			enabledFrontends.push(options[service].frontend)
-		}
-		var port = browser.runtime.connectNative("org.libredirect.stdin_parser");
-		port.postMessage(JSON.stringify(enabledFrontends));
-		port.disconnect()
-	}
-}
 
 function all(service, frontend, options, config) {
 	let instances = []
@@ -675,6 +661,8 @@ function reverse(url) {
 				case "twitter":
 				case "reddit":
 				case "imdb":
+				case "snopes":
+				case "urbanDictionary":
 				case "quora":
 				case "medium":
 					resolve(config.services[service].url + url.pathname + url.search)
