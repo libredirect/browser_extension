@@ -191,6 +191,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
+		case "libMedium":
 		case "scribe": {
 			const regex = url.hostname.match(/^(link|cdn-images-\d+|.*)\.medium\.com/)
 			if (regex && regex.length > 1) {
