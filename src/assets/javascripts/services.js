@@ -574,6 +574,12 @@ function redirect(url, type, initiator, forceRedirection) {
 				}
 			}
 		}
+		case "binternet": {
+			console.log("binternet", url.href)
+			if (url.hostname == "i.pinimg.com") return `${randomInstance}/image_proxy.php?url=${url.href}`
+			if (url.href.endsWith("pinterest.com/")) return randomInstance
+			return null
+		}
 		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
@@ -712,7 +718,8 @@ const defaultInstances = {
 	"tent": ['https://tent.sny.sh'],
 	"wolfreeAlpha": ['https://gqq.gitlab.io', 'https://uqq.gitlab.io'],
 	"libreSpeed": ['https://librespeed.org'],
-	'jitsi': ['https://meet.jit.si', 'https://8x8.vc']
+	'jitsi': ['https://meet.jit.si', 'https://8x8.vc'],
+	'binternet': ['https://binternet.ahwx.org']
 }
 
 function initDefaults() {

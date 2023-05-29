@@ -347,6 +347,30 @@
 			"embeddable": false,
 			"url": "https://fandom.com"
 		},
+		"pinterest": {
+			"name": "Pinterest",
+			"frontends": {
+				"binternet": {
+					"name": "Binternet",
+					"instanceList": true,
+					"url": "https://github.com/Ahwxorg/Binternet",
+					"embeddable": true
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}i\\.pinimg\\.com",
+				"^https?:\\/{2}(www\\.)?pinterest\\.com"
+			],
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"redirectType": "main_frame",
+				"frontend": "binternet"
+			},
+			"imageType": "svg",
+			"embeddable": true,
+			"url": "https://pinterest.com"
+		},
 		"lbry": {
 			"frontends": {
 				"lbryDesktop": {
