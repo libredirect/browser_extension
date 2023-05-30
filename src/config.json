@@ -567,6 +567,12 @@
 					"instanceList": true,
 					"url": "https://github.com/rramiachraf/dumb",
 					"localhost": true
+				},
+				"intellectual": {
+					"name": "Intellectual",
+					"instanceList": true,
+					"url": "https://github.com/Insprill/intellectual",
+					"localhost": false
 				}
 			},
 			"targets": [

@@ -433,6 +433,13 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.pathname.endsWith('-lyrics')) {
 				return `${randomInstance}${url.pathname}`
 			}
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
+		case "intellectual": {
+			if (url.pathname.endsWith('-lyrics')) {
+				return `${randomInstance}/lyrics?path=${encodeURIComponent(url.pathname)}`
+			}
+			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "ruralDictionary": {
 			if (!url.pathname.includes('/define.php') && !url.pathname.includes('/random.php') && url.pathname != '/') return randomInstance
@@ -664,6 +671,7 @@ const defaultInstances = {
 	'breezeWiki': ['https://breezewiki.com'],
 	'neuters': ['https://neuters.de'],
 	'dumb': ['https://dm.vern.cc'],
+	"intellectual": ['https://intellectual.insprill.net'],
 	'ruralDictionary': ['https://rd.vern.cc'],
 	'anonymousOverflow': ['https://code.whatever.social'],
 	'biblioReads': ['https://biblioreads.ml'],
