@@ -74,7 +74,7 @@ function redirect(url, type, initiator, forceRedirection) {
 
 		let instanceList = options[frontend]
 		if (instanceList === undefined) break
-		if (instanceList.length === 0) return
+		if (instanceList.length === 0) return null
 
 		if (
 			initiator
@@ -86,7 +86,6 @@ function redirect(url, type, initiator, forceRedirection) {
 		if (config.services[service].frontends[frontend].localhost && options[service].instance == "localhost") {
 			randomInstance = `http://${frontend}.localhost:8080`
 		}
-
 		break
 	}
 
@@ -109,7 +108,6 @@ function redirect(url, type, initiator, forceRedirection) {
 	if (!frontend) return
 
 	switch (frontend) {
-		// This is where all instance-specific code must be ran to convert the service url to one that can be understood by the frontend.
 		case "beatbump": {
 			return `${randomInstance}${url.pathname}${url.search}`
 				.replace("/watch?v=", "/listen?id=")
@@ -155,7 +153,6 @@ function redirect(url, type, initiator, forceRedirection) {
 					return `${randomInstance}/pic${url.pathname}${search}`
 				}
 			}
-
 			if (url.pathname.split("/").includes("tweets")) return `${randomInstance}${url.pathname.replace("/tweets", "")}${search}`
 			if (url.host == "t.co") return `${randomInstance}/t.co${url.pathname}`
 			return `${randomInstance}${url.pathname}${search}#m`
@@ -166,19 +163,7 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "freetube": {
 			return `freetube://https://youtu.be${url.pathname}${url.search}`.replace(/watch\?v=/, "")
 		}
-		case "invidious":
-		case "piped":
-		case "pipedMaterial":
-		case "cloudtube": {
-			if (url.pathname.startsWith("/live_chat")) {
-				return null;
-			}
-			return `${randomInstance}${url.pathname}${url.search}`;
-		}
 		case "poketube": {
-			if (url.pathname.startsWith("/live_chat")) {
-				return null;
-			}
 			if (url.pathname.startsWith('/channel')) {
 				const reg = /\/channel\/(.*)\/?$/.exec(url.pathname)
 				if (reg) {
@@ -186,9 +171,7 @@ function redirect(url, type, initiator, forceRedirection) {
 					return `${randomInstance}/channel?id=${id}${url.search}`
 				}
 			}
-			if (/\/@[a-z]+\//.exec(url.pathname)) {
-				return randomInstance
-			}
+			if (/\/@[a-z]+\//.exec(url.pathname)) return randomInstance
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "libMedium":
@@ -226,7 +209,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			return randomInstance
 		}
 		case "osm": {
-			if (initiator && initiator.host === "earth.google.com") return
+			if (initiator && initiator.host === "earth.google.com") return randomInstance
 			const travelModes = {
 				driving: "fossgis_osrm_car",
 				walking: "fossgis_osrm_foot",
@@ -236,13 +219,6 @@ function redirect(url, type, initiator, forceRedirection) {
 
 			function addressToLatLng(address) {
 				const xmlhttp = new XMLHttpRequest()
-				xmlhttp.timeout = 5000
-				http.ontimeout = () => {
-					return
-				}
-				http.onerror = () => {
-					return
-				}
 				xmlhttp.send()
 				http.onreadystatechange = () => {
 					if (xmlhttp.status === 200) {
@@ -266,8 +242,6 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.pathname.includes("/embed")) {
 				// Handle Google Maps Embed API
 				// https://www.google.com/maps/embed/v1/place?key=AIzaSyD4iE2xVSpkLLOXoyqT-RuPwURN3ddScAI&q=Eiffel+Tower,Paris+France
-				//console.log("embed life")
-
 				let query = ""
 				if (url.searchParams.has("q")) query = url.searchParams.get("q")
 				else if (url.searchParams.has("query")) query = url.searchParams.has("query")
@@ -303,16 +277,12 @@ function redirect(url, type, initiator, forceRedirection) {
 			} else if (url.pathname.includes("data=") && url.pathname.match(dataLatLngRegex)) {
 				// Get marker from data attribute
 				// https://www.google.com/maps/place/41%C2%B001'58.2%22N+40%C2%B029'18.2%22E/@41.032833,40.4862063,17z/data=!3m1!4b1!4m6!3m5!1s0x0:0xf64286eaf72fc49d!7e2!8m2!3d41.0328329!4d40.4883948
-				//console.log("data life")
-
 				let [, mlat, mlon] = url.pathname.match(dataLatLngRegex)
 
 				return `${randomInstance}/search?query=${mlat}%2C${mlon}`
 			} else if (url.searchParams.has("ll")) {
 				// Get marker from ll param
 				// https://maps.google.com/?ll=38.882147,-76.99017
-				//console.log("ll life")
-
 				const [mlat, mlon] = url.searchParams.get("ll").split(",")
 
 				return `${randomInstance}/search?query=${mlat}%2C${mlon}`
@@ -344,7 +314,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			return `${randomInstance}/${mapCentre}&${prefsEncoded}`
 		}
 		case "facil": {
-			if (initiator && initiator.host === "earth.google.com") return
+			if (initiator && initiator.host === "earth.google.com") return randomInstance
 			const travelModes = {
 				driving: "car",
 				walking: "pedestrian",
@@ -384,36 +354,25 @@ function redirect(url, type, initiator, forceRedirection) {
 			} else if (url.pathname.includes("data=") && url.pathname.match(dataLatLngRegex)) {
 				// Get marker from data attribute
 				// https://www.google.com/maps/place/41%C2%B001'58.2%22N+40%C2%B029'18.2%22E/@41.032833,40.4862063,17z/data=!3m1!4b1!4m6!3m5!1s0x0:0xf64286eaf72fc49d!7e2!8m2!3d41.0328329!4d40.4883948
-				//console.log("data life")
-
 				let [, mlat, mlon] = url.pathname.match(dataLatLngRegex)
-
 				return `${randomInstance}/#q=${mlat}%2C${mlon}`
 			} else if (url.searchParams.has("ll")) {
 				// Get marker from ll param
 				// https://maps.google.com/?ll=38.882147,-76.99017
-				//console.log("ll life")
-
 				const [mlat, mlon] = url.searchParams.get("ll").split(",")
-
 				return `${randomInstance}/#q=${mlat}%2C${mlon}`
 			} else if (url.searchParams.has("viewpoint")) {
-				// Get marker from viewpoint param.
+				// Get marker from viewpoint param
 				// https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=48.857832,2.295226&heading=-45&pitch=38&fov=80
-				//console.log("viewpoint life")
-
 				const [mlat, mlon] = url.searchParams.get("viewpoint").split(",")
 
 				return `${randomInstance}/#q=${mlat}%2C${mlon}`
 			} else {
 				// Use query as search if present.
-				//console.log("normal life")
-
 				let query
 				if (url.searchParams.has("q")) query = url.searchParams.get("q")
 				else if (url.searchParams.has("query")) query = url.searchParams.get("query")
 				else if (url.pathname.match(placeRegex)) query = url.pathname.match(placeRegex)[1]
-
 				if (query) return `${randomInstance}/${mapCentre}/Mpnk/${query}`
 			}
 		}
@@ -466,7 +425,7 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "neuters": {
 			const p = url.pathname
 			if (p.startsWith('/article/') || p.startsWith('/pf/') || p.startsWith('/arc/') || p.startsWith('/resizer/')) {
-				return null
+				return randomInstance
 			}
 			return `${randomInstance}${p}`
 		}
@@ -476,11 +435,11 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 		}
 		case "ruralDictionary": {
-			if (!url.pathname.includes('/define.php') && !url.pathname.includes('/random.php') && url.pathname != '/') return
+			if (!url.pathname.includes('/define.php') && !url.pathname.includes('/random.php') && url.pathname != '/') return randomInstance
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "anonymousOverflow": {
-			if (!url.pathname.startsWith('/questions') && url.pathname != '/') return
+			if (!url.pathname.startsWith('/questions') && url.pathname != '/') return randomInstance
 			if (url.hostname == "stackoverflow.com") {
 				const threadID = /\/(\d+)\/?$/.exec(url.pathname)
 				if (threadID) return `${randomInstance}/questions/${threadID[1]}${url.search}`
@@ -493,7 +452,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 		}
 		case "biblioReads": {
-			if (!url.pathname.startsWith('/book/show/') && url.pathname != '/') return
+			if (!url.pathname.startsWith('/book/show/') && url.pathname != '/') return randomInstance
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "wikiless": {
@@ -507,7 +466,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			return `${randomInstance}${url.pathname}${GETArguments.toString()}${url.hash}`
 		}
 		case "proxiTok": {
-			if (url.pathname.startsWith('/email')) return
+			if (url.pathname.startsWith('/email')) return randomInstance
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "waybackClassic": {
@@ -575,10 +534,8 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 		}
 		case "binternet": {
-			console.log("binternet", url.href)
 			if (url.hostname == "i.pinimg.com") return `${randomInstance}/image_proxy.php?url=${url.href}`
-			if (url.href.endsWith("pinterest.com/")) return randomInstance
-			return null
+			return randomInstance
 		}
 		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
