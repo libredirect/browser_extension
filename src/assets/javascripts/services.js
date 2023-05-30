@@ -477,12 +477,18 @@ function redirect(url, type, initiator, forceRedirection) {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "waybackClassic": {
-			const regex = /^\/\web\/[0-9]+\*\/(.*)/.exec(url.pathname)
+			const regex = /^\/\web\/(?:[0-9]+)?\*\/(.*)/.exec(url.pathname)
 			if (regex) {
 				const link = regex[1]
 				return `${randomInstance}/cgi-bin/history.cgi?utf8=✓&q=${encodeURIComponent(link)}`
 			}
-			return `${randomInstance}`
+			const regex2 = /(^\/\web\/([0-9]+)\/.*)/.exec(url.pathname)
+			if (regex2) {
+				let link = regex2[1]
+				link = link.replace(regex2[2], regex2[2] + 'if_')
+				return `https://web.archive.org${link}`
+			}
+			return
 		}
 		case "gothub": {
 			const regex = /^\/(.*)\/(.*)\/(?:blob|tree)\/(.*)\/(.*)/.exec(url.pathname)
