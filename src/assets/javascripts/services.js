@@ -547,6 +547,11 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.hostname == "i.pinimg.com") return `${randomInstance}/image_proxy.php?url=${url.href}`
 			return randomInstance
 		}
+		case "laboratory": {
+			let path = url.pathname
+			if (path == "/") path = ""
+			return `${randomInstance}/${url.hostname}${path}${url.search}`
+		}
 		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
@@ -684,6 +689,7 @@ const defaultInstances = {
 	'mikuInvidious': ['https://mikuinv.resrv.org'],
 	"tent": ['https://tent.sny.sh'],
 	"wolfreeAlpha": ['https://gqq.gitlab.io', 'https://uqq.gitlab.io'],
+	"laboratory": ['https://lab.vern.cc'],
 	"libreSpeed": ['https://librespeed.org'],
 	'jitsi': ['https://meet.jit.si', 'https://8x8.vc'],
 	'binternet': ['https://binternet.ahwx.org']

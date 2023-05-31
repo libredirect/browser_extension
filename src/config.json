@@ -761,6 +761,29 @@
 			"embeddable": false,
 			"url": "https://bandcamp.com"
 		},
+		"gitlab": {
+			"frontends": {
+				"laboratory": {
+					"name": "Laboratory",
+					"instanceList": true,
+					"url": "https://git.vitali64.duckdns.org/utils/laboratory.git/about/"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}gitlab\\.com\\/",
+				"^https?:\\/{2}gitlab\\.freedesktop\\.com\\/",
+				"^https?:\\/{2}gitlab\\.archlinux\\.com\\/"
+			],
+			"name": "Gitlab",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "laboratory"
+			},
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://gitlab.com/"
+		},
 		"wolframAlpha": {
 			"frontends": {
 				"wolfreeAlpha": {
