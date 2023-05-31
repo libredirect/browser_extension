@@ -118,9 +118,6 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "hyperpipe": {
 			return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/"))
 		}
-		case "lbryDesktop": {
-			return url.href.replace(/^https?:\/{2}odysee\.com\//, "lbry://").replace(/:(?=[a-zA-Z0-9])/g, "#")
-		}
 		case "searx":
 		case "searxng":
 			return `${randomInstance}/${url.search}`
@@ -669,7 +666,6 @@ const defaultInstances = {
 	'lingva': ['https://lingva.ml'],
 	'searxng': ['https://search.bus-hit.me'],
 	'rimgo': ['https://rimgo.vern.cc'],
-	'librarian': ['https://lbry.vern.cc'],
 	'beatbump': ['https://beatbump.ml'],
 	'hyperpipe': ['https://hyperpipe.surge.sh'],
 	'facil': [' https://facilmap.org '],

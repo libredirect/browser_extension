@@ -371,30 +371,6 @@
 			"embeddable": true,
 			"url": "https://pinterest.com"
 		},
-		"lbry": {
-			"frontends": {
-				"lbryDesktop": {
-					"name": "LBRY Desktop",
-					"embeddable": false,
-					"instanceList": false,
-					"url": "https://lbry.com/get"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}odysee\\.com(\\/|$)",
-				"^https?:\\/{2}lbry\\.tv(\\/|$)"
-			],
-			"name": "LBRY",
-			"options": {
-				"enabled": false,
-				"redirectType": "main_frame",
-				"unsupportedUrls": "bypass",
-				"frontend": "lbryDesktop"
-			},
-			"imageType": "png",
-			"embeddable": true,
-			"url": "https://odysee.com"
-		},
 		"search": {
 			"frontends": {
 				"searxng": {
