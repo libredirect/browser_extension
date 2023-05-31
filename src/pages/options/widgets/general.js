@@ -16,7 +16,7 @@ async function setOption(option, type, event) {
 	browser.storage.local.set({ options })
 }
 
-let exportSettingsElement = document.getElementById("export-settings")
+const exportSettingsElement = document.getElementById("export-settings")
 async function exportSettings() {
 	const options = await utils.getOptions()
 	options.version = browser.runtime.getManifest().version
@@ -26,12 +26,16 @@ async function exportSettings() {
 	return
 }
 exportSettings()
-
 document.getElementById("general_page").onclick = exportSettings
 
-let importSettingsElement = document.getElementById("import-settings")
-let importSettingsElementText = document.getElementById("import_settings_text")
+const importSettingsElement = document.getElementById("import-settings")
+const importSettingsElementText = document.getElementById("import_settings_text")
 importSettingsElement.addEventListener("change", () => {
+	function importError() {
+		const oldHTML = importSettingsElementText.innerHTML
+		importSettingsElementText.innerHTML = '<span style="color:red;">Error!</span>'
+		setTimeout(() => (importSettingsElementText.innerHTML = oldHTML), 1000)
+	}
 	importSettingsElementText.innerHTML = "..."
 	let file = importSettingsElement.files[0]
 	const reader = new FileReader()
@@ -42,7 +46,6 @@ importSettingsElement.addEventListener("change", () => {
 			"theme" in data
 			&& data.version == browser.runtime.getManifest().version
 		) {
-
 			browser.storage.local.clear(async () => {
 				browser.storage.local.set({ options: data }, () => {
 					location.reload()
@@ -58,11 +61,32 @@ importSettingsElement.addEventListener("change", () => {
 		importError()
 	}
 })
-function importError() {
-	const oldHTML = importSettingsElementText.innerHTML
-	importSettingsElementText.innerHTML = '<span style="color:red;">Error!</span>'
-	setTimeout(() => (importSettingsElementText.innerHTML = oldHTML), 1000)
-}
+
+const exportSettingsSync = document.getElementById("export-settings-sync")
+exportSettingsSync.addEventListener("click", async () => {
+	let options = await utils.getOptions()
+	options.version = browser.runtime.getManifest().version
+	browser.storage.sync.set({ options }, () => location.reload())
+})
+
+const importSettingsSync = document.getElementById("import-settings-sync")
+const importSettingsSyncText = document.getElementById("import_settings_sync_text")
+importSettingsSync.addEventListener("click", () => {
+	function importError() {
+		importSettingsSyncText.innerHTML = '<span style="color:red;">Error!</span>'
+		setTimeout(() => (importSettingsSyncText.innerHTML = oldHTML), 1000)
+	}
+	const oldHTML = importSettingsSyncText.innerHTML
+	importSettingsSyncText.innerHTML = "..."
+	browser.storage.sync.get({ options }, r => {
+		const options = r.options
+		if (options.version == browser.runtime.getManifest().version) {
+			browser.storage.local.set({ options }, () => location.reload())
+		} else {
+			importError()
+		}
+	})
+})
 
 const resetSettings = document.getElementById("reset-settings")
 resetSettings.addEventListener("click", async () => {
