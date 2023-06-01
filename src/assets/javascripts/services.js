@@ -461,13 +461,13 @@ function redirect(url, type, initiator, forceRedirection) {
 		}
 		case "wikiless": {
 			let hostSplit = url.host.split(".")
+			// wikiless doesn't have mobile view support yet
 			if (hostSplit[0] != "wikipedia" && hostSplit[0] != "www") {
-				// wikiless doesn't have mobile view support yet
 				if (hostSplit[0] == "m") url.searchParams.append("mobileaction", "toggle_view_mobile")
 				else url.searchParams.append("lang", hostSplit[0])
 				if (hostSplit[1] == "m") url.searchParams.append("mobileaction", "toggle_view_mobile")
 			}
-			return `${randomInstance}${url.pathname}${GETArguments.toString()}${url.hash}`
+			return `${randomInstance}${url.pathname}${url.search}${url.hash}`
 		}
 		case "proxiTok": {
 			if (url.pathname.startsWith('/email')) return randomInstance
@@ -609,47 +609,44 @@ function switchInstance(url) {
 	})
 }
 
-function reverse(url) {
-	return new Promise(async resolve => {
-		let options = await utils.getOptions()
-		let config = await utils.getConfig()
-
-		let protocolHost = utils.protocolHost(url)
-		for (const service in config.services) {
-			let frontend = options[service].frontend
-			if (options[frontend] == undefined) continue
-			if (!options[frontend].includes(protocolHost)) continue
-
-			switch (service) {
-				case "youtube":
-				case "imdb":
-				case "imgur":
-				case "tiktok":
-				case "twitter":
-				case "reddit":
-				case "imdb":
-				case "snopes":
-				case "urbanDictionary":
-				case "quora":
-				case "medium":
-					resolve(config.services[service].url + url.pathname + url.search)
-					return
-				case "fandom":
-					let regex = url.pathname.match(/^\/([a-zA-Z0-9-]+)\/wiki\/(.*)/)
-					if (regex) {
-						resolve(`https://${regex[1]}.fandom.com/wiki/${regex[2]}`)
-						return
-					}
-					resolve()
-					return
-				default:
-					resolve()
-					return
+async function reverse(url) {
+	let options = await utils.getOptions()
+	let config = await utils.getConfig()
+	let protocolHost = utils.protocolHost(url)
+	for (const service in config.services) {
+		let frontend = options[service].frontend
+		if (options[frontend] == undefined) continue
+		if (!options[frontend].includes(protocolHost)) continue
+		switch (service) {
+			case "youtube":
+			case "imdb":
+			case "imgur":
+			case "tiktok":
+			case "twitter":
+			case "reddit":
+			case "imdb":
+			case "snopes":
+			case "urbanDictionary":
+			case "quora":
+			case "medium":
+				return `${config.services[service].url}${url.pathname}${url.search}`
+			case "fandom":
+				let regex = url.pathname.match(/^\/([a-zA-Z0-9-]+)\/wiki\/(.*)/)
+				if (regex) return `https://${regex[1]}.fandom.com/wiki/${regex[2]}`
+				return
+			case "wikipedia": {
+				const lang = url.searchParams.get("lang")
+				if (lang != null) {
+					url.searchParams.delete("lang")
+					return `https://${lang}.wikipedia.org${url.pathname}${url.search}${url.hash}`
+				}
+				return `https://wikipedia.org${url.pathname}${url.search}${url.hash}`
 			}
+			default:
+				return
 		}
-		resolve()
-		return
-	})
+	}
+	return
 }
 
 const defaultInstances = {
