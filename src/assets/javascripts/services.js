@@ -642,6 +642,16 @@ async function reverse(url) {
 				}
 				return `https://wikipedia.org${url.pathname}${url.search}${url.hash}`
 			}
+			case "stackOverflow": {
+				if (url.pathname.startsWith("/questions/")) {
+					return `https://stackoverflow.com${url.pathname}${url.search}`
+				}
+				if (url.pathname.startsWith("/exchange/")) {
+					const regex = /\/exchange\/(.*?)(\/.*)/.exec(url.pathname)
+					if (regex) return `https://${regex[1]}.stackexchange.com${regex[2]}`
+				}
+				return
+			}
 			default:
 				return
 		}
