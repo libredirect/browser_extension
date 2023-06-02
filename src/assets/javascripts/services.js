@@ -436,6 +436,9 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (url.pathname.endsWith('-lyrics')) {
 				return `${randomInstance}/lyrics?path=${encodeURIComponent(url.pathname)}`
 			}
+			if (url.pathname.startsWith('/artists/')) {
+				return `${randomInstance}/artist?path=${url.pathname}`
+			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "ruralDictionary": {
