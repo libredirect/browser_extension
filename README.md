@@ -22,29 +22,34 @@ git clone https://github.com/libredirect/browser_extension
 cd browser_extension
 npm install
 npm run html # Generates html using Pug
-npm run start # Runs in firefox in debug mode using Web-ext
 ```
-#### Build and Run on Chromium manually
-1. Open `chrome://extensions`
-2. Enable `dev mode`
-3. Select `load unpacked extension`
-4. Select `src` folder
+#### Run on Firefox
+```bash
+npm run start
+```
 
 #### Build a zip package for Firefox
 ```bash
 npm run build
 ```
+
 #### Install the zip package on Firefox (temporarily)
-3. Type in the address bar: `about:debugging#/runtime/this-firefox`
-4. Press `Load Temporary Add-on...`
-5. Select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
+1. Type in the address bar: `about:debugging#/runtime/this-firefox`
+2. Press `Load Temporary Add-on...`
+3. Select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
 
 #### Install the zip package on Firefox ESR, Developer Edition, Nightly
-3. Type in the address bar: `about:config`
-4. Set `xpinstall.signatures.required` to `false`
-5. Type in the address bar: `about:addons`
-6. Click on the gear shaped `settings` button and select `Install Add-on From File...`
-7. Select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
+1. Type in the address bar: `about:config`
+2. Set `xpinstall.signatures.required` to `false`
+3. Type in the address bar: `about:addons`
+4. Click on the gear shaped `settings` button and select `Install Add-on From File...`
+5. Select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
+
+#### Run on Chromium
+1. Open `chrome://extensions`
+2. Enable `dev mode`
+3. Select `load unpacked extension`
+4. Select `src` folder
 
 ---
 
