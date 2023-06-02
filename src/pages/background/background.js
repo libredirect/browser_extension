@@ -83,7 +83,7 @@ browser.webRequest.onBeforeRequest.addListener(
 browser.tabs.onRemoved.addListener(tabId => {
 	if (tabIdRedirects[tabId] != undefined) {
 		delete tabIdRedirects[tabId]
-		console.log("Removed tab " + tabId + " from tabIdRedirects")
+		console.log(`Removed tab ${tabId} from tabIdRedirects`)
 	}
 })
 

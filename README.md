@@ -24,22 +24,22 @@ npm install
 npm run html # Generates html using Pug
 npm run start # Runs in firefox in debug mode using Web-ext
 ```
-### Build and Run on Chromium manually
+#### Build and Run on Chromium manually
 1. Open `chrome://extensions`
 2. Enable `dev mode`
 3. Select `load unpacked extension`
 4. Select `src` folder
 
-### Build a zip package for Firefox
+#### Build a zip package for Firefox
 ```bash
 npm run build
 ```
-### Install the zip package on Firefox (temporarily)
+#### Install the zip package on Firefox (temporarily)
 3. Type in the address bar: `about:debugging#/runtime/this-firefox`
 4. Press `Load Temporary Add-on...`
 5. Select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
 
-### Install the zip package on Firefox ESR, Developer Edition, Nightly
+#### Install the zip package on Firefox ESR, Developer Edition, Nightly
 3. Type in the address bar: `about:config`
 4. Set `xpinstall.signatures.required` to `false`
 5. Type in the address bar: `about:addons`
