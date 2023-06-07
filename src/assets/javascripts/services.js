@@ -459,7 +459,6 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 		}
 		case "biblioReads": {
-			if (!url.pathname.startsWith('/book/show/') && url.pathname != '/') return randomInstance
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "wikiless": {
