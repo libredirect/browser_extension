@@ -557,6 +557,16 @@ function redirect(url, type, initiator, forceRedirection) {
 		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
+		case "quetre": {
+			const regex = /([a-z]+)\.quora\.com/.exec(url.hostname)
+			console.log(regex)
+			if (regex) {
+				const lang = regex[1]
+				url.searchParams.append("lang", lang)
+				return `${randomInstance}${url.pathname}${url.search}`
+			}
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
 	}
 }
 
