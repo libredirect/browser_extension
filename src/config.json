@@ -85,12 +85,12 @@
 			},
 			"targets": [
 				"^https?:\\/{2}redirect\\.invidious\\.io\\/.*",
-				"^https?:\\/{2}(?:www\\.|m\\.)?youtube.com(\\/|$)(?!iframe_api\\/|redirect\\/)",
+				"^https?:\\/{2}(www\\.|m\\.)?youtube.com(\\/|$)(?!iframe_api\\/|redirect\\/)",
 				"^https?:\\/{2}img\\.youtube.com\\/vi\\/.*\\/..*",
-				"^https?:\\/{2}(?:i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
-				"^https?:\\/{2}(?:www\\.)?youtube.com\\/watch?v=..*",
-				"^https?:\\/{2}(?:www\\.)?youtu\\.be\\/..*",
-				"^https?:\\/{2}(?:www\\.)?(youtube|youtube-nocookie)\\.com\\/embed\\/..*"
+				"^https?:\\/{2}(i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
+				"^https?:\\/{2}(www\\.)?youtube.com\\/watch?v=..*",
+				"^https?:\\/{2}(www\\.)?youtu\\.be\\/..*",
+				"^https?:\\/{2}(www\\.)?(youtube|youtube-nocookie)\\.com\\/embed\\/..*"
 			],
 			"name": "YouTube",
 			"options": {
@@ -140,7 +140,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.|mobile\\.)?twitter\\.com(\\/|$)",
+				"^https?:\\/{2}(www\\.|mobile\\.)?twitter\\.com(\\/|$)",
 				"^https?:\\/{2}(pbs\\.|video\\.)twimg\\.com(\\/|$)",
 				"^https?:\\/{2}platform\\.twitter\\.com/embed(\\/|$)",
 				"^https?:\\/{2}t\\.co(\\/|$)"
@@ -167,7 +167,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.)?tiktok\\.com(\\/|$)"
+				"^https?:\\/{2}(www\\.)?tiktok\\.com(\\/|$)"
 			],
 			"name": "TikTok",
 			"options": {
@@ -312,7 +312,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.|m\\.)?imdb\\.com"
+				"^https?:\\/{2}(www\\.|m\\.)?imdb\\.com"
 			],
 			"name": "IMDb",
 			"options": {
@@ -334,7 +334,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:[a-zA-Z0-9-]+\\.)?(?:fandom|wikia)\\.com(?=\\/wiki|\\/?$)"
+				"^https?:\\/{2}([a-zA-Z0-9-]+\\.)?(fandom|wikia)\\.com(?=\\/wiki|\\/?$)"
 			],
 			"name": "Fandom",
 			"options": {
@@ -359,7 +359,7 @@
 			},
 			"targets": [
 				"^https?:\\/{2}i\\.pinimg\\.com",
-				"^https?:\\/{2}(?:www\\.)?pinterest\\.com"
+				"^https?:\\/{2}(www\\.)?pinterest\\.com"
 			],
 			"options": {
 				"enabled": false,
@@ -524,7 +524,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.)?reuters\\.com\\/"
+				"^https?:\\/{2}(www\\.)?reuters\\.com\\/"
 			],
 			"name": "Reuters",
 			"options": {
@@ -552,7 +552,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.)?genius\\.com\\/"
+				"^https?:\\/{2}(www\\.)?genius\\.com\\/"
 			],
 			"name": "Genius",
 			"options": {
@@ -574,7 +574,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.)?urbandictionary\\.com\\/"
+				"^https?:\\/{2}(www\\.)?urbandictionary\\.com\\/"
 			],
 			"name": "Urban Dictionary",
 			"options": {
@@ -596,7 +596,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.)?stackoverflow\\.com\\/",
+				"^https?:\\/{2}(www\\.)?stackoverflow\\.com\\/",
 				"^https?:\\/{2}([a-zA-Z0-9-]+\\.)?stackexchange\\.com\\/"
 			],
 			"name": "Stack Overflow",
@@ -620,7 +620,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.)?goodreads\\.com\\/"
+				"^https?:\\/{2}(www\\.)?goodreads\\.com\\/"
 			],
 			"name": "Goodreads",
 			"options": {
@@ -642,7 +642,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:[a-z]+\\.)*wikipedia\\.org\\/?"
+				"^https?:\\/{2}([a-z]+\\.)*wikipedia\\.org\\/?"
 			],
 			"name": "Wikipedia",
 			"options": {
@@ -663,7 +663,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.)?snopes\\.com\\/"
+				"^https?:\\/{2}(www\\.)?snopes\\.com\\/"
 			],
 			"name": "Snopes",
 			"options": {
@@ -793,7 +793,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.)?wolframalpha\\.com\\/"
+				"^https?:\\/{2}(www\\.)?wolframalpha\\.com\\/"
 			],
 			"name": "Wolfram Alpha",
 			"options": {
@@ -815,8 +815,8 @@
 			},
 			"targets": [
 				"^https?:\\/{2}speedtest\\.libredirect\\.invalid\\/",
-				"^https?:\\/{2}(?:www\\.)?fast\\.com\\/$",
-				"^https?:\\/{2}(?:www\\.)?speedtest\\.net\\/$"
+				"^https?:\\/{2}(www\\.)?fast\\.com\\/$",
+				"^https?:\\/{2}(www\\.)?speedtest\\.net\\/$"
 			],
 			"name": "Speed Test",
 			"options": {
