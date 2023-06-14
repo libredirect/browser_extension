@@ -419,6 +419,13 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
+		case "redditWaybackMachine": {
+			let lookupUrl = url.href;
+			if (['www.reddit.com', 'reddit.com'].includes(url.hostname)) {
+				lookupUrl = `https://old.reddit.com${url.pathname}`
+			}
+			return `https://web.archive.org/web/20230611000000/${lookupUrl}`
+		}
 		case "neuters": {
 			const p = url.pathname
 			if (p.startsWith('/article/') || p.startsWith('/pf/') || p.startsWith('/arc/') || p.startsWith('/resizer/')) {

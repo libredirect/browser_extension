@@ -193,6 +193,12 @@
 					"instanceList": true,
 					"url": "https://codeberg.org/teddit/teddit",
 					"localhost": true
+				},
+				"redditWaybackMachine": {
+					"name": "Internet Archive",
+					"instanceList": false,
+					"url": "https://web.archive.org",
+					"localhost": false
 				}
 			},
 			"targets": [
