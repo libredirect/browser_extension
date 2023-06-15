@@ -235,6 +235,27 @@
 			"embeddable": true,
 			"url": "https://imgur.com"
 		},
+		"pixiv": {
+			"name": "Pixiv",
+			"frontends": {
+				"pixivFe": {
+					"name": "PixivFE",
+					"instanceList": true,
+					"url": "https://codeberg.org/VnPower/pixivfe"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?pixiv\\.net\\/"
+			],
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "pixivFe"
+			},
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://www.pixiv.net"
+		},
 		"medium": {
 			"frontends": {
 				"scribe": {

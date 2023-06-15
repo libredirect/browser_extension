@@ -554,9 +554,6 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (path == "/") path = ""
 			return `${randomInstance}/${url.hostname}${path}${url.search}`
 		}
-		default: {
-			return `${randomInstance}${url.pathname}${url.search}`
-		}
 		case "quetre": {
 			const regex = /([a-z]+)\.quora\.com/.exec(url.hostname)
 			console.log(regex)
@@ -565,6 +562,17 @@ function redirect(url, type, initiator, forceRedirection) {
 				url.searchParams.append("lang", lang)
 				return `${randomInstance}${url.pathname}${url.search}`
 			}
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
+		case "pixivFe": {
+			const regex = /\/[a-z]{1,3}\/(.*)/.exec(url.pathname)
+			if (regex) {
+				const path = regex[1]
+				return `${randomInstance}/${path}${url.search}`
+			}
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
+		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 	}
@@ -711,7 +719,8 @@ const defaultInstances = {
 	"laboratory": ['https://lab.vern.cc'],
 	"libreSpeed": ['https://librespeed.org'],
 	'jitsi': ['https://meet.jit.si', 'https://8x8.vc'],
-	'binternet': ['https://binternet.ahwx.org']
+	'binternet': ['https://binternet.ahwx.org'],
+	'pixivFe': ['https://pixivfe.exozy.me']
 }
 
 function initDefaults() {
