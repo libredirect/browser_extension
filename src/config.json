@@ -85,12 +85,12 @@
 			},
 			"targets": [
 				"^https?:\\/{2}redirect\\.invidious\\.io\\/.*",
-				"^https?:\\/{2}(?:www\\.|m\\.|)youtube.com(\\/|$)(?!iframe_api\\/|redirect\\/)",
+				"^https?:\\/{2}(www\\.|m\\.)?youtube.com(\\/|$)(?!iframe_api\\/|redirect\\/)",
 				"^https?:\\/{2}img\\.youtube.com\\/vi\\/.*\\/..*",
-				"^https?:\\/{2}(?:i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
-				"^https?:\\/{2}(?:www\\.|)youtube.com\\/watch?v=..*",
-				"^https?:\\/{2}youtu\\.be\\/..*",
-				"^https?:\\/{2}(?:www\\.|)(youtube|youtube-nocookie)\\.com\\/embed\\/..*"
+				"^https?:\\/{2}(i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
+				"^https?:\\/{2}(www\\.)?youtube.com\\/watch?v=..*",
+				"^https?:\\/{2}(www\\.)?youtu\\.be\\/..*",
+				"^https?:\\/{2}(www\\.)?(youtube|youtube-nocookie)\\.com\\/embed\\/..*"
 			],
 			"name": "YouTube",
 			"options": {
@@ -140,8 +140,8 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.|mobile\\.|)twitter\\.com(\\/|$)",
-				"^https?:\\/{2}(pbs\\.|video\\.|)twimg\\.com(\\/|$)",
+				"^https?:\\/{2}(www\\.|mobile\\.)?twitter\\.com(\\/|$)",
+				"^https?:\\/{2}(pbs\\.|video\\.)twimg\\.com(\\/|$)",
 				"^https?:\\/{2}platform\\.twitter\\.com/embed(\\/|$)",
 				"^https?:\\/{2}t\\.co(\\/|$)"
 			],
@@ -167,7 +167,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.|)tiktok\\.com(\\/|$)"
+				"^https?:\\/{2}(www\\.)?tiktok\\.com(\\/|$)"
 			],
 			"name": "TikTok",
 			"options": {
@@ -196,7 +196,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.|)(reddit|reddittorjg6rue252oqsxryoxengawnmo46qy4kyii5wtqnwfj4ooad)\\.(com|onion)(?=\\/u(ser)?\\/|\\/r\\/|\\/search|\\/new|\\/?$)",
+				"^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.)?(reddit|reddittorjg6rue252oqsxryoxengawnmo46qy4kyii5wtqnwfj4ooad)\\.(com|onion)(?=\\/u(ser)?\\/|\\/r\\/|\\/search|\\/new|\\/?$)",
 				"^https?:\\/{2}(i|(external-)?preview)\\.redd\\.it"
 			],
 			"name": "Reddit",
@@ -333,7 +333,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:www\\.|m\\.|)imdb\\.com"
+				"^https?:\\/{2}(www\\.|m\\.)?imdb\\.com"
 			],
 			"name": "IMDb",
 			"options": {
@@ -355,7 +355,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:[a-zA-Z0-9-]+\\.)?(?:fandom|wikia)\\.com(?=\\/wiki|\\/?$)"
+				"^https?:\\/{2}([a-zA-Z0-9-]+\\.)?(fandom|wikia)\\.com(?=\\/wiki|\\/?$)"
 			],
 			"name": "Fandom",
 			"options": {
@@ -617,7 +617,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}?stackoverflow\\.com\\/",
+				"^https?:\\/{2}(www\\.)?stackoverflow\\.com\\/",
 				"^https?:\\/{2}([a-zA-Z0-9-]+\\.)?stackexchange\\.com\\/"
 			],
 			"name": "Stack Overflow",
@@ -663,7 +663,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(?:[a-z]+\\.)*wikipedia\\.org\\/?"
+				"^https?:\\/{2}([a-z]+\\.)*wikipedia\\.org\\/?"
 			],
 			"name": "Wikipedia",
 			"options": {
