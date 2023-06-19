@@ -69,6 +69,7 @@
 					],
 					"name": "FreeTube",
 					"embeddable": false,
+					"desktopApp": true,
 					"instanceList": false,
 					"url": "https://github.com/FreeTubeApp/FreeTube"
 				},
@@ -79,6 +80,7 @@
 					],
 					"name": "Yattee",
 					"embeddable": false,
+					"desktopApp": true,
 					"instanceList": false,
 					"url": "https://github.com/yattee/yattee"
 				}
@@ -97,6 +99,7 @@
 				"enabled": false,
 				"redirectType": "main_frame",
 				"frontend": "invidious",
+				"embedFrontend": "disabled",
 				"unsupportedUrls": "bypass"
 			},
 			"imageType": "png",
@@ -126,7 +129,6 @@
 				"unsupportedUrls": "bypass"
 			},
 			"imageType": "png",
-			"embeddable": false,
 			"url": "https://music.youtube.com"
 		},
 		"twitter": {
@@ -177,7 +179,6 @@
 				"instance": "public"
 			},
 			"imageType": "png",
-			"embeddable": false,
 			"url": "https://tiktok.com"
 		},
 		"reddit": {
@@ -207,7 +208,6 @@
 				"instance": "public"
 			},
 			"imageType": "png",
-			"embeddable": false,
 			"url": "https://reddit.com"
 		},
 		"imgur": {
@@ -253,7 +253,6 @@
 				"frontend": "pixivFe"
 			},
 			"imageType": "svg",
-			"embeddable": false,
 			"url": "https://www.pixiv.net"
 		},
 		"medium": {
@@ -297,7 +296,6 @@
 				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svg",
-			"embeddable": false,
 			"url": "https://medium.com"
 		},
 		"quora": {
@@ -320,7 +318,6 @@
 				"instance": "public"
 			},
 			"imageType": "png",
-			"embeddable": false,
 			"url": "https://quora.com"
 		},
 		"imdb": {
@@ -343,7 +340,6 @@
 				"instance": "public"
 			},
 			"imageType": "svg",
-			"embeddable": false,
 			"url": "https://imdb.com"
 		},
 		"fandom": {
@@ -365,7 +361,6 @@
 				"frontend": "breezeWiki"
 			},
 			"imageType": "svg",
-			"embeddable": false,
 			"url": "https://fandom.com"
 		},
 		"pinterest": {
@@ -427,7 +422,6 @@
 				"instance": "public"
 			},
 			"imageType": "svgMono",
-			"embeddable": false,
 			"url": "https://search.libredirect.invalid"
 		},
 		"translate": {
@@ -462,7 +456,6 @@
 				"instance": "public"
 			},
 			"imageType": "svgMono",
-			"embeddable": false,
 			"url": "https://translate.libredirect.invalid"
 		},
 		"maps": {
@@ -489,7 +482,6 @@
 				"unsupportedUrls": "bypass"
 			},
 			"imageType": "svgMono",
-			"embeddable": false,
 			"url": "https://maps.libredirect.invalid"
 		},
 		"sendFiles": {
@@ -512,7 +504,6 @@
 				"frontend": "send"
 			},
 			"imageType": "svgMono",
-			"embeddable": false,
 			"url": "https://send.libredirect.invalid"
 		},
 		"textStorage": {
@@ -533,7 +524,6 @@
 				"frontend": "privateBin"
 			},
 			"imageType": "svgMono",
-			"embeddable": false,
 			"url": "https://paste.libredirect.invalid"
 		},
 		"reuters": {
@@ -554,7 +544,6 @@
 				"frontend": "neuters"
 			},
 			"imageType": "svg",
-			"embeddable": false,
 			"url": "https://reuters.com"
 		},
 		"genius": {
@@ -583,7 +572,6 @@
 				"instance": "public"
 			},
 			"imageType": "svg",
-			"embeddable": false,
 			"url": "https://genius.com"
 		},
 		"urbanDictionary": {
@@ -604,7 +592,6 @@
 				"frontend": "ruralDictionary"
 			},
 			"imageType": "svg",
-			"embeddable": false,
 			"url": "https://urbandictionary.com"
 		},
 		"stackOverflow": {
@@ -628,7 +615,6 @@
 				"instance": "public"
 			},
 			"imageType": "svgMono",
-			"embeddable": false,
 			"url": "https://stackoverflow.com/"
 		},
 		"goodreads": {
@@ -651,7 +637,6 @@
 				"instance": "public"
 			},
 			"imageType": "svgMono",
-			"embeddable": false,
 			"url": "https://goodreads.com/"
 		},
 		"wikipedia": {
@@ -672,7 +657,6 @@
 				"frontend": "wikiless"
 			},
 			"imageType": "svg",
-			"embeddable": false,
 			"url": "https://wikipedia.org"
 		},
 		"snopes": {
@@ -693,7 +677,6 @@
 				"frontend": "suds"
 			},
 			"imageType": "svg",
-			"embeddable": false,
 			"url": "https://www.snopes.com"
 		},
 		"waybackMachine": {
@@ -714,7 +697,6 @@
 				"frontend": "waybackClassic"
 			},
 			"imageType": "svgMono",
-			"embeddable": false,
 			"url": "https://web.archive.org"
 		},
 		"github": {
@@ -735,7 +717,6 @@
 				"frontend": "gothub"
 			},
 			"imageType": "svgMono",
-			"embeddable": false,
 			"url": "https://github.com"
 		},
 		"bilibili": {
@@ -757,7 +738,6 @@
 				"frontend": "mikuInvidious"
 			},
 			"imageType": "svgMono",
-			"embeddable": false,
 			"url": "https://bilibili.com/"
 		},
 		"bandcamp": {
@@ -779,7 +759,6 @@
 				"frontend": "tent"
 			},
 			"imageType": "svg",
-			"embeddable": false,
 			"url": "https://bandcamp.com"
 		},
 		"gitlab": {
@@ -802,7 +781,6 @@
 				"frontend": "laboratory"
 			},
 			"imageType": "svg",
-			"embeddable": false,
 			"url": "https://gitlab.com/"
 		},
 		"wolframAlpha": {
@@ -823,7 +801,6 @@
 				"frontend": "wolfreeAlpha"
 			},
 			"imageType": "svg",
-			"embeddable": false,
 			"url": "https://www.wolframalpha.com"
 		},
 		"speedTest": {
@@ -846,7 +823,6 @@
 				"frontend": "libreSpeed"
 			},
 			"imageType": "svgMono",
-			"embeddable": false,
 			"url": "https://speedtest.libredirect.invalid"
 		},
 		"meet": {
@@ -867,7 +843,6 @@
 				"frontend": "jitsi"
 			},
 			"imageType": "svgMono",
-			"embeddable": false,
 			"url": "https://meet.libredirect.invalid"
 		}
 	}

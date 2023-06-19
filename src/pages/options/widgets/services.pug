@@ -29,10 +29,19 @@ each val, service in services
                     option(value="localhost") localhost
                     option(value="public") public instances
 
-            if services[service].embeddable
-                div(class="some-block option-block")
-                    h4(data-localise="__MSG_redirectType__") Redirect Type
-                    select(id=service+"-redirectType")
+            div(class="some-block option-block")
+                h4(data-localise="__MSG_redirectType__") Redirect Type
+                select(id=service+"-redirectType")
+
+            
+            div(id=service+"-embedFrontend-div"  class="some-block option-block")
+                h4(data-localise="__MSG_embedFrontend__") Embed Frontend
+                select(id=service+"-embedFrontend")
+                    option(value="disabled") Disabled
+                    each val, frontend in services[service].frontends
+                        if services[service].frontends[frontend].embeddable && services[service].frontends[frontend].instanceList
+                            option(value=frontend)=services[service].frontends[frontend].name
+
 
             div(class="some-block option-block")
                 h4 Unsupported iframes handling

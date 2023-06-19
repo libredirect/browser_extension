@@ -33,7 +33,11 @@ async function changeFrontendsSettings(service) {
 		if (config.services[service].frontends[frontend].instanceList) {
 			const frontendDiv = document.getElementById(frontend)
 			if (typeof divs[service].frontend !== "undefined") {
-				if (frontend == divs[service].frontend.value) {
+				if (
+					frontend == divs[service].frontend.value
+					||
+					(!config.services[service].frontends[divs[service].frontend.value].embeddable && divs[service].embedFrontend && frontend == divs[service].embedFrontend.value)
+				) {
 					frontendDiv.style.display = ""
 					if (config.services[service].frontends[frontend].localhost === true) {
 						document.getElementById(`${service}-instance-div`).style.display = ""
@@ -52,18 +56,23 @@ async function changeFrontendsSettings(service) {
 	}
 	if (document.getElementById(`${service}-redirectType`)) {
 		const frontend = options[service].frontend
-		if (config.services[service].frontends[frontend].embeddable) {
+		if (config.services[service].frontends[frontend].embeddable || config.services[service].frontends[frontend].desktopApp) {
 			document.getElementById(`${service}-redirectType`).innerHTML = `
 			<option value="both" data-localise="__MSG_both__">both</options>
 			<option value="sub_frame" data-localise="__MSG_onlyEmbedded__">Only Embedded</option>
 			<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
 			`
-			document.getElementById(`${service}-redirectType`).value = options[frontend].redirectType = options[service].redirectType
+			document.getElementById(`${service}-redirectType`).value = options[service].redirectType
 		} else {
 			document.getElementById(`${service}-redirectType`).innerHTML =
 				'<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>'
 			options[service].redirectType = "main_frame"
 			browser.storage.local.set({ options })
+		}
+		if (config.services[service].frontends[frontend].desktopApp) {
+			document.getElementById(`${service}-embedFrontend-div`).style.display = ''
+		} else {
+			document.getElementById(`${service}-embedFrontend-div`).style.display = 'none'
 		}
 	}
 	const frontend_name_element = document.getElementById(`${service}_page`).getElementsByClassName("frontend_name")[0]

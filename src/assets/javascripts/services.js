@@ -56,20 +56,29 @@ function redirect(url, type, initiator, forceRedirection) {
 	for (const service in config.services) {
 		if (!forceRedirection && !options[service].enabled) continue
 
-		frontend = options[service].frontend
-
-		if (!regexArray(service, url, config, frontend)) {
-			frontend = null
-			continue
-		}
-
+		frontend = options[service]
 		if (
-			(config.services[service].embeddable && type != options[service].redirectType && options[service].redirectType != "both")
-			||
-			(!config.services[service].embeddable && type != "main_frame")
+			config.services[service].embeddable &&
+			type != options[service].redirectType &&
+			options[service].redirectType != "both"
 		) {
 			if (options[service].unsupportedUrls == 'block') return 'CANCEL'
 			return
+		}
+
+		if (
+			config.services[service].embeddable
+			&&
+			type != "main_frame"
+			&&
+			options[service].redirectType != "main_frame"
+			&&
+			options[service].embedFrontend != "disabled"
+		) frontend = options[service].embedFrontend
+		
+		if (!regexArray(service, url, config, frontend)) {
+			frontend = null
+			continue
 		}
 
 		let instanceList = options[frontend]
