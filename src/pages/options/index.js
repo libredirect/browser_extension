@@ -56,20 +56,31 @@ async function changeFrontendsSettings(service) {
 	}
 	if (document.getElementById(`${service}-redirectType`)) {
 		const frontend = options[service].frontend
-		if (config.services[service].frontends[frontend].embeddable || config.services[service].frontends[frontend].desktopApp) {
+		if (config.services[service].frontends[frontend].embeddable) {
 			document.getElementById(`${service}-redirectType`).innerHTML = `
 			<option value="both" data-localise="__MSG_both__">both</options>
 			<option value="sub_frame" data-localise="__MSG_onlyEmbedded__">Only Embedded</option>
 			<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
 			`
-			document.getElementById(`${service}-redirectType`).value = options[service].redirectType
+		}
+		else if (config.services[service].frontends[frontend].desktopApp && Object.values(config.services[service].frontends).some(frontend => frontend.embeddable)) {
+			document.getElementById(`${service}-redirectType`).innerHTML = `
+			<option value="both" data-localise="__MSG_both__">both</options>
+			<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
+			`
+			if (options[service].redirectType == "sub_frame") {
+				options[service].redirectType = "main_frame"
+				browser.storage.local.set({ options })
+			}
 		} else {
 			document.getElementById(`${service}-redirectType`).innerHTML =
 				'<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>'
 			options[service].redirectType = "main_frame"
+
 			browser.storage.local.set({ options })
 		}
-		if (config.services[service].frontends[frontend].desktopApp) {
+		document.getElementById(`${service}-redirectType`).value = options[service].redirectType
+		if (config.services[service].frontends[frontend].desktopApp && options[service].redirectType != "main_frame") {
 			document.getElementById(`${service}-embedFrontend-div`).style.display = ''
 		} else {
 			document.getElementById(`${service}-embedFrontend-div`).style.display = 'none'

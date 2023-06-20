@@ -56,26 +56,20 @@ function redirect(url, type, initiator, forceRedirection) {
 	for (const service in config.services) {
 		if (!forceRedirection && !options[service].enabled) continue
 
-		frontend = options[service]
+		frontend = options[service].frontend
+
 		if (
 			config.services[service].embeddable &&
-			type != options[service].redirectType &&
-			options[service].redirectType != "both"
+			type != options[service].redirectType && options[service].redirectType != "both"
 		) {
 			if (options[service].unsupportedUrls == 'block') return 'CANCEL'
 			return
 		}
 
-		if (
-			config.services[service].embeddable
-			&&
-			type != "main_frame"
-			&&
-			options[service].redirectType != "main_frame"
-			&&
-			options[service].embedFrontend != "disabled"
-		) frontend = options[service].embedFrontend
-		
+		if (config.services[service].frontends[frontend].desktopApp && type != "main_frame" && options[service].redirectType != "main_frame")
+			frontend = options[service].embedFrontend
+
+
 		if (!regexArray(service, url, config, frontend)) {
 			frontend = null
 			continue
@@ -729,7 +723,8 @@ const defaultInstances = {
 	"libreSpeed": ['https://librespeed.org'],
 	'jitsi': ['https://meet.jit.si', 'https://8x8.vc'],
 	'binternet': ['https://binternet.ahwx.org'],
-	'pixivFe': ['https://pixivfe.exozy.me']
+	'pixivFe': ['https://pixivfe.exozy.me'],
+	'indestructables': ['https://indestructables.private.coffee']
 }
 
 function initDefaults() {
