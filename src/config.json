@@ -845,6 +845,26 @@
 			"imageType": "svgMono",
 			"url": "https://meet.libredirect.invalid"
 		},
+		"myIp": {
+			"frontends": {
+				"wtfismyip": {
+					"name": "wtfismyip",
+					"instanceList": true,
+					"url": "https://gitlab.com/wtfismyip/wtfismyip"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}myip\\.libredirect\\.invalid\\/"
+			],
+			"name": "My IP",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "wtfismyip"
+			},
+			"imageType": "svgMono",
+			"url": "https://myip.libredirect.invalid"
+		},
 		"wolframAlpha": {
 			"frontends": {
 				"wolfreeAlpha": {

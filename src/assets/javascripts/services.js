@@ -724,7 +724,8 @@ const defaultInstances = {
 	'jitsi': ['https://meet.jit.si', 'https://8x8.vc'],
 	'binternet': ['https://binternet.ahwx.org'],
 	'pixivFe': ['https://pixivfe.exozy.me'],
-	'indestructables': ['https://indestructables.private.coffee']
+	'indestructables': ['https://indestructables.private.coffee'],
+	'wtfismyip': ['https://myip.wtf']
 }
 
 function initDefaults() {
