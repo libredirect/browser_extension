@@ -501,6 +501,7 @@ function redirect(url, type, initiator, forceRedirection) {
 				const path = regex[4]
 				return `${randomInstance}/file/${user}/${repo}/${branch}/${path}`
 			}
+			if (url.hostname == "gist.github.com") return `${randomInstance}/gist${url.pathname}${url.search}`
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "mikuInvidious": {
