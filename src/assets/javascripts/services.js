@@ -493,14 +493,6 @@ function redirect(url, type, initiator, forceRedirection) {
 			return
 		}
 		case "gothub": {
-			const regex = /^\/(.*)\/(.*)\/(?:blob|tree)\/(.*)\/(.*)/.exec(url.pathname)
-			if (regex) {
-				const user = regex[1]
-				const repo = regex[2]
-				const branch = regex[3]
-				const path = regex[4]
-				return `${randomInstance}/file/${user}/${repo}/${branch}/${path}`
-			}
 			if (url.hostname == "gist.github.com") return `${randomInstance}/gist${url.pathname}${url.search}`
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
