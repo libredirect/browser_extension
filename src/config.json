@@ -269,7 +269,7 @@
 				}
 			},
 			"targets": [
-				"^https:\\/{2}(.*\\.)?medium\\.com",
+				"^https:\\/{2}([a-zA-Z0-9_-]+\\.)?medium\\.com",
 				"^https?:\\/{2}towardsdatascience\\.com(\\/|$)",
 				"^https?:\\/{2}uxdesign\\.cc(\\/|$)",
 				"^https?:\\/{2}uxplanet\\.org(\\/|$)",
