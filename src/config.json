@@ -120,7 +120,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}music\\.youtube\\.com(\\/|$)"
+				"^https?:\\/{2}music\\.youtube\\.com\\/"
 			],
 			"name": "YT Music",
 			"options": {
@@ -141,11 +141,11 @@
 					"localhost": true
 				}
 			},
-			"targets": [
-				"^https?:\\/{2}(www\\.|mobile\\.)?twitter\\.com(\\/|$)",
-				"^https?:\\/{2}(pbs\\.|video\\.)twimg\\.com(\\/|$)",
-				"^https?:\\/{2}platform\\.twitter\\.com/embed(\\/|$)",
-				"^https?:\\/{2}t\\.co(\\/|$)"
+			"targets": [	
+				"^https?:\\/{2}(www\\.|mobile\\.)?twitter\\.com\\/",
+				"^https?:\\/{2}(pbs\\.|video\\.)twimg\\.com\\/",
+				"^https?:\\/{2}platform\\.twitter\\.com/embed\\/",
+				"^https?:\\/{2}t\\.co\\/"
 			],
 			"name": "Twitter",
 			"options": {
@@ -169,7 +169,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.)?tiktok\\.com(\\/|$)"
+				"^https?:\\/{2}(www\\.)?tiktok\\.com\\/"
 			],
 			"name": "TikTok",
 			"options": {
@@ -221,7 +221,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}([im]\\.)?(stack\\.)?imgur\\.(com|io)(\\/|$)"
+				"^https?:\\/{2}([im]\\.)?(stack\\.)?imgur\\.(com|io)\\/"
 			],
 			"name": "Imgur",
 			"options": {
@@ -269,25 +269,25 @@
 				}
 			},
 			"targets": [
-				"^https:\\/{2}([a-zA-Z0-9_-]+\\.)?medium\\.com",
-				"^https?:\\/{2}towardsdatascience\\.com(\\/|$)",
-				"^https?:\\/{2}uxdesign\\.cc(\\/|$)",
-				"^https?:\\/{2}uxplanet\\.org(\\/|$)",
-				"^https?:\\/{2}betterprogramming\\.pub(\\/|$)",
-				"^https?:\\/{2}aninjusticemag\\.com(\\/|$)",
-				"^https?:\\/{2}betterhumans\\.pub(\\/|$)",
-				"^https?:\\/{2}psiloveyou\\.xyz(\\/|$)",
-				"^https?:\\/{2}entrepreneurshandbook\\.co(\\/|$)",
-				"^https?:\\/{2}blog\\.coinbase\\.com(\\/|$)",
-				"^https?:\\/{2}levelup\\.gitconnected\\.com(\\/|$)",
-				"^https?:\\/{2}javascript\\.plainenglish\\.io(\\/|$)",
-				"^https?:\\/{2}blog\\.bitsrc\\.io(\\/|$)",
-				"^https?:\\/{2}itnext\\.io(\\/|$)",
-				"^https?:\\/{2}codeburst\\.io(\\/|$)",
-				"^https?:\\/{2}infosecwriteups\\.com(\\/|$)",
-				"^https?:\\/{2}blog\\.devgenius\\.io(\\/|$)",
-				"^https?:\\/{2}writingcooperative\\.com(\\/|$)",
-				"^https?:\\/{2}proandroiddev\\.com(\\/|$)"
+				"^https:\\/{2}([a-zA-Z0-9-]+\\.)?medium\\.com",
+				"^https?:\\/{2}towardsdatascience\\.com\\/",
+				"^https?:\\/{2}uxdesign\\.cc\\/",
+				"^https?:\\/{2}uxplanet\\.org\\/",
+				"^https?:\\/{2}betterprogramming\\.pub\\/",
+				"^https?:\\/{2}aninjusticemag\\.com\\/",
+				"^https?:\\/{2}betterhumans\\.pub\\/",
+				"^https?:\\/{2}psiloveyou\\.xyz\\/",
+				"^https?:\\/{2}entrepreneurshandbook\\.co\\/",
+				"^https?:\\/{2}blog\\.coinbase\\.com\\/",
+				"^https?:\\/{2}levelup\\.gitconnected\\.com\\/",
+				"^https?:\\/{2}javascript\\.plainenglish\\.io\\/",
+				"^https?:\\/{2}blog\\.bitsrc\\.io\\/",
+				"^https?:\\/{2}itnext\\.io\\/",
+				"^https?:\\/{2}codeburst\\.io\\/",
+				"^https?:\\/{2}infosecwriteups\\.com\\/",
+				"^https?:\\/{2}blog\\.devgenius\\.io\\/",
+				"^https?:\\/{2}writingcooperative\\.com\\/",
+				"^https?:\\/{2}proandroiddev\\.com\\/"
 			],
 			"name": "Medium",
 			"options": {
@@ -308,7 +308,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}([a-zA-Z0-9-]+\\.)*quora\\.com(\\/|$)"
+				"^https?:\\/{2}([a-zA-Z0-9-]+\\.)*quora\\.com\\/"
 			],
 			"name": "Quora",
 			"options": {

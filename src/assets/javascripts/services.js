@@ -58,13 +58,6 @@ function redirect(url, type, initiator, forceRedirection) {
 
 		frontend = options[service].frontend
 
-		if (
-			config.services[service].embeddable &&
-			type != options[service].redirectType && options[service].redirectType != "both"
-		) {
-			if (options[service].unsupportedUrls == 'block') return 'CANCEL'
-			return
-		}
 
 		if (config.services[service].frontends[frontend].desktopApp && type != "main_frame" && options[service].redirectType != "main_frame")
 			frontend = options[service].embedFrontend
@@ -73,6 +66,14 @@ function redirect(url, type, initiator, forceRedirection) {
 		if (!regexArray(service, url, config, frontend)) {
 			frontend = null
 			continue
+		}
+
+		if (
+			config.services[service].embeddable &&
+			type != options[service].redirectType && options[service].redirectType != "both"
+		) {
+			if (options[service].unsupportedUrls == 'block') return 'CANCEL'
+			return
 		}
 
 		let instanceList = options[frontend]
