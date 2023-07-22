@@ -58,13 +58,6 @@ function redirect(url, type, initiator, forceRedirection) {
 
 		frontend = options[service].frontend
 
-		if (
-			config.services[service].embeddable &&
-			type != options[service].redirectType && options[service].redirectType != "both"
-		) {
-			if (options[service].unsupportedUrls == 'block') return 'CANCEL'
-			return
-		}
 
 		if (config.services[service].frontends[frontend].desktopApp && type != "main_frame" && options[service].redirectType != "main_frame")
 			frontend = options[service].embedFrontend
@@ -73,6 +66,14 @@ function redirect(url, type, initiator, forceRedirection) {
 		if (!regexArray(service, url, config, frontend)) {
 			frontend = null
 			continue
+		}
+
+		if (
+			config.services[service].embeddable &&
+			type != options[service].redirectType && options[service].redirectType != "both"
+		) {
+			if (options[service].unsupportedUrls == 'block') return 'CANCEL'
+			return
 		}
 
 		let instanceList = options[frontend]
@@ -111,13 +112,6 @@ function redirect(url, type, initiator, forceRedirection) {
 	if (!frontend) return
 
 	switch (frontend) {
-		case "beatbump": {
-			return `${randomInstance}${url.pathname}${url.search}`
-				.replace("/watch?v=", "/listen?id=")
-				.replace("/channel/", "/artist/")
-				.replace("/playlist?list=", "/playlist/VL")
-				.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/") + "?filter=all")
-		}
 		case "hyperpipe": {
 			return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/"))
 		}
@@ -701,7 +695,6 @@ const defaultInstances = {
 	'lingva': ['https://lingva.ml'],
 	'searxng': ['https://search.bus-hit.me'],
 	'rimgo': ['https://rimgo.vern.cc'],
-	'beatbump': ['https://beatbump.ml'],
 	'hyperpipe': ['https://hyperpipe.surge.sh'],
 	'facil': [' https://facilmap.org '],
 	'osm': ['https://www.openstreetmap.org'],
