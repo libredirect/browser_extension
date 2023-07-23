@@ -199,7 +199,12 @@ async function calcCustomInstances(frontend) {
 			if (index > -1) customInstances.splice(index, 1)
 			options = await utils.getOptions()
 			options[frontend] = customInstances
-			browser.storage.local.set({ options }, () => calcCustomInstances(frontend))
+			browser.storage.local.set({ options }, async () => {
+				calcCustomInstances(frontend)
+				const blacklist = await utils.getBlacklist(options)
+				const redirects = await utils.getList(options)
+				createList(frontend, config.networks, document, redirects, blacklist)
+			})
 		})
 	}
 }
@@ -232,7 +237,7 @@ async function processCustomInstances(frontend, document) {
 	})
 }
 
-function createList(frontend, networks, document, redirects, blacklist) {
+async function createList(frontend, networks, document, redirects, blacklist) {
 	for (const network in networks) {
 		const checklist = document.getElementById(frontend)
 			.getElementsByClassName(network)[0]
@@ -250,10 +255,8 @@ function createList(frontend, networks, document, redirects, blacklist) {
 			.getElementsByClassName("custom-instance")[0]
 			.placeholder = redirects[frontend].clearnet[0]
 
-		const sortedInstances = instances
-			.sort((a, b) => {
-				return (blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
-			})
+		const sortedInstances = instances.sort((a, b) => blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
+		const options = await utils.getOptions()
 
 		const content = sortedInstances
 			.map(x => {
@@ -262,7 +265,9 @@ function createList(frontend, networks, document, redirects, blacklist) {
                         <span style="color:red;">cloudflare</span>
                     </a>` : ""
 
-				const warnings = [cloudflare].join(" ")
+				const chosen = options[frontend].includes(x) ? `<span style="color:grey;">chosen</span>` : ""
+
+				const warnings = [cloudflare, chosen].join(" ")
 				return `<div class="frontend">
                             <x>
                                 <a href="${x}" target="_blank">${x}</a>
@@ -290,7 +295,10 @@ function createList(frontend, networks, document, redirects, blacklist) {
 					let options = await utils.getOptions()
 					if (!options[frontend].includes(instance)) {
 						options[frontend].push(instance)
-						browser.storage.local.set({ options }, () => calcCustomInstances(frontend))
+						browser.storage.local.set({ options }, () => {
+							calcCustomInstances(frontend)
+							createList(frontend, config.networks, document, redirects, blacklist)
+						})
 					}
 				})
 		}
