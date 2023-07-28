@@ -712,6 +712,7 @@ const defaultInstances = {
 	'binternet': ['https://binternet.ahwx.org'],
 	'pixivFe': ['https://pixivfe.exozy.me'],
 	'indestructables': ['https://indestructables.private.coffee'],
+	'destructables': ['https://ds.vern.cc'],
 	'wtfismyip': ['https://myip.wtf']
 }
 

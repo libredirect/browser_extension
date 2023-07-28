@@ -808,6 +808,11 @@
 					"name": "Indestructables",
 					"instanceList": true,
 					"url": "https://indestructables.codeberg.page"
+				},
+				"destructables": {
+					"name": "Destructables",
+					"instanceList": true,
+					"url": "https://git.vern.cc/cobra/Destructables"
 				}
 			},
 			"targets": [
