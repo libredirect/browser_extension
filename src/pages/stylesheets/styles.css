@@ -480,3 +480,17 @@ div.about a {
 	width: 500px;
 	display: inline-block;
 }
+
+@media (max-width: 1250px) {
+	body.option {
+		flex-direction: column;
+		width: 750px;
+		align-items: center;
+	}
+
+	section.links {
+		flex-direction: row;
+		width: 750px;
+		padding: 0 55px;
+	}
+}
