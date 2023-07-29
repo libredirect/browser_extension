@@ -713,7 +713,8 @@ const defaultInstances = {
 	'pixivFe': ['https://pixivfe.exozy.me'],
 	'indestructables': ['https://indestructables.private.coffee'],
 	'destructables': ['https://ds.vern.cc'],
-	'wtfismyip': ['https://myip.wtf']
+	'wtfismyip': ['https://myip.wtf'],
+	'safetwitch': ['https://safetwitch.drgns.space']
 }
 
 function initDefaults() {

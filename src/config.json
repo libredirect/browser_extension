@@ -154,6 +154,31 @@
 			"embeddable": true,
 			"url": "https://twitter.com"
 		},
+		"twitch": {
+			"frontends": {
+				"safetwitch": {
+					"name": "SafeTwitch",
+					"embeddable": false,
+					"instanceList": true,
+					"url": "https://codeberg.org/dragongoose/safetwitch",
+					"localhost": false
+				}
+			},
+			"targets": [	
+				"^https?:\\/{2}(www\\.)?twitch\\.(tv|com)\\/"
+			],
+			"name": "Twitch",
+			"options": {
+				"enabled": false,
+				"redirectType": "main_frame",
+				"unsupportedUrls": "bypass",
+				"frontend": "safetwitch",
+				"instance": "public"
+			},
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://twitch.tv"
+		},
 		"tiktok": {
 			"frontends": {
 				"proxiTok": {

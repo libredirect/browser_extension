@@ -128,7 +128,7 @@ section.links {
 	flex-wrap: wrap;
 	flex-direction: column;
 	width: 300px;
-	max-height: 850px;
+	max-height: 880px;
 }
 
 section.links div {
