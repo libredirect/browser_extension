@@ -155,7 +155,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			return url.href.replace(/^https?:\/{2}/, "yattee://")
 		}
 		case "freetube": {
-			return  'freetube://' + url.href.replace(/^https?:\/{2}/, "https//")
+			return  'freetube://' + url.href
 		}
 		case "poketube": {
 			if (url.pathname.startsWith('/channel')) {
