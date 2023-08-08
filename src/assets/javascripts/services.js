@@ -443,7 +443,6 @@ function redirect(url, type, initiator, forceRedirection) {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "anonymousOverflow": {
-			if (!url.pathname.startsWith('/questions') && url.pathname != '/') return randomInstance
 			if (url.hostname == "stackoverflow.com") {
 				const threadID = /\/(\d+)\/?$/.exec(url.pathname)
 				if (threadID) return `${randomInstance}/questions/${threadID[1]}${url.search}`
