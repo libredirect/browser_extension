@@ -4,7 +4,7 @@
         "description": "name of the extension"
     },
     "extensionDescription": {
-        "message": "Une extension web qui redirige les sites populaires vers des sites frontaux et dorsaux alternatifs respectueux de la vie privée",
+        "message": "Une extension web qui redirige les sites populaires vers des interfaces et des serveurs alternatifs respectueux de la vie privée",
         "description": "description of the extension"
     },
     "switchInstance": {
@@ -36,15 +36,15 @@
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
-        "message": "Excluded from redirecting",
+        "message": "Exclus de la redirection",
         "description": "used in the settings page"
     },
     "importSettings": {
-        "message": "Importation de paramètres",
+        "message": "Importer les paramètres",
         "description": "used in the settings page"
     },
     "exportSettings": {
-        "message": "Exportation de paramètres",
+        "message": "Exporter les paramètres",
         "description": "used in the settings page"
     },
     "resetSettings": {
@@ -56,11 +56,11 @@
         "description": "used in the settings page"
     },
     "showInPopup": {
-        "message": "Show in popup",
+        "message": "Afficher dans la fenêtre contextuelle",
         "description": "used in the settings page"
     },
     "frontend": {
-        "message": "Frontend",
+        "message": "Interface",
         "description": "used in the settings page"
     },
     "redirectType": {
@@ -80,7 +80,7 @@
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
-        "message": "Add your favorite instances",
+        "message": "Ajoutez vos instances favorites",
         "description": "used in the settings page"
     },
     "copyRaw": {
@@ -90,14 +90,14 @@
         "message": "Copié"
     },
     "redirectToOriginal": {
-        "message": "Redirect to original",
+        "message": "Rediriger vers l'original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "Essayer de rediriger ce lien",
+        "message": "Essayer de rediriger",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
-        "message": "About"
+        "message": "À propos"
     }
 }
