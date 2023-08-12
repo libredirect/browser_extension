@@ -1,1 +1,18 @@
-{}
+{
+    "theme": {
+        "message": "Téma",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "Terang",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Peteng",
+        "description": "used in the settings page"
+    },
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    }
+}
