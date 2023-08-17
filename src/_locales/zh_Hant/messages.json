@@ -1,1 +1,103 @@
-{}
+{
+    "both": {
+        "message": "全部",
+        "description": "used in the settings page"
+    },
+    "copied": {
+        "message": "已複製"
+    },
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "switchInstance": {
+        "message": "切換執行個體",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "settings": {
+        "message": "設定",
+        "description": "used in the popup"
+    },
+    "extensionDescription": {
+        "message": "WebExtension 擴充套件，可將熱門網站重新導向至隱私友好的替代服務",
+        "description": "description of the extension"
+    },
+    "general": {
+        "message": "一般",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "主題",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "淺色",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "深色",
+        "description": "used in the settings page"
+    },
+    "auto": {
+        "message": "自動",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "匯入設定",
+        "description": "used in the settings page"
+    },
+    "excludeFromRedirecting": {
+        "message": "不作重新導向",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "匯出設定",
+        "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "重設設定",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "啟用",
+        "description": "used in the settings page"
+    },
+    "showInPopup": {
+        "message": "在快顯視窗顯示",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "前端",
+        "description": "used in the settings page"
+    },
+    "redirectType": {
+        "message": "重新導向類型",
+        "description": "used in the settings page"
+    },
+    "onlyNotEmbedded": {
+        "message": "非內嵌",
+        "description": "used in the settings page"
+    },
+    "addYourFavoriteInstances": {
+        "message": "新增常用執行個體",
+        "description": "used in the settings page"
+    },
+    "redirectToOriginal": {
+        "message": "重新導向到原網址",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "redirectLink": {
+        "message": "嘗試重新導向",
+        "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "copyRaw": {
+        "message": "複製原始網址"
+    },
+    "about": {
+        "message": "關於"
+    },
+    "onlyEmbedded": {
+        "message": "僅內嵌",
+        "description": "used in the settings page"
+    }
+}
