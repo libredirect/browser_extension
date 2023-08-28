@@ -8,7 +8,7 @@
         "description": "description of the extension"
     },
     "switchInstance": {
-        "message": "Переключить экземпляр",
+        "message": "Сменить сервер",
         "description": "used in manifest.json as shortcut description"
     },
     "settings": {
@@ -76,7 +76,7 @@
         "description": "used in the settings page"
     },
     "onlyNotEmbedded": {
-        "message": "только не встроеные",
+        "message": "только не встроенные",
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
@@ -84,13 +84,13 @@
         "description": "used in the settings page"
     },
     "copyRaw": {
-        "message": "Скопировать оригинал"
+        "message": "Копировать изначальную"
     },
     "copied": {
         "message": "Скопировано"
     },
     "redirectToOriginal": {
-        "message": "Перенаправить на исходную страницу",
+        "message": "Обратно на исходный сайт",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
