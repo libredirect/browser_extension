@@ -36,7 +36,7 @@ async function changeFrontendsSettings(service) {
 				if (
 					frontend == divs[service].frontend.value
 					||
-					(!config.services[service].frontends[divs[service].frontend.value].embeddable && divs[service].embedFrontend && frontend == divs[service].embedFrontend.value)
+					(config.services[service].frontends[divs[service].frontend.value].desktopApp && divs[service].embedFrontend && frontend == divs[service].embedFrontend.value)
 				) {
 					frontendDiv.style.display = ""
 					if (config.services[service].frontends[frontend].localhost === true) {
@@ -82,8 +82,10 @@ async function changeFrontendsSettings(service) {
 		document.getElementById(`${service}-redirectType`).value = options[service].redirectType
 		if (config.services[service].frontends[frontend].desktopApp && options[service].redirectType != "main_frame") {
 			document.getElementById(`${service}-embedFrontend-div`).style.display = ''
+			document.getElementById(divs[service].embedFrontend.value).style.display = ''
 		} else {
 			document.getElementById(`${service}-embedFrontend-div`).style.display = 'none'
+			document.getElementById(divs[service].embedFrontend.value).style.display = 'none'
 		}
 	}
 	const frontend_name_element = document.getElementById(`${service}_page`).getElementsByClassName("frontend_name")[0]
