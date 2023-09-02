@@ -647,7 +647,6 @@ async function reverse(url) {
 			case "wikipedia": {
 				const lang = url.searchParams.get("lang")
 				if (lang != null) {
-					url.searchParams.delete("lang")
 					return `https://${lang}.wikipedia.org${url.pathname}${url.search}${url.hash}`
 				}
 				return `https://wikipedia.org${url.pathname}${url.search}${url.hash}`
