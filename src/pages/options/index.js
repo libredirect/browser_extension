@@ -83,9 +83,12 @@ async function changeFrontendsSettings(service) {
 		if (config.services[service].frontends[frontend].desktopApp && options[service].redirectType != "main_frame") {
 			document.getElementById(`${service}-embedFrontend-div`).style.display = ''
 			document.getElementById(divs[service].embedFrontend.value).style.display = ''
-		} else {
+		}
+		else if (config.services[service].frontends[frontend].desktopApp && options[service].redirectType == "main_frame") {
 			document.getElementById(`${service}-embedFrontend-div`).style.display = 'none'
 			document.getElementById(divs[service].embedFrontend.value).style.display = 'none'
+		} else {
+			document.getElementById(`${service}-embedFrontend-div`).style.display = 'none'
 		}
 	}
 	const frontend_name_element = document.getElementById(`${service}_page`).getElementsByClassName("frontend_name")[0]
