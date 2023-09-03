@@ -99,5 +99,14 @@
     },
     "about": {
         "message": "About"
-    }
+    },
+    "unsupportedIframesHandling": {
+        "message": "Unsupported iframes handling"
+    },
+    "fetchPublicInstances": {
+        "message": "Fetch public instances"
+    },
+    "disable": {
+        "message": "Disable"
+    }   
 }
