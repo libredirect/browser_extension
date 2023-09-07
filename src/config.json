@@ -431,6 +431,11 @@
 					"name": "LibreX",
 					"instanceList": true,
 					"url": "https://github.com/hnhx/librex"
+				},
+				"4get": {
+					"name": "4get",
+					"instanceList": true,
+					"url": "https://git.lolcat.ca/lolcat/4get"
 				}
 			},
 			"targets": [

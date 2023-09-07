@@ -121,6 +121,13 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "whoogle": {
 			return `${randomInstance}/search${url.search}`
 		}
+		case "4get": {
+			const s = url.searchParams.get("q")
+			if (s !== null) {
+				return `${randomInstance}/web?s=${encodeURIComponent(s)}`
+			}
+			return randomInstance
+		}
 		case "librex": {
 			return `${randomInstance}/search.php${url.search}`
 		}
@@ -693,6 +700,7 @@ const defaultInstances = {
 	'simplyTranslate': ['https://simplytranslate.org'],
 	'lingva': ['https://lingva.ml'],
 	'searxng': ['https://search.bus-hit.me'],
+	'4get': ['https://4get.ca'],
 	'rimgo': ['https://rimgo.vern.cc'],
 	'hyperpipe': ['https://hyperpipe.surge.sh'],
 	'facil': [' https://facilmap.org '],
