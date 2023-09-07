@@ -155,7 +155,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			return url.href.replace(/^https?:\/{2}/, "yattee://")
 		}
 		case "freetube": {
-			return  'freetube://' + url.href
+			return 'freetube://' + url.href
 		}
 		case "poketube": {
 			if (url.pathname.startsWith('/channel')) {
@@ -558,6 +558,13 @@ function redirect(url, type, initiator, forceRedirection) {
 			if (regex) {
 				const path = regex[1]
 				return `${randomInstance}/${path}${url.search}`
+			}
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
+		case "invidious": {
+			if (url.hostname == "youtu.be" || url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/live")) {
+				const watch = url.pathname.substring(url.pathname.lastIndexOf('/') + 1)
+				return `${randomInstance}/watch?v=${watch}`
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
