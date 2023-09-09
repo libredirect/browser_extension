@@ -575,6 +575,14 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
+		case "libremdb": {
+			if (url.pathname.startsWith("/Name")) {
+				for (const [key, value] of url.searchParams.entries()) {
+					return `${randomInstance}/title/${encodeURIComponent(key)}`
+				}
+			}
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
 		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
