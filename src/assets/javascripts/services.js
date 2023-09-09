@@ -92,23 +92,6 @@ function redirect(url, type, initiator, forceRedirection) {
 		}
 		break
 	}
-
-	// Here is a (temperory) space for defining constants required in 2 or more switch cases.
-	const dataLatLngRegex = /!3d(-?[0-9]{1,}.[0-9]{1,})!4d(-?[0-9]{1,}.[0-9]{1,})/
-	const placeRegex = /\/place\/(.*)\//
-	function convertMapCentre() {
-		let [lat, lon, zoom] = [null, null, null]
-		const reg = url.pathname.match(/@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/)
-		if (reg) {
-			[, lon, lat, zoom] = reg
-		} else if (url.searchParams.has("center")) {
-			// Set map centre if present
-			[lat, lon] = url.searchParams.get("center").split(",")
-			zoom = url.searchParams.get("zoom") ?? "17"
-		}
-		return { zoom, lon, lat }
-	}
-
 	if (!frontend) return
 
 	switch (frontend) {
@@ -210,6 +193,20 @@ function redirect(url, type, initiator, forceRedirection) {
 			return randomInstance
 		}
 		case "osm": {
+			const dataLatLngRegex = /!3d(-?[0-9]{1,}.[0-9]{1,})!4d(-?[0-9]{1,}.[0-9]{1,})/
+			const placeRegex = /\/place\/(.*)\//
+			function convertMapCentre() {
+				let [lat, lon, zoom] = [null, null, null]
+				const reg = url.pathname.match(/@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/)
+				if (reg) {
+					[, lon, lat, zoom] = reg
+				} else if (url.searchParams.has("center")) {
+					// Set map centre if present
+					[lat, lon] = url.searchParams.get("center").split(",")
+					zoom = url.searchParams.get("zoom") ?? "17"
+				}
+				return { zoom, lon, lat }
+			}
 			if (initiator && initiator.host === "earth.google.com") return randomInstance
 			const travelModes = {
 				driving: "fossgis_osrm_car",
@@ -313,69 +310,6 @@ function redirect(url, type, initiator, forceRedirection) {
 
 			let prefsEncoded = new URLSearchParams(prefs).toString()
 			return `${randomInstance}/${mapCentre}&${prefsEncoded}`
-		}
-		case "facil": {
-			if (initiator && initiator.host === "earth.google.com") return randomInstance
-			const travelModes = {
-				driving: "car",
-				walking: "pedestrian",
-				bicycling: "bicycle",
-				transit: "car", // not implemented on Facil, default to car.
-			}
-			const mapCentreData = convertMapCentre()
-			let mapCentre = "#"
-			if (mapCentreData.zoom && mapCentreData.lon && mapCentreData.lat) mapCentre = `#${mapCentreData.zoom}/${mapCentreData.lon}/${mapCentreData.lat}`
-
-			if (url.pathname.includes("/embed")) {
-				// Handle Google Maps Embed API
-				// https://www.google.com/maps/embed/v1/place?key=AIzaSyD4iE2xVSpkLLOXoyqT-RuPwURN3ddScAI&q=Eiffel+Tower,Paris+France
-				//console.log("embed life")
-
-				let query = ""
-				if (url.searchParams.has("q")) query = url.searchParams.get("q")
-				else if (url.searchParams.has("query")) query = url.searchParams.has("query")
-				else if (url.searchParams.has("pb"))
-					try {
-						query = url.searchParams.get("pb").split(/!2s(.*?)!/)[1]
-					} catch (error) {
-						console.error(error)
-					} // Unable to find map marker in URL.
-
-				return `${randomInstance}/#q=${query}`
-			} else if (url.pathname.includes("/dir")) {
-				// Handle Google Maps Directions
-				// https://www.google.com/maps/dir/?api=1&origin=Space+Needle+Seattle+WA&destination=Pike+Place+Market+Seattle+WA&travelmode=bicycling
-
-				let travMod = url.searchParams.get("travelmode")
-
-				let orgVal = url.searchParams.get("origin")
-				let destVal = url.searchParams.get("destination")
-
-				return `${randomInstance}/#q=${orgVal}%20to%20${destVal}%20by%20${travelModes[travMod]}`
-			} else if (url.pathname.includes("data=") && url.pathname.match(dataLatLngRegex)) {
-				// Get marker from data attribute
-				// https://www.google.com/maps/place/41%C2%B001'58.2%22N+40%C2%B029'18.2%22E/@41.032833,40.4862063,17z/data=!3m1!4b1!4m6!3m5!1s0x0:0xf64286eaf72fc49d!7e2!8m2!3d41.0328329!4d40.4883948
-				let [, mlat, mlon] = url.pathname.match(dataLatLngRegex)
-				return `${randomInstance}/#q=${mlat}%2C${mlon}`
-			} else if (url.searchParams.has("ll")) {
-				// Get marker from ll param
-				// https://maps.google.com/?ll=38.882147,-76.99017
-				const [mlat, mlon] = url.searchParams.get("ll").split(",")
-				return `${randomInstance}/#q=${mlat}%2C${mlon}`
-			} else if (url.searchParams.has("viewpoint")) {
-				// Get marker from viewpoint param
-				// https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=48.857832,2.295226&heading=-45&pitch=38&fov=80
-				const [mlat, mlon] = url.searchParams.get("viewpoint").split(",")
-
-				return `${randomInstance}/#q=${mlat}%2C${mlon}`
-			} else {
-				// Use query as search if present.
-				let query
-				if (url.searchParams.has("q")) query = url.searchParams.get("q")
-				else if (url.searchParams.has("query")) query = url.searchParams.get("query")
-				else if (url.pathname.match(placeRegex)) query = url.pathname.match(placeRegex)[1]
-				if (query) return `${randomInstance}/${mapCentre}/Mpnk/${query}`
-			}
 		}
 		case "breezeWiki": {
 			let wiki, urlpath = ""

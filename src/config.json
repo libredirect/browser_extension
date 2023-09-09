@@ -136,7 +136,7 @@
 					"localhost": true
 				}
 			},
-			"targets": [	
+			"targets": [
 				"^https?:\\/{2}(www\\.|mobile\\.)?twitter\\.com\\/",
 				"^https?:\\/{2}(www\\.|mobile\\.)?x\\.com\\/",
 				"^https?:\\/{2}(pbs\\.|video\\.)twimg\\.com\\/",
@@ -166,7 +166,7 @@
 					"localhost": false
 				}
 			},
-			"targets": [	
+			"targets": [
 				"^https?:\\/{2}(www\\.)?twitch\\.(tv|com)\\/"
 			],
 			"name": "Twitch",
@@ -487,12 +487,6 @@
 		},
 		"maps": {
 			"frontends": {
-				"facil": {
-					"name": "FacilMap",
-					"embeddable": true,
-					"instanceList": true,
-					"url": "https://github.com/FacilMap/facilmap"
-				},
 				"osm": {
 					"name": "OpenStreetMap",
 					"instanceList": true,
