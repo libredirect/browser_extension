@@ -489,12 +489,14 @@
 			"frontends": {
 				"facil": {
 					"name": "FacilMap",
+					"embeddable": true,
 					"instanceList": true,
 					"url": "https://github.com/FacilMap/facilmap"
 				},
 				"osm": {
 					"name": "OpenStreetMap",
 					"instanceList": true,
+					"embeddable": true,
 					"url": "https://www.openstreetmap.org/"
 				}
 			},
@@ -504,6 +506,7 @@
 			],
 			"name": "Maps",
 			"options": {
+				"redirectType": "main_frame",
 				"enabled": false,
 				"frontend": "osm",
 				"unsupportedUrls": "bypass"
