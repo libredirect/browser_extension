@@ -772,6 +772,7 @@ async function copyRaw(url, test) {
 }
 
 function isException(url) {
+	if (!options.exceptions) return false
 	let exceptions = options.exceptions
 	if (exceptions && url) {
 		if (exceptions.url) {
