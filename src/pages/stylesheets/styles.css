@@ -3,10 +3,7 @@ body {
 	--bg-main: #121212;
 	--bg-secondary: #202020;
 	--active: #fbc117;
-	--space: 5px;
 	--danger: #f04141;
-	--danger-light: #f9d0d5;
-	--dark-grey: #767676;
 	--light-grey: #c3c3c3;
 }
 
@@ -33,12 +30,19 @@ body {
 	color: var(--text);
 }
 
-body.rtl {
-	font-family: "Vazirmatn";
-	/* line-height: 1; */
+body * {
+	font-family: "Inter";
 }
 
-div.some-block input[type="checkbox"] {
+body.rtl {
+	font-family: "Vazirmatn";
+}
+
+body.rtl * {
+	font-family: "Vazirmatn";
+}
+
+div.block input[type="checkbox"] {
 	appearance: none;
 	-moz-appearance: none;
 	-webkit-appearance: none;
@@ -100,7 +104,6 @@ input[type="text"] {
 
 input:invalid {
 	color: var(--danger);
-	border-color: var(--danger);
 }
 
 .button svg {
@@ -108,12 +111,12 @@ input:invalid {
 	width: 18px;
 }
 
-section.option-block {
+section.block-option {
 	width: 750px;
 	margin: 0 50px;
 }
 
-section.option-block h2 {
+section.block-option h2 {
 	margin: 0;
 }
 
@@ -128,7 +131,7 @@ section.links {
 	flex-wrap: wrap;
 	flex-direction: column;
 	width: 300px;
-	max-height: 880px;
+	max-height: 800px;
 }
 
 section.links div {
@@ -169,9 +172,6 @@ section.links .selected a {
 	opacity: 0.7;
 }
 
-
-/* \25BE */
-
 hr {
 	height: 2px;
 	margin: 0 15px;
@@ -179,7 +179,7 @@ hr {
 	border: none;
 }
 
-div.some-block {
+div.block {
 	padding: 0 15px;
 	justify-content: space-between;
 	display: flex;
@@ -188,37 +188,28 @@ div.some-block {
 	margin-bottom: 10px;
 }
 
-div.option-block {
+div.block-option {
 	margin: 30px 0;
 }
 
-h4 {
-	margin: 10px 0;
-	font-size: 18px;
-}
-
-div.some-block h4 {
-	margin: 0;
-}
-
-div.option-block h4 {
+div.block-option label {
 	margin-right: 5px;
 	width: 80%;
 	min-width: 150px;
 	font-size: 18px;
 }
 
-div.option-block h1 {
+div.block-option h1 {
 	margin: 0;
 	font-size: 28px;
 	color: var(--text);
 }
 
-div.option-block div {
+div.block-option div {
 	text-align: center;
 }
 
-div.some-block input[type="checkbox"] {
+div.block input[type="checkbox"] {
 	width: 46px;
 	height: 24px;
 	background-color: var(--light-grey);
@@ -227,11 +218,11 @@ div.some-block input[type="checkbox"] {
 	cursor: pointer;
 }
 
-div.some-block input[type="checkbox"]:checked {
+div.block input[type="checkbox"]:checked {
 	background-color: var(--active);
 }
 
-div.some-block input[type="checkbox"]::before {
+div.block input[type="checkbox"]::before {
 	content: "";
 	display: inline-block;
 	width: 18px;
@@ -245,16 +236,16 @@ div.some-block input[type="checkbox"]::before {
 	transition: 0.3s;
 }
 
-body.rtl div.some-block input[type="checkbox"]::before {
+body.rtl div.block input[type="checkbox"]::before {
 	left: auto;
 	right: 4px;
 }
 
-div.some-block input[type="checkbox"]:checked::before {
+div.block input[type="checkbox"]:checked::before {
 	left: 24px;
 }
 
-body.rtl div.some-block input[type="checkbox"]:checked::before {
+body.rtl div.block input[type="checkbox"]:checked::before {
 	left: auto;
 	right: 24px;
 }
@@ -266,15 +257,7 @@ div.buttons {
 	margin-top: 15px;
 	flex-wrap: wrap;
 	align-items: center;
-}
-
-div.buttons-popup {
-	border-radius: 5px;
-	display: flex;
-	flex-wrap: wrap;
-	margin: 0 10px 7px 10px;
 	justify-content: start;
-	align-items: center;
 }
 
 .button {
@@ -301,12 +284,6 @@ div.buttons-popup {
 	color: var(--active);
 }
 
-div.buttons-inline {
-	display: flex;
-	justify-content: start;
-	/* padding: 0 15px; */
-}
-
 .button-inline {
 	display: inline-flex;
 	align-items: center;
@@ -318,22 +295,6 @@ div.buttons-inline {
 
 .button:active {
 	transform: translateY(1px);
-}
-
-button.default {
-	margin-left: 30px;
-	background-color: transparent;
-	border: none;
-	color: white;
-	padding: 5px;
-	width: 34px;
-	height: 34px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	margin: 4px 2px;
-	cursor: pointer;
 }
 
 button svg {
@@ -357,19 +318,6 @@ div.checklist a:hover {
 	text-decoration: underline;
 }
 
-div.checklist-popup div {
-	justify-content: space-between;
-	margin: 5px 15px;
-	padding: 5px 0;
-	max-width: 200px;
-	display: flex;
-	align-items: center;
-}
-
-div.checklist-popup div div {
-	margin: 0;
-}
-
 div.custom-checklist x a {
 	color: var(--active);
 }
@@ -384,20 +332,6 @@ button.add {
 	cursor: pointer;
 }
 
-div.disabled {
-	background-color: rgb(39, 39, 39);
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
-
-.light-theme.popup,
-.light-theme .popup {
-	background-color: var(--bg-secondary);
-}
-
 body.light-theme {
 	--text: black;
 	--bg-main: white;
@@ -409,15 +343,6 @@ body.light-theme select {
 	border: 1px solid black;
 }
 
-body.light-theme textarea {
-	color: black;
-	border: 1px solid #767676;
-}
-
-body.light-theme textarea:focus {
-	outline: none;
-}
-
 body.light-theme a {
 	color: black;
 }
@@ -426,27 +351,10 @@ body.light-theme a:hover {
 	color: var(--active)
 }
 
-section.general {
-	display: flex;
-	flex-wrap: wrap;
-	margin-right: 0;
-	width: 100%;
-	justify-content: space-between;
-}
-
-section.general div {
-	margin-right: 20px;
-}
-
-#customize-popup {
-	width: 250px;
-}
-
 button {
 	background-color: transparent;
 	color: var(--text);
 	border: none;
-	padding: 10px 5px;
 	text-decoration: none;
 	display: inline-block;
 	cursor: pointer;
@@ -455,15 +363,6 @@ button {
 
 body div section {
 	display: none;
-}
-
-div.about>div {
-	justify-content: start;
-	width: 520px;
-}
-
-div.about h4 {
-	width: auto;
 }
 
 select:disabled {
@@ -476,10 +375,6 @@ input:disabled {
 	cursor: not-allowed;
 }
 
-div.about a {
-	width: 500px;
-	display: inline-block;
-}
 
 @media (max-width: 1250px) {
 	body.option {

@@ -1,10 +1,10 @@
 each _, service in services    
-    div(class=service + " some-block hide")
+    div(class=`${service} block hide`)
         a(class="title" href=services[service].url)
             if services[service].imageType == 'svgMono'
                 img(class='dark' src=`/assets/images/${service}-icon.svg`)
                 img(class='light' src=`/assets/images/${service}-icon-light.svg`)
             else
                 img(src=`/assets/images/${service}-icon.${services[service].imageType}`)
-            h4=services[service].name
-        input(class=service + "-enabled" type="checkbox" aria-label=`${services[service].name} toggle`)
+            label=services[service].name
+        input(class=`${service}-enabled` type="checkbox" aria-label=`${services[service].name} toggle`)

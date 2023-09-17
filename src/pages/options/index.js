@@ -249,7 +249,7 @@ async function createList(frontend, networks, document, redirects, blacklist) {
 			.getElementsByClassName("checklist")[0]
 
 		if (!redirects[frontend]) {
-			checklist.innerHTML = '<div class="some-block option-block">No instances found.</div>'
+			checklist.innerHTML = '<div class="block block-option">No instances found.</div>'
 			break
 		}
 
@@ -287,8 +287,8 @@ async function createList(frontend, networks, document, redirects, blacklist) {
 			})
 
 		checklist.innerHTML = [
-			`<div class="some-block option-block">
-                <h4>${utils.camelCase(network)}</h4>
+			`<div class="block block-option">
+                <label>${utils.camelCase(network)}</label>
             </div>`,
 			...content,
 			"<br>"
