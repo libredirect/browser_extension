@@ -32,6 +32,14 @@ function getOptions() {
 	)
 }
 
+function getPingCache() {
+	return new Promise(resolve =>
+		browser.storage.local.get("pingCache", r => {
+			resolve(r.pingCache ?? {})
+		})
+	)
+}
+
 function getBlacklist(options) {
 	return new Promise(resolve => {
 		let url
@@ -148,5 +156,6 @@ export default {
 	camelCase,
 	getConfig,
 	getOptions,
+	getPingCache,
 	ping,
 }

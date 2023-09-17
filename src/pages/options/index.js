@@ -182,21 +182,30 @@ async function loadPage(path) {
 async function calcCustomInstances(frontend) {
 	let options = await utils.getOptions()
 	let customInstances = options[frontend]
+	const pingCache = await utils.getPingCache()
+
 	document.getElementById(frontend).getElementsByClassName("custom-checklist")[0].innerHTML = customInstances
 		.map(
-			x => `
-			<div>
-				<x>
-					<a href="${x}" target="_blank">${x}</a>
-				</x>
-				<button class="add clear-${x}">
-					<svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
-						<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
-					</svg>
-				</button>
-			</div>
-			<hr>`
-		)
+			x => {
+				let time = pingCache[x]
+				let timeText = ""
+				if (time) {
+					const { color, text } = processTime(time)
+					timeText = `<span class="ping" style="color:${color};">${text}</span>`
+				}
+				return `<div>
+							<x>
+								<a href="${x}" target="_blank">${x}</a>
+								${timeText}
+							</x>
+							<button class="add clear-${x}">
+								<svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
+									<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+								</svg>
+							</button>
+						</div>
+						<hr>`
+			})
 		.join("\n")
 	for (const item of customInstances) {
 		document.getElementById(frontend).getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
@@ -243,6 +252,8 @@ async function processCustomInstances(frontend, document) {
 }
 
 async function createList(frontend, networks, document, redirects, blacklist) {
+	const pingCache = await utils.getPingCache()
+	const options = await utils.getOptions()
 	for (const network in networks) {
 		const checklist = document.getElementById(frontend)
 			.getElementsByClassName(network)[0]
@@ -261,7 +272,6 @@ async function createList(frontend, networks, document, redirects, blacklist) {
 			.placeholder = redirects[frontend].clearnet[0]
 
 		const sortedInstances = instances.sort((a, b) => blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
-		const options = await utils.getOptions()
 
 		const content = sortedInstances
 			.map(x => {
@@ -270,9 +280,16 @@ async function createList(frontend, networks, document, redirects, blacklist) {
                         <span style="color:red;">cloudflare</span>
                     </a>` : ""
 
+				let time = pingCache[x]
+				let timeText = ""
+				if (time) {
+					const { color, text } = processTime(time)
+					timeText = `<span class="ping" style="color:${color};">${text}</span>`
+				}
+
 				const chosen = options[frontend].includes(x) ? `<span style="color:grey;">chosen</span>` : ""
 
-				const warnings = [cloudflare, chosen].join(" ")
+				const warnings = [cloudflare, timeText, chosen].join(" ")
 				return `<div class="frontend">
                             <x>
                                 <a href="${x}" target="_blank">${x}</a>
@@ -320,6 +337,7 @@ async function ping(frontend) {
 		...document.getElementById(frontend).getElementsByClassName('clearnet')[0].getElementsByTagName('x')
 	]
 
+	let pingCache = await utils.getPingCache()
 	for (const element of instanceElements) {
 		let span = element.getElementsByClassName('ping')[0]
 		if (!span) span = document.createElement('span')
@@ -328,25 +346,32 @@ async function ping(frontend) {
 		element.appendChild(span)
 
 		const href = element.getElementsByTagName('a')[0].href
-		let time = await utils.ping(href)
-
-		let color
-		let text
-
-		if (time < 5000) {
-			text = `${time}ms`
-			if (time <= 1000) color = "green"
-			else if (time <= 2000) color = "orange"
-		}
-		else if (time >= 5000) {
-			color = "red"
-			if (time == 5000) text = "5000ms+"
-			if (time > 5000) text = `Error: ${time - 5000}`
-		}
-		else {
-			color = "red"
-			text = 'Server not found'
-		}
+		const time = await utils.ping(href)
+		const { color, text } = processTime(time)
 		span.innerHTML = `<span style="color:${color};">${text}</span>`
+		pingCache[element.getElementsByTagName('a')[0].innerHTML] = time
+		browser.storage.local.set({ pingCache })
+	}
+}
+
+function processTime(time) {
+	let text
+	let color
+	if (time < 5000) {
+		text = `${time}ms`
+		if (time <= 1000) color = "green"
+		else if (time <= 2000) color = "orange"
+	}
+	else if (time >= 5000) {
+		color = "red"
+		if (time == 5000) text = "5000ms+"
+		if (time > 5000) text = `Error: ${time - 5000}`
+	}
+	else {
+		color = "red"
+		text = 'Server not found'
+	}
+	return {
+		color, text
 	}
 }
