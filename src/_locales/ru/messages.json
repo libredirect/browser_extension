@@ -40,11 +40,11 @@
         "description": "used in the settings page"
     },
     "importSettings": {
-        "message": "Импорт настроек",
+        "message": "Импортировать настройки",
         "description": "used in the settings page"
     },
     "exportSettings": {
-        "message": "Экспорт настроек",
+        "message": "Экспортировать настройки",
         "description": "used in the settings page"
     },
     "resetSettings": {
