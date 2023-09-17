@@ -517,6 +517,24 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
+		case "tuboYoutube": {
+			if (url.pathname.startsWith("/channel")) {
+				return `${randomInstance}/channel?url=${encodeURIComponent(url.href)}`
+			}
+			if (url.pathname.startsWith("/watch")) {
+				return `${randomInstance}/stream?url=${encodeURIComponent(url.href)}`
+			}
+			return `${randomInstance}`
+		}
+		case "tuboSoundcloud": {
+			if (url.pathname.match(/\/user[^\/]+(\/$|$)/)) {
+				return `${randomInstance}/channel?url=${encodeURIComponent(url.href)}`
+			}
+			if (url.pathname.match(/\/user[^\/]+\/[^\/]+/)) {
+				return `${randomInstance}/stream?url=${encodeURIComponent(url.href)}`
+			}
+			return `${randomInstance}`
+		}
 		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
@@ -670,7 +688,9 @@ const defaultInstances = {
 	'destructables': ['https://ds.vern.cc'],
 	'wtfismyip': ['https://myip.wtf'],
 	'safetwitch': ['https://safetwitch.drgns.space'],
-	'proxigram': ['https://proxigram.privacyfrontends.repl.co']
+	'proxigram': ['https://proxigram.privacyfrontends.repl.co'],
+	'tuboYoutube': ['https://tubo.migalmoreno.com'],
+	'tuboSoundcloud': ['https://tubo.migalmoreno.com'],
 }
 
 function initDefaults() {

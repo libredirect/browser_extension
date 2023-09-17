@@ -60,7 +60,21 @@
 					"name": "CloudTube",
 					"embeddable": false,
 					"instanceList": true,
-					"url": "https://sr.ht/~cadence/tube/"
+					"url": "https://sr.ht/~cadence/tube",
+					"excludeTargets": [
+						2,
+						3
+					]
+				},
+				"tuboYoutube": {
+					"name": "Tubo",
+					"embeddable": false,
+					"instanceList": true,
+					"url": "https://github.com/migalmoreno/tubo",
+					"excludeTargets": [
+						2,
+						3
+					]
 				},
 				"freetube": {
 					"excludeTargets": [
@@ -213,7 +227,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.)?instagram\\.com\\/?"
+				"^https?:\\/{2}(www\\.)?instagram\\.com"
 			],
 			"name": "Instagram",
 			"options": {
@@ -298,6 +312,29 @@
 			},
 			"imageType": "svg",
 			"url": "https://www.pixiv.net"
+		},
+		"soundcloud": {
+			"frontends": {
+				"tuboSoundcloud": {
+					"name": "Tubo",
+					"embeddable": false,
+					"instanceList": true,
+					"url": "https://github.com/migalmoreno/tubo"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}soundcloud\\.com"
+			],
+			"name": "SoundCloud",
+			"options": {
+				"enabled": false,
+				"redirectType": "main_frame",
+				"frontend": "tuboSoundcloud",
+				"unsupportedUrls": "bypass"
+			},
+			"imageType": "svg",
+			"embeddable": false,
+			"url": "https://soundcloud.com"
 		},
 		"medium": {
 			"frontends": {
