@@ -174,7 +174,7 @@
 			"frontends": {
 				"safetwitch": {
 					"name": "SafeTwitch",
-					"embeddable": false,
+					"embeddable": true,
 					"instanceList": true,
 					"url": "https://codeberg.org/dragongoose/safetwitch",
 					"localhost": false
@@ -192,7 +192,7 @@
 				"instance": "public"
 			},
 			"imageType": "svg",
-			"embeddable": false,
+			"embeddable": true,
 			"url": "https://twitch.tv"
 		},
 		"tiktok": {
