@@ -5,14 +5,14 @@ section(class="option-block" id="general_page")
 
     div(class="some-block option-block")
         h4(data-localise="__MSG_theme__") Theme
-        select#theme
+        select(id="theme" aria-label="select theme")
             option(value="detect" data-localise="__MSG_auto__") Auto
             option(value="light" data-localise="__MSG_light__") Light
             option(value="dark" data-localise="__MSG_dark__") Dark
 
     div(class="some-block option-block")
         h4(data-localise="__MSG_fetchPublicInstances__") Fetch public instances
-        select(id="fetch-instances")
+        select(id="fetch-instances" aria-label="Select fetch public instances")
             option(value="github") GitHub
             option(value="codeberg") Codeberg
             option(value="disable" data-localise="__MSG_disable__") Disable
@@ -23,13 +23,13 @@ section(class="option-block" id="general_page")
     form(id="custom-exceptions-instance-form")
         div(class="some-block option-block")
             div(class="some-block" style="padding: 0")
-                input(id="exceptions-custom-instance" placeholder="https://www.google.com" type="url")
+                input(id="exceptions-custom-instance" placeholder="https://www.google.com" type="url" aria-label="Add url exception input")
                 |&nbsp;
                 select(id="exceptions-custom-instance-type")
                     option(value="url") URL
                     option(value="regex") Regex
                 |&nbsp;
-            button(class="add" id="exceptions-add-instance" type="submit")
+            button(class="add" id="exceptions-add-instance" type="submit" aria-label="Add the url exception")
                 svg(xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor")
                     path(d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z")
 

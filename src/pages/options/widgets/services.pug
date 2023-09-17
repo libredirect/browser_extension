@@ -8,35 +8,35 @@ each val, service in services
 
         div(class="some-block option-block")
             h4(data-localise="__MSG_enable__") Enable
-            input(id=`${service}-enabled` type="checkbox")
+            input(id=`${service}-enabled` type="checkbox" aria-label="Enable checkbox")
 
         div(class="some-block option-block")
             h4(data-localise="__MSG_showInPopup__") Show in popup
-            input(id=service type="checkbox")
+            input(id=service type="checkbox" aria-label="Show in popup toggle")
 
         div(id=service+"-opacity")
 
             div(class="some-block option-block")
                 h4
                     a(class="frontend_name" target="_blank" data-localise="__MSG_frontend__") Frontend
-                select(id=service+"-frontend")
+                select(id=service+"-frontend" aria-label="Select frontend")
                     each val, frontend in services[service].frontends
                         option(value=frontend)=services[service].frontends[frontend].name
 
             div(class="some-block option-block" id=service+"-instance-div")
-                h4() Instance
-                select(id=service+"-instance")
+                h4 Instance Type
+                select(id=service+"-instance" aria-label="Select Instance type")
                     option(value="localhost") localhost
                     option(value="public") public instances
 
             div(class="some-block option-block")
                 h4(data-localise="__MSG_redirectType__") Redirect Type
-                select(id=service+"-redirectType")
+                select(id=service+"-redirectType" aria-label="Select redirect type")
 
             
             div(id=service+"-embedFrontend-div"  class="some-block option-block")
                 h4(data-localise="__MSG_embedFrontend__") Embed Frontend
-                select(id=service+"-embedFrontend")
+                select(id=service+"-embedFrontend" aria-label="Select embed frontend")
                     each val, frontend in services[service].frontends
                         if services[service].frontends[frontend].embeddable && services[service].frontends[frontend].instanceList
                             option(value=frontend)=services[service].frontends[frontend].name
@@ -44,7 +44,7 @@ each val, service in services
 
             div(class="some-block option-block")
                 h4(data-localise="__MSG_unsupportedIframesHandling__") Unsupported iframes handling
-                select(id=service+"-unsupportedUrls")
+                select(id=service+"-unsupportedUrls" aria-label="Select Unsupported iframes handling")
                     option(value="bypass") bypass
                     option(value="block") block
 
@@ -62,8 +62,8 @@ each val, service in services
 
                         form(class="custom-instance-form")
                             div(class="some-block option-block")
-                                input(class="custom-instance" type="url" placeholder="https://instance.com")
-                                button(class="add add-instance" type="submit")
+                                input(class="custom-instance" type="url" placeholder="https://instance.com" aria-label="Add instance input")
+                                button(class="add add-instance" type="submit" aria-label="Add the instance")
                                     svg(xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor")
                                         path(d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z")
 

@@ -7,4 +7,4 @@ each _, service in services
             else
                 img(src=`/assets/images/${service}-icon.${services[service].imageType}`)
             h4=services[service].name
-        input(class=service + "-enabled" type="checkbox")
+        input(class=service + "-enabled" type="checkbox" aria-label=`${services[service].name} toggle`)
