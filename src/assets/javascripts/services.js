@@ -565,28 +565,31 @@ function computeService(url, returnFrontend) {
 	})
 }
 
-function switchInstance(url) {
+function switchInstance(url, customService) {
 	return new Promise(async resolve => {
 		let options = await utils.getOptions()
 		let config = await utils.getConfig()
 
 		const protocolHost = utils.protocolHost(url)
-		for (const service in config.services) {
-			let frontend = options[service].frontend
-			let instancesList = options[frontend]
-			if (instancesList === undefined) continue
-			if (!instancesList.includes(protocolHost)) continue
+		if (customService) {
+			const instancesList = options[options[customService].frontend]
+			if (instancesList !== undefined) {
+				resolve(`${utils.getRandomInstance(instancesList)}${url.pathname}${url.search}`)
+			}
+		} else {
+			for (const service in config.services) {
+				let instancesList = options[options[service].frontend]
+				if (instancesList === undefined) continue
+				if (!instancesList.includes(protocolHost)) continue
 
-			instancesList.splice(instancesList.indexOf(protocolHost), 1)
-			if (instancesList.length === 0) {
-				resolve()
+				instancesList.splice(instancesList.indexOf(protocolHost), 1)
+				if (instancesList.length === 0) {
+					resolve()
+					return
+				}
+				resolve(`${utils.getRandomInstance(instancesList)}${url.pathname}${url.search}`)
 				return
 			}
-
-			const randomInstance = utils.getRandomInstance(instancesList)
-			const newUrl = `${randomInstance}${url.pathname}${url.search}`
-			resolve(newUrl)
-			return
 		}
 		resolve()
 	})
