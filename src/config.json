@@ -567,48 +567,6 @@
 			"imageType": "svgMono",
 			"url": "https://maps.libredirect.invalid"
 		},
-		"sendFiles": {
-			"frontends": {
-				"send": {
-					"name": "Send",
-					"instanceList": true,
-					"url": "https://gitlab.com/timvisee/send"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}send\\.libredirect\\.invalid",
-				"^https?:\\/{2}send\\.firefox\\.com\\/?$",
-				"^https?:\\/{2}sendfiles\\.online\\/?$"
-			],
-			"name": "Send Files",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "send"
-			},
-			"imageType": "svgMono",
-			"url": "https://send.libredirect.invalid"
-		},
-		"textStorage": {
-			"frontends": {
-				"privateBin": {
-					"name": "PrivateBin",
-					"instanceList": true,
-					"url": "https://privatebin.info"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}paste\\.libredirect\\.invalid"
-			],
-			"name": "Paste Text",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "privateBin"
-			},
-			"imageType": "svgMono",
-			"url": "https://paste.libredirect.invalid"
-		},
 		"reuters": {
 			"frontends": {
 				"neuters": {
@@ -867,28 +825,6 @@
 			"imageType": "svg",
 			"url": "https://gitlab.com/"
 		},
-		"speedTest": {
-			"frontends": {
-				"libreSpeed": {
-					"name": "LibreSpeed",
-					"instanceList": true,
-					"url": "https://github.com/librespeed/speedtest"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}speedtest\\.libredirect\\.invalid\\/",
-				"^https?:\\/{2}(www\\.)?fast\\.com\\/$",
-				"^https?:\\/{2}(www\\.)?speedtest\\.net\\/$"
-			],
-			"name": "Speed Test",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "libreSpeed"
-			},
-			"imageType": "svgMono",
-			"url": "https://speedtest.libredirect.invalid"
-		},
 		"instructables": {
 			"name": "Instructables",
 			"frontends": {
@@ -913,46 +849,6 @@
 			},
 			"imageType": "svg",
 			"url": "https://www.instructables.com"
-		},
-		"meet": {
-			"name": "Meet",
-			"frontends": {
-				"jitsi": {
-					"name": "Jitsi",
-					"instanceList": true,
-					"url": "https://jitsi.org"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}meet\\.libredirect\\.invalid\\/"
-			],
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "jitsi"
-			},
-			"imageType": "svgMono",
-			"url": "https://meet.libredirect.invalid"
-		},
-		"myIp": {
-			"frontends": {
-				"wtfismyip": {
-					"name": "wtfismyip",
-					"instanceList": true,
-					"url": "https://gitlab.com/wtfismyip/wtfismyip"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}myip\\.libredirect\\.invalid\\/"
-			],
-			"name": "My IP",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "wtfismyip"
-			},
-			"imageType": "svgMono",
-			"url": "https://myip.libredirect.invalid"
 		},
 		"wolframAlpha": {
 			"frontends": {
