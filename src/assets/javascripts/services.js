@@ -669,7 +669,8 @@ const defaultInstances = {
 	'indestructables': ['https://indestructables.private.coffee'],
 	'destructables': ['https://ds.vern.cc'],
 	'wtfismyip': ['https://myip.wtf'],
-	'safetwitch': ['https://safetwitch.drgns.space']
+	'safetwitch': ['https://safetwitch.drgns.space'],
+	'proxigram': ['https://proxigram.privacyfrontends.repl.co']
 }
 
 function initDefaults() {

@@ -203,6 +203,28 @@
 			"imageType": "png",
 			"url": "https://tiktok.com"
 		},
+		"instagram": {
+			"frontends": {
+				"proxigram": {
+					"name": "Proxigram",
+					"instanceList": true,
+					"url": "https://codeberg.org/ThePenguinDev/Proxigram",
+					"localhost": false
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?instagram\\.com\\/?"
+			],
+			"name": "Instagram",
+			"options": {
+				"enabled": false,
+				"frontend": "proxigram",
+				"unsupportedUrls": "bypass",
+				"instance": "public"
+			},
+			"imageType": "png",
+			"url": "https://www.instagram.com"
+		},
 		"reddit": {
 			"frontends": {
 				"libreddit": {
