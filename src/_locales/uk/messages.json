@@ -99,5 +99,14 @@
     },
     "about": {
         "message": "Про застосунок"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Непідтримувана обробка iframes"
+    },
+    "fetchPublicInstances": {
+        "message": "Отримати загальнодоступні сервери"
+    },
+    "disable": {
+        "message": "Вимкнути"
     }
 }
