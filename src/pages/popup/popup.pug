@@ -17,31 +17,31 @@ html(lang="en")
         hr
 
         div(class="block" id="change_instance_div" style="display: none")
-            button(class="title button prevent" id="change_instance")
+            button(class="title button bottom-button" id="change_instance")
                 label(data-localise="__MSG_switchInstance__") Switch Instance
                 svg(xmlns="http://www.w3.org/2000/svg" height="26px" width="26px" fill="currentColor")
                     path(d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z")
 
         div(class="block" id="copy_original_div" title="Copy the original redirected link" style="display: none")
-            button(class="title button prevent" id="copy_original")
-                label() Copy Origin
+            button(class="title button bottom-button" id="copy_original")
+                label() Copy Original
                 svg(xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="currentColor")
                     path(d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z")
 
         div(class="block" id="redirect_div" style="display: none")
-            button(class="title button prevent" id="redirect")
+            button(class="title button bottom-button" id="redirect")
                 label Redirect
                 svg(xmlns="http://www.w3.org/2000/svg" height="24" width="24" fill="currentColor")
                     path(d="M7 20v-9q0-.825.588-1.413Q8.175 9 9 9h8.2l-1.6-1.6L17 6l4 4-4 4-1.4-1.4 1.6-1.6H9v9Z")
 
         div(class="block" id="redirect_to_original_div" style="display: none")
-            button(class="title button prevent" id="redirect_to_original")
-                label Redirect To Origin
+            button(class="title button bottom-button" id="redirect_to_original")
+                label Redirect To Original
                 svg(xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="currentColor")
                     path(d="M 17,20 V 11 Q 17,10.175 16.412,9.587 15.825,9 15,9 H 6.8 L 8.4,7.4 7,6 3,10 7,14 8.4,12.6 6.8,11 H 15 v 9 z" id="path2")
 
         div(class="block")
-            button(class="title button prevent" id="more-options")
+            button(class="title button bottom-button" id="more-options")
                 label(data-localise="__MSG_settings__") Settings
                 svg(xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="26px" width="26px" fill="currentColor")
                     path(d="m9.25 22-.4-3.2q-.325-.125-.612-.3-.288-.175-.563-.375L4.7 19.375l-2.75-4.75 2.575-1.95Q4.5 12.5 4.5 12.337v-.675q0-.162.025-.337L1.95 9.375l2.75-4.75 2.975 1.25q.275-.2.575-.375.3-.175.6-.3l.4-3.2h5.5l.4 3.2q.325.125.613.3.287.175.562.375l2.975-1.25 2.75 4.75-2.575 1.95q.025.175.025.337v.675q0 .163-.05.338l2.575 1.95-2.75 4.75-2.95-1.25q-.275.2-.575.375-.3.175-.6.3l-.4 3.2Zm2.8-6.5q1.45 0 2.475-1.025Q15.55 13.45 15.55 12q0-1.45-1.025-2.475Q13.5 8.5 12.05 8.5q-1.475 0-2.488 1.025Q8.55 10.55 8.55 12q0 1.45 1.012 2.475Q10.575 15.5 12.05 15.5Z")

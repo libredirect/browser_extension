@@ -19,18 +19,36 @@ for (const service in config.services) {
 	divs[service].all = allSites.getElementsByClassName(service)[0]
 	divs[service].current = currSite.getElementsByClassName(service)[0]
 
-	divs[service].all_toggle = allSites.getElementsByClassName(service + "-enabled")[0]
-	divs[service].current_toggle = currSite.getElementsByClassName(service + "-enabled")[0]
-
+	divs[service].all_toggle = allSites.getElementsByClassName(`${service}-enabled`)[0]
 	divs[service].all_toggle.addEventListener("change", async () => {
 		const options = await utils.getOptions()
 		options[service].enabled = divs[service].all_toggle.checked
 		browser.storage.local.set({ options })
 	})
+
+	allSites.getElementsByClassName(`${service}-change_instance`)[0].addEventListener("click", () => {
+		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+			if (tabs[0].url) {
+				const url = new URL(tabs[0].url)
+				browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) })
+			}
+		})
+	})
+
+	divs[service].current_toggle = currSite.getElementsByClassName(`${service}-enabled`)[0]
 	divs[service].current_toggle.addEventListener("change", async () => {
 		const options = await utils.getOptions()
 		options[service].enabled = divs[service].current_toggle.checked
 		browser.storage.local.set({ options })
+	})
+
+	currSite.getElementsByClassName(`${service}-change_instance`)[0].addEventListener("click", () => {
+		browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
+			if (tabs[0].url) {
+				const url = new URL(tabs[0].url)
+				browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) })
+			}
+		})
 	})
 }
 
@@ -93,12 +111,3 @@ browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 		}
 	}
 })
-
-for (const a of document.getElementsByTagName("a")) {
-	a.addEventListener("click", e => {
-		if (!a.classList.contains("prevent")) {
-			browser.tabs.create({ url: a.getAttribute("href") })
-			e.preventDefault()
-		}
-	})
-}

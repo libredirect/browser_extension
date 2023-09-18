@@ -601,7 +601,6 @@ async function reverse(url) {
 	let protocolHost = utils.protocolHost(url)
 	for (const service in config.services) {
 		let frontend = options[service].frontend
-		console.log(protocolHost)
 		if (options[frontend] == undefined) continue
 		if (!options[frontend].includes(protocolHost) && protocolHost != `http://${frontend}.localhost:8080`) continue
 		switch (service) {

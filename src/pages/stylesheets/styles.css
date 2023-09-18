@@ -123,14 +123,14 @@ section.block-option h2 {
 body.option {
 	display: flex;
 	padding: 40px;
-	width: 1150px;
+	width: 1160px;
 }
 
 section.links {
 	display: flex;
 	flex-wrap: wrap;
 	flex-direction: column;
-	width: 300px;
+	width: 350px;
 	max-height: 800px;
 }
 

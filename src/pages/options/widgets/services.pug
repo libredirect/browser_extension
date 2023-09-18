@@ -7,12 +7,12 @@ each val, service in services
         hr
 
         div(class="block block-option")
-            label(data-localise="__MSG_enable__") Enable
-            input(id=`${service}-enabled` type="checkbox" aria-label="Enable checkbox")
+            label(for=`${service}-enabled` data-localise="__MSG_enable__") Enable
+            input(id=`${service}-enabled` type="checkbox")
 
         div(class="block block-option")
             label(for=service data-localise="__MSG_showInPopup__") Show in popup
-            input(id=service type="checkbox" aria-label="Show in popup toggle")
+            input(id=service type="checkbox")
 
         div(id=service+"-opacity")
 
