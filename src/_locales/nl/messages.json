@@ -48,7 +48,7 @@
         "description": "used in the settings page"
     },
     "resetSettings": {
-        "message": "Instellingen herstarten",
+        "message": "Standaardwaarden",
         "description": "used in the settings page"
     },
     "enable": {
@@ -99,5 +99,14 @@
     },
     "about": {
         "message": "Over"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Niet-ondersteunde iframes-afhandeling"
+    },
+    "fetchPublicInstances": {
+        "message": "Openbare instanties ophalen"
+    },
+    "disable": {
+        "message": "Uitschakelen"
     }
 }
