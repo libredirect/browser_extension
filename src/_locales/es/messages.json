@@ -60,7 +60,7 @@
         "description": "used in the settings page"
     },
     "frontend": {
-        "message": "Frontend",
+        "message": "Interfaz",
         "description": "used in the settings page"
     },
     "redirectType": {
@@ -99,5 +99,14 @@
     },
     "about": {
         "message": "Acerca de"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Gestión de los iframes no compatibles"
+    },
+    "fetchPublicInstances": {
+        "message": "Recuperar las instancias públicas"
+    },
+    "disable": {
+        "message": "Desactivar"
     }
 }
