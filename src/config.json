@@ -518,12 +518,6 @@
 					"url": "https://git.sr.ht/~metalune/simplytranslate_web",
 					"localhost": true
 				},
-				"lingva": {
-					"name": "Lingva Translate",
-					"instanceList": true,
-					"url": "https://github.com/TheDavidDelta/lingva-translate",
-					"localhost": true
-				},
 				"libreTranslate": {
 					"name": "LibreTranslate",
 					"instanceList": true,

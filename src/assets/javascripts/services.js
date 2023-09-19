@@ -179,19 +179,6 @@ function redirect(url, type, initiator, forceRedirection) {
 				.replace("text", "q")
 			return `${randomInstance}/${search}`
 		}
-		case "lingva": {
-			let params_arr = url.search.split("&")
-			params_arr[0] = params_arr[0].substring(1)
-			let params = {}
-			for (let i = 0; i < params_arr.length; i++) {
-				let pair = params_arr[i].split("=")
-				params[pair[0]] = pair[1]
-			}
-			if (params.sl && params.tl && params.text) {
-				return `${randomInstance}/${params.sl}/${params.tl}/${params.text}`
-			}
-			return randomInstance
-		}
 		case "osm": {
 			const dataLatLngRegex = /!3d(-?[0-9]{1,}.[0-9]{1,})!4d(-?[0-9]{1,}.[0-9]{1,})/
 			const placeRegex = /\/place\/(.*)\//
@@ -659,7 +646,6 @@ const defaultInstances = {
 	'quetre': ['https://quetre.iket.me'],
 	'libremdb': ['https://libremdb.iket.me'],
 	'simplyTranslate': ['https://simplytranslate.org'],
-	'lingva': ['https://lingva.ml'],
 	'searxng': ['https://search.bus-hit.me'],
 	'4get': ['https://4get.ca'],
 	'rimgo': ['https://rimgo.vern.cc'],
