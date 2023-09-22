@@ -4,7 +4,7 @@
         "description": "name of the extension"
     },
     "extensionDescription": {
-        "message": "Браузерное расширение, которое перенаправляет известные сайты на иные интерфейсы и движки, обеспечивающие конфиденциальность",
+        "message": "Расширение для браузера, перенаправляющее популярные сайты на обеспечивающие конфиденциальность альтернативны",
         "description": "description of the extension"
     },
     "switchInstance": {
@@ -99,5 +99,14 @@
     },
     "about": {
         "message": "О расширении"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Обработка неподдерживаемых iframe"
+    },
+    "fetchPublicInstances": {
+        "message": "Получить общедоступные серверы"
+    },
+    "disable": {
+        "message": "Выключить"
     }
 }
