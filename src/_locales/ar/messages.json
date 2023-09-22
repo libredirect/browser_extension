@@ -101,5 +101,14 @@
     },
     "about": {
         "message": "عن"
+    },
+    "unsupportedIframesHandling": {
+        "message": "التعامل مع إطارات iframe غير المدعومة"
+    },
+    "fetchPublicInstances": {
+        "message": "جلب الخوادم العامة"
+    },
+    "disable": {
+        "message": "عطّل"
     }
 }
