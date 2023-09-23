@@ -99,5 +99,14 @@
     },
     "about": {
         "message": "O rozšíření"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Nepodporovaná manipulace s iframe"
+    },
+    "fetchPublicInstances": {
+        "message": "Načíst veřejné instance"
+    },
+    "disable": {
+        "message": "Zakázat"
     }
 }
