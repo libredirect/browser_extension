@@ -99,5 +99,14 @@
     },
     "about": {
         "message": "Hakkında"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Desteklenmeyen iframe kullanımı"
+    },
+    "fetchPublicInstances": {
+        "message": "Herkese açık örnekleri getir"
+    },
+    "disable": {
+        "message": "Devre dışı bırak"
     }
 }

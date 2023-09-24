@@ -99,5 +99,14 @@
     },
     "about": {
         "message": "Informacje"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Brak obsługi ramek iframe"
+    },
+    "fetchPublicInstances": {
+        "message": "Pobierz instancje publiczne"
+    },
+    "disable": {
+        "message": "Wyłącz"
     }
 }

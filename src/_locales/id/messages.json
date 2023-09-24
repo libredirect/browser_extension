@@ -99,5 +99,14 @@
     },
     "about": {
         "message": "Tentang"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Penanganan iframe tifak didukung"
+    },
+    "fetchPublicInstances": {
+        "message": "Dapatkan server publik"
+    },
+    "disable": {
+        "message": "Nonaktifkan"
     }
 }
