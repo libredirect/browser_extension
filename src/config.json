@@ -18,6 +18,26 @@
 		}
 	},
 	"services": {
+		"youtubeMusic": {
+			"frontends": {
+				"hyperpipe": {
+					"name": "Hyperpipe",
+					"instanceList": true,
+					"url": "https://codeberg.org/Hyperpipe/Hyperpipe"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}music\\.youtube\\.com\\/"
+			],
+			"name": "YT Music",
+			"options": {
+				"enabled": false,
+				"frontend": "hyperpipe",
+				"unsupportedUrls": "bypass"
+			},
+			"imageType": "png",
+			"url": "https://music.youtube.com"
+		},
 		"youtube": {
 			"frontends": {
 				"invidious": {
@@ -106,7 +126,8 @@
 				"^https?:\\/{2}(i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
 				"^https?:\\/{2}(www\\.)?youtube.com\\/watch?v=..*",
 				"^https?:\\/{2}(www\\.)?youtu\\.be\\/..*",
-				"^https?:\\/{2}(www\\.)?(youtube|youtube-nocookie)\\.com\\/embed\\/..*"
+				"^https?:\\/{2}(www\\.)?(youtube|youtube-nocookie)\\.com\\/embed\\/..*",
+				"^https?:\\/{2}music\\.youtube\\.com\\/"
 			],
 			"name": "YouTube",
 			"options": {
@@ -119,26 +140,6 @@
 			"imageType": "png",
 			"embeddable": true,
 			"url": "https://youtube.com"
-		},
-		"youtubeMusic": {
-			"frontends": {
-				"hyperpipe": {
-					"name": "Hyperpipe",
-					"instanceList": true,
-					"url": "https://codeberg.org/Hyperpipe/Hyperpipe"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}music\\.youtube\\.com\\/"
-			],
-			"name": "YT Music",
-			"options": {
-				"enabled": false,
-				"frontend": "hyperpipe",
-				"unsupportedUrls": "bypass"
-			},
-			"imageType": "png",
-			"url": "https://music.youtube.com"
 		},
 		"twitter": {
 			"frontends": {
