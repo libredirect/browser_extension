@@ -90,7 +90,7 @@
         "message": "Copiado"
     },
     "redirectToOriginal": {
-        "message": "Redirecionar para o original",
+        "message": "Redirecionar para original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
