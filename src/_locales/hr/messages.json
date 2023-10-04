@@ -90,7 +90,7 @@
         "message": "Kopirano"
     },
     "redirectToOriginal": {
-        "message": "Preusmjeri prema originalnoj",
+        "message": "Preusmjeri na original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
@@ -99,5 +99,14 @@
     },
     "about": {
         "message": "O"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Nepodržano rukovanje iframeovima"
+    },
+    "fetchPublicInstances": {
+        "message": "Dohvati javne instance"
+    },
+    "disable": {
+        "message": "Deaktiviraj"
     }
 }
