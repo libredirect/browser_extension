@@ -99,5 +99,14 @@
     },
     "about": {
         "message": "公式サイト"
+    },
+    "unsupportedIframesHandling": {
+        "message": "未対応の iframes の処理"
+    },
+    "fetchPublicInstances": {
+        "message": "公式インスタンスを取得"
+    },
+    "disable": {
+        "message": "無効"
     }
 }
