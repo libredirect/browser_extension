@@ -1,1 +1,112 @@
-{}
+{
+    "excludeFromRedirecting": {
+        "message": "Poissuljettu uudelleenohjaukselta",
+        "description": "used in the settings page"
+    },
+    "copyRaw": {
+        "message": "Kopioi alkuperäinen"
+    },
+    "both": {
+        "message": "molemmat",
+        "description": "used in the settings page"
+    },
+    "switchInstance": {
+        "message": "Vaihda instanssi",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Tukemattomien iframejen käsittely"
+    },
+    "importSettings": {
+        "message": "Tuo asetukset",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "Vie asetukset",
+        "description": "used in the settings page"
+    },
+    "fetchPublicInstances": {
+        "message": "Hae julkiset instanssit"
+    },
+    "addYourFavoriteInstances": {
+        "message": "Lisää suosikki-instanssisi",
+        "description": "used in the settings page"
+    },
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "showInPopup": {
+        "message": "Näytä ponnahdusvalikossa",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "Teema",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "vain upotteet",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "Vaalea",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Käyttöliittymä",
+        "description": "used in the settings page"
+    },
+    "extensionDescription": {
+        "message": "Selainlaajennus joka uudelleenohjaa suositut sivustot vaihtoehtoisiin yksityisyysystävällisiin käyttöliittymiin",
+        "description": "description of the extension"
+    },
+    "copied": {
+        "message": "Kopioitu"
+    },
+    "onlyNotEmbedded": {
+        "message": "vain muut kuin upotteet",
+        "description": "used in the settings page"
+    },
+    "about": {
+        "message": "Tietoja"
+    },
+    "redirectLink": {
+        "message": "Yritä uudelleenohjata",
+        "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "redirectType": {
+        "message": "Uudelleenohjauksen tyyppi",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Tumma",
+        "description": "used in the settings page"
+    },
+    "general": {
+        "message": "Yleiset",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Ota käyttöön",
+        "description": "used in the settings page"
+    },
+    "disable": {
+        "message": "Poista käytöstä"
+    },
+    "redirectToOriginal": {
+        "message": "Uudelleenohjaa alkuperäiseen",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "auto": {
+        "message": "Automaattinen",
+        "description": "used in the settings page"
+    },
+    "settings": {
+        "message": "Asetukset",
+        "description": "used in the popup"
+    },
+    "resetSettings": {
+        "message": "Nollaa asetukset",
+        "description": "used in the settings page"
+    }
+}
