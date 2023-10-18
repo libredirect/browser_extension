@@ -568,6 +568,48 @@
 			"imageType": "svgMono",
 			"url": "https://maps.libredirect.invalid"
 		},
+		"sendFiles": {
+			"frontends": {
+				"send": {
+					"name": "Send",
+					"instanceList": true,
+					"url": "https://gitlab.com/timvisee/send"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}send\\.libredirect\\.invalid",
+				"^https?:\\/{2}send\\.firefox\\.com\\/?$",
+				"^https?:\\/{2}sendfiles\\.online\\/?$"
+			],
+			"name": "Send Files",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "send"
+			},
+			"imageType": "svgMono",
+			"url": "https://send.libredirect.invalid"
+		},
+		"textStorage": {
+			"frontends": {
+				"privateBin": {
+					"name": "PrivateBin",
+					"instanceList": true,
+					"url": "https://privatebin.info"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}paste\\.libredirect\\.invalid"
+			],
+			"name": "Paste Text",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "privateBin"
+			},
+			"imageType": "svgMono",
+			"url": "https://paste.libredirect.invalid"
+		},
 		"reuters": {
 			"frontends": {
 				"neuters": {
@@ -850,6 +892,26 @@
 			},
 			"imageType": "svg",
 			"url": "https://www.instructables.com"
+		},
+		"meet": {
+			"name": "Meet",
+			"frontends": {
+				"jitsi": {
+					"name": "Jitsi",
+					"instanceList": true,
+					"url": "https://jitsi.org"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}meet\\.libredirect\\.invalid\\/"
+			],
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "jitsi"
+			},
+			"imageType": "svgMono",
+			"url": "https://meet.libredirect.invalid"
 		},
 		"wolframAlpha": {
 			"frontends": {
