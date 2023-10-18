@@ -182,7 +182,7 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.)?twitch\\.(tv|com)\\/"
+				"^https?:\\/{2}(www\\.|clips\\.)?twitch\\.(tv|com)\\/"
 			],
 			"name": "Twitch",
 			"options": {

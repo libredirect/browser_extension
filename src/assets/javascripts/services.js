@@ -522,6 +522,12 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return `${randomInstance}`
 		}
+		case "safetwitch": {
+			if (url.hostname.startsWith("clips.")) {
+				return `${randomInstance}/clip${url.pathname}${url.search}`
+			}
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
 		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
