@@ -338,18 +338,21 @@ async function ping(frontend) {
 	]
 
 	let pingCache = await utils.getPingCache()
+	let redundancyList = {}
 	for (const element of instanceElements) {
 		let span = element.getElementsByClassName('ping')[0]
 		if (!span) span = document.createElement('span')
 		span.classList = ['ping']
 		span.innerHTML = '<span style="color:lightblue">pinging...</span>'
 		element.appendChild(span)
-
 		const href = element.getElementsByTagName('a')[0].href
-		const time = await utils.ping(href)
+		const innerHTML = element.getElementsByTagName('a')[0].innerHTML
+		const time = redundancyList[innerHTML] ?? await  utils.ping(href)
 		const { color, text } = processTime(time)
 		span.innerHTML = `<span style="color:${color};">${text}</span>`
-		pingCache[element.getElementsByTagName('a')[0].innerHTML] = time
+		pingCache[innerHTML] = time
+		redundancyList[innerHTML] = time
+
 		browser.storage.local.set({ pingCache })
 	}
 }
