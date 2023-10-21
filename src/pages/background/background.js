@@ -142,6 +142,8 @@ browser.contextMenus.create({ id: "redirectLinkInNewTab", title: 'Redirect In Ne
 browser.contextMenus.create({ id: "reverseLink", title: 'Redirect To Original', contexts: ["link"] })
 browser.contextMenus.create({ id: "reverseLinkInNewTab", title: 'Redirect To Original In New Tab', contexts: ["link"] })
 browser.contextMenus.create({ id: "copyReverseLink", title: 'Copy Original', contexts: ["link"] })
+browser.contextMenus.create({ id: "bypassLink", title: 'Bypass', contexts: ["link"] })
+browser.contextMenus.create({ id: "bypassLinkInNewTab", title: 'Bypass In New Tab', contexts: ["link"] })
 
 if (!isChrome) {
 	browser.contextMenus.create({ id: "redirectBookmark", title: 'Redirect', contexts: ["bookmark"] })
@@ -149,8 +151,9 @@ if (!isChrome) {
 	browser.contextMenus.create({ id: "reverseBookmark", title: 'Redirect To Original', contexts: ["bookmark"] })
 	browser.contextMenus.create({ id: "reverseBookmarkInNewTab", title: 'Redirect To Original In New Tab', contexts: ["bookmark"] })
 	browser.contextMenus.create({ id: "copyReverseBookmark", title: 'Copy Original', contexts: ["bookmark"] })
+	browser.contextMenus.create({ id: "bypassBookmark", title: 'Bypass', contexts: ["bookmark"] })
+	browser.contextMenus.create({ id: "bypassBookmarkInNewTab", title: 'Bypass In New Tab', contexts: ["bookmark"] })
 }
-
 
 browser.contextMenus.onClicked.addListener(async (info) => {
 	switch (info.menuItemId) {
@@ -237,6 +240,21 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 			return
 		}
 
+		case 'bypassLink':
+		case 'bypassLinkInNewTab': {
+			const url = new URL(info.linkUrl)
+			if (info.menuItemId == "bypassLink") {
+				browser.tabs.update({ url: url.href }, tab => {
+					tabIdRedirects[tab.id] = false
+				})
+			} else {
+				browser.tabs.create({ url: url.href }, tab => {
+					tabIdRedirects[tab.id] = false
+				})
+			}
+			return
+		}
+
 		case 'copyReverseBookmark': {
 			browser.bookmarks.get(info.bookmarkId, bookmarks => {
 				const url = new URL(bookmarks[0].url)
@@ -244,6 +262,7 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 			});
 			return
 		}
+
 		case 'redirectBookmark':
 		case 'redirectBookmarkInNewTab': {
 			browser.bookmarks.get(info.bookmarkId, bookmarks => {
@@ -274,6 +293,23 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 				}
 			})
 			return
+		}
+
+		case 'bypassBookmark':
+		case 'bypassBookmarkInNewTab': {
+			browser.bookmarks.get(info.bookmarkId, async bookmarks => {
+				const url = new URL(bookmarks[0].url)
+				if (info.menuItemId == "bypassBookmark") {
+					browser.tabs.update({ url: url.href }, tab => {
+						tabIdRedirects[tab.id] = false
+					})
+				} else {
+					browser.tabs.create({ url: url.href }, tab => {
+						tabIdRedirects[tab.id] = false
+					})
+				}
+				return
+			})
 		}
 	}
 })

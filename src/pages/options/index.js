@@ -347,7 +347,7 @@ async function ping(frontend) {
 		element.appendChild(span)
 		const href = element.getElementsByTagName('a')[0].href
 		const innerHTML = element.getElementsByTagName('a')[0].innerHTML
-		const time = redundancyList[innerHTML] ?? await  utils.ping(href)
+		const time = redundancyList[innerHTML] ?? await utils.ping(href)
 		const { color, text } = processTime(time)
 		span.innerHTML = `<span style="color:${color};">${text}</span>`
 		pingCache[innerHTML] = time
