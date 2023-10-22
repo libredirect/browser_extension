@@ -100,7 +100,6 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}redirect\\.invidious\\.io\\/.*",
 				"^https?:\\/{2}(www\\.|m\\.)?youtube.com(\\/|$)(?!iframe_api\\/|redirect\\/)",
 				"^https?:\\/{2}img\\.youtube.com\\/vi\\/.*\\/..*",
 				"^https?:\\/{2}(i|s)\\.ytimg.com\\/vi\\/.*\\/..*",
