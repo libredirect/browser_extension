@@ -523,6 +523,12 @@
 					"url": "https://git.sr.ht/~metalune/simplytranslate_web",
 					"localhost": true
 				},
+				"mozhi": {
+					"name": "Mozhi",
+					"instanceList": true,
+					"url": "https://codeberg.org/aryak/mozhi",
+					"localhost": false
+				},
 				"libreTranslate": {
 					"name": "LibreTranslate",
 					"instanceList": true,

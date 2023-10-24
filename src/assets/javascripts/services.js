@@ -172,6 +172,9 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "simplyTranslate": {
 			return `${randomInstance}/${url.search}`
 		}
+		case "mozhi": {
+			return `${randomInstance}`
+		}
 		case "libreTranslate": {
 			let search = url.search
 				.replace("sl", "source")
@@ -659,6 +662,7 @@ const defaultInstances = {
 	'quetre': ['https://quetre.iket.me'],
 	'libremdb': ['https://libremdb.iket.me'],
 	'simplyTranslate': ['https://simplytranslate.org'],
+	'mozhi': ['https://mozhi.aryak.me'],
 	'searxng': ['https://search.bus-hit.me'],
 	'4get': ['https://4get.ca'],
 	'rimgo': ['https://rimgo.vern.cc'],
