@@ -68,34 +68,29 @@ importSettingsElement.addEventListener("change", () => {
 const exportSettingsSync = document.getElementById("export-settings-sync")
 const importSettingsSync = document.getElementById("import-settings-sync")
 const importSettingsSyncText = document.getElementById("import_settings_sync_text")
-if (!isChrome) {
-	exportSettingsSync.addEventListener("click", async () => {
-		let options = await utils.getOptions()
-		options.version = browser.runtime.getManifest().version
-		browser.storage.sync.set({ options }, () => location.reload())
-	})
 
-	importSettingsSync.addEventListener("click", () => {
-		function importError() {
-			importSettingsSyncText.innerHTML = '<span style="color:red;">Error!</span>'
-			setTimeout(() => (importSettingsSyncText.innerHTML = oldHTML), 1000)
+exportSettingsSync.addEventListener("click", async () => {
+	let options = await utils.getOptions()
+	options.version = browser.runtime.getManifest().version
+	browser.storage.sync.set({ options }, () => location.reload())
+})
+
+importSettingsSync.addEventListener("click", () => {
+	function importError() {
+		importSettingsSyncText.innerHTML = '<span style="color:red;">Error!</span>'
+		setTimeout(() => (importSettingsSyncText.innerHTML = oldHTML), 1000)
+	}
+	const oldHTML = importSettingsSyncText.innerHTML
+	importSettingsSyncText.innerHTML = "..."
+	browser.storage.sync.get({ options }, r => {
+		const options = r.options
+		if (options.version == browser.runtime.getManifest().version) {
+			browser.storage.local.set({ options }, () => location.reload())
+		} else {
+			importError()
 		}
-		const oldHTML = importSettingsSyncText.innerHTML
-		importSettingsSyncText.innerHTML = "..."
-		browser.storage.sync.get({ options }, r => {
-			const options = r.options
-			if (options.version == browser.runtime.getManifest().version) {
-				browser.storage.local.set({ options }, () => location.reload())
-			} else {
-				importError()
-			}
-		})
 	})
-} else {
-	exportSettingsSync.style.display = 'none'
-	importSettingsSync.style.display = 'none'
-}
-
+})
 
 const resetSettings = document.getElementById("reset-settings")
 resetSettings.addEventListener("click", async () => {
