@@ -375,7 +375,7 @@ function redirect(url, type, initiator, forceRedirection) {
 		}
 		case "anonymousOverflow": {
 			if (url.hostname == "stackoverflow.com") {
-				const threadID = /\/(\d+)\/?$/.exec(url.pathname)
+				const threadID = /^\/a\/(\d+)\/?/.exec(url.pathname)
 				if (threadID) return `${randomInstance}/questions/${threadID[1]}${url.search}`
 				return `${randomInstance}${url.pathname}${url.search}`
 			}
