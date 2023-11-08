@@ -532,6 +532,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return `${randomInstance}`
 		}
+		case "twineo": 
 		case "safetwitch": {
 			if (url.hostname.startsWith("clips.")) {
 				return `${randomInstance}/clip${url.pathname}${url.search}`
@@ -689,6 +690,7 @@ const defaultInstances = {
 	'indestructables': ['https://indestructables.private.coffee'],
 	'destructables': ['https://ds.vern.cc'],
 	'safetwitch': ['https://safetwitch.drgns.space'],
+	'twineo': ['https://twineo.exozy.me'],
 	'proxigram': ['https://proxigram.privacyfrontends.repl.co'],
 	'tuboYoutube': ['https://tubo.migalmoreno.com'],
 	'tuboSoundcloud': ['https://tubo.migalmoreno.com'],

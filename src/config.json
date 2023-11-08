@@ -183,6 +183,13 @@
 					"instanceList": true,
 					"url": "https://codeberg.org/dragongoose/safetwitch",
 					"localhost": false
+				},
+				"twineo": {
+					"name": "Twineo",
+					"embeddable": true,
+					"instanceList": true,
+					"url": "https://codeberg.org/CloudyyUw/twineo",
+					"localhost": false
 				}
 			},
 			"targets": [
