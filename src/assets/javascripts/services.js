@@ -539,6 +539,9 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
+		case "tekstoLibre": {
+			return `${randomInstance}/?${url.pathname.slice(1)}`;
+		}
 		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
@@ -641,6 +644,9 @@ async function reverse(url) {
 				}
 				return
 			}
+			case "tekstowo": {
+				return `${config.services[service].url}/${url.search.slice(1)}`
+			}
 			default:
 				return
 		}
@@ -694,6 +700,7 @@ const defaultInstances = {
 	'proxigram': ['https://proxigram.privacyfrontends.repl.co'],
 	'tuboYoutube': ['https://tubo.migalmoreno.com'],
 	'tuboSoundcloud': ['https://tubo.migalmoreno.com'],
+	'tekstoLibre': ['https://davilarek.github.io/TekstoLibre'],
 }
 
 function initDefaults() {
