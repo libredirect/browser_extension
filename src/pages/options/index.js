@@ -17,6 +17,9 @@ for (const a of document.getElementById("links").getElementsByTagName("a")) {
 config = await utils.getConfig()
 options = await utils.getOptions()
 
+/**
+ * @param {string} service
+ */
 async function changeFrontendsSettings(service) {
 	options = await utils.getOptions()
 	const opacityDiv = document.getElementById(`${service}-opacity`)
@@ -95,6 +98,9 @@ async function changeFrontendsSettings(service) {
 	frontend_name_element.href = config.services[service].frontends[divs[service].frontend.value].url
 }
 
+/**
+ * @param {string} path
+ */
 async function loadPage(path) {
 	options = await utils.getOptions()
 	for (const section of document.getElementById("pages").getElementsByTagName("section")) section.style.display = "none"
@@ -251,6 +257,13 @@ async function processCustomInstances(frontend, document) {
 	})
 }
 
+/**
+ * @param {string} frontend
+ * @param {*} networks
+ * @param {*} document
+ * @param {*} redirects
+ * @param {*} blacklist
+ */
 async function createList(frontend, networks, document, redirects, blacklist) {
 	const pingCache = await utils.getPingCache()
 	const options = await utils.getOptions()
@@ -331,6 +344,9 @@ const r = window.location.href.match(/#(.*)/)
 if (r) loadPage(r[1])
 else loadPage("general")
 
+/**
+ * @param {string} frontend
+ */
 async function ping(frontend) {
 	const instanceElements = [
 		...document.getElementById(frontend).getElementsByClassName("custom-checklist")[0].getElementsByTagName('x'),
@@ -357,6 +373,9 @@ async function ping(frontend) {
 	}
 }
 
+/**
+ * @param {number} time
+ */
 function processTime(time) {
 	let text
 	let color
