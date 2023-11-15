@@ -1,6 +1,9 @@
 window.browser = window.browser || window.chrome
 
 function localisePage() {
+	/**
+	 * @param {string} tag
+	 */
 	function getMessage(tag) {
 		return tag.replace(/__MSG_(\w+)__/g, (_match, v1) => {
 			return v1 ? browser.i18n.getMessage(v1) : null

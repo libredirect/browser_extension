@@ -1,18 +1,49 @@
 window.browser = window.browser || window.chrome
 
+/**
+ * @param {Array.<T>} instances 
+ * @returns {T}
+ */
 function getRandomInstance(instances) {
 	return instances[~~(instances.length * Math.random())]
 }
 
+/**
+ * @param {string} str
+ */
 function camelCase(str) {
 	return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
+/**
+ * @param {URL} url
+ */
 function protocolHost(url) {
 	if (url.username && url.password) return `${url.protocol}//${url.username}:${url.password}@${url.host}`
 	return `${url.protocol}//${url.host}`
 }
 
+/**
+ * @typedef FrontendInfo
+ * @prop {boolean} instanceList
+ * @prop {string} name
+ * @prop {string} url
+ */
+
+/**
+ * @typedef {Object} Service
+ * @prop {Object.<string, FrontendInfo>} frontends
+ * @prop {Object} options
+ */
+
+/**
+ * @typedef {Object} Config
+ * @prop {Object.<string, Service>} services
+ */
+
+/**
+ * @returns {Promise<Config>}
+ */
 function getConfig() {
 	return new Promise(resolve => {
 		fetch("/config.json")
@@ -24,6 +55,14 @@ function getConfig() {
 	})
 }
 
+/**
+ * @typedef {Object} Option
+ * @prop {string} frontend
+ */
+
+/**
+ * @returns {Promise<Object.<string, Option | string[]>>}
+ */
 function getOptions() {
 	return new Promise(resolve =>
 		browser.storage.local.get("options", r => {
@@ -106,6 +145,9 @@ function getList(options) {
 	})
 }
 
+/**
+ * @param {string} href
+ */
 function pingOnce(href) {
 	return new Promise(async resolve => {
 		let started
@@ -130,6 +172,9 @@ function pingOnce(href) {
 	})
 }
 
+/**
+ * @param {string} href
+ */
 function ping(href) {
 	return new Promise(async resolve => {
 		let average = 0

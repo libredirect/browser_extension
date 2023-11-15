@@ -30,6 +30,12 @@ function all(service, frontend, options, config) {
 	return instances
 }
 
+/**
+ * @param {string} service
+ * @param {URL} url
+ * @param {{}} config
+ * @param {string} frontend
+ */
 function regexArray(service, url, config, frontend) {
 	let targetList = config.services[service].targets
 	if (frontend && 'excludeTargets' in config.services[service].frontends[frontend]) {
@@ -44,11 +50,24 @@ function regexArray(service, url, config, frontend) {
 	return false
 }
 
+/**
+ * @param {URL} url
+ * @param {string} type
+ * @param {URL} initiator
+ * @param {boolean} forceRedirection
+ */
 async function redirectAsync(url, type, initiator, forceRedirection) {
 	await init()
 	return redirect(url, type, initiator, forceRedirection)
 }
 
+/**
+ * @param {URL} url
+ * @param {string} type
+ * @param {URL} initiator
+ * @param {boolean} forceRedirection
+ * @returns {string | undefined}
+ */
 function redirect(url, type, initiator, forceRedirection) {
 	if (type != "main_frame" && type != "sub_frame" && type != "image") return
 	let randomInstance
@@ -545,6 +564,10 @@ function redirect(url, type, initiator, forceRedirection) {
 	}
 }
 
+/**
+ * @param {URL} url
+ * @param {*} returnFrontend
+ */
 function computeService(url, returnFrontend) {
 	return new Promise(async resolve => {
 		const config = await utils.getConfig()
@@ -569,6 +592,10 @@ function computeService(url, returnFrontend) {
 	})
 }
 
+/**
+ * @param {URL} url
+ * @param {string} customService
+ */
 function switchInstance(url, customService) {
 	return new Promise(async resolve => {
 		let options = await utils.getOptions()
@@ -599,6 +626,9 @@ function switchInstance(url, customService) {
 	})
 }
 
+/**
+ * @param {URL} url
+ */
 async function reverse(url) {
 	let options = await utils.getOptions()
 	let config = await utils.getConfig()
@@ -774,6 +804,10 @@ function processUpdate() {
 	})
 }
 
+/**
+ * @param {URL} url
+ * @param {boolean} test
+ */
 async function copyRaw(url, test) {
 	const newUrl = await reverse(url)
 	if (newUrl) {
@@ -794,6 +828,9 @@ async function copyRaw(url, test) {
 	}
 }
 
+/**
+ * @param {URL} url
+ */
 function isException(url) {
 	if (!options.exceptions) return false
 	let exceptions = options.exceptions
