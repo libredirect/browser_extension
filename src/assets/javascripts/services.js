@@ -551,7 +551,7 @@ function redirect(url, type, initiator, forceRedirection) {
 			}
 			return `${randomInstance}`
 		}
-		case "twineo": 
+		case "twineo":
 		case "safetwitch": {
 			if (url.hostname.startsWith("clips.")) {
 				return `${randomInstance}/clip${url.pathname}${url.search}`
@@ -802,6 +802,13 @@ function processUpdate() {
 				}
 				else if (frontend in options && !(frontend in config.services[service].frontends)) {
 					delete options[frontend]
+				}
+			}
+
+			for (const frontend of options.popupServices) {
+				if (!Object.keys(config.services).includes(frontend)) {
+					const i = options.popupServices.indexOf(frontend);
+					if (i > -1) options.popupServices.splice(i, 1);
 				}
 			}
 		}

@@ -99,7 +99,7 @@ resetSettings.addEventListener("click", async () => {
 	location.reload()
 })
 
-let fetchInstancesElement = document.getElementById('fetch-instances')
+const fetchInstancesElement = document.getElementById('fetch-instances')
 fetchInstancesElement.addEventListener('change', event => {
 	setOption('fetchInstances', 'select', event)
 	location.reload()
