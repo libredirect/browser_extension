@@ -943,6 +943,26 @@
 			},
 			"imageType": "svg",
 			"url": "https://www.wolframalpha.com"
+		},
+		"tekstowo": {
+			"frontends": {
+				"tekstoLibre": {
+					"name": "TekstoLibre",
+					"instanceList": true,
+					"url": "https://github.com/Davilarek/TekstoLibre"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?tekstowo\\.pl\\/"
+			],
+			"name": "Tekstowo.pl",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "tekstoLibre"
+			},
+			"imageType": "png",
+			"url": "https://www.tekstowo.pl"
 		}
 	}
 }

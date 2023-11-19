@@ -20,6 +20,8 @@ function camelCase(str) {
  */
 function protocolHost(url) {
 	if (url.username && url.password) return `${url.protocol}//${url.username}:${url.password}@${url.host}`
+	if (url.pathname == "/TekstoLibre/" && url.host.endsWith("github.io")) // workaround
+		return `${url.protocol}//${url.host}${url.pathname.slice(0, -1)}`
 	return `${url.protocol}//${url.host}`
 }
 
