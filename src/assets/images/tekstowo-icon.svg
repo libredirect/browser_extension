@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 100 100"
+   version="1.1"
+   id="svg12"
+   sodipodi:docname="tekstowo-icon.svg"
+   width="100"
+   height="100"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs12" />
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="3.3499322"
+     inkscape:cx="35.821621"
+     inkscape:cy="41.34412"
+     inkscape:window-width="1888"
+     inkscape:window-height="1060"
+     inkscape:window-x="32"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="logo_1_" />
+  <style
+     id="style1">.st0{fill:#62ae25}.st1{fill:#999}</style>
+  <g
+     id="logo_1_"
+     transform="translate(0,-24)">
+    <circle
+       style="fill:#ff6600;fill-opacity:1;stroke-width:4.40315;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.53144"
+       id="path12"
+       cx="50"
+       cy="74"
+       r="50" />
+    <linearGradient
+       id="SVGID_1_"
+       gradientUnits="userSpaceOnUse"
+       x1="39.888"
+       y1="92.283997"
+       x2="52.096001"
+       y2="125.824"
+       gradientTransform="translate(0,1.24036)">
+      <stop
+         offset="0"
+         stop-color="#8fe132"
+         id="stop5" />
+      <stop
+         offset=".362"
+         stop-color="#65bd23"
+         id="stop6" />
+      <stop
+         offset=".668"
+         stop-color="#49a519"
+         id="stop7" />
+      <stop
+         offset=".844"
+         stop-color="#3e9c15"
+         id="stop8" />
+    </linearGradient>
+    <path
+       d="m 57.782805,105.82283 c -4.54864,6.22445 -11.4913,8.91772 -15.381584,6.04489 -3.890284,-2.87282 -3.41148,-10.29428 1.137159,-16.518734 4.548641,-6.224454 11.491301,-8.917729 15.381584,-6.044903 3.950135,2.932676 3.411481,10.294291 -1.137159,16.518747 z"
+       fill="url(#SVGID_1_)"
+       id="path8"
+       style="fill:#8fe132;fill-opacity:1;stroke-width:0.999999" />
+    <linearGradient
+       id="SVGID_2_"
+       gradientUnits="userSpaceOnUse"
+       x1="-3.5739999"
+       y1="24.316"
+       x2="82.773003"
+       y2="74.168999"
+       gradientTransform="translate(0,1.24036)">
+      <stop
+         offset=".184"
+         stop-color="#8fe132"
+         id="stop9" />
+      <stop
+         offset="1"
+         stop-color="#3e9c15"
+         id="stop10" />
+    </linearGradient>
+    <path
+       d="M 65.563373,59.857627 C 61.792791,55.308986 56.585794,51.837656 51.43865,50.161842 42.820174,47.348868 40.665555,45.912455 36.59572,42.680526 34.26155,40.82516 32.645587,37.29398 30.670519,36.276521 c -0.957609,-0.478804 -1.556114,-0.05985 -1.915217,0.299252 -0.538654,0.538655 -1.077309,1.675815 -0.418954,3.112227 5.206996,12.389059 25.855425,48.538774 25.855425,48.538774 1.795516,-0.179552 3.41148,0.1197 4.728191,1.077309 0.598505,0.478804 1.07731,1.017459 1.496263,1.675815 L 42.461071,57.463605 c 0,0 -2.154619,-2.992526 1.615964,-3.591031 2.693275,-0.418954 8.319223,0.658356 11.251898,2.453871 3.172078,1.975069 10.533693,8.199522 11.970105,16.458894 0.658355,3.830433 0,5.8055 0.239402,9.21698 0.119701,1.556113 1.735664,3.052376 3.231928,0.957608 0.778057,-1.077309 1.19701,-5.027443 1.19701,-8.13967 0,-4.069837 -2.932675,-10.713244 -6.404005,-14.96263 z"
+       fill="url(#SVGID_2_)"
+       id="path10"
+       style="fill:#8fe132;fill-opacity:1;stroke-width:0.999999" />
+    <radialGradient
+       id="SVGID_3_"
+       cx="21.504999"
+       cy="103.861"
+       r="14.934"
+       gradientTransform="matrix(0.2966,0.4025,-0.805,0.5933,123.22,30.33236)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#f4ff72"
+         id="stop11" />
+      <stop
+         offset="1"
+         stop-color="#73c928"
+         stop-opacity="0"
+         id="stop12" />
+    </radialGradient>
+  </g>
+</svg>
