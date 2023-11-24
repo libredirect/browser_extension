@@ -97,6 +97,16 @@
 					"desktopApp": true,
 					"instanceList": false,
 					"url": "https://github.com/yattee/yattee"
+				},
+				"freetubePwa": {
+					"excludeTargets": [
+						2,
+						3
+					],
+					"name": "FreeTube PWA",
+					"embeddable": false,
+					"instanceList": false,
+					"url": "https://github.com/MarmadileManteater/FreeTubeCordova"
 				}
 			},
 			"targets": [
@@ -963,6 +973,26 @@
 			},
 			"imageType": "svg",
 			"url": "https://www.tekstowo.pl"
+		},
+		"bluesky": {
+			"frontends": {
+				"skyview": {
+					"name": "Skyview",
+					"instanceList": true,
+					"url": "https://github.com/badlogic/skyview"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}bsky\\.app\\/"
+			],
+			"name": "Bluesky",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "skyview"
+			},
+			"imageType": "svg",
+			"url": "https://bsky.app/"
 		}
 	}
 }

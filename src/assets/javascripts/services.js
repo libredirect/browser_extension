@@ -166,6 +166,10 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "freetube": {
 			return 'freetube://' + url.href
 		}
+		case "freetubePwa": {
+			return 'freetube://' + url.href
+		}
+
 		case "poketube": {
 			if (url.pathname.startsWith('/channel')) {
 				const reg = /\/channel\/(.*)\/?$/.exec(url.pathname)
@@ -561,6 +565,10 @@ function redirect(url, type, initiator, forceRedirection) {
 		case "tekstoLibre": {
 			return `${randomInstance}/?${url.pathname.slice(1)}`;
 		}
+		case "skyview": {
+			if (url.pathname == '/') return randomInstance
+			return `${randomInstance}?url=${encodeURIComponent(url.href)}`
+		}
 		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
@@ -731,6 +739,7 @@ const defaultInstances = {
 	'tuboYoutube': ['https://tubo.migalmoreno.com'],
 	'tuboSoundcloud': ['https://tubo.migalmoreno.com'],
 	'tekstoLibre': ['https://davilarek.github.io/TekstoLibre'],
+	'skyview': ['https://skyview.social'],
 }
 
 function initDefaults() {
