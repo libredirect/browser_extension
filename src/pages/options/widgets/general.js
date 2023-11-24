@@ -64,7 +64,6 @@ importSettingsElement.addEventListener("change", () => {
 	}
 })
 
-
 const exportSettingsSync = document.getElementById("export-settings-sync")
 const importSettingsSync = document.getElementById("import-settings-sync")
 const importSettingsSyncText = document.getElementById("import_settings_sync_text")
@@ -105,6 +104,11 @@ fetchInstancesElement.addEventListener('change', event => {
 	location.reload()
 })
 
+const redirectOnlyInIncognitoElement = document.getElementById('redirectOnlyInIncognito')
+redirectOnlyInIncognitoElement.addEventListener('change', event => {
+	setOption('redirectOnlyInIncognito', 'checkbox', event)
+})
+
 let themeElement = document.getElementById("theme")
 themeElement.addEventListener("change", event => {
 	setOption("theme", "select", event)
@@ -132,6 +136,7 @@ for (const service in config.services) {
 let options = await utils.getOptions()
 themeElement.value = options.theme
 fetchInstancesElement.value = options.fetchInstances
+redirectOnlyInIncognitoElement.target.checked = options.redirectOnlyInIncognito
 for (const service in config.services) document.getElementById(service).checked = options.popupServices.includes(service)
 
 instanceTypeElement.addEventListener("change", event => {

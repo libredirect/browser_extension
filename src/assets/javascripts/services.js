@@ -68,10 +68,11 @@ async function redirectAsync(url, type, initiator, forceRedirection) {
  * @param {boolean} forceRedirection
  * @returns {string | undefined}
  */
-function redirect(url, type, initiator, forceRedirection) {
+function redirect(url, type, initiator, forceRedirection, incognito) {
 	if (type != "main_frame" && type != "sub_frame" && type != "image") return
 	let randomInstance
 	let frontend
+	if (!forceRedirection && options.redirectOnlyInIncognito == true && !incognito) return
 	for (const service in config.services) {
 		if (!forceRedirection && !options[service].enabled) continue
 
@@ -762,9 +763,10 @@ function initDefaults() {
 				url: [],
 				regex: [],
 			}
-			options['theme'] = "detect"
-			options['popupServices'] = ["youtube", "twitter", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
-			options['fetchInstances'] = 'github'
+			options.theme = "detect"
+			options.popupServices = ["youtube", "twitter", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
+			options.fetchInstances = 'github'
+			options.redirectOnlyInIncognito = false
 
 			options = { ...options, ...defaultInstances }
 

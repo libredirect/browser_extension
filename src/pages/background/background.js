@@ -41,7 +41,7 @@ browser.webRequest.onBeforeRequest.addListener(
 			return null
 		}
 		if (tabIdRedirects[details.tabId] == false) return null
-		let newUrl = servicesHelper.redirect(url, details.type, initiator, tabIdRedirects[details.tabId], details.tabId)
+		let newUrl = servicesHelper.redirect(url, details.type, initiator, tabIdRedirects[details.tabId], details.incognito)
 
 		if (details.frameAncestors && details.frameAncestors.length > 0 && servicesHelper.isException(new URL(details.frameAncestors[0].url))) newUrl = null
 
