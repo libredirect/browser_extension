@@ -548,10 +548,11 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 			return `${randomInstance}`
 		}
 		case "tuboSoundcloud": {
-			if (url.pathname.match(/\/user[^\/]+(\/$|$)/)) {
+			if (url.pathname == '/') return `${randomInstance}?kiosk?serviceId=1`
+			if (url.pathname.match(/^\/[^\/]+(\/$|$)/)) {
 				return `${randomInstance}/channel?url=${encodeURIComponent(url.href)}`
 			}
-			if (url.pathname.match(/\/user[^\/]+\/[^\/]+/)) {
+			if (url.pathname.match(/^\/[^\/]+\/[^\/]+/)) {
 				return `${randomInstance}/stream?url=${encodeURIComponent(url.href)}`
 			}
 			return `${randomInstance}`
