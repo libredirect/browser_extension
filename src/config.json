@@ -710,7 +710,8 @@
 			},
 			"targets": [
 				"^https?:\\/{2}(www\\.)?stackoverflow\\.com\\/",
-				"^https?:\\/{2}([a-zA-Z0-9-]+\\.)?stackexchange\\.com\\/"
+				"^https?:\\/{2}([a-zA-Z0-9-]+\\.)?stackexchange\\.com\\/",
+				"^https?:\\/{2}(www\\.)?superuser\\.com\\/"
 			],
 			"name": "Stack Overflow",
 			"options": {
