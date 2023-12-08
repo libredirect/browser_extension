@@ -618,7 +618,7 @@ function switchInstance(url, customService) {
 		if (customService) {
 			const instancesList = options[options[customService].frontend]
 			if (instancesList !== undefined) {
-				resolve(`${utils.getRandomInstance(instancesList)}${url.pathname}${url.search}`)
+				resolve(`${utils.getNextInstance(url.origin, instancesList)}${url.pathname}${url.search}`)
 			}
 		} else {
 			for (const service in config.services) {
@@ -631,7 +631,7 @@ function switchInstance(url, customService) {
 					resolve()
 					return
 				}
-				resolve(`${utils.getRandomInstance(instancesList)}${url.pathname}${url.search}`)
+				resolve(`${utils.getNextInstance(url.origin, instancesList)}${url.pathname}${url.search}`)
 				return
 			}
 		}

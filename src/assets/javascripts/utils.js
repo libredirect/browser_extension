@@ -9,6 +9,23 @@ function getRandomInstance(instances) {
 }
 
 /**
+ * @param {string} currentInstanceUrl
+ * @param {Array.<T>} instances
+ * @returns {T}
+ */
+function getNextInstance(currentInstanceUrl, instances) {
+	const currentInstanceIndex = instances.indexOf(currentInstanceUrl);
+
+	if (currentInstanceIndex === -1){
+		return getRandomInstance(instances);
+	}
+
+	const nextInstanceIndex = (currentInstanceIndex + 1) % instances.length;
+
+	return instances[nextInstanceIndex];
+}
+
+/**
  * @param {string} str
  */
 function camelCase(str) {
@@ -197,6 +214,7 @@ function ping(href) {
 
 export default {
 	getRandomInstance,
+	getNextInstance,
 	protocolHost,
 	getList,
 	getBlacklist,
