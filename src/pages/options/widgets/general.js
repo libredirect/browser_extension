@@ -109,6 +109,18 @@ redirectOnlyInIncognitoElement.addEventListener('change', event => {
 	setOption('redirectOnlyInIncognito', 'checkbox', event)
 })
 
+const bookmarksMenuElement = document.getElementById('bookmarksMenu')
+bookmarksMenuElement.addEventListener('change', async event => {
+	if (event.target.checked)
+		bookmarksMenuElement.checked = await browser.permissions.request({
+			permissions: ["bookmarks"]
+		})
+	else
+		bookmarksMenuElement.checked = !await browser.permissions.remove({
+			permissions: ["bookmarks"]
+		})
+})
+
 let themeElement = document.getElementById("theme")
 themeElement.addEventListener("change", event => {
 	setOption("theme", "select", event)
@@ -136,7 +148,8 @@ for (const service in config.services) {
 let options = await utils.getOptions()
 themeElement.value = options.theme
 fetchInstancesElement.value = options.fetchInstances
-redirectOnlyInIncognitoElement.target.checked = options.redirectOnlyInIncognito
+redirectOnlyInIncognitoElement.checked = options.redirectOnlyInIncognito
+bookmarksMenuElement.checked = await browser.permissions.contains({ permissions: ["bookmarks"] })
 for (const service in config.services) document.getElementById(service).checked = options.popupServices.includes(service)
 
 instanceTypeElement.addEventListener("change", event => {
