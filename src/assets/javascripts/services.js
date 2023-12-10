@@ -445,9 +445,7 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "mikuInvidious": {
-			console.log("Hello?")
 			if (url.hostname == "bilibili.com" || url.hostname == "www.bilibili.com" || url.hostname == 'b23.tv') {
-				console.log('wewe')
 				return `${randomInstance}${url.pathname}${url.search}`
 			}
 			if (url.hostname == "space.bilibili.com") {
@@ -500,7 +498,6 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 		}
 		case "quetre": {
 			const regex = /([a-z]+)\.quora\.com/.exec(url.hostname)
-			console.log(regex)
 			if (regex) {
 				const lang = regex[1]
 				url.searchParams.append("lang", lang)
