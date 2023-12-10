@@ -994,6 +994,32 @@
 			},
 			"imageType": "svg",
 			"url": "https://bsky.app/"
+		},
+		"tumblr": {
+			"frontends": {
+				"priviblur": {
+					"name": "Priviblur",
+					"embeddable": true,
+					"instanceList": true,
+					"url": "https://github.com/syeopite/priviblur",
+					"localhost": true
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(media\\.|blog\\.|assets\\.|static\\.)?tumblr\\.com\\/",
+				"^https?:\\/{2}[0-9]+\\.media\\.tumblr\\.com\\/"
+			],
+			"name": "Tumblr",
+			"options": {
+				"enabled": false,
+				"redirectType": "main_frame",
+				"unsupportedUrls": "bypass",
+				"frontend": "priviblur",
+				"instance": "public"
+			},
+			"imageType": "svg",
+			"embeddable": true,
+			"url": "https://tumblr.com"
 		}
 	}
 }

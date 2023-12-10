@@ -571,6 +571,21 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 			if (url.pathname == '/') return randomInstance
 			return `${randomInstance}?url=${encodeURIComponent(url.href)}`
 		}
+		case "priviblur": {
+			if (url.hostname.startsWith("blog"))
+				return `${randomInstance}/blog${url.pathname}${url.search}`
+
+			if (url.hostname.startsWith("assets"))
+				return `${randomInstance}/assets${url.pathname}${url.search}`
+
+			if (url.hostname.startsWith("static"))
+				return `${randomInstance}/static${url.pathname}${url.search}`
+
+			const reg = /^([0-9]+)\.media\.tumblr\.com/.exec(url.hostname)
+			if (reg)
+				return `${randomInstance}/media/${reg[1]}${url.pathname}${url.search}`
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
 		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
@@ -742,6 +757,7 @@ const defaultInstances = {
 	'tuboSoundcloud': ['https://tubo.migalmoreno.com'],
 	'tekstoLibre': ['https://davilarek.github.io/TekstoLibre'],
 	'skyview': ['https://skyview.social'],
+	'priviblur': ['https://pb.bloat.cat'],
 }
 
 function initDefaults() {
