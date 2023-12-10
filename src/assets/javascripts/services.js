@@ -569,19 +569,36 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 			return `${randomInstance}?url=${encodeURIComponent(url.href)}`
 		}
 		case "priviblur": {
-			if (url.hostname.startsWith("blog"))
-				return `${randomInstance}/blog${url.pathname}${url.search}`
+			// www.tumblr.com
+			if (url.hostname === "www.tumblr.com")
+				return `${randomInstance}${url.pathname}${url.search}`;
 
+			// assets.tumblr.com
 			if (url.hostname.startsWith("assets"))
-				return `${randomInstance}/assets${url.pathname}${url.search}`
+				return `${randomInstance}/tblr/assets${url.pathname}${url.search}`;
 
+			// static.tumblr.com
 			if (url.hostname.startsWith("static"))
-				return `${randomInstance}/static${url.pathname}${url.search}`
+				return `${randomInstance}/tblr/static${url.pathname}${url.search}`;
 
-			const reg = /^([0-9]+)\.media\.tumblr\.com/.exec(url.hostname)
+			// *.media.tumblr.com
+			const reg = /^([0-9]+)\.media\.tumblr\.com/.exec(url.hostname);
 			if (reg)
-				return `${randomInstance}/media/${reg[1]}${url.pathname}${url.search}`
-			return `${randomInstance}${url.pathname}${url.search}`
+				return `${randomInstance}/tblr/media/${reg[1]}${url.pathname}${url.search}`;
+
+			// <blog>.tumblr.com
+			const blogregex = /^(www.)?([a-z\d]{1}[a-z\d-]{0,30}[a-z\d]{0,1})\.tumblr\.com/.exec(url.hostname);
+			const blog_name = blogregex[2];
+
+			if (blogregex)
+				// Under the <blog>.tumblr.com domain posts are under a /post path
+				if (url.pathname.startsWith("/post")) {
+					return `${randomInstance}/${blog_name}${url.pathname.slice(5)}${url.search}`;
+				} else {
+					return `${randomInstance}/${blog_name}${url.pathname}${url.search}`;
+				}
+
+			return `${randomInstance}${url.pathname}${url.search}`;
 		}
 		default: {
 			return `${randomInstance}${url.pathname}${url.search}`
