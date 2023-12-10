@@ -1006,8 +1006,9 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(media\\.|blog\\.|assets\\.|static\\.)?tumblr\\.com\\/",
-				"^https?:\\/{2}[0-9]+\\.media\\.tumblr\\.com\\/"
+				"^https?:\\/{2}(media\\.|assets\\.|static\\.)?tumblr\\.com\\/",
+				"^https?:\\/{2}[0-9]+\\.media\\.tumblr\\.com\\/",
+				"^https?:\\/{2}(www\\.)?(.*)\\.tumblr.com\\/"
 			],
 			"name": "Tumblr",
 			"options": {
