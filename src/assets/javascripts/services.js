@@ -582,7 +582,7 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 			if (reg)
 				return `${randomInstance}/tblr/media/${reg[1]}${url.pathname}${url.search}`
 			
-			const blogregex = /^(?:www\.)?([a-z\d]+)\.tumblr\.com/.exec(url.hostname) // <blog>.tumblr.com
+			const blogregex = /^(?:www\.)?([a-z\d-]+)\.tumblr\.com/.exec(url.hostname) // <blog>.tumblr.com
 			if (blogregex) {
 				const blog_name = blogregex[1];
 				// Under the <blog>.tumblr.com domain posts are under a /post path
