@@ -104,7 +104,10 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 			initiator
 			&&
 			instanceList.includes(initiator.origin)
-		) return "BYPASSTAB"
+		) {
+			if (type != "main_frame") return null
+			else return "BYPASSTAB"
+		}
 
 		randomInstance = utils.getRandomInstance(instanceList)
 		if (config.services[service].frontends[frontend].localhost && options[service].instance == "localhost") {
@@ -581,7 +584,7 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 			const reg = /^([0-9]+)\.media\.tumblr\.com/.exec(url.hostname) // *.media.tumblr.com
 			if (reg)
 				return `${randomInstance}/tblr/media/${reg[1]}${url.pathname}${url.search}`
-			
+
 			const blogregex = /^(?:www\.)?([a-z\d-]+)\.tumblr\.com/.exec(url.hostname) // <blog>.tumblr.com
 			if (blogregex) {
 				const blog_name = blogregex[1];

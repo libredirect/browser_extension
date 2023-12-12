@@ -71,7 +71,7 @@ browser.webRequest.onBeforeRequest.addListener(
 				if (tabIdRedirects[details.tabId] != false) tabIdRedirects[details.tabId] = false
 				return null
 			}
-			console.info("Redirecting", url.href, "=>", newUrl)
+			console.log("Redirecting", url.href, "=>", newUrl)
 			return { redirectUrl: newUrl }
 		}
 		return null
