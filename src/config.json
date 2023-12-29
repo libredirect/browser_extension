@@ -185,6 +185,82 @@
 			"embeddable": true,
 			"url": "https://twitter.com"
 		},
+		"bluesky": {
+			"frontends": {
+				"skyview": {
+					"name": "Skyview",
+					"instanceList": true,
+					"url": "https://github.com/badlogic/skyview"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}bsky\\.app\\/"
+			],
+			"name": "Bluesky",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "skyview"
+			},
+			"imageType": "svg",
+			"url": "https://bsky.app/"
+		},
+		"reddit": {
+			"frontends": {
+				"libreddit": {
+					"name": "Libreddit",
+					"instanceList": true,
+					"url": "https://github.com/spikecodes/libreddit",
+					"localhost": true
+				},
+				"teddit": {
+					"name": "Teddit",
+					"instanceList": true,
+					"url": "https://codeberg.org/teddit/teddit",
+					"localhost": true
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.)?(reddit|reddittorjg6rue252oqsxryoxengawnmo46qy4kyii5wtqnwfj4ooad)\\.(com|onion)(?=\\/u(ser)?\\/|\\/r\\/|\\/search|\\/new|\\/?$)",
+				"^https?:\\/{2}(i|(external-)?preview)\\.redd\\.it"
+			],
+			"name": "Reddit",
+			"options": {
+				"enabled": false,
+				"frontend": "libreddit",
+				"unsupportedUrls": "bypass",
+				"instance": "public"
+			},
+			"imageType": "png",
+			"url": "https://reddit.com"
+		},
+		"tumblr": {
+			"frontends": {
+				"priviblur": {
+					"name": "Priviblur",
+					"embeddable": true,
+					"instanceList": true,
+					"url": "https://github.com/syeopite/priviblur",
+					"localhost": true
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(media\\.|assets\\.|static\\.)?tumblr\\.com\\/",
+				"^https?:\\/{2}[0-9]+\\.media\\.tumblr\\.com\\/",
+				"^https?:\\/{2}(www\\.)?(.*)\\.tumblr.com\\/"
+			],
+			"name": "Tumblr",
+			"options": {
+				"enabled": false,
+				"redirectType": "main_frame",
+				"unsupportedUrls": "bypass",
+				"frontend": "priviblur",
+				"instance": "public"
+			},
+			"imageType": "svg",
+			"embeddable": true,
+			"url": "https://tumblr.com"
+		},
 		"twitch": {
 			"frontends": {
 				"safetwitch": {
@@ -261,34 +337,89 @@
 			"imageType": "png",
 			"url": "https://www.instagram.com"
 		},
-		"reddit": {
+		"imdb": {
 			"frontends": {
-				"libreddit": {
-					"name": "Libreddit",
+				"libremdb": {
+					"name": "libremdb",
 					"instanceList": true,
-					"url": "https://github.com/spikecodes/libreddit",
-					"localhost": true
-				},
-				"teddit": {
-					"name": "Teddit",
-					"instanceList": true,
-					"url": "https://codeberg.org/teddit/teddit",
+					"url": "https://github.com/zyachel/libremdb",
 					"localhost": true
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.)?(reddit|reddittorjg6rue252oqsxryoxengawnmo46qy4kyii5wtqnwfj4ooad)\\.(com|onion)(?=\\/u(ser)?\\/|\\/r\\/|\\/search|\\/new|\\/?$)",
-				"^https?:\\/{2}(i|(external-)?preview)\\.redd\\.it"
+				"^https?:\\/{2}(www\\.|m\\.)?imdb\\.com"
 			],
-			"name": "Reddit",
+			"name": "IMDb",
 			"options": {
 				"enabled": false,
-				"frontend": "libreddit",
 				"unsupportedUrls": "bypass",
+				"frontend": "libremdb",
 				"instance": "public"
 			},
-			"imageType": "png",
-			"url": "https://reddit.com"
+			"imageType": "svg",
+			"url": "https://imdb.com"
+		},
+		"bilibili": {
+			"frontends": {
+				"mikuInvidious": {
+					"name": "MikuInvidious",
+					"instanceList": true,
+					"url": "https://0xacab.org/johnxina/mikuinvidious"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.|space\\.)?bilibili\\.com\\/",
+				"^https?:\\/{2}b23\\.tv\\/"
+			],
+			"name": "Bilibili",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "mikuInvidious"
+			},
+			"imageType": "svgMono",
+			"url": "https://bilibili.com/"
+		},
+		"pixiv": {
+			"name": "Pixiv",
+			"frontends": {
+				"pixivFe": {
+					"name": "PixivFE",
+					"instanceList": true,
+					"url": "https://codeberg.org/VnPower/pixivfe"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?pixiv\\.net\\/"
+			],
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "pixivFe"
+			},
+			"imageType": "svg",
+			"url": "https://www.pixiv.net"
+		},
+		"fandom": {
+			"frontends": {
+				"breezeWiki": {
+					"name": "BreezeWiki",
+					"instanceList": true,
+					"url": "https://breezewiki.com"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}([a-zA-Z0-9-]+\\.)?(fandom|wikia)\\.com(?=\\/wiki|\\/?$)"
+			],
+			"name": "Fandom",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"instance": "public",
+				"frontend": "breezeWiki"
+			},
+			"imageType": "svg",
+			"url": "https://fandom.com"
 		},
 		"imgur": {
 			"frontends": {
@@ -315,25 +446,29 @@
 			"embeddable": true,
 			"url": "https://imgur.com"
 		},
-		"pixiv": {
-			"name": "Pixiv",
+		"pinterest": {
+			"name": "Pinterest",
 			"frontends": {
-				"pixivFe": {
-					"name": "PixivFE",
+				"binternet": {
+					"name": "Binternet",
 					"instanceList": true,
-					"url": "https://codeberg.org/VnPower/pixivfe"
+					"url": "https://github.com/Ahwxorg/Binternet",
+					"embeddable": true
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.)?pixiv\\.net\\/"
+				"^https?:\\/{2}i\\.pinimg\\.com",
+				"^https?:\\/{2}(www\\.)?pinterest\\.com"
 			],
 			"options": {
 				"enabled": false,
 				"unsupportedUrls": "bypass",
-				"frontend": "pixivFe"
+				"redirectType": "main_frame",
+				"frontend": "binternet"
 			},
 			"imageType": "svg",
-			"url": "https://www.pixiv.net"
+			"embeddable": true,
+			"url": "https://pinterest.com"
 		},
 		"soundcloud": {
 			"frontends": {
@@ -357,6 +492,75 @@
 			"imageType": "svg",
 			"embeddable": false,
 			"url": "https://soundcloud.com"
+		},
+		"bandcamp": {
+			"frontends": {
+				"tent": {
+					"name": "Tent",
+					"instanceList": true,
+					"url": "https://forgejo.sny.sh/sun/Tent"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(.*\\.)?bandcamp\\.com\\/",
+				"^https?:\\/{2}(f4|t4)\\.bcbits\\.com\\/"
+			],
+			"name": "Bandcamp",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "tent"
+			},
+			"imageType": "svg",
+			"url": "https://bandcamp.com"
+		},
+		"tekstowo": {
+			"frontends": {
+				"tekstoLibre": {
+					"name": "TekstoLibre",
+					"instanceList": true,
+					"url": "https://github.com/Davilarek/TekstoLibre"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?tekstowo\\.pl\\/"
+			],
+			"name": "Tekstowo.pl",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "tekstoLibre"
+			},
+			"imageType": "svg",
+			"url": "https://www.tekstowo.pl"
+		},
+		"genius": {
+			"frontends": {
+				"dumb": {
+					"name": "Dumb",
+					"instanceList": true,
+					"url": "https://github.com/rramiachraf/dumb",
+					"localhost": true
+				},
+				"intellectual": {
+					"name": "Intellectual",
+					"instanceList": true,
+					"url": "https://github.com/Insprill/intellectual",
+					"localhost": false
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?genius\\.com\\/"
+			],
+			"name": "Genius",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "dumb",
+				"instance": "public"
+			},
+			"imageType": "svg",
+			"url": "https://genius.com"
 		},
 		"medium": {
 			"frontends": {
@@ -423,72 +627,239 @@
 			"imageType": "png",
 			"url": "https://quora.com"
 		},
-		"imdb": {
+		"github": {
 			"frontends": {
-				"libremdb": {
-					"name": "libremdb",
+				"gothub": {
+					"name": "Gothub",
 					"instanceList": true,
-					"url": "https://github.com/zyachel/libremdb",
+					"url": "https://codeberg.org/gothub/gothub"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}github\\.com\\/",
+				"^https?:\\/{2}gist\\.github\\.com\\/[^\\/]+\\/[^\\/]+\\/?"
+			],
+			"name": "GitHub",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "gothub"
+			},
+			"imageType": "svgMono",
+			"url": "https://github.com"
+		},
+		"gitlab": {
+			"frontends": {
+				"laboratory": {
+					"name": "Laboratory",
+					"instanceList": true,
+					"url": "https://git.vitali64.duckdns.org/utils/laboratory.git/about/"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}gitlab\\.com\\/",
+				"^https?:\\/{2}gitlab\\.freedesktop\\.com\\/",
+				"^https?:\\/{2}gitlab\\.archlinux\\.com\\/"
+			],
+			"name": "Gitlab",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "laboratory"
+			},
+			"imageType": "svg",
+			"url": "https://gitlab.com/"
+		},
+		"stackOverflow": {
+			"frontends": {
+				"anonymousOverflow": {
+					"name": "AnonymousOverflow",
+					"instanceList": true,
+					"url": "https://github.com/httpjamesm/AnonymousOverflow",
 					"localhost": true
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}(www\\.|m\\.)?imdb\\.com"
+				"^https?:\\/{2}(www\\.)?stackoverflow\\.com\\/",
+				"^https?:\\/{2}([a-zA-Z0-9-]+\\.)?stackexchange\\.com\\/",
+				"^https?:\\/{2}(www\\.)?(superuser|askubuntu)\\.com\\/"
 			],
-			"name": "IMDb",
+			"name": "Stack Overflow",
 			"options": {
 				"enabled": false,
 				"unsupportedUrls": "bypass",
-				"frontend": "libremdb",
+				"frontend": "anonymousOverflow",
 				"instance": "public"
 			},
-			"imageType": "svg",
-			"url": "https://imdb.com"
+			"imageType": "svgMono",
+			"url": "https://stackoverflow.com/"
 		},
-		"fandom": {
+		"reuters": {
 			"frontends": {
-				"breezeWiki": {
-					"name": "BreezeWiki",
+				"neuters": {
+					"name": "Neuters",
 					"instanceList": true,
-					"url": "https://breezewiki.com"
+					"url": "https://github.com/HookedBehemoth/neuters"
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}([a-zA-Z0-9-]+\\.)?(fandom|wikia)\\.com(?=\\/wiki|\\/?$)"
+				"^https?:\\/{2}(www\\.)?reuters\\.com\\/"
 			],
-			"name": "Fandom",
+			"name": "Reuters",
 			"options": {
 				"enabled": false,
 				"unsupportedUrls": "bypass",
-				"instance": "public",
-				"frontend": "breezeWiki"
+				"frontend": "neuters"
 			},
 			"imageType": "svg",
-			"url": "https://fandom.com"
+			"url": "https://reuters.com"
 		},
-		"pinterest": {
-			"name": "Pinterest",
+		"snopes": {
 			"frontends": {
-				"binternet": {
-					"name": "Binternet",
+				"suds": {
+					"name": "Suds",
 					"instanceList": true,
-					"url": "https://github.com/Ahwxorg/Binternet",
-					"embeddable": true
+					"url": "https://git.vern.cc/cobra/Suds"
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}i\\.pinimg\\.com",
-				"^https?:\\/{2}(www\\.)?pinterest\\.com"
+				"^https?:\\/{2}(www\\.)?snopes\\.com\\/"
+			],
+			"name": "Snopes",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "suds"
+			},
+			"imageType": "svg",
+			"url": "https://www.snopes.com"
+		},
+		"urbanDictionary": {
+			"frontends": {
+				"ruralDictionary": {
+					"name": "Rural Dictionary",
+					"instanceList": true,
+					"url": "https://codeberg.org/zortazert/rural-dictionary"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?urbandictionary\\.com\\/"
+			],
+			"name": "Urban Dictionary",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "ruralDictionary"
+			},
+			"imageType": "svg",
+			"url": "https://urbandictionary.com"
+		},
+		"goodreads": {
+			"frontends": {
+				"biblioReads": {
+					"name": "BiblioReads",
+					"instanceList": true,
+					"url": "https://github.com/nesaku/BiblioReads",
+					"localhost": true
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?goodreads\\.com\\/"
+			],
+			"name": "Goodreads",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "biblioReads",
+				"instance": "public"
+			},
+			"imageType": "svgMono",
+			"url": "https://goodreads.com/"
+		},
+		"wolframAlpha": {
+			"frontends": {
+				"wolfreeAlpha": {
+					"name": "WolfreeAlpha",
+					"instanceList": true,
+					"url": "https://git.disroot.org/wolfree"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?wolframalpha\\.com\\/"
+			],
+			"name": "Wolfram Alpha",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "wolfreeAlpha"
+			},
+			"imageType": "svg",
+			"url": "https://www.wolframalpha.com"
+		},
+		"instructables": {
+			"name": "Instructables",
+			"frontends": {
+				"indestructables": {
+					"name": "Indestructables",
+					"instanceList": true,
+					"url": "https://indestructables.codeberg.page"
+				},
+				"destructables": {
+					"name": "Destructables",
+					"instanceList": true,
+					"url": "https://git.vern.cc/cobra/Destructables"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?instructables\\.com\\/"
 			],
 			"options": {
 				"enabled": false,
 				"unsupportedUrls": "bypass",
-				"redirectType": "main_frame",
-				"frontend": "binternet"
+				"frontend": "indestructables"
 			},
 			"imageType": "svg",
-			"embeddable": true,
-			"url": "https://pinterest.com"
+			"url": "https://www.instructables.com"
+		},
+		"wikipedia": {
+			"frontends": {
+				"wikiless": {
+					"name": "Wikiless",
+					"instanceList": true,
+					"url": "https://wikiless.org"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}([a-z]+\\.)*wikipedia\\.org\\/?"
+			],
+			"name": "Wikipedia",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "wikiless"
+			},
+			"imageType": "svg",
+			"url": "https://wikipedia.org"
+		},
+		"waybackMachine": {
+			"frontends": {
+				"waybackClassic": {
+					"name": "Wayback Classic",
+					"instanceList": true,
+					"url": "https://github.com/ticky/wayback-classic"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}web\\.archive\\.org\\/"
+			],
+			"name": "Wayback Machine",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "waybackClassic"
+			},
+			"imageType": "svgMono",
+			"url": "https://web.archive.org"
 		},
 		"search": {
 			"frontends": {
@@ -589,6 +960,26 @@
 			"imageType": "svgMono",
 			"url": "https://maps.libredirect.invalid"
 		},
+		"meet": {
+			"name": "Meet",
+			"frontends": {
+				"jitsi": {
+					"name": "Jitsi",
+					"instanceList": true,
+					"url": "https://jitsi.org"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}meet\\.libredirect\\.invalid\\/"
+			],
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "jitsi"
+			},
+			"imageType": "svgMono",
+			"url": "https://meet.libredirect.invalid"
+		},
 		"sendFiles": {
 			"frontends": {
 				"send": {
@@ -630,397 +1021,6 @@
 			},
 			"imageType": "svgMono",
 			"url": "https://paste.libredirect.invalid"
-		},
-		"reuters": {
-			"frontends": {
-				"neuters": {
-					"name": "Neuters",
-					"instanceList": true,
-					"url": "https://github.com/HookedBehemoth/neuters"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.)?reuters\\.com\\/"
-			],
-			"name": "Reuters",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "neuters"
-			},
-			"imageType": "svg",
-			"url": "https://reuters.com"
-		},
-		"genius": {
-			"frontends": {
-				"dumb": {
-					"name": "Dumb",
-					"instanceList": true,
-					"url": "https://github.com/rramiachraf/dumb",
-					"localhost": true
-				},
-				"intellectual": {
-					"name": "Intellectual",
-					"instanceList": true,
-					"url": "https://github.com/Insprill/intellectual",
-					"localhost": false
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.)?genius\\.com\\/"
-			],
-			"name": "Genius",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "dumb",
-				"instance": "public"
-			},
-			"imageType": "svg",
-			"url": "https://genius.com"
-		},
-		"urbanDictionary": {
-			"frontends": {
-				"ruralDictionary": {
-					"name": "Rural Dictionary",
-					"instanceList": true,
-					"url": "https://codeberg.org/zortazert/rural-dictionary"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.)?urbandictionary\\.com\\/"
-			],
-			"name": "Urban Dictionary",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "ruralDictionary"
-			},
-			"imageType": "svg",
-			"url": "https://urbandictionary.com"
-		},
-		"stackOverflow": {
-			"frontends": {
-				"anonymousOverflow": {
-					"name": "AnonymousOverflow",
-					"instanceList": true,
-					"url": "https://github.com/httpjamesm/AnonymousOverflow",
-					"localhost": true
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.)?stackoverflow\\.com\\/",
-				"^https?:\\/{2}([a-zA-Z0-9-]+\\.)?stackexchange\\.com\\/",
-				"^https?:\\/{2}(www\\.)?(superuser|askubuntu)\\.com\\/"
-			],
-			"name": "Stack Overflow",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "anonymousOverflow",
-				"instance": "public"
-			},
-			"imageType": "svgMono",
-			"url": "https://stackoverflow.com/"
-		},
-		"goodreads": {
-			"frontends": {
-				"biblioReads": {
-					"name": "BiblioReads",
-					"instanceList": true,
-					"url": "https://github.com/nesaku/BiblioReads",
-					"localhost": true
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.)?goodreads\\.com\\/"
-			],
-			"name": "Goodreads",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "biblioReads",
-				"instance": "public"
-			},
-			"imageType": "svgMono",
-			"url": "https://goodreads.com/"
-		},
-		"wikipedia": {
-			"frontends": {
-				"wikiless": {
-					"name": "Wikiless",
-					"instanceList": true,
-					"url": "https://wikiless.org"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}([a-z]+\\.)*wikipedia\\.org\\/?"
-			],
-			"name": "Wikipedia",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "wikiless"
-			},
-			"imageType": "svg",
-			"url": "https://wikipedia.org"
-		},
-		"snopes": {
-			"frontends": {
-				"suds": {
-					"name": "Suds",
-					"instanceList": true,
-					"url": "https://git.vern.cc/cobra/Suds"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.)?snopes\\.com\\/"
-			],
-			"name": "Snopes",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "suds"
-			},
-			"imageType": "svg",
-			"url": "https://www.snopes.com"
-		},
-		"waybackMachine": {
-			"frontends": {
-				"waybackClassic": {
-					"name": "Wayback Classic",
-					"instanceList": true,
-					"url": "https://github.com/ticky/wayback-classic"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}web\\.archive\\.org\\/"
-			],
-			"name": "Wayback Machine",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "waybackClassic"
-			},
-			"imageType": "svgMono",
-			"url": "https://web.archive.org"
-		},
-		"github": {
-			"frontends": {
-				"gothub": {
-					"name": "Gothub",
-					"instanceList": true,
-					"url": "https://codeberg.org/gothub/gothub"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}github\\.com\\/",
-				"^https?:\\/{2}gist\\.github\\.com\\/[^\\/]+\\/[^\\/]+\\/?"
-			],
-			"name": "GitHub",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "gothub"
-			},
-			"imageType": "svgMono",
-			"url": "https://github.com"
-		},
-		"bilibili": {
-			"frontends": {
-				"mikuInvidious": {
-					"name": "MikuInvidious",
-					"instanceList": true,
-					"url": "https://0xacab.org/johnxina/mikuinvidious"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.|space\\.)?bilibili\\.com\\/",
-				"^https?:\\/{2}b23\\.tv\\/"
-			],
-			"name": "Bilibili",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "mikuInvidious"
-			},
-			"imageType": "svgMono",
-			"url": "https://bilibili.com/"
-		},
-		"bandcamp": {
-			"frontends": {
-				"tent": {
-					"name": "Tent",
-					"instanceList": true,
-					"url": "https://forgejo.sny.sh/sun/Tent"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(.*\\.)?bandcamp\\.com\\/",
-				"^https?:\\/{2}(f4|t4)\\.bcbits\\.com\\/"
-			],
-			"name": "Bandcamp",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "tent"
-			},
-			"imageType": "svg",
-			"url": "https://bandcamp.com"
-		},
-		"gitlab": {
-			"frontends": {
-				"laboratory": {
-					"name": "Laboratory",
-					"instanceList": true,
-					"url": "https://git.vitali64.duckdns.org/utils/laboratory.git/about/"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}gitlab\\.com\\/",
-				"^https?:\\/{2}gitlab\\.freedesktop\\.com\\/",
-				"^https?:\\/{2}gitlab\\.archlinux\\.com\\/"
-			],
-			"name": "Gitlab",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "laboratory"
-			},
-			"imageType": "svg",
-			"url": "https://gitlab.com/"
-		},
-		"instructables": {
-			"name": "Instructables",
-			"frontends": {
-				"indestructables": {
-					"name": "Indestructables",
-					"instanceList": true,
-					"url": "https://indestructables.codeberg.page"
-				},
-				"destructables": {
-					"name": "Destructables",
-					"instanceList": true,
-					"url": "https://git.vern.cc/cobra/Destructables"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.)?instructables\\.com\\/"
-			],
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "indestructables"
-			},
-			"imageType": "svg",
-			"url": "https://www.instructables.com"
-		},
-		"meet": {
-			"name": "Meet",
-			"frontends": {
-				"jitsi": {
-					"name": "Jitsi",
-					"instanceList": true,
-					"url": "https://jitsi.org"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}meet\\.libredirect\\.invalid\\/"
-			],
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "jitsi"
-			},
-			"imageType": "svgMono",
-			"url": "https://meet.libredirect.invalid"
-		},
-		"wolframAlpha": {
-			"frontends": {
-				"wolfreeAlpha": {
-					"name": "WolfreeAlpha",
-					"instanceList": true,
-					"url": "https://git.disroot.org/wolfree"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.)?wolframalpha\\.com\\/"
-			],
-			"name": "Wolfram Alpha",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "wolfreeAlpha"
-			},
-			"imageType": "svg",
-			"url": "https://www.wolframalpha.com"
-		},
-		"tekstowo": {
-			"frontends": {
-				"tekstoLibre": {
-					"name": "TekstoLibre",
-					"instanceList": true,
-					"url": "https://github.com/Davilarek/TekstoLibre"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.)?tekstowo\\.pl\\/"
-			],
-			"name": "Tekstowo.pl",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "tekstoLibre"
-			},
-			"imageType": "svg",
-			"url": "https://www.tekstowo.pl"
-		},
-		"bluesky": {
-			"frontends": {
-				"skyview": {
-					"name": "Skyview",
-					"instanceList": true,
-					"url": "https://github.com/badlogic/skyview"
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}bsky\\.app\\/"
-			],
-			"name": "Bluesky",
-			"options": {
-				"enabled": false,
-				"unsupportedUrls": "bypass",
-				"frontend": "skyview"
-			},
-			"imageType": "svg",
-			"url": "https://bsky.app/"
-		},
-		"tumblr": {
-			"frontends": {
-				"priviblur": {
-					"name": "Priviblur",
-					"embeddable": true,
-					"instanceList": true,
-					"url": "https://github.com/syeopite/priviblur",
-					"localhost": true
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(media\\.|assets\\.|static\\.)?tumblr\\.com\\/",
-				"^https?:\\/{2}[0-9]+\\.media\\.tumblr\\.com\\/",
-				"^https?:\\/{2}(www\\.)?(.*)\\.tumblr.com\\/"
-			],
-			"name": "Tumblr",
-			"options": {
-				"enabled": false,
-				"redirectType": "main_frame",
-				"unsupportedUrls": "bypass",
-				"frontend": "priviblur",
-				"instance": "public"
-			},
-			"imageType": "svg",
-			"embeddable": true,
-			"url": "https://tumblr.com"
 		}
 	}
 }
