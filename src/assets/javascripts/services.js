@@ -492,7 +492,6 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 		}
 		case "binternet": {
 			if (url.hostname == "i.pinimg.com") return `${randomInstance}/image_proxy.php?url=${url.href}`
-			return randomInstance
 		}
 		case "laboratory": {
 			let path = url.pathname
