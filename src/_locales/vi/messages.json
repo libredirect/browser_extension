@@ -36,15 +36,15 @@
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
-        "message": "Excluded from redirecting",
+        "message": "Không được chuyển hướng",
         "description": "used in the settings page"
     },
     "importSettings": {
-        "message": "Nhập cài đặt",
+        "message": "Nhập vào cài đặt",
         "description": "used in the settings page"
     },
     "exportSettings": {
-        "message": "Xuất cài đặt",
+        "message": "Xuất ra cài đặt",
         "description": "used in the settings page"
     },
     "resetSettings": {
@@ -72,25 +72,25 @@
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
-        "message": "only embedded",
+        "message": "chỉ các mã nhúng",
         "description": "used in the settings page"
     },
     "onlyNotEmbedded": {
-        "message": "only not embedded",
+        "message": "chỉ những cái không phải là mã nhúng",
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
-        "message": "Add your favorite instances",
+        "message": "Thêm những instance bạn yêu thích",
         "description": "used in the settings page"
     },
     "copyRaw": {
-        "message": "Copy Raw"
+        "message": "Sao chép liên kết gốc"
     },
     "copied": {
         "message": "Đã Sao Chép"
     },
     "redirectToOriginal": {
-        "message": "Redirect to original",
+        "message": "Chuyển hướng tới trang web gốc",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
@@ -99,5 +99,14 @@
     },
     "about": {
         "message": "Về tiện ích"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Cách xử lý các iframe không được hỗ trợ"
+    },
+    "fetchPublicInstances": {
+        "message": "Tìm các instance công cộng"
+    },
+    "disable": {
+        "message": "Tắt"
     }
 }
