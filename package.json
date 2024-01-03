@@ -7,7 +7,7 @@
 	},
 	"scripts": {
 		"start": "web-ext run",
-		"start-nightly": "web-ext run --firefox=/home/manerakai/Downloads/firefox/firefox",
+		"start-nightly": "web-ext run --firefox=/home/manerakai/software/firefox_nightly/firefox",
 		"build": "web-ext build",
 		"test": "web-ext lint",
 		"html": "pug --basedir ./ --obj ./src/config.json src/pages/options/index.pug --out src/pages/options/ && pug --basedir ./ --obj ./src/config.json src/pages/popup/popup.pug --out src/pages/popup/"

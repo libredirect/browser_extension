@@ -210,9 +210,8 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 			return `${randomInstance}/${search}`
 		}
 		case "osm": {
-			const dataLatLngRegex = /!3d(-?[0-9]{1,}.[0-9]{1,})!4d(-?[0-9]{1,}.[0-9]{1,})/
-			const placeRegex = /\/place\/(.*)\//
-			function convertMapCentre() {
+			const placeRegex = /\/place\/(.*?)\//
+			function convertMapCentre(url) {
 				let [lat, lon, zoom] = [null, null, null]
 				const reg = url.pathname.match(/@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/)
 				if (reg) {
@@ -224,14 +223,6 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 				}
 				return { zoom, lon, lat }
 			}
-			if (initiator && initiator.host === "earth.google.com") return randomInstance
-			const travelModes = {
-				driving: "fossgis_osrm_car",
-				walking: "fossgis_osrm_foot",
-				bicycling: "fossgis_osrm_bike",
-				transit: "fossgis_osrm_car", // not implemented on OSM, default to car.
-			}
-
 			function addressToLatLng(address) {
 				const http = new XMLHttpRequest()
 				http.open("GET", `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1`, false)
@@ -247,86 +238,69 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 					return {}
 				}
 			}
-
-			let mapCentre = "#"
-			let prefs = {}
-
-			const mapCentreData = convertMapCentre()
-			if (mapCentreData.zoom && mapCentreData.lon && mapCentreData.lat) mapCentre = `#map=${mapCentreData.zoom}/${mapCentreData.lon}/${mapCentreData.lat}`
-			if (url.searchParams.get("layer")) prefs.layers = osmLayers[url.searchParams.get("layer")]
-
-			if (url.pathname.includes("/embed")) {
-				// Handle Google Maps Embed API
-				// https://www.google.com/maps/embed/v1/place?key=AIzaSyD4iE2xVSpkLLOXoyqT-RuPwURN3ddScAI&q=Eiffel+Tower,Paris+France
+			function getQuery(url) {
 				let query = ""
 				if (url.searchParams.has("q")) query = url.searchParams.get("q")
 				else if (url.searchParams.has("query")) query = url.searchParams.has("query")
-				else if (url.searchParams.has("pb"))
-					try {
-						query = url.searchParams.get("pb").split(/!2s(.*?)!/)[1]
-					} catch (error) {
-						// Unable to find map marker in URL.
-						console.error(error)
-					}
+				return query
+			}
+			function prefsEncoded(prefs) {
+				return new URLSearchParams(prefs).toString()
+			}
 
+			if (initiator && initiator.host === "earth.google.com") return randomInstance
+
+			let mapCentre = "#"
+			let prefs = { layers: "mapnik" }
+
+			const mapCentreData = convertMapCentre(url)
+			if (mapCentreData.zoom && mapCentreData.lon && mapCentreData.lat) mapCentre = `#map=${mapCentreData.zoom}/${mapCentreData.lon}/${mapCentreData.lat}`
+
+			if (url.pathname.includes("/embed")) { // https://www.google.com/maps/embed/v1/place?key=AIzaSyD4iE2xVSpkLLOXoyqT-RuPwURN3ddScAI&q=Eiffel+Tower,Paris+France
+				const query = getQuery(url)
 				let { coordinate, boundingbox } = addressToLatLng(query)
 				prefs.bbox = boundingbox
 				prefs.marker = coordinate
-				prefs.layers = "mapnik"
-				let prefsEncoded = new URLSearchParams(prefs).toString()
-				return `${randomInstance}/export/embed.html?${prefsEncoded}`
+				return `${randomInstance}/export/embed.html?${prefsEncoded(prefs)}`
 			} else if (url.pathname.includes("/dir")) {
-				// Handle Google Maps Directions
 				if (url.searchParams.has("travelmode")) {
+					const travelModes = {
+						driving: "fossgis_osrm_car",
+						walking: "fossgis_osrm_foot",
+						bicycling: "fossgis_osrm_bike",
+						transit: "fossgis_osrm_car", // not implemented on OSM, default to car.
+					}
 					prefs.engine = travelModes[url.searchParams.get("travelmode")]
 				}
 				const regex1 = /\/dir\/([^@/]+)\/([^@/]+)\/@-?\d[0-9.]*,-?\d[0-9.]*,\d{1,2}[.z]/.exec(url.pathname)
 				const regex2 = /\/dir\/([^@/]+)\//.exec(url.pathname)
-				if (regex1) {
-					// https://www.google.com/maps/dir/92+Rue+Moncey,+69003+Lyon,+France/M%C3%A9dip%C3%B4le+Lyon-Villeurbanne/@45.760254,4.8486298,13z?travelmode=bicycling
+				if (regex1) { // https://www.google.com/maps/dir/92+Rue+Moncey,+69003+Lyon,+France/M%C3%A9dip%C3%B4le+Lyon-Villeurbanne/@45.760254,4.8486298,13z?travelmode=bicycling
 					const origin = addressToLatLng(decodeURIComponent(regex1[1])).coordinate ?? ''
 					const destination = addressToLatLng(decodeURIComponent(regex1[2])).coordinate ?? ''
 					prefs.route = `${origin};${destination}`
-				} else if (regex2) {
-					// https://www.google.com/maps/dir/92+Rue+Moncey,+69003+Lyon,+France/@45.760254,4.8486298,13z?travelmode=bicycling
+				} else if (regex2) { // https://www.google.com/maps/dir/92+Rue+Moncey,+69003+Lyon,+France/@45.760254,4.8486298,13z?travelmode=bicycling
 					const origin = addressToLatLng(decodeURIComponent(regex2[1])).coordinate ?? ''
 					prefs.route = `${origin};`
-				} else {
-					// https://www.google.com/maps/dir/?api=1&origin=Space+Needle+Seattle+WA&destination=Pike+Place+Market+Seattle+WA&travelmode=bicycling
+				} else { // https://www.google.com/maps/dir/?api=1&origin=Space+Needle+Seattle+WA&destination=Pike+Place+Market+Seattle+WA&travelmode=bicycling
 					const origin = addressToLatLng(url.searchParams.get("origin")).coordinate ?? ''
 					const destination = addressToLatLng(url.searchParams.get("destination")).coordinate ?? ''
 					prefs.route = `${origin};${destination}`
 				}
-				const prefsEncoded = new URLSearchParams(prefs).toString()
-				return `${randomInstance}/directions?${prefsEncoded}${mapCentre}`
-			} else if (url.pathname.includes("data=") && url.pathname.match(dataLatLngRegex)) {
-				// Get marker from data attribute
-				// https://www.google.com/maps/place/41%C2%B001'58.2%22N+40%C2%B029'18.2%22E/@41.032833,40.4862063,17z/data=!3m1!4b1!4m6!3m5!1s0x0:0xf64286eaf72fc49d!7e2!8m2!3d41.0328329!4d40.4883948
-				let [, mlat, mlon] = url.pathname.match(dataLatLngRegex)
-				return `${randomInstance}/search?query=${mlat}%2C${mlon}`
-			} else if (url.searchParams.has("ll")) {
-				// Get marker from ll param
-				// https://maps.google.com/?ll=38.882147,-76.99017
+				return `${randomInstance}/directions?${prefsEncoded(prefs)}${mapCentre}`
+			} else if (url.pathname.match(placeRegex)) { // https://www.google.com/maps/place/H%C3%B4tel+de+Londres+Eiffel/@40.9845265,28.7081268,14z
+				const query = url.pathname.match(placeRegex)[1]
+				return `${randomInstance}/search?query=${query}${mapCentre}`
+			} else if (url.searchParams.has("ll")) { // https://maps.google.com/?ll=38.882147,-76.99017
 				const [mlat, mlon] = url.searchParams.get("ll").split(",")
 				return `${randomInstance}/search?query=${mlat}%2C${mlon}`
-			} else if (url.searchParams.has("viewpoint")) {
-				// Get marker from viewpoint param.
-				// https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=48.857832,2.295226&heading=-45&pitch=38&fov=80
+			} else if (url.searchParams.has("viewpoint")) { // https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=48.857832,2.295226&heading=-45&pitch=38&fov=80
 				const [mlat, mlon] = url.searchParams.get("viewpoint").split(",")
 				return `${randomInstance}/search?query=${mlat}%2C${mlon}`
 			} else {
-				// Use query as search if present.
-				let query
-				if (url.searchParams.has("q")) query = url.searchParams.get("q")
-				else if (url.searchParams.has("query")) query = url.searchParams.get("query")
-				else if (url.pathname.match(placeRegex)) query = url.pathname.match(placeRegex)[1]
-
-				let prefsEncoded = new URLSearchParams(prefs).toString()
-				if (query) return `${randomInstance}/search?query="${query}${mapCentre}&${prefsEncoded}`
+				const query = getQuery(url)
+				if (query) return `${randomInstance}/search?query="${query}${mapCentre}&${prefsEncoded(prefs)}`
 			}
-
-			let prefsEncoded = new URLSearchParams(prefs).toString()
-			return `${randomInstance}/${mapCentre}&${prefsEncoded}`
+			return `${randomInstance}/${mapCentre}&${prefsEncoded(prefs)}`
 		}
 		case "breezeWiki": {
 			let wiki, urlpath = ""
