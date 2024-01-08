@@ -160,9 +160,7 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 		case 'switchInstanceTab': {
 			const url = new URL(info.pageUrl)
 			const newUrl = await servicesHelper.switchInstance(url)
-			if (newUrl) {
-				browser.tabs.update({ url: newUrl })
-			}
+			if (newUrl) browser.tabs.update({ url: newUrl })
 			return
 		}
 		case 'settingsTab': {

@@ -617,7 +617,11 @@ function switchInstance(url, customService) {
 		if (customService) {
 			const instancesList = options[options[customService].frontend]
 			if (instancesList !== undefined) {
-				resolve(`${utils.getNextInstance(url.origin, instancesList)}${url.pathname}${url.search}`)
+				const newInstance = utils.getNextInstance(url.origin, instancesList)
+				if (newInstance) {
+					resolve(`${newInstance}${url.pathname}${url.search}`)
+					return
+				}
 			}
 		} else {
 			for (const service in config.services) {
@@ -630,8 +634,11 @@ function switchInstance(url, customService) {
 					resolve()
 					return
 				}
-				resolve(`${utils.getNextInstance(url.origin, instancesList)}${url.pathname}${url.search}`)
-				return
+				const newInstance = utils.getNextInstance(url.origin, instancesList)
+				if (newInstance) {
+					resolve(`${newInstance}${url.pathname}${url.search}`)
+					return
+				}
 			}
 		}
 		resolve()
