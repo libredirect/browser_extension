@@ -36,7 +36,7 @@
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
-        "message": "Excluír da redirección",
+        "message": "Excluído da redirección",
         "description": "used in the settings page"
     },
     "importSettings": {
