@@ -56,7 +56,7 @@
         "description": "used in the settings page"
     },
     "showInPopup": {
-        "message": "Mostrar nunha emerxente",
+        "message": "Mostrar nunha ventá emerxente",
         "description": "used in the settings page"
     },
     "frontend": {
@@ -87,7 +87,7 @@
         "message": "Copiar Orixinal"
     },
     "copied": {
-        "message": "Copiado"
+        "message": "Copiouse"
     },
     "redirectToOriginal": {
         "message": "Ir ao orixinal",
