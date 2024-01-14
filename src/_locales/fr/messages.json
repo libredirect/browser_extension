@@ -105,5 +105,8 @@
     },
     "disable": {
         "message": "Désactiver"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Gestion des iframes non prises en charge"
     }
 }
