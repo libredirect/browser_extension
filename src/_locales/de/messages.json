@@ -99,5 +99,14 @@
     },
     "about": {
         "message": "Über"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Umgang mit nicht unterstützten iFrames"
+    },
+    "fetchPublicInstances": {
+        "message": "Abrufen öffentlicher Instanzen"
+    },
+    "disable": {
+        "message": "Deaktivieren"
     }
 }
