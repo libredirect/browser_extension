@@ -419,6 +419,7 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 		}
 		case "gothub": {
 			if (url.hostname == "gist.github.com") return `${randomInstance}/gist${url.pathname}${url.search}`
+			if (url.hostname == "raw.githubusercontent.com") return `${randomInstance}/raw${url.pathname}${url.search}`
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "mikuInvidious": {

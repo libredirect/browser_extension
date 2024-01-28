@@ -637,7 +637,8 @@
 			},
 			"targets": [
 				"^https?:\\/{2}github\\.com\\/",
-				"^https?:\\/{2}gist\\.github\\.com\\/[^\\/]+\\/[^\\/]+\\/?"
+				"^https?:\\/{2}gist\\.github\\.com\\/[^\\/]+\\/[^\\/]+\\/?",
+				"^https?:\\/{2}raw\\.githubusercontent\\.com\\/[^\\/]+\\/[^\\/]+\\/?"
 			],
 			"name": "GitHub",
 			"options": {
