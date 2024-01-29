@@ -7,6 +7,15 @@ import utils from "../../assets/javascripts/utils.js"
 document.getElementById("more-options").href = browser.runtime.getURL("pages/options/index.html")
 document.getElementById("more-options").setAttribute('target', '_blank')
 
+const os = (await browser.runtime.getPlatformInfo()).os
+
+switch (os) {
+	case "fuchsia":
+	case "ios":
+	case "android": {
+		document.getElementsByTagName("html")[0].classList.add("mobile")
+	}
+}
 
 const allSites = document.getElementById("all_sites")
 const currSite = document.getElementById("current_site")

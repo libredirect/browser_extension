@@ -36,7 +36,6 @@ input {
 	width: 46px;
 }
 
-
 div.block label {
 	margin: 0;
 	font-size: 18px;
@@ -50,4 +49,17 @@ div.block label:hover {
 
 div.block div {
 	display: flex;
+}
+
+html.mobile body {
+	width: 100%;
+}
+
+html.mobile div.block label {
+	font-size: 24px;
+}
+
+html.mobile .button svg {
+	width: 30px;
+	height: 30px;
 }

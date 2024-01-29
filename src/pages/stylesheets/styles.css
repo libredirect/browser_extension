@@ -389,3 +389,54 @@ input:disabled {
 		padding: 0 55px;
 	}
 }
+
+html.mobile img,
+html.mobile svg {
+	margin-right: 10px;
+	height: 30px;
+	width: 30px;
+	color: var(--text);
+}
+
+html.mobile div.block {
+	padding: 0 15px;
+	justify-content: space-between;
+	display: flex;
+	align-items: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+html.mobile div.block input[type="checkbox"] {
+	width: 58px;
+	height: 30px;
+}
+
+html.mobile div.block input[type="checkbox"]::before {
+	width: 24px;
+	height: 24px;
+	top: 3px;
+	left: 3.5px;
+}
+
+html.mobile div.block input[type="checkbox"]:checked::before {
+	left: 30px;
+}
+
+html.mobile body.option {
+	flex-direction: column;
+	width: 100%;
+	padding: 0;
+	align-items: center;
+}
+
+
+html.mobile section.links {
+	flex-direction: row;
+	width: 100%;
+	padding: 0 55px;
+}
+
+html.mobile section.block-option {
+	width: 100%;
+}
