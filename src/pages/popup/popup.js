@@ -4,7 +4,9 @@ window.browser = window.browser || window.chrome
 import servicesHelper from "../../assets/javascripts/services.js"
 import utils from "../../assets/javascripts/utils.js"
 
-document.getElementById("more-options").addEventListener("click", () => browser.runtime.openOptionsPage())
+document.getElementById("more-options").href = browser.runtime.getURL("pages/options/index.html")
+document.getElementById("more-options").setAttribute('target', '_blank')
+
 
 const allSites = document.getElementById("all_sites")
 const currSite = document.getElementById("current_site")
