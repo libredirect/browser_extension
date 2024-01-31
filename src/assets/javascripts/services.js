@@ -704,6 +704,7 @@ async function reverse(url) {
 
 const defaultInstances = {
 	'invidious': ['https://inv.vern.cc'],
+	'viewtube': ['https://viewtube.io'],
 	'piped': ['https://pipedapi-libre.kavin.rocks'],
 	'pipedMaterial': ['https://piped-material.xn--17b.net'],
 	'cloudtube': ['https://tube.cadence.moe'],

@@ -107,6 +107,12 @@
 					"embeddable": false,
 					"instanceList": false,
 					"url": "https://github.com/MarmadileManteater/FreeTubeCordova"
+				},
+				"viewtube": {
+					"name": "ViewTube",
+					"embeddable": false,
+					"instanceList": true,
+					"url": "https://github.com/ViewTube/viewtube"
 				}
 			},
 			"targets": [
