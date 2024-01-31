@@ -134,7 +134,7 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 			}
 			return randomInstance
 		}
-		case "librex": {
+		case "librey": {
 			return `${randomInstance}/search.php${url.search}`
 		}
 		case "send": {
