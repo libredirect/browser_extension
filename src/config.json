@@ -213,6 +213,12 @@
 					"url": "https://github.com/spikecodes/libreddit",
 					"localhost": true
 				},
+				"redlib": {
+					"name": "Redlib",
+					"instanceList": true,
+					"url": "https://github.com/redlib-org/redlib",
+					"localhost": true
+				},
 				"teddit": {
 					"name": "Teddit",
 					"instanceList": true,

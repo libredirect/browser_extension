@@ -328,6 +328,7 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
+		case "redlib":
 		case "libreddit": {
 			const subdomain = url.hostname.match(/^(?:(?:external-)?preview|i)(?=\.redd\.it)/)
 			if (!subdomain) return `${randomInstance}${url.pathname}${url.search}`
@@ -709,6 +710,7 @@ const defaultInstances = {
 	'poketube': ['https://poketube.fun'],
 	'proxiTok': ['https://proxitok.pabloferreiro.es'],
 	'nitter': ['https://nitter.net'],
+	'redlib': ['https://safereddit.com'],
 	'libreddit': ['https://libreddit.spike.codes'],
 	'teddit': ['https://teddit.net'],
 	'scribe': ['https://scribe.rip'],
