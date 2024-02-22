@@ -496,6 +496,9 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 				const watch = url.pathname.substring(url.pathname.lastIndexOf('/') + 1)
 				return `${randomInstance}/watch?v=${watch}`
 			}
+			if (url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/redirect?")) {
+				return url.href
+			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "invidiousMusic": {
