@@ -904,7 +904,8 @@
 				}
 			},
 			"targets": [
-				"^https?:\\/{2}search\\.libredirect\\.invalid"
+				"^https?:\\/{2}search\\.libredirect\\.invalid",
+				"^https?:\\/{2}libredirect\\.github\\.io\\/\\?q"
 			],
 			"name": "Search",
 			"options": {
