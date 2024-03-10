@@ -99,5 +99,8 @@
     },
     "about": {
         "message": "Sobre"
+    },
+    "disable": {
+        "message": "Desativar"
     }
 }
