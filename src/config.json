@@ -161,36 +161,6 @@
 			"imageType": "png",
 			"url": "https://music.youtube.com"
 		},
-		"twitter": {
-			"frontends": {
-				"nitter": {
-					"name": "Nitter",
-					"embeddable": true,
-					"instanceList": true,
-					"url": "https://github.com/zedeus/nitter",
-					"localhost": true
-				}
-			},
-			"targets": [
-				"^https?:\\/{2}(www\\.|mobile\\.)?twitter\\.com\\/",
-				"^https?:\\/{2}(www\\.|mobile\\.)?x\\.com\\/",
-				"^https?:\\/{2}(pbs\\.|video\\.)twimg\\.com\\/",
-				"^https?:\\/{2}platform\\.x\\.com/embed\\/",
-				"^https?:\\/{2}platform\\.twitter\\.com/embed\\/",
-				"^https?:\\/{2}t\\.co\\/"
-			],
-			"name": "Twitter",
-			"options": {
-				"enabled": false,
-				"redirectType": "main_frame",
-				"unsupportedUrls": "bypass",
-				"frontend": "nitter",
-				"instance": "public"
-			},
-			"imageType": "png",
-			"embeddable": true,
-			"url": "https://twitter.com"
-		},
 		"bluesky": {
 			"frontends": {
 				"skyview": {

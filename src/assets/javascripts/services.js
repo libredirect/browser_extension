@@ -140,30 +140,6 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 		case "send": {
 			return randomInstance
 		}
-		case "nitter": {
-			let search = new URLSearchParams(url.search)
-
-			search.delete("ref_src")
-			search.delete("ref_url")
-			search.delete("s") // type of device that shared the link
-			search.delete("t") // some sort of tracking ID
-
-			search = search.toString()
-			if (search !== "") search = `?${search}`
-
-			if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video") {
-				try {
-					const [, id, format, extra] = search.match(/(.*)\?format=(.*)&(.*)/)
-					const query = encodeURIComponent(`${id}.${format}?${extra}`)
-					return `${randomInstance}/pic${url.pathname}${query}`
-				} catch {
-					return `${randomInstance}/pic${url.pathname}${search}`
-				}
-			}
-			if (url.pathname.split("/").includes("tweets")) return `${randomInstance}${url.pathname.replace("/tweets", "")}${search}`
-			if (url.host == "t.co") return `${randomInstance}/t.co${url.pathname}`
-			return `${randomInstance}${url.pathname}${search}#m`
-		}
 		case "yattee": {
 			return url.href.replace(/^https?:\/{2}/, "yattee://")
 		}
@@ -713,7 +689,6 @@ const defaultInstances = {
 	'cloudtube': ['https://tube.cadence.moe'],
 	'poketube': ['https://poketube.fun'],
 	'proxiTok': ['https://proxitok.pabloferreiro.es'],
-	'nitter': ['https://nitter.net'],
 	'redlib': ['https://safereddit.com'],
 	'libreddit': ['https://libreddit.spike.codes'],
 	'teddit': ['https://teddit.net'],
