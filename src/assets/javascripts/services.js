@@ -642,7 +642,6 @@ async function reverse(url) {
 			case "imdb":
 			case "imgur":
 			case "tiktok":
-			case "twitter":
 			case "reddit":
 			case "imdb":
 			case "snopes":
@@ -702,7 +701,6 @@ const defaultInstances = {
 	'4get': ['https://4get.ca'],
 	'rimgo': ['https://rimgo.vern.cc'],
 	'hyperpipe': ['https://hyperpipe.surge.sh'],
-	'facil': [' https://facilmap.org '],
 	'osm': ['https://www.openstreetmap.org'],
 	'breezeWiki': ['https://breezewiki.com'],
 	'neuters': ['https://neuters.de'],
@@ -749,12 +747,12 @@ function initDefaults() {
 					}
 				}
 			}
-			options['exceptions'] = {
+			options.exceptions = {
 				url: [],
 				regex: [],
 			}
 			options.theme = "detect"
-			options.popupServices = ["youtube", "twitter", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
+			options.popupServices = ["youtube", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
 			options.fetchInstances = 'github'
 			options.redirectOnlyInIncognito = false
 
@@ -781,28 +779,27 @@ function upgradeOptions() {
 
 function processUpdate() {
 	return new Promise(async resolve => {
-		let config = await utils.getConfig()
+		let frontends = []
+		const config = await utils.getConfig()
 		let options = await utils.getOptions()
 		for (const service in config.services) {
 			if (!options[service]) options[service] = {}
 
 			if (!(options[service].frontend in config.services[service].frontends)) {
-				options[service] = config.services[service].options
-				delete options[options[service].frontend]
+				options[service] = config.services[service].options // Reset settings for service
+				delete options[options[service].frontend] // Remove deprecated frontend
 			}
 
 			for (const defaultOption in config.services[service].options) {
-				if (options[service][defaultOption] === undefined) {
+				if (!(defaultOption in options[service])) {
 					options[service][defaultOption] = config.services[service].options[defaultOption]
 				}
 			}
 
 			for (const frontend in config.services[service].frontends) {
-				if (options[frontend] === undefined && config.services[service].frontends[frontend].instanceList) {
-					options[frontend] = defaultInstances[frontend]
-				}
-				else if (frontend in options && !(frontend in config.services[service].frontends)) {
-					delete options[frontend]
+				frontends.push(frontend)
+				if (!(frontend in options) && config.services[service].frontends[frontend].instanceList) {
+					options[frontend] = defaultInstances[frontend] || []
 				}
 			}
 
@@ -811,6 +808,20 @@ function processUpdate() {
 					const i = options.popupServices.indexOf(frontend);
 					if (i > -1) options.popupServices.splice(i, 1);
 				}
+			}
+		}
+		const general = ['theme', 'popupServices', 'fetchInstances', 'redirectOnlyInIncognito']
+		const combined = [
+			...Object.keys(config.services),
+			...frontends,
+			...general,
+			'exceptions',
+			'popupServices',
+			'version',
+		]
+		for (const key in options) {
+			if (combined.indexOf(key) < 0) {
+				delete options[key] // Remove any unknown settings in options
 			}
 		}
 		browser.storage.local.set({ options }, () => {
