@@ -6,16 +6,6 @@ html(lang="en")
         link(href="../stylesheets/styles.css" rel="stylesheet")
         link(href="./style.css" rel="stylesheet")
     body(dir="auto")
-        div(id="current_site")
-            include /src/pages/popup/switches
-            div(id="current_site_divider" style="display: none")
-                hr
-
-        div(id="all_sites")
-            include /src/pages/popup/switches
-
-        hr
-
         div(class="block" id="change_instance_div" style="display: none")
             button(class="title button bottom-button" id="change_instance")
                 label(data-localise="__MSG_switchInstance__") Switch Instance
@@ -39,6 +29,18 @@ html(lang="en")
                 label Redirect To Original
                 svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="xMinYMin meet" fill="currentColor")
                     path(d="M 17,20 V 11 Q 17,10.175 16.412,9.587 15.825,9 15,9 H 6.8 L 8.4,7.4 7,6 3,10 7,14 8.4,12.6 6.8,11 H 15 v 9 z" id="path2")
+
+        hr
+
+        div(id="current_site")
+            include /src/pages/popup/switches
+            div(id="current_site_divider" style="display: none")
+                hr
+
+        div(id="all_sites")
+            include /src/pages/popup/switches
+
+        hr
 
         div(class="block")
             a(class="title button bottom-button" id="more-options")
