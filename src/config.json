@@ -737,6 +737,26 @@
 			"imageType": "svg",
 			"url": "https://ifunny.co"
 		},
+		"tenor": {
+			"frontends": {
+				"soprano": {
+					"name": "Soprano",
+					"instanceList": true,
+					"url": "https://git.vern.cc/cobra/Soprano"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?tenor\\.com\\/"
+			],
+			"name": "Tenor",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "soprano"
+			},
+			"imageType": "svg",
+			"url": "https://tenor.com"
+		},
 		"urbanDictionary": {
 			"frontends": {
 				"ruralDictionary": {

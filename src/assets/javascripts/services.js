@@ -718,6 +718,7 @@ const defaultInstances = {
 	'wikiless': ['https://wikiless.org'],
 	'suds': ['https://sd.vern.cc'],
 	'unfunny': ['https://uf.vern.cc'],
+	'soprano': ['https://sp.vern.cc'],
 	'waybackClassic': ['https://wayback-classic.net'],
 	'gothub': ['https://gh.odyssey346.dev'],
 	'mikuInvidious': ['https://mikuinv.resrv.org'],
