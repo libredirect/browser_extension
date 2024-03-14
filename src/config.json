@@ -717,6 +717,26 @@
 			"imageType": "svg",
 			"url": "https://www.snopes.com"
 		},
+		"ifunny": {
+			"frontends": {
+				"unfunny": {
+					"name": "UNfunny",
+					"instanceList": true,
+					"url": "https://git.vern.cc/cobra/UNfunny"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?ifunny\\.co\\/"
+			],
+			"name": "iFunny",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "unfunny"
+			},
+			"imageType": "svg",
+			"url": "https://ifunny.co"
+		},
 		"urbanDictionary": {
 			"frontends": {
 				"ruralDictionary": {

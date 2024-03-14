@@ -717,6 +717,7 @@ const defaultInstances = {
 	'biblioReads': ['https://biblioreads.ml'],
 	'wikiless': ['https://wikiless.org'],
 	'suds': ['https://sd.vern.cc'],
+	'unfunny': ['https://uf.vern.cc'],
 	'waybackClassic': ['https://wayback-classic.net'],
 	'gothub': ['https://gh.odyssey346.dev'],
 	'mikuInvidious': ['https://mikuinv.resrv.org'],
