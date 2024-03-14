@@ -62,68 +62,21 @@ async function redirectAsync(url, type, initiator, forceRedirection) {
 }
 
 /**
- * @param {URL} url
- * @param {string} type
- * @param {URL} initiator
- * @param {boolean} forceRedirection
- * @returns {string | undefined}
+ * @param url
+ * @param frontend
+ * @param randomInstance
+ * @returns {undefined|string}
  */
-function redirect(url, type, initiator, forceRedirection, incognito) {
-	if (type != "main_frame" && type != "sub_frame" && type != "image") return
-	let randomInstance
-	let frontend
-	if (!forceRedirection && options.redirectOnlyInIncognito == true && !incognito) return
-	for (const service in config.services) {
-		if (!forceRedirection && !options[service].enabled) continue
-
-		frontend = options[service].frontend
-
-
-		if (config.services[service].frontends[frontend].desktopApp && type != "main_frame" && options[service].redirectType != "main_frame")
-			frontend = options[service].embedFrontend
-
-
-		if (!regexArray(service, url, config, frontend)) {
-			frontend = null
-			continue
-		}
-
-		if (
-			config.services[service].embeddable &&
-			type != options[service].redirectType && options[service].redirectType != "both"
-		) {
-			if (options[service].unsupportedUrls == 'block') return 'CANCEL'
-			return
-		}
-
-		let instanceList = options[frontend]
-		if (instanceList === undefined) break
-		if (instanceList.length === 0) return null
-
-		if (
-			initiator
-			&&
-			instanceList.includes(initiator.origin)
-		) {
-			if (type != "main_frame") return null
-			else return "BYPASSTAB"
-		}
-
-		randomInstance = utils.getRandomInstance(instanceList)
-		if (config.services[service].frontends[frontend].localhost && options[service].instance == "localhost") {
-			randomInstance = `http://${frontend}.localhost:8080`
-		}
-		break
-	}
-	if (!frontend) return
-
+function rewrite(url, frontend, randomInstance) {
+	if (!frontend || !randomInstance) return
 	switch (frontend) {
 		case "hyperpipe": {
 			return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/"))
 		}
 		case "searx":
-		case "searxng":
+		case "searxng": {
 			return `${randomInstance}/${url.search}`
+		}
 		case "whoogle": {
 			return `${randomInstance}/search${url.search}`
 		}
@@ -149,7 +102,6 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 		case "freetubePwa": {
 			return 'freetube://' + url.href
 		}
-
 		case "poketube": {
 			if (url.pathname.startsWith('/channel')) {
 				const reg = /\/channel\/(.*)\/?$/.exec(url.pathname)
@@ -555,6 +507,60 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 	}
+}
+
+/**
+ * @param {URL} url
+ * @param {string} type
+ * @param {URL} initiator
+ * @param {boolean} forceRedirection
+ * @returns {string | undefined}
+ */
+function redirect(url, type, initiator, forceRedirection, incognito) {
+	if (type != "main_frame" && type != "sub_frame" && type != "image") return
+	let randomInstance
+	let frontend
+	if (!forceRedirection && options.redirectOnlyInIncognito == true && !incognito) return
+	for (const service in config.services) {
+		if (!forceRedirection && !options[service].enabled) continue
+
+		frontend = options[service].frontend
+
+		if (config.services[service].frontends[frontend].desktopApp && type != "main_frame" && options[service].redirectType != "main_frame")
+			frontend = options[service].embedFrontend
+
+		if (!regexArray(service, url, config, frontend)) {
+			frontend = null
+			continue
+		}
+
+		if (
+			config.services[service].embeddable
+			&&
+			type != options[service].redirectType && options[service].redirectType != "both"
+		) {
+			if (options[service].unsupportedUrls == 'block') return 'CANCEL'
+			return
+		}
+
+		let instanceList = options[frontend]
+		if (instanceList === undefined) break
+		if (instanceList.length === 0) return null
+
+		if (initiator && instanceList.includes(initiator.origin)) {
+			if (type != "main_frame") return null
+			else return "BYPASSTAB"
+		}
+
+		randomInstance = utils.getRandomInstance(instanceList)
+		if (config.services[service].frontends[frontend].localhost && options[service].instance == "localhost") {
+			randomInstance = `http://${frontend}.localhost:8080`
+		}
+		break
+	}
+	if (!frontend) return
+
+	return rewrite(url, frontend, randomInstance)
 }
 
 /**
