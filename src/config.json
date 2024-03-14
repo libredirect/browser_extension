@@ -757,6 +757,26 @@
 			"imageType": "svg",
 			"url": "https://tenor.com"
 		},
+		"knowyourmeme": {
+			"frontends": {
+				"meme": {
+					"name": "MeMe",
+					"instanceList": true,
+					"url": "https://git.vern.cc/cobra/MeMe"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?knowyourmeme\\.com\\/"
+			],
+			"name": "KnowYourMeme",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "meme"
+			},
+			"imageType": "svg",
+			"url": "https://knowyourmeme.com"
+		},
 		"urbanDictionary": {
 			"frontends": {
 				"ruralDictionary": {

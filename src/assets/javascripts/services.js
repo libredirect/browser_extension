@@ -719,6 +719,7 @@ const defaultInstances = {
 	'suds': ['https://sd.vern.cc'],
 	'unfunny': ['https://uf.vern.cc'],
 	'soprano': ['https://sp.vern.cc'],
+	'meme': ['https://mm.vern.cc'],
 	'waybackClassic': ['https://wayback-classic.net'],
 	'gothub': ['https://gh.odyssey346.dev'],
 	'mikuInvidious': ['https://mikuinv.resrv.org'],
