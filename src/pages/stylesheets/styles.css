@@ -375,18 +375,26 @@ input:disabled {
 	cursor: not-allowed;
 }
 
-
 @media (max-width: 1250px) {
 	body.option {
 		flex-direction: column;
-		width: 750px;
+		width: 95vw;
 		align-items: center;
+		padding: 40px 0px;
 	}
 
 	section.links {
 		flex-direction: row;
-		width: 750px;
+		width: 95vw;
 		padding: 0 55px;
+	}
+
+	section.block-option {
+		width: 95vw;
+	}
+
+	div.checklist div x {
+		overflow: hidden;
 	}
 }
 
