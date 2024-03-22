@@ -367,7 +367,7 @@ function rewrite(url, frontend, randomInstance) {
 			if (url.hostname.endsWith('bandcamp.com')) {
 				const regex = /^(.*)\.bandcamp\.com/.exec(url.hostname)
 				const artist = regex[1]
-				if (url.pathname == '/') {
+				if (url.pathname == '/' || url.pathname == '/music') {
 					return `${randomInstance}/artist.php?name=${artist}`
 				} else {
 					const regex = /^\/(.*)\/(.*)/.exec(url.pathname)
