@@ -716,6 +716,66 @@
 			"imageType": "svg",
 			"url": "https://www.snopes.com"
 		},
+		"ifunny": {
+			"frontends": {
+				"unfunny": {
+					"name": "UNfunny",
+					"instanceList": true,
+					"url": "https://git.vern.cc/cobra/UNfunny"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?ifunny\\.co\\/"
+			],
+			"name": "iFunny",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "unfunny"
+			},
+			"imageType": "svg",
+			"url": "https://ifunny.co"
+		},
+		"tenor": {
+			"frontends": {
+				"soprano": {
+					"name": "Soprano",
+					"instanceList": true,
+					"url": "https://git.vern.cc/cobra/Soprano"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?tenor\\.com\\/"
+			],
+			"name": "Tenor",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "soprano"
+			},
+			"imageType": "svg",
+			"url": "https://tenor.com"
+		},
+		"knowyourmeme": {
+			"frontends": {
+				"meme": {
+					"name": "MeMe",
+					"instanceList": true,
+					"url": "https://git.vern.cc/cobra/MeMe"
+				}
+			},
+			"targets": [
+				"^https?:\\/{2}(www\\.)?knowyourmeme\\.com\\/"
+			],
+			"name": "KnowYourMeme",
+			"options": {
+				"enabled": false,
+				"unsupportedUrls": "bypass",
+				"frontend": "meme"
+			},
+			"imageType": "svg",
+			"url": "https://knowyourmeme.com"
+		},
 		"urbanDictionary": {
 			"frontends": {
 				"ruralDictionary": {
