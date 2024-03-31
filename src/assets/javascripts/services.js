@@ -309,11 +309,21 @@ function rewrite(url, frontend, randomInstance) {
 				if (threadID) return `${randomInstance}/questions/${threadID[1]}${url.search}`
 				return `${randomInstance}${url.pathname}${url.search}`
 			}
+			if (url.pathname == "/" || url.pathname == "") {
+				// https://stackexchange.com or https://superuser.com
+				return `${randomInstance}${url.pathname}${url.search}`
+			}
 			const regex = url.href.match(/https?:\/{2}(?:([a-zA-Z0-9-]+)\.)?stackexchange\.com\//)
 			if (regex && regex.length > 1) {
 				const subdomain = regex[1]
 				return `${randomInstance}/exchange/${subdomain}${url.pathname}${url.search}`
 			}
+			const notExchangeRegex = url.hostname.match(/(?:[a-zA-Z]+\.)?(?:askubuntu\.com|mathoverflow\.net|serverfault\.com|stackapps\.com|superuser\.com|stackoverflow\.com)/)
+			if (notExchangeRegex) {
+				return `${randomInstance}/exchange/${notExchangeRegex[0]}${url.pathname}${url.search}`
+			}
+			// "Default case"
+			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "biblioReads": {
 			return `${randomInstance}${url.pathname}${url.search}`
