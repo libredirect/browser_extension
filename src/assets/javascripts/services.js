@@ -62,13 +62,12 @@ async function redirectAsync(url, type, initiator, forceRedirection) {
 }
 
 /**
- * @param url
- * @param frontend
- * @param randomInstance
+ * @param {URL} url
+ * @param {string} frontend
+ * @param {string} randomInstance
  * @returns {undefined|string}
  */
 function rewrite(url, frontend, randomInstance) {
-	if (!frontend || !randomInstance) return
 	switch (frontend) {
 		case "hyperpipe": {
 			return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/"))
@@ -316,7 +315,6 @@ function rewrite(url, frontend, randomInstance) {
 			if (notExchangeRegex) {
 				return `${randomInstance}/exchange/${notExchangeRegex[0]}${url.pathname}${url.search}`
 			}
-			// "Default case"
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "biblioReads": {
