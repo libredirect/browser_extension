@@ -32,6 +32,7 @@ let tabIdRedirects = {}
 browser.webRequest.onBeforeRequest.addListener(
 	details => {
 		const url = new URL(details.url)
+		const old_href = url.href
 		if (new RegExp(/^chrome-extension:\/{2}.*\/instances\/.*.json$/).test(url.href) && details.type == "xmlhttprequest") return
 		let initiator
 		try {
@@ -71,7 +72,7 @@ browser.webRequest.onBeforeRequest.addListener(
 				if (tabIdRedirects[details.tabId] != false) tabIdRedirects[details.tabId] = false
 				return null
 			}
-			console.log("Redirecting", url.href, "=>", newUrl)
+			console.log("Redirecting", old_href, "=>", newUrl)
 			return { redirectUrl: newUrl }
 		}
 		return null

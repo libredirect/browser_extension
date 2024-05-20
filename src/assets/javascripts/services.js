@@ -81,12 +81,16 @@ function rewrite(url, frontend, randomInstance) {
 		case "librey":
 			return `${randomInstance}/search.php${url.search}`
 		case "yattee":
+			url.searchParams.delete("si")
 			return url.href.replace(/^https?:\/{2}/, "yattee://")
 		case "freetube":
+			url.searchParams.delete("si")
 			return 'freetube://' + url.href
 		case "freetubePwa":
+			url.searchParams.delete("si")
 			return 'freetube://' + url.href
 		case "poketube": {
+			url.searchParams.delete("si")
 			if (url.pathname.startsWith('/channel')) {
 				const reg = /\/channel\/(.*)\/?$/.exec(url.pathname)
 				if (reg) {
@@ -383,6 +387,7 @@ function rewrite(url, frontend, randomInstance) {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "invidious": {
+			url.searchParams.delete("si")
 			if (url.hostname == "youtu.be" || url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/live")) {
 				const watch = url.pathname.substring(url.pathname.lastIndexOf('/') + 1)
 				return `${randomInstance}/watch?v=${watch}${url.search.replace("?", "&")}`
@@ -407,6 +412,7 @@ function rewrite(url, frontend, randomInstance) {
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "tuboYoutube":
+			url.searchParams.delete("si")
 			if (url.pathname.startsWith("/channel")) return `${randomInstance}/channel?url=${encodeURIComponent(url.href)}`
 			if (url.pathname.startsWith("/watch")) return `${randomInstance}/stream?url=${encodeURIComponent(url.href)}`
 			return randomInstance
@@ -442,6 +448,11 @@ function rewrite(url, frontend, randomInstance) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`;
 		}
+		case "piped":
+		case "pipedMaterial":
+		case "cloudtube":
+		case "viewtube":
+			url.searchParams.delete("si")
 		default:
 			return `${randomInstance}${url.pathname}${url.search}`
 	}
