@@ -206,10 +206,7 @@ document.getElementById("custom-exceptions-instance-form").addEventListener("sub
 	if (val) {
 		options = await utils.getOptions()
 		options.exceptions = exceptionsCustomInstances
-		browser.storage.local.set({ options }, () =>
-			nameCustomInstanceInput.value = ""
-		)
-
+		browser.storage.local.set({ options }, () => nameCustomInstanceInput.value = "")
 	}
 	calcExceptionsCustomInstances()
 })

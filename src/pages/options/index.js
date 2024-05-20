@@ -260,7 +260,7 @@ async function processCustomInstances(frontend, document) {
 /**
  * @param {string} frontend
  * @param {*} networks
- * @param {*} document
+ * @param {Document} document
  * @param {*} redirects
  * @param {*} blacklist
  */
@@ -393,7 +393,5 @@ function processTime(time) {
 		color = "red"
 		text = 'Server not found'
 	}
-	return {
-		color, text
-	}
+	return { color, text }
 }

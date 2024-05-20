@@ -15,13 +15,8 @@ function getRandomInstance(instances) {
  */
 function getNextInstance(currentInstanceUrl, instances) {
 	const currentInstanceIndex = instances.indexOf(currentInstanceUrl);
-
-	if (currentInstanceIndex === -1){
-		return getRandomInstance(instances);
-	}
-
+	if (currentInstanceIndex === -1) return getRandomInstance(instances);
 	const nextInstanceIndex = (currentInstanceIndex + 1) % instances.length;
-
 	return instances[nextInstanceIndex];
 }
 
@@ -101,12 +96,8 @@ function getPingCache() {
 function getBlacklist(options) {
 	return new Promise(resolve => {
 		let url
-		if (options.fetchInstances == 'github') {
-			url = 'https://raw.githubusercontent.com/libredirect/instances/main/blacklist.json'
-		}
-		else if (options.fetchInstances == 'codeberg') {
-			url = 'https://codeberg.org/LibRedirect/instances/raw/branch/main/blacklist.json'
-		}
+		if (options.fetchInstances == 'github') url = 'https://raw.githubusercontent.com/libredirect/instances/main/blacklist.json'
+		else if (options.fetchInstances == 'codeberg') url = 'https://codeberg.org/LibRedirect/instances/raw/branch/main/blacklist.json'
 		else {
 			resolve('disabled')
 			return
@@ -134,12 +125,8 @@ function getBlacklist(options) {
 function getList(options) {
 	return new Promise(resolve => {
 		let url
-		if (options.fetchInstances == 'github') {
-			url = 'https://raw.githubusercontent.com/libredirect/instances/main/data.json'
-		}
-		else if (options.fetchInstances == 'codeberg') {
-			url = 'https://codeberg.org/LibRedirect/instances/raw/branch/main/data.json'
-		}
+		if (options.fetchInstances == 'github') url = 'https://raw.githubusercontent.com/libredirect/instances/main/data.json'
+		else if (options.fetchInstances == 'codeberg') url = 'https://codeberg.org/LibRedirect/instances/raw/branch/main/data.json'
 		else {
 			resolve('disabled')
 			return

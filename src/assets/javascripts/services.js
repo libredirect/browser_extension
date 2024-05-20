@@ -5,12 +5,9 @@ window.browser = window.browser || window.chrome
 
 let config, options
 
-function init() {
-	return new Promise(async resolve => {
-		options = await utils.getOptions()
-		config = await utils.getConfig()
-		resolve()
-	})
+async function init() {
+	options = await utils.getOptions()
+	config = await utils.getConfig()
 }
 
 init()
@@ -69,38 +66,26 @@ async function redirectAsync(url, type, initiator, forceRedirection) {
  */
 function rewrite(url, frontend, randomInstance) {
 	switch (frontend) {
-		case "hyperpipe": {
+		case "hyperpipe":
 			return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery => searchQuery.replace("?q=", "/"))
-		}
 		case "searx":
-		case "searxng": {
+		case "searxng":
 			return `${randomInstance}/${url.search}`
-		}
-		case "whoogle": {
+		case "whoogle":
 			return `${randomInstance}/search${url.search}`
-		}
 		case "4get": {
 			const s = url.searchParams.get("q")
-			if (s !== null) {
-				return `${randomInstance}/web?s=${encodeURIComponent(s)}`
-			}
+			if (s !== null) return `${randomInstance}/web?s=${encodeURIComponent(s)}`
 			return randomInstance
 		}
-		case "librey": {
+		case "librey":
 			return `${randomInstance}/search.php${url.search}`
-		}
-		case "send": {
-			return randomInstance
-		}
-		case "yattee": {
+		case "yattee":
 			return url.href.replace(/^https?:\/{2}/, "yattee://")
-		}
-		case "freetube": {
+		case "freetube":
 			return 'freetube://' + url.href
-		}
-		case "freetubePwa": {
+		case "freetubePwa":
 			return 'freetube://' + url.href
-		}
 		case "poketube": {
 			if (url.pathname.startsWith('/channel')) {
 				const reg = /\/channel\/(.*)\/?$/.exec(url.pathname)
@@ -123,19 +108,13 @@ function rewrite(url, frontend, randomInstance) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
-		case "simplyTranslate": {
+		case "simplyTranslate":
 			return `${randomInstance}/${url.search}`
-		}
-		case "mozhi": {
-			return `${randomInstance}`
-		}
-		case "libreTranslate": {
-			let search = url.search
-				.replace("sl", "source")
-				.replace("tl", "target")
-				.replace("text", "q")
-			return `${randomInstance}/${search}`
-		}
+		case "send":
+		case "mozhi":
+			return randomInstance
+		case "libreTranslate":
+			return `${randomInstance}/${url.search.replace("sl", "source").replace("tl", "target").replace("text", "q")}`
 		case "osm": {
 			const placeRegex = /\/place\/(.*?)\//
 			function convertMapCentre(url) {
@@ -249,12 +228,9 @@ function rewrite(url, frontend, randomInstance) {
 			}
 			return `${randomInstance}${wiki}${urlpath}${url.search}`
 		}
-		case "rimgo": {
-			if (url.href.search(/^https?:\/{2}(?:[im]\.)?stack\./) > -1) {
-				return `${randomInstance}/stack${url.pathname}${url.search}`
-			}
+		case "rimgo":
+			if (url.href.search(/^https?:\/{2}(?:[im]\.)?stack\./) > -1) return `${randomInstance}/stack${url.pathname}${url.search}`
 			return `${randomInstance}${url.pathname}${url.search}`
-		}
 		case "redlib":
 		case "libreddit": {
 			const subdomain = url.hostname.match(/^(?:(?:external-)?preview|i)(?=\.redd\.it)/)
@@ -269,13 +245,12 @@ function rewrite(url, frontend, randomInstance) {
 			}
 			return randomInstance
 		}
-		case "teddit": {
+		case "teddit":
 			if (/^(?:(?:external-)?preview|i)\.redd\.it/.test(url.hostname)) {
 				if (url.search == "") return `${randomInstance}${url.pathname}?teddit_proxy=${url.hostname}`
 				else return `${randomInstance}${url.pathname}${url.search}&teddit_proxy=${url.hostname}`
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
-		}
 		case "neuters": {
 			const p = url.pathname
 			if (p.startsWith('/article/') || p.startsWith('/pf/') || p.startsWith('/arc/') || p.startsWith('/resizer/')) {
@@ -283,19 +258,14 @@ function rewrite(url, frontend, randomInstance) {
 			}
 			return `${randomInstance}${p}`
 		}
-		case "dumb": {
-			if (url.pathname.endsWith('-lyrics')) {
-				return `${randomInstance}${url.pathname}`
-			}
+		case "dumb":
+			if (url.pathname.endsWith('-lyrics')) return `${randomInstance}${url.pathname}`
 			return `${randomInstance}${url.pathname}${url.search}`
-		}
-		case "intellectual": {
+		case "intellectual":
 			return `${randomInstance}${url.pathname}${url.search}`
-		}
-		case "ruralDictionary": {
+		case "ruralDictionary":
 			if (!url.pathname.includes('/define.php') && !url.pathname.includes('/random.php') && url.pathname != '/') return randomInstance
 			return `${randomInstance}${url.pathname}${url.search}`
-		}
 		case "anonymousOverflow": {
 			if (url.hostname == "stackoverflow.com") {
 				const threadID = /^\/a\/(\d+)\/?/.exec(url.pathname)
@@ -317,9 +287,8 @@ function rewrite(url, frontend, randomInstance) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
-		case "biblioReads": {
+		case "biblioReads":
 			return `${randomInstance}${url.pathname}${url.search}`
-		}
 		case "wikiless": {
 			let hostSplit = url.host.split(".")
 			// wikiless doesn't have mobile view support yet
@@ -330,10 +299,9 @@ function rewrite(url, frontend, randomInstance) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}${url.hash}`
 		}
-		case "proxiTok": {
+		case "proxiTok":
 			if (url.pathname.startsWith('/email')) return randomInstance
 			return `${randomInstance}${url.pathname}${url.search}`
-		}
 		case "waybackClassic": {
 			const regex = /^\/\web\/(?:[0-9]+)?\*\/(.*)/.exec(url.pathname)
 			if (regex) {
@@ -348,19 +316,13 @@ function rewrite(url, frontend, randomInstance) {
 			}
 			return
 		}
-		case "gothub": {
+		case "gothub":
 			if (url.hostname == "gist.github.com") return `${randomInstance}/gist${url.pathname}${url.search}`
 			if (url.hostname == "raw.githubusercontent.com") return `${randomInstance}/raw${url.pathname}${url.search}`
 			return `${randomInstance}${url.pathname}${url.search}`
-		}
-		case "mikuInvidious": {
-			if (url.hostname == "bilibili.com" || url.hostname == "www.bilibili.com" || url.hostname == 'b23.tv') {
-				return `${randomInstance}${url.pathname}${url.search}`
-			}
-			if (url.hostname == "space.bilibili.com") {
-				return `${randomInstance}/space${url.pathname}${url.search}`
-			}
-		}
+		case "mikuInvidious":
+			if (url.hostname == "bilibili.com" || url.hostname == "www.bilibili.com" || url.hostname == 'b23.tv') return `${randomInstance}${url.pathname}${url.search}`
+			if (url.hostname == "space.bilibili.com") return `${randomInstance}/space${url.pathname}${url.search}`
 		case "tent": {
 			if (url.hostname == 'bandcamp.com' && url.pathname == '/search') {
 				const query = url.searchParams.get('q')
@@ -396,9 +358,8 @@ function rewrite(url, frontend, randomInstance) {
 				}
 			}
 		}
-		case "binternet": {
+		case "binternet":
 			if (url.hostname == "i.pinimg.com") return `${randomInstance}/image_proxy.php?url=${url.href}`
-		}
 		case "laboratory": {
 			let path = url.pathname
 			if (path == "/") path = ""
@@ -446,68 +407,44 @@ function rewrite(url, frontend, randomInstance) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
-		case "tuboYoutube": {
-			if (url.pathname.startsWith("/channel")) {
-				return `${randomInstance}/channel?url=${encodeURIComponent(url.href)}`
-			}
-			if (url.pathname.startsWith("/watch")) {
-				return `${randomInstance}/stream?url=${encodeURIComponent(url.href)}`
-			}
-			return `${randomInstance}`
-		}
-		case "tuboSoundcloud": {
+		case "tuboYoutube":
+			if (url.pathname.startsWith("/channel")) return `${randomInstance}/channel?url=${encodeURIComponent(url.href)}`
+			if (url.pathname.startsWith("/watch")) return `${randomInstance}/stream?url=${encodeURIComponent(url.href)}`
+			return randomInstance
+		case "tuboSoundcloud":
 			if (url.pathname == '/') return `${randomInstance}?kiosk?serviceId=1`
-			if (url.pathname.match(/^\/[^\/]+(\/$|$)/)) {
-				return `${randomInstance}/channel?url=${encodeURIComponent(url.href)}`
-			}
-			if (url.pathname.match(/^\/[^\/]+\/[^\/]+/)) {
-				return `${randomInstance}/stream?url=${encodeURIComponent(url.href)}`
-			}
-			return `${randomInstance}`
-		}
+			if (url.pathname.match(/^\/[^\/]+(\/$|$)/)) return `${randomInstance}/channel?url=${encodeURIComponent(url.href)}`
+			if (url.pathname.match(/^\/[^\/]+\/[^\/]+/)) return `${randomInstance}/stream?url=${encodeURIComponent(url.href)}`
+			return randomInstance
 		case "twineo":
-		case "safetwitch": {
-			if (url.hostname.startsWith("clips.")) {
-				return `${randomInstance}/clip${url.pathname}${url.search}`
-			}
+		case "safetwitch":
+			if (url.hostname.startsWith("clips.")) return `${randomInstance}/clip${url.pathname}${url.search}`
 			return `${randomInstance}${url.pathname}${url.search}`
-		}
-		case "tekstoLibre": {
+
+		case "tekstoLibre":
 			return `${randomInstance}/?${url.pathname.slice(1)}`;
-		}
-		case "skyview": {
+		case "skyview":
 			if (url.pathname == '/') return randomInstance
 			return `${randomInstance}?url=${encodeURIComponent(url.href)}`
-		}
 		case "priviblur": {
-			if (url.hostname == "www.tumblr.com")
-				return `${randomInstance}${url.pathname}${url.search}`
-
-			if (url.hostname.startsWith("assets"))
-				return `${randomInstance}/tblr/assets${url.pathname}${url.search}`
-
-			if (url.hostname.startsWith("static"))
-				return `${randomInstance}/tblr/static${url.pathname}${url.search}`
+			if (url.hostname == "www.tumblr.com") return `${randomInstance}${url.pathname}${url.search}`
+			if (url.hostname.startsWith("assets")) return `${randomInstance}/tblr/assets${url.pathname}${url.search}`
+			if (url.hostname.startsWith("static")) return `${randomInstance}/tblr/static${url.pathname}${url.search}`
 
 			const reg = /^([0-9]+)\.media\.tumblr\.com/.exec(url.hostname) // *.media.tumblr.com
-			if (reg)
-				return `${randomInstance}/tblr/media/${reg[1]}${url.pathname}${url.search}`
+			if (reg) return `${randomInstance}/tblr/media/${reg[1]}${url.pathname}${url.search}`
 
 			const blogregex = /^(?:www\.)?([a-z\d-]+)\.tumblr\.com/.exec(url.hostname) // <blog>.tumblr.com
 			if (blogregex) {
 				const blog_name = blogregex[1];
 				// Under the <blog>.tumblr.com domain posts are under a /post path
-				if (url.pathname.startsWith("/post")) {
-					return `${randomInstance}/${blog_name}${url.pathname.slice(5)}${url.search}`
-				} else {
-					return `${randomInstance}/${blog_name}${url.pathname}${url.search}`;
-				}
+				if (url.pathname.startsWith("/post")) return `${randomInstance}/${blog_name}${url.pathname.slice(5)}${url.search}`
+				else return `${randomInstance}/${blog_name}${url.pathname}${url.search}`;
 			}
 			return `${randomInstance}${url.pathname}${url.search}`;
 		}
-		default: {
+		default:
 			return `${randomInstance}${url.pathname}${url.search}`
-		}
 	}
 }
 
@@ -657,10 +594,11 @@ async function reverse(url) {
 			case "quora":
 			case "medium":
 				return `${config.services[service].url}${url.pathname}${url.search}`
-			case "fandom":
+			case "fandom": {
 				let regex = url.pathname.match(/^\/([a-zA-Z0-9-]+)\/wiki\/(.*)/)
 				if (regex) return `https://${regex[1]}.fandom.com/wiki/${regex[2]}`
 				return
+			}
 			case "wikipedia": {
 				const lang = url.searchParams.get("lang")
 				if (lang != null) {
@@ -678,9 +616,8 @@ async function reverse(url) {
 				}
 				return
 			}
-			case "tekstowo": {
+			case "tekstowo":
 				return `${config.services[service].url}/${url.search.slice(1)}`
-			}
 			default:
 				return
 		}
@@ -875,8 +812,7 @@ function isException(url) {
 		if (exceptions.url) {
 			for (let item of exceptions.url) {
 				item = new URL(item)
-				item = item.href
-				item = item.replace(/^http:\/\//, 'https://')
+				item = item.href.replace(/^http:\/\//, 'https://')
 				if (item == url.href) return true
 			}
 		}
