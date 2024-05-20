@@ -78,19 +78,11 @@ function getConfig() {
  * @returns {Promise<Object.<string, Option | string[]>>}
  */
 function getOptions() {
-	return new Promise(resolve =>
-		browser.storage.local.get("options", r => {
-			resolve(r.options)
-		})
-	)
+	return new Promise(resolve => browser.storage.local.get("options", r => resolve(r.options)))
 }
 
 function getPingCache() {
-	return new Promise(resolve =>
-		browser.storage.local.get("pingCache", r => {
-			resolve(r.pingCache ?? {})
-		})
-	)
+	return new Promise(resolve => browser.storage.local.get("pingCache", r => resolve(r.pingCache ?? {})))
 }
 
 function getBlacklist(options) {
@@ -98,26 +90,15 @@ function getBlacklist(options) {
 		let url
 		if (options.fetchInstances == 'github') url = 'https://raw.githubusercontent.com/libredirect/instances/main/blacklist.json'
 		else if (options.fetchInstances == 'codeberg') url = 'https://codeberg.org/LibRedirect/instances/raw/branch/main/blacklist.json'
-		else {
-			resolve('disabled')
-			return
-		}
+		else return resolve('disabled')
 		const http = new XMLHttpRequest()
 		http.open("GET", url, true)
 		http.onreadystatechange = () => {
-			if (http.status === 200 && http.readyState == XMLHttpRequest.DONE) {
+			if (http.status === 200 && http.readyState == XMLHttpRequest.DONE)
 				resolve(JSON.parse(http.responseText))
-				return
-			}
 		}
-		http.onerror = () => {
-			resolve()
-			return
-		}
-		http.ontimeout = () => {
-			resolve()
-			return
-		}
+		http.onerror = () => resolve()
+		http.ontimeout = () => resolve()
 		http.send(null)
 	})
 }
@@ -127,26 +108,15 @@ function getList(options) {
 		let url
 		if (options.fetchInstances == 'github') url = 'https://raw.githubusercontent.com/libredirect/instances/main/data.json'
 		else if (options.fetchInstances == 'codeberg') url = 'https://codeberg.org/LibRedirect/instances/raw/branch/main/data.json'
-		else {
-			resolve('disabled')
-			return
-		}
+		else return resolve('disabled')
 		const http = new XMLHttpRequest()
 		http.open("GET", url, true)
 		http.onreadystatechange = () => {
-			if (http.status === 200 && http.readyState == XMLHttpRequest.DONE) {
-				resolve(JSON.parse(http.responseText))
-				return
-			}
+			if (http.status === 200 && http.readyState == XMLHttpRequest.DONE)
+				return resolve(JSON.parse(http.responseText))
 		}
-		http.onerror = () => {
-			resolve()
-			return
-		}
-		http.ontimeout = () => {
-			resolve()
-			return
-		}
+		http.onerror = () => resolve()
+		http.ontimeout = () => resolve()
 		http.send(null)
 	})
 }

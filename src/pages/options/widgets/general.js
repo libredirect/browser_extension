@@ -8,12 +8,16 @@ const isChrome = browser.runtime.getBrowserInfo === undefined
 
 async function setOption(option, type, event) {
 	let options = await utils.getOptions()
-	if (type == "select") {
-		options[option] = event.target.options[event.target.options.selectedIndex].value
-	} else if (type == "checkbox") {
-		options[option] = event.target.checked
-	} else if (type == "range") {
-		options[option] = event.target.value
+	switch (type) {
+		case "select":
+			options[option] = event.target.options[event.target.options.selectedIndex].value
+			break;
+		case "checkbox":
+			options[option] = event.target.checked
+			break;
+		case "range":
+			options[option] = event.target.value
+			break;
 	}
 	browser.storage.local.set({ options })
 }

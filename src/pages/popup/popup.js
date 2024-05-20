@@ -11,13 +11,10 @@ await browser.runtime.getPlatformInfo(r => {
 	switch (r.os) {
 		case "fuchsia":
 		case "ios":
-		case "android": {
+		case "android":
 			document.getElementsByTagName("html")[0].classList.add("mobile")
-		}
 	}
-}
-)
-
+})
 
 const allSites = document.getElementById("all_sites")
 const currSite = document.getElementById("current_site")
@@ -66,12 +63,10 @@ for (const service in config.services) {
 }
 
 browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
-	let url;
-
 	// Set visibility of control buttons
 	if (tabs[0].url) {
 		const hr = document.getElementById("hr")
-		url = new URL(tabs[0].url)
+		var url = new URL(tabs[0].url)
 		servicesHelper.switchInstance(url).then(r => {
 			if (r) {
 				document.getElementById("change_instance_div").style.display = ""
@@ -81,31 +76,22 @@ browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 				)
 			}
 		})
-		servicesHelper.copyRaw(url, true).then(r => {
-			if (r) {
-				document.getElementById("copy_original_div").style.display = ""
-				hr.style.display = ""
-				document.getElementById("copy_original").addEventListener("click", () =>
-					servicesHelper.copyRaw(url)
-				)
-			}
-		})
 		servicesHelper.reverse(url).then(r => {
 			if (r) {
-				document.getElementById("redirect_to_original_div").style.display = ""
 				hr.style.display = ""
-				document.getElementById("redirect_to_original").addEventListener("click", () =>
-					browser.runtime.sendMessage("reverseTab")
-				)
+
+				document.getElementById("copy_original_div").style.display = ""
+				document.getElementById("copy_original").addEventListener("click", () => servicesHelper.copyRaw(url))
+
+				document.getElementById("redirect_to_original_div").style.display = ""
+				document.getElementById("redirect_to_original").addEventListener("click", () => browser.runtime.sendMessage("reverseTab"))
 			}
 		})
 		servicesHelper.redirectAsync(url, "main_frame", null, true).then(r => {
 			if (r) {
 				document.getElementById("redirect_div").style.display = ""
 				hr.style.display = ""
-				document.getElementById("redirect").addEventListener("click", () =>
-					browser.runtime.sendMessage("redirectTab")
-				)
+				document.getElementById("redirect").addEventListener("click", () => browser.runtime.sendMessage("redirectTab"))
 			}
 		})
 	}

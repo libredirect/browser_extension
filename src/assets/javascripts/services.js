@@ -792,25 +792,21 @@ function processUpdate() {
 
 /**
  * @param {URL} url
- * @param {boolean} test
  */
-async function copyRaw(url, test) {
+async function copyRaw(url) {
 	const newUrl = await reverse(url)
 	if (newUrl) {
-		if (!test) {
-			if (!isChrome) {
-				navigator.clipboard.writeText(newUrl)
-			} else {
-				var copyFrom = document.createElement("textarea");
-				copyFrom.textContent = newUrl;
-				document.body.appendChild(copyFrom);
-				copyFrom.select()
-				document.execCommand('copy')
-				copyFrom.blur();
-				document.body.removeChild(copyFrom);
-			}
+		if (!isChrome) {
+			navigator.clipboard.writeText(newUrl)
+		} else {
+			var copyFrom = document.createElement("textarea");
+			copyFrom.textContent = newUrl;
+			document.body.appendChild(copyFrom);
+			copyFrom.select()
+			document.execCommand('copy')
+			copyFrom.blur();
+			document.body.removeChild(copyFrom);
 		}
-		return newUrl
 	}
 }
 

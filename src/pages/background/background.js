@@ -92,15 +92,15 @@ browser.commands.onCommand.addListener(async command => {
 	browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 		const url = new URL(tabs[0].url)
 		switch (command) {
-			case "switchInstance":
+			case "switchInstance": {
 				const newUrl = await servicesHelper.switchInstance(url)
 				if (newUrl) browser.tabs.update({ url: newUrl })
 				break
-			case "copyRaw": {
+			}
+			case "copyRaw":
 				servicesHelper.copyRaw(url)
 				break
-			}
-			case "redirect": {
+			case "redirect":
 				browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 					if (tabs[0].url) {
 						const url = new URL(tabs[0].url)
@@ -113,8 +113,7 @@ browser.commands.onCommand.addListener(async command => {
 					}
 				})
 				break
-			}
-			case "reverse": {
+			case "reverse":
 				browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 					if (tabs[0].url) {
 						const url = new URL(tabs[0].url)
@@ -127,7 +126,6 @@ browser.commands.onCommand.addListener(async command => {
 					}
 				})
 				break
-			}
 		}
 	})
 })
@@ -164,11 +162,10 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 			if (newUrl) browser.tabs.update({ url: newUrl })
 			return
 		}
-		case 'settingsTab': {
+		case 'settingsTab':
 			browser.runtime.openOptionsPage()
 			return
-		}
-		case 'copyReverseTab': {
+		case 'copyReverseTab':
 			browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 				if (tabs[0].url) {
 					const url = new URL(tabs[0].url)
@@ -176,8 +173,7 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 				}
 			})
 			return
-		}
-		case 'reverseTab': {
+		case 'reverseTab':
 			browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 				if (tabs[0].url) {
 					const url = new URL(tabs[0].url)
@@ -190,8 +186,7 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 				}
 			})
 			return
-		}
-		case 'redirectTab': {
+		case 'redirectTab':
 			browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
 				if (tabs[0].url) {
 					const url = new URL(tabs[0].url)
@@ -204,8 +199,6 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 				}
 			})
 			return
-		}
-
 		case 'copyReverseLink': {
 			const url = new URL(info.linkUrl)
 			await servicesHelper.copyRaw(url)
@@ -238,7 +231,6 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 			}
 			return
 		}
-
 		case 'bypassLink':
 		case 'bypassLinkInNewTab': {
 			const url = new URL(info.linkUrl)
@@ -253,17 +245,14 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 			}
 			return
 		}
-
-		case 'copyReverseBookmark': {
+		case 'copyReverseBookmark':
 			browser.bookmarks.get(info.bookmarkId, bookmarks => {
 				const url = new URL(bookmarks[0].url)
 				servicesHelper.copyRaw(url)
 			});
 			return
-		}
-
 		case 'redirectBookmark':
-		case 'redirectBookmarkInNewTab': {
+		case 'redirectBookmarkInNewTab':
 			browser.bookmarks.get(info.bookmarkId, bookmarks => {
 				const url = new URL(bookmarks[0].url)
 				const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
@@ -273,9 +262,8 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 				}
 			})
 			return
-		}
 		case 'reverseBookmark':
-		case 'reverseBookmarkInNewTab': {
+		case 'reverseBookmarkInNewTab':
 			browser.bookmarks.get(info.bookmarkId, async bookmarks => {
 				const url = new URL(bookmarks[0].url)
 				const newUrl = await servicesHelper.reverse(url)
@@ -292,24 +280,17 @@ browser.contextMenus.onClicked.addListener(async (info) => {
 				}
 			})
 			return
-		}
-
 		case 'bypassBookmark':
-		case 'bypassBookmarkInNewTab': {
+		case 'bypassBookmarkInNewTab':
 			browser.bookmarks.get(info.bookmarkId, async bookmarks => {
 				const url = new URL(bookmarks[0].url)
 				if (info.menuItemId == "bypassBookmark") {
-					browser.tabs.update({ url: url.href }, tab => {
-						tabIdRedirects[tab.id] = false
-					})
+					browser.tabs.update({ url: url.href }, tab => tabIdRedirects[tab.id] = false)
 				} else {
-					browser.tabs.create({ url: url.href }, tab => {
-						tabIdRedirects[tab.id] = false
-					})
+					browser.tabs.create({ url: url.href }, tab => tabIdRedirects[tab.id] = false)
 				}
 				return
 			})
-		}
 	}
 })
 
@@ -319,11 +300,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			if (tabs[0].url) {
 				const url = new URL(tabs[0].url)
 				const newUrl = await servicesHelper.reverse(url)
-				if (newUrl) {
-					browser.tabs.update(tabs[0].id, { url: newUrl }, () => {
-						tabIdRedirects[tabs[0].id] = false
-					})
-				}
+				if (newUrl) browser.tabs.update(tabs[0].id, { url: newUrl }, () => tabIdRedirects[tabs[0].id] = false)
 			}
 		})
 	}
@@ -332,11 +309,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 			if (tabs[0].url) {
 				const url = new URL(tabs[0].url)
 				const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
-				if (newUrl) {
-					browser.tabs.update(tabs[0].id, { url: newUrl }, () => {
-						tabIdRedirects[tabs[0].id] = true
-					})
-				}
+				if (newUrl) browser.tabs.update(tabs[0].id, { url: newUrl }, () => tabIdRedirects[tabs[0].id] = true)
 			}
 		})
 	}
