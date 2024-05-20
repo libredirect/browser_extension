@@ -2,6 +2,8 @@ import utils from "../../assets/javascripts/utils.js"
 
 let config,
 	options,
+	blacklist,
+	redirects,
 	divs = {}
 
 for (const a of document.getElementById("links").getElementsByTagName("a")) {
@@ -148,20 +150,11 @@ async function loadPage(path) {
 		changeFrontendsSettings(service)
 
 
-		for (const frontend in config.services[service].frontends) {
-			if (config.services[service].frontends[frontend].instanceList) {
-				processCustomInstances(frontend, document)
-				document.getElementById(`ping-${frontend}`).addEventListener("click", async () => {
-					document.getElementById(`ping-${frontend}`).getElementsByTagName('x')[0].innerHTML = "Pinging..."
-					await ping(frontend)
-					document.getElementById(`ping-${frontend}`).getElementsByTagName('x')[0].innerHTML = "Ping instances"
-				})
-			}
-		}
+
 
 		!async function () {
-			const blacklist = await utils.getBlacklist(options)
-			const redirects = await utils.getList(options)
+			blacklist = await utils.getBlacklist(options)
+			redirects = await utils.getList(options)
 
 			for (const frontend in config.services[service].frontends) {
 				if (config.services[service].frontends[frontend].instanceList) {
@@ -177,8 +170,19 @@ async function loadPage(path) {
 							.innerHTML = 'Could not fetch instances.'
 					}
 					else {
-						createList(frontend, config.networks, document, redirects, blacklist)
+						createList(frontend)
 					}
+				}
+			}
+
+			for (const frontend in config.services[service].frontends) {
+				if (config.services[service].frontends[frontend].instanceList) {
+					processCustomInstances(frontend)
+					document.getElementById(`ping-${frontend}`).addEventListener("click", async () => {
+						document.getElementById(`ping-${frontend}`).getElementsByTagName('x')[0].innerHTML = "Pinging..."
+						await ping(frontend)
+						document.getElementById(`ping-${frontend}`).getElementsByTagName('x')[0].innerHTML = "Ping instances"
+					})
 				}
 			}
 		}()
@@ -199,10 +203,12 @@ async function calcCustomInstances(frontend) {
 					const { color, text } = processTime(time)
 					timeText = `<span class="ping" style="color:${color};">${text}</span>`
 				}
+				const custom = isCustomInstance(frontend, x) ? "" : `<span>custom</span>`
 				return `<div>
 							<x>
 								<a href="${x}" target="_blank">${x}</a>
 								${timeText}
+								${custom}
 							</x>
 							<button class="add clear-${x}">
 								<svg xmlns="https://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="currentColor">
@@ -220,16 +226,16 @@ async function calcCustomInstances(frontend) {
 			options = await utils.getOptions()
 			options[frontend] = customInstances
 			browser.storage.local.set({ options }, async () => {
+				blacklist = await utils.getBlacklist(options)
+				redirects = await utils.getList(options)
 				calcCustomInstances(frontend)
-				const blacklist = await utils.getBlacklist(options)
-				const redirects = await utils.getList(options)
-				createList(frontend, config.networks, document, redirects, blacklist)
+				createList(frontend)
 			})
 		})
 	}
 }
 
-async function processCustomInstances(frontend, document) {
+async function processCustomInstances(frontend) {
 	calcCustomInstances(frontend)
 	document.getElementById(frontend).getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
 		event.preventDefault()
@@ -259,15 +265,11 @@ async function processCustomInstances(frontend, document) {
 
 /**
  * @param {string} frontend
- * @param {*} networks
- * @param {Document} document
- * @param {*} redirects
- * @param {*} blacklist
  */
-async function createList(frontend, networks, document, redirects, blacklist) {
+async function createList(frontend) {
 	const pingCache = await utils.getPingCache()
 	const options = await utils.getOptions()
-	for (const network in networks) {
+	for (const network in config.networks) {
 		const checklist = document.getElementById(frontend)
 			.getElementsByClassName(network)[0]
 			.getElementsByClassName("checklist")[0]
@@ -332,7 +334,7 @@ async function createList(frontend, networks, document, redirects, blacklist) {
 						options[frontend].push(instance)
 						browser.storage.local.set({ options }, () => {
 							calcCustomInstances(frontend)
-							createList(frontend, config.networks, document, redirects, blacklist)
+							createList(frontend)
 						})
 					}
 				})
@@ -394,4 +396,13 @@ function processTime(time) {
 		text = 'Server not found'
 	}
 	return { color, text }
+}
+
+function isCustomInstance(frontend, instance) {
+	for (const network in config.networks) {
+		if (!redirects[frontend]) return false;
+		const instances = redirects[frontend][network]
+		if (instances.includes(instance)) return true
+	}
+	return false
 }
