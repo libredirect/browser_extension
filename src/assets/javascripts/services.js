@@ -385,11 +385,10 @@ function rewrite(url, frontend, randomInstance) {
 		case "invidious": {
 			if (url.hostname == "youtu.be" || url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/live")) {
 				const watch = url.pathname.substring(url.pathname.lastIndexOf('/') + 1)
-				return `${randomInstance}/watch?v=${watch}`
+				return `${randomInstance}/watch?v=${watch}${url.search.replace("?", "&")}`
 			}
-			if (url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/redirect?")) {
+			if (url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/redirect?"))
 				return url.href
-			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
 		case "invidiousMusic": {
