@@ -66,6 +66,12 @@
 						3
 					]
 				},
+				"lightTube": {
+					"name": "LightTube",
+					"embeddable": false,
+					"instanceList": true,
+					"url": "https://github.com/lighttube-org/LightTube"
+				},
 				"tuboYoutube": {
 					"name": "Tubo",
 					"embeddable": false,

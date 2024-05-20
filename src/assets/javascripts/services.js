@@ -451,6 +451,7 @@ function rewrite(url, frontend, randomInstance) {
 		case "piped":
 		case "pipedMaterial":
 		case "cloudtube":
+		case "lightTube":
 		case "viewtube":
 			url.searchParams.delete("si")
 		default:
@@ -641,6 +642,7 @@ const defaultInstances = {
 	'piped': ['https://pipedapi-libre.kavin.rocks'],
 	'pipedMaterial': ['https://piped-material.xn--17b.net'],
 	'cloudtube': ['https://tube.cadence.moe'],
+	'lightTube': ['https://tube.kuylar.dev'],
 	'poketube': ['https://poketube.fun'],
 	'proxiTok': ['https://proxitok.pabloferreiro.es'],
 	'redlib': ['https://safereddit.com'],
