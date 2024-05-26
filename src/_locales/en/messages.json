@@ -93,6 +93,9 @@
         "message": "Redirect to original",
         "description": "Used in context menus when right clicking on a page/tab"
     },
+    "pageAction": {
+        "message": "Show in Page Action"
+    },
     "redirectLink": {
         "message": "Attempt to redirect",
         "description": "Used in context menus when right clicking on a hyperlink"

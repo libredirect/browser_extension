@@ -28,6 +28,13 @@ browser.runtime.onInstalled.addListener(async details => {
 
 let tabIdRedirects = {}
 
+// page action
+browser.tabs.onUpdated.addListener(async (id, changeInfo, tabInfo) => {
+	const { pageAction } = await utils.getOptions()
+	if (!pageAction) return;
+	browser.pageAction.show(tabInfo.id);
+});
+
 // true == Always redirect, false == Never redirect, null/undefined == follow options for services
 browser.webRequest.onBeforeRequest.addListener(
 	details => {

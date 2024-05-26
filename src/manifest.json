@@ -44,6 +44,17 @@
 			"128": "assets/images/libredirect-128.png"
 		}
 	},
+	"page_action": {
+		"default_title": "__MSG_extensionName__",
+		"browser_style": false,
+		"default_popup": "pages/popup/popup.html",
+		"default_icon": {
+			"16": "assets/images/libredirect-16.png",
+			"32": "assets/images/libredirect-32.png",
+			"48": "assets/images/libredirect-48.png",
+			"128": "assets/images/libredirect-128.png"
+		}
+	},
 	"options_ui": {
 		"page": "pages/options/index.html",
 		"browser_style": false,
