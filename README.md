@@ -53,4 +53,8 @@ npm run build
 
 ---
 
+Test conditions to check new functions and changes after building - [please refer here](./test-conditions.md)
+
+---
+
 Forked from [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)
