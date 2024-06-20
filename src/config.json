@@ -76,7 +76,7 @@
 					"name": "Tubo",
 					"embeddable": false,
 					"instanceList": true,
-					"url": "https://github.com/migalmoreno/tubo",
+					"url": "https://git.migalmoreno.com/tubo/about/",
 					"excludeTargets": [
 						2,
 						3
@@ -464,7 +464,7 @@
 					"name": "Tubo",
 					"embeddable": false,
 					"instanceList": true,
-					"url": "https://github.com/migalmoreno/tubo"
+					"url": "https://git.migalmoreno.com/tubo/about/"
 				}
 			},
 			"targets": [
