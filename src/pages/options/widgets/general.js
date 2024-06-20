@@ -121,6 +121,11 @@ bookmarksMenuElement.addEventListener('change', async event => {
 		browser.permissions.remove({ permissions: ["bookmarks"] }, r => bookmarksMenuElement.checked = !r)
 })
 
+const pageActionElement = document.getElementById('pageAction')
+pageActionElement.addEventListener('change', event => {
+	setOption('pageAction', 'checkbox', event)
+})
+
 let themeElement = document.getElementById("theme")
 themeElement.addEventListener("change", event => {
 	setOption("theme", "select", event)
@@ -149,6 +154,7 @@ let options = await utils.getOptions()
 themeElement.value = options.theme
 fetchInstancesElement.value = options.fetchInstances
 redirectOnlyInIncognitoElement.checked = options.redirectOnlyInIncognito
+pageActionElement.checked = options.pageAction
 browser.permissions.contains({ permissions: ["bookmarks"] }, r => bookmarksMenuElement.checked = r)
 for (const service in config.services) document.getElementById(service).checked = options.popupServices.includes(service)
 
