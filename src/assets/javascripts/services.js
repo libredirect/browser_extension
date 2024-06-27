@@ -403,6 +403,35 @@ function rewrite(url, frontend, randomInstance) {
 			}
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
+		case 'materialious': {
+			url.searchParams.delete('si')
+			if (url.hostname == 'youtu.be' || (url.hostname.endsWith('youtube.com') && url.pathname.startsWith('/live'))) {
+				const watch = url.pathname.substring(url.pathname.lastIndexOf('/') + 1)
+				return `${randomInstance}/watch/${watch}${url.search.replace('?', '&')}`
+			}
+			if (url.hostname.endsWith("youtube.com")) {
+				if (url.pathname.startsWith('/watch')) {
+					if (url.searchParams.has('v')) {
+						const watch = url.searchParams.get('v')
+						url.searchParams.delete('v')
+						return `${randomInstance}/watch/${watch}${url.search.replace('?', '&')}`
+					}
+					return `${randomInstance}/watch/${url.search.replace('?', '&')}`
+				}
+				if (url.pathname.startsWith('/results')) {
+					if (url.searchParams.has('search_query')) {
+						const search = url.searchParams.get('search_query')
+						url.searchParams.delete('search_query')
+						return `${randomInstance}/search/${search}${url.search.replace('?', '&')}`
+					}
+					return `${randomInstance}/search/${url.search.replace('?', '&')}`
+				}
+				if (url.pathname.startsWith('/redirect?')) {
+					return url.href
+				}
+			}
+			return `${randomInstance}${url.pathname}${url.search}`
+		}
 		case "libremdb": {
 			if (url.pathname.startsWith("/Name")) {
 				for (const [key, value] of url.searchParams.entries()) {
@@ -638,6 +667,7 @@ async function reverse(url) {
 
 const defaultInstances = {
 	'invidious': ['https://inv.vern.cc'],
+	'materialious': ['https://app.materialio.us'],
 	'viewtube': ['https://viewtube.io'],
 	'piped': ['https://pipedapi-libre.kavin.rocks'],
 	'pipedMaterial': ['https://piped-material.xn--17b.net'],
