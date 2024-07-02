@@ -431,6 +431,30 @@ function rewrite(url, frontend, randomInstance) {
 		case "skyview":
 			if (url.pathname == '/') return randomInstance
 			return `${randomInstance}?url=${encodeURIComponent(url.href)}`
+		case "nitter": {
+			let search = new URLSearchParams(url.search)
+
+			search.delete("ref_src")
+			search.delete("ref_url")
+			search.delete("s") // type of device that shared the link
+			search.delete("t") // some sort of tracking ID
+
+			search = search.toString()
+			if (search !== "") search = `?${search}`
+
+			if (url.host.split(".")[0] === "pbs" || url.host.split(".")[0] === "video") {
+				try {
+					const [, id, format, extra] = search.match(/(.*)\?format=(.*)&(.*)/)
+					const query = encodeURIComponent(`${id}.${format}?${extra}`)
+					return `${randomInstance}/pic${url.pathname}${query}`
+				} catch {
+					return `${randomInstance}/pic${url.pathname}${search}`
+				}
+			}
+			if (url.pathname.split("/").includes("tweets")) return `${randomInstance}${url.pathname.replace("/tweets", "")}${search}`
+			if (url.host == "t.co") return `${randomInstance}/t.co${url.pathname}`
+			return `${randomInstance}${url.pathname}${search}#m`
+		}
 		case "priviblur": {
 			if (url.hostname == "www.tumblr.com") return `${randomInstance}${url.pathname}${url.search}`
 			if (url.hostname.startsWith("assets")) return `${randomInstance}/tblr/assets${url.pathname}${url.search}`
@@ -689,6 +713,7 @@ const defaultInstances = {
 	'tekstoLibre': ['https://davilarek.github.io/TekstoLibre'],
 	'skyview': ['https://skyview.social'],
 	'priviblur': ['https://pb.bloat.cat'],
+	'nitter': ['https://nitter.privacydev.net'],
 }
 
 function initDefaults() {
