@@ -26,6 +26,12 @@
 					"instanceList": true,
 					"url": "https://invidious.io/"
 				},
+				"materialious": {
+					"name": "Materialious",
+					"embeddable": true,
+					"instanceList": true,
+					"url": "https://materialio.us/"
+				},
 				"piped": {
 					"excludeTargets": [
 						2,
