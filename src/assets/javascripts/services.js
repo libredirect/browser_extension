@@ -682,6 +682,8 @@ async function reverse(url) {
 			}
 			case "tekstowo":
 				return `${config.services[service].url}/${url.search.slice(1)}`
+			case "goodreads":
+					return `https://goodreads.com${url.pathname}${url.search}`
 			default:
 				return
 		}
