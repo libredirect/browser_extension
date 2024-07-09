@@ -396,6 +396,13 @@ function rewrite(url, frontend, randomInstance) {
 				return url.href
 			return `${randomInstance}${url.pathname}${url.search}`
 		}
+		case "freetubeMusic": {
+			if (url.hostname == "youtu.be" || url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/live")) {
+				const watch = url.pathname.substring(url.pathname.lastIndexOf('/') + 1)
+				return `freetube://youtube.com/watch?v=${watch}`
+			}
+			return 'freetube://' + url.href
+		}
 		case "invidiousMusic": {
 			if (url.hostname == "youtu.be" || url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/live")) {
 				const watch = url.pathname.substring(url.pathname.lastIndexOf('/') + 1)
@@ -683,7 +690,7 @@ async function reverse(url) {
 			case "tekstowo":
 				return `${config.services[service].url}/${url.search.slice(1)}`
 			case "goodreads":
-					return `https://goodreads.com${url.pathname}${url.search}`
+				return `https://goodreads.com${url.pathname}${url.search}`
 			default:
 				return
 		}
