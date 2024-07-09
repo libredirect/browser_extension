@@ -746,6 +746,7 @@ const defaultInstances = {
 	'skyview': ['https://skyview.social'],
 	'priviblur': ['https://pb.bloat.cat'],
 	'nitter': ['https://nitter.privacydev.net'],
+	'pasted': ['https://pasted.drakeerv.com'],
 }
 
 function initDefaults() {

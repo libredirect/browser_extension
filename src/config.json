@@ -1094,6 +1094,11 @@
 					"name": "PrivateBin",
 					"instanceList": true,
 					"url": "https://privatebin.info"
+				},
+				"pasted": {
+					"name": "Pasted",
+					"instanceList": true,
+					"url": "https://github.com/Dragynfruit/pasted"
 				}
 			},
 			"targets": [
