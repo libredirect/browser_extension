@@ -1,39 +1,39 @@
 {
-	"name": "libredirect",
-	"description": "Redirects YouTube, Twitter, TikTok and more to privacy friendly frontends.",
-	"engines": {
-		"node": ">=16.13.1",
-		"npm": ">=8.1.2"
-	},
-	"scripts": {
-		"start": "web-ext run",
-		"nightly": "web-ext run --firefox=/home/esmail/software/firefox_nightly/firefox",
-		"android": "web-ext run -t firefox-android --adb-device emulator-5554 --firefox-apk org.mozilla.fenix",
-		"build": "web-ext build",
-		"test": "web-ext lint",
-		"html": "pug --basedir ./ --obj ./src/config.json src/pages/options/index.pug --out src/pages/options/ && pug --basedir ./ --obj ./src/config.json src/pages/popup/popup.pug --out src/pages/popup/"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/libredirect/libredirect.git"
-	},
-	"author": "LibRedirect",
-	"license": "GPL-3.0-only",
-	"bugs": {
-		"url": "https://github.com/libredirect/libredirect/issues"
-	},
-	"homepage": "https://libredirect.github.io",
-	"devDependencies": {
-		"pug-cli": "^1.0.0-alpha6",
-		"web-ext": "^7.2.0"
-	},
-	"webExt": {
-		"sourceDir": "./src/",
-		"run": {
-			"browserConsole": true
-		},
-		"build": {
-			"overwriteDest": true
-		}
-	}
+  "name": "libredirect",
+  "description": "Redirects YouTube, Twitter, TikTok and more to privacy friendly frontends.",
+  "engines": {
+    "node": ">=16.13.1",
+    "npm": ">=8.1.2"
+  },
+  "scripts": {
+    "start": "web-ext run",
+    "nightly": "web-ext run --firefox=/home/esmail/software/firefox_nightly/firefox",
+    "android": "web-ext run -t firefox-android --adb-device emulator-5554 --firefox-apk org.mozilla.fenix",
+    "build": "web-ext build",
+    "test": "web-ext lint",
+    "html": "pug --basedir ./ --obj ./src/config.json src/pages/options/index.pug --out src/pages/options/ && pug --basedir ./ --obj ./src/config.json src/pages/popup/popup.pug --out src/pages/popup/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libredirect/libredirect.git"
+  },
+  "author": "LibRedirect",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/libredirect/libredirect/issues"
+  },
+  "homepage": "https://libredirect.github.io",
+  "devDependencies": {
+    "pug-cli": "^1.0.0-alpha6",
+    "web-ext": "^7.2.0"
+  },
+  "webExt": {
+    "sourceDir": "./src/",
+    "run": {
+      "browserConsole": true
+    },
+    "build": {
+      "overwriteDest": true
+    }
+  }
 }

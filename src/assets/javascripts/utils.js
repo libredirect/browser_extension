@@ -1,11 +1,11 @@
 window.browser = window.browser || window.chrome
 
 /**
- * @param {Array.<T>} instances 
+ * @param {Array.<T>} instances
  * @returns {T}
  */
 function getRandomInstance(instances) {
-	return instances[~~(instances.length * Math.random())]
+  return instances[~~(instances.length * Math.random())]
 }
 
 /**
@@ -14,27 +14,28 @@ function getRandomInstance(instances) {
  * @returns {T}
  */
 function getNextInstance(currentInstanceUrl, instances) {
-	const currentInstanceIndex = instances.indexOf(currentInstanceUrl);
-	if (currentInstanceIndex === -1) return getRandomInstance(instances);
-	const nextInstanceIndex = (currentInstanceIndex + 1) % instances.length;
-	return instances[nextInstanceIndex];
+  const currentInstanceIndex = instances.indexOf(currentInstanceUrl)
+  if (currentInstanceIndex === -1) return getRandomInstance(instances)
+  const nextInstanceIndex = (currentInstanceIndex + 1) % instances.length
+  return instances[nextInstanceIndex]
 }
 
 /**
  * @param {string} str
  */
 function camelCase(str) {
-	return str.charAt(0).toUpperCase() + str.slice(1)
+  return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 /**
  * @param {URL} url
  */
 function protocolHost(url) {
-	if (url.username && url.password) return `${url.protocol}//${url.username}:${url.password}@${url.host}`
-	if (url.pathname == "/TekstoLibre/" && url.host.endsWith("github.io")) // workaround
-		return `${url.protocol}//${url.host}${url.pathname.slice(0, -1)}`
-	return `${url.protocol}//${url.host}`
+  if (url.username && url.password) return `${url.protocol}//${url.username}:${url.password}@${url.host}`
+  if (url.pathname == "/TekstoLibre/" && url.host.endsWith("github.io"))
+    // workaround
+    return `${url.protocol}//${url.host}${url.pathname.slice(0, -1)}`
+  return `${url.protocol}//${url.host}`
 }
 
 /**
@@ -59,14 +60,14 @@ function protocolHost(url) {
  * @returns {Promise<Config>}
  */
 function getConfig() {
-	return new Promise(resolve => {
-		fetch("/config.json")
-			.then(response => response.text())
-			.then(json => {
-				resolve(JSON.parse(json))
-				return
-			})
-	})
+  return new Promise(resolve => {
+    fetch("/config.json")
+      .then(response => response.text())
+      .then(json => {
+        resolve(JSON.parse(json))
+        return
+      })
+  })
 }
 
 /**
@@ -78,106 +79,108 @@ function getConfig() {
  * @returns {Promise<Object.<string, Option | string[]>>}
  */
 function getOptions() {
-	return new Promise(resolve => browser.storage.local.get("options", r => resolve(r.options)))
+  return new Promise(resolve => browser.storage.local.get("options", r => resolve(r.options)))
 }
 
 function getPingCache() {
-	return new Promise(resolve => browser.storage.local.get("pingCache", r => resolve(r.pingCache ?? {})))
+  return new Promise(resolve => browser.storage.local.get("pingCache", r => resolve(r.pingCache ?? {})))
 }
 
 function getBlacklist(options) {
-	return new Promise(resolve => {
-		let url
-		if (options.fetchInstances == 'github') url = 'https://raw.githubusercontent.com/libredirect/instances/main/blacklist.json'
-		else if (options.fetchInstances == 'codeberg') url = 'https://codeberg.org/LibRedirect/instances/raw/branch/main/blacklist.json'
-		else return resolve('disabled')
-		const http = new XMLHttpRequest()
-		http.open("GET", url, true)
-		http.onreadystatechange = () => {
-			if (http.status === 200 && http.readyState == XMLHttpRequest.DONE)
-				resolve(JSON.parse(http.responseText))
-		}
-		http.onerror = () => resolve()
-		http.ontimeout = () => resolve()
-		http.send(null)
-	})
+  return new Promise(resolve => {
+    let url
+    if (options.fetchInstances == "github")
+      url = "https://raw.githubusercontent.com/libredirect/instances/main/blacklist.json"
+    else if (options.fetchInstances == "codeberg")
+      url = "https://codeberg.org/LibRedirect/instances/raw/branch/main/blacklist.json"
+    else return resolve("disabled")
+    const http = new XMLHttpRequest()
+    http.open("GET", url, true)
+    http.onreadystatechange = () => {
+      if (http.status === 200 && http.readyState == XMLHttpRequest.DONE) resolve(JSON.parse(http.responseText))
+    }
+    http.onerror = () => resolve()
+    http.ontimeout = () => resolve()
+    http.send(null)
+  })
 }
 
 function getList(options) {
-	return new Promise(resolve => {
-		let url
-		if (options.fetchInstances == 'github') url = 'https://raw.githubusercontent.com/libredirect/instances/main/data.json'
-		else if (options.fetchInstances == 'codeberg') url = 'https://codeberg.org/LibRedirect/instances/raw/branch/main/data.json'
-		else return resolve('disabled')
-		const http = new XMLHttpRequest()
-		http.open("GET", url, true)
-		http.onreadystatechange = () => {
-			if (http.status === 200 && http.readyState == XMLHttpRequest.DONE)
-				return resolve(JSON.parse(http.responseText))
-		}
-		http.onerror = () => resolve()
-		http.ontimeout = () => resolve()
-		http.send(null)
-	})
+  return new Promise(resolve => {
+    let url
+    if (options.fetchInstances == "github")
+      url = "https://raw.githubusercontent.com/libredirect/instances/main/data.json"
+    else if (options.fetchInstances == "codeberg")
+      url = "https://codeberg.org/LibRedirect/instances/raw/branch/main/data.json"
+    else return resolve("disabled")
+    const http = new XMLHttpRequest()
+    http.open("GET", url, true)
+    http.onreadystatechange = () => {
+      if (http.status === 200 && http.readyState == XMLHttpRequest.DONE) return resolve(JSON.parse(http.responseText))
+    }
+    http.onerror = () => resolve()
+    http.ontimeout = () => resolve()
+    http.send(null)
+  })
 }
 
 /**
  * @param {string} href
  */
 function pingOnce(href) {
-	return new Promise(async resolve => {
-		let started
-		let http = new XMLHttpRequest()
-		http.timeout = 5000
-		http.ontimeout = () => resolve(5000)
-		http.onerror = () => resolve()
-		http.onreadystatechange = () => {
-			if (http.readyState == 2) {
-				if (http.status == 200) {
-					let ended = new Date().getTime()
-					http.abort()
-					resolve(ended - started)
-				} else {
-					resolve(5000 + http.status)
-				}
-			}
-		}
-		http.open("GET", `${href}?_=${new Date().getTime()}`, true)
-		started = new Date().getTime()
-		http.send(null)
-	})
+  return new Promise(async resolve => {
+    let started
+    let http = new XMLHttpRequest()
+    http.timeout = 5000
+    http.ontimeout = () => resolve(5000)
+    http.onerror = () => resolve()
+    http.onreadystatechange = () => {
+      if (http.readyState == 2) {
+        if (http.status == 200) {
+          let ended = new Date().getTime()
+          http.abort()
+          resolve(ended - started)
+        } else {
+          resolve(5000 + http.status)
+        }
+      }
+    }
+    http.open("GET", `${href}?_=${new Date().getTime()}`, true)
+    started = new Date().getTime()
+    http.send(null)
+  })
 }
 
 /**
  * @param {string} href
  */
 function ping(href) {
-	return new Promise(async resolve => {
-		let average = 0
-		let time
-		for (let i = 0; i < 3; i++) {
-			time = await pingOnce(href)
-			if (i == 0) continue
-			if (time >= 5000) {
-				resolve(time)
-				return
-			}
-			average += time
-		}
-		average = parseInt(average / 3)
-		resolve(average)
-	})
+  return new Promise(async resolve => {
+    let average = 0
+    let time
+    for (let i = 0; i < 3; i++) {
+      time = await pingOnce(href)
+      if (i == 0) continue
+      if (time >= 5000) {
+        resolve(time)
+        return
+      }
+      average += time
+    }
+    average = parseInt(average / 3)
+    resolve(average)
+  })
 }
 
 export default {
-	getRandomInstance,
-	getNextInstance,
-	protocolHost,
-	getList,
-	getBlacklist,
-	camelCase,
-	getConfig,
-	getOptions,
-	getPingCache,
-	ping,
+  getRandomInstance,
+  getNextInstance,
+  protocolHost,
+  getList,
+  getBlacklist,
+  camelCase,
+  getConfig,
+  getOptions,
+  getPingCache,
+  ping,
 }

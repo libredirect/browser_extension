@@ -1,19 +1,19 @@
 import utils from "../../assets/javascripts/utils.js"
 
 let config,
-	options,
-	blacklist,
-	redirects,
-	divs = {}
+  options,
+  blacklist,
+  redirects,
+  divs = {}
 
 for (const a of document.getElementById("links").getElementsByTagName("a")) {
-	if (!a.href.includes("https://")) {
-		a.addEventListener("click", e => {
-			const path = a.getAttribute("href").replace("#", "")
-			loadPage(path)
-			e.preventDefault()
-		})
-	}
+  if (!a.href.includes("https://")) {
+    a.addEventListener("click", e => {
+      const path = a.getAttribute("href").replace("#", "")
+      loadPage(path)
+      e.preventDefault()
+    })
+  }
 }
 
 config = await utils.getConfig()
@@ -23,180 +23,180 @@ options = await utils.getOptions()
  * @param {string} service
  */
 async function changeFrontendsSettings(service) {
-	options = await utils.getOptions()
-	const opacityDiv = document.getElementById(`${service}-opacity`)
-	if (document.getElementById(`${service}-enabled`).checked) {
-		opacityDiv.style.pointerEvents = 'auto'
-		opacityDiv.style.opacity = 1
-		opacityDiv.style.userSelect = 'auto'
-	} else {
-		opacityDiv.style.pointerEvents = 'none'
-		opacityDiv.style.opacity = 0.4
-		opacityDiv.style.userSelect = 'none'
-	}
-	for (const frontend in config.services[service].frontends) {
-		if (config.services[service].frontends[frontend].instanceList) {
-			const frontendDiv = document.getElementById(frontend)
-			if (typeof divs[service].frontend !== "undefined") {
-				if (
-					frontend == divs[service].frontend.value
-					||
-					(config.services[service].frontends[divs[service].frontend.value].desktopApp && divs[service].embedFrontend && frontend == divs[service].embedFrontend.value)
-				) {
-					frontendDiv.style.display = ""
-					if (config.services[service].frontends[frontend].localhost === true) {
-						document.getElementById(`${service}-instance-div`).style.display = ""
+  options = await utils.getOptions()
+  const opacityDiv = document.getElementById(`${service}-opacity`)
+  if (document.getElementById(`${service}-enabled`).checked) {
+    opacityDiv.style.pointerEvents = "auto"
+    opacityDiv.style.opacity = 1
+    opacityDiv.style.userSelect = "auto"
+  } else {
+    opacityDiv.style.pointerEvents = "none"
+    opacityDiv.style.opacity = 0.4
+    opacityDiv.style.userSelect = "none"
+  }
+  for (const frontend in config.services[service].frontends) {
+    if (config.services[service].frontends[frontend].instanceList) {
+      const frontendDiv = document.getElementById(frontend)
+      if (typeof divs[service].frontend !== "undefined") {
+        if (
+          frontend == divs[service].frontend.value ||
+          (config.services[service].frontends[divs[service].frontend.value].desktopApp &&
+            divs[service].embedFrontend &&
+            frontend == divs[service].embedFrontend.value)
+        ) {
+          frontendDiv.style.display = ""
+          if (config.services[service].frontends[frontend].localhost === true) {
+            document.getElementById(`${service}-instance-div`).style.display = ""
 
-						if (options[service].instance == "localhost") {
-							frontendDiv.style.display = "none"
-						}
-					} else {
-						document.getElementById(`${service}-instance-div`).style.display = "none"
-					}
-				} else {
-					frontendDiv.style.display = "none"
-				}
-			}
-		}
-	}
-	if (document.getElementById(`${service}-redirectType`)) {
-		const frontend = options[service].frontend
-		if (config.services[service].frontends[frontend].embeddable) {
-			document.getElementById(`${service}-redirectType`).innerHTML = `
+            if (options[service].instance == "localhost") {
+              frontendDiv.style.display = "none"
+            }
+          } else {
+            document.getElementById(`${service}-instance-div`).style.display = "none"
+          }
+        } else {
+          frontendDiv.style.display = "none"
+        }
+      }
+    }
+  }
+  if (document.getElementById(`${service}-redirectType`)) {
+    const frontend = options[service].frontend
+    if (config.services[service].frontends[frontend].embeddable) {
+      document.getElementById(`${service}-redirectType`).innerHTML = `
 			<option value="both" data-localise="__MSG_both__">both</options>
 			<option value="sub_frame" data-localise="__MSG_onlyEmbedded__">Only Embedded</option>
 			<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
 			`
-		}
-		else if (config.services[service].frontends[frontend].desktopApp && Object.values(config.services[service].frontends).some(frontend => frontend.embeddable)) {
-			document.getElementById(`${service}-redirectType`).innerHTML = `
+    } else if (
+      config.services[service].frontends[frontend].desktopApp &&
+      Object.values(config.services[service].frontends).some(frontend => frontend.embeddable)
+    ) {
+      document.getElementById(`${service}-redirectType`).innerHTML = `
 			<option value="both" data-localise="__MSG_both__">both</options>
 			<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>
 			`
-			if (options[service].redirectType == "sub_frame") {
-				options[service].redirectType = "main_frame"
-				browser.storage.local.set({ options })
-			}
-		} else {
-			document.getElementById(`${service}-redirectType`).innerHTML =
-				'<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>'
-			options[service].redirectType = "main_frame"
+      if (options[service].redirectType == "sub_frame") {
+        options[service].redirectType = "main_frame"
+        browser.storage.local.set({ options })
+      }
+    } else {
+      document.getElementById(`${service}-redirectType`).innerHTML =
+        '<option value="main_frame" data-localise="__MSG_onlyNotEmbedded__">Only Not Embedded</option>'
+      options[service].redirectType = "main_frame"
 
-			browser.storage.local.set({ options })
-		}
-		document.getElementById(`${service}-redirectType`).value = options[service].redirectType
-		if (config.services[service].frontends[frontend].desktopApp && options[service].redirectType != "main_frame") {
-			document.getElementById(`${service}-embedFrontend-div`).style.display = ''
-			document.getElementById(divs[service].embedFrontend.value).style.display = ''
-		}
-		else if (config.services[service].frontends[frontend].desktopApp && options[service].redirectType == "main_frame") {
-			document.getElementById(`${service}-embedFrontend-div`).style.display = 'none'
-			document.getElementById(divs[service].embedFrontend.value).style.display = 'none'
-		} else {
-			document.getElementById(`${service}-embedFrontend-div`).style.display = 'none'
-		}
-	}
-	const frontend_name_element = document.getElementById(`${service}_page`).getElementsByClassName("frontend_name")[0]
-	frontend_name_element.href = config.services[service].frontends[divs[service].frontend.value].url
+      browser.storage.local.set({ options })
+    }
+    document.getElementById(`${service}-redirectType`).value = options[service].redirectType
+    if (config.services[service].frontends[frontend].desktopApp && options[service].redirectType != "main_frame") {
+      document.getElementById(`${service}-embedFrontend-div`).style.display = ""
+      document.getElementById(divs[service].embedFrontend.value).style.display = ""
+    } else if (
+      config.services[service].frontends[frontend].desktopApp &&
+      options[service].redirectType == "main_frame"
+    ) {
+      document.getElementById(`${service}-embedFrontend-div`).style.display = "none"
+      document.getElementById(divs[service].embedFrontend.value).style.display = "none"
+    } else {
+      document.getElementById(`${service}-embedFrontend-div`).style.display = "none"
+    }
+  }
+  const frontend_name_element = document.getElementById(`${service}_page`).getElementsByClassName("frontend_name")[0]
+  frontend_name_element.href = config.services[service].frontends[divs[service].frontend.value].url
 }
 
 /**
  * @param {string} path
  */
 async function loadPage(path) {
-	options = await utils.getOptions()
-	for (const section of document.getElementById("pages").getElementsByTagName("section")) section.style.display = "none"
-	document.getElementById(`${path}_page`).style.display = "block"
+  options = await utils.getOptions()
+  for (const section of document.getElementById("pages").getElementsByTagName("section")) section.style.display = "none"
+  document.getElementById(`${path}_page`).style.display = "block"
 
-	for (const element of document.getElementsByClassName("title")) {
-		const a = element.getElementsByTagName('a')[0]
-		if (a.getAttribute("href") == `#${path}`) {
-			element.classList.add("selected")
-		} else {
-			element.classList.remove("selected")
-		}
-	}
+  for (const element of document.getElementsByClassName("title")) {
+    const a = element.getElementsByTagName("a")[0]
+    if (a.getAttribute("href") == `#${path}`) {
+      element.classList.add("selected")
+    } else {
+      element.classList.remove("selected")
+    }
+  }
 
-	for (const service in config.services) {
-		if (options[service].enabled) {
-			document.getElementById(`${service}-link`).style.opacity = 1
-		} else {
-			document.getElementById(`${service}-link`).style.opacity = 0.4
-		}
-	}
+  for (const service in config.services) {
+    if (options[service].enabled) {
+      document.getElementById(`${service}-link`).style.opacity = 1
+    } else {
+      document.getElementById(`${service}-link`).style.opacity = 0.4
+    }
+  }
 
-	window.history.pushState({ id: "100" }, "Page 2", `/pages/options/index.html#${path}`)
+  window.history.pushState({ id: "100" }, "Page 2", `/pages/options/index.html#${path}`)
 
-	if (path != 'general') {
-		const service = path;
-		divs[service] = {}
-		for (const option in config.services[service].options) {
-			divs[service][option] = document.getElementById(`${service}-${option}`)
-			if (typeof config.services[service].options[option] == "boolean") divs[service][option].checked = options[service][option]
-			else divs[service][option].value = options[service][option]
-			divs[service][option].addEventListener("change", async () => {
-				let options = await utils.getOptions()
-				if (typeof config.services[service].options[option] == "boolean")
-					options[service][option] = divs[service][option].checked
-				else
-					options[service][option] = divs[service][option].value
-				browser.storage.local.set({ options })
-				changeFrontendsSettings(service)
-			})
-		}
-		changeFrontendsSettings(service)
+  if (path != "general") {
+    const service = path
+    divs[service] = {}
+    for (const option in config.services[service].options) {
+      divs[service][option] = document.getElementById(`${service}-${option}`)
+      if (typeof config.services[service].options[option] == "boolean")
+        divs[service][option].checked = options[service][option]
+      else divs[service][option].value = options[service][option]
+      divs[service][option].addEventListener("change", async () => {
+        let options = await utils.getOptions()
+        if (typeof config.services[service].options[option] == "boolean")
+          options[service][option] = divs[service][option].checked
+        else options[service][option] = divs[service][option].value
+        browser.storage.local.set({ options })
+        changeFrontendsSettings(service)
+      })
+    }
+    changeFrontendsSettings(service)
 
-		blacklist = await utils.getBlacklist(options)
-		redirects = await utils.getList(options)
-		for (const frontend in config.services[service].frontends) {
-			if (config.services[service].frontends[frontend].instanceList) {
-				if (redirects == 'disabled' || blacklist == 'disabled') {
-					document.getElementById(frontend).getElementsByClassName('clearnet')[0].style.display = 'none'
-					document.getElementById(frontend).getElementsByClassName('ping')[0].style.display = 'none'
-				}
-				else if (!redirects || !blacklist) {
-					document.getElementById(frontend)
-						.getElementsByClassName('clearnet')[0]
-						.getElementsByClassName("checklist")[0]
-						.getElementsByClassName('loading')[0]
-						.innerHTML = 'Could not fetch instances.'
-				}
-				else {
-					createList(frontend)
-				}
-			}
-		}
+    blacklist = await utils.getBlacklist(options)
+    redirects = await utils.getList(options)
+    for (const frontend in config.services[service].frontends) {
+      if (config.services[service].frontends[frontend].instanceList) {
+        if (redirects == "disabled" || blacklist == "disabled") {
+          document.getElementById(frontend).getElementsByClassName("clearnet")[0].style.display = "none"
+          document.getElementById(frontend).getElementsByClassName("ping")[0].style.display = "none"
+        } else if (!redirects || !blacklist) {
+          document
+            .getElementById(frontend)
+            .getElementsByClassName("clearnet")[0]
+            .getElementsByClassName("checklist")[0]
+            .getElementsByClassName("loading")[0].innerHTML = "Could not fetch instances."
+        } else {
+          createList(frontend)
+        }
+      }
+    }
 
-		for (const frontend in config.services[service].frontends) {
-			if (config.services[service].frontends[frontend].instanceList) {
-				processCustomInstances(frontend)
-				document.getElementById(`ping-${frontend}`).addEventListener("click", async () => {
-					document.getElementById(`ping-${frontend}`).getElementsByTagName('x')[0].innerHTML = "Pinging..."
-					await ping(frontend)
-					document.getElementById(`ping-${frontend}`).getElementsByTagName('x')[0].innerHTML = "Ping instances"
-				})
-			}
-		}
-	}
+    for (const frontend in config.services[service].frontends) {
+      if (config.services[service].frontends[frontend].instanceList) {
+        processCustomInstances(frontend)
+        document.getElementById(`ping-${frontend}`).addEventListener("click", async () => {
+          document.getElementById(`ping-${frontend}`).getElementsByTagName("x")[0].innerHTML = "Pinging..."
+          await ping(frontend)
+          document.getElementById(`ping-${frontend}`).getElementsByTagName("x")[0].innerHTML = "Ping instances"
+        })
+      }
+    }
+  }
 }
 
 async function calcCustomInstances(frontend) {
-	let options = await utils.getOptions()
-	let customInstances = options[frontend]
-	const pingCache = await utils.getPingCache()
+  let options = await utils.getOptions()
+  let customInstances = options[frontend]
+  const pingCache = await utils.getPingCache()
 
-	document.getElementById(frontend).getElementsByClassName("custom-checklist")[0].innerHTML = customInstances
-		.map(
-			x => {
-	      const time = pingCache[x];
-        if (time) {
-          var { color, text } = processTime(time);
-        }
-        const timeText = time
-          ? `<span class="ping" style="color:${color};">${text}</span>`
-          : "";
-				const custom = isCustomInstance(frontend, x) ? "" : `<span>custom</span>`
-				return `<div>
+  document.getElementById(frontend).getElementsByClassName("custom-checklist")[0].innerHTML = customInstances
+    .map(x => {
+      const time = pingCache[x]
+      if (time) {
+        var { color, text } = processTime(time)
+      }
+      const timeText = time ? `<span class="ping" style="color:${color};">${text}</span>` : ""
+      const custom = isCustomInstance(frontend, x) ? "" : `<span>custom</span>`
+      return `<div>
 							<x>
 								<a href="${x}" target="_blank">${x}</a>
 								${timeText}
@@ -209,87 +209,97 @@ async function calcCustomInstances(frontend) {
 							</button>
 						</div>
 						<hr>`
-			})
-		.join("\n")
-	for (const item of customInstances) {
-		document.getElementById(frontend).getElementsByClassName(`clear-${item}`)[0].addEventListener("click", async () => {
-			const index = customInstances.indexOf(item)
-			if (index > -1) customInstances.splice(index, 1)
-			options = await utils.getOptions()
-			options[frontend] = customInstances
-			browser.storage.local.set({ options }, async () => {
-				calcCustomInstances(frontend)
-				createList(frontend)
-			})
-		})
-	}
+    })
+    .join("\n")
+  for (const item of customInstances) {
+    document
+      .getElementById(frontend)
+      .getElementsByClassName(`clear-${item}`)[0]
+      .addEventListener("click", async () => {
+        const index = customInstances.indexOf(item)
+        if (index > -1) customInstances.splice(index, 1)
+        options = await utils.getOptions()
+        options[frontend] = customInstances
+        browser.storage.local.set({ options }, async () => {
+          calcCustomInstances(frontend)
+          createList(frontend)
+        })
+      })
+  }
 }
 
 async function processCustomInstances(frontend) {
-	calcCustomInstances(frontend)
-	document.getElementById(frontend).getElementsByClassName("custom-instance-form")[0].addEventListener("submit", async event => {
-		event.preventDefault()
-		let options = await utils.getOptions()
-		let customInstances = options[frontend]
-		let frontendCustomInstanceInput = document.getElementById(frontend).getElementsByClassName("custom-instance")[0]
-		try {
-			var url = new URL(frontendCustomInstanceInput.value)
-		} catch (error) {
-			return
-		}
-		let protocolHostVar = utils.protocolHost(url)
-		if (frontendCustomInstanceInput.validity.valid) {
-			if (!customInstances.includes(protocolHostVar)) {
-				customInstances.push(protocolHostVar)
-				options = await utils.getOptions()
-				options[frontend] = customInstances
-				browser.storage.local.set({ options }, () => {
-					frontendCustomInstanceInput.value = ""
-					calcCustomInstances(frontend)
-				})
-			}
-		}
-	})
+  calcCustomInstances(frontend)
+  document
+    .getElementById(frontend)
+    .getElementsByClassName("custom-instance-form")[0]
+    .addEventListener("submit", async event => {
+      event.preventDefault()
+      let options = await utils.getOptions()
+      let customInstances = options[frontend]
+      let frontendCustomInstanceInput = document.getElementById(frontend).getElementsByClassName("custom-instance")[0]
+      try {
+        var url = new URL(frontendCustomInstanceInput.value)
+      } catch (error) {
+        return
+      }
+      let protocolHostVar = utils.protocolHost(url)
+      if (frontendCustomInstanceInput.validity.valid) {
+        if (!customInstances.includes(protocolHostVar)) {
+          customInstances.push(protocolHostVar)
+          options = await utils.getOptions()
+          options[frontend] = customInstances
+          browser.storage.local.set({ options }, () => {
+            frontendCustomInstanceInput.value = ""
+            calcCustomInstances(frontend)
+          })
+        }
+      }
+    })
 }
 
 /**
  * @param {string} frontend
  */
 async function createList(frontend) {
-	const pingCache = await utils.getPingCache()
-	const options = await utils.getOptions()
-	for (const network in config.networks) {
-		const checklist = document.getElementById(frontend).getElementsByClassName(network)[0].getElementsByClassName("checklist")[0]
+  const pingCache = await utils.getPingCache()
+  const options = await utils.getOptions()
+  for (const network in config.networks) {
+    const checklist = document
+      .getElementById(frontend)
+      .getElementsByClassName(network)[0]
+      .getElementsByClassName("checklist")[0]
 
-		if (!redirects[frontend]) {
-			checklist.innerHTML = '<div class="block block-option">No instances found.</div>'
-			break
-		}
+    if (!redirects[frontend]) {
+      checklist.innerHTML = '<div class="block block-option">No instances found.</div>'
+      break
+    }
 
-		const instances = redirects[frontend][network]
-		if (!instances || instances.length === 0) continue
+    const instances = redirects[frontend][network]
+    if (!instances || instances.length === 0) continue
 
-		document.getElementById(frontend).getElementsByClassName("custom-instance")[0].placeholder = redirects[frontend].clearnet[0]
+    document.getElementById(frontend).getElementsByClassName("custom-instance")[0].placeholder =
+      redirects[frontend].clearnet[0]
 
-		instances.sort((a, b) => blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
-		const content = instances
-			.map(x => {
-				const cloudflare = blacklist.cloudflare.includes(x) ?
-					`<a target="_blank" href="https://libredirect.github.io/docs.html#instances">
+    instances.sort((a, b) => blacklist.cloudflare.includes(a) && !blacklist.cloudflare.includes(b))
+    const content = instances.map(x => {
+      const cloudflare = blacklist.cloudflare.includes(x)
+        ? `<a target="_blank" href="https://libredirect.github.io/docs.html#instances">
                         <span style="color:red;">cloudflare</span>
-                    </a>` : ""
+                    </a>`
+        : ""
 
-				let time = pingCache[x]
-				let timeText = ""
-				if (time) {
-					const { color, text } = processTime(time)
-					timeText = `<span class="ping" style="color:${color};">${text}</span>`
-				}
+      let time = pingCache[x]
+      let timeText = ""
+      if (time) {
+        const { color, text } = processTime(time)
+        timeText = `<span class="ping" style="color:${color};">${text}</span>`
+      }
 
-				const chosen = options[frontend].includes(x) ? `<span style="color:grey;">chosen</span>` : ""
+      const chosen = options[frontend].includes(x) ? `<span style="color:grey;">chosen</span>` : ""
 
-				const warnings = [cloudflare, timeText, chosen].join(" ")
-				return `<div class="frontend">
+      const warnings = [cloudflare, timeText, chosen].join(" ")
+      return `<div class="frontend">
                             <x>
                                 <a href="${x}" target="_blank">${x}</a>
 								${warnings}
@@ -300,30 +310,29 @@ async function createList(frontend) {
                                 </svg>
                             </button>
                         </div>`
-			})
+    })
 
-		checklist.innerHTML = [
-			`<div class="block block-option">
+    checklist.innerHTML = [
+      `<div class="block block-option">
                 <label>${utils.camelCase(network)}</label>
             </div>`,
-			...content,
-			"<br>"
-		].join("\n<hr>\n")
+      ...content,
+      "<br>",
+    ].join("\n<hr>\n")
 
-		for (const instance of instances) {
-			checklist.getElementsByClassName(`add-${instance}`)[0]
-				.addEventListener("click", async () => {
-					let options = await utils.getOptions()
-					if (!options[frontend].includes(instance)) {
-						options[frontend].push(instance)
-						browser.storage.local.set({ options }, () => {
-							calcCustomInstances(frontend)
-							createList(frontend)
-						})
-					}
-				})
-		}
-	}
+    for (const instance of instances) {
+      checklist.getElementsByClassName(`add-${instance}`)[0].addEventListener("click", async () => {
+        let options = await utils.getOptions()
+        if (!options[frontend].includes(instance)) {
+          options[frontend].push(instance)
+          browser.storage.local.set({ options }, () => {
+            calcCustomInstances(frontend)
+            createList(frontend)
+          })
+        }
+      })
+    }
+  }
 }
 
 const r = window.location.href.match(/#(.*)/)
@@ -334,59 +343,57 @@ else loadPage("general")
  * @param {string} frontend
  */
 async function ping(frontend) {
-	const instanceElements = [
-		...document.getElementById(frontend).getElementsByClassName("custom-checklist")[0].getElementsByTagName('x'),
-		...document.getElementById(frontend).getElementsByClassName('clearnet')[0].getElementsByTagName('x')
-	]
+  const instanceElements = [
+    ...document.getElementById(frontend).getElementsByClassName("custom-checklist")[0].getElementsByTagName("x"),
+    ...document.getElementById(frontend).getElementsByClassName("clearnet")[0].getElementsByTagName("x"),
+  ]
 
-	let pingCache = await utils.getPingCache()
-	let redundancyList = {}
-	for (const element of instanceElements) {
-		let span = element.getElementsByClassName('ping')[0]
-		if (!span) span = document.createElement('span')
-		span.classList = ['ping']
-		span.innerHTML = '<span style="color:lightblue">pinging...</span>'
-		element.appendChild(span)
-		const href = element.getElementsByTagName('a')[0].href
-		const innerHTML = element.getElementsByTagName('a')[0].innerHTML
-		const time = redundancyList[innerHTML] ?? await utils.ping(href)
-		const { color, text } = processTime(time)
-		span.innerHTML = `<span style="color:${color};">${text}</span>`
-		pingCache[innerHTML] = time
-		redundancyList[innerHTML] = time
+  let pingCache = await utils.getPingCache()
+  let redundancyList = {}
+  for (const element of instanceElements) {
+    let span = element.getElementsByClassName("ping")[0]
+    if (!span) span = document.createElement("span")
+    span.classList = ["ping"]
+    span.innerHTML = '<span style="color:lightblue">pinging...</span>'
+    element.appendChild(span)
+    const href = element.getElementsByTagName("a")[0].href
+    const innerHTML = element.getElementsByTagName("a")[0].innerHTML
+    const time = redundancyList[innerHTML] ?? (await utils.ping(href))
+    const { color, text } = processTime(time)
+    span.innerHTML = `<span style="color:${color};">${text}</span>`
+    pingCache[innerHTML] = time
+    redundancyList[innerHTML] = time
 
-		browser.storage.local.set({ pingCache })
-	}
+    browser.storage.local.set({ pingCache })
+  }
 }
 
 /**
  * @param {number} time
  */
 function processTime(time) {
-	let text
-	let color
-	if (time < 5000) {
-		text = `${time}ms`
-		if (time <= 1000) color = "green"
-		else if (time <= 2000) color = "orange"
-	}
-	else if (time >= 5000) {
-		color = "red"
-		if (time == 5000) text = "5000ms+"
-		if (time > 5000) text = `Error: ${time - 5000}`
-	}
-	else {
-		color = "red"
-		text = 'Server not found'
-	}
-	return { color, text }
+  let text
+  let color
+  if (time < 5000) {
+    text = `${time}ms`
+    if (time <= 1000) color = "green"
+    else if (time <= 2000) color = "orange"
+  } else if (time >= 5000) {
+    color = "red"
+    if (time == 5000) text = "5000ms+"
+    if (time > 5000) text = `Error: ${time - 5000}`
+  } else {
+    color = "red"
+    text = "Server not found"
+  }
+  return { color, text }
 }
 
 function isCustomInstance(frontend, instance) {
-	for (const network in config.networks) {
-		if (!redirects[frontend]) return false;
-		const instances = redirects[frontend][network]
-		if (instances.includes(instance)) return true
-	}
-	return false
+  for (const network in config.networks) {
+    if (!redirects[frontend]) return false
+    const instances = redirects[frontend][network]
+    if (instances.includes(instance)) return true
+  }
+  return false
 }
