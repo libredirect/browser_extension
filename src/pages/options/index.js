@@ -188,11 +188,13 @@ async function calcCustomInstances(frontend) {
 	document.getElementById(frontend).getElementsByClassName("custom-checklist")[0].innerHTML = customInstances
 		.map(
 			x => {
-				const time = pingCache[x]
-				if (time) {
-					const { color, text } = processTime(time)
-					var timeText = `<span class="ping" style="color:${color};">${text}</span>`
-				}
+	      const time = pingCache[x];
+        if (time) {
+          var { color, text } = processTime(time);
+        }
+        const timeText = time
+          ? `<span class="ping" style="color:${color};">${text}</span>`
+          : "";
 				const custom = isCustomInstance(frontend, x) ? "" : `<span>custom</span>`
 				return `<div>
 							<x>
