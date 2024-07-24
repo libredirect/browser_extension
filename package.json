@@ -1,5 +1,6 @@
 {
   "name": "libredirect",
+  "type": "module",
   "description": "Redirects YouTube, Twitter, TikTok and more to privacy friendly frontends.",
   "engines": {
     "node": ">=16.13.1",
@@ -11,7 +12,7 @@
     "android": "web-ext run -t firefox-android --adb-device emulator-5554 --firefox-apk org.mozilla.fenix",
     "build": "web-ext build",
     "test": "web-ext lint",
-    "html": "pug --basedir ./ --obj ./src/config.json src/pages/options/index.pug --out src/pages/options/ && pug --basedir ./ --obj ./src/config.json src/pages/popup/popup.pug --out src/pages/popup/"
+    "html": "rollup -c"
   },
   "repository": {
     "type": "git",
@@ -24,8 +25,16 @@
   },
   "homepage": "https://libredirect.github.io",
   "devDependencies": {
+    "prettier": "3.3.3",
     "pug-cli": "^1.0.0-alpha6",
-    "web-ext": "^7.2.0"
+    "web-ext": "^7.2.0",
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "rollup": "^3.15.0",
+    "rollup-plugin-css-only": "^4.3.0",
+    "rollup-plugin-svelte": "^7.1.2",
+    "svelte": "^3.55.0"
   },
   "webExt": {
     "sourceDir": "./src/",

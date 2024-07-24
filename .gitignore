@@ -7,3 +7,4 @@ package-lock.json
 src/pages/options/index.html
 src/pages/popup/popup.html
 pnpm-lock.yaml
+src/pages/options/build
