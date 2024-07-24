@@ -5,7 +5,7 @@
   export let ariaLabel
 </script>
 
-<select  bind:value={value} on:change={onChange} aria-label={ariaLabel} on:change on:contextmenu on:input>
+<select bind:value on:change={onChange} aria-label={ariaLabel} on:change on:contextmenu on:input>
   {#each values as option}
     <option value={option.value}>{option.name}</option>
   {/each}

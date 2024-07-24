@@ -46,19 +46,17 @@
   }
 
   let embeddableFrontends = []
-  $: (() => {
-    if (serviceConf) {
-      embeddableFrontends = []
-      for (const [frontendId, frontendConf] of Object.entries(serviceConf.frontends)) {
-        if (frontendConf.embeddable && frontendConf.instanceList) {
-          embeddableFrontends.push({
-            value: frontendId,
-            name: frontendConf.name,
-          })
-        }
+  $: if (serviceConf) {
+    embeddableFrontends = []
+    for (const [frontendId, frontendConf] of Object.entries(serviceConf.frontends)) {
+      if (frontendConf.embeddable && frontendConf.instanceList) {
+        embeddableFrontends.push({
+          value: frontendId,
+          name: frontendConf.name,
+        })
       }
     }
-  })()
+  }
 </script>
 
 <RowSelect

@@ -13,6 +13,7 @@
   import utils from "../../../assets/javascripts/utils"
 
   export let selectedService
+  export let selectedFrontend
 
   let _options
   let _config
@@ -34,10 +35,10 @@
 
   $: {
     allInstances = []
-    if (_options[serviceOptions.frontend]) allInstances.push(..._options[serviceOptions.frontend])
-    if (redirects && redirects[serviceOptions.frontend]) {
-      for (const network in redirects[serviceOptions.frontend]) {
-        allInstances.push(...redirects[serviceOptions.frontend][network])
+    if (_options[selectedFrontend]) allInstances.push(..._options[selectedFrontend])
+    if (redirects && redirects[selectedFrontend]) {
+      for (const network in redirects[selectedFrontend]) {
+        allInstances.push(...redirects[selectedFrontend][network])
       }
     }
   }
@@ -48,12 +49,12 @@
   }
 
   function isCustomInstance(instance) {
-    if (redirects[serviceOptions.frontend]) {
-      for (const network in redirects[serviceOptions.frontend]) {
-        if (redirects[serviceOptions.frontend][network].includes(instance)) return true
+    if (redirects[selectedFrontend]) {
+      for (const network in redirects[selectedFrontend]) {
+        if (redirects[selectedFrontend][network].includes(instance)) return false
       }
     }
-    return false
+    return true
   }
 
   async function pingInstances() {
@@ -92,15 +93,15 @@
   let addInstanceValue
   function addInstance() {
     const instance = utils.protocolHost(new URL(addInstanceValue))
-    if (!_options[serviceOptions.frontend].includes(instance)) {
-      _options[serviceOptions.frontend].push(instance)
+    if (!_options[selectedFrontend].includes(instance)) {
+      _options[selectedFrontend].push(instance)
       addInstanceValue = ""
       options.set(_options)
     }
   }
 </script>
 
-{#if serviceConf.frontends[serviceOptions.frontend].instanceList && redirects && blacklist}
+{#if serviceConf.frontends[selectedFrontend].instanceList && redirects && blacklist}
   <hr />
   <div dir="ltr">
     <div class="ping">
@@ -120,16 +121,14 @@
         type="url"
         placeholder="https://instance.com"
         aria-label="Add instance input"
-        on:keydown={e => {
-          if (e.key === "Enter") addInstance()
-        }}
+        on:keydown={e => e.key === "Enter" && addInstance()}
       />
       <button on:click={addInstance} class="add" aria-label="Add the instance">
         <AddIcon />
       </button>
     </Row>
 
-    {#each _options[serviceOptions.frontend] as instance}
+    {#each _options[selectedFrontend] as instance}
       <Row>
         <span>
           <a href={instance} target="_blank" rel="noopener noreferrer">{instance}</a>
@@ -144,9 +143,9 @@
           class="add"
           aria-label="Remove Instance"
           on:click={() => {
-            const index = _options[serviceOptions.frontend].indexOf(instance)
+            const index = _options[selectedFrontend].indexOf(instance)
             if (index > -1) {
-              _options[serviceOptions.frontend].splice(index, 1)
+              _options[selectedFrontend].splice(index, 1)
               options.set(_options)
             }
           }}
@@ -156,15 +155,15 @@
       </Row>
       <hr />
     {/each}
-    <Row></Row>
 
     {#if redirects !== "disabled" && blacklist !== "disabled"}
-      {#if redirects[serviceOptions.frontend] && redirects[serviceOptions.frontend]["clearnet"]}
+      {#if redirects[selectedFrontend] && redirects[selectedFrontend]["clearnet"]}
         {#each Object.entries(_config.networks) as [networkName, network]}
-          {#if redirects[serviceOptions.frontend] && redirects[serviceOptions.frontend][networkName]}
+          {#if redirects[selectedFrontend] && redirects[selectedFrontend][networkName] && redirects[selectedFrontend][networkName].length > 0}
+            <Row></Row>
             <Row><Label>{network.name}</Label></Row>
             <hr />
-            {#each redirects[serviceOptions.frontend][networkName] as instance}
+            {#each redirects[selectedFrontend][networkName] as instance}
               <Row>
                 <span>
                   <a href={instance} target="_blank" rel="noopener noreferrer">{instance}</a>
@@ -178,7 +177,7 @@
                       cloudflare
                     </a>
                   {/if}
-                  {#if _options[serviceOptions.frontend].includes(instance)}
+                  {#if _options[selectedFrontend].includes(instance)}
                     <span style="color:grey">chosen</span>
                   {/if}
                   {#if pingCache && pingCache[instance]}
@@ -189,9 +188,9 @@
                   class="add"
                   aria-label="Add instance"
                   on:click={() => {
-                    if (_options[serviceOptions.frontend]) {
-                      if (!_options[serviceOptions.frontend].includes(instance)) {
-                        _options[serviceOptions.frontend].push(instance)
+                    if (_options[selectedFrontend]) {
+                      if (!_options[selectedFrontend].includes(instance)) {
+                        _options[selectedFrontend].push(instance)
                         options.set(_options)
                       }
                     }

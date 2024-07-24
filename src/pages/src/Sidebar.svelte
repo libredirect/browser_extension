@@ -12,7 +12,7 @@
   </a>
   <a href="#services" on:click={() => page.set("services")} style={$page == "services" && "color: var(--active);"}>
     <ServicesIcon style="margin-right: 5px" />
-    <span data-localise="__MSG_general__">Services</span>
+    <span data-localise="__MSG_services__">Services</span>
   </a>
   <a href="https://libredirect.github.io" target="_blank" rel="noopener noreferrer">
     <AboutIcon style="margin-right: 5px" />

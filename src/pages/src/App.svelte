@@ -29,7 +29,6 @@
   onMount(async () => {
     let opts = await utils.getOptions()
     if (!opts) {
-      console.log("init defulats")
       await servicesHelper.initDefaults()
       opts = await utils.getOptions()
     }

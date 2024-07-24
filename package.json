@@ -25,16 +25,16 @@
   },
   "homepage": "https://libredirect.github.io",
   "devDependencies": {
-    "prettier": "3.3.3",
-    "pug-cli": "^1.0.0-alpha6",
-    "web-ext": "^7.2.0",
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-terser": "^0.4.0",
+    "prettier": "3.3.3",
+    "pug-cli": "^1.0.0-alpha6",
     "rollup": "^3.15.0",
     "rollup-plugin-css-only": "^4.3.0",
     "rollup-plugin-svelte": "^7.1.2",
-    "svelte": "^3.55.0"
+    "svelte": "^3.55.0",
+    "web-ext": "^7.2.0"
   },
   "webExt": {
     "sourceDir": "./src/",
@@ -44,5 +44,8 @@
     "build": {
       "overwriteDest": true
     }
+  },
+  "dependencies": {
+    "svelte-select": "^5.8.3"
   }
 }

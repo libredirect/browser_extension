@@ -1,6 +1,4 @@
 <script>
-  let browser = window.browser || window.chrome
-
   import Checkbox from "../components/RowCheckbox.svelte"
   import RowSelect from "../components/RowSelect.svelte"
   import Row from "../components/Row.svelte"
@@ -8,8 +6,10 @@
   import Select from "../components/Select.svelte"
   import { options, config } from "../stores"
   import RedirectType from "./RedirectType.svelte"
-  import { onDestroy, onMount } from "svelte"
+  import { onDestroy } from "svelte"
   import Instances from "./Instances.svelte"
+  import SvelteSelect from "svelte-select"
+  import ServiceIcon from "./ServiceIcon.svelte"
 
   let _options
   let _config
@@ -22,9 +22,9 @@
   })
 
   let selectedService = "youtube"
-
   $: serviceConf = _config.services[selectedService]
   $: serviceOptions = _options[selectedService]
+  $: frontendWebsite = serviceConf.frontends[serviceOptions.frontend].url
 </script>
 
 <div>
@@ -33,15 +33,26 @@
       Service:
       <a href={serviceConf.url} target="_blank" rel="noopener noreferrer">{serviceConf.url}</a>
     </Label>
-    <Select
+    <SvelteSelect
+      clearable={false}
+      class="svelte_select"
       value={selectedService}
-      values={[
-        ...Object.entries(_config.services).map(([serviceId, service]) => {
-          return { value: serviceId, name: service.name }
+      on:change={e => (selectedService = e.detail.value)}
+      items={[
+        ...Object.entries(_config.services).map(([serviceKey, service]) => {
+          return { value: serviceKey, label: service.name }
         }),
       ]}
-      onChange={e => (selectedService = e.target.options[e.target.options.selectedIndex].value)}
-    />
+    >
+      <div class="slot" slot="item" let:item>
+        <ServiceIcon details={item} />
+        {item.label}
+      </div>
+      <div class="slot" slot="selection" let:selection>
+        <ServiceIcon details={selection} />
+        {selection.label}
+      </div>
+    </SvelteSelect>
   </Row>
 
   <hr />
@@ -73,9 +84,9 @@
     <Row>
       <Label>
         Frontend:
-        <a href={serviceConf.frontends[serviceOptions.frontend].url} target="_blank" rel="noopener noreferrer"
-          >{serviceConf.frontends[serviceOptions.frontend].url}</a
-        >
+        <a href={frontendWebsite} target="_blank" rel="noopener noreferrer">
+          {frontendWebsite}
+        </a>
       </Label>
       <Select
         value={serviceOptions.frontend}
@@ -95,7 +106,7 @@
     <RedirectType {selectedService} />
 
     <RowSelect
-      label="Unsupported iframes handling"
+      label="Unsupported embeds handling"
       value={serviceOptions.unsupportedUrls}
       onChange={e => {
         serviceOptions.unsupportedUrls = e.target.options[e.target.options.selectedIndex].value
@@ -108,12 +119,55 @@
     />
 
     {#if selectedService == "search"}
-      <div>
-        Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click
-        <a href="https://libredirect.github.io/docs.html#search_engine_chromium">here</a>.
-      </div>
+      <Row>
+        <Label>
+          Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click
+          <a
+            href="https://libredirect.github.io/docs.html#search_engine_chromium"
+            target="_blank"
+            rel="noopener noreferrer"
+            >here
+          </a>.
+        </Label>
+      </Row>
     {/if}
 
-    <Instances {selectedService} />
+    <Instances
+      {selectedService}
+      selectedFrontend={!serviceConf.frontends[serviceOptions.frontend].desktopApp ||
+      serviceOptions.redirectType == "main_frame"
+        ? serviceOptions.frontend
+        : serviceOptions.embedFrontend}
+    />
+
+    <Row></Row>
   </div>
 </div>
+
+<style>
+  :global(.svelte_select) {
+    font-weight: bold;
+    --item-padding: 0 10px;
+    --border: none;
+    --border-hover: none;
+    --width: 210px;
+    --background: var(--bg-secondary);
+    --list-background: var(--bg-secondary);
+    --item-active-background: red;
+    --item-is-active-bg: grey;
+    --item-hover-bg: grey;
+    --item-color: var(--text); /*text color*/
+  }
+  :global(.svelte_select .slot) {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+
+  :global(.svelte_select img, .svelte_select svg) {
+    margin-right: 10px;
+    height: 26px;
+    width: 26px;
+    color: var(--text);
+  }
+</style>
