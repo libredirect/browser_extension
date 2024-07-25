@@ -9,10 +9,9 @@
   import SwitchInstanceIcon from "../icons/SwitchInstanceIcon.svelte"
   import SettingsIcon from "../icons/SettingsIcon.svelte"
   import { options, config } from "./stores"
-  import ServiceIcon from "./components/ServiceIcon.svelte"
   import { onDestroy } from "svelte"
   import servicesHelper from "../../assets/javascripts/services"
-  import Checkbox from "../components/Checkbox.svelte"
+  import Switch from "./components/Switch.svelte"
 
   let _options
   let _config
@@ -35,117 +34,70 @@
       servicesHelper.switchInstance(url).then(r => (switchInstance = r))
       servicesHelper.reverse(url).then(r => (redirectToOriginal = r))
       servicesHelper.redirectAsync(url, "main_frame", null, true).then(r => (redirect = r))
-      currentService = await servicesHelper.computeService(url)
+      servicesHelper.computeService(url).then(r => (currentService = r))
     }
   })
 </script>
 
 {#if redirect}
-  <Row class="row" on:click={() => browser.runtime.sendMessage("redirectTab")}>
+  <Row class="interactive" on:click={() => browser.runtime.sendMessage("redirectTab")}>
     <Label>Redirect</Label>
     <RedirectIcon />
   </Row>
 {/if}
 
 {#if switchInstance}
-  <Row class="row" on:click={async () => browser.tabs.update({ url: await servicesHelper.switchInstance(url) })}>
+  <Row
+    class="interactive"
+    on:click={async () => browser.tabs.update({ url: await servicesHelper.switchInstance(url) })}
+  >
     <Label>Switch Instance</Label>
     <SwitchInstanceIcon />
   </Row>
 {/if}
 
 {#if redirectToOriginal}
-  <Row class="row" on:click={() => servicesHelper.copyRaw(url)}>
+  <Row class="interactive" on:click={() => servicesHelper.copyRaw(url)}>
     <Label>Copy Original</Label>
     <CopyIcon />
   </Row>
-  <Row class="row" on:click={() => browser.runtime.sendMessage("reverseTab")}>
+  <Row class="interactive" on:click={() => browser.runtime.sendMessage("reverseTab")}>
     <Label>Redirect To Original</Label>
     <RedirectToOriginalIcon />
   </Row>
 {/if}
 
-<hr />
-
-{#if currentService}
-  <Row>
-    <div
-      style="display: flex;justify-content: space-between;align-items: center;"
-      class="row"
-      on:keydown={null}
-      on:click={() => window.open(browser.runtime.getURL(_config.services[currentService].url), "_blank")}
-    >
-      <ServiceIcon details={{ value: currentService, label: _config.services[currentService].name }} />
-      <Label>{_config.services[currentService].name}</Label>
-    </div>
-    <div style="display: flex;align-items: center;">
-      <Checkbox
-        style="margin-right:5px"
-        label="Enable"
-        checked={_options[currentService].enabled}
-        onChange={e => {
-          _options[currentService].enabled = e.target.checked
-          options.set(_options)
-        }}
-      />
-      <SwitchInstanceIcon
-        class="row"
-        on:click={async () => browser.tabs.update({ url: await servicesHelper.switchInstance(url, currentService) })}
-      />
-    </div>
-  </Row>
+{#if redirect || switchInstance || redirectToOriginal}
+  <hr />
 {/if}
 
-<hr />
+{#if currentService}
+  <Switch serviceKey={currentService} {url} />
+  <hr />
+{/if}
 
 {#each _options.popupServices as serviceKey}
   {#if currentService !== serviceKey}
-    <Row>
-      <div
-        style="display: flex;align-items: center;"
-        class="row"
-        on:keydown={null}
-        on:click={() => window.open(browser.runtime.getURL(_config.services[serviceKey].url), "_blank")}
-      >
-        <ServiceIcon details={{ value: serviceKey, label: _config.services[serviceKey].name }} />
-        <Label>{_config.services[serviceKey].name}</Label>
-      </div>
-      <div style="display: flex;align-items: center;">
-        <Checkbox
-          style="margin-right:5px"
-          label="Enable"
-          checked={_options[serviceKey].enabled}
-          onChange={e => {
-            console.log(e.target.checked)
-            _options[serviceKey].enabled = e.target.checked
-            options.set(_options)
-          }}
-        />
-        <SwitchInstanceIcon
-          class="row"
-          on:click={async () => browser.tabs.update({ url: await servicesHelper.switchInstance(url, serviceKey) })}
-        />
-      </div>
-    </Row>
+    <Switch {serviceKey} {url} />
   {/if}
 {/each}
 
 <hr />
 
-<Row class="row" on:click={() => window.open(browser.runtime.getURL("pages/options/index.html"), "_blank")}>
+<Row class="interactive" on:click={() => window.open(browser.runtime.getURL("pages/options/index.html"), "_blank")}>
   <Label>Settings</Label>
   <SettingsIcon />
 </Row>
 
 <style>
-  :global(.row) {
+  :global(.interactive) {
     transition: 0.1s;
   }
-  :global(.row:hover) {
+  :global(.interactive:hover) {
     color: var(--active);
     cursor: pointer;
   }
-  :global(.row:active) {
+  :global(.interactive:active) {
     transform: translateY(1px);
   }
 
