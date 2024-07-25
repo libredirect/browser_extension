@@ -119,7 +119,7 @@
         "embedFrontend": "invidious",
         "unsupportedUrls": "bypass"
       },
-      "imageType": "png",
+      "imageType": "svg",
       "embeddable": true,
       "url": "https://youtube.com"
     },
@@ -151,7 +151,7 @@
         "frontend": "hyperpipe",
         "unsupportedUrls": "bypass"
       },
-      "imageType": "png",
+      "imageType": "svg",
       "url": "https://music.youtube.com"
     },
     "twitter": {
@@ -180,7 +180,7 @@
         "frontend": "nitter",
         "instance": "public"
       },
-      "imageType": "png",
+      "imageType": "svg",
       "embeddable": true,
       "url": "https://twitter.com"
     },
@@ -234,7 +234,7 @@
         "unsupportedUrls": "bypass",
         "instance": "public"
       },
-      "imageType": "png",
+      "imageType": "svg",
       "url": "https://reddit.com"
     },
     "tumblr": {
@@ -311,7 +311,7 @@
         "frontend": "proxiTok",
         "instance": "public"
       },
-      "imageType": "png",
+      "imageType": "svg",
       "url": "https://tiktok.com"
     },
     "instagram": {
@@ -331,7 +331,7 @@
         "unsupportedUrls": "bypass",
         "instance": "public"
       },
-      "imageType": "png",
+      "imageType": "svg",
       "url": "https://www.instagram.com"
     },
     "imdb": {
@@ -428,7 +428,7 @@
         "frontend": "rimgo",
         "instance": "public"
       },
-      "imageType": "png",
+      "imageType": "svg",
       "embeddable": true,
       "url": "https://imgur.com"
     },
@@ -596,7 +596,7 @@
         "frontend": "quetre",
         "instance": "public"
       },
-      "imageType": "png",
+      "imageType": "svg",
       "url": "https://quora.com"
     },
     "github": {
