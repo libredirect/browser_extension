@@ -1,8 +1,8 @@
 <script>
   import { page } from "./stores"
-  import GeneralIcon from "./icons/GeneralIcon.svelte"
-  import ServicesIcon from "./icons/ServicesIcon.svelte"
-  import AboutIcon from "./icons/AboutIcon.svelte"
+  import GeneralIcon from "../icons/GeneralIcon.svelte"
+  import ServicesIcon from "../icons/ServicesIcon.svelte"
+  import AboutIcon from "../icons/AboutIcon.svelte"
 </script>
 
 <div>

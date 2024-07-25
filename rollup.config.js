@@ -5,14 +5,23 @@ import resolve from "@rollup/plugin-node-resolve"
 import css from "rollup-plugin-css-only"
 
 const production = !process.env.ROLLUP_WATCH
+let input
+let output
+if (process.argv.includes("--config-options")) {
+  input = "src/pages/options_src/main.js"
+  output = "src/pages/options/build/bundle.js"
+} else if (process.argv.includes("--config-popup")) {
+  input = "src/pages/popup_src/main.js"
+  output = "src/pages/popup/build/bundle.js"
+}
 
 export default {
-  input: "src/pages/src/main.js",
+  input,
   output: {
     sourcemap: true,
     format: "iife",
     name: "app",
-    file: "src/pages/options/build/bundle.js",
+    file: output,
   },
   plugins: [
     svelte({
@@ -27,7 +36,7 @@ export default {
       exportConditions: ["svelte"],
     }),
     commonjs(),
-    // production && terser(),
+    production && terser(),
   ],
   watch: {
     clearScreen: false,

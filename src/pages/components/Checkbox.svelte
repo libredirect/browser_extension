@@ -3,7 +3,7 @@
   export let onChange
 </script>
 
-<input bind:checked on:change={onChange} type="checkbox" />
+<input {...$$restProps} bind:checked on:change={onChange} type="checkbox" />
 
 <style>
   input[type="checkbox"] {

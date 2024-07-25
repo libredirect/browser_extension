@@ -3,8 +3,8 @@
   "type": "module",
   "description": "Redirects YouTube, Twitter, TikTok and more to privacy friendly frontends.",
   "engines": {
-    "node": ">=16.13.1",
-    "npm": ">=8.1.2"
+    "node": ">=18.20.4",
+    "npm": ">=10.7.0"
   },
   "scripts": {
     "start": "web-ext run",
@@ -12,7 +12,7 @@
     "android": "web-ext run -t firefox-android --adb-device emulator-5554 --firefox-apk org.mozilla.fenix",
     "build": "web-ext build",
     "test": "web-ext lint",
-    "html": "rollup -c"
+    "html": "rollup -c --config-popup && rollup -c --config-options"
   },
   "repository": {
     "type": "git",
@@ -25,16 +25,7 @@
   },
   "homepage": "https://libredirect.github.io",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^24.0.0",
-    "@rollup/plugin-node-resolve": "^15.0.0",
-    "@rollup/plugin-terser": "^0.4.0",
-    "prettier": "3.3.3",
-    "pug-cli": "^1.0.0-alpha6",
-    "rollup": "^3.15.0",
-    "rollup-plugin-css-only": "^4.3.0",
-    "rollup-plugin-svelte": "^7.1.2",
-    "svelte": "^3.55.0",
-    "web-ext": "^7.2.0"
+    "prettier": "3.3.3"
   },
   "webExt": {
     "sourceDir": "./src/",
@@ -46,6 +37,15 @@
     }
   },
   "dependencies": {
-    "svelte-select": "^5.8.3"
+    "svelte-select": "^5.8.3",
+    "pug-cli": "^1.0.0-alpha6",
+    "rollup": "^3.15.0",
+    "rollup-plugin-css-only": "^4.3.0",
+    "rollup-plugin-svelte": "^7.1.2",
+    "svelte": "^3.55.0",
+    "web-ext": "^7.2.0",
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.0"
   }
 }

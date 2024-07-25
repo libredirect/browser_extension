@@ -24,14 +24,17 @@
       theme = "light"
     }
   }
+  $: imageType = _config.services[details.value].imageType
 </script>
 
-{#if _config.services[details.value].imageType == "svgMono"}
-  {#if theme == "dark"}
-    <img src={`/assets/images/${details.value}-icon-light.svg`} alt={details.label} />
+{#if imageType}
+  {#if imageType == "svgMono"}
+    {#if theme == "dark"}
+      <img src={`/assets/images/${details.value}-icon-light.svg`} alt={details.label} />
+    {:else}
+      <img src={`/assets/images/${details.value}-icon.svg`} alt={details.label} />
+    {/if}
   {:else}
-    <img src={`/assets/images/${details.value}-icon.svg`} alt={details.label} />
+    <img src={`/assets/images/${details.value}-icon.${imageType}`} alt={details.label} />
   {/if}
-{:else}
-  <img src={`/assets/images/${details.value}-icon.${_config.services[details.value].imageType}`} alt={details.label} />
 {/if}

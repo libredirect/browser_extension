@@ -1,14 +1,14 @@
 <script>
   let browser = window.browser || window.chrome
 
-  import Button from "../components/Button.svelte"
-  import AddIcon from "../icons/AddIcon.svelte"
+  import Button from "../../components/Button.svelte"
+  import AddIcon from "../../icons/AddIcon.svelte"
   import { options, config } from "../stores"
-  import PingIcon from "../icons/PingIcon.svelte"
-  import Row from "../components/Row.svelte"
-  import Input from "../components/Input.svelte"
-  import Label from "../components/Label.svelte"
-  import CloseIcon from "../icons/CloseIcon.svelte"
+  import PingIcon from "../../icons/PingIcon.svelte"
+  import Row from "../../components/Row.svelte"
+  import Input from "../../components/Input.svelte"
+  import Label from "../../components/Label.svelte"
+  import CloseIcon from "../../icons/CloseIcon.svelte"
   import { onDestroy, onMount } from "svelte"
   import utils from "../../../assets/javascripts/utils"
 

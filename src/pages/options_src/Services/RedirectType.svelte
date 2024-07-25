@@ -1,11 +1,11 @@
 <script>
   import { onDestroy } from "svelte"
 
-  import RowSelect from "../components/RowSelect.svelte"
+  import RowSelect from "../../components/RowSelect.svelte"
   import SvelteSelect from "svelte-select"
   import { options, config } from "../stores"
-  import Row from "../components/Row.svelte"
-  import Label from "../components/Label.svelte"
+  import Row from "../../components/Row.svelte"
+  import Label from "../../components/Label.svelte"
   import FrontendIcon from "./FrontendIcon.svelte"
 
   let _options

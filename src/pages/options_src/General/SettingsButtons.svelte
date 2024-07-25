@@ -2,10 +2,10 @@
   let browser = window.browser || window.chrome
 
   import { onDestroy } from "svelte"
-  import Button from "../components/Button.svelte"
-  import ExportIcon from "../icons/ExportIcon.svelte"
-  import ImportIcon from "../icons/ImportIcon.svelte"
-  import ResetIcon from "../icons/ResetIcon.svelte"
+  import Button from "../../components/Button.svelte"
+  import ExportIcon from "../../icons/ExportIcon.svelte"
+  import ImportIcon from "../../icons/ImportIcon.svelte"
+  import ResetIcon from "../../icons/ResetIcon.svelte"
   import { options } from "../stores"
   import servicesHelper from "../../../assets/javascripts/services.js"
   import utils from "../../../assets/javascripts/utils.js"

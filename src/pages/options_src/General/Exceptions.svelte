@@ -1,10 +1,10 @@
 <script>
-  import Row from "../components/Row.svelte"
-  import Select from "../components/Select.svelte"
-  import AddIcon from "../icons/AddIcon.svelte"
-  import CloseIcon from "../icons/CloseIcon.svelte"
-  import Input from "../components/Input.svelte"
-  import Label from "../components/Label.svelte"
+  import Row from "../../components/Row.svelte"
+  import Select from "../../components/Select.svelte"
+  import AddIcon from "../../icons/AddIcon.svelte"
+  import CloseIcon from "../../icons/CloseIcon.svelte"
+  import Input from "../../components/Input.svelte"
+  import Label from "../../components/Label.svelte"
   import { options, config } from "../stores"
   import { onDestroy } from "svelte"
 

@@ -3,8 +3,8 @@
 
   import Exceptions from "./Exceptions.svelte"
   import SettingsButtons from "./SettingsButtons.svelte"
-  import RowSelect from "../components/RowSelect.svelte"
-  import Checkbox from "../components/RowCheckbox.svelte"
+  import RowSelect from "../../components/RowSelect.svelte"
+  import Checkbox from "../../components/RowCheckbox.svelte"
   import { options } from "../stores"
   import { onDestroy } from "svelte"
 
