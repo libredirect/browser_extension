@@ -20,6 +20,8 @@
     "16": "assets/images/libredirect-16.png",
     "32": "assets/images/libredirect-32.png",
     "48": "assets/images/libredirect-48.png",
+    "64": "assets/images/libredirect-64.png",
+    "96": "assets/images/libredirect-96.png",
     "128": "assets/images/libredirect-128.png"
   },
   "permissions": ["webRequest", "webRequestBlocking", "storage", "clipboardWrite", "contextMenus", "<all_urls>"],
@@ -32,6 +34,8 @@
       "16": "assets/images/libredirect-16.png",
       "32": "assets/images/libredirect-32.png",
       "48": "assets/images/libredirect-48.png",
+      "64": "assets/images/libredirect-64.png",
+      "96": "assets/images/libredirect-96.png",
       "128": "assets/images/libredirect-128.png"
     }
   },
