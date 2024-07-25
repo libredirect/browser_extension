@@ -2,7 +2,11 @@
   import { onDestroy } from "svelte"
 
   import RowSelect from "../components/RowSelect.svelte"
+  import SvelteSelect from "svelte-select"
   import { options, config } from "../stores"
+  import Row from "../components/Row.svelte"
+  import Label from "../components/Label.svelte"
+  import FrontendIcon from "./FrontendIcon.svelte"
 
   let _options
   let _config
@@ -52,7 +56,7 @@
       if (frontendConf.embeddable && frontendConf.instanceList) {
         embeddableFrontends.push({
           value: frontendId,
-          name: frontendConf.name,
+          label: frontendConf.name,
         })
       }
     }
@@ -70,13 +74,26 @@
 />
 
 {#if serviceConf.frontends[frontendName].desktopApp && serviceOptions.redirectType != "main_frame"}
-  <RowSelect
-    label="Embed Frontend"
-    value={_options.embedFrontend}
-    onChange={e => {
-      serviceOptions.embedFrontend = e.target.options[e.target.options.selectedIndex].value
-      options.set(_options)
-    }}
-    values={embeddableFrontends}
-  />
+  <Row>
+    <Label>Embed Frontend</Label>
+    <SvelteSelect
+      clearable={false}
+      class="svelte_select"
+      value={serviceOptions.embedFrontend}
+      on:change={e => {
+        serviceOptions.embedFrontend = e.detail.value
+        options.set(_options)
+      }}
+      items={embeddableFrontends}
+    >
+      <div class="slot" slot="item" let:item>
+        <FrontendIcon details={item} {selectedService} />
+        {item.label}
+      </div>
+      <div class="slot" slot="selection" let:selection>
+        <FrontendIcon details={selection} {selectedService} />
+        {selection.label}
+      </div>
+    </SvelteSelect>
+  </Row>
 {/if}

@@ -917,14 +917,15 @@
         "simplyTranslate": {
           "name": "SimplyTranslate",
           "instanceList": true,
-          "url": "https://git.sr.ht/~metalune/simplytranslate_web",
+          "url": "https://codeberg.org/ManeraKai/simplytranslate",
           "localhost": true
         },
         "mozhi": {
           "name": "Mozhi",
           "instanceList": true,
           "url": "https://codeberg.org/aryak/mozhi",
-          "localhost": false
+          "localhost": false,
+          "imageType": "svg"
         },
         "libreTranslate": {
           "name": "LibreTranslate",

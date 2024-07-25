@@ -103,7 +103,7 @@
   div {
     height: 100%;
     display: grid;
-    grid-template-columns: min-content 700px;
+    grid-template-columns: min-content 800px;
     margin: 0;
     padding-top: 50px;
     justify-content: center;

@@ -10,6 +10,7 @@
   import Instances from "./Instances.svelte"
   import SvelteSelect from "svelte-select"
   import ServiceIcon from "./ServiceIcon.svelte"
+  import FrontendIcon from "./FrontendIcon.svelte"
 
   let _options
   let _config
@@ -88,19 +89,31 @@
           {frontendWebsite}
         </a>
       </Label>
-      <Select
+
+      <SvelteSelect
+        clearable={false}
+        class="svelte_select"
         value={serviceOptions.frontend}
-        values={[
-          ...Object.entries(serviceConf.frontends).map(([frontendId, frontend]) => ({
-            value: frontendId,
-            name: frontend.name,
-          })),
-        ]}
-        onChange={e => {
-          serviceOptions.frontend = e.target.options[e.target.options.selectedIndex].value
+        on:change={e => {
+          serviceOptions.frontend = e.detail.value
           options.set(_options)
         }}
-      />
+        items={[
+          ...Object.entries(serviceConf.frontends).map(([frontendId, frontend]) => ({
+            value: frontendId,
+            label: frontend.name,
+          })),
+        ]}
+      >
+        <div class="slot" slot="item" let:item>
+          <FrontendIcon details={item} {selectedService} />
+          {item.label}
+        </div>
+        <div class="slot" slot="selection" let:selection>
+          <FrontendIcon details={selection} {selectedService} />
+          {selection.label}
+        </div>
+      </SvelteSelect>
     </Row>
 
     <RedirectType {selectedService} />
@@ -156,7 +169,9 @@
     --item-active-background: red;
     --item-is-active-bg: grey;
     --item-hover-bg: grey;
-    --item-color: var(--text); /*text color*/
+    --item-is-active-color: var(--text);
+    --padding: 0 0 0 10px;
+    --item-color: var(--text);
   }
   :global(.svelte_select .slot) {
     display: flex;
