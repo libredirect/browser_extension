@@ -634,7 +634,7 @@
         "^https?:\\/{2}gitlab\\.freedesktop\\.com\\/",
         "^https?:\\/{2}gitlab\\.archlinux\\.com\\/"
       ],
-      "name": "Gitlab",
+      "name": "GitLab",
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
