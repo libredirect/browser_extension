@@ -38,4 +38,9 @@
   input:focus {
     outline-color: var(--active);
   }
+  @media (max-width: 715px) {
+    input {
+      width: 200px;
+    }
+  }
 </style>

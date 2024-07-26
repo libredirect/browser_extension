@@ -93,7 +93,6 @@
 {/if}
 
 <style>
- 
   :global(body) {
     width: 100vw;
     height: 100vh;
@@ -114,5 +113,24 @@
     background-color: var(--bg-main);
     color: var(--text);
     overflow: scroll;
+  }
+
+  @media (max-width: 1250px) {
+    div {
+      grid-template-columns: auto;
+      grid-template-rows: min-content auto;
+      padding-left: 5vw;
+      padding-right: 5vw;
+    }
+  }
+
+  @media (max-width: 715px) {
+    div {
+      font-size: 14px;
+      grid-template-columns: auto;
+      grid-template-rows: min-content auto;
+      padding-left: 5vw;
+      padding-right: 5vw;
+    }
   }
 </style>

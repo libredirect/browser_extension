@@ -21,13 +21,6 @@ function getNextInstance(currentInstanceUrl, instances) {
 }
 
 /**
- * @param {string} str
- */
-function camelCase(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1)
-}
-
-/**
  * @param {URL} url
  */
 function protocolHost(url) {
@@ -178,7 +171,6 @@ export default {
   protocolHost,
   getList,
   getBlacklist,
-  camelCase,
   getConfig,
   getOptions,
   getPingCache,

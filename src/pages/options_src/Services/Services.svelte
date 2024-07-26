@@ -1,6 +1,4 @@
 <script>
-  import Checkbox from "../../components/RowCheckbox.svelte"
-  import RowSelect from "../../components/RowSelect.svelte"
   import Row from "../../components/Row.svelte"
   import Label from "../../components/Label.svelte"
   import Select from "../../components/Select.svelte"
@@ -11,6 +9,7 @@
   import SvelteSelect from "svelte-select"
   import ServiceIcon from "./ServiceIcon.svelte"
   import FrontendIcon from "./FrontendIcon.svelte"
+  import Checkbox from "../../components/Checkbox.svelte"
 
   let _options
   let _config
@@ -58,29 +57,33 @@
 
   <hr />
 
-  <Checkbox
-    label="Enable"
-    checked={serviceOptions.enabled}
-    onChange={e => {
-      serviceOptions.enabled = e.target.checked
-      options.set(_options)
-    }}
-  />
-
-  <div style={!serviceOptions.enabled && "pointer-events: none;opacity: 0.4;user-select: none;"}>
+  <Row>
+    <Label>Enable</Label>
     <Checkbox
-      label="Show in popup"
-      checked={_options.popupServices.includes(selectedService)}
+      checked={serviceOptions.enabled}
       onChange={e => {
-        if (e.target.checked && !_options.popupServices.includes(selectedService)) {
-          _options.popupServices.push(selectedService)
-        } else if (_options.popupServices.includes(selectedService)) {
-          const index = _options.popupServices.indexOf(selectedService)
-          if (index !== -1) _options.popupServices.splice(index, 1)
-        }
+        serviceOptions.enabled = e.target.checked
         options.set(_options)
       }}
     />
+  </Row>
+
+  <div style={!serviceOptions.enabled && "pointer-events: none;opacity: 0.4;user-select: none;"}>
+    <Row>
+      <Label>Show in popup</Label>
+      <Checkbox
+        checked={_options.popupServices.includes(selectedService)}
+        onChange={e => {
+          if (e.target.checked && !_options.popupServices.includes(selectedService)) {
+            _options.popupServices.push(selectedService)
+          } else if (_options.popupServices.includes(selectedService)) {
+            const index = _options.popupServices.indexOf(selectedService)
+            if (index !== -1) _options.popupServices.splice(index, 1)
+          }
+          options.set(_options)
+        }}
+      />
+    </Row>
 
     <Row>
       <Label>
@@ -118,18 +121,20 @@
 
     <RedirectType {selectedService} />
 
-    <RowSelect
-      label="Unsupported embeds handling"
-      value={serviceOptions.unsupportedUrls}
-      onChange={e => {
-        serviceOptions.unsupportedUrls = e.target.options[e.target.options.selectedIndex].value
-        options.set(_options)
-      }}
-      values={[
-        { value: "bypass", name: "Bypass" },
-        { value: "block", name: "Block" },
-      ]}
-    />
+    <Row>
+      <Label>Unsupported embeds handling</Label>
+      <Select
+        value={serviceOptions.unsupportedUrls}
+        onChange={e => {
+          serviceOptions.unsupportedUrls = e.target.options[e.target.options.selectedIndex].value
+          options.set(_options)
+        }}
+        values={[
+          { value: "bypass", name: "Bypass" },
+          { value: "block", name: "Block" },
+        ]}
+      />
+    </Row>
 
     {#if selectedService == "search"}
       <Row>
@@ -163,6 +168,7 @@
     --item-padding: 0 10px;
     --border: none;
     --border-hover: none;
+    --border-focused: none;
     --width: 210px;
     --background: var(--bg-secondary);
     --list-background: var(--bg-secondary);
@@ -178,7 +184,6 @@
     justify-content: start;
     align-items: center;
   }
-
   :global(.svelte_select img, .svelte_select svg) {
     margin-right: 10px;
     height: 26px;

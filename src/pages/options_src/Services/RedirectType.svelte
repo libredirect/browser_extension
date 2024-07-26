@@ -1,12 +1,11 @@
 <script>
   import { onDestroy } from "svelte"
-
-  import RowSelect from "../../components/RowSelect.svelte"
   import SvelteSelect from "svelte-select"
   import { options, config } from "../stores"
   import Row from "../../components/Row.svelte"
   import Label from "../../components/Label.svelte"
   import FrontendIcon from "./FrontendIcon.svelte"
+  import Select from "../../components/Select.svelte"
 
   let _options
   let _config
@@ -63,15 +62,17 @@
   }
 </script>
 
-<RowSelect
-  label="Redirect Type"
-  value={serviceOptions.redirectType}
-  onChange={e => {
-    serviceOptions.redirectType = e.target.options[e.target.options.selectedIndex].value
-    options.set(_options)
-  }}
-  {values}
-/>
+<Row>
+  <Label>Redirect Type</Label>
+  <Select
+    value={serviceOptions.redirectType}
+    onChange={e => {
+      serviceOptions.redirectType = e.target.options[e.target.options.selectedIndex].value
+      options.set(_options)
+    }}
+    {values}
+  />
+</Row>
 
 {#if serviceConf.frontends[frontendName].desktopApp && serviceOptions.redirectType != "main_frame"}
   <Row>

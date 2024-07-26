@@ -63,10 +63,10 @@
       console.log("pinging...", instance)
       pingCache[instance] = { color: "lightblue", value: "pinging..." }
       const time = await utils.ping(instance)
-      pingCache[instance] = processTime(time)
+      pingCache[instance] = colorTime(time)
     }
   }
-  function processTime(time) {
+  function colorTime(time) {
     let value
     let color
     if (time < 5000) {
@@ -225,6 +225,7 @@
   a {
     color: var(--text);
     text-decoration: none;
+    word-wrap: anywhere;
   }
 
   a:hover {

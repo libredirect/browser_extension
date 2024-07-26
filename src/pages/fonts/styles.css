@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "Inter";
+  src: url("Inter-VariableFont_slnt,wght.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("Vazirmatn-VariableFont_wght.ttf");
+  font-weight: normal;
+  font-style: normal;
+}

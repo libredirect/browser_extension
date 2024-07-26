@@ -40,4 +40,18 @@
   a:hover {
     color: var(--active);
   }
+
+  @media (max-width: 1250px) {
+    div {
+      flex-direction: row;
+      justify-content: center;
+      margin: 0;
+    }
+  }
+
+  @media (max-width: 715px) {
+    a {
+      margin: 5px;
+    }
+  }
 </style>
