@@ -1,5 +1,5 @@
 <script>
-  let browser = window.browser || window.chrome
+  const browser = window.browser || window.chrome
 
   import Checkbox from "../../components/Checkbox.svelte"
   import Label from "../../components/Label.svelte"
@@ -35,7 +35,7 @@
   </div>
   <div>
     <Checkbox
-      style="margin-right:5px"
+      class="margin margin_{document.body.dir}"
       label="Enable"
       checked={_options[serviceKey].enabled}
       onChange={e => {
@@ -54,5 +54,14 @@
   div {
     display: flex;
     align-items: center;
+  }
+
+  :global(.margin) {
+    margin-right: 5px;
+    margin-left: 0;
+  }
+  :global(.margin_rtl) {
+    margin-right: 0;
+    margin-left: 5px;
   }
 </style>

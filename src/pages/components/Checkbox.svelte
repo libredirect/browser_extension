@@ -1,9 +1,10 @@
 <script>
   export let checked
   export let onChange
+  console.log(document.body.dir)
 </script>
 
-<input {...$$restProps} bind:checked on:change={onChange} type="checkbox" />
+<input class={document.body.dir} {...$$restProps} bind:checked on:change={onChange} type="checkbox" />
 
 <style>
   input[type="checkbox"] {
@@ -40,13 +41,13 @@
     left: 24px;
   }
 
-  /* body.rtl div.block input[type="checkbox"]::before {
-      left: auto;
-      right: 4px;
-    } */
+  input[type="checkbox"].rtl::before {
+    left: auto;
+    right: 3.5px;
+  }
 
-  /* body.rtl div.block input[type="checkbox"]:checked::before {
-      left: auto;
-      right: 24px;
-    } */
+  input[type="checkbox"].rtl:checked::before {
+    left: auto;
+    right: 24px;
+  }
 </style>

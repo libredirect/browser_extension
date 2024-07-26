@@ -9,6 +9,7 @@
   "scripts": {
     "start": "web-ext run",
     "nightly": "web-ext run --firefox=/home/esmail/software/firefox_nightly/firefox",
+    "start_ar": "web-ext run --firefox=/home/esmail/software/firefox_ar/firefox",
     "android": "web-ext run -t firefox-android --adb-device emulator-5554 --firefox-apk org.mozilla.fenix ",
     "build": "web-ext build",
     "test": "web-ext lint",

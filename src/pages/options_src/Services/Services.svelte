@@ -1,4 +1,6 @@
 <script>
+  const browser = window.browser || window.chrome
+
   import Row from "../../components/Row.svelte"
   import Label from "../../components/Label.svelte"
   import Select from "../../components/Select.svelte"
@@ -33,32 +35,34 @@
       Service:
       <a href={serviceConf.url} target="_blank" rel="noopener noreferrer">{serviceConf.url}</a>
     </Label>
-    <SvelteSelect
-      clearable={false}
-      class="svelte_select"
-      value={selectedService}
-      on:change={e => (selectedService = e.detail.value)}
-      items={[
-        ...Object.entries(_config.services).map(([serviceKey, service]) => {
-          return { value: serviceKey, label: service.name }
-        }),
-      ]}
-    >
-      <div class="slot" slot="item" let:item>
-        <ServiceIcon details={item} />
-        {item.label}
-      </div>
-      <div class="slot" slot="selection" let:selection>
-        <ServiceIcon details={selection} />
-        {selection.label}
-      </div>
-    </SvelteSelect>
+    <div dir="ltr">
+      <SvelteSelect
+        clearable={false}
+        class="svelte_select"
+        value={selectedService}
+        on:change={e => (selectedService = e.detail.value)}
+        items={[
+          ...Object.entries(_config.services).map(([serviceKey, service]) => {
+            return { value: serviceKey, label: service.name }
+          }),
+        ]}
+      >
+        <div class="slot" slot="item" let:item>
+          <ServiceIcon details={item} />
+          {item.label}
+        </div>
+        <div class="slot" slot="selection" let:selection>
+          <ServiceIcon details={selection} />
+          {selection.label}
+        </div>
+      </SvelteSelect>
+    </div>
   </Row>
 
   <hr />
 
   <Row>
-    <Label>Enable</Label>
+    <Label>{browser.i18n.getMessage("enable") || "Enable"}</Label>
     <Checkbox
       checked={serviceOptions.enabled}
       onChange={e => {
@@ -70,7 +74,7 @@
 
   <div style={!serviceOptions.enabled && "pointer-events: none;opacity: 0.4;user-select: none;"}>
     <Row>
-      <Label>Show in popup</Label>
+      <Label>{browser.i18n.getMessage("showInPopup") || "Show in popup"}</Label>
       <Checkbox
         checked={_options.popupServices.includes(selectedService)}
         onChange={e => {
@@ -87,42 +91,44 @@
 
     <Row>
       <Label>
-        Frontend:
+        {browser.i18n.getMessage("frontend") || "Frontend"}:
         <a href={frontendWebsite} target="_blank" rel="noopener noreferrer">
           {frontendWebsite}
         </a>
       </Label>
-
-      <SvelteSelect
-        clearable={false}
-        class="svelte_select"
-        value={serviceOptions.frontend}
-        on:change={e => {
-          serviceOptions.frontend = e.detail.value
-          options.set(_options)
-        }}
-        items={[
-          ...Object.entries(serviceConf.frontends).map(([frontendId, frontend]) => ({
-            value: frontendId,
-            label: frontend.name,
-          })),
-        ]}
-      >
-        <div class="slot" slot="item" let:item>
-          <FrontendIcon details={item} {selectedService} />
-          {item.label}
-        </div>
-        <div class="slot" slot="selection" let:selection>
-          <FrontendIcon details={selection} {selectedService} />
-          {selection.label}
-        </div>
-      </SvelteSelect>
+      <div dir="ltr">
+        <SvelteSelect
+          clearable={false}
+          dir="ltr"
+          class="svelte_select"
+          value={serviceOptions.frontend}
+          on:change={e => {
+            serviceOptions.frontend = e.detail.value
+            options.set(_options)
+          }}
+          items={[
+            ...Object.entries(serviceConf.frontends).map(([frontendId, frontend]) => ({
+              value: frontendId,
+              label: frontend.name,
+            })),
+          ]}
+        >
+          <div class="slot" slot="item" let:item>
+            <FrontendIcon details={item} {selectedService} />
+            {item.label}
+          </div>
+          <div class="slot" slot="selection" let:selection>
+            <FrontendIcon details={selection} {selectedService} />
+            {selection.label}
+          </div>
+        </SvelteSelect>
+      </div>
     </Row>
 
     <RedirectType {selectedService} />
 
     <Row>
-      <Label>Unsupported embeds handling</Label>
+      <Label>{browser.i18n.getMessage("unsupportedIframesHandling") || "Unsupported embeds handling"}</Label>
       <Select
         value={serviceOptions.unsupportedUrls}
         onChange={e => {
@@ -130,8 +136,8 @@
           options.set(_options)
         }}
         values={[
-          { value: "bypass", name: "Bypass" },
-          { value: "block", name: "Block" },
+          { value: "bypass", name: browser.i18n.getMessage("bypass") || "Bypass" },
+          { value: "block", name: browser.i18n.getMessage("block") || "Block" },
         ]}
       />
     </Row>
@@ -139,13 +145,14 @@
     {#if selectedService == "search"}
       <Row>
         <Label>
-          Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click
+          {@html browser.i18n.getMessage("searchHint") ||
+            `Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click
           <a
             href="https://libredirect.github.io/docs.html#search_engine_chromium"
             target="_blank"
             rel="noopener noreferrer"
             >here
-          </a>.
+          </a>.`}
         </Label>
       </Row>
     {/if}
@@ -184,8 +191,10 @@
     justify-content: start;
     align-items: center;
   }
+
   :global(.svelte_select img, .svelte_select svg) {
     margin-right: 10px;
+    margin-left: 0;
     height: 26px;
     width: 26px;
     color: var(--text);

@@ -1,5 +1,5 @@
 <script>
-  let browser = window.browser || window.chrome
+  const browser = window.browser || window.chrome
 
   import General from "./General/General.svelte"
   import utils from "../../assets/javascripts/utils.js"
@@ -67,12 +67,15 @@
       cssVariables = light
     }
   }
+
+  const dir = ["ar", "iw", "ku", "fa", "ur"].includes(browser.i18n.getUILanguage()) ? "rtl" : "ltr"
+  document.body.dir = dir
 </script>
 
 {#if _options && _config}
   <div
-    class="main"
-    dir="auto"
+    class={dir}
+    {dir}
     style="
     --text: {cssVariables.text};
     --bg-main: {cssVariables.bgMain};

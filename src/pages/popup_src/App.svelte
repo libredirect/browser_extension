@@ -1,5 +1,5 @@
 <script>
-  let browser = window.browser || window.chrome
+  const browser = window.browser || window.chrome
 
   import utils from "../../assets/javascripts/utils.js"
   import { onDestroy } from "svelte"

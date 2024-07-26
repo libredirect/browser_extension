@@ -1,5 +1,5 @@
 <script>
-  let browser = window.browser || window.chrome
+  const browser = window.browser || window.chrome
 
   import { onDestroy } from "svelte"
   import Button from "../../components/Button.svelte"
@@ -85,8 +85,8 @@
 
 <div class="buttons">
   <Button on:click={() => importSettingsInput.click()} disabled={disableButtons}>
-    <ImportIcon />
-    <x data-localise="__MSG_importSettings__">Import Settings</x>
+    <ImportIcon class="margin margin_{document.body.dir}" />
+    <x data-localise="__MSG_importSettings__">{browser.i18n.getMessage("importSettings") || "Import Settings"}</x>
   </Button>
   <input
     type="file"
@@ -97,22 +97,33 @@
   />
 
   <Button on:click={exportSettings} disabled={disableButtons}>
-    <ExportIcon />
-    <x data-localise="__MSG_exportSettings__">Export Settings</x>
+    <ExportIcon class="margin margin_{document.body.dir}" />
+    <x data-localise="__MSG_exportSettings__">{browser.i18n.getMessage("exportSettings") || "Export Settings"}</x>
   </Button>
 
   <Button on:click={exportSettingsSync} disabled={disableButtons}>
-    <ExportIcon />
+    <ExportIcon class="margin margin_{document.body.dir}" />
     <x>Export Settings to Sync</x>
   </Button>
 
   <Button on:click={importSettingsSync} disabled={disableButtons}>
-    <ImportIcon />
-    <x>Import Settings from Sync</x>
+    <ImportIcon class="margin margin_{document.body.dir}" />
+    <x>{browser.i18n.getMessage("importSettingsFromSync") || "Import Settings from Sync"}</x>
   </Button>
 
   <Button on:click={resetSettings} disabled={disableButtons}>
-    <ResetIcon />
-    <x>Reset Settings</x>
+    <ResetIcon class="margin margin_{document.body.dir}" />
+    <x>{browser.i18n.getMessage("resetSettings") || "Reset Settings"}</x>
   </Button>
 </div>
+
+<style>
+  :global(.margin) {
+    margin-right: 10px;
+    margin-left: 0;
+  }
+  :global(.margin_rtl) {
+    margin-right: 0;
+    margin-left: 10px;
+  }
+</style>

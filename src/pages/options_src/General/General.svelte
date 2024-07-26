@@ -1,5 +1,5 @@
 <script>
-  let browser = window.browser || window.chrome
+  const browser = window.browser || window.chrome
 
   import Exceptions from "./Exceptions.svelte"
   import SettingsButtons from "./SettingsButtons.svelte"
@@ -26,12 +26,12 @@
 
 <div>
   <Row>
-    <Label>Theme</Label>
+    <Label>{browser.i18n.getMessage("theme") || "Theme"}</Label>
     <Select
       values={[
-        { value: "detect", name: "Auto" },
-        { value: "light", name: "Light" },
-        { value: "dark", name: "Dark" },
+        { value: "detect", name: browser.i18n.getMessage("auto") || "Auto" },
+        { value: "light", name: browser.i18n.getMessage("light") || "Light" },
+        { value: "dark", name: browser.i18n.getMessage("dark") || "Dark" },
       ]}
       value={_options.theme}
       onChange={e => {
@@ -43,13 +43,13 @@
   </Row>
 
   <Row>
-    <Label>Fetch public instances</Label>
+    <Label>{browser.i18n.getMessage("fetchPublicInstances") || "Fetch public instances"}</Label>
     <Select
       value={_options.fetchInstances}
       values={[
         { value: "github", name: "GitHub" },
         { value: "codeberg", name: "Codeberg" },
-        { value: "disable", name: "Disable" },
+        { value: "disable", name: browser.i18n.getMessage("disable") || "Disable" },
       ]}
       onChange={e => {
         _options.fetchInstances = e.target.options[e.target.options.selectedIndex].value
@@ -60,7 +60,7 @@
   </Row>
 
   <Row>
-    <Label>Redirect Only in Incognito</Label>
+    <Label>{browser.i18n.getMessage("redirectOnlyInIncognito") || "Redirect Only in Incognito"}</Label>
     <Checkbox
       checked={_options.redirectOnlyInIncognito}
       onChange={e => {
@@ -71,7 +71,7 @@
   </Row>
 
   <Row>
-    <Label>Bookmarks menu</Label>
+    <Label>{browser.i18n.getMessage("bookmarksMenu") || "Bookmarks menu"}</Label>
     <Checkbox bind:checked={bookmarksPermission} />
   </Row>
 

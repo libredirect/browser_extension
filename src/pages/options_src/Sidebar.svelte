@@ -1,4 +1,6 @@
 <script>
+  const browser = window.browser || window.chrome
+
   import { page } from "./stores"
   import GeneralIcon from "../icons/GeneralIcon.svelte"
   import ServicesIcon from "../icons/ServicesIcon.svelte"
@@ -7,16 +9,16 @@
 
 <div>
   <a href="#general" on:click={() => page.set("general")} style={$page == "general" && "color: var(--active);"}>
-    <GeneralIcon style="margin-right: 5px" />
-    <span data-localise="__MSG_general__">General</span>
+    <GeneralIcon class="margin margin_{document.body.dir}" />
+    <span data-localise="__MSG_general__">{browser.i18n.getMessage("general") || "General"}</span>
   </a>
   <a href="#services" on:click={() => page.set("services")} style={$page == "services" && "color: var(--active);"}>
-    <ServicesIcon style="margin-right: 5px" />
-    <span data-localise="__MSG_services__">Services</span>
+    <ServicesIcon class="margin margin_{document.body.dir}" />
+    <span data-localise="__MSG_services__">{browser.i18n.getMessage("general") || "Services"}</span>
   </a>
   <a href="https://libredirect.github.io" target="_blank" rel="noopener noreferrer">
-    <AboutIcon style="margin-right: 5px" />
-    <span data-localise="__MSG_about__">About</span>
+    <AboutIcon class="margin margin_{document.body.dir}" />
+    <span data-localise="__MSG_about__">{browser.i18n.getMessage("about") || "About"}</span>
   </a>
 </div>
 
@@ -53,5 +55,14 @@
     a {
       margin: 5px;
     }
+  }
+
+  :global(.margin) {
+    margin-right: 5px;
+    margin-left: 0;
+  }
+  :global(.margin_rtl) {
+    margin-right: 0;
+    margin-left: 5px;
   }
 </style>

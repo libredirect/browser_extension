@@ -1,5 +1,5 @@
 <script>
-  let browser = window.browser || window.chrome
+  const browser = window.browser || window.chrome
 
   import Button from "../../components/Button.svelte"
   import AddIcon from "../../icons/AddIcon.svelte"
@@ -28,7 +28,6 @@
   let blacklist
   let redirects
 
-  $: serviceOptions = _options[selectedService]
   $: serviceConf = _config.services[selectedService]
 
   let allInstances = []
@@ -103,18 +102,18 @@
 
 {#if serviceConf.frontends[selectedFrontend].instanceList && redirects && blacklist}
   <hr />
+
+  <div class="ping">
+    <Button on:click={pingInstances}>
+      <PingIcon class="margin margin_{document.body.dir}" />
+      {browser.i18n.getMessage("pingInstances") || "Ping Instances"}
+    </Button>
+  </div>
+
+  <Row>
+    <Label>{browser.i18n.getMessage("addYourFavoriteInstances") || "Add your favorite instances"}</Label>
+  </Row>
   <div dir="ltr">
-    <div class="ping">
-      <Button on:click={pingInstances}>
-        <PingIcon />
-        Ping Instances
-      </Button>
-    </div>
-
-    <Row>
-      <Label>Add your favorite instances</Label>
-    </Row>
-
     <Row>
       <Input
         bind:value={addInstanceValue}
@@ -230,5 +229,14 @@
 
   a:hover {
     text-decoration: underline;
+  }
+
+  :global(.margin) {
+    margin-right: 10px;
+    margin-left: 0;
+  }
+  :global(.margin_rtl) {
+    margin-right: 0;
+    margin-left: 10px;
   }
 </style>

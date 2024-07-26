@@ -1,4 +1,6 @@
 <script>
+  const browser = window.browser || window.chrome
+
   import { onDestroy } from "svelte"
   import SvelteSelect from "svelte-select"
   import { options, config } from "../stores"
@@ -26,9 +28,9 @@
   let values
   $: if (serviceConf.frontends[frontendName].embeddable) {
     values = [
-      { value: "both", name: "Both" },
-      { value: "sub_frame", name: "Only Embedded" },
-      { value: "main_frame", name: "Only Not Embedded" },
+      { value: "both", name: browser.i18n.getMessage("both") || "Both" },
+      { value: "sub_frame", name: browser.i18n.getMessage("onlyEmbedded") || "Only Embedded" },
+      { value: "main_frame", name: browser.i18n.getMessage("onlyNotEmbedded") || "Only Not Embedded" },
     ]
   } else if (
     serviceConf.frontends[frontendName].desktopApp &&
@@ -63,7 +65,7 @@
 </script>
 
 <Row>
-  <Label>Redirect Type</Label>
+  <Label>{browser.i18n.getMessage("redirectType") || "Redirect Type"}</Label>
   <Select
     value={serviceOptions.redirectType}
     onChange={e => {
@@ -76,7 +78,7 @@
 
 {#if serviceConf.frontends[frontendName].desktopApp && serviceOptions.redirectType != "main_frame"}
   <Row>
-    <Label>Embed Frontend</Label>
+    <Label>{browser.i18n.getMessage("embedFrontend") || "Embed Frontend"}</Label>
     <SvelteSelect
       clearable={false}
       class="svelte_select"

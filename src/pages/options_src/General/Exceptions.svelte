@@ -1,4 +1,6 @@
 <script>
+  const browser = window.browser || window.chrome
+
   import Row from "../../components/Row.svelte"
   import Select from "../../components/Select.svelte"
   import AddIcon from "../../icons/AddIcon.svelte"
@@ -54,10 +56,10 @@
   }
 </script>
 
-<div class="block block-option">
-  <Row>
-    <Label>Excluded from redirecting</Label>
-  </Row>
+<Row>
+  <Label>{browser.i18n.getMessage("excludeFromRedirecting") || "Excluded from redirecting"}</Label>
+</Row>
+<div dir="ltr">
   <Row>
     <div>
       <Input
