@@ -10,15 +10,15 @@
 <div>
   <a href="#general" on:click={() => page.set("general")} style={$page == "general" && "color: var(--active);"}>
     <GeneralIcon class="margin margin_{document.body.dir}" />
-    <span data-localise="__MSG_general__">{browser.i18n.getMessage("general") || "General"}</span>
+    {browser.i18n.getMessage("general") || "General"}
   </a>
   <a href="#services" on:click={() => page.set("services")} style={$page == "services" && "color: var(--active);"}>
     <ServicesIcon class="margin margin_{document.body.dir}" />
-    <span data-localise="__MSG_services__">{browser.i18n.getMessage("general") || "Services"}</span>
+    {browser.i18n.getMessage("general") || "Services"}
   </a>
   <a href="https://libredirect.github.io" target="_blank" rel="noopener noreferrer">
     <AboutIcon class="margin margin_{document.body.dir}" />
-    <span data-localise="__MSG_about__">{browser.i18n.getMessage("about") || "About"}</span>
+    {browser.i18n.getMessage("about") || "About"}
   </a>
 </div>
 

@@ -38,7 +38,6 @@
         _options.theme = e.target.options[e.target.options.selectedIndex].value
         options.set(_options)
       }}
-      ariaLabel="select theme"
     />
   </Row>
 
@@ -55,7 +54,6 @@
         _options.fetchInstances = e.target.options[e.target.options.selectedIndex].value
         options.set(_options)
       }}
-      ariaLabel={"Select fetch public instances"}
     />
   </Row>
 
@@ -75,7 +73,7 @@
     <Checkbox bind:checked={bookmarksPermission} />
   </Row>
 
-  <Exceptions opts={_options} />
+  <Exceptions />
 
-  <SettingsButtons opts={_options} />
+  <SettingsButtons />
 </div>

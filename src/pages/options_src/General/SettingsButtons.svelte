@@ -14,24 +14,18 @@
   const unsubscribe = options.subscribe(val => (_options = val))
   onDestroy(unsubscribe)
 
-  let disableButtons = false
-
   let importSettingsInput
   let importSettingsFiles
   $: if (importSettingsFiles) {
-    disableButtons = true
     const reader = new FileReader()
     reader.readAsText(importSettingsFiles[0])
     reader.onload = async () => {
       const data = JSON.parse(reader.result)
       if ("theme" in data && data.version == browser.runtime.getManifest().version) {
         browser.storage.local.clear(async () => {
-          console.log("clearing")
           options.set(data)
-          disableButtons = false
         })
       } else {
-        console.log("incompatible settings")
         alert("Incompatible settings")
       }
     }
@@ -42,26 +36,21 @@
   }
 
   async function exportSettings() {
-    disableButtons = true
     _options.version = browser.runtime.getManifest().version
     const resultString = JSON.stringify(_options, null, "  ")
     const anchor = document.createElement("a")
     anchor.href = "data:application/json;base64," + btoa(resultString)
     anchor.download = `libredirect-settings-v${_options.version}.json`
     anchor.click()
-    disableButtons = false
   }
 
   async function exportSettingsSync() {
-    disableButtons = true
     _options.version = browser.runtime.getManifest().version
     await servicesHelper.initDefaults()
     browser.storage.sync.set({ options: _options })
-    disableButtons = false
   }
 
   async function importSettingsSync() {
-    disableButtons = true
     browser.storage.sync.get({ options }, r => {
       const optionsSync = r.options
       if (optionsSync.version == browser.runtime.getManifest().version) {
@@ -69,24 +58,21 @@
       } else {
         alert("Error")
       }
-      disableButtons = false
     })
   }
 
   async function resetSettings() {
-    disableButtons = true
     browser.storage.local.clear(async () => {
       await servicesHelper.initDefaults()
       options.set(await utils.getOptions())
-      disableButtons = false
     })
   }
 </script>
 
 <div class="buttons">
-  <Button on:click={() => importSettingsInput.click()} disabled={disableButtons}>
+  <Button on:click={() => importSettingsInput.click()}>
     <ImportIcon class="margin margin_{document.body.dir}" />
-    <x data-localise="__MSG_importSettings__">{browser.i18n.getMessage("importSettings") || "Import Settings"}</x>
+    {browser.i18n.getMessage("importSettings") || "Import Settings"}
   </Button>
   <input
     type="file"
@@ -96,24 +82,24 @@
     bind:files={importSettingsFiles}
   />
 
-  <Button on:click={exportSettings} disabled={disableButtons}>
+  <Button on:click={exportSettings}>
     <ExportIcon class="margin margin_{document.body.dir}" />
-    <x data-localise="__MSG_exportSettings__">{browser.i18n.getMessage("exportSettings") || "Export Settings"}</x>
+    {browser.i18n.getMessage("exportSettings") || "Export Settings"}
   </Button>
 
-  <Button on:click={exportSettingsSync} disabled={disableButtons}>
+  <Button on:click={exportSettingsSync}>
     <ExportIcon class="margin margin_{document.body.dir}" />
-    <x>Export Settings to Sync</x>
+    {browser.i18n.getMessage("exportSettingsToSync") || "Export Settings to Sync"}
   </Button>
 
-  <Button on:click={importSettingsSync} disabled={disableButtons}>
+  <Button on:click={importSettingsSync}>
     <ImportIcon class="margin margin_{document.body.dir}" />
-    <x>{browser.i18n.getMessage("importSettingsFromSync") || "Import Settings from Sync"}</x>
+    {browser.i18n.getMessage("importSettingsFromSync") || "Import Settings from Sync"}
   </Button>
 
-  <Button on:click={resetSettings} disabled={disableButtons}>
+  <Button on:click={resetSettings}>
     <ResetIcon class="margin margin_{document.body.dir}" />
-    <x>{browser.i18n.getMessage("resetSettings") || "Reset Settings"}</x>
+    {browser.i18n.getMessage("resetSettings") || "Reset Settings"}
   </Button>
 </div>
 

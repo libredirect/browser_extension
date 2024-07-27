@@ -3,7 +3,7 @@
 </script>
 
 <input
-  {...$$props}
+  {...$$restProps}
   bind:value
   on:blur
   on:change
