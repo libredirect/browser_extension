@@ -1032,6 +1032,24 @@
       },
       "imageType": "svgMono",
       "url": "https://paste.libredirect.invalid"
+    },
+    "ultimateGuitar": {
+      "frontends": {
+        "freetar": {
+          "name": "Freetar",
+          "instanceList": true,
+          "url": "https://github.com/kmille/freetar"
+        }
+      },
+      "targets": ["^https?:\\/{2}(tabs\\.|www\\.)?ultimate-guitar\\.com"],
+      "name": "Ultimate Guitar",
+      "options": {
+        "enabled": false,
+        "unsupportedUrls": "bypass",
+        "frontend": "freetar"
+      },
+      "imageType": "svg",
+      "url": "https://www.ultimate-guitar.com"
     }
   }
 }

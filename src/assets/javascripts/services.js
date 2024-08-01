@@ -531,6 +531,15 @@ function rewrite(url, frontend, randomInstance) {
       }
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "freetar":
+      if (url.pathname.startsWith("/search.php")) {
+        url.searchParams.set("search_term", url.searchParams.get("value"))
+        url.searchParams.delete("value")
+        url.searchParams.delete("search_type")
+        return `${randomInstance}/search${url.search}`
+      }
+      if (url.pathname.startsWith("/artist")) return
+      return `${randomInstance}${url.pathname}${url.search}`
     case "piped":
     case "pipedMaterial":
     case "cloudtube":
@@ -779,6 +788,7 @@ const defaultInstances = {
   priviblur: ["https://pb.bloat.cat"],
   nitter: ["https://nitter.privacydev.net"],
   pasted: ["https://pasted.drakeerv.com"],
+  freetar: ["https://freetar.de"],
 }
 
 function initDefaults() {
