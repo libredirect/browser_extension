@@ -48,7 +48,10 @@
     />
     <SwitchInstanceIcon
       class="interactive"
-      on:click={async () => browser.tabs.update({ url: await servicesHelper.switchInstance(url, serviceKey) })}
+      on:click={async () =>
+        browser.tabs.update({ url: await servicesHelper.switchInstance(url, serviceKey) }, () => {
+          window.close()
+        })}
     />
   </div>
 </Row>
