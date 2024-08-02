@@ -10,7 +10,7 @@
     "start": "web-ext run",
     "nightly": "web-ext run --firefox=/home/esmail/software/firefox_nightly/firefox",
     "start_ar": "web-ext run --firefox=/home/esmail/software/firefox_ar/firefox",
-    "android": "web-ext run -t firefox-android --adb-device emulator-5554 --firefox-apk org.mozilla.fenix ",
+    "android": "web-ext run -t firefox-android --adb-device emulator-5554 --firefox-apk org.mozilla.firefox --adb-remove-old-artifacts",
     "build": "web-ext build",
     "test": "web-ext lint",
     "html": "rollup -c --config-popup && rollup -c --config-options"

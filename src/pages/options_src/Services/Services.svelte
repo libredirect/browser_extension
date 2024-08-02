@@ -32,8 +32,9 @@
 <div>
   <Row>
     <Label>
-      Service:
-      <a href={serviceConf.url} target="_blank" rel="noopener noreferrer">{serviceConf.url}</a>
+      <a href={serviceConf.url} style="text-decoration: underline;" target="_blank" rel="noopener noreferrer">
+        {browser.i18n.getMessage("service") || "Service"}
+      </a>
     </Label>
     <div dir="ltr">
       <SvelteSelect
@@ -91,9 +92,8 @@
 
     <Row>
       <Label>
-        {browser.i18n.getMessage("frontend") || "Frontend"}:
-        <a href={frontendWebsite} target="_blank" rel="noopener noreferrer">
-          {frontendWebsite}
+        <a href={frontendWebsite} style="text-decoration: underline;" target="_blank" rel="noopener noreferrer">
+          {browser.i18n.getMessage("frontend") || "Frontend"}
         </a>
       </Label>
       <div dir="ltr">

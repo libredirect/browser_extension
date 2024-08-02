@@ -1,7 +1,6 @@
 <script>
   export let checked
   export let onChange
-  console.log(document.body.dir)
 </script>
 
 <input class={document.body.dir} {...$$restProps} bind:checked on:change={onChange} type="checkbox" />

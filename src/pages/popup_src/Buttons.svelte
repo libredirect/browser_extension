@@ -41,7 +41,14 @@
 
 <div class={document.body.dir}>
   {#if redirect}
-    <Row class="interactive" on:click={() => browser.runtime.sendMessage("redirectTab")}>
+    <Row
+      class="interactive"
+      on:click={() => {
+        browser.runtime.sendMessage("redirectTab", () => {
+          window.close()
+        })
+      }}
+    >
       <Label>{browser.i18n.getMessage("redirect") || "Redirect"}</Label>
       <RedirectIcon />
     </Row>
@@ -50,7 +57,10 @@
   {#if switchInstance}
     <Row
       class="interactive"
-      on:click={async () => browser.tabs.update({ url: await servicesHelper.switchInstance(url) })}
+      on:click={async () =>
+        browser.tabs.update({ url: await servicesHelper.switchInstance(url) }, () => {
+          window.close()
+        })}
     >
       <Label>{browser.i18n.getMessage("switchInstance") || "Switch Instance"}</Label>
       <SwitchInstanceIcon />
@@ -62,7 +72,13 @@
       <Label>{browser.i18n.getMessage("copyOriginal") || "Copy Original"}</Label>
       <CopyIcon />
     </Row>
-    <Row class="interactive" on:click={() => browser.runtime.sendMessage("reverseTab")}>
+    <Row
+      class="interactive"
+      on:click={() =>
+        browser.runtime.sendMessage("reverseTab", () => {
+          window.close()
+        })}
+    >
       <Label>{browser.i18n.getMessage("redirectToOriginal" || "Redirect to Original")}</Label>
       <RedirectToOriginalIcon />
     </Row>
@@ -85,7 +101,13 @@
 
   <hr />
 
-  <Row class="interactive" on:click={() => window.open(browser.runtime.getURL("pages/options/index.html"), "_blank")}>
+  <Row
+    class="interactive"
+    on:click={() =>
+      browser.tabs.create({ url: browser.runtime.getURL("pages/options/index.html") }, () => {
+        window.close()
+      })}
+  >
     <Label>{browser.i18n.getMessage("settings")}</Label>
     <SettingsIcon />
   </Row>

@@ -28,7 +28,10 @@
   <div
     class="interactive"
     on:keydown={null}
-    on:click={() => window.open(browser.runtime.getURL(_config.services[serviceKey].url), "_blank")}
+    on:click={() =>
+      browser.tabs.create({ url: browser.runtime.getURL(_config.services[serviceKey].url) }, () => {
+        window.close()
+      })}
   >
     <ServiceIcon details={{ value: serviceKey, label: _config.services[serviceKey].name }} />
     <Label>{_config.services[serviceKey].name}</Label>

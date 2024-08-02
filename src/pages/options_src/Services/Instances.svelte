@@ -59,7 +59,6 @@
   async function pingInstances() {
     pingCache = {}
     for (const instance of allInstances) {
-      console.log("pinging...", instance)
       pingCache[instance] = { color: "lightblue", value: "pinging..." }
       const time = await utils.ping(instance)
       pingCache[instance] = colorTime(time)

@@ -14,13 +14,30 @@
   const unsubscribe = options.subscribe(val => (_options = val))
   onDestroy(unsubscribe)
 
+  let disableBookmarks = null
+  browser.runtime.getPlatformInfo(r => {
+    switch (r.os) {
+      case "fuchsia":
+      case "ios":
+      case "android":
+        disableBookmarks = true
+        break
+      default:
+        disableBookmarks = false
+    }
+    if (!disableBookmarks) {
+      browser.permissions.contains({ permissions: ["bookmarks"] }, r => (bookmarksPermission = r))
+    }
+  })
+
   let bookmarksPermission
-  browser.permissions.contains({ permissions: ["bookmarks"] }, r => (bookmarksPermission = r))
-  $: if (bookmarksPermission) {
-    browser.permissions.request({ permissions: ["bookmarks"] }, r => (bookmarksPermission = r))
-  } else {
-    browser.permissions.remove({ permissions: ["bookmarks"] })
-    bookmarksPermission = false
+  $: if (disableBookmarks !== null && disableBookmarks === false) {
+    if (bookmarksPermission) {
+      browser.permissions.request({ permissions: ["bookmarks"] }, r => (bookmarksPermission = r))
+    } else {
+      browser.permissions.remove({ permissions: ["bookmarks"] })
+      bookmarksPermission = false
+    }
   }
 </script>
 
@@ -68,10 +85,12 @@
     />
   </Row>
 
-  <Row>
-    <Label>{browser.i18n.getMessage("bookmarksMenu") || "Bookmarks menu"}</Label>
-    <Checkbox bind:checked={bookmarksPermission} />
-  </Row>
+  {#if disableBookmarks === false}
+    <Row>
+      <Label>{browser.i18n.getMessage("bookmarksMenu") || "Bookmarks menu"}</Label>
+      <Checkbox bind:checked={bookmarksPermission} />
+    </Row>
+  {/if}
 
   <Exceptions />
 
