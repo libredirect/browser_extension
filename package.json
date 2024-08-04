@@ -11,7 +11,8 @@
     "nightly": "web-ext run --firefox=/home/esmail/software/firefox_nightly/firefox",
     "start_ar": "web-ext run --firefox=/home/esmail/software/firefox_ar/firefox",
     "android": "web-ext run -t firefox-android --adb-device emulator-5554 --firefox-apk org.mozilla.firefox --adb-remove-old-artifacts",
-    "build": "web-ext build",
+    "build": "web-ext build -i pages/options_src -i pages/popup_src pages/icons -i pages/popup_src -i pages/components",
+    "build_chromium": "brave-browser --pack-extension=src/ --pack-extension-key=src.pem",
     "test": "web-ext lint",
     "html": "rollup -c --config-popup && rollup -c --config-options"
   },
