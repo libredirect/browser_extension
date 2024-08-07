@@ -697,6 +697,7 @@ async function reverse(url) {
       case "snopes":
       case "urbanDictionary":
       case "quora":
+      case "twitter":
       case "medium":
         return `${config.services[service].url}${url.pathname}${url.search}`
       case "fandom": {
