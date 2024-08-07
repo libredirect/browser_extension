@@ -27,6 +27,8 @@
   $: serviceConf = _config.services[selectedService]
   $: serviceOptions = _options[selectedService]
   $: frontendWebsite = serviceConf.frontends[serviceOptions.frontend].url
+  $: servicesEntries = Object.entries(_config.services)
+  $: frontendEntries = Object.entries(serviceConf.frontends)
 </script>
 
 <div>
@@ -41,9 +43,10 @@
         clearable={false}
         class="svelte_select"
         value={selectedService}
+        on:hoverItem={e => (selectedService = servicesEntries[e.detail][0])}
         on:change={e => (selectedService = e.detail.value)}
         items={[
-          ...Object.entries(_config.services).map(([serviceKey, service]) => {
+          ...servicesEntries.map(([serviceKey, service]) => {
             return { value: serviceKey, label: service.name }
           }),
         ]}
@@ -102,12 +105,16 @@
           dir="ltr"
           class="svelte_select"
           value={serviceOptions.frontend}
+          on:hoverItem={e => {
+            serviceOptions.frontend = frontendEntries[e.detail][0]
+            options.set(_options)
+          }}
           on:change={e => {
             serviceOptions.frontend = e.detail.value
             options.set(_options)
           }}
           items={[
-            ...Object.entries(serviceConf.frontends).map(([frontendId, frontend]) => ({
+            ...frontendEntries.map(([frontendId, frontend]) => ({
               value: frontendId,
               label: frontend.name,
             })),
