@@ -1056,6 +1056,24 @@
       },
       "imageType": "svg",
       "url": "https://www.ultimate-guitar.com"
+    },
+    "baiduTieba": {
+      "frontends": {
+        "ratAintTieba": {
+          "name": "Rat Aint Tieba",
+          "instanceList": true,
+          "url": "https://0xacab.org/johnxina/rat"
+        }
+      },
+      "targets": ["^https?:\\/{2}tieba\\.baidu\\.com"],
+      "name": "Baidu Tieba",
+      "options": {
+        "enabled": false,
+        "unsupportedUrls": "bypass",
+        "frontend": "ratAintTieba"
+      },
+      "imageType": "svg",
+      "url": "https://tieba.baidu.com"
     }
   }
 }

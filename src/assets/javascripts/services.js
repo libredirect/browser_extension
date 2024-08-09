@@ -543,6 +543,9 @@ function rewrite(url, frontend, randomInstance) {
       }
       if (url.pathname.startsWith("/artist")) return
       return `${randomInstance}${url.pathname}${url.search}`
+    case "ratAintTieba":
+      url.searchParams.delete("ie")
+      return `${randomInstance}${url.pathname}${url.search}`
     case "piped":
     case "pipedMaterial":
     case "cloudtube":
@@ -794,6 +797,7 @@ const defaultInstances = {
   nitter: ["https://nitter.privacydev.net"],
   pasted: ["https://pasted.drakeerv.com"],
   freetar: ["https://freetar.de"],
+  ratAintTieba: ["https://rat.fis.land"],
 }
 
 function initDefaults() {
