@@ -273,6 +273,9 @@ function rewrite(url, frontend, randomInstance) {
         else return `${randomInstance}${url.pathname}${url.search}&teddit_proxy=${url.hostname}`
       }
       return `${randomInstance}${url.pathname}${url.search}`
+    case "eddrit":
+      if (/^(?:(?:external-)?preview|i)\.redd\.it/.test(url.hostname)) return randomInstance
+      return `${randomInstance}${url.pathname}${url.search}`
     case "neuters": {
       const p = url.pathname
       if (p.startsWith("/article/") || p.startsWith("/pf/") || p.startsWith("/arc/") || p.startsWith("/resizer/")) {
@@ -746,6 +749,7 @@ const defaultInstances = {
   redlib: ["https://safereddit.com"],
   libreddit: ["https://libreddit.spike.codes"],
   teddit: ["https://teddit.net"],
+  eddrit: ["https://eddrit.com"],
   scribe: ["https://scribe.rip"],
   libMedium: ["https://md.vern.cc"],
   quetre: ["https://quetre.iket.me"],

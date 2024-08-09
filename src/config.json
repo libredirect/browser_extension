@@ -214,13 +214,19 @@
           "name": "Redlib",
           "instanceList": true,
           "url": "https://github.com/redlib-org/redlib",
-          "localhost": true
+          "localhost": false
         },
         "teddit": {
           "name": "Teddit",
           "instanceList": true,
           "url": "https://codeberg.org/teddit/teddit",
-          "localhost": true
+          "localhost": false
+        },
+        "eddrit": {
+          "name": "Eddrit",
+          "instanceList": true,
+          "url": "https://github.com/corenting/eddrit",
+          "localhost": false
         }
       },
       "targets": [
