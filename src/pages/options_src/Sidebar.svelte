@@ -14,7 +14,7 @@
   </a>
   <a href="#services" on:click={() => page.set("services")} style={$page == "services" && "color: var(--active);"}>
     <ServicesIcon class="margin margin_{document.body.dir}" />
-    {browser.i18n.getMessage("general") || "Services"}
+    {browser.i18n.getMessage("services") || "Services"}
   </a>
   <a href="https://libredirect.github.io" target="_blank" rel="noopener noreferrer">
     <AboutIcon class="margin margin_{document.body.dir}" />
@@ -37,6 +37,7 @@
     color: var(--text);
     transition: 0.1s;
     margin: 10px;
+    min-width: max-content;
   }
 
   a:hover {

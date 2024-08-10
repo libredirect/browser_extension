@@ -110,7 +110,7 @@
     margin: 0;
     padding-top: 50px;
     justify-content: center;
-    font-family: "Inter";
+    font-family: "Inter", sans-serif;
     box-sizing: border-box;
     font-size: 16px;
     background-color: var(--bg-main);
