@@ -106,7 +106,7 @@
     margin: 0;
     padding: 10px;
     padding-top: 20px;
-    font-family: "Inter";
+    font-family: "Inter", sans-serif;
     font-size: 16px;
     background-color: var(--bg-main);
     color: var(--text);
