@@ -878,6 +878,28 @@
       "imageType": "svgMono",
       "url": "https://web.archive.org"
     },
+    "pastebin": {
+      "frontends": {
+        "pasted": {
+          "name": "Pasted",
+          "instanceList": true,
+          "url": "https://github.com/Dragynfruit/pasted"
+        }
+      },
+      "targets": [
+        "^https?:\\/{2}pastebin\\.com\\/"
+      ],
+      "name": "Pastebin",
+      "options": {
+        "enabled": false,
+        "unsupportedUrls": "bypass",
+        "frontend": "pasted",
+        "instance": "public"
+      },
+      "imageType": "svg",
+      "embeddable": true,
+      "url": "https://pastebin.com"
+    },
     "search": {
       "frontends": {
         "searxng": {
