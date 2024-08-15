@@ -896,7 +896,7 @@
         "frontend": "pasted",
         "instance": "public"
       },
-      "imageType": "svg",
+      "imageType": "svgMono",
       "embeddable": true,
       "url": "https://pastebin.com"
     },
