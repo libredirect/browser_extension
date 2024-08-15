@@ -43,7 +43,6 @@
         clearable={false}
         class="svelte_select"
         value={selectedService}
-        on:hoverItem={e => (selectedService = servicesEntries[e.detail][0])}
         on:change={e => (selectedService = e.detail.value)}
         items={[
           ...servicesEntries.map(([serviceKey, service]) => {
@@ -105,10 +104,6 @@
           dir="ltr"
           class="svelte_select"
           value={serviceOptions.frontend}
-          on:hoverItem={e => {
-            serviceOptions.frontend = frontendEntries[e.detail][0]
-            options.set(_options)
-          }}
           on:change={e => {
             serviceOptions.frontend = e.detail.value
             options.set(_options)

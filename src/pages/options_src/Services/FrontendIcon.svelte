@@ -1,6 +1,7 @@
 <script>
   import { onDestroy } from "svelte"
   export let details
+  export let selectedService
   import { config, options } from "../stores"
   let _options
   let _config
@@ -24,9 +25,6 @@
       theme = "light"
     }
   }
-
-  export let selectedService
-
   $: imageType = _config.services[selectedService].frontends[details.value].imageType
 </script>
 
