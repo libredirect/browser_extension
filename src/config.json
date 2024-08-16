@@ -1208,6 +1208,26 @@
       },
       "imageType": "svgMono",
       "url": "https://threads.net"
+    },
+    "deviantArt": {
+      "frontends": {
+        "skunkyArt": {
+          "name": "SkunkyArt",
+          "instanceList": true,
+          "url": "https://git.sr.ht/~nixgoat/shoelace"
+        }
+      },
+      "targets": [
+        "^https?:\\/{2}(www\\.)?deviantart\\.com"
+      ],
+      "name": "DeviantArt",
+      "options": {
+        "enabled": false,
+        "unsupportedUrls": "bypass",
+        "frontend": "skunkyArt"
+      },
+      "imageType": "svg",
+      "url": "https://deviantart.com"
     }
   }
 }
