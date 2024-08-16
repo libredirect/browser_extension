@@ -50,11 +50,11 @@
           }),
         ]}
       >
-        <div class="slot" slot="item" let:item>
+        <div class={"slot " + (!_options[item.value].enabled && "disabled")} slot="item" let:item>
           <ServiceIcon details={item} />
           {item.label}
         </div>
-        <div class="slot" slot="selection" let:selection>
+        <div class={"slot " + (!_options[selection.value].enabled && "disabled")} slot="selection" let:selection>
           <ServiceIcon details={selection} />
           {selection.label}
         </div>
@@ -181,10 +181,10 @@
     --width: 210px;
     --background: var(--bg-secondary);
     --list-background: var(--bg-secondary);
-    --item-active-background: red;
     --item-is-active-bg: grey;
     --item-hover-bg: grey;
     --item-is-active-color: var(--text);
+    --list-max-height: 400px;
     --padding: 0 0 0 10px;
     --item-color: var(--text);
   }
@@ -200,5 +200,9 @@
     height: 26px;
     width: 26px;
     color: var(--text);
+  }
+
+  :global(.svelte_select .disabled) {
+    opacity: 0.4;
   }
 </style>
