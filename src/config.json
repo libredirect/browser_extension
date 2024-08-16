@@ -33,21 +33,30 @@
           "url": "https://materialio.us/"
         },
         "piped": {
-          "excludeTargets": [2, 3],
+          "excludeTargets": [
+            2,
+            3
+          ],
           "name": "Piped",
           "embeddable": true,
           "instanceList": true,
           "url": "https://github.com/TeamPiped/Piped"
         },
         "pipedMaterial": {
-          "excludeTargets": [2, 3],
+          "excludeTargets": [
+            2,
+            3
+          ],
           "name": "Piped-Material",
           "embeddable": false,
           "instanceList": true,
           "url": "https://github.com/mmjee/Piped-Material"
         },
         "poketube": {
-          "excludeTargets": [2, 3],
+          "excludeTargets": [
+            2,
+            3
+          ],
           "name": "PokeTube",
           "embeddable": true,
           "instanceList": true,
@@ -58,7 +67,10 @@
           "embeddable": false,
           "instanceList": true,
           "url": "https://sr.ht/~cadence/tube",
-          "excludeTargets": [2, 3]
+          "excludeTargets": [
+            2,
+            3
+          ]
         },
         "lightTube": {
           "name": "LightTube",
@@ -71,10 +83,16 @@
           "embeddable": false,
           "instanceList": true,
           "url": "https://git.migalmoreno.com/tubo/about/",
-          "excludeTargets": [2, 3]
+          "excludeTargets": [
+            2,
+            3
+          ]
         },
         "freetube": {
-          "excludeTargets": [2, 3],
+          "excludeTargets": [
+            2,
+            3
+          ],
           "name": "FreeTube",
           "embeddable": false,
           "desktopApp": true,
@@ -82,7 +100,10 @@
           "url": "https://github.com/FreeTubeApp/FreeTube"
         },
         "yattee": {
-          "excludeTargets": [2, 3],
+          "excludeTargets": [
+            2,
+            3
+          ],
           "name": "Yattee",
           "embeddable": false,
           "desktopApp": true,
@@ -90,7 +111,10 @@
           "url": "https://github.com/yattee/yattee"
         },
         "freetubePwa": {
-          "excludeTargets": [2, 3],
+          "excludeTargets": [
+            2,
+            3
+          ],
           "name": "FreeTube PWA",
           "embeddable": false,
           "instanceList": false,
@@ -144,7 +168,9 @@
           "url": "https://github.com/FreeTubeApp/FreeTube"
         }
       },
-      "targets": ["^https?:\\/{2}music\\.youtube\\.com\\/"],
+      "targets": [
+        "^https?:\\/{2}music\\.youtube\\.com\\/"
+      ],
       "name": "YT Music",
       "options": {
         "enabled": false,
@@ -192,7 +218,9 @@
           "url": "https://github.com/badlogic/skyview"
         }
       },
-      "targets": ["^https?:\\/{2}bsky\\.app\\/"],
+      "targets": [
+        "^https?:\\/{2}bsky\\.app\\/"
+      ],
       "name": "Bluesky",
       "options": {
         "enabled": false,
@@ -287,7 +315,9 @@
           "localhost": false
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.|clips\\.)?twitch\\.(tv|com)\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.|clips\\.)?twitch\\.(tv|com)\\/"
+      ],
       "name": "Twitch",
       "options": {
         "enabled": false,
@@ -309,7 +339,9 @@
           "localhost": true
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?tiktok\\.com\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?tiktok\\.com\\/"
+      ],
       "name": "TikTok",
       "options": {
         "enabled": false,
@@ -329,7 +361,9 @@
           "localhost": false
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?instagram\\.com"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?instagram\\.com"
+      ],
       "name": "Instagram",
       "options": {
         "enabled": false,
@@ -349,7 +383,9 @@
           "localhost": true
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.|m\\.)?imdb\\.com"],
+      "targets": [
+        "^https?:\\/{2}(www\\.|m\\.)?imdb\\.com"
+      ],
       "name": "IMDb",
       "options": {
         "enabled": false,
@@ -368,7 +404,10 @@
           "url": "https://0xacab.org/johnxina/mikuinvidious"
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.|space\\.)?bilibili\\.com\\/", "^https?:\\/{2}b23\\.tv\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.|space\\.)?bilibili\\.com\\/",
+        "^https?:\\/{2}b23\\.tv\\/"
+      ],
       "name": "Bilibili",
       "options": {
         "enabled": false,
@@ -387,7 +426,9 @@
           "url": "https://codeberg.org/VnPower/pixivfe"
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?pixiv\\.net\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?pixiv\\.net\\/"
+      ],
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
@@ -404,7 +445,9 @@
           "url": "https://breezewiki.com"
         }
       },
-      "targets": ["^https?:\\/{2}([a-zA-Z0-9-]+\\.)?(fandom|wikia)\\.com(?=\\/wiki|\\/?$)"],
+      "targets": [
+        "^https?:\\/{2}([a-zA-Z0-9-]+\\.)?(fandom|wikia)\\.com(?=\\/wiki|\\/?$)"
+      ],
       "name": "Fandom",
       "options": {
         "enabled": false,
@@ -425,7 +468,9 @@
           "embeddable": true
         }
       },
-      "targets": ["^https?:\\/{2}([im]\\.)?(stack\\.)?imgur\\.(com|io)\\/"],
+      "targets": [
+        "^https?:\\/{2}([im]\\.)?(stack\\.)?imgur\\.(com|io)\\/"
+      ],
       "name": "Imgur",
       "options": {
         "enabled": false,
@@ -448,7 +493,10 @@
           "embeddable": true
         }
       },
-      "targets": ["^https?:\\/{2}i\\.pinimg\\.com", "^https?:\\/{2}(www\\.)?pinterest\\.com"],
+      "targets": [
+        "^https?:\\/{2}i\\.pinimg\\.com",
+        "^https?:\\/{2}(www\\.)?pinterest\\.com"
+      ],
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
@@ -468,7 +516,9 @@
           "url": "https://git.migalmoreno.com/tubo/about/"
         }
       },
-      "targets": ["^https?:\\/{2}soundcloud\\.com"],
+      "targets": [
+        "^https?:\\/{2}soundcloud\\.com"
+      ],
       "name": "SoundCloud",
       "options": {
         "enabled": false,
@@ -488,7 +538,10 @@
           "url": "https://forgejo.sny.sh/sun/Tent"
         }
       },
-      "targets": ["^https?:\\/{2}(.*\\.)?bandcamp\\.com\\/", "^https?:\\/{2}(f4|t4)\\.bcbits\\.com\\/"],
+      "targets": [
+        "^https?:\\/{2}(.*\\.)?bandcamp\\.com\\/",
+        "^https?:\\/{2}(f4|t4)\\.bcbits\\.com\\/"
+      ],
       "name": "Bandcamp",
       "options": {
         "enabled": false,
@@ -506,7 +559,9 @@
           "url": "https://github.com/Davilarek/TekstoLibre"
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?tekstowo\\.pl\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?tekstowo\\.pl\\/"
+      ],
       "name": "Tekstowo.pl",
       "options": {
         "enabled": false,
@@ -531,7 +586,9 @@
           "localhost": false
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?genius\\.com\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?genius\\.com\\/"
+      ],
       "name": "Genius",
       "options": {
         "enabled": false,
@@ -594,7 +651,9 @@
           "localhost": true
         }
       },
-      "targets": ["^https?:\\/{2}([a-zA-Z0-9-]+\\.)*quora\\.com\\/"],
+      "targets": [
+        "^https?:\\/{2}([a-zA-Z0-9-]+\\.)*quora\\.com\\/"
+      ],
       "name": "Quora",
       "options": {
         "enabled": false,
@@ -681,7 +740,9 @@
           "url": "https://github.com/HookedBehemoth/neuters"
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?reuters\\.com\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?reuters\\.com\\/"
+      ],
       "name": "Reuters",
       "options": {
         "enabled": false,
@@ -699,7 +760,9 @@
           "url": "https://git.vern.cc/cobra/Suds"
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?snopes\\.com\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?snopes\\.com\\/"
+      ],
       "name": "Snopes",
       "options": {
         "enabled": false,
@@ -717,7 +780,9 @@
           "url": "https://git.vern.cc/cobra/UNfunny"
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?ifunny\\.co\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?ifunny\\.co\\/"
+      ],
       "name": "iFunny",
       "options": {
         "enabled": false,
@@ -735,7 +800,9 @@
           "url": "https://git.vern.cc/cobra/Soprano"
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?tenor\\.com\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?tenor\\.com\\/"
+      ],
       "name": "Tenor",
       "options": {
         "enabled": false,
@@ -753,7 +820,9 @@
           "url": "https://git.vern.cc/cobra/MeMe"
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?knowyourmeme\\.com\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?knowyourmeme\\.com\\/"
+      ],
       "name": "KnowYourMeme",
       "options": {
         "enabled": false,
@@ -771,7 +840,9 @@
           "url": "https://codeberg.org/zortazert/rural-dictionary"
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?urbandictionary\\.com\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?urbandictionary\\.com\\/"
+      ],
       "name": "Urban Dictionary",
       "options": {
         "enabled": false,
@@ -790,7 +861,9 @@
           "localhost": true
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?goodreads\\.com\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?goodreads\\.com\\/"
+      ],
       "name": "Goodreads",
       "options": {
         "enabled": false,
@@ -809,7 +882,9 @@
           "url": "https://git.disroot.org/wolfree"
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?wolframalpha\\.com\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?wolframalpha\\.com\\/"
+      ],
       "name": "Wolfram Alpha",
       "options": {
         "enabled": false,
@@ -833,7 +908,9 @@
           "url": "https://git.vern.cc/cobra/Destructables"
         }
       },
-      "targets": ["^https?:\\/{2}(www\\.)?instructables\\.com\\/"],
+      "targets": [
+        "^https?:\\/{2}(www\\.)?instructables\\.com\\/"
+      ],
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
@@ -850,7 +927,9 @@
           "url": "https://wikiless.org"
         }
       },
-      "targets": ["^https?:\\/{2}([a-z]+\\.)*wikipedia\\.org\\/?"],
+      "targets": [
+        "^https?:\\/{2}([a-z]+\\.)*wikipedia\\.org\\/?"
+      ],
       "name": "Wikipedia",
       "options": {
         "enabled": false,
@@ -868,7 +947,9 @@
           "url": "https://github.com/ticky/wayback-classic"
         }
       },
-      "targets": ["^https?:\\/{2}web\\.archive\\.org\\/"],
+      "targets": [
+        "^https?:\\/{2}web\\.archive\\.org\\/"
+      ],
       "name": "Wayback Machine",
       "options": {
         "enabled": false,
@@ -929,7 +1010,10 @@
           "url": "https://git.lolcat.ca/lolcat/4get"
         }
       },
-      "targets": ["^https?:\\/{2}search\\.libredirect\\.invalid", "^https?:\\/{2}libredirect\\.github\\.io\\/\\?q"],
+      "targets": [
+        "^https?:\\/{2}search\\.libredirect\\.invalid",
+        "^https?:\\/{2}libredirect\\.github\\.io\\/\\?q"
+      ],
       "name": "Search",
       "options": {
         "enabled": false,
@@ -1007,7 +1091,9 @@
           "url": "https://jitsi.org"
         }
       },
-      "targets": ["^https?:\\/{2}meet\\.libredirect\\.invalid\\/"],
+      "targets": [
+        "^https?:\\/{2}meet\\.libredirect\\.invalid\\/"
+      ],
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
@@ -1051,7 +1137,9 @@
           "url": "https://github.com/Dragynfruit/pasted"
         }
       },
-      "targets": ["^https?:\\/{2}paste\\.libredirect\\.invalid"],
+      "targets": [
+        "^https?:\\/{2}paste\\.libredirect\\.invalid"
+      ],
       "name": "Paste Text",
       "options": {
         "enabled": false,
@@ -1069,7 +1157,9 @@
           "url": "https://github.com/kmille/freetar"
         }
       },
-      "targets": ["^https?:\\/{2}(tabs\\.|www\\.)?ultimate-guitar\\.com"],
+      "targets": [
+        "^https?:\\/{2}(tabs\\.|www\\.)?ultimate-guitar\\.com"
+      ],
       "name": "Ultimate Guitar",
       "options": {
         "enabled": false,
@@ -1087,7 +1177,9 @@
           "url": "https://0xacab.org/johnxina/rat"
         }
       },
-      "targets": ["^https?:\\/{2}tieba\\.baidu\\.com"],
+      "targets": [
+        "^https?:\\/{2}tieba\\.baidu\\.com"
+      ],
       "name": "Baidu Tieba",
       "options": {
         "enabled": false,
@@ -1096,6 +1188,26 @@
       },
       "imageType": "svg",
       "url": "https://tieba.baidu.com"
+    },
+    "threads": {
+      "frontends": {
+        "shoelace": {
+          "name": "Shoelace",
+          "instanceList": true,
+          "url": "https://git.sr.ht/~nixgoat/shoelace"
+        }
+      },
+      "targets": [
+        "^https?:\\/{2}(www\\.)?threads\\.net"
+      ],
+      "name": "Threads",
+      "options": {
+        "enabled": false,
+        "unsupportedUrls": "bypass",
+        "frontend": "shoelace"
+      },
+      "imageType": "svgMono",
+      "url": "https://threads.net"
     }
   }
 }

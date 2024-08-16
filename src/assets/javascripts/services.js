@@ -546,6 +546,11 @@ function rewrite(url, frontend, randomInstance) {
     case "ratAintTieba":
       url.searchParams.delete("ie")
       return `${randomInstance}${url.pathname}${url.search}`
+    case "shoelace": {
+      const reg = /\/(?:(?:(?:.*)?\/post)|t)\/(.*)(?:\/)?/.exec(url.pathname)
+      if (reg) return `${randomInstance}/t/${reg[1]}${url.search}`
+      return `${randomInstance}${url.pathname}${url.search}`
+    }
     case "piped":
     case "pipedMaterial":
     case "cloudtube":
@@ -798,6 +803,7 @@ const defaultInstances = {
   pasted: ["https://pasted.drakeerv.com"],
   freetar: ["https://freetar.de"],
   ratAintTieba: ["https://rat.fis.land"],
+  shoelace: ["https://shoelace.mint.lgbt"],
 }
 
 function initDefaults() {
