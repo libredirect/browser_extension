@@ -2,12 +2,13 @@
   const browser = window.browser || window.chrome
 
   import General from "./General/General.svelte"
+  import url from './url'
   import utils from "../../assets/javascripts/utils.js"
   import { onDestroy } from "svelte"
   import servicesHelper from "../../assets/javascripts/services.js"
   import { onMount } from "svelte"
   import Sidebar from "./Sidebar.svelte"
-  import { options, config, page } from "./stores"
+  import { options, config } from "./stores"
   import Services from "./Services/Services.svelte"
 
   let _options
@@ -35,9 +36,6 @@
     options.set(opts)
     config.set(await utils.getConfig())
   })
-
-  let _page
-  page.subscribe(val => (_page = val))
 
   const dark = {
     text: "#fff",
@@ -85,9 +83,9 @@
     --light-grey: {cssVariables.lightGrey};"
   >
     <Sidebar />
-    {#if _page == "general"}
+    {#if !$url.hash || $url.hash == "#general"}
       <General />
-    {:else if _page == "services"}
+    {:else if $url.hash.startsWith("#services")}
       <Services />
     {/if}
   </div>

@@ -126,7 +126,7 @@
   }
 
   :global(img, svg) {
-    margin-right: 10px;
+    margin-right: 5px;
     margin-left: 0;
     height: 26px;
     width: 26px;
@@ -135,6 +135,6 @@
 
   :global(.rtl img, .rtl svg) {
     margin-right: 0;
-    margin-left: 10px;
+    margin-left: 5px;
   }
 </style>

@@ -1,6 +1,7 @@
 <script>
   const browser = window.browser || window.chrome
 
+  import url from "../url"
   import Row from "../../components/Row.svelte"
   import Label from "../../components/Label.svelte"
   import Select from "../../components/Select.svelte"
@@ -22,8 +23,7 @@
     unsubscribeOptions()
     unsubscribeConfig()
   })
-
-  let selectedService = "youtube"
+  let selectedService = $url.hash.startsWith("#services:") ? $url.hash.split(":")[1] : "youtube"
   $: serviceConf = _config.services[selectedService]
   $: serviceOptions = _options[selectedService]
   $: frontendWebsite = serviceConf.frontends[serviceOptions.frontend].url
@@ -43,7 +43,11 @@
         clearable={false}
         class="svelte_select"
         value={selectedService}
-        on:change={e => (selectedService = e.detail.value)}
+        showChevron
+        on:change={e => {
+          selectedService = e.detail.value
+          window.location.hash = `services:${e.detail.value}`
+        }}
         items={[
           ...servicesEntries.map(([serviceKey, service]) => {
             return { value: serviceKey, label: service.name }
@@ -58,6 +62,7 @@
           <ServiceIcon details={selection} />
           {selection.label}
         </div>
+        <div style="font-size: 10px;" slot="chevron-icon">🮦</div>
       </SvelteSelect>
     </div>
   </Row>
@@ -104,6 +109,7 @@
           dir="ltr"
           class="svelte_select"
           value={serviceOptions.frontend}
+          showChevron
           on:change={e => {
             serviceOptions.frontend = e.detail.value
             options.set(_options)
@@ -123,6 +129,7 @@
             <FrontendIcon details={selection} {selectedService} />
             {selection.label}
           </div>
+          <div style="font-size: 10px;" slot="chevron-icon">🮦</div>
         </SvelteSelect>
       </div>
     </Row>

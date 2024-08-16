@@ -1,18 +1,18 @@
 <script>
   const browser = window.browser || window.chrome
 
-  import { page } from "./stores"
+  import url from "./url"
   import GeneralIcon from "../icons/GeneralIcon.svelte"
   import ServicesIcon from "../icons/ServicesIcon.svelte"
   import AboutIcon from "../icons/AboutIcon.svelte"
 </script>
 
 <div>
-  <a href="#general" on:click={() => page.set("general")} style={$page == "general" && "color: var(--active);"}>
+  <a href="#general" style={$url.hash == "#general" && "color: var(--active);"}>
     <GeneralIcon class="margin margin_{document.body.dir}" />
     {browser.i18n.getMessage("general") || "General"}
   </a>
-  <a href="#services" on:click={() => page.set("services")} style={$page == "services" && "color: var(--active);"}>
+  <a href="#services" style={$url.hash == "#services" && "color: var(--active);"}>
     <ServicesIcon class="margin margin_{document.body.dir}" />
     {browser.i18n.getMessage("services") || "Services"}
   </a>

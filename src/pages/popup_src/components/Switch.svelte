@@ -9,6 +9,7 @@
   import { onDestroy } from "svelte"
   import servicesHelper from "../../../assets/javascripts/services"
   import { options, config } from "../stores"
+  import SettingsIcon from "../../icons/SettingsIcon.svelte"
 
   let _options
   let _config
@@ -50,6 +51,13 @@
       class="interactive"
       on:click={async () =>
         browser.tabs.update({ url: await servicesHelper.switchInstance(url, serviceKey) }, () => {
+          window.close()
+        })}
+    />
+    <SettingsIcon
+      class="interactive"
+      on:click={() =>
+        browser.tabs.create({ url: browser.runtime.getURL(`pages/options/index.html#services:${serviceKey}`) }, () => {
           window.close()
         })}
     />
