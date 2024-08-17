@@ -83,8 +83,8 @@
         "message": "Dodajte svoje omiljene instance",
         "description": "used in the settings page"
     },
-    "copyRaw": {
-        "message": "Kopiraj original"
+    "copyOriginal": {
+        "message": "Copy Original"
     },
     "copied": {
         "message": "Kopirano"
@@ -108,5 +108,38 @@
     },
     "disable": {
         "message": "Deaktiviraj"
+    },
+    "pingInstances": {
+        "message": "Ping Instances"
+    },
+    "exportSettingsToSync": {
+        "message": "Export Settings to Sync"
+    },
+    "importSettingsFromSync": {
+        "message": "Import Settings from Sync"
+    },
+    "services": {
+        "message": "Services"
+    },
+    "service": {
+        "message": "Service"
+    },
+    "bookmarksMenu": {
+        "message": "Bookmarks menu"
+    },
+    "redirectOnlyInIncognito": {
+        "message": "Redirect Only in Incognito"
+    },
+    "bypass": {
+        "message": "Bypass"
+    },
+    "block": {
+        "message": "Block"
+    },
+    "searchHint": {
+        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+    },
+    "redirect": {
+        "message": "Redirect"
     }
 }

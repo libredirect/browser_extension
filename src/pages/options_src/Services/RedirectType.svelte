@@ -37,15 +37,15 @@
     Object.values(serviceConf.frontends).some(frontend => frontend.embeddable)
   ) {
     values = [
-      { value: "both", name: "both" },
-      { value: "main_frame", name: "Only Not Embedded" },
+      { value: "both", name: browser.i18n.getMessage("both") || "Both" },
+      { value: "main_frame", name: browser.i18n.getMessage("onlyNotEmbedded") || "Only Not Embedded" },
     ]
     if (serviceOptions.redirectType == "sub_frame") {
       serviceOptions.redirectType = "main_frame"
       options.set(_options)
     }
   } else {
-    values = [{ value: "main_frame", name: "Only Not Embedded" }]
+    values = [{ value: "main_frame", name: browser.i18n.getMessage("onlyNotEmbedded") || "Only Not Embedded" }]
     serviceOptions.redirectType = "main_frame"
     options.set(_options)
   }
