@@ -125,6 +125,12 @@
           "embeddable": false,
           "instanceList": true,
           "url": "https://github.com/ViewTube/viewtube"
+        },
+        "ytify": {
+          "name": "ytify",
+          "embeddable": false,
+          "instanceList": true,
+          "url": "https://github.com/n-ce/ytify/"
         }
       },
       "targets": [

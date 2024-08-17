@@ -565,6 +565,15 @@ function rewrite(url, frontend, randomInstance) {
 
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "ytify": {
+      if (url.pathname.startsWith('/watch')) return `${randomInstance}/?s=${encodeURIComponent(url.searchParams.get('v'))}`
+
+      const channelReg = /\/channel\/([^\/]+)/.exec(url.pathname)
+      if (channelReg) return `${randomInstance}/list?channel=${channelReg[1]}`
+
+      if (url.pathname.startsWith('/playlist')) return `${randomInstance}/list?playlists=${encodeURIComponent(url.searchParams.get('list'))}`
+      return `${randomInstance}${url.pathname}${url.search}`
+    }
     case "piped":
     case "pipedMaterial":
     case "cloudtube":
@@ -818,7 +827,8 @@ const defaultInstances = {
   freetar: ["https://freetar.de"],
   ratAintTieba: ["https://rat.fis.land"],
   shoelace: ["https://shoelace.mint.lgbt"],
-  skunkyArt: ["https://skunky.bloat.cat/"],
+  skunkyArt: ["https://skunky.bloat.cat"],
+  ytify: ["https://ytify.netlify.app"],
 }
 
 function initDefaults() {
