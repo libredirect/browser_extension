@@ -1,1 +1,145 @@
-{}
+{
+    "extensionName": {
+        "message": "LibRedirect",
+        "description": "name of the extension"
+    },
+    "extensionDescription": {
+        "message": "A web extension that redirects popular sites to alternative privacy-friendly frontends and backends",
+        "description": "description of the extension"
+    },
+    "switchInstance": {
+        "message": "Switch Instance",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "settings": {
+        "message": "Settings",
+        "description": "used in the popup"
+    },
+    "general": {
+        "message": "General",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "Theme",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "Light",
+        "description": "used in the settings page"
+    },
+    "dark": {
+        "message": "Dark",
+        "description": "used in the settings page"
+    },
+    "auto": {
+        "message": "Auto",
+        "description": "used in the settings page"
+    },
+    "excludeFromRedirecting": {
+        "message": "Excluded from redirecting",
+        "description": "used in the settings page"
+    },
+    "importSettings": {
+        "message": "Import Settings",
+        "description": "used in the settings page"
+    },
+    "exportSettings": {
+        "message": "Export Settings",
+        "description": "used in the settings page"
+    },
+    "resetSettings": {
+        "message": "Reset Settings",
+        "description": "used in the settings page"
+    },
+    "enable": {
+        "message": "Enable",
+        "description": "used in the settings page"
+    },
+    "showInPopup": {
+        "message": "Show in popup",
+        "description": "used in the settings page"
+    },
+    "frontend": {
+        "message": "Frontend",
+        "description": "used in the settings page"
+    },
+    "redirectType": {
+        "message": "Redirect Type",
+        "description": "used in the settings page"
+    },
+    "both": {
+        "message": "both",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "only embedded",
+        "description": "used in the settings page"
+    },
+    "onlyNotEmbedded": {
+        "message": "only not embedded",
+        "description": "used in the settings page"
+    },
+    "addYourFavoriteInstances": {
+        "message": "Add your favorite instances",
+        "description": "used in the settings page"
+    },
+    "copyOriginal": {
+        "message": "Copy Original"
+    },
+    "copied": {
+        "message": "Copied"
+    },
+    "redirectToOriginal": {
+        "message": "Redirect to original",
+        "description": "Used in context menus when right clicking on a page/tab"
+    },
+    "redirectLink": {
+        "message": "Attempt to redirect",
+        "description": "Used in context menus when right clicking on a hyperlink"
+    },
+    "about": {
+        "message": "About"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Unsupported embeds handling"
+    },
+    "fetchPublicInstances": {
+        "message": "Fetch public instances"
+    },
+    "disable": {
+        "message": "Disable"
+    },
+    "pingInstances": {
+        "message": "Ping Instances"
+    },
+    "exportSettingsToSync": {
+        "message": "Export Settings to Sync"
+    },
+    "importSettingsFromSync": {
+        "message": "Import Settings from Sync"
+    },
+    "services": {
+        "message": "Services"
+    },
+    "service": {
+        "message": "Service"
+    },
+    "bookmarksMenu": {
+        "message": "Bookmarks menu"
+    },
+    "redirectOnlyInIncognito": {
+        "message": "Redirect Only in Incognito"
+    },
+    "bypass": {
+        "message": "Bypass"
+    },
+    "block": {
+        "message": "Block"
+    },
+    "searchHint": {
+        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+    },
+    "redirect": {
+        "message": "Redirect"
+    }
+}

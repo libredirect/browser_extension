@@ -1,4 +1,32 @@
 {
+    "extensionName": {
+        "message": "লিবরিডাইরেক্ট",
+        "description": "name of the extension"
+    },
+    "extensionDescription": {
+        "message": "একটি ওয়েব এক্সটেনশন যা জনপ্রিয় সাইটগুলোকে বিকল্প গোপনীয়তা-বান্ধব ফ্রন্টএন্ড এবং ব্যাকএন্ডে পুনর্নির্দেশ করে",
+        "description": "description of the extension"
+    },
+    "switchInstance": {
+        "message": "ইন্সট্যান্স পাল্টাও",
+        "description": "used in manifest.json as shortcut description"
+    },
+    "settings": {
+        "message": "পছন্দসমূহ",
+        "description": "used in the popup"
+    },
+    "general": {
+        "message": "সাধারণ",
+        "description": "used in the settings page"
+    },
+    "theme": {
+        "message": "রঙ",
+        "description": "used in the settings page"
+    },
+    "light": {
+        "message": "সাদা",
+        "description": "used in the settings page"
+    },
     "dark": {
         "message": "অন্ধকার",
         "description": "used in the settings page"
@@ -7,16 +35,8 @@
         "message": "স্বয়ংক্রিয়",
         "description": "used in the settings page"
     },
-    "enable": {
-        "message": "সক্রিয়",
-        "description": "used in the settings page"
-    },
-    "frontend": {
-        "message": "সামনের অংশ",
-        "description": "used in the settings page"
-    },
-    "both": {
-        "message": "উভয়",
+    "excludeFromRedirecting": {
+        "message": "পুনঃনির্দেশ থেকে বাদ দেওয়া",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -31,73 +51,95 @@
         "message": "পছন্দসমূহ সহজাত অবস্থায় ফিরত নাও",
         "description": "used in the settings page"
     },
-    "redirectType": {
-        "message": "পুনঃনির্দেশ ধরণ",
-        "description": "used in the settings page"
-    },
-    "excludeFromRedirecting": {
-        "message": "পুনঃনির্দেশ থেকে বাদ দেওয়া",
+    "enable": {
+        "message": "সক্রিয়",
         "description": "used in the settings page"
     },
     "showInPopup": {
         "message": "পপআপে দেখাও",
         "description": "used in the settings page"
     },
-    "copyRaw": {
-        "message": "কাঁচা অনুলিপি"
+    "frontend": {
+        "message": "সামনের অংশ",
+        "description": "used in the settings page"
+    },
+    "redirectType": {
+        "message": "পুনঃনির্দেশ ধরণ",
+        "description": "used in the settings page"
+    },
+    "both": {
+        "message": "উভয়",
+        "description": "used in the settings page"
+    },
+    "onlyEmbedded": {
+        "message": "শুধু এমবেডকৃত",
+        "description": "used in the settings page"
     },
     "onlyNotEmbedded": {
         "message": "এমবেডকৃত নয়",
         "description": "used in the settings page"
     },
-    "about": {
-        "message": "আমাদের সম্পর্কে"
-    },
-    "redirectLink": {
-        "message": "পুনঃনির্দেশ করার চেষ্টা করো",
-        "description": "Used in context menus when right clicking on a hyperlink"
-    },
-    "extensionName": {
-        "message": "লিবরিডাইরেক্ট",
-        "description": "name of the extension"
-    },
-    "theme": {
-        "message": "রঙ",
+    "addYourFavoriteInstances": {
+        "message": "পছন্দের ইন্সট্যান্স যোগ করো",
         "description": "used in the settings page"
     },
-    "light": {
-        "message": "সাদা",
-        "description": "used in the settings page"
+    "copyOriginal": {
+        "message": "Copy Original"
     },
     "copied": {
         "message": "অনুলিপিত"
-    },
-    "extensionDescription": {
-        "message": "একটি ওয়েব এক্সটেনশন যা জনপ্রিয় সাইটগুলোকে বিকল্প গোপনীয়তা-বান্ধব ফ্রন্টএন্ড এবং ব্যাকএন্ডে পুনর্নির্দেশ করে",
-        "description": "description of the extension"
     },
     "redirectToOriginal": {
         "message": "আসলটায় পুনঃনির্দেশ করো",
         "description": "Used in context menus when right clicking on a page/tab"
     },
-    "addYourFavoriteInstances": {
-        "message": "পছন্দের ইন্সট্যান্স যোগ করো",
-        "description": "used in the settings page"
+    "redirectLink": {
+        "message": "পুনঃনির্দেশ করার চেষ্টা করো",
+        "description": "Used in context menus when right clicking on a hyperlink"
     },
-    "settings": {
-        "message": "পছন্দসমূহ",
-        "description": "used in the popup"
+    "about": {
+        "message": "আমাদের সম্পর্কে"
     },
-    "general": {
-        "message": "সাধারণ",
-        "description": "used in the settings page"
+    "unsupportedIframesHandling": {
+        "message": "Unsupported embeds handling"
     },
-    "switchInstance": {
-        "message": "ইন্সট্যান্স পাল্টাও",
-        "description": "used in manifest.json as shortcut description"
+    "fetchPublicInstances": {
+        "message": "Fetch public instances"
     },
-    "onlyEmbedded": {
-        "message": "শুধু এমবেডকৃত",
-        "description": "used in the settings page"
+    "disable": {
+        "message": "Disable"
+    },
+    "pingInstances": {
+        "message": "Ping Instances"
+    },
+    "exportSettingsToSync": {
+        "message": "Export Settings to Sync"
+    },
+    "importSettingsFromSync": {
+        "message": "Import Settings from Sync"
+    },
+    "services": {
+        "message": "Services"
+    },
+    "service": {
+        "message": "Service"
+    },
+    "bookmarksMenu": {
+        "message": "Bookmarks menu"
+    },
+    "redirectOnlyInIncognito": {
+        "message": "Redirect Only in Incognito"
+    },
+    "bypass": {
+        "message": "Bypass"
+    },
+    "block": {
+        "message": "Block"
+    },
+    "searchHint": {
+        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+    },
+    "redirect": {
+        "message": "Redirect"
     }
 }

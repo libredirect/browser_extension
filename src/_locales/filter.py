@@ -3,16 +3,20 @@ import json
 
 langs = [
     'ar',
+    'bn',
     'bs',
     'cs',
     'de',
+    'eo',
     'es',
+    'fi',
     'fr',
     'gl',
     'hr',
     'id',
     'it',
     'ja',
+    'jv',
     'ko',
     'nb_NO',
     'nl',
@@ -26,6 +30,7 @@ langs = [
     'uk',
     'vi',
     'zh_Hans',
+    'zh_Hant',
 ]
 en_json = {}
 
