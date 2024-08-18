@@ -147,7 +147,8 @@
         "redirectType": "main_frame",
         "frontend": "invidious",
         "embedFrontend": "invidious",
-        "unsupportedUrls": "bypass"
+        "unsupportedUrls": "bypass",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "embeddable": true,
@@ -181,7 +182,8 @@
       "options": {
         "enabled": false,
         "frontend": "hyperpipe",
-        "unsupportedUrls": "bypass"
+        "unsupportedUrls": "bypass",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://music.youtube.com"
@@ -210,7 +212,8 @@
         "redirectType": "main_frame",
         "unsupportedUrls": "bypass",
         "frontend": "nitter",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "embeddable": true,
@@ -231,7 +234,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "skyview"
+        "frontend": "skyview",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://bsky.app/"
@@ -272,7 +276,8 @@
         "enabled": false,
         "frontend": "libreddit",
         "unsupportedUrls": "bypass",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://reddit.com"
@@ -298,7 +303,8 @@
         "redirectType": "main_frame",
         "unsupportedUrls": "bypass",
         "frontend": "priviblur",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "embeddable": true,
@@ -330,7 +336,8 @@
         "redirectType": "main_frame",
         "unsupportedUrls": "bypass",
         "frontend": "safetwitch",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "embeddable": true,
@@ -353,7 +360,8 @@
         "enabled": false,
         "unsupportedUrls": "bypass",
         "frontend": "proxiTok",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://tiktok.com"
@@ -375,7 +383,8 @@
         "enabled": false,
         "frontend": "proxigram",
         "unsupportedUrls": "bypass",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://www.instagram.com"
@@ -397,7 +406,8 @@
         "enabled": false,
         "unsupportedUrls": "bypass",
         "frontend": "libremdb",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://imdb.com"
@@ -418,7 +428,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "mikuInvidious"
+        "frontend": "mikuInvidious",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svgMono",
       "url": "https://bilibili.com/"
@@ -438,7 +449,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "pixivFe"
+        "frontend": "pixivFe",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://www.pixiv.net"
@@ -459,7 +471,8 @@
         "enabled": false,
         "unsupportedUrls": "bypass",
         "instance": "public",
-        "frontend": "breezeWiki"
+        "frontend": "breezeWiki",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://fandom.com"
@@ -483,7 +496,8 @@
         "redirectType": "main_frame",
         "unsupportedUrls": "bypass",
         "frontend": "rimgo",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "embeddable": true,
@@ -507,7 +521,8 @@
         "enabled": false,
         "unsupportedUrls": "bypass",
         "redirectType": "main_frame",
-        "frontend": "binternet"
+        "frontend": "binternet",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "embeddable": true,
@@ -530,7 +545,8 @@
         "enabled": false,
         "redirectType": "main_frame",
         "frontend": "tuboSoundcloud",
-        "unsupportedUrls": "bypass"
+        "unsupportedUrls": "bypass",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "embeddable": false,
@@ -552,7 +568,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "tent"
+        "frontend": "tent",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://bandcamp.com"
@@ -572,7 +589,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "tekstoLibre"
+        "frontend": "tekstoLibre",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://www.tekstowo.pl"
@@ -600,7 +618,8 @@
         "enabled": false,
         "unsupportedUrls": "bypass",
         "frontend": "dumb",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://genius.com"
@@ -643,7 +662,8 @@
       "options": {
         "frontend": "scribe",
         "enabled": false,
-        "unsupportedUrls": "bypass"
+        "unsupportedUrls": "bypass",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://medium.com"
@@ -665,7 +685,8 @@
         "enabled": false,
         "unsupportedUrls": "bypass",
         "frontend": "quetre",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://quora.com"
@@ -687,7 +708,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "gothub"
+        "frontend": "gothub",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svgMono",
       "url": "https://github.com"
@@ -709,7 +731,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "laboratory"
+        "frontend": "laboratory",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://gitlab.com/"
@@ -733,7 +756,8 @@
         "enabled": false,
         "unsupportedUrls": "bypass",
         "frontend": "anonymousOverflow",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svgMono",
       "url": "https://stackoverflow.com/"
@@ -753,7 +777,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "neuters"
+        "frontend": "neuters",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://reuters.com"
@@ -773,7 +798,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "suds"
+        "frontend": "suds",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://www.snopes.com"
@@ -793,7 +819,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "unfunny"
+        "frontend": "unfunny",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://ifunny.co"
@@ -813,7 +840,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "soprano"
+        "frontend": "soprano",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://tenor.com"
@@ -833,7 +861,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "meme"
+        "frontend": "meme",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://knowyourmeme.com"
@@ -853,7 +882,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "ruralDictionary"
+        "frontend": "ruralDictionary",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://urbandictionary.com"
@@ -875,7 +905,8 @@
         "enabled": false,
         "unsupportedUrls": "bypass",
         "frontend": "biblioReads",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svgMono",
       "url": "https://goodreads.com/"
@@ -895,7 +926,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "wolfreeAlpha"
+        "frontend": "wolfreeAlpha",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://www.wolframalpha.com"
@@ -920,7 +952,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "indestructables"
+        "frontend": "indestructables",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://www.instructables.com"
@@ -940,7 +973,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "wikiless"
+        "frontend": "wikiless",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://wikipedia.org"
@@ -960,7 +994,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "waybackClassic"
+        "frontend": "waybackClassic",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svgMono",
       "url": "https://web.archive.org"
@@ -981,7 +1016,8 @@
         "enabled": false,
         "unsupportedUrls": "bypass",
         "frontend": "pasted",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svgMono",
       "embeddable": true,
@@ -1048,7 +1084,8 @@
         "frontend": "searxng",
         "unsupportedUrls": "bypass",
         "redirectGoogle": false,
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svgMono",
       "url": "https://search.libredirect.invalid"
@@ -1083,7 +1120,8 @@
         "enabled": false,
         "frontend": "simplyTranslate",
         "unsupportedUrls": "bypass",
-        "instance": "public"
+        "instance": "public",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svgMono",
       "url": "https://translate.libredirect.invalid"
@@ -1106,7 +1144,8 @@
         "redirectType": "main_frame",
         "enabled": false,
         "frontend": "osm",
-        "unsupportedUrls": "bypass"
+        "unsupportedUrls": "bypass",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svgMono",
       "url": "https://maps.libredirect.invalid"
@@ -1126,7 +1165,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "jitsi"
+        "frontend": "jitsi",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svgMono",
       "url": "https://meet.libredirect.invalid"
@@ -1148,7 +1188,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "send"
+        "frontend": "send",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svgMono",
       "url": "https://send.libredirect.invalid"
@@ -1173,7 +1214,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "privateBin"
+        "frontend": "privateBin",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svgMono",
       "url": "https://paste.libredirect.invalid"
@@ -1193,7 +1235,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "freetar"
+        "frontend": "freetar",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://www.ultimate-guitar.com"
@@ -1213,7 +1256,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "ratAintTieba"
+        "frontend": "ratAintTieba",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://tieba.baidu.com"
@@ -1233,7 +1277,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "shoelace"
+        "frontend": "shoelace",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svgMono",
       "url": "https://threads.net"
@@ -1253,7 +1298,8 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "skunkyArt"
+        "frontend": "skunkyArt",
+        "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
       "url": "https://deviantart.com"

@@ -609,6 +609,8 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
 
     frontend = options[service].frontend
 
+    if (options[service].redirectOnlyInIncognito == true && !incognito) continue
+
     if (
       config.services[service].frontends[frontend].desktopApp &&
       type != "main_frame" &&

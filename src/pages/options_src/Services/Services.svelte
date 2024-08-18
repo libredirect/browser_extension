@@ -171,6 +171,19 @@
       />
     </Row>
 
+    <div style={_options.redirectOnlyInIncognito && "pointer-events: none;opacity: 0.4;user-select: none;"}>
+      <Row>
+        <Label>{browser.i18n.getMessage("redirectOnlyInIncognito") || "Redirect Only in Incognito"}</Label>
+        <Checkbox
+          checked={serviceOptions.redirectOnlyInIncognito}
+          onChange={e => {
+            serviceOptions.redirectOnlyInIncognito = e.target.checked
+            options.set(_options)
+          }}
+        />
+      </Row>
+    </div>
+
     {#if selectedService == "search"}
       <Row>
         <Label>{browser.i18n.getMessage("redirectGoogle") || "Redirect Google"}</Label>
