@@ -20,14 +20,12 @@
     const reader = new FileReader()
     reader.readAsText(importSettingsFiles[0])
     reader.onload = async () => {
-      const data = JSON.parse(reader.result)
-      if ("theme" in data && data.version == browser.runtime.getManifest().version) {
-        browser.storage.local.clear(async () => {
-          options.set(data)
-        })
-      } else {
-        alert("Incompatible settings")
+      let data = JSON.parse(reader.result)
+      if (data.version != browser.runtime.getManifest().version) {
+        alert("Importing from a previous version. Be careful")
       }
+      data = await servicesHelper.processUpdate(data)
+      options.set(data)
     }
     reader.onerror = error => {
       console.log("error", error)
@@ -51,20 +49,20 @@
   }
 
   async function importSettingsSync() {
-    browser.storage.sync.get({ options }, r => {
-      const optionsSync = r.options
-      if (optionsSync.version == browser.runtime.getManifest().version) {
-        options.set(optionsSync)
-      } else {
-        alert("Error")
+    browser.storage.sync.get({ options }, async r => {
+      let data = r.options
+      if (data.version != browser.runtime.getManifest().version) {
+        alert("Importing from a previous version. Be careful")
       }
+      data = await servicesHelper.processUpdate(data)
+      options.set(data)
     })
   }
 
   async function resetSettings() {
     browser.storage.local.clear(async () => {
-      await servicesHelper.initDefaults()
-      options.set(await utils.getOptions())
+      const data = await servicesHelper.initDefaults()
+      options.set(data)
     })
   }
 </script>

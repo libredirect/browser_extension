@@ -88,7 +88,7 @@
 
 <style>
   :global(html, body) {
-    width: 300px;
+    width: 280px;
     height: min-content;
     min-height: auto;
     margin: 0;

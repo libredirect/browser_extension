@@ -831,99 +831,86 @@ const defaultInstances = {
   ytify: ["https://ytify.netlify.app"],
 }
 
+async function getDefaults() {
+  let config = await utils.getConfig()
+  let options = {}
+  for (const service in config.services) {
+    options[service] = {}
+    for (const defaultOption in config.services[service].options) {
+      options[service][defaultOption] = config.services[service].options[defaultOption]
+    }
+    for (const frontend in config.services[service].frontends) {
+      if (config.services[service].frontends[frontend].instanceList) {
+        options[frontend] = []
+      }
+    }
+  }
+  options.exceptions = {
+    url: [],
+    regex: [],
+  }
+  options.theme = "detect"
+  options.popupServices = ["youtube", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
+  options.fetchInstances = "github"
+  options.redirectOnlyInIncognito = false
+  options = { ...options, ...defaultInstances }
+  return options
+}
+
 function initDefaults() {
   return new Promise(resolve => {
     browser.storage.local.clear(async () => {
-      let config = await utils.getConfig()
-      let options = {}
-      for (const service in config.services) {
-        options[service] = {}
-        for (const defaultOption in config.services[service].options) {
-          options[service][defaultOption] = config.services[service].options[defaultOption]
-        }
-        for (const frontend in config.services[service].frontends) {
-          if (config.services[service].frontends[frontend].instanceList) {
-            options[frontend] = []
-          }
-        }
-      }
-      options.exceptions = {
-        url: [],
-        regex: [],
-      }
-      options.theme = "detect"
-      options.popupServices = ["youtube", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
-      options.fetchInstances = "github"
-      options.redirectOnlyInIncognito = false
-
-      options = { ...options, ...defaultInstances }
-
+      options = await getDefaults()
       browser.storage.local.set({ options }, () => resolve())
     })
   })
 }
 
-function upgradeOptions() {
+function processUpdate(_options) {
   return new Promise(async resolve => {
-    let options = await utils.getOptions()
+    const config = await utils.getConfig()
+    let options = _options ?? await utils.getOptions()
+
+    const defaults = await getDefaults()
+
+    // Remove any unknown option or subOption
+    for (const optionName in options) {
+      if (!(optionName in defaults)) delete options[optionName]
+      else if (typeof optionName === 'object' && optionName !== null) {
+        for (const subOptionName in options[optionName]) {
+          if (!(subOptionName in defaults[optionName])) delete options[optionName][subOptionName]
+        }
+      }
+    }
+
+    // Remove any unknwon popupService
+    options.popupServices = options.popupServices.filter(service => service in config.services)
+
+    // Add missing options
+    for (const [defaultName, defaultValue] of Object.entries(defaults)) {
+      if (!(defaultName in options)) {
+        options[defaultName] = defaultValue
+      }
+    }
+
+    for (const [serviceName, serviceValue] of Object.entries(config.services)) {
+      // Reset service options if selected frontend is deprecated
+      if (!(options[serviceName].frontend in serviceValue.frontends)) {
+        options[serviceName] = serviceValue.options
+      }
+
+      // Add a default service option if it's not present
+      for (const optionName in serviceValue.options) {
+        if (!(optionName in options[serviceName])) {
+          options[serviceName][optionName] = serviceValue.options[optionName]
+        }
+      }
+    }
 
     browser.storage.local.clear(() => {
       browser.storage.local.set({ options }, () => {
-        resolve()
+        resolve(options)
       })
-    })
-  })
-}
-
-function processUpdate() {
-  return new Promise(async resolve => {
-    let frontends = []
-    const config = await utils.getConfig()
-    let options = await utils.getOptions()
-    for (const service in config.services) {
-      if (!options[service]) options[service] = {}
-
-      if (!(options[service].frontend in config.services[service].frontends)) {
-        options[service] = config.services[service].options // Reset settings for service
-        delete options[options[service].frontend] // Remove deprecated frontend
-      }
-
-      for (const defaultOption in config.services[service].options) {
-        if (!(defaultOption in options[service])) {
-          options[service][defaultOption] = config.services[service].options[defaultOption]
-        }
-      }
-
-      for (const frontend in config.services[service].frontends) {
-        frontends.push(frontend)
-        if (!(frontend in options) && config.services[service].frontends[frontend].instanceList) {
-          options[frontend] = defaultInstances[frontend] || []
-        }
-      }
-
-      for (const frontend of options.popupServices) {
-        if (!Object.keys(config.services).includes(frontend)) {
-          const i = options.popupServices.indexOf(frontend)
-          if (i > -1) options.popupServices.splice(i, 1)
-        }
-      }
-    }
-    const general = ["theme", "popupServices", "fetchInstances", "redirectOnlyInIncognito"]
-    const combined = [
-      ...Object.keys(config.services),
-      ...frontends,
-      ...general,
-      "exceptions",
-      "popupServices",
-      "version",
-    ]
-    for (const key in options) {
-      if (combined.indexOf(key) < 0) {
-        delete options[key] // Remove any unknown settings in options
-      }
-    }
-    browser.storage.local.set({ options }, () => {
-      resolve()
     })
   })
 }
@@ -973,7 +960,6 @@ export default {
   computeService,
   reverse,
   initDefaults,
-  upgradeOptions,
   processUpdate,
   copyRaw,
   switchInstance,

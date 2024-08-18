@@ -13,14 +13,8 @@ browser.runtime.onInstalled.addListener(async details => {
       if (!(await utils.getOptions())) {
         await servicesHelper.initDefaults()
       }
-      browser.runtime.openOptionsPage()
     } else if (details.reason == "update") {
-      if (details.previousVersion == "2.5.2") {
-        await servicesHelper.upgradeOptions()
-        await servicesHelper.processUpdate()
-      } else {
-        await servicesHelper.processUpdate()
-      }
+      await servicesHelper.processUpdate()
     }
   }
 })

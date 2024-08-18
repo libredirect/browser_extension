@@ -72,7 +72,7 @@
             <ServiceIcon details={selection} />
             {selection.label}
           {:else}
-            {browser.i18n.getMessage("search_service") || "Search Service"}
+            {browser.i18n.getMessage("searchService") || "Search Service"}
           {/if}
         </div>
         <div style="font-size: 10px;" slot="chevron-icon">🮦</div>
