@@ -44,7 +44,6 @@
 
   async function exportSettingsSync() {
     _options.version = browser.runtime.getManifest().version
-    await servicesHelper.initDefaults()
     browser.storage.sync.set({ options: _options })
   }
 
