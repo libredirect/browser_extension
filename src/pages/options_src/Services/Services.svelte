@@ -116,7 +116,7 @@
           {browser.i18n.getMessage("frontend") || "Frontend"}
         </a>
       </Label>
-      <div dir="ltr"  on:click={() => (hideFrontendSelection = true)} on:keydown={null}>
+      <div dir="ltr" on:click={() => (hideFrontendSelection = true)} on:keydown={null}>
         <SvelteSelect
           clearable={false}
           dir="ltr"
@@ -172,6 +172,16 @@
     </Row>
 
     {#if selectedService == "search"}
+      <Row>
+        <Label>{browser.i18n.getMessage("redirectGoogle") || "Redirect Google"}</Label>
+        <Checkbox
+          checked={serviceOptions.redirectGoogle}
+          onChange={e => {
+            serviceOptions.redirectGoogle = e.target.checked
+            options.set(_options)
+          }}
+        />
+      </Row>
       <Row>
         <Label>
           {@html browser.i18n.getMessage("searchHint") ||

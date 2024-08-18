@@ -33,12 +33,14 @@ function all(service, frontend, options, config) {
  * @param {{}} config
  * @param {string} frontend
  */
-function regexArray(service, url, config, frontend) {
+function regexArray(service, url, config, options, frontend) {
   let targetList = config.services[service].targets
   if (frontend && "excludeTargets" in config.services[service].frontends[frontend]) {
-    targetList = targetList.filter(
-      val => !config.services[service].frontends[frontend].excludeTargets.includes(targetList.indexOf(val))
-    )
+    if (service !== "search" || !options['search'].redirectGoogle) {
+      targetList = targetList.filter(
+        val => !config.services[service].frontends[frontend].excludeTargets.includes(targetList.indexOf(val))
+      )
+    }
   }
   for (const targetString in targetList) {
     const target = new RegExp(targetList[targetString])
@@ -67,13 +69,17 @@ async function redirectAsync(url, type, initiator, forceRedirection) {
 function rewrite(url, frontend, randomInstance) {
   switch (frontend) {
     case "hyperpipe":
+      for (const key of [...url.searchParams.keys()]) if (key !== "q") url.searchParams.delete(key)
       return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery =>
         searchQuery.replace("?q=", "/")
       )
     case "searx":
     case "searxng":
+      for (const key of [...url.searchParams.keys()]) if (key !== "q") url.searchParams.delete(key)
+      console.log(url.searchParams)
       return `${randomInstance}/${url.search}`
     case "whoogle":
+      for (const key of [...url.searchParams.keys()]) if (key !== "q") url.searchParams.delete(key)
       return `${randomInstance}/search${url.search}`
     case "4get": {
       const s = url.searchParams.get("q")
@@ -81,6 +87,7 @@ function rewrite(url, frontend, randomInstance) {
       return randomInstance
     }
     case "librey":
+      for (const key in url.searchParams.keys()) if (key != "q") url.searchParams.delete(key)
       return `${randomInstance}/search.php${url.search}`
     case "yattee":
       url.searchParams.delete("si")
@@ -609,7 +616,7 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
     )
       frontend = options[service].embedFrontend
 
-    if (!regexArray(service, url, config, frontend)) {
+    if (!regexArray(service, url, config, options, frontend)) {
       frontend = null
       continue
     }
@@ -652,7 +659,7 @@ function computeService(url, returnFrontend) {
     const config = await utils.getConfig()
     const options = await utils.getOptions()
     for (const service in config.services) {
-      if (regexArray(service, url, config)) {
+      if (regexArray(service, url, config, options)) {
         resolve(service)
         return
       } else {

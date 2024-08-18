@@ -993,38 +993,61 @@
           "name": "SearXNG",
           "instanceList": true,
           "url": "https://github.com/searxng/searxng",
-          "localhost": true
+          "localhost": true,
+          "excludeTargets": [
+            2,
+            3
+          ]
         },
         "searx": {
           "name": "SearX",
           "instanceList": true,
-          "url": "https://searx.github.io/searx/"
+          "url": "https://searx.github.io/searx/",
+          "excludeTargets": [
+            2,
+            3
+          ]
         },
         "whoogle": {
           "name": "Whoogle",
           "instanceList": true,
-          "url": "https://benbusby.com/projects/whoogle-search/"
+          "url": "https://benbusby.com/projects/whoogle-search/",
+          "excludeTargets": [
+            2,
+            3
+          ]
         },
         "librey": {
           "name": "LibreY",
           "instanceList": true,
-          "url": "https://github.com/Ahwxorg/librey/"
+          "url": "https://github.com/Ahwxorg/librey/",
+          "excludeTargets": [
+            2,
+            3
+          ]
         },
         "4get": {
           "name": "4get",
           "instanceList": true,
-          "url": "https://git.lolcat.ca/lolcat/4get"
+          "url": "https://git.lolcat.ca/lolcat/4get",
+          "excludeTargets": [
+            2,
+            3
+          ]
         }
       },
       "targets": [
         "^https?:\\/{2}search\\.libredirect\\.invalid",
-        "^https?:\\/{2}libredirect\\.github\\.io\\/\\?q"
+        "^https?:\\/{2}libredirect\\.github\\.io\\/\\?q",
+        "^https?:\\/{2}(www\\.)?google\\.com",
+        "^https?:\\/{2}(www\\.)?bing\\.com"
       ],
       "name": "Search",
       "options": {
         "enabled": false,
         "frontend": "searxng",
         "unsupportedUrls": "bypass",
+        "redirectGoogle": false,
         "instance": "public"
       },
       "imageType": "svgMono",
