@@ -410,6 +410,7 @@ function rewrite(url, frontend, randomInstance) {
       }
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "liteXiv":
     case "pixivFe": {
       const regex = /\/[a-z]{1,3}\/(.*)/.exec(url.pathname)
       if (regex) {
@@ -827,6 +828,7 @@ const defaultInstances = {
   laboratory: ["https://lab.vern.cc"],
   binternet: ["https://bn.bloat.cat"],
   pixivFe: ["https://pixivfe.exozy.me"],
+  liteXiv: ["https://litexiv.exozy.me"],
   indestructables: ["https://indestructables.private.coffee"],
   destructables: ["https://ds.vern.cc"],
   safetwitch: ["https://safetwitch.drgns.space"],

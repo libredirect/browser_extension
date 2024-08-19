@@ -441,6 +441,11 @@
           "name": "PixivFE",
           "instanceList": true,
           "url": "https://codeberg.org/VnPower/pixivfe"
+        },
+        "liteXiv": {
+          "name": "LiteXiv",
+          "instanceList": true,
+          "url": "https://codeberg.org/Peaksol/LiteXiv"
         }
       },
       "targets": [
