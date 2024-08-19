@@ -52,12 +52,12 @@ function regexArray(service, url, config, options, frontend) {
 /**
  * @param {URL} url
  * @param {string} type
- * @param {URL} initiator
+ * @param {URL} originUrl
  * @param {boolean} forceRedirection
  */
-async function redirectAsync(url, type, initiator, forceRedirection) {
+async function redirectAsync(url, type, originUrl, documentUrl, forceRedirection) {
   await init()
-  return redirect(url, type, initiator, forceRedirection)
+  return redirect(url, type, originUrl, documentUrl, forceRedirection)
 }
 
 /**
@@ -171,7 +171,7 @@ function rewrite(url, frontend, randomInstance) {
         return new URLSearchParams(prefs).toString()
       }
 
-      if (initiator && initiator.host === "earth.google.com") return randomInstance
+      if (originUrl && originUrl.host === "earth.google.com") return randomInstance
 
       let mapCentre = "#"
       let prefs = { layers: "mapnik" }
@@ -595,11 +595,11 @@ function rewrite(url, frontend, randomInstance) {
 /**
  * @param {URL} url
  * @param {string} type
- * @param {URL} initiator
+ * @param {URL} originUrl
  * @param {boolean} forceRedirection
  * @returns {string | undefined}
  */
-function redirect(url, type, initiator, forceRedirection, incognito) {
+function redirect(url, type, originUrl, documentUrl, forceRedirection, incognito) {
   if (type != "main_frame" && type != "sub_frame" && type != "image") return
   let randomInstance
   let frontend
@@ -623,6 +623,12 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
       continue
     }
 
+    if (type != "main_frame" && documentUrl && options[service].redirectType == "sub_frame") {
+      if (regexArray(service, documentUrl, config, options, frontend)) {
+        return
+      }
+    }
+
     if (
       config.services[service].embeddable &&
       type != options[service].redirectType &&
@@ -636,7 +642,7 @@ function redirect(url, type, initiator, forceRedirection, incognito) {
     if (instanceList === undefined) break
     if (instanceList.length === 0) return null
 
-    if (initiator && instanceList.includes(initiator.origin)) {
+    if (originUrl && instanceList.includes(originUrl.origin)) {
       if (type != "main_frame") return null
       else return "BYPASSTAB"
     }

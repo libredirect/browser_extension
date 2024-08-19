@@ -28,15 +28,17 @@ browser.webRequest.onBeforeRequest.addListener(
     const old_href = url.href
     if (new RegExp(/^chrome-extension:\/{2}.*\/instances\/.*.json$/).test(url.href) && details.type == "xmlhttprequest")
       return
-    let initiator
+    let originUrl
     try {
-      if (details.originUrl) initiator = new URL(details.originUrl)
-      else if (details.initiator && details.initiator !== "null") initiator = new URL(details.initiator)
+      if (details.originUrl) originUrl = new URL(details.originUrl)
     } catch {
       return null
     }
+    let documentUrl
+    try { if (details.documentUrl) documentUrl = new URL(details.documentUrl) }
+    catch (error) { return null }
     if (tabIdRedirects[details.tabId] == false) return null
-    let newUrl = servicesHelper.redirect(url, details.type, initiator, tabIdRedirects[details.tabId], details.incognito)
+    let newUrl = servicesHelper.redirect(url, details.type, originUrl, documentUrl, tabIdRedirects[details.tabId], details.incognito)
 
     if (
       details.frameAncestors &&
@@ -103,7 +105,7 @@ browser.runtime.getPlatformInfo(r => {
             browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
               if (tabs[0].url) {
                 const url = new URL(tabs[0].url)
-                const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
+                const newUrl = servicesHelper.redirect(url, "main_frame", null, null, true)
                 if (newUrl) {
                   browser.tabs.update(tabs[0].id, { url: newUrl }, () => {
                     tabIdRedirects[tabs[0].id] = true
@@ -209,7 +211,7 @@ browser.runtime.getPlatformInfo(r => {
           browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
             if (tabs[0].url) {
               const url = new URL(tabs[0].url)
-              const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
+              const newUrl = servicesHelper.redirect(url, "main_frame", null, null, true)
               if (newUrl) {
                 browser.tabs.update(tabs[0].id, { url: newUrl }, () => {
                   tabIdRedirects[tabs[0].id] = true
@@ -226,7 +228,7 @@ browser.runtime.getPlatformInfo(r => {
         case "redirectLink":
         case "redirectLinkInNewTab": {
           const url = new URL(info.linkUrl)
-          const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
+          const newUrl = servicesHelper.redirect(url, "main_frame", null, null, true)
           if (newUrl) {
             if (info.menuItemId == "redirectLink") browser.tabs.update({ url: newUrl })
             else browser.tabs.create({ url: newUrl })
@@ -274,7 +276,7 @@ browser.runtime.getPlatformInfo(r => {
         case "redirectBookmarkInNewTab":
           browser.bookmarks.get(info.bookmarkId, bookmarks => {
             const url = new URL(bookmarks[0].url)
-            const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
+            const newUrl = servicesHelper.redirect(url, "main_frame", null, null, true)
             if (newUrl) {
               if (info.menuItemId == "redirectBookmark") browser.tabs.update({ url: newUrl })
               else browser.tabs.create({ url: newUrl })
@@ -328,7 +330,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
       if (tabs[0].url) {
         const url = new URL(tabs[0].url)
-        const newUrl = servicesHelper.redirect(url, "main_frame", null, true)
+        const newUrl = servicesHelper.redirect(url, "main_frame", null, null, true)
         if (newUrl) browser.tabs.update(tabs[0].id, { url: newUrl }, () => (tabIdRedirects[tabs[0].id] = true))
       }
     })
