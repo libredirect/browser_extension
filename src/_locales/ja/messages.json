@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "元のサービスのURIをコピー"
     },
     "copied": {
         "message": "コピーしました"
@@ -110,36 +110,36 @@
         "message": "無効"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "インスタンスへの遅延を確認"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "設定を同期にエクスポート"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "設定を同期からインポート"
     },
     "services": {
-        "message": "Services"
+        "message": "サービス"
     },
     "service": {
-        "message": "Service"
+        "message": "サービス"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "ブークマーク"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "シークレットモードのみに転送"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "飛ばさせる"
     },
     "block": {
-        "message": "Block"
+        "message": "無効にする"
     },
     "searchHint": {
         "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "転送する"
     }
 }
