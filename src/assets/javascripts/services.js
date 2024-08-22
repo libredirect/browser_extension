@@ -396,6 +396,7 @@ function rewrite(url, frontend, randomInstance) {
     }
     case "binternet":
       if (url.hostname == "i.pinimg.com") return `${randomInstance}/image_proxy.php?url=${url.href}`
+      return `${randomInstance}${url.pathname}${url.search}`
     case "laboratory": {
       let path = url.pathname
       if (path == "/") path = ""

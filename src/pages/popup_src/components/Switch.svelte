@@ -27,7 +27,7 @@
 
 <Row>
   <div
-    class="interactive"
+    class="interactive margin margin_{document.body.dir}"
     on:keydown={null}
     on:click={() =>
       browser.tabs.create({ url: browser.runtime.getURL(_config.services[serviceKey].url) }, () => {
