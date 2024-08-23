@@ -36,7 +36,7 @@ function all(service, frontend, options, config) {
 function regexArray(service, url, config, options, frontend) {
   let targetList = config.services[service].targets
   if (frontend && "excludeTargets" in config.services[service].frontends[frontend]) {
-    if (service !== "search" || !options['search'].redirectGoogle) {
+    if (service !== "search" || !options["search"].redirectGoogle) {
       targetList = targetList.filter(
         val => !config.services[service].frontends[frontend].excludeTargets.includes(targetList.indexOf(val))
       )
@@ -66,7 +66,7 @@ async function redirectAsync(url, type, originUrl, documentUrl, forceRedirection
  * @param {string} randomInstance
  * @returns {undefined|string}
  */
-function rewrite(url, frontend, randomInstance) {
+function rewrite(url, originUrl, frontend, randomInstance) {
   switch (frontend) {
     case "hyperpipe":
       for (const key of [...url.searchParams.keys()]) if (key !== "q") url.searchParams.delete(key)
@@ -129,65 +129,26 @@ function rewrite(url, frontend, randomInstance) {
     case "libreTranslate":
       return `${randomInstance}/${url.search.replace("sl", "source").replace("tl", "target").replace("text", "q")}`
     case "osm": {
-      const placeRegex = /\/place\/(.*?)\//
-      function convertMapCentre(url) {
-        let [lat, lon, zoom] = [null, null, null]
-        const reg = url.pathname.match(/@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/)
-        if (reg) {
-          ;[, lon, lat, zoom] = reg
-        } else if (url.searchParams.has("center")) {
-          // Set map centre if present
-          ;[lat, lon] = url.searchParams.get("center").split(",")
-          zoom = url.searchParams.get("zoom") ?? "17"
-        }
-        return { zoom, lon, lat }
-      }
-      function addressToLatLng(address) {
-        const http = new XMLHttpRequest()
-        http.open(
-          "GET",
-          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1`,
-          false
-        )
-        http.send()
-        if (http.status == 200) {
-          const json = JSON.parse(http.responseText)[0]
-          if (json) {
-            return {
-              coordinate: `${json.lat},${json.lon}`,
-              boundingbox: `${json.boundingbox[2]},${json.boundingbox[1]},${json.boundingbox[3]},${json.boundingbox[0]}`,
-            }
-          }
-          return {}
-        }
-      }
-      function getQuery(url) {
-        let query = ""
-        if (url.searchParams.has("q")) query = url.searchParams.get("q")
-        else if (url.searchParams.has("query")) query = url.searchParams.has("query")
-        return query
-      }
-      function prefsEncoded(prefs) {
-        return new URLSearchParams(prefs).toString()
-      }
-
       if (originUrl && originUrl.host === "earth.google.com") return randomInstance
 
-      let mapCentre = "#"
       let prefs = { layers: "mapnik" }
 
-      const mapCentreData = convertMapCentre(url)
-      if (mapCentreData.zoom && mapCentreData.lon && mapCentreData.lat)
+      let mapCentre = "#"
+      const mapCentreData = utils.convertMapCentre(url)
+      if (mapCentreData.zoom && mapCentreData.lon && mapCentreData.lat) {
         mapCentre = `#map=${mapCentreData.zoom}/${mapCentreData.lon}/${mapCentreData.lat}`
+      }
 
       if (url.pathname.includes("/embed")) {
         // https://www.google.com/maps/embed/v1/place?key=AIzaSyD4iE2xVSpkLLOXoyqT-RuPwURN3ddScAI&q=Eiffel+Tower,Paris+France
-        const query = getQuery(url)
-        let { coordinate, boundingbox } = addressToLatLng(query)
+        const query = utils.getQuery(url)
+        let { coordinate, boundingbox } = utils.addressToLatLng(query)
         prefs.bbox = boundingbox
         prefs.marker = coordinate
-        return `${randomInstance}/export/embed.html?${prefsEncoded(prefs)}`
-      } else if (url.pathname.includes("/dir")) {
+        return `${randomInstance}/export/embed.html?${utils.prefsEncoded(prefs)}`
+      }
+
+      if (url.pathname.includes("/dir")) {
         if (url.searchParams.has("travelmode")) {
           const travelModes = {
             driving: "fossgis_osrm_car",
@@ -201,37 +162,44 @@ function rewrite(url, frontend, randomInstance) {
         const regex2 = /\/dir\/([^@/]+)\//.exec(url.pathname)
         if (regex1) {
           // https://www.google.com/maps/dir/92+Rue+Moncey,+69003+Lyon,+France/M%C3%A9dip%C3%B4le+Lyon-Villeurbanne/@45.760254,4.8486298,13z?travelmode=bicycling
-          const origin = addressToLatLng(decodeURIComponent(regex1[1])).coordinate ?? ""
-          const destination = addressToLatLng(decodeURIComponent(regex1[2])).coordinate ?? ""
+          const origin = utils.addressToLatLng(decodeURIComponent(regex1[1])).coordinate ?? ""
+          const destination = utils.addressToLatLng(decodeURIComponent(regex1[2])).coordinate ?? ""
           prefs.route = `${origin};${destination}`
         } else if (regex2) {
           // https://www.google.com/maps/dir/92+Rue+Moncey,+69003+Lyon,+France/@45.760254,4.8486298,13z?travelmode=bicycling
-          const origin = addressToLatLng(decodeURIComponent(regex2[1])).coordinate ?? ""
+          const origin = utils.addressToLatLng(decodeURIComponent(regex2[1])).coordinate ?? ""
           prefs.route = `${origin};`
         } else {
           // https://www.google.com/maps/dir/?api=1&origin=Space+Needle+Seattle+WA&destination=Pike+Place+Market+Seattle+WA&travelmode=bicycling
-          const origin = addressToLatLng(url.searchParams.get("origin")).coordinate ?? ""
-          const destination = addressToLatLng(url.searchParams.get("destination")).coordinate ?? ""
+          const origin = utils.addressToLatLng(url.searchParams.get("origin")).coordinate ?? ""
+          const destination = utils.addressToLatLng(url.searchParams.get("destination")).coordinate ?? ""
           prefs.route = `${origin};${destination}`
         }
-        return `${randomInstance}/directions?${prefsEncoded(prefs)}${mapCentre}`
-      } else if (url.pathname.match(placeRegex)) {
+        return `${randomInstance}/directions?${utils.prefsEncoded(prefs)}${mapCentre}`
+      }
+
+      const placeRegex = /\/place\/(.*?)\//
+      if (url.pathname.match(placeRegex)) {
         // https://www.google.com/maps/place/H%C3%B4tel+de+Londres+Eiffel/@40.9845265,28.7081268,14z
         const query = url.pathname.match(placeRegex)[1]
         return `${randomInstance}/search?query=${query}${mapCentre}`
-      } else if (url.searchParams.has("ll")) {
+      }
+
+      if (url.searchParams.has("ll")) {
         // https://maps.google.com/?ll=38.882147,-76.99017
         const [mlat, mlon] = url.searchParams.get("ll").split(",")
         return `${randomInstance}/search?query=${mlat}%2C${mlon}`
-      } else if (url.searchParams.has("viewpoint")) {
+      }
+
+      if (url.searchParams.has("viewpoint")) {
         // https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=48.857832,2.295226&heading=-45&pitch=38&fov=80
         const [mlat, mlon] = url.searchParams.get("viewpoint").split(",")
         return `${randomInstance}/search?query=${mlat}%2C${mlon}`
-      } else {
-        const query = getQuery(url)
-        if (query) return `${randomInstance}/search?query="${query}${mapCentre}&${prefsEncoded(prefs)}`
       }
-      return `${randomInstance}/${mapCentre}&${prefsEncoded(prefs)}`
+
+      const query = utils.getQuery(url)
+      if (query) return `${randomInstance}/search?query="${query}${mapCentre}&${utils.prefsEncoded(prefs)}`
+      return `${randomInstance}/${mapCentre}&${utils.prefsEncoded(prefs)}`
     }
     case "breezeWiki": {
       let wiki,
@@ -561,7 +529,7 @@ function rewrite(url, frontend, randomInstance) {
       return `${randomInstance}${url.pathname}${url.search}`
     }
     case "skunkyArt": {
-      if (url.pathname.startsWith('/search')) return `${randomInstance}${url.pathname}${url.search}&scope=all`
+      if (url.pathname.startsWith("/search")) return `${randomInstance}${url.pathname}${url.search}&scope=all`
 
       const artReg = /^\/.*?\/art\/(.*)\/?/.exec(url.pathname)
       if (artReg) return `${randomInstance}/post/art/${artReg[1]}${url.search}`
@@ -575,12 +543,14 @@ function rewrite(url, frontend, randomInstance) {
       return `${randomInstance}${url.pathname}${url.search}`
     }
     case "ytify": {
-      if (url.pathname.startsWith('/watch')) return `${randomInstance}/?s=${encodeURIComponent(url.searchParams.get('v'))}`
+      if (url.pathname.startsWith("/watch"))
+        return `${randomInstance}/?s=${encodeURIComponent(url.searchParams.get("v"))}`
 
       const channelReg = /\/channel\/([^\/]+)/.exec(url.pathname)
       if (channelReg) return `${randomInstance}/list?channel=${channelReg[1]}`
 
-      if (url.pathname.startsWith('/playlist')) return `${randomInstance}/list?playlists=${encodeURIComponent(url.searchParams.get('list'))}`
+      if (url.pathname.startsWith("/playlist"))
+        return `${randomInstance}/list?playlists=${encodeURIComponent(url.searchParams.get("list"))}`
       return `${randomInstance}${url.pathname}${url.search}`
     }
     case "piped":
@@ -657,7 +627,7 @@ function redirect(url, type, originUrl, documentUrl, forceRedirection, incognito
   }
   if (!frontend) return
 
-  return rewrite(url, frontend, randomInstance)
+  return rewrite(url, originUrl, frontend, randomInstance)
 }
 
 /**
@@ -887,14 +857,14 @@ function initDefaults() {
 function processUpdate(_options) {
   return new Promise(async resolve => {
     const config = await utils.getConfig()
-    let options = _options ?? await utils.getOptions()
+    let options = _options ?? (await utils.getOptions())
 
     const defaults = await getDefaults()
 
     // Remove any unknown option or subOption
     for (const optionName in options) {
       if (!(optionName in defaults)) delete options[optionName]
-      else if (typeof optionName === 'object' && optionName !== null) {
+      else if (typeof optionName === "object" && optionName !== null) {
         for (const subOptionName in options[optionName]) {
           if (!(subOptionName in defaults[optionName])) delete options[optionName][subOptionName]
         }

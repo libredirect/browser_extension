@@ -165,6 +165,49 @@ function ping(href) {
   })
 }
 
+function addressToLatLng(address) {
+  const http = new XMLHttpRequest()
+  http.open(
+    "GET",
+    `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1`,
+    false
+  )
+  http.send()
+  if (http.status == 200) {
+    const json = JSON.parse(http.responseText)[0]
+    if (json) {
+      return {
+        coordinate: `${json.lat},${json.lon}`,
+        boundingbox: `${json.boundingbox[2]},${json.boundingbox[1]},${json.boundingbox[3]},${json.boundingbox[0]}`,
+      }
+    }
+    return {}
+  }
+}
+
+function getQuery(url) {
+  let query = ""
+  if (url.searchParams.has("q")) query = url.searchParams.get("q")
+  else if (url.searchParams.has("query")) query = url.searchParams.has("query")
+  return query
+}
+function prefsEncoded(prefs) {
+  return new URLSearchParams(prefs).toString()
+}
+
+function convertMapCentre(url) {
+  let [lat, lon, zoom] = [null, null, null]
+  const reg = url.pathname.match(/@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/)
+  if (reg) {
+    ;[, lon, lat, zoom] = reg
+  } else if (url.searchParams.has("center")) {
+    // Set map centre if present
+    ;[lat, lon] = url.searchParams.get("center").split(",")
+    zoom = url.searchParams.get("zoom") ?? "17"
+  }
+  return { zoom, lon, lat }
+}
+
 export default {
   getRandomInstance,
   getNextInstance,
@@ -175,4 +218,8 @@ export default {
   getOptions,
   getPingCache,
   ping,
+  addressToLatLng,
+  getQuery,
+  prefsEncoded,
+  convertMapCentre
 }
