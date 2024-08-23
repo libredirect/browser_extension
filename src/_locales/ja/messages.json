@@ -8,7 +8,7 @@
         "description": "description of the extension"
     },
     "switchInstance": {
-        "message": "インスタンスを切り替え",
+        "message": "インスタンスを変更",
         "description": "used in manifest.json as shortcut description"
     },
     "settings": {
@@ -80,7 +80,7 @@
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
-        "message": "好きなインスタンスを追加",
+        "message": "独自のインスタンスを追加",
         "description": "used in the settings page"
     },
     "copyOriginal": {
@@ -104,13 +104,13 @@
         "message": "未対応の iframes の処理"
     },
     "fetchPublicInstances": {
-        "message": "公式インスタンスを取得"
+        "message": "公開インスタンスの一覧を取得"
     },
     "disable": {
         "message": "無効"
     },
     "pingInstances": {
-        "message": "インスタンスへの遅延を確認"
+        "message": "インスタンスの応答時間を確認"
     },
     "exportSettingsToSync": {
         "message": "設定を同期にエクスポート"
@@ -125,19 +125,19 @@
         "message": "サービス"
     },
     "bookmarksMenu": {
-        "message": "ブークマーク"
+        "message": "ブークマークのメニューに追加"
     },
     "redirectOnlyInIncognito": {
-        "message": "シークレットモードのみに転送"
+        "message": "シークレットモードでのみ転送"
     },
     "bypass": {
-        "message": "飛ばさせる"
+        "message": "転送なし"
     },
     "block": {
-        "message": "無効にする"
+        "message": "表示しない"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "LibRedirect を標準の検索エンジンに設定します。chromium ブラウザーでのやり方は、<a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>こちらをクリック</a>。"
     },
     "redirect": {
         "message": "転送する"
