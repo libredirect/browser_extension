@@ -101,7 +101,7 @@
         "message": "公式サイト"
     },
     "unsupportedIframesHandling": {
-        "message": "未対応の iframes の処理"
+        "message": "未対応の埋め込み動画の処理"
     },
     "fetchPublicInstances": {
         "message": "公開インスタンスの一覧を取得"
