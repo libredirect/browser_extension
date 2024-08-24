@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Kopírovat originál"
     },
     "copied": {
         "message": "Zkopírováno"
@@ -110,36 +110,36 @@
         "message": "Zakázat"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Otestovat odezvu instancí"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Exportovat nastavení do synchronizace"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Importovat nastavení ze synchronizace"
     },
     "services": {
-        "message": "Services"
+        "message": "Služby"
     },
     "service": {
-        "message": "Service"
+        "message": "Služba"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Nabídka záložek"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Přesměrovat pouze v anonymním okně"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Obejít"
     },
     "block": {
-        "message": "Block"
+        "message": "Blokovat"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Nastavte LibRedirect jako výchozí vyhledávač. Návod pro Chromium prohlížeče naleznete <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>zde</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Přesměrovat"
     }
 }
