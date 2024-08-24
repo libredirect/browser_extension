@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Copiar original"
     },
     "copied": {
         "message": "Copiado"
@@ -101,7 +101,7 @@
         "message": "Acerca de"
     },
     "unsupportedIframesHandling": {
-        "message": "Gestión de los iframes no compatibles"
+        "message": "Manejo de incrustaciones de código no soportado"
     },
     "fetchPublicInstances": {
         "message": "Recuperar las instancias públicas"
@@ -110,36 +110,36 @@
         "message": "Desactivar"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Prueba de velocidad de las instancias"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Exportar configuraciones para sincronizar"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Importar configuraciones para sincronizar"
     },
     "services": {
-        "message": "Services"
+        "message": "Servicios"
     },
     "service": {
         "message": "Service"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Menú de marcadores"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Redirigir solo en modo incógnito"
     },
     "bypass": {
         "message": "Bypass"
     },
     "block": {
-        "message": "Block"
+        "message": "Bloquear"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Establece LibRedirect como motor de búsqueda predeterminado. Para saber cómo hacerlo en los navegadores Chromium, haz clic <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>aquí</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Redirigir"
     }
 }
