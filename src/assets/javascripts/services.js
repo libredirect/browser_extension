@@ -121,6 +121,7 @@ function rewrite(url, originUrl, frontend, randomInstance) {
       }
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "translite":
     case "simplyTranslate":
       return `${randomInstance}/${url.search}`
     case "send":
@@ -773,6 +774,7 @@ const defaultInstances = {
   quetre: ["https://quetre.iket.me"],
   libremdb: ["https://libremdb.iket.me"],
   simplyTranslate: ["https://simplytranslate.org"],
+  translite: ["https://tl.bloat.cat"],
   mozhi: ["https://mozhi.aryak.me"],
   searxng: ["https://search.bus-hit.me"],
   "4get": ["https://4get.ca"],

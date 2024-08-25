@@ -1114,6 +1114,11 @@
           "name": "LibreTranslate",
           "instanceList": true,
           "url": "https://github.com/LibreTranslate/LibreTranslate"
+        },
+        "translite": {
+          "name": "Translite",
+          "instanceList": true,
+          "url": "https://codeberg.org/gospodin/translite"
         }
       },
       "targets": [
