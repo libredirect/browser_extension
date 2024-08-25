@@ -55,9 +55,9 @@ function regexArray(service, url, config, options, frontend) {
  * @param {URL} originUrl
  * @param {boolean} forceRedirection
  */
-async function redirectAsync(url, type, originUrl, documentUrl, forceRedirection) {
+async function redirectAsync(url, type, originUrl, documentUrl, incognito, forceRedirection) {
   await init()
-  return redirect(url, type, originUrl, documentUrl, forceRedirection)
+  return redirect(url, type, originUrl, documentUrl, incognito, forceRedirection)
 }
 
 /**
@@ -569,20 +569,21 @@ function rewrite(url, originUrl, frontend, randomInstance) {
  * @param {URL} url
  * @param {string} type
  * @param {URL} originUrl
+ * @param {URL} documentUrl
+ * @param {boolean} incognito
  * @param {boolean} forceRedirection
  * @returns {string | undefined}
  */
-function redirect(url, type, originUrl, documentUrl, forceRedirection, incognito) {
+function redirect(url, type, originUrl, documentUrl, incognito, forceRedirection) {
   if (type != "main_frame" && type != "sub_frame" && type != "image") return
   let randomInstance
   let frontend
   if (!forceRedirection && options.redirectOnlyInIncognito == true && !incognito) return
   for (const service in config.services) {
     if (!forceRedirection && !options[service].enabled) continue
+    if (!forceRedirection && options[service].redirectOnlyInIncognito == true && !incognito) continue
 
     frontend = options[service].frontend
-
-    if (options[service].redirectOnlyInIncognito == true && !incognito) continue
 
     if (
       config.services[service].frontends[frontend].desktopApp &&
@@ -613,11 +614,11 @@ function redirect(url, type, originUrl, documentUrl, forceRedirection, incognito
 
     let instanceList = options[frontend]
     if (instanceList === undefined) break
-    if (instanceList.length === 0) return null
+    if (instanceList.length === 0) return "https://libredirect.invalid"
 
     if (originUrl && instanceList.includes(originUrl.origin)) {
-      if (type != "main_frame") return null
-      else return "BYPASSTAB"
+      if (type == "main_frame") return "BYPASSTAB"
+      else return null
     }
 
     randomInstance = utils.getRandomInstance(instanceList)
@@ -937,10 +938,18 @@ function isException(url) {
       for (let item of exceptions.url) {
         item = new URL(item)
         item = item.href.replace(/^http:\/\//, "https://")
-        if (item == url.href) return true
+        if (item == url.href) {
+          return true
+        }
       }
     }
-    if (exceptions.regex) for (const item of exceptions.regex) if (new RegExp(item).test(url.href)) return true
+    if (exceptions.regex) {
+      for (const item of exceptions.regex) {
+        if (new RegExp(item).test(url.href)) {
+          return true
+        }
+      }
+    }
   }
   return false
 }

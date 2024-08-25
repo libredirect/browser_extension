@@ -33,7 +33,7 @@
       url = new URL(tabs[0].url)
       servicesHelper.switchInstance(url).then(r => (switchInstance = r))
       servicesHelper.reverse(url).then(r => (redirectToOriginal = r))
-      servicesHelper.redirectAsync(url, "main_frame", null, true).then(r => (redirect = r))
+      servicesHelper.redirectAsync(url, "main_frame", null, null, false, true).then(r => (redirect = r))
       servicesHelper.computeService(url).then(r => (currentService = r))
     }
   })
@@ -44,7 +44,7 @@
     <Row
       class="interactive"
       on:click={() => {
-        browser.runtime.sendMessage("redirectTab", () => {
+        browser.tabs.update({ url: redirect }, () => {
           window.close()
         })
       }}
@@ -58,7 +58,7 @@
     <Row
       class="interactive"
       on:click={async () =>
-        browser.tabs.update({ url: await servicesHelper.switchInstance(url) }, () => {
+        browser.tabs.update({ url: switchInstance }, () => {
           window.close()
         })}
     >
@@ -75,7 +75,7 @@
     <Row
       class="interactive"
       on:click={() =>
-        browser.runtime.sendMessage("reverseTab", () => {
+        browser.tabs.update({ url: redirectToOriginal }, () => {
           window.close()
         })}
     >
