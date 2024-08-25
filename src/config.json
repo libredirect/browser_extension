@@ -274,7 +274,7 @@
       "name": "Reddit",
       "options": {
         "enabled": false,
-        "frontend": "libreddit",
+        "frontend": "redlib",
         "unsupportedUrls": "bypass",
         "instance": "public",
         "redirectOnlyInIncognito": false
