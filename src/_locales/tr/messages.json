@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Aslını Kopyala"
     },
     "copied": {
         "message": "Kopyalandı"
@@ -101,7 +101,7 @@
         "message": "Hakkında"
     },
     "unsupportedIframesHandling": {
-        "message": "Desteklenmeyen iframe kullanımı"
+        "message": "Desteklenmeyen gömülü kullanımı"
     },
     "fetchPublicInstances": {
         "message": "Herkese açık örnekleri getir"
@@ -110,36 +110,36 @@
         "message": "Devre dışı bırak"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Örneklere Ping At"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Ayarlayı Eşzamanlamaya Aktar"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Ayarları Eşzamanlamadan İçe Aktar"
     },
     "services": {
-        "message": "Services"
+        "message": "Hizmetler"
     },
     "service": {
         "message": "Service"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Yer imleri menüsü"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Yalnızca Gizli Modda Yönlendir"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Atla"
     },
     "block": {
         "message": "Block"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "LibRedirect'i öntanımlı arama moturu olarak ayarlayın. Chromium tabanlı tarayıcılarda nasıl yapılacağını öğrenmek için <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>buraya</a> tıklayın."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Yönlendir"
     }
 }

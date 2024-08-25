@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Kopiuj oryginał"
     },
     "copied": {
         "message": "Skopiowano"
@@ -101,7 +101,7 @@
         "message": "Informacje"
     },
     "unsupportedIframesHandling": {
-        "message": "Brak obsługi ramek iframe"
+        "message": "Brak obsługi osadzania"
     },
     "fetchPublicInstances": {
         "message": "Pobierz instancje publiczne"
@@ -110,36 +110,36 @@
         "message": "Wyłącz"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Pinguj instancje"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Eksportuj ustawienia do synchronizacji"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Importuj ustawienia do synchronizacji"
     },
     "services": {
-        "message": "Services"
+        "message": "Usługi"
     },
     "service": {
-        "message": "Service"
+        "message": "Usługa"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Menu zakładek"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Przekieruj tylko w trybie incognito"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Omiń"
     },
     "block": {
-        "message": "Block"
+        "message": "Zablokuj"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Ustaw LibRedirect jako domyślną wyszukiwarkę. Aby dowiedzieć się, jak to zrobić w przeglądarkach Chromium, kliknij <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>tutaj</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Przekieruj"
     }
 }
