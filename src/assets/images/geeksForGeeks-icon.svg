@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="GFG"
+   width="70"
+   height="70"
+   viewBox="0 0 70 70.000001"
+   version="1.1"
+   sodipodi:docname="gfg-gg-logo.svg"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="7.4688057"
+     inkscape:cx="17.941289"
+     inkscape:cy="21.020764"
+     inkscape:window-width="1888"
+     inkscape:window-height="1052"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="GFG" />
+  <path
+     id="Path_402"
+     data-name="Path 402"
+     d="m 64.495957,33.850871 h -24.407 a 9.748,9.748 0 0 1 17.129,-5.146 l 3.55,-3.57 a 14.77,14.77 0 0 0 -25.724,8.716 h -0.085 a 14.77,14.77 0 0 0 -25.7240007,-8.716 l 3.5499997,3.57 a 9.748,9.748 0 0 1 17.129001,5.146 H 5.5059563 q -0.043,0.565 -0.044,1.141 a 14.771,14.771 0 0 0 29.1490007,3.383 h 0.778 a 14.769,14.769 0 0 0 29.149,-3.383 q 0.002,-0.576 -0.042,-1.141 z m -44.264,10.889 a 9.749,9.749 0 0 1 -9.151001,-6.385 h 18.300001 a 9.75,9.75 0 0 1 -9.149,6.385 z m 29.538,0 a 9.75,9.75 0 0 1 -9.152,-6.385 h 18.3 a 9.75,9.75 0 0 1 -9.147,6.385 z"
+     fill="#2f8d46" />
+</svg>

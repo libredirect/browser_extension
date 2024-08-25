@@ -819,6 +819,7 @@ const defaultInstances = {
   shoelace: ["https://shoelace.mint.lgbt"],
   skunkyArt: ["https://skunky.bloat.cat"],
   ytify: ["https://ytify.netlify.app"],
+  nerdsForNerds: ["https://nn.vern.cc"],
 }
 
 async function getDefaults() {

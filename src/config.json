@@ -1313,6 +1313,27 @@
       },
       "imageType": "svg",
       "url": "https://deviantart.com"
+    },
+    "geeksForGeeks": {
+      "frontends": {
+        "nerdsForNerds": {
+          "name": "NerdsforNerds",
+          "instanceList": true,
+          "url": "https://git.vern.cc/cobra/NerdsforNerds"
+        }
+      },
+      "targets": [
+        "^https?:\\/{2}(www\\.)?geeksforgeeks\\.org"
+      ],
+      "name": "GeeksforGeeks",
+      "options": {
+        "enabled": false,
+        "unsupportedUrls": "bypass",
+        "frontend": "nerdsForNerds",
+        "redirectOnlyInIncognito": false
+      },
+      "imageType": "svg",
+      "url": "https://www.geeksforgeeks.org"
     }
   }
 }
