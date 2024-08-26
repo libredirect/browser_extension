@@ -31,6 +31,7 @@ function all(service, frontend, options, config) {
  * @param {string} service
  * @param {URL} url
  * @param {{}} config
+ * @param {{}} options
  * @param {string} frontend
  */
 function regexArray(service, url, config, options, frontend) {
@@ -47,17 +48,6 @@ function regexArray(service, url, config, options, frontend) {
     if (target.test(url.href)) return true
   }
   return false
-}
-
-/**
- * @param {URL} url
- * @param {string} type
- * @param {URL} originUrl
- * @param {boolean} forceRedirection
- */
-async function redirectAsync(url, type, originUrl, documentUrl, incognito, forceRedirection) {
-  await init()
-  return redirect(url, type, originUrl, documentUrl, incognito, forceRedirection)
 }
 
 /**
@@ -554,6 +544,13 @@ function rewrite(url, originUrl, frontend, randomInstance) {
         return `${randomInstance}/list?playlists=${encodeURIComponent(url.searchParams.get("list"))}`
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "koub":
+      if (url.pathname.startsWith("/view/") || url.pathname.startsWith("/stories/")) {
+        return `${randomInstance}${url.pathname}${url.search}`
+      }
+      const accountReg = /^\/([^\/]+)\/?$/.exec(url.pathname)
+      if (accountReg) return `${randomInstance}/account${url.pathname}${url.search}`
+
     case "piped":
     case "pipedMaterial":
     case "cloudtube":
@@ -630,6 +627,20 @@ function redirect(url, type, originUrl, documentUrl, incognito, forceRedirection
   if (!frontend) return
 
   return rewrite(url, originUrl, frontend, randomInstance)
+}
+
+/**
+ * @param {URL} url
+ * @param {string} type
+ * @param {URL} originUrl
+ * @param {URL} documentUrl
+ * @param {boolean} incognito
+ * @param {boolean} forceRedirection
+ * @returns {string | undefined}
+ */
+async function redirectAsync(url, type, originUrl, documentUrl, incognito, forceRedirection) {
+  await init()
+  return redirect(url, type, originUrl, documentUrl, incognito, forceRedirection)
 }
 
 /**
@@ -821,6 +832,7 @@ const defaultInstances = {
   skunkyArt: ["https://skunky.bloat.cat"],
   ytify: ["https://ytify.netlify.app"],
   nerdsForNerds: ["https://nn.vern.cc"],
+  koub: ["https://koub.clovius.club"],
 }
 
 async function getDefaults() {

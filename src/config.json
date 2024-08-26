@@ -1334,6 +1334,27 @@
       },
       "imageType": "svg",
       "url": "https://www.geeksforgeeks.org"
+    },
+    "coub": {
+      "frontends": {
+        "koub": {
+          "name": "Koub",
+          "instanceList": true,
+          "url": "https://codeberg.org/gospodin/koub"
+        }
+      },
+      "targets": [
+        "^https?:\\/{2}(www\\.)?coub\\.com"
+      ],
+      "name": "Coub",
+      "options": {
+        "enabled": false,
+        "unsupportedUrls": "bypass",
+        "frontend": "koub",
+        "redirectOnlyInIncognito": false
+      },
+      "imageType": "svg",
+      "url": "https://coub.com"
     }
   }
 }
