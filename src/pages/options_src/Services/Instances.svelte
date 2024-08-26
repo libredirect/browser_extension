@@ -5,6 +5,7 @@
   import AddIcon from "../../icons/AddIcon.svelte"
   import { options, config } from "../stores"
   import PingIcon from "../../icons/PingIcon.svelte"
+  import AutoPickIcon from "../../icons/AutoPickIcon.svelte"
   import Row from "../../components/Row.svelte"
   import Input from "../../components/Input.svelte"
   import Label from "../../components/Label.svelte"
@@ -36,10 +37,9 @@
     allInstances = []
     if (_options[selectedFrontend]) allInstances.push(..._options[selectedFrontend])
     if (redirects && redirects[selectedFrontend]) {
-      for (const network in redirects[selectedFrontend]) {
-        allInstances.push(...redirects[selectedFrontend][network])
-      }
+      allInstances.push(...redirects[selectedFrontend]["clearnet"])
     }
+    allInstances = [...new Set(allInstances)]
   }
 
   let pingCache
@@ -64,6 +64,31 @@
       pingCache[instance] = colorTime(time)
     }
   }
+  function randomInstances(n) {
+    let instances = []
+    for (let i = 0; i < n; i++) {
+      instances.push(redirects[selectedFrontend]["clearnet"][Math.floor(Math.random() * allInstances.length)])
+    }
+    return instances
+  }
+
+  async function autoPickInstance() {
+    const instances = randomInstances(5)
+    const myInstancesCache = []
+    for (const instance of instances) {
+      pingCache[instance] = { color: "lightblue", value: "pinging..." }
+      const time = await utils.ping(instance)
+      pingCache[instance] = colorTime(time)
+      myInstancesCache.push([instance, time])
+    }
+    myInstancesCache.sort(function (a, b) {
+      return a[1] - b[1]
+    })
+
+    _options[selectedFrontend].push(myInstancesCache[0][0])
+    options.set(_options)
+  }
+
   function colorTime(time) {
     let value
     let color
@@ -102,10 +127,14 @@
 {#if serviceConf.frontends[selectedFrontend].instanceList && redirects && blacklist}
   <hr />
 
-  <div class="ping">
+  <div>
     <Button on:click={pingInstances}>
       <PingIcon class="margin margin_{document.body.dir}" />
       {browser.i18n.getMessage("pingInstances") || "Ping Instances"}
+    </Button>
+    <Button on:click={autoPickInstance}>
+      <AutoPickIcon class="margin margin_{document.body.dir}" />
+      {browser.i18n.getMessage("autoPickInstance") || "Auto Pick Instance"}
     </Button>
   </div>
 
