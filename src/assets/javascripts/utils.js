@@ -24,11 +24,14 @@ function getNextInstance(currentInstanceUrl, instances) {
  * @param {URL} url
  */
 function protocolHost(url) {
-  if (url.username && url.password) return `${url.protocol}//${url.username}:${url.password}@${url.host}`
+  url.pathname = url.pathname.replace(/\/$/, '');
+  if (url.username && url.password) return `${url.protocol}//${url.username}:${url.password}@${url.host}${url.pathname}`
+
+  // workaround
   if (url.pathname == "/TekstoLibre/" && url.host.endsWith("github.io"))
-    // workaround
     return `${url.protocol}//${url.host}${url.pathname.slice(0, -1)}`
-  return `${url.protocol}//${url.host}`
+
+  return `${url.protocol}//${url.host}${url.pathname}`
 }
 
 /**
@@ -221,5 +224,5 @@ export default {
   addressToLatLng,
   getQuery,
   prefsEncoded,
-  convertMapCentre
+  convertMapCentre,
 }
