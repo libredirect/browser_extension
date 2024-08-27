@@ -141,5 +141,20 @@
     },
     "redirect": {
         "message": "Přesměrovat"
+    },
+    "autoPickInstance": {
+        "message": "Automaticky vybrat instanci"
+    },
+    "searchService": {
+        "message": "Služba vyhledávání"
+    },
+    "redirectGoogle": {
+        "message": "Přesměrovat Google"
+    },
+    "search_frontend": {
+        "message": "Frontend vyhledávání"
+    },
+    "embedFrontend": {
+        "message": "Vložený frontend"
     }
 }
