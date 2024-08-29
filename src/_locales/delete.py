@@ -50,6 +50,11 @@ keys = ['extensionName',
         'excludeFromRedirecting',
         'pingInstances',
         'redirect',
+        'autoPickInstance',
+        'redirectGoogle',
+        'search_frontend',
+        'searchService',
+        'embedFrontend',
         ]
 
 tmp = {}

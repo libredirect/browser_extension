@@ -12,6 +12,7 @@ langs = [
     'fi',
     'fr',
     'gl',
+    'hi',
     'hr',
     'id',
     'it',

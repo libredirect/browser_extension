@@ -141,5 +141,20 @@
     },
     "redirect": {
         "message": "重定向"
+    },
+    "embedFrontend": {
+        "message": "嵌入页面前端"
+    },
+    "autoPickInstance": {
+        "message": "自动挑选实例"
+    },
+    "redirectGoogle": {
+        "message": "重定向 Google"
+    },
+    "search_frontend": {
+        "message": "搜索前端"
+    },
+    "searchService": {
+        "message": "搜索服务"
     }
 }

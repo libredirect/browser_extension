@@ -141,5 +141,20 @@
     },
     "redirect": {
         "message": "Yönlendir"
+    },
+    "redirectGoogle": {
+        "message": "Yönlendir (Google)"
+    },
+    "search_frontend": {
+        "message": "Arama Ön Ucu"
+    },
+    "embedFrontend": {
+        "message": "Ön Ucu Göm"
+    },
+    "autoPickInstance": {
+        "message": "Örneği Otomatik Seç"
+    },
+    "searchService": {
+        "message": "Arama Hizmeti"
     }
 }
