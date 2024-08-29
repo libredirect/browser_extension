@@ -141,5 +141,20 @@
     },
     "redirect": {
         "message": "転送する"
+    },
+    "search_frontend": {
+        "message": "検索フロントエンド"
+    },
+    "embedFrontend": {
+        "message": "埋め込みフロントエンド"
+    },
+    "redirectGoogle": {
+        "message": "Googleを転送する"
+    },
+    "autoPickInstance": {
+        "message": "インスタンスを自動で取得"
+    },
+    "searchService": {
+        "message": "検索サービス"
     }
 }
