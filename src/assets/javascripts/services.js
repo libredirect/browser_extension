@@ -667,6 +667,15 @@ function computeService(url) {
     resolve()
   })
 }
+export function computeFrontend(url) {
+  for (const service in config.services) {
+    for (const frontend in config.services[service].frontends) {
+      if (all(service, frontend, options, config).includes(utils.protocolHost(url))) {
+        return {service, frontend}
+      }
+    }
+  }
+}
 
 /**
  * @param {URL} url
@@ -975,4 +984,5 @@ export default {
   copyRaw,
   switchInstance,
   isException,
+  computeFrontend,
 }

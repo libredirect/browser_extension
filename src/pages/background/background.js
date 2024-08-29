@@ -58,7 +58,7 @@ browser.webRequest.onBeforeRequest.addListener(
       return null
     }
 
-    const newUrl = servicesHelper.redirect(
+    let newUrl = servicesHelper.redirect(
       url,
       details.type,
       originUrl,
@@ -72,20 +72,16 @@ browser.webRequest.onBeforeRequest.addListener(
       const frontend = url.searchParams.get("frontend")
       const oldUrl = new URL(url.searchParams.get("url"))
 
-      browser.tabs.update({
-        url: browser.runtime.getURL(
-          `/pages/messages/index.html?message=no_instance&url=${encodeURIComponent(oldUrl)}&frontend=${encodeURIComponent(frontend)}`
-        ),
-      })
+      newUrl = browser.runtime.getURL(
+        `/pages/messages/index.html?message=no_instance&url=${encodeURIComponent(oldUrl)}&frontend=${encodeURIComponent(frontend)}`
+      )
     }
 
     if (!newUrl) {
       if (url.href.match(/^https?:\/{2}(.*\.)?libredirect\.invalid.*/)) {
-        browser.tabs.update({
-          url: browser.runtime.getURL(
-            `/pages/messages/index.html?message=disabled&url=${encodeURIComponent(url.href)}`
-          ),
-        })
+        newUrl = browser.runtime.getURL(
+          `/pages/messages/index.html?message=disabled&url=${encodeURIComponent(url.href)}`
+        )
       }
     }
 
@@ -106,6 +102,22 @@ browser.webRequest.onBeforeRequest.addListener(
   },
   { urls: ["<all_urls>"] },
   ["blocking"]
+)
+
+browser.webRequest.onHeadersReceived.addListener(
+  details => {
+    if (details.statusCode >= 501 || details.statusCode == 429 || details.statusCode == 403) {
+      const url = new URL(details.url)
+      const { service, frontend } = servicesHelper.computeFrontend(url)
+      if (!service) return
+      browser.tabs.update({
+        url: browser.runtime.getURL(
+          `/pages/messages/index.html?message=server_error&code=${details.statusCode}=&url=${encodeURIComponent(url.href)}&frontend=${encodeURIComponent(frontend)}&service=${encodeURIComponent(service)}`
+        ),
+      })
+    }
+  },
+  { urls: ["<all_urls>"] }
 )
 
 browser.tabs.onRemoved.addListener(tabId => {

@@ -9,6 +9,7 @@
   import { options, config, page } from "./stores"
   import Button from "../components/Button.svelte"
   import AutoPickIcon from "../icons/AutoPickIcon.svelte"
+  import SwitchInstanceIcon from "../icons/SwitchInstanceIcon.svelte"
 
   let _options
   const unsubscribeOptions = options.subscribe(val => {
@@ -49,7 +50,7 @@
   const params = new URLSearchParams(window.location.search)
   const oldUrl = new URL(params.get("url"))
 
-  async function autoPickInstance() {
+  async function autoPick() {
     const frontend = params.get("frontend")
     autoPicking = true
     const instances = utils.randomInstances(redirects[frontend]["clearnet"], 5)
@@ -59,6 +60,10 @@
     _options[frontend].push(pings[0][0])
     options.set(_options)
     autoPicking = false
+  }
+
+  async function autoPickInstance() {
+    await autoPick()
     await redirectUrl()
   }
 
@@ -73,6 +78,36 @@
     const newUrl = await servicesHelper.redirectAsync(oldUrl, "main_frame", null, null, false, true)
     browser.tabs.update({ url: newUrl })
   }
+
+  async function switchInstance() {
+    const newUrl = await servicesHelper.switchInstance(oldUrl)
+    browser.tabs.update({ url: newUrl })
+  }
+
+  async function removeInstance() {
+    const frontend = params.get("frontend")
+    const i = _options[frontend].indexOf(utils.protocolHost(oldUrl))
+    _options[frontend].splice(i, 1)
+    options.set(_options)
+    const newUrl = await servicesHelper.switchInstance(oldUrl, service)
+    browser.tabs.update({ url: newUrl })
+  }
+
+  async function removeAndAutoPickInstance() {
+    const frontend = params.get("frontend")
+    const i = _options[frontend].indexOf(utils.protocolHost(oldUrl))
+    _options[frontend].splice(i, 1)
+    options.set(_options)
+    await autoPick()
+    const newUrl = await servicesHelper.switchInstance(oldUrl, service)
+    browser.tabs.update({ url: newUrl })
+  }
+
+  async function addAutoPickInstance() {
+    await autoPick()
+    const newUrl = await servicesHelper.switchInstance(oldUrl)
+    browser.tabs.update({ url: newUrl })
+  }
 </script>
 
 {#if _options && _config}
@@ -83,6 +118,34 @@
         <Button on:click={enableService}>
           {browser.i18n.getMessage("enable") || "Enable"}
         </Button>
+      </div>
+    {:else if window.location.search.includes("message=server_error")}
+      <!-- https://httpstat.us/403 for testing -->
+      <div>
+        <h1>Your selected instance gave out an error</h1>
+        {#if _options[params.get("frontend")].length > 1}
+          <Button on:click={switchInstance}>
+            <SwitchInstanceIcon class="margin margin_{document.body.dir}" />
+            {browser.i18n.getMessage("switchInstance") || "Switch Instance"}
+          </Button>
+          <Button on:click={removeInstance}>
+            <SwitchInstanceIcon class="margin margin_{document.body.dir}" />
+            {browser.i18n.getMessage("removeInstance") || "Remove Instance"}
+            +
+            {browser.i18n.getMessage("switchInstance") || "Switch Instance"}
+          </Button>
+        {:else}
+          <Button on:click={addAutoPickInstance} disabled={autoPicking}>
+            <AutoPickIcon class="margin margin_{document.body.dir}" />
+            {browser.i18n.getMessage("autoPickInstance") || "Auto Pick Instance"}
+          </Button>
+          <Button on:click={removeAndAutoPickInstance} disabled={autoPicking}>
+            <AutoPickIcon class="margin margin_{document.body.dir}" />
+            {browser.i18n.getMessage("removeInstance") || "Remove Instance"}
+            +
+            {browser.i18n.getMessage("autoPickInstance") || "Auto Pick Instance"}
+          </Button>
+        {/if}
       </div>
     {:else if window.location.search.includes("message=no_instance")}
       <div>
