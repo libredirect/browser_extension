@@ -7,3 +7,4 @@ package-lock.json
 pnpm-lock.yaml
 src/pages/options/build
 src/pages/popup/build
+src/pages/messages/build

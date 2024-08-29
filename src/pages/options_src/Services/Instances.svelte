@@ -64,16 +64,9 @@
       pingCache[instance] = colorTime(time)
     }
   }
-  function randomInstances(n) {
-    let instances = []
-    for (let i = 0; i < n; i++) {
-      instances.push(redirects[selectedFrontend]["clearnet"][Math.floor(Math.random() * allInstances.length)])
-    }
-    return instances
-  }
 
   async function autoPickInstance() {
-    const instances = randomInstances(5)
+    const instances = utils.randomInstances(redirects[selectedFrontend]["clearnet"], 5)
     const myInstancesCache = []
     for (const instance of instances) {
       pingCache[instance] = { color: "lightblue", value: "pinging..." }
@@ -81,9 +74,7 @@
       pingCache[instance] = colorTime(time)
       myInstancesCache.push([instance, time])
     }
-    myInstancesCache.sort(function (a, b) {
-      return a[1] - b[1]
-    })
+    myInstancesCache.sort((a, b) => a[1] - b[1])
 
     _options[selectedFrontend].push(myInstancesCache[0][0])
     options.set(_options)

@@ -14,7 +14,7 @@
     "build": "web-ext build -i pages/options_src -i pages/popup_src pages/icons -i pages/popup_src -i pages/components",
     "build_chromium": "brave-browser --pack-extension=src/ --pack-extension-key=src.pem",
     "test": "web-ext lint",
-    "html": "rollup -c --config-popup && rollup -c --config-options"
+    "html": "rollup -c --config-popup && rollup -c --config-options && rollup -c --config-messages"
   },
   "repository": {
     "type": "git",

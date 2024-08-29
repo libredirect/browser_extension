@@ -19,11 +19,17 @@
     padding: 10px;
   }
 
-  button:hover {
+  button:hover:enabled {
     color: var(--active);
   }
 
-  button:active {
+  button:active:enabled {
     transform: translateY(1px);
   }
+
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  
 </style>

@@ -24,7 +24,7 @@ function getNextInstance(currentInstanceUrl, instances) {
  * @param {URL} url
  */
 function protocolHost(url) {
-  url.pathname = url.pathname.replace(/\/$/, '');
+  url.pathname = url.pathname.replace(/\/$/, "")
   if (url.username && url.password) return `${url.protocol}//${url.username}:${url.password}@${url.host}${url.pathname}`
 
   // workaround
@@ -211,6 +211,55 @@ function convertMapCentre(url) {
   return { zoom, lon, lat }
 }
 
+export function randomInstances(clearnet, n) {
+  let instances = []
+  if (n > clearnet.length) n = clearnet.length
+  for (let i = 0; i < n; i++) {
+    const randomNumber = Math.floor(Math.random() * clearnet.length)
+    const randomInstance = clearnet[randomNumber]
+    instances.push(randomInstance)
+  }
+  return instances
+}
+export function style(options, window) {
+  const vars = cssVariables(options, window)
+  return `--text: ${vars.text};
+  --bg-main: ${vars.bgMain};
+  --bg-secondary: ${vars.bgSecondary};
+  --active: ${vars.active};
+  --danger: ${vars.danger};
+  --light-grey: ${vars.lightGrey};`
+}
+
+function cssVariables(options, window) {
+  const dark = {
+    text: "#fff",
+    bgMain: "#121212",
+    bgSecondary: "#202020",
+    active: "#fbc117",
+    danger: "#f04141",
+    lightGrey: "#c3c3c3",
+  }
+
+  const light = {
+    text: "black",
+    bgMain: "white",
+    bgSecondary: "#e4e4e4",
+    active: "#fb9817",
+    danger: "#f04141",
+    lightGrey: "#c3c3c3",
+  }
+  if (options.theme == "dark") {
+    return dark
+  } else if (options.theme == "light") {
+    return light
+  } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    return dark
+  } else {
+    return light
+  }
+}
+
 export default {
   getRandomInstance,
   getNextInstance,
@@ -225,4 +274,6 @@ export default {
   getQuery,
   prefsEncoded,
   convertMapCentre,
+  randomInstances,
+  style,
 }

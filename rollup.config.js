@@ -14,6 +14,10 @@ if (process.argv.includes("--config-options")) {
   input = "src/pages/popup_src/main.js"
   output = "src/pages/popup/build/bundle.js"
 }
+else if (process.argv.includes("--config-messages")) {
+  input = "src/pages/messages_src/main.js"
+  output = "src/pages/messages/build/bundle.js"
+}
 
 export default {
   input,

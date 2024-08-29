@@ -2,7 +2,7 @@
   const browser = window.browser || window.chrome
 
   import General from "./General/General.svelte"
-  import url from './url'
+  import url from "./url"
   import utils from "../../assets/javascripts/utils.js"
   import { onDestroy } from "svelte"
   import servicesHelper from "../../assets/javascripts/services.js"
@@ -37,51 +37,15 @@
     config.set(await utils.getConfig())
   })
 
-  const dark = {
-    text: "#fff",
-    bgMain: "#121212",
-    bgSecondary: "#202020",
-    active: "#fbc117",
-    danger: "#f04141",
-    lightGrey: "#c3c3c3",
-  }
-  const light = {
-    text: "black",
-    bgMain: "white",
-    bgSecondary: "#e4e4e4",
-    active: "#fb9817",
-    danger: "#f04141",
-    lightGrey: "#c3c3c3",
-  }
-  let cssVariables
-  $: if (_options) {
-    if (_options.theme == "dark") {
-      cssVariables = dark
-    } else if (_options.theme == "light") {
-      cssVariables = light
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      cssVariables = dark
-    } else {
-      cssVariables = light
-    }
-  }
+  let style
+  $: if (_options) style = utils.style(_options, window)
 
   const dir = ["ar", "iw", "ku", "fa", "ur"].includes(browser.i18n.getUILanguage()) ? "rtl" : "ltr"
   document.body.dir = dir
 </script>
 
 {#if _options && _config}
-  <div
-    class={dir}
-    {dir}
-    style="
-    --text: {cssVariables.text};
-    --bg-main: {cssVariables.bgMain};
-    --bg-secondary: {cssVariables.bgSecondary};
-    --active: {cssVariables.active};
-    --danger: {cssVariables.danger};
-    --light-grey: {cssVariables.lightGrey};"
-  >
+  <div class={dir} {dir} {style}>
     <Sidebar />
     {#if !$url.hash || $url.hash == "#general"}
       <General />

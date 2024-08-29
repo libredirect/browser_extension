@@ -143,7 +143,7 @@
       ],
       "name": "YouTube",
       "options": {
-        "enabled": false,
+        "enabled": true,
         "redirectType": "main_frame",
         "frontend": "invidious",
         "embedFrontend": "invidious",

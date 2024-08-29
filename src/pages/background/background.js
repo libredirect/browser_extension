@@ -67,10 +67,25 @@ browser.webRequest.onBeforeRequest.addListener(
       tabIdRedirects[details.tabId]
     )
 
+    if (newUrl && newUrl.startsWith("https://no-instance.libredirect.invalid")) {
+      const url = new URL(newUrl)
+      const frontend = url.searchParams.get("frontend")
+      const oldUrl = new URL(url.searchParams.get("url"))
+
+      browser.tabs.update({
+        url: browser.runtime.getURL(
+          `/pages/messages/index.html?message=no_instance&url=${encodeURIComponent(oldUrl)}&frontend=${encodeURIComponent(frontend)}`
+        ),
+      })
+    }
+
     if (!newUrl) {
-      const match = url.href.match(/^https?:\/{2}(.*\.)?libredirect\.invalid.*/)
-      if (match) {
-        browser.tabs.update({ url: browser.runtime.getURL(`/pages/messages/no_instance.html`) })
+      if (url.href.match(/^https?:\/{2}(.*\.)?libredirect\.invalid.*/)) {
+        browser.tabs.update({
+          url: browser.runtime.getURL(
+            `/pages/messages/index.html?message=disabled&url=${encodeURIComponent(url.href)}`
+          ),
+        })
       }
     }
 

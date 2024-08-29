@@ -610,17 +610,19 @@ function redirect(url, type, originUrl, documentUrl, incognito, forceRedirection
     }
 
     let instanceList = options[frontend]
-    if (instanceList === undefined) break
-    if (instanceList.length === 0) return "https://libredirect.invalid"
+    if (instanceList === undefined) break // should not happen if settings are correct
+
+    if (config.services[service].frontends[frontend].localhost && options[service].instance == "localhost") {
+      randomInstance = `http://${frontend}.localhost:8080`
+    } else if (instanceList.length === 0) {
+      return `https://no-instance.libredirect.invalid?frontend=${encodeURIComponent(frontend)}&url=${encodeURIComponent(url.href)}`
+    } else {
+      randomInstance = utils.getRandomInstance(instanceList)
+    }
 
     if (originUrl && instanceList.includes(originUrl.origin)) {
       if (type == "main_frame") return "BYPASSTAB"
       else return null
-    }
-
-    randomInstance = utils.getRandomInstance(instanceList)
-    if (config.services[service].frontends[frontend].localhost && options[service].instance == "localhost") {
-      randomInstance = `http://${frontend}.localhost:8080`
     }
     break
   }
@@ -636,7 +638,7 @@ function redirect(url, type, originUrl, documentUrl, incognito, forceRedirection
  * @param {URL} documentUrl
  * @param {boolean} incognito
  * @param {boolean} forceRedirection
- * @returns {string | undefined}
+ * @returns {Promise<string | undefined>}
  */
 async function redirectAsync(url, type, originUrl, documentUrl, incognito, forceRedirection) {
   await init()
@@ -645,9 +647,8 @@ async function redirectAsync(url, type, originUrl, documentUrl, incognito, force
 
 /**
  * @param {URL} url
- * @param {*} returnFrontend
  */
-function computeService(url, returnFrontend) {
+function computeService(url) {
   return new Promise(async resolve => {
     const config = await utils.getConfig()
     const options = await utils.getOptions()
@@ -658,9 +659,7 @@ function computeService(url, returnFrontend) {
       } else {
         for (const frontend in config.services[service].frontends) {
           if (all(service, frontend, options, config).includes(utils.protocolHost(url))) {
-            if (returnFrontend) resolve([service, frontend, utils.protocolHost(url)])
-            else resolve(service)
-            return
+            return resolve(service)
           }
         }
       }
@@ -768,7 +767,7 @@ async function reverse(url) {
 }
 
 const defaultInstances = {
-  invidious: ["https://inv.vern.cc"],
+  // invidious: ["https://inv.vern.cc"],
   materialious: ["https://app.materialio.us"],
   viewtube: ["https://viewtube.io"],
   piped: ["https://pipedapi-libre.kavin.rocks"],
