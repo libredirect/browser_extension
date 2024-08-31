@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Скопіювати оригінал"
     },
     "copied": {
         "message": "Скопійовано"
@@ -101,7 +101,7 @@
         "message": "Про застосунок"
     },
     "unsupportedIframesHandling": {
-        "message": "Непідтримувана обробка iframes"
+        "message": "Обробка непідтримуваних вбудовувань"
     },
     "fetchPublicInstances": {
         "message": "Отримати загальнодоступні сервери"
@@ -119,13 +119,13 @@
         "message": "Import Settings from Sync"
     },
     "services": {
-        "message": "Services"
+        "message": "Служби"
     },
     "service": {
-        "message": "Service"
+        "message": "Служба"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Меню закладок"
     },
     "redirectOnlyInIncognito": {
         "message": "Redirect Only in Incognito"
@@ -141,5 +141,14 @@
     },
     "redirect": {
         "message": "Redirect"
+    },
+    "autoPickInstance": {
+        "message": "Автопідбір сервера"
+    },
+    "redirectGoogle": {
+        "message": "Переспрямування Google"
+    },
+    "searchService": {
+        "message": "Служба пошуку"
     }
 }

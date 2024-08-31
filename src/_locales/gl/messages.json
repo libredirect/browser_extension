@@ -56,7 +56,7 @@
         "description": "used in the settings page"
     },
     "showInPopup": {
-        "message": "Mostrar nunha ventá emerxente",
+        "message": "Mostrar nunha xanela emerxente",
         "description": "used in the settings page"
     },
     "frontend": {
@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Copiar Orixinal"
     },
     "copied": {
         "message": "Copiouse"
@@ -110,36 +110,51 @@
         "message": "Desactivar"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Comprobar Instancias"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Exportar Axustes a Sincr."
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Importar Axustes de Sincr"
     },
     "services": {
-        "message": "Services"
+        "message": "Servizos"
     },
     "service": {
         "message": "Service"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Menú dos marcadores"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Redirect só en Incógnito"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Omitir"
     },
     "block": {
         "message": "Block"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Establece a LibRedirect como Motor de Busca predeterminado. Para facelo nos navegadores chromium, preme <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>aquí</a>."
     },
     "redirect": {
         "message": "Redirect"
+    },
+    "autoPickInstance": {
+        "message": "Selección Autom. de instancia"
+    },
+    "redirectGoogle": {
+        "message": "Redirect a Google"
+    },
+    "search_frontend": {
+        "message": "Buscar Interface Alt."
+    },
+    "searchService": {
+        "message": "Buscar Servizo"
+    },
+    "embedFrontend": {
+        "message": "Incrustar Interface"
     }
 }
