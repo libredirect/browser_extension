@@ -4,11 +4,11 @@
         "description": "name of the extension"
     },
     "extensionDescription": {
-        "message": "WebExtension 擴充套件，可將熱門網站重新導向至隱私友好的替代服務",
+        "message": "一個網路擴充功能可以將熱門網站重新導向至隱私友好的替代服務",
         "description": "description of the extension"
     },
     "switchInstance": {
-        "message": "切換執行個體",
+        "message": "切換實例",
         "description": "used in manifest.json as shortcut description"
     },
     "settings": {
@@ -36,7 +36,7 @@
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
-        "message": "不作重新導向",
+        "message": "排除重新導向",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -68,29 +68,29 @@
         "description": "used in the settings page"
     },
     "both": {
-        "message": "全部",
+        "message": "兩者",
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
-        "message": "僅內嵌",
+        "message": "僅已內嵌",
         "description": "used in the settings page"
     },
     "onlyNotEmbedded": {
-        "message": "非內嵌",
+        "message": "僅非已內嵌",
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
-        "message": "新增常用執行個體",
+        "message": "新增你喜歡的實例",
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "複製原始的"
     },
     "copied": {
         "message": "已複製"
     },
     "redirectToOriginal": {
-        "message": "重新導向到原網址",
+        "message": "重新導向至原始網址",
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
@@ -101,45 +101,60 @@
         "message": "關於"
     },
     "unsupportedIframesHandling": {
-        "message": "Unsupported iframes handling"
+        "message": "不支援的嵌入處理"
     },
     "fetchPublicInstances": {
-        "message": "Fetch public instances"
+        "message": "取得公共實例"
     },
     "disable": {
-        "message": "Disable"
+        "message": "停用"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Ping 實例"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "匯出設定以同步"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "從同步匯入設定"
     },
     "services": {
-        "message": "Services"
+        "message": "服務"
     },
     "service": {
-        "message": "Service"
+        "message": "服務"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "書籤選單"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "僅在隱身模式下重新導向"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "繞行"
     },
     "block": {
-        "message": "Block"
+        "message": "封鎖"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "設定 LibRedirect 為預設搜尋引擎。如要了解如何在 Chromium 瀏覽器中執行操作，請點擊<a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>此處</a>。"
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "重新導向"
+    },
+    "autoPickInstance": {
+        "message": "自動選擇實例"
+    },
+    "embedFrontend": {
+        "message": "嵌入前端"
+    },
+    "redirectGoogle": {
+        "message": "重新導向 Google"
+    },
+    "search_frontend": {
+        "message": "搜尋前端"
+    },
+    "searchService": {
+        "message": "搜尋服務"
     }
 }
