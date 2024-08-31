@@ -112,17 +112,17 @@
 
 {#if _options && _config}
   <div class="main" dir="auto" {style}>
-    {#if window.location.search.includes("message=disabled")}
+    {#if params.get("message") == "disabled"}
       <div>
         <h1>You disabled redirections for this service</h1>
         <Button on:click={enableService}>
           {browser.i18n.getMessage("enable") || "Enable"}
         </Button>
       </div>
-    {:else if window.location.search.includes("message=server_error")}
+    {:else if params.get("message") == "server_error"}
       <!-- https://httpstat.us/403 for testing -->
       <div>
-        <h1>Your selected instance gave out an error</h1>
+        <h1>Your selected instance gave out an error: {params.get("code")}</h1>
         {#if _options[params.get("frontend")].length > 1}
           <Button on:click={switchInstance}>
             <SwitchInstanceIcon class="margin margin_{document.body.dir}" />
@@ -147,7 +147,7 @@
           </Button>
         {/if}
       </div>
-    {:else if window.location.search.includes("message=no_instance")}
+    {:else if params.get("message") == "no_instance"}
       <div>
         <h1>You have no instance selected for this frontend</h1>
         <Button on:click={autoPickInstance} disabled={autoPicking}>

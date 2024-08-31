@@ -51,6 +51,7 @@
           window.location.hash = `services:${e.detail.value}`
           hideServiceSelection = false
         }}
+        on:pointerup={() => (hideServiceSelection = false)}
         on:focus={() => (hideServiceSelection = true)}
         on:blur={() => (hideServiceSelection = false)}
         items={[
@@ -128,6 +129,7 @@
             options.set(_options)
             hideFrontendSelection = false
           }}
+          on:pointerup={() => (hideServiceSelection = false)}
           on:focus={() => (hideFrontendSelection = true)}
           on:blur={() => (hideFrontendSelection = false)}
           items={[

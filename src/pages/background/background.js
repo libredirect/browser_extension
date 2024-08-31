@@ -71,17 +71,21 @@ browser.webRequest.onBeforeRequest.addListener(
       const url = new URL(newUrl)
       const frontend = url.searchParams.get("frontend")
       const oldUrl = new URL(url.searchParams.get("url"))
-
-      newUrl = browser.runtime.getURL(
-        `/pages/messages/index.html?message=no_instance&url=${encodeURIComponent(oldUrl)}&frontend=${encodeURIComponent(frontend)}`
-      )
+      const params = new URLSearchParams({
+        message: "no_instance",
+        url: oldUrl,
+        frontend: frontend,
+      })
+      newUrl = browser.runtime.getURL(`/pages/messages/index.html?${params.toString()}`)
     }
 
     if (!newUrl) {
       if (url.href.match(/^https?:\/{2}(.*\.)?libredirect\.invalid.*/)) {
-        newUrl = browser.runtime.getURL(
-          `/pages/messages/index.html?message=disabled&url=${encodeURIComponent(url.href)}`
-        )
+        const params = new URLSearchParams({
+          message: "disabled",
+          url: url.href,
+        })
+        newUrl = browser.runtime.getURL(`/pages/messages/index.html?${params.toString()}`)
       }
     }
 
@@ -110,10 +114,15 @@ browser.webRequest.onHeadersReceived.addListener(
       const url = new URL(details.url)
       const { service, frontend } = servicesHelper.computeFrontend(url)
       if (!service) return
+      const params = new URLSearchParams({
+        message: "server_error",
+        code: details.statusCode,
+        url: url.href,
+        frontend: frontend,
+        service: service,
+      })
       browser.tabs.update({
-        url: browser.runtime.getURL(
-          `/pages/messages/index.html?message=server_error&code=${details.statusCode}=&url=${encodeURIComponent(url.href)}&frontend=${encodeURIComponent(frontend)}&service=${encodeURIComponent(service)}`
-        ),
+        url: browser.runtime.getURL(`/pages/messages/index.html?${params.toString()}`),
       })
     }
   },
