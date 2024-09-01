@@ -32,7 +32,7 @@
         "description": "used in the settings page"
     },
     "auto": {
-        "message": "Auto",
+        "message": "Automatski",
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
@@ -68,7 +68,7 @@
         "description": "used in the settings page"
     },
     "both": {
-        "message": "oba",
+        "message": "oboje",
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
@@ -110,13 +110,13 @@
         "message": "Deaktiviraj"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Testiraj instance"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Izvezi postavke za sinkronizaciju"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Uvezi postavke iz sinkronizacije"
     },
     "services": {
         "message": "Usluge"
@@ -137,9 +137,24 @@
         "message": "Blokiraj"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Postavi LibRedirect kao standardnu tražilicu. <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>Ovdje</a> pogledaj kako se to radi u Chromium web pregledniku."
     },
     "redirect": {
         "message": "Preusmjeri"
+    },
+    "autoPickInstance": {
+        "message": "Odaberi instancu automatski"
+    },
+    "redirectGoogle": {
+        "message": "Preusmjeri na Google"
+    },
+    "search_frontend": {
+        "message": "Traži sučelje"
+    },
+    "searchService": {
+        "message": "Traži uslugu"
+    },
+    "embedFrontend": {
+        "message": "Ugradi sučelje"
     }
 }
