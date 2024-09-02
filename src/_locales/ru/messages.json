@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Копировать исходную"
     },
     "copied": {
         "message": "Скопировано"
@@ -101,7 +101,7 @@
         "message": "О расширении"
     },
     "unsupportedIframesHandling": {
-        "message": "Обработка неподдерживаемых iframe"
+        "message": "Обработка неподдерживаемых встроенных сайтов"
     },
     "fetchPublicInstances": {
         "message": "Получить общедоступные серверы"
@@ -110,36 +110,51 @@
         "message": "Выключить"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Опросить серверы"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Экспортировать настройки в службу синхронизации"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Импортировать настройки из службы синхронизации"
     },
     "services": {
-        "message": "Services"
+        "message": "Службы"
     },
     "service": {
-        "message": "Service"
+        "message": "Служба"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Меню закладок"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Перенаправлять только в приватных окнах"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Обход"
     },
     "block": {
         "message": "Block"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Установить LibRedirect в качестве поисковой системы по умолчанию. Подробности о том, как это сделать в браузерах на Chromium, доступны <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>здесь</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Перенаправить"
+    },
+    "redirectGoogle": {
+        "message": "Перенаправление Google"
+    },
+    "autoPickInstance": {
+        "message": "Выбирать сервер автоматически"
+    },
+    "searchService": {
+        "message": "Служба поиска"
+    },
+    "search_frontend": {
+        "message": "Поисковый интерфейс"
+    },
+    "embedFrontend": {
+        "message": "Встроить интерфейс"
     }
 }
