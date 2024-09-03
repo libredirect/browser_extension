@@ -67,16 +67,22 @@ browser.webRequest.onBeforeRequest.addListener(
       tabIdRedirects[details.tabId]
     )
 
-    if (newUrl && newUrl.startsWith("https://no-instance.libredirect.invalid")) {
-      const url = new URL(newUrl)
-      const frontend = url.searchParams.get("frontend")
-      const oldUrl = new URL(url.searchParams.get("url"))
+    if (
+      (newUrl && newUrl.startsWith("https://no-instance.libredirect.invalid")) ||
+      (!newUrl && url.href.startsWith("https://no-instance.libredirect.invalid"))
+    ) {
+      newUrl = newUrl ? new URL(newUrl) : url
+      const frontend = newUrl.searchParams.get("frontend")
+      const oldUrl = new URL(newUrl.searchParams.get("url"))
       const params = new URLSearchParams({
         message: "no_instance",
         url: oldUrl,
         frontend: frontend,
       })
-      newUrl = browser.runtime.getURL(`/pages/messages/index.html?${params.toString()}`)
+      browser.tabs.update({
+        url: browser.runtime.getURL(`/pages/messages/index.html?${params.toString()}`),
+      })
+      return { cancel: true }
     }
 
     if (!newUrl) {
@@ -85,7 +91,10 @@ browser.webRequest.onBeforeRequest.addListener(
           message: "disabled",
           url: url.href,
         })
-        newUrl = browser.runtime.getURL(`/pages/messages/index.html?${params.toString()}`)
+        browser.tabs.update({
+          url: browser.runtime.getURL(`/pages/messages/index.html?${params.toString()}`),
+        })
+        return { cancel: true }
       }
     }
 
@@ -121,9 +130,11 @@ browser.webRequest.onHeadersReceived.addListener(
         frontend: frontend,
         service: service,
       })
-      browser.tabs.update({
-        url: browser.runtime.getURL(`/pages/messages/index.html?${params.toString()}`),
-      })
+      setTimeout(() => {
+        browser.tabs.update({
+          url: browser.runtime.getURL(`/pages/messages/index.html?${params.toString()}`),
+        })
+      }, 2000)
     }
   },
   { urls: ["<all_urls>"] }
@@ -364,4 +375,9 @@ browser.runtime.getPlatformInfo(r => {
       }
     })
   }
+})
+
+browser.runtime.onMessage.addListener(r => {
+  if (r.message == "reverse") tabIdRedirects[r.tabId] = false
+  else if (r.message == "redirect") tabIdRedirects[r.tabId] = true
 })

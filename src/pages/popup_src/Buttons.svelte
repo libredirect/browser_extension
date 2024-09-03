@@ -44,8 +44,10 @@
     <Row
       class="interactive"
       on:click={() => {
-        browser.tabs.update({ url: redirect }, () => {
-          window.close()
+        browser.tabs.query({ active: true, currentWindow: true }, tabs => {
+          browser.runtime.sendMessage({ message: "redirect", tabId: tabs[0].id }, () => {
+            browser.tabs.update({ url: redirect })
+          })
         })
       }}
     >
@@ -74,10 +76,13 @@
     </Row>
     <Row
       class="interactive"
-      on:click={() =>
-        browser.tabs.update({ url: redirectToOriginal }, () => {
-          window.close()
-        })}
+      on:click={() => {
+        browser.tabs.query({ active: true, currentWindow: true }, tabs => {
+          browser.runtime.sendMessage({ message: "reverse", tabId: tabs[0].id }, () => {
+            browser.tabs.update({ url: redirectToOriginal })
+          })
+        })
+      }}
     >
       <Label>{browser.i18n.getMessage("redirectToOriginal" || "Redirect to Original")}</Label>
       <RedirectToOriginalIcon />

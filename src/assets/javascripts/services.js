@@ -66,7 +66,6 @@ function rewrite(url, originUrl, frontend, randomInstance) {
     case "searx":
     case "searxng":
       for (const key of [...url.searchParams.keys()]) if (key !== "q") url.searchParams.delete(key)
-      console.log(url.searchParams)
       return `${randomInstance}/${url.search}`
     case "whoogle":
       for (const key of [...url.searchParams.keys()]) if (key !== "q") url.searchParams.delete(key)
@@ -658,7 +657,7 @@ function computeService(url) {
         return
       } else {
         for (const frontend in config.services[service].frontends) {
-          if (all(service, frontend, options, config).includes(utils.protocolHost(url))) {
+          if (all(service, frontend, options, config).findIndex(instance => url.href.startsWith(instance)) >= 0) {
             return resolve(service)
           }
         }
@@ -670,8 +669,8 @@ function computeService(url) {
 export function computeFrontend(url) {
   for (const service in config.services) {
     for (const frontend in config.services[service].frontends) {
-      if (all(service, frontend, options, config).includes(utils.protocolHost(url))) {
-        return {service, frontend}
+      if (all(service, frontend, options, config).findIndex(instance => url.href.startsWith(instance)) >= 0) {
+        return { service, frontend }
       }
     }
   }
@@ -692,25 +691,20 @@ function switchInstance(url, customService) {
       if (instancesList !== undefined) {
         const newInstance = utils.getNextInstance(url.origin, instancesList)
         if (newInstance) {
-          resolve(`${newInstance}${url.pathname}${url.search}`)
-          return
+          return resolve(`${newInstance}${url.pathname}${url.search}`)
         }
       }
     } else {
       for (const service in config.services) {
         let instancesList = options[options[service].frontend]
         if (instancesList === undefined) continue
-        if (!instancesList.includes(protocolHost)) continue
-
-        instancesList.splice(instancesList.indexOf(protocolHost), 1)
-        if (instancesList.length === 0) {
-          resolve()
-          return
-        }
+        const index = instancesList.findIndex(instance => url.href.startsWith(instance))
+        if (index < 0) continue
+        instancesList.splice(index, 1)
+        if (instancesList.length === 0) return resolve()
         const newInstance = utils.getNextInstance(url.origin, instancesList)
         if (newInstance) {
-          resolve(`${newInstance}${url.pathname}${url.search}`)
-          return
+          return resolve(`${newInstance}${url.pathname}${url.search}`)
         }
       }
     }
@@ -724,11 +718,14 @@ function switchInstance(url, customService) {
 async function reverse(url) {
   let options = await utils.getOptions()
   let config = await utils.getConfig()
-  let protocolHost = utils.protocolHost(url)
   for (const service in config.services) {
     let frontend = options[service].frontend
     if (options[frontend] == undefined) continue
-    if (!options[frontend].includes(protocolHost) && protocolHost != `http://${frontend}.localhost:8080`) continue
+    if (
+      options[frontend].findIndex(instance => url.href.startsWith(instance)) < 0 &&
+      !url.href.startsWith(`http://${frontend}.localhost:8080`)
+    )
+      continue
     switch (service) {
       case "youtube":
       case "imdb":
@@ -776,7 +773,6 @@ async function reverse(url) {
 }
 
 const defaultInstances = {
-  // invidious: ["https://inv.vern.cc"],
   materialious: ["https://app.materialio.us"],
   viewtube: ["https://viewtube.io"],
   piped: ["https://pipedapi-libre.kavin.rocks"],
@@ -786,8 +782,6 @@ const defaultInstances = {
   poketube: ["https://poketube.fun"],
   proxiTok: ["https://proxitok.pabloferreiro.es"],
   redlib: ["https://safereddit.com"],
-  libreddit: ["https://libreddit.spike.codes"],
-  teddit: ["https://teddit.net"],
   eddrit: ["https://eddrit.com"],
   scribe: ["https://scribe.rip"],
   libMedium: ["https://md.vern.cc"],
@@ -807,15 +801,11 @@ const defaultInstances = {
   intellectual: ["https://intellectual.insprill.net"],
   ruralDictionary: ["https://rd.vern.cc"],
   anonymousOverflow: ["https://code.whatever.social"],
-  biblioReads: ["https://biblioreads.ml"],
-  wikiless: ["https://wikiless.org"],
   suds: ["https://sd.vern.cc"],
   unfunny: ["https://uf.vern.cc"],
   soprano: ["https://sp.vern.cc"],
   meme: ["https://mm.vern.cc"],
   waybackClassic: ["https://wayback-classic.net"],
-  gothub: ["https://gh.odyssey346.dev"],
-  mikuInvidious: ["https://mikuinv.resrv.org"],
   tent: ["https://tent.sny.sh"],
   wolfreeAlpha: ["https://gqq.gitlab.io", "https://uqq.gitlab.io"],
   laboratory: ["https://lab.vern.cc"],

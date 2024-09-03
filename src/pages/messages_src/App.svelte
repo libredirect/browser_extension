@@ -33,7 +33,6 @@
       await servicesHelper.initDefaults()
       opts = await utils.getOptions()
     }
-    redirects = await utils.getList(opts)
     options.set(opts)
     config.set(await utils.getConfig())
   })
@@ -45,7 +44,6 @@
   $: if (_options) style = utils.style(_options, window)
 
   let autoPicking = false
-  let redirects
 
   const params = new URLSearchParams(window.location.search)
   const oldUrl = new URL(params.get("url"))
@@ -53,10 +51,14 @@
   async function autoPick() {
     const frontend = params.get("frontend")
     autoPicking = true
+    const redirects = await utils.getList(_options)
     const instances = utils.randomInstances(redirects[frontend]["clearnet"], 5)
-    const pings = await Promise.all([...instances.map(async instance => [instance, await utils.ping(instance)])])
+    const pings = await Promise.all([
+      ...instances.map(async instance => {
+        return [instance, await utils.ping(instance)]
+      }),
+    ])
     pings.sort((a, b) => a[1] - b[1])
-    console.log(pings)
     _options[frontend].push(pings[0][0])
     options.set(_options)
     autoPicking = false
@@ -85,8 +87,9 @@
   }
 
   async function removeInstance() {
+    const service = await servicesHelper.computeService(oldUrl)
     const frontend = params.get("frontend")
-    const i = _options[frontend].indexOf(utils.protocolHost(oldUrl))
+    const i = _options[frontend].findIndex(instance => oldUrl.href.startsWith(instance))
     _options[frontend].splice(i, 1)
     options.set(_options)
     const newUrl = await servicesHelper.switchInstance(oldUrl, service)
@@ -94,8 +97,10 @@
   }
 
   async function removeAndAutoPickInstance() {
+    const service = await servicesHelper.computeService(oldUrl)
+
     const frontend = params.get("frontend")
-    const i = _options[frontend].indexOf(utils.protocolHost(oldUrl))
+    const i = _options[frontend].findIndex(instance => oldUrl.href.startsWith(instance))
     _options[frontend].splice(i, 1)
     options.set(_options)
     await autoPick()
