@@ -8,7 +8,7 @@
         "description": "extension description"
     },
     "switchInstance": {
-        "message": "تبديل النظير",
+        "message": "تبديل النُسخة",
         "description": "used in the popup"
     },
     "settings": {
@@ -80,7 +80,7 @@
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
-        "message": "أضف نظرائك المفضلين",
+        "message": "أضِف نُسخك المُفضلة",
         "description": "used in the settings page"
     },
     "copyOriginal": {
@@ -102,16 +102,16 @@
         "message": "عن"
     },
     "unsupportedIframesHandling": {
-        "message": "التعامل مع إطارات iframe غير المدعومة"
+        "message": "التعامل مع embeds غير المدعوم"
     },
     "fetchPublicInstances": {
-        "message": "جلب الخوادم العامة"
+        "message": "اجلب النُسخ العامة"
     },
     "disable": {
         "message": "عطّل"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "بينج النُسخ"
     },
     "exportSettingsToSync": {
         "message": "Export Settings to Sync"
@@ -142,5 +142,20 @@
     },
     "redirect": {
         "message": "Redirect"
+    },
+    "autoPickInstance": {
+        "message": "اختر النُسخ تلقائيًا"
+    },
+    "redirectGoogle": {
+        "message": "إعادة توجيه جوجل"
+    },
+    "search_frontend": {
+        "message": "واجهة البحث"
+    },
+    "searchService": {
+        "message": "خدمة البحث"
+    },
+    "embedFrontend": {
+        "message": "واجهة Embed"
     }
 }
