@@ -110,13 +110,13 @@
         "message": "Вимкнути"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Опитати сервери"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Експорт налаштувань до служби синхронізації"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Імпорт налаштувань зі служби синхронізації"
     },
     "services": {
         "message": "Служби"
@@ -128,19 +128,19 @@
         "message": "Меню закладок"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Переспрямовувати лише в режимі інкогніто"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Обхід"
     },
     "block": {
         "message": "Block"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Установити LibRedirect усталеним засобом пошуку. Як це зробити у браузерах на основі chromium, читайте <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>тут</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Переспрямувати"
     },
     "autoPickInstance": {
         "message": "Автопідбір сервера"
@@ -150,5 +150,11 @@
     },
     "searchService": {
         "message": "Служба пошуку"
+    },
+    "search_frontend": {
+        "message": "Пошуковий інтерфейс"
+    },
+    "embedFrontend": {
+        "message": "Вбудований інтерфейс"
     }
 }
