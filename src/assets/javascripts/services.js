@@ -519,16 +519,16 @@ function rewrite(url, originUrl, frontend, randomInstance) {
       return `${randomInstance}${url.pathname}${url.search}`
     }
     case "skunkyArt": {
-      if (url.pathname.startsWith("/search")) return `${randomInstance}${url.pathname}${url.search}&scope=all`
+      if (url.pathname.startsWith("/search")) return `${randomInstance}${url.pathname}${url.search}&type=all`
 
-      const artReg = /^\/.*?\/art\/(.*)\/?/.exec(url.pathname)
-      if (artReg) return `${randomInstance}/post/art/${artReg[1]}${url.search}`
+      const artReg = /^\/(.*?)\/art\/(.*)\/?/.exec(url.pathname)
+      if (artReg) return `${randomInstance}/post/${artReg[1]}/${artReg[2]}${url.search}`
 
       const userReg = /^\/([^\/]+)$/.exec(url.pathname)
-      if (userReg) return `${randomInstance}/user/${userReg[1]}${url.search}`
+      if (userReg)return `${randomInstance}/group_user?q=${userReg[1]}&type=about`
 
-      const galleryReg = /^\/.*?\/gallery(\/$|$)$/.exec(url.pathname)
-      if (galleryReg) return `${randomInstance}/user/${userReg[1]}?a=gallery`
+      const galleryReg = /^\/(.*?)\/gallery(\/$|$)$/.exec(url.pathname)
+      if (galleryReg) return `${randomInstance}/group_user?q=${galleryReg[1]}&type=gallery`
 
       return `${randomInstance}${url.pathname}${url.search}`
     }
