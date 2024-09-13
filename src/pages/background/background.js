@@ -71,6 +71,7 @@ browser.webRequest.onBeforeRequest.addListener(
       (newUrl && newUrl.startsWith("https://no-instance.libredirect.invalid")) ||
       (!newUrl && url.href.startsWith("https://no-instance.libredirect.invalid"))
     ) {
+      if (details.type != "main_frame") return null
       newUrl = newUrl ? new URL(newUrl) : url
       const frontend = newUrl.searchParams.get("frontend")
       const oldUrl = new URL(newUrl.searchParams.get("url"))
@@ -85,17 +86,16 @@ browser.webRequest.onBeforeRequest.addListener(
       return { cancel: true }
     }
 
-    if (!newUrl) {
-      if (url.href.match(/^https?:\/{2}(.*\.)?libredirect\.invalid.*/)) {
-        const params = new URLSearchParams({
-          message: "disabled",
-          url: url.href,
-        })
-        browser.tabs.update({
-          url: browser.runtime.getURL(`/pages/messages/index.html?${params.toString()}`),
-        })
-        return { cancel: true }
-      }
+    if (!newUrl && url.href.match(/^https?:\/{2}(.*\.)?libredirect\.invalid.*/)) {
+      if (details.type != "main_frame") return null
+      const params = new URLSearchParams({
+        message: "disabled",
+        url: url.href,
+      })
+      browser.tabs.update({
+        url: browser.runtime.getURL(`/pages/messages/index.html?${params.toString()}`),
+      })
+      return { cancel: true }
     }
 
     if (newUrl === "CANCEL") {
@@ -121,8 +121,9 @@ browser.webRequest.onHeadersReceived.addListener(
   details => {
     if (details.statusCode >= 501 || details.statusCode == 429 || details.statusCode == 403) {
       const url = new URL(details.url)
-      const { service, frontend } = servicesHelper.computeFrontend(url)
-      if (!service) return
+      const r = servicesHelper.computeFrontend(url)
+      if (!r) return
+      const { service, frontend } = r
       const params = new URLSearchParams({
         message: "server_error",
         code: details.statusCode,

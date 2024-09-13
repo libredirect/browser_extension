@@ -525,7 +525,7 @@ function rewrite(url, originUrl, frontend, randomInstance) {
       if (artReg) return `${randomInstance}/post/${artReg[1]}/${artReg[2]}${url.search}`
 
       const userReg = /^\/([^\/]+)$/.exec(url.pathname)
-      if (userReg)return `${randomInstance}/group_user?q=${userReg[1]}&type=about`
+      if (userReg) return `${randomInstance}/group_user?q=${userReg[1]}&type=about`
 
       const galleryReg = /^\/(.*?)\/gallery(\/$|$)$/.exec(url.pathname)
       if (galleryReg) return `${randomInstance}/group_user?q=${galleryReg[1]}&type=gallery`
@@ -941,6 +941,7 @@ async function copyRaw(url) {
  * @param {URL} url
  */
 function isException(url) {
+  if (!options) return false
   if (!options.exceptions) return false
   let exceptions = options.exceptions
   if (exceptions && url) {
