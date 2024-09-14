@@ -117,29 +117,29 @@ browser.webRequest.onBeforeRequest.addListener(
   ["blocking"]
 )
 
-browser.webRequest.onHeadersReceived.addListener(
-  details => {
-    if (details.statusCode >= 501 || details.statusCode == 429 || details.statusCode == 403) {
-      const url = new URL(details.url)
-      const r = servicesHelper.computeFrontend(url)
-      if (!r) return
-      const { service, frontend } = r
-      const params = new URLSearchParams({
-        message: "server_error",
-        code: details.statusCode,
-        url: url.href,
-        frontend: frontend,
-        service: service,
-      })
-      setTimeout(() => {
-        browser.tabs.update({
-          url: browser.runtime.getURL(`/pages/messages/index.html?${params.toString()}`),
-        })
-      }, 2000)
-    }
-  },
-  { urls: ["<all_urls>"] }
-)
+// browser.webRequest.onHeadersReceived.addListener(
+//   details => {
+//     if (details.statusCode >= 501 || details.statusCode == 429 || details.statusCode == 403) {
+//       const url = new URL(details.url)
+//       const r = servicesHelper.computeFrontend(url)
+//       if (!r) return
+//       const { service, frontend } = r
+//       const params = new URLSearchParams({
+//         message: "server_error",
+//         code: details.statusCode,
+//         url: url.href,
+//         frontend: frontend,
+//         service: service,
+//       })
+//       setTimeout(() => {
+//         browser.tabs.update({
+//           url: browser.runtime.getURL(`/pages/messages/index.html?${params.toString()}`),
+//         })
+//       }, 2000)
+//     }
+//   },
+//   { urls: ["<all_urls>"] }
+// )
 
 browser.tabs.onRemoved.addListener(tabId => {
   if (tabIdRedirects[tabId] != undefined) {
