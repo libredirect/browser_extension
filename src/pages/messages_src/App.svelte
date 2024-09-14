@@ -80,39 +80,6 @@
     const newUrl = await servicesHelper.redirectAsync(oldUrl, "main_frame", null, null, false, true)
     browser.tabs.update({ url: newUrl })
   }
-
-  async function switchInstance() {
-    const newUrl = await servicesHelper.switchInstance(oldUrl)
-    browser.tabs.update({ url: newUrl })
-  }
-
-  async function removeInstance() {
-    const service = await servicesHelper.computeService(oldUrl)
-    const frontend = params.get("frontend")
-    const i = _options[frontend].findIndex(instance => oldUrl.href.startsWith(instance))
-    _options[frontend].splice(i, 1)
-    options.set(_options)
-    const newUrl = await servicesHelper.switchInstance(oldUrl, service)
-    browser.tabs.update({ url: newUrl })
-  }
-
-  async function removeAndAutoPickInstance() {
-    const service = await servicesHelper.computeService(oldUrl)
-
-    const frontend = params.get("frontend")
-    const i = _options[frontend].findIndex(instance => oldUrl.href.startsWith(instance))
-    _options[frontend].splice(i, 1)
-    options.set(_options)
-    await autoPick()
-    const newUrl = await servicesHelper.switchInstance(oldUrl, service)
-    browser.tabs.update({ url: newUrl })
-  }
-
-  async function addAutoPickInstance() {
-    await autoPick()
-    const newUrl = await servicesHelper.switchInstance(oldUrl)
-    browser.tabs.update({ url: newUrl })
-  }
 </script>
 
 {#if _options && _config}
@@ -123,34 +90,6 @@
         <Button on:click={enableService}>
           {browser.i18n.getMessage("enable") || "Enable"}
         </Button>
-      </div>
-    {:else if params.get("message") == "server_error"}
-      <!-- https://httpstat.us/403 for testing -->
-      <div>
-        <h1>Your selected instance gave out an error: {params.get("code")}</h1>
-        {#if _options[params.get("frontend")].length > 1}
-          <Button on:click={switchInstance}>
-            <SwitchInstanceIcon class="margin margin_{document.body.dir}" />
-            {browser.i18n.getMessage("switchInstance") || "Switch Instance"}
-          </Button>
-          <Button on:click={removeInstance}>
-            <SwitchInstanceIcon class="margin margin_{document.body.dir}" />
-            {browser.i18n.getMessage("removeInstance") || "Remove Instance"}
-            +
-            {browser.i18n.getMessage("switchInstance") || "Switch Instance"}
-          </Button>
-        {:else}
-          <Button on:click={addAutoPickInstance} disabled={autoPicking}>
-            <AutoPickIcon class="margin margin_{document.body.dir}" />
-            {browser.i18n.getMessage("autoPickInstance") || "Auto Pick Instance"}
-          </Button>
-          <Button on:click={removeAndAutoPickInstance} disabled={autoPicking}>
-            <AutoPickIcon class="margin margin_{document.body.dir}" />
-            {browser.i18n.getMessage("removeInstance") || "Remove Instance"}
-            +
-            {browser.i18n.getMessage("autoPickInstance") || "Auto Pick Instance"}
-          </Button>
-        {/if}
       </div>
     {:else if params.get("message") == "no_instance"}
       <div>

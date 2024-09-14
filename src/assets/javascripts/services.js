@@ -669,7 +669,9 @@ function computeService(url) {
 export function computeFrontend(url) {
   for (const service in config.services) {
     for (const frontend in config.services[service].frontends) {
-      if (all(service, frontend, options, config).findIndex(instance => url.href.startsWith(instance)) >= 0) {
+      const instances = all(service, frontend, options, config)
+      const i = instances.findIndex(instance => url.href.startsWith(instance))
+      if (i >= 0) {
         return { service, frontend }
       }
     }
