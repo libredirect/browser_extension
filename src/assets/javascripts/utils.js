@@ -31,7 +31,8 @@ function protocolHost(url) {
   if (url.pathname == "/TekstoLibre/" && url.host.endsWith("github.io"))
     return `${url.protocol}//${url.host}${url.pathname.slice(0, -1)}`
 
-  return `${url.protocol}//${url.host}${url.pathname}`
+  const pathname = url.pathname != "/" ? url.pathname : ""
+  return `${url.protocol}//${url.host}${pathname}`
 }
 
 /**
