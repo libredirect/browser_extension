@@ -94,23 +94,23 @@
     />
   </Row>
 
-  <div style={!serviceOptions.enabled && "pointer-events: none;opacity: 0.4;user-select: none;"}>
-    <Row>
-      <Label>{browser.i18n.getMessage("showInPopup") || "Show in popup"}</Label>
-      <Checkbox
-        checked={_options.popupServices.includes(selectedService)}
-        onChange={e => {
-          if (e.target.checked && !_options.popupServices.includes(selectedService)) {
-            _options.popupServices.push(selectedService)
-          } else if (_options.popupServices.includes(selectedService)) {
-            const index = _options.popupServices.indexOf(selectedService)
-            if (index !== -1) _options.popupServices.splice(index, 1)
-          }
-          options.set(_options)
-        }}
-      />
-    </Row>
+  <Row>
+    <Label>{browser.i18n.getMessage("showInPopup") || "Show in popup"}</Label>
+    <Checkbox
+      checked={_options.popupServices.includes(selectedService)}
+      onChange={e => {
+        if (e.target.checked && !_options.popupServices.includes(selectedService)) {
+          _options.popupServices.push(selectedService)
+        } else if (_options.popupServices.includes(selectedService)) {
+          const index = _options.popupServices.indexOf(selectedService)
+          if (index !== -1) _options.popupServices.splice(index, 1)
+        }
+        options.set(_options)
+      }}
+    />
+  </Row>
 
+  <div style={!serviceOptions.enabled && "pointer-events: none;opacity: 0.4;user-select: none;"}>
     <Row>
       <Label>
         <a href={frontendWebsite} style="text-decoration: underline;" target="_blank" rel="noopener noreferrer">
