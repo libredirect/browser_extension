@@ -10,7 +10,7 @@
   import SettingsIcon from "../icons/SettingsIcon.svelte"
   import { options, config } from "./stores"
   import { onDestroy } from "svelte"
-  import servicesHelper, { computeFrontend } from "../../assets/javascripts/services"
+  import servicesHelper from "../../assets/javascripts/services"
   import Switch from "./components/Switch.svelte"
   import AutoPickIcon from "../icons/AutoPickIcon.svelte"
   import utils from "../../assets/javascripts/utils"
@@ -53,14 +53,18 @@
     options.set(_options)
     const newUrl = await servicesHelper.switchInstance(url, service)
     browser.tabs.update({ url: newUrl })
+    window.close()
   }
 
-  async function autoPick() {
+  async function autoPickInstance() {
     autoPicking = true
     const redirects = await utils.getList(_options)
-    const instances = utils.randomInstances(redirects[frontend]["clearnet"], 5)
+    const clearnet = redirects[frontend]["clearnet"]
+    const i = clearnet.findIndex(instance => url.href.startsWith(instance))
+    if (i >= 0) clearnet.splice(i, 1)
+    const randomInstances = utils.randomInstances(clearnet, 5)
     const pings = await Promise.all([
-      ...instances.map(async instance => {
+      ...randomInstances.map(async instance => {
         return [instance, await utils.ping(instance)]
       }),
     ])
@@ -71,20 +75,21 @@
   }
 
   async function addAutoPickInstance() {
-    await autoPick()
-    const newUrl = await servicesHelper.switchInstance(url)
-    browser.tabs.update({ url: newUrl })
+    await autoPickInstance()
+    browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) }, () => {
+      window.close()
+    })
   }
 
   async function removeAndAutoPickInstance() {
     const i = _options[frontend].findIndex(instance => url.href.startsWith(instance))
     _options[frontend].splice(i, 1)
     options.set(_options)
-    await autoPick()
-    const newUrl = await servicesHelper.switchInstance(url, service)
-    browser.tabs.update({ url: newUrl })
+    await autoPickInstance()
+    browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) }, () => {
+      window.close()
+    })
   }
-  $: console.log("autoPicking", autoPicking)
 </script>
 
 <div class={document.body.dir}>
@@ -94,7 +99,9 @@
       on:click={() => {
         browser.tabs.query({ active: true, currentWindow: true }, tabs => {
           browser.runtime.sendMessage({ message: "redirect", tabId: tabs[0].id }, () => {
-            browser.tabs.update({ url: redirect })
+            browser.tabs.update({ url: redirect }, () => {
+              window.close()
+            })
           })
         })
       }}
