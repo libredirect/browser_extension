@@ -106,7 +106,7 @@
         })
       }}
     >
-      <Label>{browser.i18n.getMessage("redirect") || "Redirect"}</Label>
+      <Label class="margin">{browser.i18n.getMessage("redirect") || "Redirect"}</Label>
       <RedirectIcon />
     </Row>
   {/if}
@@ -121,12 +121,12 @@
               window.close()
             })}
         >
-          <Label>{browser.i18n.getMessage("switchInstance") || "Switch Instance"}</Label>
+          <Label class="margin">{browser.i18n.getMessage("switchInstance") || "Switch Instance"}</Label>
           <SwitchInstanceIcon />
         </Row>
       {/if}
       <Row class="interactive" on:click={removeInstance}>
-        <Label>
+        <Label class="margin">
           {browser.i18n.getMessage("remove") || "Remove"}
           +
           {browser.i18n.getMessage("switchInstance") || "Switch Instance"}
@@ -135,7 +135,7 @@
       </Row>
     {:else}
       <Row class={"interactive " + (autoPicking ? "disabled" : "")} on:click={removeAndAutoPickInstance}>
-        <Label>
+        <Label class="margin">
           {browser.i18n.getMessage("remove") || "Remove"}
           +
           {browser.i18n.getMessage("autoPickInstance") || "Auto Pick Instance"}
@@ -143,7 +143,7 @@
         <AutoPickIcon />
       </Row>
       <Row class={"interactive " + (autoPicking ? "disabled" : "")} on:click={addAutoPickInstance}>
-        <Label>
+        <Label class="margin">
           {browser.i18n.getMessage("autoPickInstance") || "Auto Pick Instance"}
         </Label>
         <AutoPickIcon />
@@ -153,7 +153,7 @@
 
   {#if redirectToOriginal}
     <Row class="interactive" on:click={() => servicesHelper.copyRaw(url)}>
-      <Label>{browser.i18n.getMessage("copyOriginal") || "Copy Original"}</Label>
+      <Label class="margin">{browser.i18n.getMessage("copyOriginal") || "Copy Original"}</Label>
       <CopyIcon />
     </Row>
     <Row
@@ -166,7 +166,7 @@
         })
       }}
     >
-      <Label>{browser.i18n.getMessage("redirectToOriginal" || "Redirect to Original")}</Label>
+      <Label class="margin">{browser.i18n.getMessage("redirectToOriginal" || "Redirect to Original")}</Label>
       <RedirectToOriginalIcon />
     </Row>
   {/if}
@@ -195,7 +195,7 @@
         window.close()
       })}
   >
-    <Label>{browser.i18n.getMessage("settings")}</Label>
+    <Label class="margin">{browser.i18n.getMessage("settings")}</Label>
     <SettingsIcon />
   </Row>
 </div>
@@ -235,6 +235,15 @@
   }
 
   :global(.rtl img, .rtl svg) {
+    margin-right: 0;
+    margin-left: 5px;
+  }
+
+  :global(.margin) {
+    margin-right: 5px;
+    margin-left: 0;
+  }
+  :global(.margin_rtl) {
     margin-right: 0;
     margin-left: 5px;
   }
