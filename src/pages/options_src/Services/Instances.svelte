@@ -56,30 +56,6 @@
     return true
   }
 
-  async function pingInstances() {
-    pingCache = {}
-    for (const instance of allInstances) {
-      pingCache[instance] = { color: "lightblue", value: "pinging..." }
-      const time = await utils.ping(instance)
-      pingCache[instance] = colorTime(time)
-    }
-  }
-
-  async function autoPickInstance() {
-    const instances = utils.randomInstances(redirects[selectedFrontend]["clearnet"], 5)
-    const myInstancesCache = []
-    for (const instance of instances) {
-      pingCache[instance] = { color: "lightblue", value: "pinging..." }
-      const time = await utils.ping(instance)
-      pingCache[instance] = colorTime(time)
-      myInstancesCache.push([instance, time])
-    }
-    myInstancesCache.sort((a, b) => a[1] - b[1])
-
-    _options[selectedFrontend].push(myInstancesCache[0][0])
-    options.set(_options)
-  }
-
   function colorTime(time) {
     let value
     let color
@@ -113,17 +89,46 @@
       options.set(_options)
     }
   }
+
+  let autoPicking = false
+  let pinging = false
 </script>
 
 {#if serviceConf.frontends[selectedFrontend].instanceList && redirects && blacklist}
   <hr />
 
   <div>
-    <Button on:click={pingInstances}>
+    <Button
+      on:click={async () => {
+        pinging = true
+        pingCache = {}
+        for (const instance of allInstances) {
+          pingCache[instance] = { color: "lightblue", value: "pinging..." }
+          const time = await utils.ping(instance)
+          pingCache[instance] = colorTime(time)
+        }
+        pinging = false
+      }}
+      disabled={pinging}
+    >
       <PingIcon class="margin margin_{document.body.dir}" />
       {browser.i18n.getMessage("pingInstances") || "Ping Instances"}
     </Button>
-    <Button on:click={autoPickInstance}>
+    <Button
+      on:click={async () => {
+        autoPicking = true
+        const clearnet = redirects[selectedFrontend]["clearnet"]
+        for (const instance of _options[selectedFrontend]) {
+          const i = clearnet.indexOf(instance)
+          if (i >= 0) clearnet.splice(i, 1)
+        }
+        const instance = await utils.autoPickInstance(clearnet)
+        _options[selectedFrontend].push(instance)
+        options.set(_options)
+        autoPicking = false
+      }}
+      disabled={autoPicking}
+    >
       <AutoPickIcon class="margin margin_{document.body.dir}" />
       {browser.i18n.getMessage("autoPickInstance") || "Auto Pick Instance"}
     </Button>

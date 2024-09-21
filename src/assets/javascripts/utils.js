@@ -222,6 +222,22 @@ export function randomInstances(clearnet, n) {
   }
   return instances
 }
+
+async function autoPickInstance(clearnet, url) {
+  if (url) {
+    const i = clearnet.findIndex(instance => url.href.startsWith(instance))
+    if (i >= 0) clearnet.splice(i, 1)
+  }
+  const random = randomInstances(clearnet, 5)
+  const pings = await Promise.all([
+    ...random.map(async instance => {
+      return [instance, await ping(instance)]
+    }),
+  ])
+  pings.sort((a, b) => a[1] - b[1])
+  return pings[0][0]
+}
+
 export function style(options, window) {
   const vars = cssVariables(options, window)
   return `--text: ${vars.text};
@@ -277,4 +293,5 @@ export default {
   convertMapCentre,
   randomInstances,
   style,
+  autoPickInstance,
 }

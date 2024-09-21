@@ -17,7 +17,6 @@
 
   let _options
   let _config
-  let autoPicking = false
 
   const unsubscribeOptions = options.subscribe(val => (_options = val))
   const unsubscribeConfig = config.subscribe(val => (_config = val))
@@ -30,7 +29,6 @@
   let switchInstance
   let redirectToOriginal
   let redirect
-  let currentService
   let frontend
   let service
   browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
@@ -39,56 +37,19 @@
       servicesHelper.switchInstance(url).then(r => (switchInstance = r))
       servicesHelper.reverse(url).then(r => (redirectToOriginal = r))
       servicesHelper.redirectAsync(url, "main_frame", null, null, false, true).then(r => (redirect = r))
-      servicesHelper.computeService(url).then(r => (currentService = r))
-      const computed = servicesHelper.computeFrontend(url)
-      if (computed) {
-        ;({ service, frontend } = computed)
-      }
+      servicesHelper.computeServiceFrontend(url).then(r => ({ service, frontend } = r))
     }
   })
 
-  async function removeInstance() {
-    const i = _options[frontend].findIndex(instance => url.href.startsWith(instance))
-    _options[frontend].splice(i, 1)
-    options.set(_options)
-    const newUrl = await servicesHelper.switchInstance(url, service)
-    browser.tabs.update({ url: newUrl })
-    window.close()
-  }
-
-  async function autoPickInstance() {
+  let autoPicking = false
+  async function autoPick() {
     autoPicking = true
     const redirects = await utils.getList(_options)
     const clearnet = redirects[frontend]["clearnet"]
-    const i = clearnet.findIndex(instance => url.href.startsWith(instance))
-    if (i >= 0) clearnet.splice(i, 1)
-    const randomInstances = utils.randomInstances(clearnet, 5)
-    const pings = await Promise.all([
-      ...randomInstances.map(async instance => {
-        return [instance, await utils.ping(instance)]
-      }),
-    ])
-    pings.sort((a, b) => a[1] - b[1])
-    _options[frontend].push(pings[0][0])
+    const instance = await utils.autoPickInstance(clearnet, url)
+    _options[frontend].push(instance)
     options.set(_options)
     autoPicking = false
-  }
-
-  async function addAutoPickInstance() {
-    await autoPickInstance()
-    browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) }, () => {
-      window.close()
-    })
-  }
-
-  async function removeAndAutoPickInstance() {
-    const i = _options[frontend].findIndex(instance => url.href.startsWith(instance))
-    _options[frontend].splice(i, 1)
-    options.set(_options)
-    await autoPickInstance()
-    browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) }, () => {
-      window.close()
-    })
   }
 </script>
 
@@ -125,7 +86,18 @@
           <SwitchInstanceIcon />
         </Row>
       {/if}
-      <Row class="interactive" on:click={removeInstance}>
+      <Row
+        class="interactive"
+        on:click={async () => {
+          const i = _options[frontend].findIndex(instance => url.href.startsWith(instance))
+          _options[frontend].splice(i, 1)
+          options.set(_options)
+          const newUrl = await servicesHelper.switchInstance(url, service)
+          browser.tabs.update({ url: newUrl }, () => {
+            window.close()
+          })
+        }}
+      >
         <Label class="margin">
           {browser.i18n.getMessage("remove") || "Remove"}
           +
@@ -134,7 +106,18 @@
         <SwitchInstanceIcon />
       </Row>
     {:else}
-      <Row class={"interactive " + (autoPicking ? "disabled" : "")} on:click={removeAndAutoPickInstance}>
+      <Row
+        class={"interactive " + (autoPicking ? "disabled" : "")}
+        on:click={async () => {
+          const i = _options[frontend].findIndex(instance => url.href.startsWith(instance))
+          _options[frontend].splice(i, 1)
+          options.set(_options)
+          await autoPick()
+          browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) }, () => {
+            window.close()
+          })
+        }}
+      >
         <Label class="margin">
           {browser.i18n.getMessage("remove") || "Remove"}
           +
@@ -142,7 +125,15 @@
         </Label>
         <AutoPickIcon />
       </Row>
-      <Row class={"interactive " + (autoPicking ? "disabled" : "")} on:click={addAutoPickInstance}>
+      <Row
+        class={"interactive " + (autoPicking ? "disabled" : "")}
+        on:click={async () => {
+          await autoPick()
+          browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) }, () => {
+            window.close()
+          })
+        }}
+      >
         <Label class="margin">
           {browser.i18n.getMessage("autoPickInstance") || "Auto Pick Instance"}
         </Label>
@@ -161,7 +152,9 @@
       on:click={() => {
         browser.tabs.query({ active: true, currentWindow: true }, tabs => {
           browser.runtime.sendMessage({ message: "reverse", tabId: tabs[0].id }, () => {
-            browser.tabs.update({ url: redirectToOriginal })
+            browser.tabs.update({ url: redirectToOriginal }, () => {
+              window.close()
+            })
           })
         })
       }}
@@ -175,13 +168,13 @@
     <hr />
   {/if}
 
-  {#if currentService}
-    <Switch serviceKey={currentService} {url} />
+  {#if service}
+    <Switch serviceKey={service} {url} />
     <hr />
   {/if}
 
   {#each _options.popupServices as serviceKey}
-    {#if currentService !== serviceKey}
+    {#if service !== serviceKey}
       <Switch {serviceKey} {url} />
     {/if}
   {/each}

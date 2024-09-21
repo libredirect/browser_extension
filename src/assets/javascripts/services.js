@@ -647,32 +647,19 @@ async function redirectAsync(url, type, originUrl, documentUrl, incognito, force
 /**
  * @param {URL} url
  */
-function computeService(url) {
-  return new Promise(async resolve => {
-    const config = await utils.getConfig()
-    const options = await utils.getOptions()
-    for (const service in config.services) {
-      if (regexArray(service, url, config, options)) {
-        resolve(service)
-        return
-      } else {
-        for (const frontend in config.services[service].frontends) {
-          if (all(service, frontend, options, config).findIndex(instance => url.href.startsWith(instance)) >= 0) {
-            return resolve(service)
-          }
-        }
-      }
-    }
-    resolve()
-  })
-}
-export function computeFrontend(url) {
+async function computeServiceFrontend(url) {
+  const config = await utils.getConfig()
+  const options = await utils.getOptions()
   for (const service in config.services) {
-    for (const frontend in config.services[service].frontends) {
-      const instances = all(service, frontend, options, config)
-      const i = instances.findIndex(instance => url.href.startsWith(instance))
-      if (i >= 0) {
-        return { service, frontend }
+    if (regexArray(service, url, config, options)) {
+      return { service, frontend: null }
+    } else {
+      for (const frontend in config.services[service].frontends) {
+        const instances = all(service, frontend, options, config)
+        const i = instances.findIndex(instance => url.href.startsWith(instance))
+        if (i >= 0) {
+          return { service, frontend }
+        }
       }
     }
   }
@@ -970,12 +957,11 @@ function isException(url) {
 export default {
   redirect,
   redirectAsync,
-  computeService,
+  computeServiceFrontend,
   reverse,
   initDefaults,
   processUpdate,
   copyRaw,
   switchInstance,
   isException,
-  computeFrontend,
 }

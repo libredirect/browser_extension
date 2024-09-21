@@ -9,7 +9,6 @@
   import { options, config, page } from "./stores"
   import Button from "../components/Button.svelte"
   import AutoPickIcon from "../icons/AutoPickIcon.svelte"
-  import SwitchInstanceIcon from "../icons/SwitchInstanceIcon.svelte"
 
   let _options
   const unsubscribeOptions = options.subscribe(val => {
@@ -49,31 +48,14 @@
   const oldUrl = new URL(params.get("url"))
 
   async function autoPick() {
-    const frontend = params.get("frontend")
     autoPicking = true
+    const frontend = params.get("frontend")
     const redirects = await utils.getList(_options)
-    const instances = utils.randomInstances(redirects[frontend]["clearnet"], 5)
-    const pings = await Promise.all([
-      ...instances.map(async instance => {
-        return [instance, await utils.ping(instance)]
-      }),
-    ])
-    pings.sort((a, b) => a[1] - b[1])
-    _options[frontend].push(pings[0][0])
+    const clearnet = redirects[frontend]["clearnet"]
+    const instance = await utils.autoPickInstance(clearnet)
+    _options[frontend].push(instance)
     options.set(_options)
     autoPicking = false
-  }
-
-  async function autoPickInstance() {
-    await autoPick()
-    await redirectUrl()
-  }
-
-  async function enableService() {
-    const service = await servicesHelper.computeService(oldUrl)
-    _options[service].enabled = true
-    options.set(_options)
-    await redirectUrl()
   }
 
   async function redirectUrl() {
@@ -87,14 +69,27 @@
     {#if params.get("message") == "disabled"}
       <div>
         <h1>You disabled redirections for this service</h1>
-        <Button on:click={enableService}>
+        <Button
+          on:click={async () => {
+            const { service } = await servicesHelper.computeServiceFrontend(oldUrl)
+            _options[service].enabled = true
+            options.set(_options)
+            await redirectUrl()
+          }}
+        >
           {browser.i18n.getMessage("enable") || "Enable"}
         </Button>
       </div>
     {:else if params.get("message") == "no_instance"}
       <div>
         <h1>You have no instance selected for this frontend</h1>
-        <Button on:click={autoPickInstance} disabled={autoPicking}>
+        <Button
+          on:click={async () => {
+            await autoPick()
+            await redirectUrl()
+          }}
+          disabled={autoPicking}
+        >
           <AutoPickIcon class="margin margin_{document.body.dir}" />
           {browser.i18n.getMessage("autoPickInstance") || "Auto Pick Instance"}
         </Button>
