@@ -1147,7 +1147,8 @@
       },
       "targets": [
         "^https?:\\/{2}maps\\.libredirect\\.invalid",
-        "^https?:\\/{2}(((www|maps)\\.)?(google\\.).*(\\/maps)|maps\\.(google\\.).*)"
+        "^https?:\\/{2}(www\\.)?maps\\.google(\\.[a-z]{2,3}){1,2}\\/",
+        "^https?:\\/{2}(www\\.)?google(\\.[a-z]{2,3}){1,2}\\/maps\\/?"
       ],
       "name": "Maps",
       "options": {
