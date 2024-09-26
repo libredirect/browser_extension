@@ -207,20 +207,34 @@
                     <span style="color:{pingCache[instance].color}">{pingCache[instance].value}</span>
                   {/if}
                 </span>
-                <button
-                  class="add"
-                  aria-label="Add instance"
-                  on:click={() => {
-                    if (_options[selectedFrontend]) {
-                      if (!_options[selectedFrontend].includes(instance)) {
+                {#if !_options[selectedFrontend].includes(instance)}
+                  <button
+                    class="add"
+                    aria-label="Add instance"
+                    on:click={() => {
+                      if (_options[selectedFrontend]) {
                         _options[selectedFrontend].push(instance)
                         options.set(_options)
                       }
-                    }
-                  }}
-                >
-                  <AddIcon />
-                </button>
+                    }}
+                  >
+                    <AddIcon />
+                  </button>
+                {:else}
+                  <button
+                    class="add"
+                    aria-label="Remove Instance"
+                    on:click={() => {
+                      const index = _options[selectedFrontend].indexOf(instance)
+                      if (index > -1) {
+                        _options[selectedFrontend].splice(index, 1)
+                        options.set(_options)
+                      }
+                    }}
+                  >
+                    <CloseIcon />
+                  </button>
+                {/if}
               </Row>
               <hr />
             {/each}
