@@ -268,8 +268,8 @@
         }
       },
       "targets": [
-        "^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.)?(reddit|reddittorjg6rue252oqsxryoxengawnmo46qy4kyii5wtqnwfj4ooad)\\.(com|onion)(?=\\/u(ser)?\\/|\\/r\\/|\\/search|\\/new|\\/?$)",
-        "^https?:\\/{2}(i|(external-)?preview)\\.redd\\.it"
+        "^https?:\\/{2}(www\\.|old\\.|np\\.|new\\.|amp\\.)?(reddit|reddittorjg6rue252oqsxryoxengawnmo46qy4kyii5wtqnwfj4ooad)\\.(com|onion)(?=\\/u(ser)?\\/|\\/r\\/|\\/search|\\/new|\\/comments|\\/?$)",
+        "^https?:\\/{2}((i|(external-)?preview)\\.)?redd\\.it"
       ],
       "name": "Reddit",
       "options": {
