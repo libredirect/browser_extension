@@ -220,15 +220,17 @@ function rewrite(url, originUrl, frontend, randomInstance) {
       return `${randomInstance}${url.pathname}${url.search}`
     case "redlib":
     case "libreddit": {
-      const subdomain = url.hostname.match(/^(?:(?:external-)?preview|i)(?=\.redd\.it)/)
+      const subdomain = url.hostname.match(/^(?:((?:external-)?preview|i)\.)?redd\.it/)
       if (!subdomain) return `${randomInstance}${url.pathname}${url.search}`
-      switch (subdomain[0]) {
+      switch (subdomain[1]) {
         case "preview":
           return `${randomInstance}/preview/pre${url.pathname}${url.search}`
         case "external-preview":
           return `${randomInstance}/preview/external-pre${url.pathname}${url.search}`
         case "i":
           return `${randomInstance}/img${url.pathname}`
+        default:
+          return `${randomInstance}/comments${url.pathname}`
       }
       return randomInstance
     }
