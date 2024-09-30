@@ -1,1 +1,137 @@
-{}
+{
+    "settings": {
+        "message": "Beállítások"
+    },
+    "extensionDescription": {
+        "message": "Egy webes kiterjesztés, amely népszerű webhelyeket irányít át alternatív, adatvédelemet tiszteletben tartó elő- és háttérprogramokra"
+    },
+    "general": {
+        "message": "Általános"
+    },
+    "theme": {
+        "message": "Téma"
+    },
+    "light": {
+        "message": "Világos"
+    },
+    "exportSettings": {
+        "message": "Beállítások exportálása"
+    },
+    "both": {
+        "message": "mindkettő"
+    },
+    "dark": {
+        "message": "Sötét"
+    },
+    "auto": {
+        "message": "Automatikus"
+    },
+    "excludeFromRedirecting": {
+        "message": "Az átirányításból kizárva"
+    },
+    "importSettings": {
+        "message": "Beállítások importálása"
+    },
+    "resetSettings": {
+        "message": "Beállítások visszaállítása"
+    },
+    "onlyEmbedded": {
+        "message": "csak beágyazott"
+    },
+    "enable": {
+        "message": "Engedélyezés"
+    },
+    "showInPopup": {
+        "message": "Megjelenítés felugró ablakban"
+    },
+    "onlyNotEmbedded": {
+        "message": "csak nem beágyazott"
+    },
+    "copied": {
+        "message": "Másolva"
+    },
+    "redirectLink": {
+        "message": "Kísérlet az átirányításra"
+    },
+    "fetchPublicInstances": {
+        "message": "Nyilvános példányok lekérése"
+    },
+    "addYourFavoriteInstances": {
+        "message": "Adja hozzá kedvenc példányait"
+    },
+    "copyOriginal": {
+        "message": "Eredeti másolása"
+    },
+    "redirectToOriginal": {
+        "message": "Átirányítás az eredetire"
+    },
+    "about": {
+        "message": "Rólunk"
+    },
+    "unsupportedIframesHandling": {
+        "message": "Nem támogatott beágyazások kezelése"
+    },
+    "disable": {
+        "message": "Tiltás"
+    },
+    "services": {
+        "message": "Szolgáltatások"
+    },
+    "pingInstances": {
+        "message": "Példányok pingelése"
+    },
+    "exportSettingsToSync": {
+        "message": "Beállítások exportálása a szinkronizáláshoz"
+    },
+    "importSettingsFromSync": {
+        "message": "Beállítások importálása a szinkronizációból"
+    },
+    "service": {
+        "message": "Szolgáltatás"
+    },
+    "bookmarksMenu": {
+        "message": "Könyvjelzők menü"
+    },
+    "block": {
+        "message": "Letiltás"
+    },
+    "redirectOnlyInIncognito": {
+        "message": "Átirányítás csak inkognitóban"
+    },
+    "redirect": {
+        "message": "Átirányítás"
+    },
+    "switchInstance": {
+        "message": "Példány váltása"
+    },
+    "frontend": {
+        "message": "Előtétprogram"
+    },
+    "redirectType": {
+        "message": "Átirányítás típusa"
+    },
+    "autoPickInstance": {
+        "message": "Példány automatikus kiválasztása"
+    },
+    "redirectGoogle": {
+        "message": "Google átirányítása"
+    },
+    "search_frontend": {
+        "message": "Előtétprogram keresése"
+    },
+    "extensionName": {
+        "message": "LibRedirect"
+    },
+    "bypass": {
+        "message": "Megkerülés"
+    },
+    "searchHint": {
+        "message": "LibRedirect beállítása alapértelmezett keresőmotornak. A Chromium böngészőkben történő művelethez kattintson <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>ide</a>."
+    },
+    "searchService": {
+        "message": "Szolgáltatás keresése"
+    },
+    "embedFrontend": {
+        "message": "Beágyazott előtétprogram"
+    }
+}
