@@ -27,7 +27,7 @@
         "message": "Automatikus"
     },
     "excludeFromRedirecting": {
-        "message": "Az átirányításból kizárva"
+        "message": "Átirányításból kizárt"
     },
     "importSettings": {
         "message": "Beállítások importálása"
