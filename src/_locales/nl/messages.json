@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Origineel kopiëren"
     },
     "copied": {
         "message": "Gekopieerd"
@@ -101,7 +101,7 @@
         "message": "Over"
     },
     "unsupportedIframesHandling": {
-        "message": "Niet-ondersteunde iframes-afhandeling"
+        "message": "Niet-ondersteunde insluitafhandeling"
     },
     "fetchPublicInstances": {
         "message": "Openbare instanties ophalen"
@@ -110,36 +110,51 @@
         "message": "Uitschakelen"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Instanties pingen"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Instellingen synchroniseren"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Instellingen ophalen uit synchronisatie"
     },
     "services": {
-        "message": "Services"
+        "message": "Diensten"
     },
     "service": {
-        "message": "Service"
+        "message": "Dienst"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Bladwijzermenu"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Alleen doorverwijzen in privévensters"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Omzeilen"
     },
     "block": {
-        "message": "Block"
+        "message": "Blokkeren"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Stel LibRedirect in als de standaard zoekmachine. Hoe je dit doet in op Chromium gebaseerde browsers, lees je <a href='' target='_blank' rel='noopener noreferrer'>hier</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Doorverwijzen"
+    },
+    "autoPickInstance": {
+        "message": "Automatisch instantie kiezen"
+    },
+    "redirectGoogle": {
+        "message": "Google doorverwijzen"
+    },
+    "searchService": {
+        "message": "Zoeken naar dienst"
+    },
+    "search_frontend": {
+        "message": "Zoeken naar front-end"
+    },
+    "embedFrontend": {
+        "message": "Front-end insluiten"
     }
 }
