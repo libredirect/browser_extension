@@ -52,15 +52,15 @@
           "instanceList": true,
           "url": "https://github.com/mmjee/Piped-Material"
         },
-        "poketube": {
+        "poke": {
           "excludeTargets": [
             2,
             3
           ],
-          "name": "PokeTube",
+          "name": "Poke",
           "embeddable": true,
           "instanceList": true,
-          "url": "https://codeberg.org/Ashley/poketube"
+          "url": "https://codeberg.org/ashley/poke"
         },
         "cloudtube": {
           "name": "CloudTube",
