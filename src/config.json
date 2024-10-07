@@ -1299,7 +1299,7 @@
         "skunkyArt": {
           "name": "SkunkyArt",
           "instanceList": true,
-          "url": "https://git.sr.ht/~nixgoat/shoelace"
+          "url": "https://codeberg.org/skunky/skunkyart"
         }
       },
       "targets": [
