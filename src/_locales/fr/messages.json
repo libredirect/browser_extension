@@ -56,7 +56,7 @@
         "description": "used in the settings page"
     },
     "showInPopup": {
-        "message": "Afficher dans la fenêtre contextuelle",
+        "message": "Afficher dans la fenêtre contextuelle de l'extension",
         "description": "used in the settings page"
     },
     "frontend": {
@@ -72,11 +72,11 @@
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
-        "message": "uniquement intégré",
+        "message": "éléments embarqués seulement",
         "description": "used in the settings page"
     },
     "onlyNotEmbedded": {
-        "message": "seulement non intégré",
+        "message": "tout sauf éléments embarqués",
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Copier l'original"
     },
     "copied": {
         "message": "Copié"
@@ -101,22 +101,22 @@
         "message": "À propos"
     },
     "unsupportedIframesHandling": {
-        "message": "Gestion des iframes non prises en charge"
+        "message": "Gestion des éléments embarqués non-pris-en-charge"
     },
     "fetchPublicInstances": {
-        "message": "Rechercher des instances publiques"
+        "message": "Récupérer des instances publiques"
     },
     "disable": {
         "message": "Désactiver"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Envoyer un ping aux instances"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Exporter les paramètres vers Sync"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Importer les paramètres depuis Sync"
     },
     "services": {
         "message": "Services"
@@ -125,21 +125,36 @@
         "message": "Service"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Menu des marque-pages"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Rediriger seulement en Mode Incognito"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Laisser tel quel"
     },
     "block": {
-        "message": "Block"
+        "message": "Bloquer"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Paramétrez LibRedirect pour être votre moteur de recherche par défaut. Pour savoir comment faire sur un navigateur chromium, cliquez <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>ici</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Rediriger"
+    },
+    "autoPickInstance": {
+        "message": "Choix d'instance automatique"
+    },
+    "redirectGoogle": {
+        "message": "Rediriger Google"
+    },
+    "search_frontend": {
+        "message": "Chercher une interface"
+    },
+    "searchService": {
+        "message": "Chercher un service"
+    },
+    "embedFrontend": {
+        "message": "Interface des éléments embarqués"
     }
 }
