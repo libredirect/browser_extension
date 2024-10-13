@@ -269,8 +269,11 @@ function rewrite(url, originUrl, frontend, randomInstance) {
         // https://stackexchange.com or https://superuser.com
         return `${randomInstance}${url.pathname}${url.search}`
       }
-      const regex = url.href.match(/https?:\/{2}(?:([a-zA-Z0-9-]+)\.)?stackexchange\.com\//)
+      const regex = url.href.match(/https?:\/{2}(?:([a-zA-Z0-9-]+)\.(meta\.)?)?stackexchange\.com\//)
       if (regex && regex.length > 1) {
+        if (regex[2]) {
+          return `${randomInstance}/exchange/${url.hostname}${url.pathname}${url.search}`
+        }
         const subdomain = regex[1]
         return `${randomInstance}/exchange/${subdomain}${url.pathname}${url.search}`
       }
