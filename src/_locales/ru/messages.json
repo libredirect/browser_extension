@@ -146,7 +146,7 @@
         "message": "Перенаправление Google"
     },
     "autoPickInstance": {
-        "message": "Выбирать сервер автоматически"
+        "message": "Выбрать сервер автоматически"
     },
     "searchService": {
         "message": "Служба поиска"
