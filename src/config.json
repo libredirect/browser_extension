@@ -753,7 +753,7 @@
       },
       "targets": [
         "^https?:\\/{2}(www\\.)?([a-zA-Z]+\\.)?stackoverflow\\.com\\/",
-        "(?!^https?:\\/{2}(api|data|blog)\\.)^https?:\\/{2}([a-zA-Z0-9-]+\\.)stackexchange\\.com\\/",
+        "^https?:\\/{2}((?!(api|data|blog)\\.)[a-zA-Z0-9-]+\\.(meta\\.)?)?stackexchange\\.com\\/",
         "^https?:\\/{2}(www\\.)?([a-zA-Z]+\\.)?(askubuntu\\.com|mathoverflow\\.net|serverfault\\.com|stackapps\\.com|superuser\\.com)\\/"
       ],
       "name": "Stack Overflow",
