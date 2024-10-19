@@ -87,7 +87,7 @@ function rewrite(url, originUrl, frontend, randomInstance) {
     case "freetubePwa":
       url.searchParams.delete("si")
       return "freetube://" + url.href
-    case "poke": {
+    case "poketube": {
       url.searchParams.delete("si")
       if (url.pathname.startsWith("/channel")) {
         const reg = /\/channel\/(.*)\/?$/.exec(url.pathname)
@@ -768,7 +768,7 @@ const defaultInstances = {
   pipedMaterial: ["https://piped-material.xn--17b.net"],
   cloudtube: ["https://tube.cadence.moe"],
   lightTube: ["https://tube.kuylar.dev"],
-  poke: ["https://poketube.fun"],
+  poketube: ["https://poketube.fun"],
   proxiTok: ["https://proxitok.pabloferreiro.es"],
   redlib: ["https://safereddit.com"],
   eddrit: ["https://eddrit.com"],
