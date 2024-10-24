@@ -57,10 +57,10 @@
             2,
             3
           ],
-          "name": "PokeTube",
+          "name": "Poke",
           "embeddable": true,
           "instanceList": true,
-          "url": "https://codeberg.org/Ashley/poketube"
+          "url": "https://codeberg.org/ashley/poke"
         },
         "cloudtube": {
           "name": "CloudTube",
@@ -1299,7 +1299,7 @@
         "skunkyArt": {
           "name": "SkunkyArt",
           "instanceList": true,
-          "url": "https://git.sr.ht/~nixgoat/shoelace"
+          "url": "https://codeberg.org/skunky/skunkyart"
         }
       },
       "targets": [
