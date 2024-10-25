@@ -72,11 +72,11 @@
         "description": "used in the settings page"
     },
     "onlyEmbedded": {
-        "message": "vain upotteet",
+        "message": "vain upotetut",
         "description": "used in the settings page"
     },
     "onlyNotEmbedded": {
-        "message": "vain muut kuin upotteet",
+        "message": "vain muut kuin upotetut",
         "description": "used in the settings page"
     },
     "addYourFavoriteInstances": {
@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Kopioi alkuperäinen"
     },
     "copied": {
         "message": "Kopioitu"
@@ -101,7 +101,7 @@
         "message": "Tietoja"
     },
     "unsupportedIframesHandling": {
-        "message": "Tukemattomien iframejen käsittely"
+        "message": "Tukemattomien upotusten käsittely"
     },
     "fetchPublicInstances": {
         "message": "Hae julkiset instanssit"
@@ -110,36 +110,51 @@
         "message": "Poista käytöstä"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Kokeile yhteyttä instanssiin"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Vie asetukset Sync:iin"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Tuo asetukset Sync:istä"
     },
     "services": {
-        "message": "Services"
+        "message": "Palvelut"
     },
     "service": {
-        "message": "Service"
+        "message": "Palvelu"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Kirjanmerkkipalkki"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Uudelleenohjaa vain yksityisikkunassa"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Ohita"
     },
     "block": {
-        "message": "Block"
+        "message": "Estä"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Aseta LibRedirect oletushakukoneeksi. Ohjeita varten chromium-selaimissa, paina <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>tästä</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Uudelleenohjaa"
+    },
+    "autoPickInstance": {
+        "message": "Automaattisesti valitse instanssi"
+    },
+    "redirectGoogle": {
+        "message": "Uudelleenohjaa Googleen"
+    },
+    "search_frontend": {
+        "message": "Hae käyttöliittymää"
+    },
+    "searchService": {
+        "message": "Hae palveluja"
+    },
+    "embedFrontend": {
+        "message": "Upota käyttöliittymä"
     }
 }
