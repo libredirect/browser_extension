@@ -53,6 +53,7 @@ browser.webRequest.onBeforeRequest.addListener(
     let documentUrl
     try {
       if (details.originUrl) originUrl = new URL(details.originUrl)
+      else if (details.initiator) originUrl = new URL(details.initiator)
       if (details.documentUrl) documentUrl = new URL(details.documentUrl)
     } catch {
       return null
