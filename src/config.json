@@ -219,6 +219,25 @@
       "embeddable": true,
       "url": "https://twitter.com"
     },
+    "chatGpt": {
+      "frontends": {
+        "duckDuckGoAiChat": {
+          "name": "DuckDuckGo AI Chat",
+          "instanceList": false,
+          "url": "https://duckduckgo.com/duckduckgo-help-pages/aichat/"
+        }
+      },
+      "targets": ["^https?:\\/{2}chatgpt\\.com"],
+      "name": "ChatGPT",
+      "options": {
+        "enabled": false,
+        "unsupportedUrls": "bypass",
+        "frontend": "duckDuckGoAiChat",
+        "redirectOnlyInIncognito": false
+      },
+      "imageType": "svgMono",
+      "url": "https://chatgpt.com/"
+    },
     "bluesky": {
       "frontends": {
         "skyview": {

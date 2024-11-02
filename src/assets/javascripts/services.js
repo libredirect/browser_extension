@@ -555,6 +555,9 @@ function rewrite(url, originUrl, frontend, randomInstance) {
       const accountReg = /^\/([^\/]+)\/?$/.exec(url.pathname)
       if (accountReg) return `${randomInstance}/account${url.pathname}${url.search}`
 
+    case "duckDuckGoAiChat":
+      return "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1"
+
     case "piped":
     case "pipedMaterial":
     case "cloudtube":
