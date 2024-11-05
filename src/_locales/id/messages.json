@@ -8,7 +8,7 @@
         "description": "description of the extension"
     },
     "switchInstance": {
-        "message": "Tukar Instansi",
+        "message": "Tukar Server",
         "description": "used in manifest.json as shortcut description"
     },
     "settings": {
@@ -101,7 +101,7 @@
         "message": "Tentang"
     },
     "unsupportedIframesHandling": {
-        "message": "Penanganan iframe tifak didukung"
+        "message": "Penanganan sematan tidak didukung"
     },
     "fetchPublicInstances": {
         "message": "Dapatkan server publik"
@@ -110,7 +110,7 @@
         "message": "Nonaktifkan"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Ping Server"
     },
     "exportSettingsToSync": {
         "message": "Export Settings to Sync"
@@ -141,5 +141,20 @@
     },
     "redirect": {
         "message": "Redirect"
+    },
+    "autoPickInstance": {
+        "message": "Pilih Server Otomatis"
+    },
+    "redirectGoogle": {
+        "message": "Alihkan Google"
+    },
+    "search_frontend": {
+        "message": "Frontend Pencarian"
+    },
+    "searchService": {
+        "message": "Layanan Pencarian"
+    },
+    "embedFrontend": {
+        "message": "Frontend Sematan"
     }
 }
