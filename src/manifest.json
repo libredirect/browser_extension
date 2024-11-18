@@ -48,7 +48,7 @@
     "search_provider": {
       "name": "__MSG_extensionName__",
       "keyword": "@libredirect",
-      "favicon_url": "https://raw.githubusercontent.com/libredirect/browser_extension/master/src/assets/images/libredirect.svg",
+      "favicon_url": "assets/images/libredirect.svg",
       "search_url": "https://search.libredirect.invalid/?q={searchTerms}",
       "encoding": "UTF-8",
       "is_default": false
