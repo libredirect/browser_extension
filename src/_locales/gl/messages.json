@@ -98,7 +98,7 @@
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
-        "message": "Acerca de"
+        "message": "Sobre"
     },
     "unsupportedIframesHandling": {
         "message": "Xestión de incrustacións sen soporte"
