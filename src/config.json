@@ -559,6 +559,12 @@
           "embeddable": false,
           "instanceList": true,
           "url": "https://git.migalmoreno.com/tubo/about/"
+        },
+        "soundcloak": {
+          "name": "soundcloak",
+          "embeddable": false,
+          "instanceList": true,
+          "url": "https://github.com/maid-zone/soundcloak"
         }
       },
       "targets": [

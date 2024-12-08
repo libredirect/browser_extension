@@ -557,7 +557,40 @@ function rewrite(url, originUrl, frontend, randomInstance) {
 
     case "duckDuckGoAiChat":
       return "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1"
+    
+    case "soundcloak":
+      if (url.pathname.startsWith("/feed") || url.pathname.startsWith("/stream")) { // this feature requires authentication and is unsupported, so just redirect to main page
+        return randomInstance
+      }
 
+      if (url.pathname.startsWith("/search")) {
+        if (!url.search) {
+          return randomInstance
+        }
+
+        let type = ""
+        if (url.pathname.startsWith("/search/sounds")) {
+          type = "tracks"
+        } else if (url.pathname.startsWith("/search/people")) {
+          type = "users"
+        } else if (url.pathname.startsWith("/search/albums") || url.pathname.startsWith("/search/sets")) {
+          type = "playlists"
+        }
+
+        if (type) {
+          type = "&type="+type
+        } else {
+          return randomInstance // fallback for unsupported search types (searching for anything for example)
+        }
+
+        return `${randomInstance}/search${url.search}${type}`
+      }
+
+      if (url.host == "on.soundcloud.com") {
+        return `${randomInstance}/on${url.pathname}`
+      }
+
+      return `${randomInstance}${url.pathname}${url.search}`
     case "piped":
     case "pipedMaterial":
     case "cloudtube":
@@ -762,6 +795,38 @@ async function reverse(url) {
         return `${config.services[service].url}/${url.search.slice(1)}`
       case "goodreads":
         return `https://goodreads.com${url.pathname}${url.search}`
+      case "soundcloud":
+        if (frontend == "soundcloak") {
+          if (url.pathname.includes("/_/")) { // soundcloak-specific pages
+            return `${config.services[service].url}${url.pathname.split("/_/")[0]}`
+          }
+
+          if (url.pathname == "/search") {
+            let type = url.searchParams.get("type")
+            switch (type) {
+              case "playlists":
+                type = "sets"
+                break
+              case "tracks":
+                type = "sounds"
+                break
+              case "users":
+                type = "people"
+                break
+              default:
+                type = ""
+            }
+
+            url.searchParams.delete("type")
+            if (!type) {
+              return `${config.services[service].url}/search?${url.searchParams.toString()}`
+            } else {
+              return `${config.services[service].url}/search/${type}?${url.searchParams.toString()}`
+            }
+          }
+
+          return `${config.services[service].url}${url.pathname}`
+        }
       default:
         return
     }
@@ -828,6 +893,7 @@ const defaultInstances = {
   ytify: ["https://ytify.netlify.app"],
   nerdsForNerds: ["https://nn.vern.cc"],
   koub: ["https://koub.clovius.club"],
+  soundcloak: ["https://soundcloak.fly.dev"]
 }
 
 async function getDefaults() {
