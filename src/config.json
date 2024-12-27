@@ -564,7 +564,7 @@
           "name": "soundcloak",
           "embeddable": false,
           "instanceList": true,
-          "url": "https://github.com/maid-zone/soundcloak"
+          "url": "https://git.maid.zone/stuff/soundcloak"
         }
       },
       "targets": [
