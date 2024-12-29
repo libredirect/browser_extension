@@ -38,7 +38,7 @@
     const resultString = JSON.stringify(_options, null, "  ")
     const anchor = document.createElement("a")
     anchor.href = "data:application/json;base64," + btoa(resultString)
-    anchor.download = `libredirect-settings-v${_options.version}.json`
+    anchor.download = `libredirect-settings-v${_options.version}-${(new Date().toISOString().replace(':','-').slice(0,-5))}.json`
     anchor.click()
   }
 
