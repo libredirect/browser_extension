@@ -1,1 +1,137 @@
-{}
+{
+    "extensionName": {
+        "message": "லிப்ரெடிரிடர்"
+    },
+    "switchInstance": {
+        "message": "சான்று"
+    },
+    "copyOriginal": {
+        "message": "அசல் நகலெடுக்கவும்"
+    },
+    "autoPickInstance": {
+        "message": "ஆட்டோ-பிக் நிகழ்வு"
+    },
+    "extensionDescription": {
+        "message": "பிரபலமான தளங்களை மாற்று தனியுரிமை நட்பு முன்பக்கங்கள் மற்றும் பின்தளத்தில் திருப்பி விடும் ஒரு வலை நீட்டிப்பு"
+    },
+    "settings": {
+        "message": "அமைப்புகள்"
+    },
+    "general": {
+        "message": "பொது"
+    },
+    "theme": {
+        "message": "கருப்பொருள்"
+    },
+    "light": {
+        "message": "ஒளி"
+    },
+    "dark": {
+        "message": "இருண்ட"
+    },
+    "auto": {
+        "message": "தானி"
+    },
+    "excludeFromRedirecting": {
+        "message": "திருப்பிவிடுவதிலிருந்து விலக்கப்பட்டது"
+    },
+    "importSettings": {
+        "message": "அமைப்புகளை இறக்குமதி செய்யுங்கள்"
+    },
+    "exportSettings": {
+        "message": "ஏற்றுமதி அமைப்புகள்"
+    },
+    "resetSettings": {
+        "message": "அமைப்புகளை மீட்டமைக்கவும்"
+    },
+    "enable": {
+        "message": "இயக்கு"
+    },
+    "showInPopup": {
+        "message": "பாப்அப்பில் காட்டு"
+    },
+    "frontend": {
+        "message": "ஃபிரான்ட்"
+    },
+    "redirectType": {
+        "message": "திருப்பி வகை"
+    },
+    "both": {
+        "message": "இரண்டும்"
+    },
+    "onlyEmbedded": {
+        "message": "உட்பொதிக்கப்பட்டது"
+    },
+    "onlyNotEmbedded": {
+        "message": "உட்பொதிக்கப்படவில்லை"
+    },
+    "addYourFavoriteInstances": {
+        "message": "உங்களுக்கு பிடித்த நிகழ்வுகளைச் சேர்க்கவும்"
+    },
+    "copied": {
+        "message": "நகலெடுக்கப்பட்டது"
+    },
+    "redirectToOriginal": {
+        "message": "அசலுக்கு திருப்பி விடுங்கள்"
+    },
+    "redirectLink": {
+        "message": "திருப்பிவிட முயற்சி"
+    },
+    "about": {
+        "message": "பற்றி"
+    },
+    "unsupportedIframesHandling": {
+        "message": "ஆதரிக்கப்படாத உட்பொதிகள் கையாளுதல்"
+    },
+    "fetchPublicInstances": {
+        "message": "பொது நிகழ்வுகளைப் பெறுங்கள்"
+    },
+    "disable": {
+        "message": "முடக்கு"
+    },
+    "pingInstances": {
+        "message": "பிங் நிகழ்வுகள்"
+    },
+    "exportSettingsToSync": {
+        "message": "ஒத்திசைக்க அமைப்புகளை ஏற்றுமதி செய்யுங்கள்"
+    },
+    "importSettingsFromSync": {
+        "message": "ஒத்திசைவிலிருந்து அமைப்புகளை இறக்குமதி செய்யுங்கள்"
+    },
+    "services": {
+        "message": "சேவைகள்"
+    },
+    "service": {
+        "message": "பணி"
+    },
+    "bookmarksMenu": {
+        "message": "புக்மார்க்ச் பட்டியல்"
+    },
+    "redirectOnlyInIncognito": {
+        "message": "மறைமுகத்தில் மட்டுமே திருப்பி விடுங்கள்"
+    },
+    "bypass": {
+        "message": "பைபாச்"
+    },
+    "block": {
+        "message": "தொகுதி"
+    },
+    "searchHint": {
+        "message": "இயல்புநிலை தேடுபொறியாக Lirbredirect ஐ அமைக்கவும். குரோமியம் உலாவிகளில் எவ்வாறு செய்வது என்பதற்கு, <a href = 'https: //libredirect.github.io/docs.html#search_engine_chromium' target = '_ வெற்று' rel = 'noopener norferrer'> இங்கே </a>."
+    },
+    "redirect": {
+        "message": "திருப்பி விடுங்கள்"
+    },
+    "redirectGoogle": {
+        "message": "Google ஐ திருப்பி விடுங்கள்"
+    },
+    "search_frontend": {
+        "message": "முன்பக்கத்தைத் தேடுங்கள்"
+    },
+    "searchService": {
+        "message": "தேடல் பணி"
+    },
+    "embedFrontend": {
+        "message": "ஃபிரான்டெண்ட் உட்பொதிக்கவும்"
+    }
+}
