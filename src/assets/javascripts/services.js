@@ -890,7 +890,7 @@ const defaultInstances = {
   ratAintTieba: ["https://rat.fis.land"],
   shoelace: ["https://shoelace.mint.lgbt"],
   skunkyArt: ["https://skunky.bloat.cat"],
-  ytify: ["https://ytify.netlify.app"],
+  ytify: ["https://ytify.us.kg"],
   nerdsForNerds: ["https://nn.vern.cc"],
   koub: ["https://koub.clovius.club"],
   soundcloak: ["https://soundcloak.fly.dev"]
