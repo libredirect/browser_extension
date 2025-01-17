@@ -1,1 +1,137 @@
-{}
+{
+    "both": {
+        "message": "هر دو"
+    },
+    "exportSettings": {
+        "message": "خروجی گرفتن از تنظیمات"
+    },
+    "extensionName": {
+        "message": "LibRedirect"
+    },
+    "settings": {
+        "message": "تنظیمات"
+    },
+    "switchInstance": {
+        "message": "جایگزینی نمونه"
+    },
+    "general": {
+        "message": "عمومی"
+    },
+    "theme": {
+        "message": "پوسته"
+    },
+    "auto": {
+        "message": "خودکار"
+    },
+    "excludeFromRedirecting": {
+        "message": "چشم‌پوشی از هدایت کردن"
+    },
+    "importSettings": {
+        "message": "واردکردن تنظیمات"
+    },
+    "resetSettings": {
+        "message": "بازنشانی تنظیمات"
+    },
+    "enable": {
+        "message": "فعال‌کردن"
+    },
+    "frontend": {
+        "message": "پیشگاه"
+    },
+    "redirectType": {
+        "message": "نوع هدایت"
+    },
+    "onlyEmbedded": {
+        "message": "تنها جاسازی شده"
+    },
+    "onlyNotEmbedded": {
+        "message": "تنها جاسازی نشده"
+    },
+    "addYourFavoriteInstances": {
+        "message": "افزودن نمونه‌های مورد پسند شما"
+    },
+    "light": {
+        "message": "روشن"
+    },
+    "dark": {
+        "message": "تیره"
+    },
+    "showInPopup": {
+        "message": "نمایش در بازشونده"
+    },
+    "copyOriginal": {
+        "message": "رونویسی اصلی"
+    },
+    "copied": {
+        "message": "رونویسی شد"
+    },
+    "redirectToOriginal": {
+        "message": "هدایت به اصلی"
+    },
+    "about": {
+        "message": "درباره"
+    },
+    "unsupportedIframesHandling": {
+        "message": "مدیریت جاسازی‌های پشتیبانی نشده"
+    },
+    "disable": {
+        "message": "غیر‌فعال کردن"
+    },
+    "pingInstances": {
+        "message": "پینگ گرفتن از نمونه‌ها"
+    },
+    "exportSettingsToSync": {
+        "message": "خروجی گرفتن از تنظیمات برای همگام‌سازی"
+    },
+    "importSettingsFromSync": {
+        "message": "واردکردن تنظیمات برای همگام‌سازی"
+    },
+    "services": {
+        "message": "سامانه‌ها"
+    },
+    "service": {
+        "message": "سامانه"
+    },
+    "redirectOnlyInIncognito": {
+        "message": "تنها هدایت کردن در حالت خصوصی"
+    },
+    "bypass": {
+        "message": "دور زدن"
+    },
+    "block": {
+        "message": "مسدود کردن"
+    },
+    "redirect": {
+        "message": "هدایت کردن"
+    },
+    "autoPickInstance": {
+        "message": "گزینش خودکار نمونه"
+    },
+    "redirectGoogle": {
+        "message": "هدایت کردن گوگل"
+    },
+    "search_frontend": {
+        "message": "جستجو پیشگاه"
+    },
+    "searchService": {
+        "message": "جستجو سامانه"
+    },
+    "embedFrontend": {
+        "message": "پیشگاه جاسازی‌شده"
+    },
+    "extensionDescription": {
+        "message": "یک افزونه مرورگر که وبگاه های محبوب را به نمونه‌های دوست‌دار حریم خصوصی هدایت میکند"
+    },
+    "bookmarksMenu": {
+        "message": "فهرست نشان شده‌ها"
+    },
+    "redirectLink": {
+        "message": "تلاش برای هدایت"
+    },
+    "fetchPublicInstances": {
+        "message": "دریافت نمونه‌های عمومی"
+    },
+    "searchHint": {
+        "message": "LIBREDIRECT را به عنوان موتور جستجوی پیش‌فرض تنظیم کنید. برای نحوه انجام در مرورگرهای کروم ، روی <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>اینجا</a> ضربه بزنید."
+    }
+}
