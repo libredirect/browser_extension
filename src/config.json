@@ -82,7 +82,7 @@
           "name": "Tubo",
           "embeddable": false,
           "instanceList": true,
-          "url": "https://git.migalmoreno.com/tubo/about/",
+          "url": "https://github.com/migalmoreno/tubo",
           "excludeTargets": [
             2,
             3
@@ -558,7 +558,7 @@
           "name": "Tubo",
           "embeddable": false,
           "instanceList": true,
-          "url": "https://git.migalmoreno.com/tubo/about/"
+          "url": "https://github.com/migalmoreno/tubo"
         },
         "soundcloak": {
           "name": "soundcloak",
