@@ -287,6 +287,15 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
     }
     case "biblioReads":
       return `${randomInstance}${url.pathname}${url.search}`
+    case "wikimore": {
+      let hostSplit = url.host.split(".")
+      // wikiless doesn't have mobile view support yet
+      if (hostSplit[0] != "wikipedia" && hostSplit[0] != "www") {
+        const lang = url.hostname.split(".")[0]
+        return `${randomInstance}/wiki/${lang}${url.pathname}${url.search}${url.hash}`
+      }
+      return `${randomInstance}${url.pathname}${url.search}${url.hash}`
+    }
     case "wikiless": {
       let hostSplit = url.host.split(".")
       // wikiless doesn't have mobile view support yet
@@ -910,6 +919,7 @@ const defaultInstances = {
   koub: ["https://koub.clovius.club"],
   soundcloak: ["https://soundcloak.fly.dev"],
   gocook: ["https://cook.adminforge.de"],
+  wikimore: ["https://wikimore.private.coffee"],
 }
 
 async function getDefaults() {

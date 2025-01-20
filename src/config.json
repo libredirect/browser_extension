@@ -1012,6 +1012,11 @@
           "name": "Wikiless",
           "instanceList": true,
           "url": "https://wikiless.org"
+        },
+        "wikimore": {
+          "name": "Wikimore",
+          "instanceList": true,
+          "url": "https://git.private.coffee/privatecoffee/wikimore"
         }
       },
       "targets": [
