@@ -358,7 +358,10 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       }
     }
     case "binternet":
-      if (url.hostname == "i.pinimg.com") return `${randomInstance}/image_proxy.php?url=${url.href}`
+      if (url.hostname == "i.pinimg.com") return `${randomInstance}/image_proxy.php?url=${encodeURIComponent(url.href)}`
+      return `${randomInstance}${url.pathname}${url.search}`
+    case "painterest":
+      if (url.hostname == "i.pinimg.com") return `${randomInstance}/_/proxy?url=${encodeURIComponent(url.href)}`
       return `${randomInstance}${url.pathname}${url.search}`
     case "laboratory": {
       let path = url.pathname
@@ -880,6 +883,7 @@ const defaultInstances = {
   wolfreeAlpha: ["https://gqq.gitlab.io", "https://uqq.gitlab.io"],
   laboratory: ["https://lab.vern.cc"],
   binternet: ["https://bn.bloat.cat"],
+  painterest: ["https://pt.bloat.cat"],
   pixivFe: ["https://pixivfe.exozy.me"],
   liteXiv: ["https://litexiv.exozy.me"],
   indestructables: ["https://indestructables.private.coffee"],

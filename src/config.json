@@ -541,6 +541,12 @@
           "instanceList": true,
           "url": "https://github.com/Ahwxorg/Binternet",
           "embeddable": true
+        },
+        "painterest": {
+          "name": "Painterest",
+          "instanceList": true,
+          "url": "https://codeberg.org/thirtysix/painterest",
+          "embeddable": true
         }
       },
       "targets": [
