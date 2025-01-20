@@ -375,6 +375,12 @@
           "instanceList": true,
           "url": "https://github.com/pablouser1/ProxiTok",
           "localhost": true
+        },
+        "offtiktok": {
+          "name": "Offtiktok",
+          "instanceList": true,
+          "url": "https://github.com/MarsHeer/offtiktok",
+          "localhost": false
         }
       },
       "targets": [

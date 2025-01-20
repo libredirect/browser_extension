@@ -297,6 +297,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       }
       return `${randomInstance}${url.pathname}${url.search}${url.hash}`
     }
+    case "offtiktok":
     case "proxiTok":
       if (url.pathname.startsWith("/email")) return randomInstance
       return `${randomInstance}${url.pathname}${url.search}`
@@ -853,6 +854,7 @@ const defaultInstances = {
   lightTube: ["https://tube.kuylar.dev"],
   poketube: ["https://poketube.fun"],
   proxiTok: ["https://proxitok.pabloferreiro.es"],
+  offtiktok: ["https://www.offtiktok.com"],
   redlib: ["https://safereddit.com"],
   eddrit: ["https://eddrit.com"],
   troddit: ["https://www.troddit.com"],
