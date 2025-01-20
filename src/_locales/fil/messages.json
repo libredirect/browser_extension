@@ -1,1 +1,137 @@
-{}
+{
+    "resetSettings": {
+        "message": "I-reset ang mga setting"
+    },
+    "fetchPublicInstances": {
+        "message": "Kunin ang mga publikong instansya"
+    },
+    "searchHint": {
+        "message": "Itakda ang LibRedirect bilang Default na Search Engine. Para sa kung paano gawin sa mga Chromium browser, mag-click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>dito</a>."
+    },
+    "unsupportedIframesHandling": {
+        "message": "Pag-handle sa mga hindi sinusuportahang embed"
+    },
+    "extensionDescription": {
+        "message": "Isang web extension na nagre-redirect ng mga popular na site sa mga alternatibong privacy-friendly na frontend at backend"
+    },
+    "service": {
+        "message": "Serbisyo"
+    },
+    "extensionName": {
+        "message": "LibRedirect"
+    },
+    "light": {
+        "message": "Maliwanag"
+    },
+    "switchInstance": {
+        "message": "Palitan ang Instansya"
+    },
+    "settings": {
+        "message": "Mga Setting"
+    },
+    "general": {
+        "message": "General"
+    },
+    "theme": {
+        "message": "Tema"
+    },
+    "dark": {
+        "message": "Madilim"
+    },
+    "auto": {
+        "message": "Awto"
+    },
+    "excludeFromRedirecting": {
+        "message": "Hindi kasama mula sa pag-redirect"
+    },
+    "importSettings": {
+        "message": "I-import ang mga setting"
+    },
+    "exportSettings": {
+        "message": "I-export ang mga setting"
+    },
+    "enable": {
+        "message": "I-enable"
+    },
+    "frontend": {
+        "message": "Frontend"
+    },
+    "redirectType": {
+        "message": "Uri ng Redirect"
+    },
+    "both": {
+        "message": "pareho"
+    },
+    "onlyEmbedded": {
+        "message": "embedded lamang"
+    },
+    "onlyNotEmbedded": {
+        "message": "mga hindi embedded lamang"
+    },
+    "addYourFavoriteInstances": {
+        "message": "Idagdag ang iyong mga paboritong instansya"
+    },
+    "copyOriginal": {
+        "message": "Kopyahin ang Orihinal"
+    },
+    "copied": {
+        "message": "Kinopya"
+    },
+    "redirectToOriginal": {
+        "message": "Mag-redirect sa orihinal"
+    },
+    "about": {
+        "message": "Tungkol sa"
+    },
+    "disable": {
+        "message": "I-disable"
+    },
+    "pingInstances": {
+        "message": "I-ping ang Mga Instansya"
+    },
+    "exportSettingsToSync": {
+        "message": "I-export ang Mga Setting para Mag-sync"
+    },
+    "importSettingsFromSync": {
+        "message": "I-import ang Mga Setting mula sa Sync"
+    },
+    "services": {
+        "message": "Mga Serbisyo"
+    },
+    "bookmarksMenu": {
+        "message": "Menu ng mga bookmark"
+    },
+    "redirectOnlyInIncognito": {
+        "message": "Mag-redirect lamang sa Incognito"
+    },
+    "bypass": {
+        "message": "I-bypass"
+    },
+    "block": {
+        "message": "I-block"
+    },
+    "redirect": {
+        "message": "I-redirect"
+    },
+    "autoPickInstance": {
+        "message": "Awtomatikong piliin ang Instansya"
+    },
+    "redirectGoogle": {
+        "message": "I-redirect ang Google"
+    },
+    "search_frontend": {
+        "message": "Frontend ng Paghahanap"
+    },
+    "searchService": {
+        "message": "Serbisyo ng Paghahanap"
+    },
+    "embedFrontend": {
+        "message": "Frontend ng Embed"
+    },
+    "showInPopup": {
+        "message": "Ipakita sa popup"
+    },
+    "redirectLink": {
+        "message": "Subukang mag-redirect"
+    }
+}
