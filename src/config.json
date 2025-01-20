@@ -1264,6 +1264,11 @@
           "name": "Pasted",
           "instanceList": true,
           "url": "https://github.com/Dragynfruit/pasted"
+        },
+        "pasty": {
+          "name": "Pasty",
+          "instanceList": true,
+          "url": "https://github.com/lus/pasty"
         }
       },
       "targets": [

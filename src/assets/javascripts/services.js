@@ -909,6 +909,7 @@ const defaultInstances = {
   priviblur: ["https://pb.bloat.cat"],
   nitter: ["https://nitter.privacydev.net"],
   pasted: ["https://pasted.drakeerv.com"],
+  pasty: ["https://pasty.lus.pm"],
   freetar: ["https://freetar.de"],
   ultimateTab: ["https://ultimate-tab.com"],
   ratAintTieba: ["https://rat.fis.land"],
