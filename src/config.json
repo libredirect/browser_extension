@@ -284,6 +284,12 @@
           "instanceList": true,
           "url": "https://github.com/corenting/eddrit",
           "localhost": false
+        },
+        "troddit": {
+          "name": "Troddit",
+          "instanceList": false,
+          "url": "https://github.com/burhan-syed/troddit",
+          "localhost": false
         }
       },
       "targets": [
@@ -1265,7 +1271,7 @@
         },
         "ultimateTab": {
           "name": "Ultimate Tab",
-          "instanceList": true,
+          "instanceList": false,
           "url": "https://github.com/BenoitBellegarde/UltimateTab"
         }
       },

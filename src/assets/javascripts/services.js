@@ -230,10 +230,8 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
           return `${randomInstance}/preview/external-pre${url.pathname}${url.search}`
         case "i":
           return `${randomInstance}/img${url.pathname}`
-        default:
-          return `${randomInstance}/comments${url.pathname}`
       }
-      return randomInstance
+      return `${randomInstance}/comments${url.pathname}`
     }
     case "teddit":
       if (/^(?:(?:external-)?preview|i)\.redd\.it/.test(url.hostname)) {
@@ -241,6 +239,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
         else return `${randomInstance}${url.pathname}${url.search}&teddit_proxy=${url.hostname}`
       }
       return `${randomInstance}${url.pathname}${url.search}`
+    case "troddit":
     case "eddrit":
       if (/^(?:(?:external-)?preview|i)\.redd\.it/.test(url.hostname)) return randomInstance
       return `${randomInstance}${url.pathname}${url.search}`
@@ -853,6 +852,7 @@ const defaultInstances = {
   proxiTok: ["https://proxitok.pabloferreiro.es"],
   redlib: ["https://safereddit.com"],
   eddrit: ["https://eddrit.com"],
+  troddit: ["https://www.troddit.com"],
   scribe: ["https://scribe.rip"],
   libMedium: ["https://md.vern.cc"],
   quetre: ["https://quetre.iket.me"],
