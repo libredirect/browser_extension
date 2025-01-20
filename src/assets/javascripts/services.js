@@ -387,7 +387,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
     case "invidious": {
       // tracker
       url.searchParams.delete("si")
-      
+
       if (type == "sub_frame") url.searchParams.append("autoplay", "0")
 
       if (url.hostname == "youtu.be" || (url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/live"))) {
@@ -511,6 +511,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       }
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "ultimateTab":
     case "freetar":
       if (url.pathname.startsWith("/search.php")) {
         url.searchParams.set("search_term", url.searchParams.get("value"))
@@ -564,7 +565,8 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       return "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1"
 
     case "soundcloak":
-      if (url.pathname.startsWith("/feed") || url.pathname.startsWith("/stream")) { // this feature requires authentication and is unsupported, so just redirect to main page
+      if (url.pathname.startsWith("/feed") || url.pathname.startsWith("/stream")) {
+        // this feature requires authentication and is unsupported, so just redirect to main page
         return randomInstance
       }
 
@@ -583,7 +585,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
         }
 
         if (type) {
-          type = "&type="+type
+          type = "&type=" + type
         } else {
           return randomInstance // fallback for unsupported search types (searching for anything for example)
         }
@@ -802,7 +804,8 @@ async function reverse(url) {
         return `https://goodreads.com${url.pathname}${url.search}`
       case "soundcloud":
         if (frontend == "soundcloak") {
-          if (url.pathname.includes("/_/")) { // soundcloak-specific pages
+          if (url.pathname.includes("/_/")) {
+            // soundcloak-specific pages
             return `${config.services[service].url}${url.pathname.split("/_/")[0]}`
           }
 
@@ -892,13 +895,14 @@ const defaultInstances = {
   nitter: ["https://nitter.privacydev.net"],
   pasted: ["https://pasted.drakeerv.com"],
   freetar: ["https://freetar.de"],
+  ultimateTab: ["https://ultimate-tab.com"],
   ratAintTieba: ["https://rat.fis.land"],
   shoelace: ["https://shoelace.mint.lgbt"],
   skunkyArt: ["https://skunky.bloat.cat"],
   ytify: ["https://ytify.us.kg"],
   nerdsForNerds: ["https://nn.vern.cc"],
   koub: ["https://koub.clovius.club"],
-  soundcloak: ["https://soundcloak.fly.dev"]
+  soundcloak: ["https://soundcloak.fly.dev"],
 }
 
 async function getDefaults() {

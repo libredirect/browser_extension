@@ -1262,6 +1262,11 @@
           "name": "Freetar",
           "instanceList": true,
           "url": "https://github.com/kmille/freetar"
+        },
+        "ultimateTab": {
+          "name": "Ultimate Tab",
+          "instanceList": true,
+          "url": "https://github.com/BenoitBellegarde/UltimateTab"
         }
       },
       "targets": [
