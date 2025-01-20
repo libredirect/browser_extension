@@ -1392,6 +1392,27 @@
       },
       "imageType": "svg",
       "url": "https://coub.com"
+    },
+    "chefkoch": {
+      "frontends": {
+        "gocook": {
+          "name": "GoCook",
+          "instanceList": true,
+          "url": "https://github.com/NoUmlautsAllowed/gocook"
+        }
+      },
+      "targets": [
+        "^https?:\\/{2}(www\\.)?chefkoch\\.de"
+      ],
+      "name": "Chefkoch",
+      "options": {
+        "enabled": false,
+        "unsupportedUrls": "bypass",
+        "frontend": "gocook",
+        "redirectOnlyInIncognito": false
+      },
+      "imageType": "svg",
+      "url": "https://www.chefkoch.de"
     }
   }
 }

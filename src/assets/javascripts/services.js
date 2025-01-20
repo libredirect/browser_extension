@@ -903,6 +903,7 @@ const defaultInstances = {
   nerdsForNerds: ["https://nn.vern.cc"],
   koub: ["https://koub.clovius.club"],
   soundcloak: ["https://soundcloak.fly.dev"],
+  gocook: ["https://cook.adminforge.de"],
 }
 
 async function getDefaults() {
