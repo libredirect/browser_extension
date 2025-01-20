@@ -54,9 +54,10 @@ function regexArray(service, url, config, options, frontend) {
  * @param {URL} url
  * @param {string} frontend
  * @param {string} randomInstance
+ * @param {string} type
  * @returns {undefined|string}
  */
-function rewrite(url, originUrl, frontend, randomInstance) {
+function rewrite(url, originUrl, frontend, randomInstance, type) {
   switch (frontend) {
     case "hyperpipe":
       for (const key of [...url.searchParams.keys()]) if (key !== "q") url.searchParams.delete(key)
@@ -384,10 +385,14 @@ function rewrite(url, originUrl, frontend, randomInstance) {
       return `${randomInstance}${url.pathname}${url.search}`
     }
     case "invidious": {
+      // tracker
       url.searchParams.delete("si")
+      
+      if (type == "sub_frame") url.searchParams.append("autoplay", "0")
+
       if (url.hostname == "youtu.be" || (url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/live"))) {
         const watch = url.pathname.substring(url.pathname.lastIndexOf("/") + 1)
-        return `${randomInstance}/watch?v=${watch}${url.search.replace("?", "&")}`
+        return `${randomInstance}/watch?v=${watch}&${url.search.substring(1)}`
       }
       if (url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/redirect?")) return url.href
       return `${randomInstance}${url.pathname}${url.search}`
@@ -557,7 +562,7 @@ function rewrite(url, originUrl, frontend, randomInstance) {
 
     case "duckDuckGoAiChat":
       return "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1"
-    
+
     case "soundcloak":
       if (url.pathname.startsWith("/feed") || url.pathname.startsWith("/stream")) { // this feature requires authentication and is unsupported, so just redirect to main page
         return randomInstance
@@ -668,7 +673,7 @@ function redirect(url, type, originUrl, documentUrl, incognito, forceRedirection
   }
   if (!frontend) return
 
-  return rewrite(url, originUrl, frontend, randomInstance)
+  return rewrite(url, originUrl, frontend, randomInstance, type)
 }
 
 /**
