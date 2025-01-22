@@ -1,6 +1,6 @@
 {
     "extensionName": {
-        "message": "LibRedirect",
+        "message": "Libredirect",
         "description": "name of the extension"
     },
     "extensionDescription": {
@@ -8,11 +8,11 @@
         "description": "description of the extension"
     },
     "switchInstance": {
-        "message": "Tukar Server",
+        "message": "Ganti Server",
         "description": "used in manifest.json as shortcut description"
     },
     "settings": {
-        "message": "Pengaturan",
+        "message": "Setelan",
         "description": "used in the popup"
     },
     "general": {
@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Salin Asli"
     },
     "copied": {
         "message": "Disalin"
@@ -113,34 +113,34 @@
         "message": "Ping Server"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Pengaturan Ekspor ke Sinkronisasi"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Mengimpor Pengaturan dari Sinkronisasi"
     },
     "services": {
-        "message": "Services"
+        "message": "Layanan"
     },
     "service": {
         "message": "Service"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Menu penanda"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Alihkan Hanya dalam Penyamaran"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Mengakali"
     },
     "block": {
         "message": "Block"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Tetapkan LibRedirect sebagai Mesin Pencari Default. Untuk cara melakukannya di browser kromium, klik<a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Pengalihan"
     },
     "autoPickInstance": {
         "message": "Pilih Server Otomatis"
