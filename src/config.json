@@ -1389,6 +1389,11 @@
           "name": "NerdsforNerds",
           "instanceList": true,
           "url": "https://git.vern.cc/cobra/NerdsforNerds"
+        },
+        "ducksForDucks": {
+          "name": "Ducks for Ducks",
+          "instanceList": true,
+          "url": "https://git.private.coffee/PrivateCoffee/ducksforducks"
         }
       },
       "targets": [

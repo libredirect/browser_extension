@@ -929,6 +929,7 @@ const defaultInstances = {
   skunkyArt: ["https://skunky.bloat.cat"],
   ytify: ["https://ytify.us.kg"],
   nerdsForNerds: ["https://nn.vern.cc"],
+  ducksForDucks: ["https://ducksforducks.private.coffee"],
   koub: ["https://koub.clovius.club"],
   soundcloak: ["https://soundcloak.fly.dev"],
   gocook: ["https://cook.adminforge.de"],
