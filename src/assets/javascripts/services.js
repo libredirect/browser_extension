@@ -397,6 +397,15 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       }
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "vixipy": {
+      const regex = /\/[a-z]{1,3}\/(.*)/.exec(url.pathname)
+      if (regex) {
+        let path = regex[1]
+        if (path.startsWith("tags/")) path = path.replace(/tags/, "tag")
+        return `${randomInstance}/${path}${url.search}`
+      }
+      return `${randomInstance}${url.pathname}${url.search}`
+    }
     case "invidious": {
       // tracker
       url.searchParams.delete("si")
@@ -899,6 +908,7 @@ const defaultInstances = {
   painterest: ["https://pt.bloat.cat"],
   pixivFe: ["https://pixivfe.exozy.me"],
   liteXiv: ["https://litexiv.exozy.me"],
+  vixipy: ["https://vx.maid.zone"],
   indestructables: ["https://indestructables.private.coffee"],
   destructables: ["https://ds.vern.cc"],
   safetwitch: ["https://safetwitch.drgns.space"],
