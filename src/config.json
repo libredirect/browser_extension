@@ -683,6 +683,11 @@
           "name": "LibMedium",
           "instanceList": true,
           "url": "https://github.com/realaravinth/libmedium"
+        },
+        "small": {
+          "name": "Small",
+          "instanceList": true,
+          "url": "https://git.private.coffee/PrivateCoffee/small"
         }
       },
       "targets": [

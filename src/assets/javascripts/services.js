@@ -100,6 +100,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       if (/\/@[a-z]+\//.exec(url.pathname)) return randomInstance
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "small":
     case "libMedium":
     case "scribe": {
       const regex = url.hostname.match(/^(link|cdn-images-\d+|.*)\.medium\.com/)
@@ -869,6 +870,7 @@ const defaultInstances = {
   troddit: ["https://www.troddit.com"],
   scribe: ["https://scribe.rip"],
   libMedium: ["https://md.vern.cc"],
+  small: ["https://small.bloat.cat"],
   quetre: ["https://quetre.iket.me"],
   libremdb: ["https://libremdb.iket.me"],
   simplyTranslate: ["https://simplytranslate.org"],
