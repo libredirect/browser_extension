@@ -993,15 +993,20 @@
     "instructables": {
       "name": "Instructables",
       "frontends": {
-        "indestructables": {
-          "name": "Indestructables",
+        "structables": {
+          "name": "Structables",
           "instanceList": true,
-          "url": "https://indestructables.codeberg.page"
+          "url": "https://github.com/PrivateCoffee/structables"
         },
         "destructables": {
           "name": "Destructables",
           "instanceList": true,
           "url": "https://git.vern.cc/cobra/Destructables"
+        },
+        "indestructables": {
+          "name": "Indestructables",
+          "instanceList": true,
+          "url": "https://indestructables.codeberg.page"
         }
       },
       "targets": [
@@ -1010,7 +1015,7 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "indestructables",
+        "frontend": "structables",
         "redirectOnlyInIncognito": false
       },
       "imageType": "svg",

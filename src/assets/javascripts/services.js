@@ -911,6 +911,7 @@ const defaultInstances = {
   vixipy: ["https://vx.maid.zone"],
   indestructables: ["https://indestructables.private.coffee"],
   destructables: ["https://ds.vern.cc"],
+  structables: ["https://structables.private.coffee"],
   safetwitch: ["https://safetwitch.drgns.space"],
   twineo: ["https://twineo.exozy.me"],
   proxigram: ["https://ig.opnxng.com"],
