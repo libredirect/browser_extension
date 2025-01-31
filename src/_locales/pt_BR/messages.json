@@ -141,5 +141,20 @@
     },
     "redirect": {
         "message": "Redirect"
+    },
+    "redirectGoogle": {
+        "message": "Redirecionar o Google"
+    },
+    "search_frontend": {
+        "message": "Pesquise front -end"
+    },
+    "searchService": {
+        "message": "Serviço de pesquisa"
+    },
+    "embedFrontend": {
+        "message": "Incorporar front -end"
+    },
+    "autoPickInstance": {
+        "message": "Instância automática"
     }
 }
