@@ -101,7 +101,7 @@
         "message": "About"
     },
     "unsupportedIframesHandling": {
-        "message": "Manipulare iframe neacceptată"
+        "message": "Manipulare embeds neacceptată"
     },
     "fetchPublicInstances": {
         "message": "Obține instanțe publice"
@@ -141,5 +141,17 @@
     },
     "redirect": {
         "message": "Redirect"
+    },
+    "redirectGoogle": {
+        "message": "Redirectare Google"
+    },
+    "search_frontend": {
+        "message": "Căutare Frontend"
+    },
+    "searchService": {
+        "message": "Servicii Căutare"
+    },
+    "embedFrontend": {
+        "message": "Embed Frontend"
     }
 }
