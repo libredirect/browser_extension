@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Kopirajte original"
     },
     "copied": {
         "message": "Kopirano"
@@ -101,45 +101,60 @@
         "message": "O"
     },
     "unsupportedIframesHandling": {
-        "message": "Unsupported iframes handling"
+        "message": "Nepodržano rukovanje iframeovima"
     },
     "fetchPublicInstances": {
-        "message": "Fetch public instances"
+        "message": "Dohvatite javne instance"
     },
     "disable": {
-        "message": "Disable"
+        "message": "Isključite"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Testirajte instance"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Izvezite postavke za sinkronizaciju"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Uvezite postavke iz sinkronizacije"
     },
     "services": {
-        "message": "Services"
+        "message": "Usluge"
     },
     "service": {
         "message": "Service"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Izbornik obilježaka"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Preusmjerite samo u inkognito"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Zaobiđite"
     },
     "block": {
-        "message": "Block"
+        "message": "Blokirajte"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Postavite LibRedirect kao standardni tražionik. <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>Ovdje</a> pogledajte kako se to radi u Kromijum mrežnom pregledniku."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Preusmjerite"
+    },
+    "autoPickInstance": {
+        "message": "Odaberite automatski instancu"
+    },
+    "redirectGoogle": {
+        "message": "Preusmjerite Google"
+    },
+    "search_frontend": {
+        "message": "Tražite sučelje"
+    },
+    "embedFrontend": {
+        "message": "Ugradite sučelje"
+    },
+    "searchService": {
+        "message": "Tražite uslužnik"
     }
 }
