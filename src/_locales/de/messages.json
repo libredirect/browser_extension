@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Original kopieren"
     },
     "copied": {
         "message": "Kopiert"
@@ -101,7 +101,7 @@
         "message": "Über"
     },
     "unsupportedIframesHandling": {
-        "message": "Umgang mit nicht unterstützten iFrames"
+        "message": "Nicht unterstützte Einbettungenbehandlung"
     },
     "fetchPublicInstances": {
         "message": "Abrufen öffentlicher Instanzen"
@@ -110,36 +110,51 @@
         "message": "Deaktivieren"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Instanzen anpingen"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Einstellungen zur Synchronisierung exportieren"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Einstellungen aus Sync importieren"
     },
     "services": {
-        "message": "Services"
+        "message": "Dienstleistungen"
     },
     "service": {
         "message": "Service"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Lesezeichen-Menü"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Nur in Inkognito umleiten"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Umgehen"
     },
     "block": {
         "message": "Block"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Legen Sie LibRedirect als Standard-Suchmaschine fest. Wie man das in Chromium-Browsern macht, erfahren Sie <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>hier</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Umleiten"
+    },
+    "autoPickInstance": {
+        "message": "Automatisch auswählen Instanz"
+    },
+    "redirectGoogle": {
+        "message": "Google umleiten"
+    },
+    "search_frontend": {
+        "message": "Suche Frontend"
+    },
+    "searchService": {
+        "message": "Suche Dienst"
+    },
+    "embedFrontend": {
+        "message": "Frontend einbetten"
     }
 }
