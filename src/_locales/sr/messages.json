@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Копирајте оригинал"
     },
     "copied": {
         "message": "Копирано"
@@ -101,45 +101,60 @@
         "message": "О"
     },
     "unsupportedIframesHandling": {
-        "message": "Unsupported iframes handling"
+        "message": "Неподржано руковање и-фрамеовима"
     },
     "fetchPublicInstances": {
-        "message": "Fetch public instances"
+        "message": "Дохватите јавне инстанце"
     },
     "disable": {
-        "message": "Disable"
+        "message": "Искључите"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Тестирајте инстанце"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Извезите подешавања за синкронизацију"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Увезите подешавања из синкронизације"
     },
     "services": {
-        "message": "Services"
+        "message": "Услуге"
     },
     "service": {
-        "message": "Service"
+        "message": "Услуга"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Изборник обиљежака"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Преусмерите само у инкогнитоа"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Заобиђите"
     },
     "block": {
-        "message": "Block"
+        "message": "Блокирајте"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Поставите ЛибРедирецт као стандардни тражионик. <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>Овде</a> погледајте како се то ради у Кромијум мрежном прегледнику."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Преусмерите"
+    },
+    "autoPickInstance": {
+        "message": "Одаберите аутоматски инстанцу"
+    },
+    "redirectGoogle": {
+        "message": "Преусмерите Google"
+    },
+    "search_frontend": {
+        "message": "Тражите сучеље"
+    },
+    "embedFrontend": {
+        "message": "Уградите сучеље"
+    },
+    "searchService": {
+        "message": "Тражите услужник"
     }
 }
