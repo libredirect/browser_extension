@@ -816,7 +816,13 @@ async function reverse(url) {
         }
         if (url.pathname.startsWith("/exchange/")) {
           const regex = /\/exchange\/(.*?)(\/.*)/.exec(url.pathname)
-          if (regex) return `https://${regex[1]}.stackexchange.com${regex[2]}`
+          if (regex) {
+            if (regex[1].includes(".")) {
+              return `https://${regex[1]}${regex[2]}`
+            } else {
+              return `https://${regex[1]}.stackexchange.com${regex[2]}`
+            }
+          }
         }
         return
       }
