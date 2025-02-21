@@ -891,7 +891,7 @@ const defaultInstances = {
   simplyTranslate: ["https://simplytranslate.org"],
   translite: ["https://tl.bloat.cat"],
   mozhi: ["https://mozhi.aryak.me"],
-  searxng: ["https://search.bus-hit.me"],
+  searxng: ["https://nyc1.sx.ggtyler.dev"],
   "4get": ["https://4get.ca"],
   rimgo: ["https://rimgo.vern.cc"],
   hyperpipe: ["https://hyperpipe.surge.sh"],
