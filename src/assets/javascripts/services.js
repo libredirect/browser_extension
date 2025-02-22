@@ -934,7 +934,7 @@ const defaultInstances = {
   ratAintTieba: ["https://rat.fis.land"],
   shoelace: ["https://shoelace.mint.lgbt"],
   skunkyArt: ["https://skunky.bloat.cat"],
-  ytify: ["https://ytify.us.kg"],
+  ytify: ["https://ytify.pp.ua"],
   nerdsForNerds: ["https://nn.vern.cc"],
   ducksForDucks: ["https://ducksforducks.private.coffee"],
   koub: ["https://koub.clovius.club"],
