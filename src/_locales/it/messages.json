@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Copia originale"
     },
     "copied": {
         "message": "Copiato"
@@ -101,7 +101,7 @@
         "message": "Informazioni"
     },
     "unsupportedIframesHandling": {
-        "message": "Gestione iframe non supportati"
+        "message": "Gestione degli elementi incorporati non supportata"
     },
     "fetchPublicInstances": {
         "message": "Recupera istanze pubbliche"
@@ -110,36 +110,51 @@
         "message": "Disattiva"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Ping istanze"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Esporta impostazioni in Sync"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Importa impostazioni da Sync"
     },
     "services": {
-        "message": "Services"
+        "message": "Servizi"
     },
     "service": {
         "message": "Service"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Menu Segnalibri"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Reindirizza solo in Incognito"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Ignora"
     },
     "block": {
         "message": "Block"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Impostare LibRedirect come motore di ricerca predefinito. Per i browser Chromium, premere <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>qui</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Reindirizza"
+    },
+    "autoPickInstance": {
+        "message": "Scegli istanza automaticamente"
+    },
+    "redirectGoogle": {
+        "message": "Reindirizza Google"
+    },
+    "search_frontend": {
+        "message": "Cerca frontend"
+    },
+    "searchService": {
+        "message": "Cerca servizio"
+    },
+    "embedFrontend": {
+        "message": "Incorpora frontend"
     }
 }
