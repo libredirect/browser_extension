@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "মূলটা অনুলিপি করো"
     },
     "copied": {
         "message": "অনুলিপিত"
@@ -101,45 +101,60 @@
         "message": "আমাদের সম্পর্কে"
     },
     "unsupportedIframesHandling": {
-        "message": "Unsupported embeds handling"
+        "message": "এমবেড স্থাপন অসমর্থিত"
     },
     "fetchPublicInstances": {
-        "message": "Fetch public instances"
+        "message": "প্রকাশিত সম্মুখাংশ আনো"
     },
     "disable": {
-        "message": "Disable"
+        "message": "নিষ্করিয়"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "সার্ভার পিং করো"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "পছন্দসমূহ সিঙ্কে রপ্তানি করো"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "পছন্দসমূহ সিঙ্ক থেকে আমদানি করো"
     },
     "services": {
-        "message": "Services"
+        "message": "সেবাসমূহ"
     },
     "service": {
         "message": "Service"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "বুকমার্ক তালিকা"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "শুধু ইনকগনিটোতে পুনর্নির্দেশ করো"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "উপেক্ষা করো"
     },
     "block": {
         "message": "Block"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "লিবরিডাইরেক্টকে সহজাত অনুসন্ধান যন্ত্র হিসেবে রাখো। ক্রোমিয়াম ব্রাউজারে এটা করার জন্য <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>এখানে টিপ দাও</a>।"
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "পুনর্নির্দেশ"
+    },
+    "autoPickInstance": {
+        "message": "স্বয়ংক্রিয়ভাবে নির্বাচন করো"
+    },
+    "redirectGoogle": {
+        "message": "গুগল পুনর্নির্দেশ করো"
+    },
+    "search_frontend": {
+        "message": "অনুসন্ধান সম্মূখাংশ"
+    },
+    "searchService": {
+        "message": "অনুসন্ধান সেবা"
+    },
+    "embedFrontend": {
+        "message": "সম্মূখাংশ স্থাপন করো"
     }
 }
