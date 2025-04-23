@@ -32,7 +32,7 @@
         "description": "Utilizado na página de configurações"
     },
     "auto": {
-        "message": "Auto",
+        "message": "Automático",
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
@@ -84,7 +84,7 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "Copiar Original"
     },
     "copied": {
         "message": "Copiado"
@@ -104,43 +104,43 @@
         "message": "Unsupported iframes handling"
     },
     "fetchPublicInstances": {
-        "message": "Fetch public instances"
+        "message": "Buscando instâncias públicas"
     },
     "disable": {
         "message": "Desativar"
     },
     "pingInstances": {
-        "message": "Ping Instances"
+        "message": "Fazer Ping nas Instâncias"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "Exportar Configurações para a Sincronização"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "Importar Configurações da Sincronização"
     },
     "services": {
-        "message": "Services"
+        "message": "Serviços"
     },
     "service": {
         "message": "Service"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "Menu de favoritos"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "Redirecionar Somente em Anônimo"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "Ultrapassar"
     },
     "block": {
         "message": "Block"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "Configure LibRedirect como Motor de Pesquisa Padrão. Para como fazer em navegadores Chromium, clique <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>aqui</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "Redirecionar"
     },
     "redirectGoogle": {
         "message": "Redirecionar o Google"
