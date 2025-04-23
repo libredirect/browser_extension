@@ -240,6 +240,11 @@
     },
     "bluesky": {
       "frontends": {
+        "skychat": {
+          "name": "Skychat",
+          "instanceList": true,
+          "url": "https://github.com/badlogic/skychat"
+        },
         "skyview": {
           "name": "Skyview",
           "instanceList": true,

@@ -22,9 +22,8 @@ browser.runtime.onInstalled.addListener(async details => {
 // true to redirect, false to bypass
 let tabIdRedirects = {}
 
-// true == Always redirect, false == Never redirect, null/undefined == follow options for services
-browser.webRequest.onBeforeRequest.addListener(
-  details => {
+
+async function redirectCallback(details) {
     const old_href = details.url
     const url = new URL(details.url)
     if (new RegExp(/^chrome-extension:\/{2}.*\/instances\/.*.json$/).test(url.href) && details.type == "xmlhttprequest")
@@ -59,7 +58,7 @@ browser.webRequest.onBeforeRequest.addListener(
       return null
     }
 
-    let newUrl = servicesHelper.redirect(
+    let newUrl = await servicesHelper.redirect(
       url,
       details.type,
       originUrl,
@@ -113,7 +112,9 @@ browser.webRequest.onBeforeRequest.addListener(
       return { redirectUrl: newUrl }
     }
     return null
-  },
+  }
+// true == Always redirect, false == Never redirect, null/undefined == follow options for services
+browser.webRequest.onBeforeRequest.addListener(redirectCallback,
   { urls: ["<all_urls>"] },
   ["blocking"]
 )

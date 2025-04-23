@@ -57,7 +57,7 @@ function regexArray(service, url, config, options, frontend) {
  * @param {string} type
  * @returns {undefined|string}
  */
-function rewrite(url, originUrl, frontend, randomInstance, type) {
+async function rewrite(url, originUrl, frontend, randomInstance, type) {
   switch (frontend) {
     case "hyperpipe":
       for (const key of [...url.searchParams.keys()]) if (key !== "q") url.searchParams.delete(key)
@@ -490,6 +490,23 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
     case "skyview":
       if (url.pathname == "/") return randomInstance
       return `${randomInstance}?url=${encodeURIComponent(url.href)}`
+    case "skychat":
+      if (url.pathname == "/") return randomInstance
+      // Can't encode or the / gets escaped, slicing off first slash
+      const bskyPath = url.pathname.slice(1)
+      if (bskyPath.includes("/post/")) {
+        console.log(`Path ${bskyPath} is a post`)
+        const pathParts = bskyPath.split("/")
+        var userDid = pathParts[1]
+        if (!userDid.startsWith("did:plc:")) {
+          const did = await utils.handleToDid(userDid)
+          return `${randomInstance}/#thread/${did}/${pathParts[3]}`
+        } else {
+          return `${randomInstance}/#thread/${userDid}/${pathParts[3]}`
+        }
+      } else {
+        return `${randomInstance}/#${bskyPath}`
+      }
     case "nitter": {
       let search = new URLSearchParams(url.search)
 
@@ -640,7 +657,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
  * @param {boolean} forceRedirection
  * @returns {string | undefined}
  */
-function redirect(url, type, originUrl, documentUrl, incognito, forceRedirection) {
+async function redirect(url, type, originUrl, documentUrl, incognito, forceRedirection) {
   if (type != "main_frame" && type != "sub_frame" && type != "image") return
   let randomInstance
   let frontend
@@ -697,7 +714,7 @@ function redirect(url, type, originUrl, documentUrl, incognito, forceRedirection
   }
   if (!frontend) return
 
-  return rewrite(url, originUrl, frontend, randomInstance, type)
+  return await rewrite(url, originUrl, frontend, randomInstance, type)
 }
 
 /**
@@ -925,6 +942,7 @@ const defaultInstances = {
   tuboSoundcloud: ["https://tubo.media"],
   tekstoLibre: ["https://davilarek.github.io/TekstoLibre"],
   skyview: ["https://skyview.social"],
+  skychat: ["https://skychat.social"],
   priviblur: ["https://pb.bloat.cat"],
   nitter: ["https://nitter.privacydev.net"],
   pasted: ["https://pasted.drakeerv.com"],
