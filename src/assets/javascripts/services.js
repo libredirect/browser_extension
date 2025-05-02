@@ -373,6 +373,8 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       return `${randomInstance}${url.pathname}${url.search}`
     case "painterest":
       if (url.hostname == "i.pinimg.com") return `${randomInstance}/_/proxy?url=${encodeURIComponent(url.href)}`
+      const regex = /^\/pin\/[^\/]+/.exec(url.pathname)
+      if (regex) return `${randomInstance}${regex[0]}`
       return `${randomInstance}${url.pathname}${url.search}`
     case "laboratory": {
       let path = url.pathname
@@ -797,6 +799,7 @@ async function reverse(url) {
       case "quora":
       case "twitter":
       case "medium":
+      case "pinterest":
         return `${config.services[service].url}${url.pathname}${url.search}`
       case "fandom": {
         let regex = url.pathname.match(/^\/([a-zA-Z0-9-]+)\/wiki\/(.*)/)
