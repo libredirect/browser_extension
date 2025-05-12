@@ -189,6 +189,45 @@ function addressToLatLng(address) {
   }
 }
 
+async function handleToDid(handle) {
+  console.log("Have to look up DID")
+  // DNS lookup via Cloudflare first
+  try {
+    const dnsResponse = await fetch(`https://cloudflare-dns.com/dns-query?name=_atproto.${handle}&type=TXT`, {
+        headers: {
+          "accept": "application/dns-json"
+        }
+      }
+    )
+    if (dnsResponse.ok) {
+      const dnsJson = await dnsResponse.json()
+      if (dnsJson.Status == 0) {
+        // parse, strip quotes, and strip leading "did="
+        const userDid = dnsJson.Answer[0].data.replaceAll("\"","").slice(4)
+        console.log(`DNS lookup returned ${userDid}`)
+        return userDid
+      } else {
+        // If not in TXT records, get via .well-known
+        const wellKnownResponse = await fetch(
+          `https://${handle}/.well-known/atproto-did`
+        )
+        if (wellKnownResponse.ok) {
+          const wellKnownText = await wellKnownResponse.text()
+          console.log(`userDid was ${wellKnownText} via web`)
+          return wellKnownText.trim()
+        }
+      }
+    } else {
+      console.log(`Failed: ${dnsResponse.status}: ${dnsResponse}`)
+      console.log(`Failed: ${wellKnownResponse.status}: ${wellKnownResponse}`)
+    }
+    return handle
+  } catch(e) {
+    console.log(e.message)
+    return handle
+  }
+}
+
 function getQuery(url) {
   let query = ""
   if (url.searchParams.has("q")) query = url.searchParams.get("q")
@@ -288,6 +327,7 @@ export default {
   getPingCache,
   ping,
   addressToLatLng,
+  handleToDid,
   getQuery,
   prefsEncoded,
   convertMapCentre,
