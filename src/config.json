@@ -562,7 +562,7 @@
       },
       "targets": [
         "^https?:\\/{2}i\\.pinimg\\.com",
-        "^https?:\\/{2}(www\\.)?pinterest\\.com"
+        "^https?:\\/{2}((?!api\\.)[a-zA-Z]+\\.)?pinterest\\.com"
       ],
       "options": {
         "enabled": false,
