@@ -74,6 +74,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
     case "searxng":
       for (const key of [...url.searchParams.keys()]) if (key !== "q") url.searchParams.delete(key)
       return `${randomInstance}/${url.search}`
+    case "websurfx":
     case "whoogle":
       for (const key of [...url.searchParams.keys()]) if (key !== "q") url.searchParams.delete(key)
       return `${randomInstance}/search${url.search}`
@@ -904,6 +905,7 @@ const defaultInstances = {
   mozhi: ["https://mozhi.aryak.me"],
   searxng: ["https://nyc1.sx.ggtyler.dev"],
   "4get": ["https://4get.ca"],
+  websurfx: ["https://alamin655-spacex.hf.space"],
   rimgo: ["https://rimgo.vern.cc"],
   hyperpipe: ["https://hyperpipe.surge.sh"],
   osm: ["https://www.openstreetmap.org"],

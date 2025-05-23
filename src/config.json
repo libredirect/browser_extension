@@ -1148,6 +1148,15 @@
             2,
             3
           ]
+        },
+        "websurfx": {
+          "name": "Websurfx",
+          "instanceList": true,
+          "url": "https://github.com/neon-mmd/websurfx",
+          "excludeTargets": [
+            2,
+            3
+          ]
         }
       },
       "targets": [
