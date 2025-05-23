@@ -136,6 +136,18 @@
 
   <Row>
     <Label>{browser.i18n.getMessage("addYourFavoriteInstances") || "Add your favorite instances"}</Label>
+    <button
+      on:click={() => {
+        if (_options[selectedFrontend]) {
+          _options[selectedFrontend] = []
+          options.set(_options)
+        }
+      }}
+      class="add"
+      title="Remove All Instances"
+    >
+      <CloseIcon style="color: var(--active);" />
+    </button>
   </Row>
   <div dir="ltr">
     <Row>
@@ -143,10 +155,10 @@
         bind:value={addInstanceValue}
         type="url"
         placeholder="https://instance.com"
-        aria-label="Add instance input"
+        title="Add instance input"
         on:keydown={e => e.key === "Enter" && addInstance()}
       />
-      <button on:click={addInstance} class="add" aria-label="Add the instance">
+      <button on:click={addInstance} class="add" title="Add the instance">
         <AddIcon />
       </button>
     </Row>
@@ -164,7 +176,7 @@
         </span>
         <button
           class="add"
-          aria-label="Remove Instance"
+          title="Remove Instance"
           on:click={() => {
             const index = _options[selectedFrontend].indexOf(instance)
             if (index > -1) {
@@ -184,7 +196,23 @@
         {#each Object.entries(_config.networks) as [networkName, network]}
           {#if redirects[selectedFrontend] && redirects[selectedFrontend][networkName] && redirects[selectedFrontend][networkName].length > 0}
             <Row></Row>
-            <Row><Label>{network.name}</Label></Row>
+            <Row>
+              <Label>{network.name}</Label>
+              <button
+                on:click={() => {
+                  if (_options[selectedFrontend]) {
+                    for (const instance of redirects[selectedFrontend][networkName]) {
+                      if (!_options[selectedFrontend].includes(instance)) _options[selectedFrontend].push(instance)
+                    }
+                    options.set(_options)
+                  }
+                }}
+                class="add"
+                title="Add All Instances"
+              >
+                <AddIcon style="color: var(--active);" />
+              </button>
+            </Row>
             <hr />
             {#each redirects[selectedFrontend][networkName] as instance}
               <Row>
@@ -210,7 +238,7 @@
                 {#if !_options[selectedFrontend].includes(instance)}
                   <button
                     class="add"
-                    aria-label="Add instance"
+                    title="Add instance"
                     on:click={() => {
                       if (_options[selectedFrontend]) {
                         _options[selectedFrontend].push(instance)
@@ -223,7 +251,7 @@
                 {:else}
                   <button
                     class="add"
-                    aria-label="Remove Instance"
+                    title="Remove Instance"
                     on:click={() => {
                       const index = _options[selectedFrontend].indexOf(instance)
                       if (index > -1) {
