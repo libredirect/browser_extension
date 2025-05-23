@@ -698,6 +698,11 @@
           "name": "Small",
           "instanceList": true,
           "url": "https://git.private.coffee/PrivateCoffee/small"
+        },
+        "freedium": {
+          "name": "Freedium",
+          "instanceList": true,
+          "url": "https://codeberg.org/Freedium-cfd"
         }
       },
       "targets": [

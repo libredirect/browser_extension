@@ -102,6 +102,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
     }
     case "small":
     case "libMedium":
+    case "freedium":
     case "scribe": {
       const regex = url.hostname.match(/^(link|cdn-images-\d+|.*)\.medium\.com/)
       if (regex && regex.length > 1) {
@@ -889,6 +890,7 @@ const defaultInstances = {
   scribe: ["https://scribe.rip"],
   libMedium: ["https://md.vern.cc"],
   small: ["https://small.bloat.cat"],
+  freedium: ["https://freedium.cfd"],
   quetre: ["https://quetre.iket.me"],
   libremdb: ["https://libremdb.iket.me"],
   simplyTranslate: ["https://simplytranslate.org"],
