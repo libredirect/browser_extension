@@ -482,6 +482,11 @@
           "name": "Vixipy",
           "instanceList": true,
           "url": "https://codeberg.org/vixipy/Vixipy"
+        },
+        "pixivViewer": {
+          "name": "Pixiv Viewer",
+          "instanceList": true,
+          "url": "https://github.com/asadahimeka/pixiv-viewer"
         }
       },
       "targets": [

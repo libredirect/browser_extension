@@ -390,6 +390,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       }
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "pixivViewer":
     case "liteXiv":
     case "pixivFe": {
       const regex = /\/[a-z]{1,3}\/(.*)/.exec(url.pathname)
@@ -915,6 +916,7 @@ const defaultInstances = {
   painterest: ["https://pt.bloat.cat"],
   pixivFe: ["https://pixiv.perennialte.ch"],
   liteXiv: ["https://litexiv.465321.best", "https://litexiv.bloat.cat"],
+  pixivViewer: ["https://pixiv.pictures"],
   vixipy: ["https://vx.maid.zone"],
   indestructables: ["https://indestructables.private.coffee"],
   destructables: ["https://ds.vern.cc"],
