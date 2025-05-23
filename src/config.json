@@ -930,7 +930,7 @@
         "ruralDictionary": {
           "name": "Rural Dictionary",
           "instanceList": true,
-          "url": "https://codeberg.org/zortazert/rural-dictionary"
+          "url": "https://codeberg.org/cobra/rural-dict"
         }
       },
       "targets": [
