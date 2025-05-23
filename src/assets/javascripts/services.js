@@ -912,7 +912,6 @@ const defaultInstances = {
   meme: ["https://mm.vern.cc"],
   waybackClassic: ["https://wayback-classic.net"],
   tent: ["https://tent.sny.sh"],
-  wolfreeAlpha: ["https://gqq.gitlab.io", "https://uqq.gitlab.io"],
   laboratory: ["https://lab.vern.cc"],
   binternet: ["https://bn.bloat.cat"],
   painterest: ["https://pt.bloat.cat"],
