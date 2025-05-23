@@ -465,12 +465,10 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       return `${randomInstance}${url.pathname}${url.search}`
     }
     case "libremdb": {
-      if (url.pathname.startsWith("/Name")) {
-        for (const [key, value] of url.searchParams.entries()) {
-          return `${randomInstance}/title/${encodeURIComponent(key)}`
-        }
+      if (/\/((?:name|title)\/\w+)\/?$/.exec(url.pathname)) {
+        return `${randomInstance}${url.pathname}${url.search}`
       }
-      return `${randomInstance}${url.pathname}${url.search}`
+      return randomInstance
     }
     case "tuboYoutube":
       url.searchParams.delete("si")
