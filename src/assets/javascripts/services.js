@@ -578,13 +578,14 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
         return `${randomInstance}/list?playlists=${encodeURIComponent(url.searchParams.get("list"))}`
       return `${randomInstance}${url.pathname}${url.search}`
     }
-    case "koub":
+    case "koub": {
       if (url.pathname.startsWith("/view/") || url.pathname.startsWith("/stories/")) {
         return `${randomInstance}${url.pathname}${url.search}`
       }
       const accountReg = /^\/([^\/]+)\/?$/.exec(url.pathname)
       if (accountReg) return `${randomInstance}/account${url.pathname}${url.search}`
-
+      return randomInstance
+    }
     case "duckDuckGoAiChat":
       return "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1"
 
