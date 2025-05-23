@@ -211,6 +211,19 @@
       </Row>
     {/if}
 
+    {#if selectedService == "twitter"}
+      <Row>
+        <Label>{browser.i18n.getMessage("disableTwimg") || "Disable twimg.com"}</Label>
+        <Checkbox
+          checked={serviceOptions.disableTwimg}
+          onChange={e => {
+            serviceOptions.disableTwimg = e.target.checked
+            options.set(_options)
+          }}
+        />
+      </Row>
+    {/if}
+
     <Instances
       {selectedService}
       selectedFrontend={!serviceConf.frontends[serviceOptions.frontend].desktopApp ||

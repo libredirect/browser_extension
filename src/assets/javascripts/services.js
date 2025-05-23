@@ -36,11 +36,17 @@ function all(service, frontend, options, config) {
  */
 function regexArray(service, url, config, options, frontend) {
   let targetList = config.services[service].targets
-  if (frontend && "excludeTargets" in config.services[service].frontends[frontend]) {
-    if (service !== "search" || !options["search"].redirectGoogle) {
+  if (frontend) {
+    if (
+      "excludeTargets" in config.services[service].frontends[frontend] &&
+      (service !== "search" || !options["search"].redirectGoogle)
+    ) {
       targetList = targetList.filter(
         val => !config.services[service].frontends[frontend].excludeTargets.includes(targetList.indexOf(val))
       )
+    }
+    if (service === "twitter" && options["twitter"].disableTwimg) {
+      targetList = targetList.splice(2)
     }
   }
   for (const targetString in targetList) {
