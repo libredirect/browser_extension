@@ -942,6 +942,7 @@ const defaultInstances = {
   soundcloak: ["https://soundcloak.fly.dev"],
   gocook: ["https://cook.adminforge.de"],
   wikimore: ["https://wikimore.private.coffee"],
+  libreTranslate: ["https://libretranslate.com"],
 }
 
 async function getDefaults() {
