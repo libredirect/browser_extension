@@ -1299,6 +1299,25 @@
       "imageType": "svgMono",
       "url": "https://paste.libredirect.invalid"
     },
+    "office": {
+       "frontends": {
+        "cryptPad": {
+          "name": "CryptPad",
+          "instanceList": true,
+          "url": "https://cryptpad.org"
+        }
+      },
+      "targets": ["^https?:\\/{2}office\\.libredirect\\.invalid"],
+      "name": "Office",
+      "options": {
+        "enabled": false,
+        "unsupportedUrls": "bypass",
+        "frontend": "cryptPad",
+        "redirectOnlyInIncognito": false
+      },
+      "imageType": "svgMono",
+      "url": "https://office.libredirect.invalid"
+    },
     "ultimateGuitar": {
       "frontends": {
         "freetar": {

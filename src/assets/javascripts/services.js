@@ -943,6 +943,7 @@ const defaultInstances = {
   gocook: ["https://cook.adminforge.de"],
   wikimore: ["https://wikimore.private.coffee"],
   libreTranslate: ["https://libretranslate.com"],
+  cryptPad: ["https://cryptpad.org"]
 }
 
 async function getDefaults() {
