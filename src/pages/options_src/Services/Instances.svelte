@@ -102,11 +102,13 @@
       on:click={async () => {
         pinging = true
         pingCache = {}
-        for (const instance of allInstances) {
-          pingCache[instance] = { color: "lightblue", value: "pinging..." }
-          const time = await utils.ping(instance)
-          pingCache[instance] = colorTime(time)
-        }
+        await Promise.allSettled(
+          allInstances.map(async (instance) => {
+            pingCache[instance] = { color: "lightblue", value: "pinging..." }
+            const time = await utils.ping(instance)
+            pingCache[instance] = colorTime(time)
+          })
+        )
         pinging = false
       }}
       disabled={pinging}
