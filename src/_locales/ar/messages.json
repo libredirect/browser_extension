@@ -8,7 +8,7 @@
         "description": "extension description"
     },
     "switchInstance": {
-        "message": "تبديل النُسخة",
+        "message": "بدّل النُسخة",
         "description": "used in the popup"
     },
     "settings": {
@@ -84,10 +84,10 @@
         "description": "used in the settings page"
     },
     "copyOriginal": {
-        "message": "Copy Original"
+        "message": "انسخ الأصل"
     },
     "copied": {
-        "message": "تم النسخ",
+        "message": "نُسِخ",
         "description": "used in the popup"
     },
     "redirectToOriginal": {
@@ -102,46 +102,46 @@
         "message": "عن"
     },
     "unsupportedIframesHandling": {
-        "message": "التعامل مع embeds غير المدعوم"
+        "message": "معالجة التضمينات غير مدعومة"
     },
     "fetchPublicInstances": {
         "message": "اجلب النُسخ العامة"
     },
     "disable": {
-        "message": "عطّل"
+        "message": "عطِّل"
     },
     "pingInstances": {
         "message": "بينج النُسخ"
     },
     "exportSettingsToSync": {
-        "message": "Export Settings to Sync"
+        "message": "صدّر الإعدادات للمزامنة"
     },
     "importSettingsFromSync": {
-        "message": "Import Settings from Sync"
+        "message": "استورد الإعدادات من المزامنة"
     },
     "services": {
-        "message": "Services"
+        "message": "الخدمات"
     },
     "service": {
-        "message": "Service"
+        "message": "الخدمة"
     },
     "bookmarksMenu": {
-        "message": "Bookmarks menu"
+        "message": "قائمة العلامات"
     },
     "redirectOnlyInIncognito": {
-        "message": "Redirect Only in Incognito"
+        "message": "أعد التوجيه في وضع التصفح المتخفي فقط"
     },
     "bypass": {
-        "message": "Bypass"
+        "message": "تجاوز"
     },
     "block": {
-        "message": "Block"
+        "message": "احجب"
     },
     "searchHint": {
-        "message": "Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>here</a>."
+        "message": "اجعل LibRedirect محرك البحث الافتراضي. لمعرفة كيفية القيام بذلك في متصفحات كروميوم، انقر <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>هنا</a>."
     },
     "redirect": {
-        "message": "Redirect"
+        "message": "أعد التوجيه"
     },
     "autoPickInstance": {
         "message": "اختر النُسخ تلقائيًا"
@@ -156,6 +156,6 @@
         "message": "خدمة البحث"
     },
     "embedFrontend": {
-        "message": "واجهة Embed"
+        "message": "واجهة التضمين (Embed)"
     }
 }
