@@ -252,6 +252,7 @@
     --list-max-height: 400px;
     --padding: 0 0 0 10px;
     --item-color: var(--text);
+    --item-transition: none
   }
   :global(.svelte_select .slot) {
     display: flex;
