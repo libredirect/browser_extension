@@ -24,8 +24,8 @@
       if (data.version != browser.runtime.getManifest().version) {
         alert("Importing from a previous version. Be careful")
       }
-      data = await servicesHelper.processUpdate(data)
-      options.set(data)
+      await servicesHelper.processUpdate(data)
+      options.set(await utils.getOptions())
     }
     reader.onerror = error => {
       console.log("error", error)
@@ -53,16 +53,14 @@
       if (data.version != browser.runtime.getManifest().version) {
         alert("Importing from a previous version. Be careful")
       }
-      data = await servicesHelper.processUpdate(data)
-      options.set(data)
+      await servicesHelper.processUpdate(data)
+      options.set(await utils.getOptions())
     })
   }
 
   async function resetSettings() {
-    browser.storage.local.clear(async () => {
-      const data = await servicesHelper.initDefaults()
-      options.set(data)
-    })
+    await servicesHelper.initDefaults()
+    options.set(await utils.getOptions())
   }
 </script>
 

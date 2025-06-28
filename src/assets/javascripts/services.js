@@ -1034,11 +1034,7 @@ function processUpdate(_options) {
       }
     }
 
-    browser.storage.local.clear(() => {
-      browser.storage.local.set({ options }, () => {
-        resolve(options)
-      })
-    })
+    browser.storage.local.clear(() => browser.storage.local.set({ options }, () => resolve()))
   })
 }
 
