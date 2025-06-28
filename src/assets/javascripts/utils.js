@@ -24,14 +24,14 @@ function getNextInstance(currentInstanceUrl, instances) {
  * @param {URL} url
  */
 function protocolHost(url) {
-  url.pathname = url.pathname.replace(/\/$/, "")
-  if (url.username && url.password) return `${url.protocol}//${url.username}:${url.password}@${url.host}${url.pathname}`
+  const pathname = url.pathname.replace(/\/$/, "")
 
   // workaround
-  if (url.pathname == "/TekstoLibre/" && url.host.endsWith("github.io"))
-    return `${url.protocol}//${url.host}${url.pathname.slice(0, -1)}`
+  if (pathname == "/TekstoLibre" && url.host.endsWith("github.io"))
+    return `${url.protocol}//${url.host}${pathname.slice(0, -1)}`
 
-  const pathname = url.pathname != "/" ? url.pathname : ""
+  if (url.username && url.password) return `${url.protocol}//${url.username}:${url.password}@${url.host}${pathname}`
+
   return `${url.protocol}//${url.host}${pathname}`
 }
 
