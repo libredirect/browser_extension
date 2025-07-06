@@ -574,6 +574,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
 
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "ytifyMusic":
     case "ytify": {
       if (url.pathname.startsWith("/watch"))
         return `${randomInstance}/?s=${encodeURIComponent(url.searchParams.get("v"))}`
@@ -948,6 +949,7 @@ const defaultInstances = {
   shoelace: ["https://shoelace.mint.lgbt"],
   skunkyArt: ["https://skunky.bloat.cat"],
   ytify: ["https://ytify.pp.ua"],
+  ytifyMusic: ["https://ytify.pp.ua"],
   nerdsForNerds: ["https://nn.vern.cc"],
   ducksForDucks: ["https://ducksforducks.private.coffee"],
   koub: ["https://koub.clovius.club"],
