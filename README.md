@@ -53,7 +53,7 @@ npm run build
 4. Click on the gear shaped `settings` button and select `Install Add-on From File...`
 5. Select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
 
-#### Run on Chromium
+#### Run on Chromium (Note: This extention is not compatible with Chomium based browsers which enforce Manifest v3)
 
 1. Open `chrome://extensions`
 2. Enable `dev mode`
