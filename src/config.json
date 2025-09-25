@@ -156,6 +156,12 @@
     },
     "youtubeMusic": {
       "frontends": {
+        "ytifyMusic": {
+          "name": "ytify",
+          "embeddable": false,
+          "instanceList": true,
+          "url": "https://github.com/n-ce/ytify/"
+        },
         "hyperpipe": {
           "name": "Hyperpipe",
           "instanceList": true,
