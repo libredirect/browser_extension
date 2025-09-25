@@ -1393,7 +1393,7 @@
         }
       },
       "targets": [
-        "^https?:\\/{2}(www\\.)?threads\\.net"
+        "^https?:\\/{2}(www\\.)?threads\\.(net|com)"
       ],
       "name": "Threads",
       "options": {
