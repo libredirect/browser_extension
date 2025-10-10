@@ -244,6 +244,11 @@
           "name": "Skyview",
           "instanceList": true,
           "url": "https://github.com/badlogic/skyview"
+        },
+        "skylib": {
+          "name": "Skylib",
+          "instanceList": true,
+          "url": "https://codeberg.org/bg443/skylib-backend"
         }
       },
       "targets": [
