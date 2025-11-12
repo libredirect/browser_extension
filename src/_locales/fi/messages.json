@@ -4,7 +4,7 @@
         "description": "name of the extension"
     },
     "extensionDescription": {
-        "message": "Selainlaajennus joka uudelleenohjaa suositut sivustot vaihtoehtoisiin yksityisyysystävällisiin käyttöliittymiin",
+        "message": "Selainlaajennus, joka uudelleenohjaa suositut sivustot vaihtoehtoisiin yksityisyysystävällisiin käyttöliittymiin",
         "description": "description of the extension"
     },
     "switchInstance": {
@@ -110,7 +110,7 @@
         "message": "Poista käytöstä"
     },
     "pingInstances": {
-        "message": "Kokeile yhteyttä instanssiin"
+        "message": "Kokeile yhteyttä instansseihin"
     },
     "exportSettingsToSync": {
         "message": "Vie asetukset Sync:iin"
