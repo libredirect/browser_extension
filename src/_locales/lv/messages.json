@@ -1,1 +1,95 @@
-{}
+{
+    "extensionName": {
+        "message": "LibRedirect"
+    },
+    "settings": {
+        "message": "Iestatījumi"
+    },
+    "general": {
+        "message": "Vispārīgie"
+    },
+    "theme": {
+        "message": "Motīvs"
+    },
+    "light": {
+        "message": "Gaišs"
+    },
+    "dark": {
+        "message": "Tumšs"
+    },
+    "enable": {
+        "message": "Iespējot"
+    },
+    "frontend": {
+        "message": "Saskarne"
+    },
+    "both": {
+        "message": "abus"
+    },
+    "copied": {
+        "message": "Nokopēts"
+    },
+    "about": {
+        "message": "Par paplašinājumu"
+    },
+    "disable": {
+        "message": "Atspējot"
+    },
+    "services": {
+        "message": "Pakalpojumi"
+    },
+    "service": {
+        "message": "Pakalpojums"
+    },
+    "bypass": {
+        "message": "Apiet"
+    },
+    "switchInstance": {
+        "message": "Mainīt serveri (instanci)"
+    },
+    "importSettings": {
+        "message": "Ievietot iestatījumus"
+    },
+    "exportSettings": {
+        "message": "Izgūt iestatījumus"
+    },
+    "resetSettings": {
+        "message": "Atiestatīt iestatījumus"
+    },
+    "redirectType": {
+        "message": "Novirzīšanas veids"
+    },
+    "copyOriginal": {
+        "message": "Kopēt oriģinālu"
+    },
+    "bookmarksMenu": {
+        "message": "Grāmatzīmju izvēlne"
+    },
+    "autoPickInstance": {
+        "message": "Automātiski atlasīt serveri (instanci)"
+    },
+    "extensionDescription": {
+        "message": "Pārlūka paplašinājums, kas novirza populāras vietnes uz konfidencialitātes drošām saskarnes un servera programmatūras alternatīvām"
+    },
+    "excludeFromRedirecting": {
+        "message": "Novirzīšanas izņēmumi (Izslēgt no novirzīšanas)"
+    },
+    "showInPopup": {
+        "message": "Rādīt uznirstošajā logā"
+    },
+    "onlyEmbedded": {
+        "message": "tikai iebūvēto"
+    },
+    "onlyNotEmbedded": {
+        "message": "tikai neiebūvēto"
+    },
+    "addYourFavoriteInstances": {
+        "message": "Pievienojiet savus iecienītākos serverus (instances)"
+    },
+    "redirectToOriginal": {
+        "message": "Novirzīt uz oriģinālo vietni"
+    },
+    "fetchPublicInstances": {
+        "message": "Iegūt publiskos serverus (instances)"
+    }
+}
