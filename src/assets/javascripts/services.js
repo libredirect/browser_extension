@@ -597,6 +597,9 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
     case "duckDuckGoAiChat":
       return "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1"
 
+    case "protonLumo":
+      return "https://lumo.proton.me/"
+
     case "soundcloak":
       if (url.pathname.startsWith("/feed") || url.pathname.startsWith("/stream")) {
         // this feature requires authentication and is unsupported, so just redirect to main page
