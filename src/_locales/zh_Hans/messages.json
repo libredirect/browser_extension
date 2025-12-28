@@ -94,14 +94,14 @@
         "description": "Used in context menus when right clicking on a page/tab"
     },
     "redirectLink": {
-        "message": "尝试进行重定向",
+        "message": "尝试重定向",
         "description": "Used in context menus when right clicking on a hyperlink"
     },
     "about": {
         "message": "关于"
     },
     "unsupportedIframesHandling": {
-        "message": "处理未支持的嵌入页面的方式"
+        "message": "未支持的嵌入页面的处理方式"
     },
     "fetchPublicInstances": {
         "message": "获取公共实例"
