@@ -513,6 +513,11 @@
           "name": "BreezeWiki",
           "instanceList": true,
           "url": "https://breezewiki.com"
+        },
+        "phantom": {
+          "name": "Phantom",
+          "instanceList": true,
+          "url": "https://codeberg.org/phantom-org/phantom"
         }
       },
       "targets": [

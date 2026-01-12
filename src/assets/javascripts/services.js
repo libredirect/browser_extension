@@ -201,6 +201,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       if (query) return `${randomInstance}/search?query="${query}${mapCentre}&${utils.prefsEncoded(prefs)}`
       return `${randomInstance}/${mapCentre}&${utils.prefsEncoded(prefs)}`
     }
+    case "phantom":
     case "breezeWiki": {
       let wiki,
         urlpath = ""
@@ -957,7 +958,8 @@ const defaultInstances = {
   gocook: ["https://cook.adminforge.de"],
   wikimore: ["https://wikimore.private.coffee"],
   libreTranslate: ["https://libretranslate.com"],
-  cryptPad: ["https://cryptpad.org"]
+  cryptPad: ["https://cryptpad.org"],
+  phantom: ["https://phantom.kuuro.net"]
 }
 
 async function getDefaults() {
