@@ -399,6 +399,12 @@
     },
     "instagram": {
       "frontends": {
+        "kittygram": {
+          "name": "kittygram",
+          "instanceList": true,
+          "url": "https://codeberg.org/irelephant/kittygram",
+          "localhost": true
+        },
         "proxigram": {
           "name": "Proxigram",
           "instanceList": true,
@@ -412,7 +418,8 @@
       "name": "Instagram",
       "options": {
         "enabled": false,
-        "frontend": "proxigram",
+        "frontend": "kittygram",
+        "embedFrontend": "kittygram",
         "unsupportedUrls": "bypass",
         "instance": "public",
         "redirectOnlyInIncognito": false
@@ -1319,7 +1326,7 @@
       "url": "https://paste.libredirect.invalid"
     },
     "office": {
-       "frontends": {
+      "frontends": {
         "cryptPad": {
           "name": "CryptPad",
           "instanceList": true,
