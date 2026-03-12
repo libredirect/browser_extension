@@ -35,24 +35,21 @@ function all(service, frontend, options, config) {
  * @param {string} frontend
  */
 function regexArray(service, url, config, options, frontend) {
-  let targetList = config.services[service].targets
+  const targetList = new Set(config.services[service].targets)
   if (frontend) {
     if (
       "excludeTargets" in config.services[service].frontends[frontend] &&
       (service !== "search" || !options["search"].redirectGoogle)
     ) {
-      targetList = targetList.filter(
-        val => !config.services[service].frontends[frontend].excludeTargets.includes(targetList.indexOf(val))
-      )
+      for (const target of config.services[service].frontends[frontend].excludeTargets)
+        targetList.delete(target)
     }
-    if (service === "twitter" && options["twitter"].disableTwimg) {
-      targetList = targetList.splice(2)
-    }
+    if (service === "twitter" && options["twitter"].disableTwimg)
+      targetList.delete(String.raw`^https?:\/{2}(pbs\.|video\.)twimg\.com\/`)
   }
-  for (const targetString in targetList) {
-    const target = new RegExp(targetList[targetString])
-    if (target.test(url.href)) return true
-  }
+  for (const target of targetList)
+    if (new RegExp(target).test(url.href))
+      return true
   return false
 }
 
