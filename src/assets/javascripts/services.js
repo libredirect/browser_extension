@@ -198,7 +198,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       }
 
       const query = utils.getQuery(url)
-      if (query) return `${randomInstance}/search?query="${query}${mapCentre}&${utils.prefsEncoded(prefs)}`
+      if (query) return `${randomInstance}/search?query=${query}${mapCentre}&${utils.prefsEncoded(prefs)}`
       return `${randomInstance}/${mapCentre}&${utils.prefsEncoded(prefs)}`
     }
     case "phantom":
