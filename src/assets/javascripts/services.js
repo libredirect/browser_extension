@@ -46,7 +46,7 @@ function regexArray(service, url, config, options, frontend) {
       )
     }
     if (service === "twitter" && options["twitter"].disableTwimg) {
-      targetList = targetList.splice(2, 1)
+      targetList.splice(2, 1)
     }
   }
   for (const targetString in targetList) {
