@@ -231,6 +231,11 @@
           "name": "DuckDuckGo AI Chat",
           "instanceList": false,
           "url": "https://duckduckgo.com/duckduckgo-help-pages/aichat/"
+        },
+        "protonLumo": {
+          "name": "Lumo by Proton",
+          "instanceList": false,
+          "url": "https://lumo.proton.me/"
         }
       },
       "targets": ["^https?:\\/{2}chatgpt\\.com"],
