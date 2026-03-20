@@ -938,6 +938,7 @@ const defaultInstances = {
   structables: ["https://structables.private.coffee"],
   safetwitch: ["https://safetwitch.drgns.space"],
   twineo: ["https://twineo.exozy.me"],
+  kittygram: ["https://kittygram.irelephant.net/"],
   proxigram: ["https://ig.opnxng.com"],
   tuboYoutube: ["https://tubo.media"],
   tuboSoundcloud: ["https://tubo.media"],
