@@ -943,6 +943,7 @@ const defaultInstances = {
   tuboSoundcloud: ["https://tubo.media"],
   tekstoLibre: ["https://davilarek.github.io/TekstoLibre"],
   skyview: ["https://skyview.social"],
+  skylib: ["https://skylib.coffee"],
   priviblur: ["https://pb.bloat.cat"],
   nitter: ["https://nitter.privacydev.net"],
   pasted: ["https://pasted.drakeerv.com"],
