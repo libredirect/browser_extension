@@ -956,7 +956,7 @@ const defaultInstances = {
   pasty: ["https://pasty.lus.pm"],
   freetar: ["https://freetar.de"],
   ultimateTab: ["https://ultimate-tab.com"],
-  ratAintTieba: ["https://rat.fis.land"],
+  ratAintTieba: ["https://ti.opnxng.com"],
   shoelace: ["https://shoelace.mint.lgbt"],
   skunkyArt: ["https://skunky.bloat.cat"],
   ytify: ["https://ytify.pp.ua"],
