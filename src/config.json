@@ -591,6 +591,12 @@
           "instanceList": true,
           "url": "https://codeberg.org/thirtysix/painterest",
           "embeddable": true
+        },
+        "pinless": {
+          "name": "Pinless",
+          "instanceList": true,
+          "url": "https://github.com/bunk-im/pinless",
+          "embeddable": true
         }
       },
       "targets": [

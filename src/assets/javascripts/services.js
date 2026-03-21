@@ -385,6 +385,9 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       const regex = /^\/pin\/[^\/]+/.exec(url.pathname)
       if (regex) return `${randomInstance}${regex[0]}`
       return `${randomInstance}${url.pathname}${url.search}`
+    case "pinless":
+      if (url.hostname == "i.pinimg.com") return `${randomInstance}/image?url=${encodeURIComponent(url.href)}`
+      return `${randomInstance}${url.pathname}${url.search}`
     case "laboratory": {
       let path = url.pathname
       if (path == "/") path = ""
@@ -930,6 +933,7 @@ const defaultInstances = {
   laboratory: ["https://lab.vern.cc"],
   binternet: ["https://bn.bloat.cat"],
   painterest: ["https://pt.bloat.cat"],
+  pinless: ["https://pinterest.bunk.im/"],
   pixivFe: ["https://pixiv.perennialte.ch"],
   liteXiv: ["https://litexiv.465321.best", "https://litexiv.bloat.cat"],
   pixivViewer: ["https://pixiv.pictures"],
