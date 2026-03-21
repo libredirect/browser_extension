@@ -907,13 +907,13 @@ const defaultInstances = {
   small: ["https://small.bloat.cat"],
   freedium: ["https://freedium.cfd"],
   quetre: ["https://quetre.iket.me"],
-  libremdb: ["https://libremdb.iket.me"],
+  libremdb: ["https://libremdb.iket.me", "https://libremdb.fbin.in"],
   simplyTranslate: ["https://simplytranslate.org"],
-  translite: ["https://tl.bloat.cat"],
+  translite: ["https://tl.bloat.cat", "https://tl.fbin.in"],
   rens: ["https://ren.maid.zone"],
   mozhi: ["https://mozhi.aryak.me"],
   searxng: ["https://nyc1.sx.ggtyler.dev"],
-  "4get": ["https://4get.ca"],
+  "4get": ["https://4get.ca", "https://4g.flossboxin.org.in", "https://fossq.com"],
   websurfx: ["https://alamin655-spacex.hf.space"],
   rimgo: ["https://rimgo.vern.cc"],
   hyperpipe: ["https://hyperpipe.surge.sh"],
@@ -967,9 +967,9 @@ const defaultInstances = {
   koub: ["https://koub.clovius.club"],
   soundcloak: ["https://soundcloak.fly.dev"],
   gocook: ["https://cook.adminforge.de"],
-  wikimore: ["https://wikimore.private.coffee"],
+  wikimore: ["https://wikimore.private.coffee", "https://w.fbin.in"],
   libreTranslate: ["https://libretranslate.com"],
-  cryptPad: ["https://cryptpad.org"],
+  cryptPad: ["https://cryptpad.org", "https://cpad.fbin.in"],
   phantom: ["https://phantom.kuuro.net"]
 }
 
