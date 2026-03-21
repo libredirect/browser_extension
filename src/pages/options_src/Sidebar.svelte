@@ -5,6 +5,7 @@
   import GeneralIcon from "../icons/GeneralIcon.svelte"
   import ServicesIcon from "../icons/ServicesIcon.svelte"
   import AboutIcon from "../icons/AboutIcon.svelte"
+  const version = browser.runtime.getManifest().version
 </script>
 
 <div>
@@ -20,6 +21,7 @@
     <AboutIcon class="margin margin_{document.body.dir}" />
     {browser.i18n.getMessage("about") || "About"}
   </a>
+  <a href="https://github.com/libredirect/browser_extension/releases/tag/v{version}">v{version}</a>
 </div>
 
 <style>
