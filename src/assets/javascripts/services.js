@@ -907,6 +907,7 @@ const defaultInstances = {
   libremdb: ["https://libremdb.iket.me"],
   simplyTranslate: ["https://simplytranslate.org"],
   translite: ["https://tl.bloat.cat"],
+  rens: ["https://ren.maid.zone"],
   mozhi: ["https://mozhi.aryak.me"],
   searxng: ["https://nyc1.sx.ggtyler.dev"],
   "4get": ["https://4get.ca"],
@@ -986,7 +987,7 @@ async function getDefaults() {
     regex: [],
   }
   options.theme = "detect"
-  options.popupServices = ["youtube", "tiktok", "imgur", "reddit", "quora", "translate", "maps"]
+  options.popupServices = ["youtube", "tiktok", "imgur", "reddit", "quora", "translate", "googleLens", "maps"]
   options.fetchInstances = "github"
   options.redirectOnlyInIncognito = false
   options = { ...options, ...defaultInstances }

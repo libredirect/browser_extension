@@ -1247,6 +1247,29 @@
       "imageType": "svgMono",
       "url": "https://translate.libredirect.invalid"
     },
+    "googleLens": {
+      "frontends": {
+       "rens": {
+          "name": "rens",
+          "instanceList": true,
+          "url": "https://git.maid.zone/stuff/rens"
+        }
+      },
+      "targets": [
+        "^https?:\\/{2}lens\\.google(\\.[a-z]{2,3}){1,2}\\/",
+        "^https?:\\/{2}googlelens\\.libredirect\\.invalid"
+      ],
+      "name": "Google Lens",
+      "options": {
+        "enabled": false,
+        "frontend": "rens",
+        "unsupportedUrls": "bypass",
+        "instance": "public",
+        "redirectOnlyInIncognito": false
+      },
+      "imageType": "svgMono",
+      "url": "https://googlelens.libredirect.invalid"
+    },
     "maps": {
       "frontends": {
         "osm": {
