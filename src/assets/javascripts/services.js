@@ -927,6 +927,7 @@ const defaultInstances = {
   suds: ["https://sd.vern.cc"],
   unfunny: ["https://uf.vern.cc"],
   soprano: ["https://sp.vern.cc"],
+  mezzo: ["https://tenor.fsky.io"],
   meme: ["https://mm.vern.cc"],
   waybackClassic: ["https://wayback-classic.net"],
   tent: ["https://tent.sny.sh"],

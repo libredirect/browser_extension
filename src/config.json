@@ -934,6 +934,11 @@
           "name": "Soprano",
           "instanceList": true,
           "url": "https://git.vern.cc/cobra/Soprano"
+        },
+        "mezzo": {
+          "name": "Mezzo",
+          "instanceList": true,
+          "url": "https://foundry.fsky.io/fsky/mezzo"
         }
       },
       "targets": [
