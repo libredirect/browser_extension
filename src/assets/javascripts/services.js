@@ -201,6 +201,104 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       if (query) return `${randomInstance}/search?query=${query}${mapCentre}&${utils.prefsEncoded(prefs)}`
       return `${randomInstance}/${mapCentre}&${utils.prefsEncoded(prefs)}`
     }
+    case "geo": {
+      if (originUrl && originUrl.host === "earth.google.com") return null
+
+      // Manejo especial para URLs de consent.google.com
+      if (url.host.includes("consent.google.com") && url.searchParams.has("continue")) {
+        const continueUrl = decodeURIComponent(url.searchParams.get("continue"))
+        try {
+          const innerUrl = new URL(continueUrl)
+          if (innerUrl.searchParams.has("q")) {
+            const qParam = innerUrl.searchParams.get("q")
+            const coordMatch = qParam.match(/^(-?\d+\.?\d*),(-?\d+\.?\d*)/)
+            if (coordMatch) {
+              const [, lat, lon] = coordMatch
+              return `geo:${lat},${lon}?z=15`
+            }
+          }
+          if (innerUrl.searchParams.has("ll")) {
+            const [lat, lon] = innerUrl.searchParams.get("ll").split(",")
+            return `geo:${lat},${lon}?z=15`
+          }
+        } catch (e) {
+          // Si no se puede parsear, continuar con la lógica normal
+        }
+      }
+
+      let mapCentre = ""
+      const mapCentreData = utils.convertMapCentre(url)
+      if (mapCentreData.zoom && mapCentreData.lon && mapCentreData.lat) {
+        mapCentre = `geo:${mapCentreData.lat},${mapCentreData.lon}?z=${mapCentreData.zoom}`
+      }
+
+      if (url.pathname.includes("/embed")) {
+        const query = utils.getQuery(url)
+        let { coordinate } = utils.addressToLatLng(query)
+        if (coordinate) {
+          const [lat, lon] = coordinate.split(",")
+          return `geo:${lat},${lon}?z=15`
+        }
+        return mapCentre || null
+      }
+
+      if (url.pathname.includes("/dir")) {
+        const regex1 = /\/dir\/([^@/]+)\/([^@/]+)\/@-?\d[0-9.]*,-?\d[0-9.]*,\d{1,2}[.z]/.exec(url.pathname)
+        const regex2 = /\/dir\/([^@/]+)\//.exec(url.pathname)
+        if (regex1) {
+          const origin = utils.addressToLatLng(decodeURIComponent(regex1[1])).coordinate ?? ""
+          if (origin) {
+            const [lat, lon] = origin.split(",")
+            return `geo:${lat},${lon}?z=15`
+          }
+        } else if (regex2) {
+          const origin = utils.addressToLatLng(decodeURIComponent(regex2[1])).coordinate ?? ""
+          if (origin) {
+            const [lat, lon] = origin.split(",")
+            return `geo:${lat},${lon}?z=15`
+          }
+        } else {
+          const origin = utils.addressToLatLng(url.searchParams.get("origin")).coordinate ?? ""
+          if (origin) {
+            const [lat, lon] = origin.split(",")
+            return `geo:${lat},${lon}?z=15`
+          }
+        }
+        return mapCentre || null
+      }
+
+      const placeRegex = /\/place\/(.*?)\//
+      if (url.pathname.match(placeRegex)) {
+        const query = url.pathname.match(placeRegex)[1]
+        const { coordinate } = utils.addressToLatLng(decodeURIComponent(query))
+        if (coordinate) {
+          const [lat, lon] = coordinate.split(",")
+          return `geo:${lat},${lon}?z=15`
+        }
+        return mapCentre || null
+      }
+
+      if (url.searchParams.has("ll")) {
+        const [mlat, mlon] = url.searchParams.get("ll").split(",")
+        return `geo:${mlat},${mlon}?z=15`
+      }
+
+      if (url.searchParams.has("viewpoint")) {
+        const [mlat, mlon] = url.searchParams.get("viewpoint").split(",")
+        return `geo:${mlat},${mlon}?z=15`
+      }
+
+      if (url.searchParams.has("q")) {
+        const qParam = url.searchParams.get("q")
+        const coordMatch = qParam.match(/^(-?\d+\.?\d*),(-?\d+\.?\d*)/)
+        if (coordMatch) {
+          const [, lat, lon] = coordMatch
+          return `geo:${lat},${lon}?z=15`
+        }
+      }
+
+      return mapCentre || null
+    }
     case "phantom":
     case "breezeWiki": {
       let wiki,

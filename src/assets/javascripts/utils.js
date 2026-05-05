@@ -203,7 +203,7 @@ function convertMapCentre(url) {
   let [lat, lon, zoom] = [null, null, null]
   const reg = url.pathname.match(/@(-?\d[0-9.]*),(-?\d[0-9.]*),(\d{1,2})[.z]/)
   if (reg) {
-    ;[, lon, lat, zoom] = reg
+    ;[, lat, lon, zoom] = reg
   } else if (url.searchParams.has("center")) {
     // Set map centre if present
     ;[lat, lon] = url.searchParams.get("center").split(",")
