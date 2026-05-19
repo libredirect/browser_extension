@@ -137,7 +137,7 @@
         "message": "屏蔽"
     },
     "searchHint": {
-        "message": "请将 LibRedirect 设为默认搜索引擎。对于 Chromium 的操作方法，点击<a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>此处</a>了解。"
+        "message": "请将 LibRedirect 设为默认搜索引擎。Chromium 浏览器的操作方法，点击<a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>此处</a>了解。"
     },
     "redirect": {
         "message": "重定向"
