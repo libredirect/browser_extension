@@ -141,5 +141,14 @@
     },
     "redirect": {
         "message": "Redirect"
+    },
+    "redirectGoogle": {
+        "message": "Redirecionar o Google"
+    },
+    "search_frontend": {
+        "message": "Pequisar Frontend"
+    },
+    "searchService": {
+        "message": "Serviço de pesquisa"
     }
 }
