@@ -137,7 +137,7 @@
         "message": "Zablokuj"
     },
     "searchHint": {
-        "message": "Ustaw LibRedirect jako domyślną wyszukiwarkę. Aby dowiedzieć się, jak to zrobić w przeglądarkach Chromium, kliknij <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>tutaj</a>."
+        "message": "Ustaw LibRedirect jako domyślną wyszukiwarkę. Aby dowiedzieć się, jak to zrobić w przeglądarkach Chromium, kliknij <a href='https://libredirect.manerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>tutaj</a>."
     },
     "redirect": {
         "message": "Przekieruj"

@@ -202,7 +202,7 @@
           {@html browser.i18n.getMessage("searchHint") ||
             `Set LibRedirect as Default Search Engine. For how to do in chromium browsers, click
           <a
-            href="https://libredirect.github.io/docs.html#search_engine_chromium"
+            href="https://libredirect.manerakai.com/docs.html#search_engine_chromium"
             target="_blank"
             rel="noopener noreferrer"
             >here

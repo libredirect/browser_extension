@@ -137,7 +137,7 @@
         "message": "封鎖"
     },
     "searchHint": {
-        "message": "設定 LibRedirect 為預設搜尋引擎。如要了解如何在 Chromium 瀏覽器中執行操作，請點擊<a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>此處</a>。"
+        "message": "設定 LibRedirect 為預設搜尋引擎。如要了解如何在 Chromium 瀏覽器中執行操作，請點擊<a href='https://libredirect.manerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>此處</a>。"
     },
     "redirect": {
         "message": "重新導向"

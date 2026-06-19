@@ -137,7 +137,7 @@
         "message": "表示しない"
     },
     "searchHint": {
-        "message": "LibRedirect を標準の検索エンジンに設定します。chromium ブラウザーでのやり方は、<a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>こちらをクリック</a>。"
+        "message": "LibRedirect を標準の検索エンジンに設定します。chromium ブラウザーでのやり方は、<a href='https://libredirect.manerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>こちらをクリック</a>。"
     },
     "redirect": {
         "message": "転送する"

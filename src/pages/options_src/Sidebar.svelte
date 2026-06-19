@@ -17,7 +17,7 @@
     <ServicesIcon class="margin margin_{document.body.dir}" />
     {browser.i18n.getMessage("services") || "Services"}
   </a>
-  <a href="https://libredirect.github.io" target="_blank" rel="noopener noreferrer">
+  <a href="https://libredirect.manerakai.com" target="_blank" rel="noopener noreferrer">
     <AboutIcon class="margin margin_{document.body.dir}" />
     {browser.i18n.getMessage("about") || "About"}
   </a>
