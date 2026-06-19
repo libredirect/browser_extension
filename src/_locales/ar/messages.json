@@ -138,7 +138,7 @@
         "message": "احجب"
     },
     "searchHint": {
-        "message": "اجعل LibRedirect محرك البحث الافتراضي. لمعرفة كيفية القيام بذلك في متصفحات كروميوم، انقر <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>هنا</a>."
+        "message": "اجعل LibRedirect محرك البحث الافتراضي. لمعرفة كيفية القيام بذلك في متصفحات كروميوم، انقر <a href='https://libredirect.manerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>هنا</a>."
     },
     "redirect": {
         "message": "أعد التوجيه"

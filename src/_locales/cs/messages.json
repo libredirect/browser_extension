@@ -137,7 +137,7 @@
         "message": "Blokovat"
     },
     "searchHint": {
-        "message": "Nastavte LibRedirect jako výchozí vyhledávač. Návod pro Chromium prohlížeče naleznete <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>zde</a>."
+        "message": "Nastavte LibRedirect jako výchozí vyhledávač. Návod pro Chromium prohlížeče naleznete <a href='https://libredirect.manerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>zde</a>."
     },
     "redirect": {
         "message": "Přesměrovat"

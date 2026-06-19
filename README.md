@@ -6,7 +6,7 @@ A browser extension that redirects YouTube, Twitter, TikTok... requests to alter
     <img src ="./img/badge-amo.png" height=60 >
 </a>
 &nbsp;
-<a href="https://libredirect.github.io/download_chromium.html">
+<a href="https://libredirect.manerakai.com/download_chromium.html">
     <img src ="./img/badge-chromium.png" height=60 >
 </a>
 

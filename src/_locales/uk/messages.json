@@ -137,7 +137,7 @@
         "message": "Block"
     },
     "searchHint": {
-        "message": "Установити LibRedirect усталеним засобом пошуку. Як це зробити у браузерах на основі chromium, читайте <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>тут</a>."
+        "message": "Установити LibRedirect усталеним засобом пошуку. Як це зробити у браузерах на основі chromium, читайте <a href='https://libredirect.manerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>тут</a>."
     },
     "redirect": {
         "message": "Переспрямувати"

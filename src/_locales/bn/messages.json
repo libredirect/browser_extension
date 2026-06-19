@@ -137,7 +137,7 @@
         "message": "Block"
     },
     "searchHint": {
-        "message": "লিবরিডাইরেক্টকে সহজাত অনুসন্ধান যন্ত্র হিসেবে রাখো। ক্রোমিয়াম ব্রাউজারে এটা করার জন্য <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>এখানে টিপ দাও</a>।"
+        "message": "লিবরিডাইরেক্টকে সহজাত অনুসন্ধান যন্ত্র হিসেবে রাখো। ক্রোমিয়াম ব্রাউজারে এটা করার জন্য <a href='https://libredirect.manerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>এখানে টিপ দাও</a>।"
     },
     "redirect": {
         "message": "পুনর্নির্দেশ"

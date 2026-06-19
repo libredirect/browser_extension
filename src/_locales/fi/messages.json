@@ -137,7 +137,7 @@
         "message": "Estä"
     },
     "searchHint": {
-        "message": "Aseta LibRedirect oletushakukoneeksi. Ohjeita varten chromium-selaimissa, paina <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>tästä</a>."
+        "message": "Aseta LibRedirect oletushakukoneeksi. Ohjeita varten chromium-selaimissa, paina <a href='https://libredirect.manerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>tästä</a>."
     },
     "redirect": {
         "message": "Uudelleenohjaa"

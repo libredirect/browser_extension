@@ -222,7 +222,7 @@
                   <a href={instance} target="_blank" rel="noopener noreferrer">{instance}</a>
                   {#if blacklist.cloudflare.includes(instance)}
                     <a
-                      href="https://libredirect.github.io/docs.html#instances"
+                      href="https://libredirect.manerakai.com/docs.html#instances"
                       target="_blank"
                       rel="noopener noreferrer"
                       style="color:red;"

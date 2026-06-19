@@ -137,7 +137,7 @@
         "message": "Blokiraj"
     },
     "searchHint": {
-        "message": "Postavi LibRedirect kao standardnu tražilicu. <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>Ovdje</a> pogledaj kako se to radi u Chromium web pregledniku."
+        "message": "Postavi LibRedirect kao standardnu tražilicu. <a href='https://libredirect.manerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>Ovdje</a> pogledaj kako se to radi u Chromium web pregledniku."
     },
     "redirect": {
         "message": "Preusmjeri"

@@ -126,7 +126,7 @@
         "message": "Megkerülés"
     },
     "searchHint": {
-        "message": "LibRedirect beállítása alapértelmezett keresőmotornak. A Chromium böngészőkben történő művelethez kattintson <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>ide</a>."
+        "message": "LibRedirect beállítása alapértelmezett keresőmotornak. A Chromium böngészőkben történő művelethez kattintson <a href='https://libredirect.manerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>ide</a>."
     },
     "searchService": {
         "message": "Szolgáltatás keresése"

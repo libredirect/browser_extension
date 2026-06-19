@@ -25,7 +25,7 @@
   "bugs": {
     "url": "https://github.com/libredirect/libredirect/issues"
   },
-  "homepage": "https://libredirect.github.io",
+  "homepage": "https://libredirect.manerakai.com",
   "devDependencies": {
     "prettier": "3.3.3"
   },

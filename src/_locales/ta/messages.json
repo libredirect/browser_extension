@@ -117,7 +117,7 @@
         "message": "தொகுதி"
     },
     "searchHint": {
-        "message": "இயல்புநிலை தேடுபொறியாக Lirbredirect ஐ அமைக்கவும். குரோமியம் உலாவிகளில் எவ்வாறு செய்வது என்பதற்கு, <a href = 'https: //libredirect.github.io/docs.html#search_engine_chromium' target = '_ வெற்று' rel = 'noopener norferrer'> இங்கே </a>."
+        "message": "இயல்புநிலை தேடுபொறியாக Lirbredirect ஐ அமைக்கவும். குரோமியம் உலாவிகளில் எவ்வாறு செய்வது என்பதற்கு, <a href = 'https: //libredirect.manerakai.com/docs.html#search_engine_chromium' target = '_ வெற்று' rel = 'noopener norferrer'> இங்கே </a>."
     },
     "redirect": {
         "message": "திருப்பி விடுங்கள்"

@@ -6,7 +6,7 @@
         "message": "Kunin ang mga publikong instansya"
     },
     "searchHint": {
-        "message": "Itakda ang LibRedirect bilang Default na Search Engine. Para sa kung paano gawin sa mga Chromium browser, mag-click <a href='https://libredirect.github.io/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>dito</a>."
+        "message": "Itakda ang LibRedirect bilang Default na Search Engine. Para sa kung paano gawin sa mga Chromium browser, mag-click <a href='https://libredirect.manerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>dito</a>."
     },
     "unsupportedIframesHandling": {
         "message": "Pag-handle sa mga hindi sinusuportahang embed"
