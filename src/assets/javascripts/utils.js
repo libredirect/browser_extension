@@ -24,7 +24,7 @@ function getNextInstance(currentInstanceUrl, instances) {
  * @param {URL} url
  */
 function protocolHost(url) {
-  const pathname = url.pathname.replace(/\/$/, "")
+  const pathname = url.pathname.replace(/\/+$/, "")
 
   // workaround
   if (pathname == "/TekstoLibre" && url.host.endsWith("github.io"))
