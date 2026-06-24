@@ -1288,12 +1288,19 @@
           "instanceList": true,
           "embeddable": true,
           "url": "https://www.openstreetmap.org/"
+        },
+        "geo": {
+          "name": "Geo Protocol",
+          "instanceList": false,
+          "embeddable": false,
+          "url": "geo://"
         }
       },
       "targets": [
         "^https?:\\/{2}maps\\.libredirect\\.invalid",
         "^https?:\\/{2}(www\\.)?maps\\.google(\\.[a-z]{2,3}){1,2}\\/",
-        "^https?:\\/{2}(www\\.)?google(\\.[a-z]{2,3}){1,2}\\/maps\\/?"
+        "^https?:\\/{2}(www\\.)?google(\\.[a-z]{2,3}){1,2}\\/maps\\/?" ,
+        "^https?:\\/{2}consent\\.google\\.com.*maps\\.google"
       ],
       "name": "Maps",
       "options": {
