@@ -92,6 +92,9 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
     case "freetube":
       url.searchParams.delete("si")
       return "freetube://" + url.href
+    case "opentubex":
+      url.searchParams.delete("si")
+      return "opentubex://" + url.href
     case "freetubePwa":
       url.searchParams.delete("si")
       return "freetube://" + url.href

@@ -99,6 +99,17 @@
           "instanceList": false,
           "url": "https://github.com/FreeTubeApp/FreeTube"
         },
+        "opentubex": {
+          "excludeTargets": [
+            2,
+            3
+          ],
+          "name": "OpenTubeX",
+          "embeddable": false,
+          "desktopApp": true,
+          "instanceList": false,
+          "url": "https://github.com/OpenTubeX/OpenTubeX"
+        },
         "yattee": {
           "excludeTargets": [
             2,
