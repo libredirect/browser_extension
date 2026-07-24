@@ -131,6 +131,12 @@
           "embeddable": false,
           "instanceList": true,
           "url": "https://github.com/n-ce/ytify/"
+        },
+        "nosuggest": {
+          "name": "NoSuggest",
+          "embeddable": false,
+          "instanceList": true,
+          "url": "https://github.com/No-Suggest/NoSuggest"
         }
       },
       "targets": [
