@@ -421,6 +421,14 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       }
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "nosuggest": {
+      url.searchParams.delete("si")
+      if (url.hostname == "youtu.be" || (url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/live"))) {
+        const watch = url.pathname.substring(url.pathname.lastIndexOf("/") + 1)
+        return `${randomInstance}/watch?v=${watch}${url.search}`
+      }
+      return `${randomInstance}${url.pathname}${url.search}`
+    }
     case "invidious": {
       // tracker
       url.searchParams.delete("si")
