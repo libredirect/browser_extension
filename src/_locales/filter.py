@@ -1,4 +1,5 @@
 import json
+import os
 
 
 langs = [
@@ -42,7 +43,10 @@ with open('src/_locales/en/messages.json') as data:
 
 for lang in langs:
     lang_json = {}
-    with open('src/_locales/'+lang+'/messages.json') as data:
+    lang_path = os.path.realpath('src/_locales/'+lang+'/messages.json')
+    if not lang_path.startswith(os.path.realpath('src/_locales/')):
+        raise ValueError(f"Path traversal detected for lang: {lang}")
+    with open(lang_path) as data:
         lang_json = json.load(data)
         lang_json_new = {}
         for key in en_json:
@@ -50,7 +54,7 @@ for lang in langs:
                 lang_json_new[key] = lang_json[key]
             else:
                 lang_json_new[key] = en_json[key]
-        with open('src/_locales/'+lang+'/messages.json', 'w') as outfile:
+        with open(lang_path, 'w') as outfile:
             outfile.write(
                 json.dumps(
                     lang_json_new,
