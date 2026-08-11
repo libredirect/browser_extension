@@ -137,7 +137,7 @@
         "message": "Blokkeren"
     },
     "searchHint": {
-        "message": "Stel LibRedirect in als de standaard zoekmachine. Hoe je dit doet in op Chromium gebaseerde browsers, lees je <a href='' target='_blank' rel='noopener noreferrer'>hier</a>."
+        "message": "Stel LibRedirect in als de standaard zoekmachine. Hoe je dit doet in op Chromium gebaseerde browsers, lees je <a href='https://libredirect.github.iomanerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>hier</a>."
     },
     "redirect": {
         "message": "Doorverwijzen"
