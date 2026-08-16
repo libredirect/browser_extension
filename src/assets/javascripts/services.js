@@ -923,7 +923,7 @@ const defaultInstances = {
   dumb: ["https://dm.vern.cc"],
   intellectual: ["https://intellectual.insprill.net"],
   ruralDictionary: ["https://rd.vern.cc"],
-  anonymousOverflow: ["https://code.whatever.social"],
+  anonymousOverflow: ["https://overflow.hostux.net"],
   suds: ["https://sd.vern.cc"],
   unfunny: ["https://uf.vern.cc"],
   soprano: ["https://sp.vern.cc"],
