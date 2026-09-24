@@ -113,7 +113,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
     case "gelbooru-go": {
       const postId = url.searchParams.get("id")
       if (url.pathname === "/index.php" && url.searchParams.get("page") === "post" && url.searchParams.get("s") === "view" && postId) {
-       return `${randomInstance}/post/${postId}`
+        return `${randomInstance}/post/${postId}`
       }
       if (/^(img\d+\.)?gelbooru\.com$/.test(url.hostname) && /^\/(images|samples|thumbnails)\//.test(url.pathname)) {
         return `${randomInstance}/proxy?url=${encodeURIComponent(url.href)}`
@@ -498,8 +498,8 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       }
       if (url.hostname.endsWith("bandcamp.com")) {
         const regex = /^(.*)\.bandcamp\.com/.exec(url.hostname)
-        const artist = regex[1]
-        if (url.pathname == "/" || url.pathname == "/music") {
+        if ((url.pathname == "/" || url.pathname == "/music") && regex != null && regex.length == 2) {
+          const artist = regex[1]
           return `${randomInstance}/artist.php?name=${artist}`
         } else {
           const regex = /^\/(.*)\/(.*)/.exec(url.pathname)
