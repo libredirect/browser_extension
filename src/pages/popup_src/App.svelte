@@ -39,7 +39,10 @@
   page.subscribe(val => (_page = val))
 
   let style
-  $: if (_options) style = utils.style(_options, window)
+  $: if (_options) {
+    style = utils.style(_options, window)
+    document.getElementsByTagName("body")[0].setAttribute("style", style)
+  }
 </script>
 
 {#if _options && _config}
@@ -58,6 +61,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: var(--bg-main);
   }
 
   :global(body) {
