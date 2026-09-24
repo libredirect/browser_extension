@@ -1134,7 +1134,7 @@
       "options": {
         "enabled": false,
         "unsupportedUrls": "bypass",
-        "frontend": "wikiless",
+        "frontend": "wikimore",
         "redirectOnlyInIncognito": false
       },
       "imageType": "svg",
