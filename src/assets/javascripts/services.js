@@ -137,7 +137,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       let prefs = { layers: "mapnik" }
 
       let mapCentre = "#"
-      const mapCentreData = utils.convertMapCentre(url)
+      const mapCentreData = utils.convertMapCentreGoogle(url)
       if (mapCentreData.zoom && mapCentreData.lon && mapCentreData.lat) {
         mapCentre = `#map=${mapCentreData.zoom}/${mapCentreData.lon}/${mapCentreData.lat}`
       }
