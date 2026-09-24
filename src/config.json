@@ -334,6 +334,38 @@
       "imageType": "svg",
       "url": "https://reddit.com"
     },
+    "gelbooru": {
+      "frontends": {
+        "gelbooru-go": {
+          "name": "Gelbooru-go",
+          "embeddable": true,
+          "instanceList": true,
+          "url": "https://codeberg.org/vlnst/gelbooru-go"
+        },
+        "booruview": {
+          "name": "BooruView",
+          "embeddable": true,
+          "instanceList": true,
+          "url": "https://codeberg.org/jessienyan/booruview"
+        }
+      },
+      "targets": [
+        "^https?:\\/{2}(www\\.)?gelbooru\\.com\\/",
+        "^https?:\\/{2}img[0-9]+\\.gelbooru\\.com\\/"
+      ],
+      "name": "Gelbooru",
+      "options": {
+        "enabled": false,
+        "redirectType": "main_frame",
+        "unsupportedUrls": "bypass",
+        "frontend": "gelbooru-go",
+        "instance": "public",
+        "redirectOnlyInIncognito": false
+      },
+      "imageType": "svg",
+      "embeddable": true,
+      "url": "https://gelbooru.com"
+    },
     "tumblr": {
       "frontends": {
         "priviblur": {
@@ -1271,7 +1303,7 @@
     },
     "googleLens": {
       "frontends": {
-       "rens": {
+        "rens": {
           "name": "rens",
           "instanceList": true,
           "url": "https://git.maid.zone/stuff/rens"

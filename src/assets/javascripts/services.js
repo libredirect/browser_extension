@@ -110,6 +110,54 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       if (/\/@[a-z]+\//.exec(url.pathname)) return randomInstance
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "gelbooru-go": {
+      const postId = url.searchParams.get("id")
+      if (url.pathname === "/index.php" && url.searchParams.get("page") === "post" && url.searchParams.get("s") === "view" && postId) {
+       return `${randomInstance}/post/${postId}`
+      }
+      if (/^(img\d+\.)?gelbooru\.com$/.test(url.hostname) && /^\/(images|samples|thumbnails)\//.test(url.pathname)) {
+        return `${randomInstance}/proxy?url=${encodeURIComponent(url.href)}`
+      }
+      if (url.pathname === "/index.php" && url.searchParams.get("page") === "post" && url.searchParams.get("s") === "list") {
+        const tags = url.searchParams.get("tags")
+        const rating = url.searchParams.get("rating")
+        const sort = url.searchParams.get("sort")
+        const pid = parseInt(url.searchParams.get("pid"), 10)
+        let params = []
+        if (tags) params.push(`tags=${encodeURIComponent(tags)}`)
+        if (rating) params.push(`rating=${encodeURIComponent(rating)}`)
+        if (sort) params.push(`sort=${encodeURIComponent(sort)}`)
+        if (pid > 0) params.push(`page=${Math.floor(pid / 42)}`)
+        const queryString = params.length > 0 ? `?${params.join("&")}` : ""
+        return `${randomInstance}/${queryString}`
+      }
+      return randomInstance
+    }
+    case "booruview": {
+      if (/^(img\d+\.)?gelbooru\.com$/.test(url.hostname) && /^\/(images|samples|thumbnails)\//.test(url.pathname)) {
+        const pathParts = url.pathname.split("/")
+        if (pathParts.length >= 4) {
+          const dir1 = pathParts[2]
+          const dir2 = pathParts[3]
+          const filename = pathParts[4]
+          const baseName = filename.split(".")[0]
+          return `${randomInstance}/media/${dir1}/${dir2}/${baseName}.webp`
+        }
+        return `${randomInstance}/media${url.pathname}`
+      }
+      if (url.pathname === "/index.php" && url.searchParams.get("page") === "post" && url.searchParams.get("s") === "list") {
+        const tags = url.searchParams.get("tags")
+        if (tags) {
+          const booruTags = tags.split("+").join(",")
+          return `${randomInstance}/search/1/${encodeURIComponent(booruTags)}`
+        }
+        return `${randomInstance}/search/1/`
+      }
+      if (url.pathname === "/index.php" && url.searchParams.get("page") === "post" && url.searchParams.get("s") === "view") {
+        return randomInstance
+      }
+      return randomInstance
+    }
     case "small":
     case "libMedium":
     case "freedium":
@@ -1071,7 +1119,9 @@ const defaultInstances = {
   wikimore: ["https://wikimore.private.coffee"],
   libreTranslate: ["https://libretranslate.com"],
   cryptPad: ["https://cryptpad.org"],
-  phantom: ["https://phantom.kuuro.net"]
+  phantom: ["https://phantom.kuuro.net"],
+  "gelbooru-go": ["https://gel.bloat.cat"],
+  booruview: ["https://booruview.com"]
 }
 
 async function getDefaults() {
