@@ -1345,7 +1345,7 @@
         "^https?:\\/{2}(www\\.)?google(\\.[a-z]{2,3}){1,2}\\/maps\\/?" ,
         "^https?:\\/{2}consent\\.google\\.com.*maps\\.google"
       ],
-      "name": "Maps",
+      "name": "Google Maps",
       "options": {
         "redirectType": "main_frame",
         "enabled": false,
