@@ -1240,6 +1240,15 @@
             2,
             3
           ]
+        },
+        "degoog": {
+          "name": "Degoog",
+          "instanceList": true,
+          "url": "https://github.com/degoog-org/degoog",
+          "excludeTargets": [
+            2,
+            3
+          ]
         }
       },
       "targets": [
