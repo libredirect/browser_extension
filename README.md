@@ -10,6 +10,12 @@ A browser extension that redirects YouTube, Twitter, TikTok... requests to alter
     <img src ="./img/badge-chromium.png" height=60 >
 </a>
 
+## Donate
+
+<a class="badge_medium" href="https://opencollective.com/libredirect">
+    <img src="./img/Open-Collective.webp" alt="Open Collective badge" height=60>
+</a>
+
 ## Translate
 
 <a href="https://hosted.weblate.org/projects/libredirect/extension">
