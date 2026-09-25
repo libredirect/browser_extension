@@ -1125,6 +1125,11 @@
           "name": "Wikimore",
           "instanceList": true,
           "url": "https://git.private.coffee/privatecoffee/wikimore"
+        },
+        "wikiviewer": {
+          "name": "WikiViewer",
+          "instanceList": true,
+          "url": "codeberg.org/bnyro/wikiviewer"
         }
       },
       "targets": [

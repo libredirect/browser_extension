@@ -447,6 +447,8 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
     }
     case "biblioReads":
       return `${randomInstance}${url.pathname}${url.search}`
+    case "wikiviewer": 
+      return `${randomInstance}${url.pathname}${url.search}${url.hash}`
     case "wikimore": {
       let hostSplit = url.host.split(".")
       // wikiless doesn't have mobile view support yet
@@ -1119,6 +1121,7 @@ const defaultInstances = {
   soundcloak: ["https://soundcloak.fly.dev"],
   gocook: ["https://cook.adminforge.de"],
   wikimore: ["https://wikimore.private.coffee"],
+  wikiviewer: ["https://wiki.chatoyer.de"],
   libreTranslate: ["https://libretranslate.com"],
   cryptPad: ["https://cryptpad.org"],
   phantom: ["https://phantom.kuuro.net"],
