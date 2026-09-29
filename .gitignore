@@ -3,7 +3,6 @@ web-ext-artifacts/
 nod
 node_modules
 .vscode
-pnpm-lock.yaml
 src/pages/options/build
 src/pages/popup/build
 src/pages/messages/build
