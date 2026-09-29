@@ -41,7 +41,7 @@
   "dependencies": {
     "svelte-select": "^5.8.3",
     "pug-cli": "^1.0.0-alpha6",
-    "rollup": "^3.30.0",
+    "rollup": "^3.15.0",
     "rollup-plugin-css-only": "^4.3.0",
     "rollup-plugin-svelte": "^7.1.2",
     "svelte": "^5.57.1",
