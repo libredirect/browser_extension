@@ -45,7 +45,7 @@
     "rollup-plugin-css-only": "^4.3.0",
     "rollup-plugin-svelte": "^7.1.2",
     "svelte": "^3.55.0",
-    "web-ext": "^7.2.0",
+    "web-ext": "^10.7.0",
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-terser": "^0.4.0"
