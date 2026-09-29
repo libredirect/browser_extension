@@ -2,7 +2,6 @@ web-ext-artifacts/
 .DS_Store
 nod
 node_modules
-package-lock.json
 .vscode
 pnpm-lock.yaml
 src/pages/options/build
