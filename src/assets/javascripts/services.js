@@ -743,12 +743,32 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       return `${randomInstance}${url.pathname}${url.search}`
     }
     case "koub": {
-      if (url.pathname.startsWith("/view/") || url.pathname.startsWith("/stories/")) {
+      if (url.pathname === "/") {
+        return randomInstance
+      }
+      if (
+        url.pathname === "/view" || url.pathname.startsWith("/view/") ||
+        url.pathname === "/stories" || url.pathname.startsWith("/stories/") ||
+        url.pathname === "/community" || url.pathname.startsWith("/community/")
+      ) {
         return `${randomInstance}${url.pathname}${url.search}`
       }
-      const accountReg = /^\/([^\/]+)\/?$/.exec(url.pathname)
-      if (accountReg) return `${randomInstance}/account${url.pathname}${url.search}`
-      return randomInstance
+      if (url.pathname === "/search") {
+        const q = url.searchParams.get("q")
+        if (q !== null) {
+          url.searchParams.delete("q")
+          url.searchParams.set("query", q)
+        }
+        return `${randomInstance}/search${url.search}`
+      }
+      if (url.pathname === "/tags" || url.pathname.startsWith("/tags/")) {
+        return `${randomInstance}/tag${url.pathname.slice(5)}${url.search}`
+      }
+      const match = url.pathname.match(/^\/([^\/?#]+)/)
+      if (match) {
+        return `${randomInstance}/account/${match[1]}${url.search}`
+      }
+      return `${randomInstance}${url.pathname}${url.search}`
     }
     case "duckDuckGoAiChat":
       return "https://duckduckgo.com/?q=DuckDuckGo+AI+Chat&ia=chat&duckai=1"
@@ -1034,6 +1054,21 @@ async function reverse(url) {
 
           return `${config.services[service].url}${url.pathname}`
         }
+      case "coub": {
+        let path = url.pathname
+        if (path.startsWith("/account/")) {
+          path = "/" + path.slice(9)
+        } else if (path.startsWith("/tag/") || path === "/tag") {
+          path = "/tags" + path.slice(4)
+        } else if (path === "/search") {
+          const query = url.searchParams.get("query")
+          if (query !== null) {
+            url.searchParams.delete("query")
+            url.searchParams.set("q", query)
+          }
+        }
+        return `${config.services[service].url}${path}${url.search}`
+      }
       default:
         return
     }
@@ -1117,7 +1152,7 @@ const defaultInstances = {
   ytifyMusic: ["https://ytify.pp.ua"],
   nerdsForNerds: ["https://nn.vern.cc"],
   ducksForDucks: ["https://ducksforducks.private.coffee"],
-  koub: ["https://koub.clovius.club"],
+  koub: ["https://koub.bloat.cat"],
   soundcloak: ["https://soundcloak.fly.dev"],
   gocook: ["https://cook.adminforge.de"],
   wikimore: ["https://wikimore.private.coffee"],

@@ -1356,7 +1356,7 @@
       "targets": [
         "^https?:\\/{2}maps\\.libredirect\\.invalid",
         "^https?:\\/{2}(www\\.)?maps\\.google(\\.[a-z]{2,3}){1,2}\\/",
-        "^https?:\\/{2}(www\\.)?google(\\.[a-z]{2,3}){1,2}\\/maps\\/?" ,
+        "^https?:\\/{2}(www\\.)?google(\\.[a-z]{2,3}){1,2}\\/maps\\/?",
         "^https?:\\/{2}consent\\.google\\.com.*maps\\.google"
       ],
       "name": "Google Maps",
@@ -1584,7 +1584,7 @@
         "koub": {
           "name": "Koub",
           "instanceList": true,
-          "url": "https://codeberg.org/gospodin/koub"
+          "url": "https://git.bloat.cat/gospodin/koub"
         }
       },
       "targets": [
