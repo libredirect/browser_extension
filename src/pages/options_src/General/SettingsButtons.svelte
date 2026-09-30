@@ -1,6 +1,6 @@
 <script>
   const browser = window.browser || window.chrome
-
+  
   import { onDestroy } from "svelte"
   import Button from "../../components/Button.svelte"
   import ExportIcon from "../../icons/ExportIcon.svelte"
@@ -9,6 +9,7 @@
   import { options } from "../stores"
   import servicesHelper from "../../../assets/javascripts/services.js"
   import utils from "../../../assets/javascripts/utils.js"
+  import {gzip, ungzip} from "pako";
 
   let _options
   const unsubscribe = options.subscribe(val => (_options = val))
@@ -44,18 +45,33 @@
 
   async function exportSettingsSync() {
     _options.version = browser.runtime.getManifest().version
-    browser.storage.sync.set({ options: _options })
+  
+    const options_str = JSON.stringify(_options);
+    const options_uint8array = gzip(options_str);
+    const options_base64 = btoa(String.fromCharCode.apply(null, options_uint8array));
+   
+    browser.storage.sync.set({ options: options_base64 })
+
+    alert("Exported settings to Sync")
   }
 
   async function importSettingsSync() {
     browser.storage.sync.get({ options }, async r => {
-      let data = r.options
+      const options_base64 = r.options
+      const options_uint8array = Uint8Array.from(atob(options_base64), char => char.charCodeAt(0));
+      const options_str = new TextDecoder().decode(ungzip(options_uint8array));
+      const data = JSON.parse(options_str);
+
       if (data.version != browser.runtime.getManifest().version) {
         alert("Importing from a previous version. Be careful")
       }
       await servicesHelper.processUpdate(data)
+
+      
       options.set(await utils.getOptions())
-    })
+
+      alert("Imported settings from Sync")
+    })    
   }
 
   async function resetSettings() {
