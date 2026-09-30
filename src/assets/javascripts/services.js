@@ -450,11 +450,8 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
     case "wikiviewer": 
       return `${randomInstance}${url.pathname}${url.search}${url.hash}`
     case "wikimore": {
-      let hostSplit = url.host.split(".")
-      // wikiless doesn't have mobile view support yet
-      if (hostSplit[0] != "wikipedia" && hostSplit[0] != "www") {
-        const lang = url.hostname.split(".")[0]
-        return `${randomInstance}/wiki/${lang}${url.pathname}${url.search}${url.hash}`
+      if (url.pathname.includes('wiki')){
+        return `${randomInstance}/${url.host}${url.pathname}${url.search}${url.hash}`
       }
       return `${randomInstance}${url.pathname}${url.search}${url.hash}`
     }
