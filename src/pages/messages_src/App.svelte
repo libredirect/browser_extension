@@ -60,7 +60,7 @@
 
   async function redirectUrl() {
     const newUrl = await servicesHelper.redirectAsync(oldUrl, "main_frame", null, null, false, true)
-    browser.tabs.update({ url: newUrl })
+    window.open(newUrl, "_self")
   }
 </script>
 
