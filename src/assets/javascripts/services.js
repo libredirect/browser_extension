@@ -652,6 +652,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
     case "skyview":
       if (url.pathname == "/") return randomInstance
       return `${randomInstance}?url=${encodeURIComponent(url.href)}`
+    case "shitter":
     case "nitter": {
       let search = new URLSearchParams(url.search)
 
@@ -1138,6 +1139,7 @@ const defaultInstances = {
   skylib: ["https://skylib.coffee"],
   priviblur: ["https://pb.bloat.cat"],
   nitter: ["https://nitter.privacydev.net"],
+  shitter: ["https://shitter.thepixora.com"],
   pasted: ["https://pasted.drakeerv.com"],
   pasty: ["https://pasty.lus.pm"],
   freetar: ["https://freetar.de"],

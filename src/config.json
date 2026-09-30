@@ -213,6 +213,13 @@
           "instanceList": true,
           "url": "https://github.com/zedeus/nitter",
           "localhost": true
+        },
+        "shitter": {
+          "name": "Shitter",
+          "embeddable": true,
+          "instanceList": true,
+          "url": "https://github.com/zedeus/nitter",
+          "localhost": true
         }
       },
       "targets": [
@@ -228,7 +235,7 @@
         "enabled": false,
         "redirectType": "main_frame",
         "unsupportedUrls": "bypass",
-        "frontend": "nitter",
+        "frontend": "shitter",
         "instance": "public",
         "redirectOnlyInIncognito": false
       },
