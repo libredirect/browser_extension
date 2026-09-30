@@ -40,7 +40,8 @@
         {browser.i18n.getMessage("service") || "Service"}
       </a>
     </Label>
-    <div dir="ltr" on:click={() => (hideServiceSelection = true)} on:keydown={null}>
+    <!-- svelte-ignore a11y_interactive_supports_focus -->
+    <div dir="ltr" on:click={() => (hideServiceSelection = true)} on:keydown={null} role="button">
       <SvelteSelect
         clearable={false}
         class="svelte_select"
@@ -117,7 +118,8 @@
           {browser.i18n.getMessage("frontend") || "Frontend"}
         </a>
       </Label>
-      <div dir="ltr" on:click={() => (hideFrontendSelection = true)} on:keydown={null}>
+      <!-- svelte-ignore a11y_interactive_supports_focus -->
+      <div dir="ltr" on:click={() => (hideFrontendSelection = true)} on:keydown={null} role="button">
         <SvelteSelect
           clearable={false}
           dir="ltr"

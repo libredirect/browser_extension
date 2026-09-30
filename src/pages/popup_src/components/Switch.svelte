@@ -26,6 +26,7 @@
 </script>
 
 <Row>
+  <!-- svelte-ignore a11y_interactive_supports_focus -->
   <div
     class="interactive margin margin_{document.body.dir}"
     on:keydown={null}
@@ -33,6 +34,7 @@
       browser.tabs.create({ url: _config.services[serviceKey].url }, () => {
         window.close()
       })}
+    role="button"
   >
     <ServiceIcon details={{ value: serviceKey, label: _config.services[serviceKey].name }} />
     <Label>{_config.services[serviceKey].name}</Label>
