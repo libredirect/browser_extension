@@ -25,24 +25,25 @@ A browser extension that redirects YouTube, Twitter, TikTok... requests to alter
 ## Development
 
 Install [Node.js](https://nodejs.org/)
+Install [pnpm](https://pnpm.io/)
 
 ```bash
 git clone https://github.com/libredirect/browser_extension
 cd browser_extension
-npm install
-npm run html # Generates html using Pug
+pnpm install
+pnpm run html # Generates html using Pug
 ```
 
 #### Run on Firefox
 
 ```bash
-npm run start
+pnpm run start
 ```
 
 #### Build a zip package for Firefox
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 #### Install the zip package on Firefox (temporarily)
