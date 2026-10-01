@@ -1046,27 +1046,6 @@
       "imageType": "svgMono",
       "url": "https://goodreads.com/"
     },
-    "wolframAlpha": {
-      "frontends": {
-        "wolfreeAlpha": {
-          "name": "WolfreeAlpha",
-          "instanceList": true,
-          "url": "https://git.disroot.org/wolfree"
-        }
-      },
-      "targets": [
-        "^https?:\\/{2}(www\\.)?wolframalpha\\.com\\/"
-      ],
-      "name": "Wolfram Alpha",
-      "options": {
-        "enabled": false,
-        "unsupportedUrls": "bypass",
-        "frontend": "wolfreeAlpha",
-        "redirectOnlyInIncognito": false
-      },
-      "imageType": "svg",
-      "url": "https://www.wolframalpha.com"
-    },
     "instructables": {
       "name": "Instructables",
       "frontends": {
