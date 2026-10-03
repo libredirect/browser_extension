@@ -1,1 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#fff" d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   class="Gdd5U"
+   focusable="false"
+   viewBox="0 0 144 144"
+   width="144"
+   height="144"
+   version="2.0"
+   id="svg4"
+   standalone="no"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs4">
+    <view
+       viewBox="0 0 144 144"
+       id="view2" />
+  </defs>
+  <g
+     id="g4"
+     transform="translate(-24,-24)">
+    <circle
+       fill="#34A853"
+       cx="144.07"
+       cy="144"
+       r="16"
+       id="circle1"
+       style="fill:#ffffff;fill-opacity:1" />
+    <circle
+       fill="#4285F4"
+       cx="96.07"
+       cy="104"
+       r="24"
+       id="circle2"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       fill="#EA4335"
+       d="M 24,135.2 C 24,153.31 38.69,168 56.8,168 H 96 V 152 L 55.9,151.9 C 47.1,151.9 40,143.71 40,134 V 116 H 24 Z"
+       id="path2"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       fill="#FBBC05"
+       d="M 168,72.8 C 168,54.69 153.31,40 135.2,40 H 116 l 20,16 c 8.8,0 16,8.29 16,18 v 30 h 16 z"
+       id="path3"
+       style="fill:#ffffff;fill-opacity:1" />
+    <path
+       fill="#4285F4"
+       d="M 112,24 H 80 L 68,40 H 56.8 C 38.69,40 24,54.69 24,72.8 V 92 H 40 V 74 c 0,-9.71 7.2,-18 16,-18 h 80 z"
+       id="path4"
+       style="fill:#ffffff;fill-opacity:1" />
+  </g>
+</svg>
