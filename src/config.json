@@ -941,7 +941,7 @@
         "suds": {
           "name": "Suds",
           "instanceList": true,
-          "url": "https://git.vern.cc/cobra/Suds"
+          "url": "https://codeberg.org/cobra/Suds"
         }
       },
       "targets": [
@@ -962,7 +962,7 @@
         "unfunny": {
           "name": "UNfunny",
           "instanceList": true,
-          "url": "https://git.vern.cc/cobra/UNfunny"
+          "url": "https://codeberg.org/cobra/UNfunny"
         }
       },
       "targets": [
@@ -983,7 +983,7 @@
         "soprano": {
           "name": "Soprano",
           "instanceList": true,
-          "url": "https://git.vern.cc/cobra/Soprano"
+          "url": "https://codeberg.org/cobra/Soprano"
         },
         "mezzo": {
           "name": "Mezzo",
@@ -1009,7 +1009,7 @@
         "meme": {
           "name": "MeMe",
           "instanceList": true,
-          "url": "https://git.vern.cc/cobra/MeMe"
+          "url": "https://codeberg.org/cobra/MeMe"
         }
       },
       "targets": [
@@ -1101,7 +1101,7 @@
         "destructables": {
           "name": "Destructables",
           "instanceList": true,
-          "url": "https://git.vern.cc/cobra/Destructables"
+          "url": "https://codeberg.org/cobra/Destructables"
         },
         "indestructables": {
           "name": "Indestructables",
@@ -1565,7 +1565,7 @@
         "nerdsForNerds": {
           "name": "NerdsforNerds",
           "instanceList": true,
-          "url": "https://git.vern.cc/cobra/NerdsforNerds"
+          "url": "https://codeberg.org/cobra/NerdsforNerds"
         },
         "ducksForDucks": {
           "name": "Ducks for Ducks",
