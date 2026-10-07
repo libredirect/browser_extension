@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json
+name: "3: Other"
+description: "Other questions or something unrelated."
+title: "other: "
+labels: ["Kind: Other"]
+body:
+  - type: checkboxes
+    id: duplicates
+    attributes:
+      label: Duplicates
+      options:
+        - label: I have checked on [Codeberg](https://codeberg.org/LibRedirect/browser_extension/issues) and can confirm this issue is not a duplicate.
+          required: true
+        - label: I have checked on [GitHub](https://github.com/libredirect/browser_extension/issues) and can confirm this issue is not a duplicate.
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: |
+        Please provide a description of your question or issue here.
+    validations:
+      required: true

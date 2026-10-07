@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json
+name: "2: Feature Request"
+description: "Please start here and describe your feature request."
+title: "fr: "
+labels: ["Kind: Feature"]
+body:
+  - type: markdown
+    attributes:
+      value: Is there something missing that you want to see in LibRedirect? Suggest a feature so it will exist in a future release.
+  - type: checkboxes
+    id: duplicates
+    attributes:
+      label: Duplicates
+      options:
+        - label: I have checked on [Codeberg](https://codeberg.org/LibRedirect/browser_extension/issues) and can confirm this issue is not a duplicate.
+          required: true
+        - label: I have checked on [GitHub](https://github.com/libredirect/browser_extension/issues) and can confirm this issue is not a duplicate.
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Please provide a description of your feature request here.

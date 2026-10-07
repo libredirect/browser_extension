@@ -1,0 +1,66 @@
+# yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json
+name: "1: Bug"
+description: "Please start here and describe your situation."
+title: "bug: "
+labels: ["Kind: Bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Is LibRedirect not behaving as expected? Report a bug so that it can be fixed as soon as possible.
+  - type: checkboxes
+    id: duplicates
+    attributes:
+      label: Duplicates
+      options:
+        - label: I have checked on [Codeberg](https://codeberg.org/LibRedirect/browser_extension/issues) and can confirm this issue is not a duplicate.
+          required: true
+        - label: I have checked on [GitHub](https://github.com/libredirect/browser_extension/issues) and can confirm this issue is not a duplicate.
+          required: true
+  - type: dropdown
+    id: can-reproduce
+    attributes:
+      label: Can you reproduce the bug?
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: |
+        Please describe your problem as a first-hand experience. Try to focus on the problem. You do not have to find a solution, you can leave this to us.
+        <details><summary>Further instructions</summary>
+
+         * Start by explaining what you want to achieve ("I wanted to find an issue to work on").
+         * Try to include steps that you took and that resulted in the current situation. ("I opened the issue tracker, clicked on …, then …").
+         * If there were moments of confusion, please describe them. ("There was a button saying … and I was not sure if it would do what I expect").
+         * If you want to do something and don't know how or if it is possible, explain the goal ("I would like to know if there are issues that meet the following criteria …").
+        </details>
+    validations:
+      required: true
+  - type: textarea
+    id: workarounds
+    attributes:
+      label: Potential workarounds
+      description: |
+        If you found a solution to your problem, even if it is not great, please share your experiences with it.
+        <details><summary>Further instructions</summary>
+
+        * Start by explaining what you tried and how it worked out ("I used X and it gives me the results, but it takes a lot of time to click through the UI").
+        * What are the major problems with your workaround(s)? ("It takes long to get there", "It looks very ugly")
+
+        </details>
+  - type: input
+    id: lr-ver
+    attributes:
+      label: LibRedirect Version
+      description: LibRedirect version (or commit reference).
+  - type: textarea
+    id: versions
+    attributes:
+      label: Other details about your environment (software names and versions)
+      description: Please investigate the problem before creating an issue and provide relevant information.
+    validations:
+      required: true
