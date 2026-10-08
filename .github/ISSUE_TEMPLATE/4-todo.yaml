@@ -2,7 +2,7 @@
 name: "4: TODO"
 description: "Use this template to track tasks."
 title: "todo: "
-labels: ["Kind: TO DO"]
+labels: ["Kind: To Do"]
 body:
   - type: textarea
     id: description
