@@ -1,0 +1,71 @@
+# yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json
+name: "3: New Frontend"
+description: "Suggest a new privacy-respecting frontend."
+title: "nf: "
+labels: ["Kind: New Frontend"]
+body:
+  - type: checkboxes
+    id: duplicates
+    attributes:
+      label: Duplicates
+      options:
+        - label: I have checked on [Codeberg](https://codeberg.org/LibRedirect/browser_extension/issues) and can confirm this issue is not a duplicate.
+          required: true
+        - label: I have checked on [GitHub](https://github.com/libredirect/browser_extension/issues) and can confirm this issue is not a duplicate.
+          required: true
+  - type: input
+    id: code
+    attributes:
+      label: Source code
+      description: URL to the frontend's source code repository.
+    validations:
+      required: true
+  - type: input
+    id: instance-list
+    attributes:
+      label: Instance list URL
+      description: URL to the instance list if available or a link to an issue that requested the original project to create and maintain one. (One of these is required to reduce long-term maintenance work).
+    validations:
+      required: true
+  - type: input
+    id: official
+    attributes:
+      label: Official Instance URL
+      description: The official instance URL. If there is no official instance, you must explicitly state "None" or "Unofficial only".
+    validations:
+      required: true
+  - type: input
+    id: original
+    attributes:
+      label: Original website
+      description: The original website this frontend redirects from (e.g., YouTube, Twitter, Reddit).
+    validations:
+      required: true
+  - type: dropdown
+    id: redirection-type
+    attributes:
+      label: Redirection Type
+      description: |
+        Does it follow redirections with a simple domain change or custom URLs?
+        **Note: Simple domain changes are prioritized as they are faster to implement. This does not mean we won't work on custom URLs, but they are lower priority.**
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+  - type: dropdown
+    id: embeds
+    attributes:
+      label: Does the original website have embeds?
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+  - type: input
+    id: sample
+    attributes:
+      label: Sample embed URL
+      description: If yes to embeds, please provide a sample URL containing an embed for testing purposes.
+    validations:
+      required: false

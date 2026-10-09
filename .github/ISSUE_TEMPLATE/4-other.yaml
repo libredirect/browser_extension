@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json
-name: "3: Other"
+name: "4: Other"
 description: "Other questions or something unrelated."
 title: "other: "
 labels: ["Kind: Other"]
@@ -17,7 +17,6 @@ body:
     id: description
     attributes:
       label: Description
-      description: |
-        Please provide a description of your question or issue here.
+      description: Please provide a description of your question or issue here.
     validations:
       required: true

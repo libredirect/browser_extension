@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json
-name: "4: TODO"
+name: "5: To Do"
 description: "Use this template to track tasks."
 title: "todo: "
 labels: ["Kind: To Do"]
