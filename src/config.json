@@ -347,7 +347,7 @@
           "name": "Gelbooru-go",
           "embeddable": true,
           "instanceList": true,
-          "url": "https://codeberg.org/vlnst/gelbooru-go"
+          "url": "https://git.bloat.cat/vlnst/gelbooru-go"
         },
         "booruview": {
           "name": "BooruView",

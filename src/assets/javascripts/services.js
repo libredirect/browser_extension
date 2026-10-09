@@ -117,42 +117,45 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
         return `${randomInstance}/post/${postId}`
       }
       if (/^(img\d+\.)?gelbooru\.com$/.test(url.hostname) && /^\/(images|samples|thumbnails)\//.test(url.pathname)) {
+        // gelbooru-go only proxies https URLs
+        url.protocol = "https:"
         return `${randomInstance}/proxy?url=${encodeURIComponent(url.href)}`
       }
       if (url.pathname === "/index.php" && url.searchParams.get("page") === "post" && url.searchParams.get("s") === "list") {
-        const tags = url.searchParams.get("tags")
-        const rating = url.searchParams.get("rating")
-        const sort = url.searchParams.get("sort")
+        const tags = url.searchParams.get("tags")?.trim()
         const pid = parseInt(url.searchParams.get("pid"), 10)
         let params = []
-        if (tags) params.push(`tags=${encodeURIComponent(tags)}`)
-        if (rating) params.push(`rating=${encodeURIComponent(rating)}`)
-        if (sort) params.push(`sort=${encodeURIComponent(sort)}`)
-        if (pid > 0) params.push(`page=${Math.floor(pid / 42)}`)
+        if (tags && tags !== "all") params.push(`tags=${encodeURIComponent(tags)}`)
+        // The instance maps the post offset onto its own page size
+        if (pid > 0) params.push(`pid=${pid}`)
         const queryString = params.length > 0 ? `?${params.join("&")}` : ""
         return `${randomInstance}/${queryString}`
+      }
+      if (url.pathname === "/index.php" && url.searchParams.get("page") === "wiki") {
+        const search = url.searchParams.get("search")?.trim()
+        if (url.searchParams.get("s") === "list" && search)
+          return `${randomInstance}/wiki/${encodeURIComponent(search.replace(/\s+/g, "_"))}`
+        const id = parseInt(url.searchParams.get("id"), 10)
+        if (url.searchParams.get("s") === "view" && id > 0) return `${randomInstance}/wiki?id=${id}`
       }
       return randomInstance
     }
     case "booruview": {
-      if (/^(img\d+\.)?gelbooru\.com$/.test(url.hostname) && /^\/(images|samples|thumbnails)\//.test(url.pathname)) {
-        const pathParts = url.pathname.split("/")
-        if (pathParts.length >= 4) {
-          const dir1 = pathParts[2]
-          const dir2 = pathParts[3]
-          const filename = pathParts[4]
-          const baseName = filename.split(".")[0]
-          return `${randomInstance}/media/${dir1}/${dir2}/${baseName}.webp`
-        }
-        return `${randomInstance}/media${url.pathname}`
+      // Mirror of Gelbooru's CDN with optimized files
+      const media = /^\/(images|samples)\/([0-9a-f]{2})\/([0-9a-f]{2})\/((?:sample_)?[0-9a-f]+)\.(\w+)$/.exec(url.pathname)
+      if (media) {
+        let [, kind, dir1, dir2, name, ext] = media
+        if (kind === "samples" || /^(jpe?g|png|bmp)$/.test(ext)) ext = "webp"
+        return `https://media.booruview.com/${dir1}/${dir2}/${name}.${ext}`
       }
+      // Thumbnails aren't mirrored
+      if (/^\/(images|samples|thumbnails)\//.test(url.pathname)) return
       if (url.pathname === "/index.php" && url.searchParams.get("page") === "post" && url.searchParams.get("s") === "list") {
-        const tags = url.searchParams.get("tags")
-        if (tags) {
-          const booruTags = tags.split("+").join(",")
-          return `${randomInstance}/search/1/${encodeURIComponent(booruTags)}`
-        }
-        return `${randomInstance}/search/1/`
+        const tags = (url.searchParams.get("tags") ?? "").split(/\s+/).filter(tag => tag && tag !== "all")
+        // BooruView shows 100 posts per page, 1-indexed, up to page 200
+        const pid = parseInt(url.searchParams.get("pid"), 10)
+        const page = pid > 0 ? Math.min(Math.floor(pid / 100) + 1, 200) : 1
+        return `${randomInstance}/search/${page}/${tags.map(encodeURIComponent).join(",")}`
       }
       if (url.pathname === "/index.php" && url.searchParams.get("page") === "post" && url.searchParams.get("s") === "view") {
         return randomInstance
@@ -1015,6 +1018,49 @@ async function reverse(url) {
         }
         return
       }
+      case "gelbooru": {
+        if (frontend != "gelbooru-go") return
+        const base = `${config.services[service].url}/index.php`
+        const post = /^\/post\/(\d+)/.exec(url.pathname)
+        if (post) return `${base}?page=post&s=view&id=${post[1]}`
+        const wikiId = parseInt(url.searchParams.get("id"), 10)
+        if (url.pathname == "/wiki" && wikiId > 0) return `${base}?page=wiki&s=view&id=${wikiId}`
+        const wiki = /^\/wiki\/(.+)/.exec(url.pathname)
+        if (wiki) {
+          try {
+            return `${base}?page=wiki&s=list&search=${encodeURIComponent(decodeURIComponent(wiki[1]))}`
+          } catch {
+            return config.services[service].url
+          }
+        }
+        if (url.pathname.startsWith("/proxy")) {
+          try {
+            const media = new URL(url.searchParams.get("url"))
+            if (/(^|\.)gelbooru\.com$/.test(media.hostname)) return media.href
+          } catch {}
+          return config.services[service].url
+        }
+        if (url.pathname == "/") {
+          const tags = url.searchParams.get("tags")?.trim()
+          const terms = []
+          if (tags && tags !== "all") terms.push(tags)
+          const ratings = [...new Set(url.searchParams.getAll("rating"))]
+          if (ratings.length === 1) terms.push(`rating:${ratings[0]}`)
+          else if (ratings.length > 1) {
+            // Gelbooru combines tags with AND; exclude the unselected ratings.
+            for (const rating of ["general", "sensitive", "questionable", "explicit"]) {
+              if (!ratings.includes(rating)) terms.push(`-rating:${rating}`)
+            }
+          }
+          const sort = url.searchParams.get("sort")
+          if (sort) terms.push(`sort:${sort}`)
+          const pid = parseInt(url.searchParams.get("pid"), 10)
+          // Converting page would require the instance's configured page size.
+          const offset = pid > 0 ? `&pid=${pid}` : ""
+          return `${base}?page=post&s=list&tags=${encodeURIComponent(terms.join(" ") || "all")}${offset}`
+        }
+        return config.services[service].url
+      }
       case "tekstowo":
         return `${config.services[service].url}/${url.search.slice(1)}`
       case "goodreads":
@@ -1159,7 +1205,7 @@ const defaultInstances = {
   libreTranslate: ["https://libretranslate.com"],
   cryptPad: ["https://cryptpad.org"],
   phantom: ["https://phantom.kuuro.net"],
-  "gelbooru-go": ["https://gel.bloat.cat"],
+  "gelbooru-go": ["https://gel.bloat.cat", "https://gel.nadeko.net"],
   booruview: ["https://booruview.com"]
 }
 
