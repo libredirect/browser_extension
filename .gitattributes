@@ -1,0 +1,14 @@
+*                text=auto eol=lf
+*.json           linguist-detectable
+*.prettierignore linguist-language=Shell
+*.prettierrc     linguist-language=JSON
+*.ttf            binary
+*.png            binary
+*.webp           binary
+*.xml            linguist-detectable
+*.yaml           linguist-detectable
+*.yml            linguist-language=YAML
+.git*            linguist-language=Shell
+.npmrc           linguist-language=Shell
+.nvmrc           linguist-language=Shell
+pnpm-lock.yaml   linguist-generated
