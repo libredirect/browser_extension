@@ -7,14 +7,13 @@ by us. Support ends for the existing version as soon as a new release is done.
 
 ## Reporting a Vulnerability
 
-- The Version affected
-- The commit which knowingly or unknowingly brings the vulnerability
+- The Version affected.
+- The commit which knowingly or unknowingly brings the vulnerability.
 - How to reproduce it - Either a detailed write up or Video as the reporter
   prefers but details are important.
 - Possible or full scale solutions that the reporter as come up with to fix them
   and shouldn't affect other functions for a long term.
-- The time you have taken to find the vulnerability
-
+- The time you have taken to find the vulnerability.
 - Depending the level of it, you can choose to make an immediate PR or being
   high, recommeneded to send them privately to us.
 
@@ -42,8 +41,8 @@ with safety. It would be great if you help us.
 And there is bounty, If severity is too high, the team will consider awarding a
 amount from the donations it had received depending on your report. It's a
 community project, you do this as your wish. However, awarding the amount and
-how much amount is totally the decisions of the libredirect maintainers. So,
+how much amount is totally the decisions of the LibRedirect maintainers. So,
 don't get your hopes too high. We strive on community's donations that motivates
 us to better build the extension further.
 
-Thanks for reporting vulnerabilities if any, Happy Hunting !
+Thanks for reporting vulnerabilities if any, Happy Hunting!

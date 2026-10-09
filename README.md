@@ -1,31 +1,25 @@
-<img src="./img/libredirect_full.svg" height="50" />
+<div align="center">
 
-A browser extension that redirects YouTube, Twitter, TikTok... requests to
-alternative privacy friendly frontends and backends.
+[![LibRedirect](./assets/libredirect-banner.svg)](https://libredirect.manerakai.com)
 
-<a href="https://addons.mozilla.org/firefox/addon/libredirect/">
-  <img src="./img/badge-amo.png" height="60">
-</a>
-&nbsp;
-<a href="https://libredirect.manerakai.com/download_chromium.html">
-  <img src="./img/badge-chromium.png" height="60">
-</a>
+A browser extension that redirects YouTube, Twitter, TikTok, and other requests
+to alternative privacy-friendly frontends.
 
-## Donate
+[![Mozilla Add-on](./assets/badge-firefox.svg)](https://addons.mozilla.org/firefox/addon/libredirect)
+[![Chromium](./assets/badge-chromium.svg)](https://libredirect.manerakai.com/download_chromium.html)
+[![Weblate](./assets/badge-weblate.svg)](https://hosted.weblate.org/projects/libredirect/extension)
+[![Support LibRedirect](./assets/badge-support.svg)](https://libredirect.manerakai.com/donate.html)
 
-<a class="badge_medium" href="https://opencollective.com/libredirect">
-  <img src="./img/Open-Collective.webp" alt="Open Collective badge" height="60">
-</a>
-
-## Translate
-
-<a href="https://hosted.weblate.org/projects/libredirect/extension">
-  <img src="./img/weblate.svg">
-</a>
+</div>
 
 ## Development
 
 Install [Node.js](https://nodejs.org) and [pnpm](https://pnpm.io).
+
+> [!NOTE]
+>
+> Do not test in your work environment. Create a new profile for testing or
+> download a separate browser.
 
 ```bash
 git clone https://github.com/libredirect/browser_extension && cd browser_extension
@@ -34,45 +28,52 @@ pnpm install
 pnpm run html
 ```
 
-### Run on Firefox
+### Firefox
 
 ```bash
+# Run Firefox with the extension
 pnpm run start
-```
 
-### Build a zip package for Firefox
-
-```bash
+# Build a zip package for Firefox
 pnpm run build
 ```
 
-### Install the zip package on Firefox (temporarily)
+#### Install the zip package on Firefox (temporarily)
 
-1. Type in the address bar: `about:debugging#/runtime/this-firefox`
-2. Press `Load Temporary Add-on...`
-3. Select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
+1. Type `about:debugging#/runtime/this-firefox` in the address bar.
+2. Click **Load Temporary Add-on...**.
+3. Select `libredirect-VERSION.zip` from the `web-ext-artifacts/` folder.
 
-### Install the zip package on Firefox ESR, Developer Edition, Nightly
+#### Install the zip package on Firefox ESR, Developer Edition, Nightly
 
-1. Type in the address bar: `about:config`
-2. Set `xpinstall.signatures.required` to `false`
-3. Type in the address bar: `about:addons`
-4. Click on the gear shaped `settings` button and select `Install Add-on From
-   File...`
-5. Select `libredirect-VERSION.zip` from `web-ext-artifacts` folder
+1. Type `about:config` in the address bar.
+2. Set `xpinstall.signatures.required` to `false`.
+3. Type `about:addons` in the address bar.
+4. Click the gear-shaped settings button and select **Install Add-on From
+   File...**.
+5. Select `libredirect-VERSION.zip` from the `web-ext-artifacts/` folder.
 
-### Run on Chromium
+### Chromium
 
-1. Open `chrome://extensions`
-2. Enable `dev mode`
-3. Select `load unpacked extension`
-4. Select `src` folder
+1. Open `chrome://extensions`.
+2. Enable **Developer mode**.
+3. Click **Load unpacked**.
+4. Select the `src/` folder.
 
 ### Test
 
-Test conditions to check new functions and changes after building -
-[please refer here](./test-conditions.md)
+See [TEST.md](./TEST.md).
+
+## Privacy Policy
+
+- Nothing is collected.
+- All URL redirections work locally, except for OpenStreetMap reverse geocoding,
+  which is done via the
+  [OSM Nominatim API](https://nominatim.org/release-docs/develop/api/Overview).
+- By default, the list of instances is fetched from GitHub. Alternatively, it
+  may be fetched from Codeberg or not at all.
 
 ## Notes
 
-Forked from [Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect)
+Forked from
+[Privacy Redirect](https://github.com/SimonBrazell/privacy-redirect).
