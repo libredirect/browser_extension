@@ -20,7 +20,7 @@
         "description": "used in the settings page"
     },
     "theme": {
-        "message": "Haŭto",
+        "message": "Etoso",
         "description": "used in the settings page"
     },
     "light": {
@@ -36,7 +36,7 @@
         "description": "used in the settings page"
     },
     "excludeFromRedirecting": {
-        "message": "Eksigita de alidirektado",
+        "message": "Retejoj ne alidirektataj",
         "description": "used in the settings page"
     },
     "importSettings": {
@@ -113,10 +113,10 @@
         "message": "Eĥosondi servilojn"
     },
     "exportSettingsToSync": {
-        "message": "Elporti agordojn por sinkronigado"
+        "message": "Elporti agordojn en retumilan sinkronigon"
     },
     "importSettingsFromSync": {
-        "message": "Enporti agordojn el sinkronigado"
+        "message": "Enporti agordojn el retumila sinkronigo"
     },
     "services": {
         "message": "Servoj"
@@ -137,7 +137,7 @@
         "message": "Bloki"
     },
     "searchHint": {
-        "message": "Agordu LibRedirect·on kiel vian defaŭltan sercilon. Por kiel fari ĝin en Chromium-bazitaj retumiloj (angle), <a href='https://libredirect.manerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>alklaku tien</a>."
+        "message": "Agordu LibRedirect kiel vian defaŭltan sercilon. Por lerni fari tion en Chromium-bazitaj retumiloj, <a href='https://libredirect.manerakai.com/docs.html#search_engine_chromium' target='_blank' rel='noopener noreferrer'>alklaku ĉi tien (angle)</a>."
     },
     "redirect": {
         "message": "Alidirekti"
@@ -146,13 +146,13 @@
         "message": "Aŭtomate elekti servilon"
     },
     "redirectGoogle": {
-        "message": "Alidirekti Google·on"
+        "message": "Alidirekti Google"
     },
     "search_frontend": {
-        "message": "Fasado de serĉo"
+        "message": "Serĉi fasadon"
     },
     "searchService": {
-        "message": "Servo de serĉo"
+        "message": "Serĉi servon"
     },
     "embedFrontend": {
         "message": "Fasado de enigita paĝo"
