@@ -7,7 +7,7 @@ to alternative privacy-friendly frontends.
   <img src="./assets/badge-amo.svg" height="60">
 </a>
 &nbsp;
-<a href="https://libredirect.manerakai.com/download_chromium.html">
+<a href="https://libredirect.manerakai.com/docs.html#chromium-install">
   <img src="./assets/badge-chromium.png" height="60">
 </a>
 
