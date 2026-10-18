@@ -989,6 +989,7 @@ async function reverse(url) {
       case "twitter":
       case "medium":
       case "pinterest":
+      case "instagram":
         return `${config.services[service].url}${url.pathname}${url.search}`
       case "fandom": {
         let regex = url.pathname.match(/^\/([a-zA-Z0-9-]+)\/wiki\/(.*)/)
