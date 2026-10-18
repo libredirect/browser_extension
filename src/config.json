@@ -1266,7 +1266,7 @@
       "targets": [
         "^https?:\\/{2}search\\.libredirect\\.invalid",
         "^https?:\\/{2}libredirect\\.github\\.io\\/\\?q",
-        "^https?:\\/{2}(www\\.)?google\\.com",
+        "^https?:\\/{2}(www\\.)?google\\.com(?!\\/search\\?([^#]*&)?vsrid=)",
         "^https?:\\/{2}(www\\.)?bing\\.com"
       ],
       "name": "Search",
