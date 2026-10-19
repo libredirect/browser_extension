@@ -46,7 +46,7 @@ function regexArray(service, url, config, options, frontend) {
       )
     }
     if (service === "twitter" && options["twitter"].disableTwimg) {
-      targetList.splice(2, 1)
+      targetList = targetList.filter((_, index) => index !== 2)
     }
   }
   for (const targetString in targetList) {
@@ -678,7 +678,10 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       }
       if (url.pathname.split("/").includes("tweets"))
         return `${randomInstance}${url.pathname.replace("/tweets", "")}${search}`
-      if (url.host == "t.co") return `${randomInstance}/t.co${url.pathname}`
+      if (url.host == "t.co") {
+        if (url.pathname == "/") return randomInstance
+        return `${randomInstance}/t.co${url.pathname}`
+      }
       return `${randomInstance}${url.pathname}${search}#m`
     }
     case "priviblur": {
