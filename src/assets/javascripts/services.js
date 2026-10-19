@@ -989,7 +989,8 @@ async function reverse(url) {
       continue
     switch (service) {
       case "youtube":
-        if (frontend == "vivid") return `${config.services[service].url}${url.hash.slice(1) || url.pathname + url.search}`
+        if (frontend == "vivid")
+          return `${config.services[service].url}${url.hash.slice(1) || url.pathname + url.search}`
       case "imdb":
       case "imgur":
       case "tiktok":
