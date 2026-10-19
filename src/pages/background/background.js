@@ -357,7 +357,10 @@ browser.runtime.getPlatformInfo(r => {
 
 browser.runtime.onMessage.addListener((r, sender, sendResponse) => {
   if (r.message == "switchInstance") {
-    servicesHelper.switchInstance(new URL(r.url), r.customService).then(sendResponse)
+    servicesHelper
+      .switchInstance(new URL(r.url), r.customService)
+      .then(sendResponse)
+      .catch(() => sendResponse())
     return true
   }
   if (r.message == "reverse") tabIdRedirects[r.tabId] = false

@@ -940,7 +940,14 @@ async function switchInstance(url, customService, preview = false) {
 
   for (const service of customService ? [customService] : Object.keys(config.services)) {
     const frontend = options[service].frontend
-    const instances = [...new Set(options[frontend] ?? [])]
+    const instances = [...new Set(options[frontend] ?? [])].filter(instance => {
+      try {
+        new URL(instance)
+        return true
+      } catch {
+        return false
+      }
+    })
     const current = instances.find(instance => {
       const base = new URL(instance)
       const path = base.pathname.replace(/\/+$/, "")
@@ -966,8 +973,8 @@ async function switchInstance(url, customService, preview = false) {
       instancePools.set(frontend, pool)
     }
     pool.remaining = pool.remaining.filter(instance => instance != current)
-    if (pool.remaining.length == 0) pool.remaining = [...instances]
-    const newInstance = utils.getRandomInstance(pool.remaining.filter(instance => instance != current))
+    if (pool.remaining.length == 0) pool.remaining = candidates
+    const newInstance = utils.getRandomInstance(pool.remaining)
     pool.remaining.splice(pool.remaining.indexOf(newInstance), 1)
     return `${newInstance}${url.pathname}${url.search}`
   }
