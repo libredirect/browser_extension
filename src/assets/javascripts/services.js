@@ -926,39 +926,56 @@ async function computeServiceFrontend(url) {
   }
 }
 
+// The background page owns these pools; popup availability checks do not consume them.
+const instancePools = new Map()
+
 /**
  * @param {URL} url
  * @param {string} customService
+ * @param {boolean} preview
  */
-function switchInstance(url, customService) {
-  return new Promise(async resolve => {
-    let options = await utils.getOptions()
-    let config = await utils.getConfig()
+async function switchInstance(url, customService, preview = false) {
+  const options = await utils.getOptions()
+  const config = await utils.getConfig()
 
-    const protocolHost = utils.protocolHost(url)
-    if (customService) {
-      const instancesList = options[options[customService].frontend]
-      if (instancesList !== undefined) {
-        const newInstance = utils.getNextInstance(url.origin, instancesList)
-        if (newInstance) {
-          return resolve(`${newInstance}${url.pathname}${url.search}`)
-        }
-      }
-    } else {
-      for (const service in config.services) {
-        let instancesList = options[options[service].frontend]
-        if (instancesList === undefined) continue
-        const index = instancesList.findIndex(instance => url.href.startsWith(instance))
-        if (index < 0) continue
-        instancesList.splice(index, 1)
-        if (instancesList.length === 0) return resolve()
-        const newInstance = utils.getNextInstance(url.origin, instancesList)
-        if (newInstance) {
-          return resolve(`${newInstance}${url.pathname}${url.search}`)
-        }
-      }
+  for (const service of customService ? [customService] : Object.keys(config.services)) {
+    const frontend = options[service].frontend
+    const instances = [...new Set(options[frontend] ?? [])]
+    const current = instances.find(instance => {
+      const base = new URL(instance)
+      const path = base.pathname.replace(/\/+$/, "")
+      return (
+        url.origin == base.origin &&
+        url.username == base.username &&
+        url.password == base.password &&
+        (url.pathname == path || url.pathname.startsWith(`${path}/`))
+      )
+    })
+    if (!customService && !current) continue
+    const candidates = instances.filter(instance => instance != current)
+    if (candidates.length == 0) return
+    if (preview) return `${candidates[0]}${url.pathname}${url.search}`
+
+    let pool = instancePools.get(frontend)
+    if (
+      !pool ||
+      instances.length != pool.instances.length ||
+      instances.some((instance, i) => instance != pool.instances[i])
+    ) {
+      pool = { instances, remaining: [...instances] }
+      instancePools.set(frontend, pool)
     }
-    resolve()
+    pool.remaining = pool.remaining.filter(instance => instance != current)
+    if (pool.remaining.length == 0) pool.remaining = [...instances]
+    const newInstance = utils.getRandomInstance(pool.remaining.filter(instance => instance != current))
+    pool.remaining.splice(pool.remaining.indexOf(newInstance), 1)
+    return `${newInstance}${url.pathname}${url.search}`
+  }
+}
+
+function switchInstanceInBackground(url, customService) {
+  return new Promise(resolve => {
+    browser.runtime.sendMessage({ message: "switchInstance", url: url.href, customService }, resolve)
   })
 }
 
@@ -1346,5 +1363,6 @@ export default {
   processUpdate,
   copyRaw,
   switchInstance,
+  switchInstanceInBackground,
   isException,
 }
