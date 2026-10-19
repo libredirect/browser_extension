@@ -45,8 +45,8 @@ function regexArray(service, url, config, options, frontend) {
         val => !config.services[service].frontends[frontend].excludeTargets.includes(targetList.indexOf(val))
       )
     }
-    if (service === "twitter" && options["twitter"].disableTwimg) {
-      targetList.splice(2, 1)
+    if (service === "twitter" && options["twitter"].disableTwimg && url.hostname.endsWith(".twimg.com")) {
+      return false
     }
   }
   for (const targetString in targetList) {
@@ -678,7 +678,10 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       }
       if (url.pathname.split("/").includes("tweets"))
         return `${randomInstance}${url.pathname.replace("/tweets", "")}${search}`
-      if (url.host == "t.co") return `${randomInstance}/t.co${url.pathname}`
+      if (url.host == "t.co") {
+        if (url.pathname == "/") return randomInstance
+        return `${randomInstance}/t.co${url.pathname}`
+      }
       return `${randomInstance}${url.pathname}${search}#m`
     }
     case "priviblur": {
