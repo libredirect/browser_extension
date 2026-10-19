@@ -961,7 +961,9 @@ async function switchInstance(url, customService, preview = false) {
     if (!customService && !current) continue
     const candidates = instances.filter(instance => instance != current)
     if (candidates.length == 0) return
-    if (preview) return `${candidates[0]}${url.pathname}${url.search}`
+    const currentPath = current ? new URL(current).pathname.replace(/\/+$/, "") : ""
+    const pathname = url.pathname.slice(currentPath.length)
+    if (preview) return `${candidates[0]}${pathname}${url.search}`
 
     let pool = instancePools.get(frontend)
     if (
@@ -976,7 +978,7 @@ async function switchInstance(url, customService, preview = false) {
     if (pool.remaining.length == 0) pool.remaining = candidates
     const newInstance = utils.getRandomInstance(pool.remaining)
     pool.remaining.splice(pool.remaining.indexOf(newInstance), 1)
-    return `${newInstance}${url.pathname}${url.search}`
+    return `${newInstance}${pathname}${url.search}`
   }
 }
 
