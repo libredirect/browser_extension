@@ -45,8 +45,8 @@ function regexArray(service, url, config, options, frontend) {
         val => !config.services[service].frontends[frontend].excludeTargets.includes(targetList.indexOf(val))
       )
     }
-    if (service === "twitter" && options["twitter"].disableTwimg) {
-      targetList = targetList.filter((_, index) => index !== 2)
+    if (service === "twitter" && options["twitter"].disableTwimg && url.hostname.endsWith(".twimg.com")) {
+      return false
     }
   }
   for (const targetString in targetList) {
