@@ -600,6 +600,17 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       }
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "vivid": {
+      url.searchParams.delete("si")
+      if (url.hostname == "youtu.be" || /^\/(shorts|live|embed)\//.test(url.pathname)) {
+        const watch = url.pathname.split("/").filter(Boolean).pop()
+        url.searchParams.set("v", watch)
+        return `${randomInstance}/#/watch${url.search}`
+      }
+      // Vivid only routes /channel/:id, so a tab segment would land on its homepage
+      const path = url.pathname.replace(/^(\/channel\/[^/]+)\/.*/, "$1")
+      return `${randomInstance}/#${path}${url.search}`
+    }
     case "materialious": {
       url.searchParams.delete("si")
       if (url.hostname == "youtu.be" || (url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/live"))) {
@@ -978,6 +989,8 @@ async function reverse(url) {
       continue
     switch (service) {
       case "youtube":
+        if (frontend == "vivid")
+          return `${config.services[service].url}${url.hash.slice(1) || url.pathname + url.search}`
       case "imdb":
       case "imgur":
       case "tiktok":
@@ -1121,6 +1134,7 @@ async function reverse(url) {
 }
 
 const defaultInstances = {
+  vivid: ["https://vivid.errexe.xyz"],
   materialious: ["https://app.materialio.us"],
   viewtube: ["https://viewtube.io"],
   piped: ["https://pipedapi-libre.kavin.rocks"],
