@@ -944,6 +944,8 @@ async function switchInstance(url, customService) {
     if (!customService && !current) continue
     const candidates = instances.filter(instance => instance != current)
     if (candidates.length == 0) return
+    const currentPath = current ? new URL(current).pathname.replace(/\/+$/, "") : ""
+    const pathname = url.pathname.slice(currentPath.length)
 
     let visited = visitedInstances.get(frontend)
     if (!visited) {
@@ -959,7 +961,7 @@ async function switchInstance(url, customService) {
     }
     const newInstance = utils.getRandomInstance(unvisited)
     visited.add(newInstance)
-    return `${newInstance}${url.pathname}${url.search}`
+    return `${newInstance}${pathname}${url.search}`
   }
 }
 
