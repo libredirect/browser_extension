@@ -329,7 +329,8 @@
           "name": "kddit",
           "instanceList": false,
           "url": "https://github.com/kzarist/kddit",
-          "localhost": false
+          "localhost": false,
+          "imageType": "svg"
         }
       },
       "targets": [
