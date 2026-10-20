@@ -422,6 +422,13 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       if (!url.pathname.includes("/define.php") && !url.pathname.includes("/random.php") && url.pathname != "/")
         return randomInstance
       return `${randomInstance}${url.pathname}${url.search}`
+    case "sdict":
+      if (type == "image") return
+      if (url.pathname == "/") return randomInstance
+      if (/^\/examples\/[^/]+\/?$/.test(url.pathname))
+        return `${randomInstance}${url.pathname.replace("/examples/", "/translate/").replace(/\/$/, "")}${url.search}#examples`
+      if (!/^\/translate\/[^/]+\/?$/.test(url.pathname)) return
+      return `${randomInstance}${url.pathname.replace(/\/$/, "")}${url.search}${url.hash}`
     case "anonymousOverflow": {
       if (url.hostname == "stackoverflow.com") {
         const threadID = /^\/a\/(\d+)\/?/.exec(url.pathname)
@@ -989,6 +996,7 @@ async function reverse(url) {
       case "twitter":
       case "medium":
       case "pinterest":
+      case "spanishDict":
         return `${config.services[service].url}${url.pathname}${url.search}`
       case "fandom": {
         let regex = url.pathname.match(/^\/([a-zA-Z0-9-]+)\/wiki\/(.*)/)
@@ -1155,6 +1163,7 @@ const defaultInstances = {
   dumb: ["https://dm.vern.cc"],
   intellectual: ["https://intellectual.insprill.net"],
   ruralDictionary: ["https://rd.vern.cc"],
+  sdict: ["https://sdict.sloria.fun"],
   anonymousOverflow: ["https://overflow.hostux.net"],
   suds: ["https://sd.vern.cc"],
   unfunny: ["https://uf.vern.cc"],
