@@ -423,12 +423,10 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
         return randomInstance
       return `${randomInstance}${url.pathname}${url.search}`
     case "sdict":
-      if (type == "image") return
-      if (url.pathname == "/") return randomInstance
-      if (/^\/examples\/[^/]+\/?$/.test(url.pathname))
-        return `${randomInstance}${url.pathname.replace("/examples/", "/translate/").replace(/\/$/, "")}${url.search}#examples`
-      if (!/^\/translate\/[^/]+\/?$/.test(url.pathname)) return
-      return `${randomInstance}${url.pathname.replace(/\/$/, "")}${url.search}${url.hash}`
+      if (!/^\/((translate|examples)\/[^/]+)?$/.test(url.pathname)) return
+      if (url.pathname.startsWith("/examples/"))
+        return `${randomInstance}${url.pathname.replace("/examples/", "/translate/")}${url.search}#examples`
+      return `${randomInstance}${url.pathname}${url.search}${url.hash}`
     case "anonymousOverflow": {
       if (url.hostname == "stackoverflow.com") {
         const threadID = /^\/a\/(\d+)\/?/.exec(url.pathname)
