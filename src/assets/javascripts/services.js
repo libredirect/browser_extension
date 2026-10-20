@@ -396,6 +396,9 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       }
       return `${randomInstance}/comments${url.pathname}`
     }
+    case "kddit":
+      if (/^(?:(?:external-)?preview|i)\.redd\.it$/.test(url.hostname)) return `${randomInstance}/proxy/${url.href}`
+      return `${randomInstance}${url.pathname}${url.search}`
     case "teddit":
       if (/^(?:(?:external-)?preview|i)\.redd\.it/.test(url.hostname)) {
         if (url.search == "") return `${randomInstance}${url.pathname}?teddit_proxy=${url.hostname}`
@@ -977,11 +980,16 @@ async function reverse(url) {
     )
       continue
     switch (service) {
+      case "reddit":
+        if (frontend == "kddit") {
+          const proxied = url.pathname.match(/^\/(?:proxy|video)\/(https?:\/\/.+)/)
+          if (proxied) return `${proxied[1]}${url.search}`
+        }
+        return `${config.services[service].url}${url.pathname}${url.search}`
       case "youtube":
       case "imdb":
       case "imgur":
       case "tiktok":
-      case "reddit":
       case "imdb":
       case "snopes":
       case "urbanDictionary":
@@ -1133,6 +1141,7 @@ const defaultInstances = {
   redlib: ["https://safereddit.com"],
   eddrit: ["https://eddrit.com"],
   troddit: ["https://www.troddit.com"],
+  kddit: ["https://kddit.kalli.st"],
   scribe: ["https://scribe.rip"],
   libMedium: ["https://md.vern.cc"],
   small: ["https://small.bloat.cat"],

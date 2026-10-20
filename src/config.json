@@ -324,6 +324,13 @@
           "instanceList": false,
           "url": "https://github.com/burhan-syed/troddit",
           "localhost": false
+        },
+        "kddit": {
+          "name": "kddit",
+          "instanceList": false,
+          "url": "https://github.com/kzarist/kddit",
+          "localhost": false,
+          "imageType": "svg"
         }
       },
       "targets": [
