@@ -65,6 +65,12 @@ function regexArray(service, url, config, options, frontend) {
  */
 function rewrite(url, originUrl, frontend, randomInstance, type) {
   switch (frontend) {
+    case "soprano":
+    case "mezzo": {
+      if (!/^media1?\.tenor\.com$/.test(url.hostname)) return
+      const proxyPath = frontend === "soprano" ? "/proxy" : "/proxy.gif"
+      return `${randomInstance}${proxyPath}?url=${encodeURIComponent(url.href)}`
+    }
     case "hyperpipe":
       for (const key of [...url.searchParams.keys()]) if (key !== "q") url.searchParams.delete(key)
       return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery =>
