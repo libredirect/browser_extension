@@ -113,7 +113,11 @@ function getList(options) {
     const http = new XMLHttpRequest()
     http.open("GET", url, true)
     http.onreadystatechange = () => {
-      if (http.status === 200 && http.readyState == XMLHttpRequest.DONE) return resolve(JSON.parse(http.responseText))
+      if (http.status === 200 && http.readyState == XMLHttpRequest.DONE) {
+        const list = JSON.parse(http.responseText)
+        list.invidiousMusic = list.invidious
+        return resolve(list)
+      }
     }
     http.onerror = () => resolve()
     http.ontimeout = () => resolve()
