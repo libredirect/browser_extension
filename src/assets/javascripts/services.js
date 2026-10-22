@@ -573,6 +573,14 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       }
       return `${randomInstance}${url.pathname}${url.search}`
     }
+    case "typetype":
+    case "typetypeMusic": {
+      if (url.pathname.startsWith("/results")) {
+        return `${randomInstance}/search?q=${encodeURIComponent(url.searchParams.get("search_query") ?? "")}`
+      }
+      const channel = /^\/(?:channel\/)?(UC[\w-]{22}|@[^/]+)/.exec(url.pathname)
+      if (channel) return `${randomInstance}/channel/${channel[1]}`
+    }
     case "invidious": {
       // tracker
       url.searchParams.delete("si")
@@ -1195,6 +1203,8 @@ const defaultInstances = {
   skunkyArt: ["https://skunky.bloat.cat"],
   ytify: ["https://ytify.pp.ua"],
   ytifyMusic: ["https://ytify.pp.ua"],
+  typetype: ["https://watch.typetype.video"],
+  typetypeMusic: ["https://watch.typetype.video"],
   nerdsForNerds: ["https://nn.vern.cc"],
   ducksForDucks: ["https://ducksforducks.private.coffee"],
   koub: ["https://koub.bloat.cat"],
