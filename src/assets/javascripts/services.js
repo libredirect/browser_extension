@@ -67,9 +67,13 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
   switch (frontend) {
     case "soprano":
     case "mezzo": {
-      if (!/^media1?\.tenor\.com$/.test(url.hostname)) return
-      const proxyPath = frontend === "soprano" ? "/proxy" : "/proxy.gif"
-      return `${randomInstance}${proxyPath}?url=${encodeURIComponent(url.href)}`
+      if (/^media1?\.tenor\.com$/.test(url.hostname)) {
+        if (frontend === "soprano") {
+          return `${randomInstance}/proxy?url=${encodeURIComponent(url.href)}`
+        }
+        return `${randomInstance}/media/${url.hostname}${url.pathname}`
+      }
+      return `${randomInstance}${url.pathname}${url.search}`
     }
     case "hyperpipe":
       for (const key of [...url.searchParams.keys()]) if (key !== "q") url.searchParams.delete(key)
