@@ -989,6 +989,13 @@ async function reverse(url) {
       case "pinterest":
       case "instagram":
         return `${config.services[service].url}${url.pathname}${url.search}`
+      case "tumblr": {
+        const media = /^\/tblr\/media\/([^/]+)(\/.*)/.exec(url.pathname)
+        if (media) return `https://${media[1]}.media.tumblr.com${media[2]}${url.search}`
+        const asset = /^\/tblr\/(a|assets|static)(\/.*)/.exec(url.pathname)
+        if (asset) return `https://${asset[1]}.tumblr.com${asset[2]}${url.search}`
+        return `https://www.tumblr.com${url.pathname}${url.search}`
+      }
       case "fandom": {
         let regex = url.pathname.match(/^\/([a-zA-Z0-9-]+)\/wiki\/(.*)/)
         if (regex) return `https://${regex[1]}.fandom.com/wiki/${regex[2]}`
