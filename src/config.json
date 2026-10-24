@@ -992,7 +992,7 @@
         }
       },
       "targets": [
-        "^https?:\\/{2}(www\\.)?tenor\\.com\\/"
+        "^https?:\\/{2}(?:www\\.|media1?\\.)?tenor\\.com\\/"
       ],
       "name": "Tenor",
       "options": {
