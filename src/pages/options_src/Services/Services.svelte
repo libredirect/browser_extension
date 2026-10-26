@@ -24,8 +24,10 @@
     unsubscribeConfig()
   })
   let selectedService = $url.hash.startsWith("#services:") ? $url.hash.split(":")[1] : "youtube"
-  let hideServiceSelection = false
-  let hideFrontendSelection = false
+  let serviceListOpen = false
+  let serviceFilterText = ""
+  let frontendListOpen = false
+  let frontendFilterText = ""
   $: serviceConf = _config.services[selectedService]
   $: serviceOptions = _options[selectedService]
   $: frontendWebsite = serviceConf.frontends[serviceOptions.frontend].url
@@ -40,21 +42,18 @@
         {browser.i18n.getMessage("service") || "Service"}
       </a>
     </Label>
-    <!-- svelte-ignore a11y_interactive_supports_focus -->
-    <div dir="ltr" on:click={() => (hideServiceSelection = true)} on:keydown={null} role="button">
+    <div dir="ltr">
       <SvelteSelect
         clearable={false}
         class="svelte_select"
         value={selectedService}
         showChevron
+        bind:listOpen={serviceListOpen}
+        bind:filterText={serviceFilterText}
         on:change={e => {
           selectedService = e.detail.value
           window.location.hash = `services:${e.detail.value}`
-          hideServiceSelection = false
         }}
-        on:pointerup={() => (hideServiceSelection = false)}
-        on:focus={() => (hideServiceSelection = true)}
-        on:blur={() => (hideServiceSelection = false)}
         items={[
           ...servicesEntries.map(([serviceKey, service]) => {
             return { value: serviceKey, label: service.name }
@@ -66,15 +65,15 @@
           {item.label}
         </div>
         <div
-          class={"slot " + (!_options[selection.value].enabled && !hideServiceSelection && "disabled")}
+          class={"slot " + (!_options[selection.value].enabled && "disabled")}
           slot="selection"
           let:selection
         >
-          {#if !hideServiceSelection}
+          {#if serviceListOpen && serviceFilterText.length === 0}
+            {browser.i18n.getMessage("searchService") || "Search Service"}
+          {:else}
             <ServiceIcon details={selection} />
             {selection.label}
-          {:else}
-            {browser.i18n.getMessage("searchService") || "Search Service"}
           {/if}
         </div>
         <div style="font-size: 10px;" slot="chevron-icon">🮦</div>
@@ -118,22 +117,19 @@
           {browser.i18n.getMessage("frontend") || "Frontend"}
         </a>
       </Label>
-      <!-- svelte-ignore a11y_interactive_supports_focus -->
-      <div dir="ltr" on:click={() => (hideFrontendSelection = true)} on:keydown={null} role="button">
+      <div dir="ltr">
         <SvelteSelect
           clearable={false}
           dir="ltr"
           class="svelte_select"
           value={serviceOptions.frontend}
           showChevron
+          bind:listOpen={frontendListOpen}
+          bind:filterText={frontendFilterText}
           on:change={e => {
             serviceOptions.frontend = e.detail.value
             options.set(_options)
-            hideFrontendSelection = false
           }}
-          on:pointerup={() => (hideServiceSelection = false)}
-          on:focus={() => (hideFrontendSelection = true)}
-          on:blur={() => (hideFrontendSelection = false)}
           items={[
             ...frontendEntries.map(([frontendId, frontend]) => ({
               value: frontendId,
@@ -146,11 +142,11 @@
             {item.label}
           </div>
           <div class="slot" slot="selection" let:selection>
-            {#if !hideFrontendSelection}
+            {#if frontendListOpen && frontendFilterText.length === 0}
+              {browser.i18n.getMessage("search_frontend") || "Search Frontend"}
+            {:else}
               <FrontendIcon details={selection} {selectedService} />
               {selection.label}
-            {:else}
-              {browser.i18n.getMessage("search_frontend") || "Search Frontend"}
             {/if}
           </div>
           <div style="font-size: 10px;" slot="chevron-icon">🮦</div>
