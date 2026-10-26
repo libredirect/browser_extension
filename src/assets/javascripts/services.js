@@ -602,7 +602,8 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
     }
     case "vivid": {
       url.searchParams.delete("si")
-      if (url.hostname == "youtu.be" || /^\/(shorts|live|embed)\//.test(url.pathname)) {
+      if (url.pathname.startsWith("/embed/")) return `${randomInstance}/#${url.pathname}${url.search}`
+      if (url.hostname == "youtu.be" || /^\/(shorts|live)\//.test(url.pathname)) {
         const watch = url.pathname.split("/").filter(Boolean).pop()
         url.searchParams.set("v", watch)
         return `${randomInstance}/#/watch${url.search}`

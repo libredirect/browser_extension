@@ -32,9 +32,9 @@
             2
           ],
           "name": "Vivid",
-          "embeddable": false,
+          "embeddable": true,
           "instanceList": true,
-          "url": "https://github.com/Youtube-Hackers/vivid"
+          "url": "https://github.com/TeamVivid/Vivid"
         },
         "materialious": {
           "name": "Materialious",
