@@ -228,7 +228,7 @@
 
     <Instances
       {selectedService}
-      selectedFrontend={!serviceConf.frontends[serviceOptions.frontend].desktopApp ||
+      selectedFrontend={!('desktopApp' in serviceConf.frontends[serviceOptions.frontend] && serviceConf.frontends[serviceOptions.frontend].desktopApp) ||
       serviceOptions.redirectType == "main_frame"
         ? serviceOptions.frontend
         : serviceOptions.embedFrontend}

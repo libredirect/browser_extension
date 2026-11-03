@@ -33,6 +33,7 @@
       { value: "main_frame", name: browser.i18n.getMessage("onlyNotEmbedded") || "Only Not Embedded" },
     ]
   } else if (
+    'desktopApp' in serviceConf.frontends[frontendName] &&
     serviceConf.frontends[frontendName].desktopApp &&
     Object.values(serviceConf.frontends).some(frontend => frontend.embeddable)
   ) {
@@ -76,7 +77,7 @@
   />
 </Row>
 
-{#if serviceConf.frontends[frontendName].desktopApp && serviceOptions.redirectType != "main_frame"}
+{#if 'desktopApp' in serviceConf.frontends[frontendName] && serviceConf.frontends[frontendName].desktopApp && serviceOptions.redirectType != "main_frame"}
   <Row>
     <Label>{browser.i18n.getMessage("embedFrontend") || "Embed Frontend"}</Label>
     <SvelteSelect

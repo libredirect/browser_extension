@@ -843,6 +843,7 @@ function redirect(url, type, originUrl, documentUrl, incognito, forceRedirection
     frontend = options[service].frontend
 
     if (
+      'desktopApp' in config.services[service].frontends[frontend] &&
       config.services[service].frontends[frontend].desktopApp &&
       type != "main_frame" &&
       options[service].redirectType != "main_frame"
