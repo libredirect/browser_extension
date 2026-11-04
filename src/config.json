@@ -142,6 +142,12 @@
           "embeddable": false,
           "instanceList": true,
           "url": "https://github.com/n-ce/ytify/"
+        },
+        "typetype": {
+          "name": "TypeType",
+          "embeddable": false,
+          "instanceList": true,
+          "url": "https://github.com/TypeType-Video/TypeType"
         }
       },
       "targets": [
@@ -190,6 +196,12 @@
           "desktopApp": true,
           "instanceList": false,
           "url": "https://github.com/FreeTubeApp/FreeTube"
+        },
+        "typetypeMusic": {
+          "name": "TypeType",
+          "embeddable": false,
+          "instanceList": true,
+          "url": "https://github.com/TypeType-Video/TypeType"
         }
       },
       "targets": [
