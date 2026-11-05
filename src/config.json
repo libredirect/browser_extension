@@ -1208,15 +1208,6 @@
             3
           ]
         },
-        "searx": {
-          "name": "SearX",
-          "instanceList": true,
-          "url": "https://searx.github.io/searx/",
-          "excludeTargets": [
-            2,
-            3
-          ]
-        },
         "whoogle": {
           "name": "Whoogle",
           "instanceList": true,

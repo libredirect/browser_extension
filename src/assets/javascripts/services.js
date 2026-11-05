@@ -70,7 +70,6 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       return `${randomInstance}${url.pathname}${url.search}`.replace(/\/search\?q=.*/, searchQuery =>
         searchQuery.replace("?q=", "/")
       )
-    case "searx":
     case "searxng":
       for (const key of [...url.searchParams.keys()]) if (key !== "q") url.searchParams.delete(key)
       return `${randomInstance}/${url.search}`
