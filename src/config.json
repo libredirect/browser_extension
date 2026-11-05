@@ -1046,6 +1046,27 @@
       "imageType": "svg",
       "url": "https://urbandictionary.com"
     },
+    "spanishDict": {
+      "frontends": {
+        "sdict": {
+          "name": "sdict",
+          "instanceList": true,
+          "url": "https://github.com/sloria/sdict"
+        }
+      },
+      "targets": [
+        "^https?:\\/{2}(www\\.)?spanishdict\\.com\\/"
+      ],
+      "name": "SpanishDict",
+      "options": {
+        "enabled": false,
+        "unsupportedUrls": "bypass",
+        "frontend": "sdict",
+        "redirectOnlyInIncognito": false
+      },
+      "imageType": "png",
+      "url": "https://www.spanishdict.com"
+    },
     "goodreads": {
       "frontends": {
         "biblioReads": {

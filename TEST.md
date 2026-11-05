@@ -35,6 +35,7 @@
 - Fandom: <https://naruto.fandom.com>.
 - Genius: <https://genius.com/Doja-cat-demons-lyrics>.
 - Urban Dictionary: <https://urbandictionary.com/define.php?term=Roads>.
+- SpanishDict: <https://www.spanishdict.com/translate/hola>.
 - Stack Overflow:
   <https://stackoverflow.com/questions/16330404/how-to-remove-remote-origin-from-a-git-repository>.
 - Goodreads: <https://www.goodreads.com/book/show/3869.A_Brief_History_of_Time>.
