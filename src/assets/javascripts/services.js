@@ -604,24 +604,24 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       url.searchParams.delete("si")
       if (url.hostname == "youtu.be" || (url.hostname.endsWith("youtube.com") && url.pathname.startsWith("/live"))) {
         const watch = url.pathname.substring(url.pathname.lastIndexOf("/") + 1)
-        return `${randomInstance}/watch/${watch}${url.search.replace("?", "&")}`
+        return `${randomInstance}/watch/${watch}${url.search}`
       }
       if (url.hostname.endsWith("youtube.com")) {
         if (url.pathname.startsWith("/watch")) {
           if (url.searchParams.has("v")) {
             const watch = url.searchParams.get("v")
             url.searchParams.delete("v")
-            return `${randomInstance}/watch/${watch}${url.search.replace("?", "&")}`
+            return `${randomInstance}/watch/${watch}${url.search}`
           }
-          return `${randomInstance}/watch/${url.search.replace("?", "&")}`
+          return `${randomInstance}/watch/${url.search}`
         }
         if (url.pathname.startsWith("/results")) {
           if (url.searchParams.has("search_query")) {
             const search = url.searchParams.get("search_query")
             url.searchParams.delete("search_query")
-            return `${randomInstance}/search/${search}${url.search.replace("?", "&")}`
+            return `${randomInstance}/search/${search}${url.search}`
           }
-          return `${randomInstance}/search/${url.search.replace("?", "&")}`
+          return `${randomInstance}/search/${url.search}`
         }
         if (url.pathname.startsWith("/redirect?")) {
           return url.href
