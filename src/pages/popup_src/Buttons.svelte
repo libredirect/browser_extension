@@ -49,6 +49,7 @@
     const instance = await utils.autoPickInstance(clearnet, url)
     _options[frontend].push(instance)
     options.set(_options)
+    await new Promise(resolve => browser.storage.local.set({ options: _options }, resolve))
     autoPicking = false
   }
 </script>
@@ -78,7 +79,7 @@
         <Row
           class="interactive"
           on:click={async () =>
-            browser.tabs.update({ url: switchInstance }, () => {
+            browser.tabs.update({ url: await servicesHelper.switchInstanceInBackground(url) }, () => {
               window.close()
             })}
         >
@@ -92,7 +93,7 @@
           const i = _options[frontend].findIndex(instance => url.href.startsWith(instance))
           _options[frontend].splice(i, 1)
           options.set(_options)
-          const newUrl = await servicesHelper.switchInstance(url, service)
+          const newUrl = await servicesHelper.switchInstanceInBackground(url, service)
           browser.tabs.update({ url: newUrl }, () => {
             window.close()
           })
@@ -113,7 +114,7 @@
           _options[frontend].splice(i, 1)
           options.set(_options)
           await autoPick()
-          browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) }, () => {
+          browser.tabs.update({ url: await servicesHelper.switchInstanceInBackground(url, service) }, () => {
             window.close()
           })
         }}
@@ -129,7 +130,7 @@
         class={"interactive " + (autoPicking ? "disabled" : "")}
         on:click={async () => {
           await autoPick()
-          browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) }, () => {
+          browser.tabs.update({ url: await servicesHelper.switchInstanceInBackground(url, service) }, () => {
             window.close()
           })
         }}

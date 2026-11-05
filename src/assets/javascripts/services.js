@@ -926,39 +926,46 @@ async function computeServiceFrontend(url) {
   }
 }
 
+// Each page gets its own copy of this module and the popup's dies on close, so only the background copy keeps history.
+const visitedInstances = new Map()
+
 /**
  * @param {URL} url
  * @param {string} customService
  */
-function switchInstance(url, customService) {
-  return new Promise(async resolve => {
-    let options = await utils.getOptions()
-    let config = await utils.getConfig()
+async function switchInstance(url, customService) {
+  const options = await utils.getOptions()
+  const config = await utils.getConfig()
 
-    const protocolHost = utils.protocolHost(url)
-    if (customService) {
-      const instancesList = options[options[customService].frontend]
-      if (instancesList !== undefined) {
-        const newInstance = utils.getNextInstance(url.origin, instancesList)
-        if (newInstance) {
-          return resolve(`${newInstance}${url.pathname}${url.search}`)
-        }
-      }
-    } else {
-      for (const service in config.services) {
-        let instancesList = options[options[service].frontend]
-        if (instancesList === undefined) continue
-        const index = instancesList.findIndex(instance => url.href.startsWith(instance))
-        if (index < 0) continue
-        instancesList.splice(index, 1)
-        if (instancesList.length === 0) return resolve()
-        const newInstance = utils.getNextInstance(url.origin, instancesList)
-        if (newInstance) {
-          return resolve(`${newInstance}${url.pathname}${url.search}`)
-        }
-      }
+  for (const service of customService ? [customService] : Object.keys(config.services)) {
+    const frontend = options[service].frontend
+    const instances = options[frontend] ?? []
+    const current = instances.find(instance => url.href.startsWith(instance))
+    if (!customService && !current) continue
+    const candidates = instances.filter(instance => instance != current)
+    if (candidates.length == 0) return
+
+    let visited = visitedInstances.get(frontend)
+    if (!visited) {
+      visited = new Set()
+      visitedInstances.set(frontend, visited)
     }
-    resolve()
+    if (current) visited.add(current)
+    let unvisited = candidates.filter(instance => !visited.has(instance))
+    if (unvisited.length == 0) {
+      visited.clear()
+      if (current) visited.add(current)
+      unvisited = candidates
+    }
+    const newInstance = utils.getRandomInstance(unvisited)
+    visited.add(newInstance)
+    return `${newInstance}${url.pathname}${url.search}`
+  }
+}
+
+function switchInstanceInBackground(url, customService) {
+  return new Promise(resolve => {
+    browser.runtime.sendMessage({ message: "switchInstance", url: url.href, customService }, resolve)
   })
 }
 
@@ -1346,5 +1353,6 @@ export default {
   processUpdate,
   copyRaw,
   switchInstance,
+  switchInstanceInBackground,
   isException,
 }
