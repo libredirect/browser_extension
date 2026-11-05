@@ -81,8 +81,26 @@
   })
 
   let addInstanceValue
+  let addInstanceError = false
   function addInstance() {
-    const instance = utils.protocolHost(new URL(addInstanceValue))
+    addInstanceError = false
+    let url
+    try {
+      url = new URL(addInstanceValue.trim())
+    } catch {
+      // Missing protocol or invalid input — try prepending https://
+      try {
+        url = new URL(`https://${addInstanceValue.trim()}`)
+      } catch {
+        addInstanceError = true
+        return
+      }
+    }
+    if (!url.host || /\s/.test(url.host)) {
+      addInstanceError = true
+      return
+    }
+    const instance = utils.protocolHost(url)
     if (!_options[selectedFrontend].includes(instance)) {
       _options[selectedFrontend].push(instance)
       addInstanceValue = ""
@@ -155,9 +173,12 @@
     <Row>
       <Input
         bind:value={addInstanceValue}
-        type="url"
+        type="text"
+        inputmode="url"
         placeholder="https://instance.com"
         title="Add instance input"
+        style={addInstanceError ? "outline: 2px solid red;" : ""}
+        on:input={() => (addInstanceError = false)}
         on:keydown={e => e.key === "Enter" && addInstance()}
       />
       <button on:click={addInstance} class="add" title="Add the instance">

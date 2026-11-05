@@ -15,6 +15,7 @@
   onDestroy(unsubscribe)
 
   let disableBookmarks = null
+  let bookmarksPermission
   browser.runtime.getPlatformInfo(r => {
     switch (r.os) {
       case "fuchsia":
@@ -30,7 +31,6 @@
     }
   })
 
-  let bookmarksPermission
   $: if (disableBookmarks !== null && disableBookmarks === false) {
     if (bookmarksPermission) {
       browser.permissions.request({ permissions: ["bookmarks"] }, r => (bookmarksPermission = r))
