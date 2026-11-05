@@ -190,7 +190,7 @@
 
     {#if selectedService == "search"}
       <Row>
-        <Label>{browser.i18n.getMessage("redirectGoogle") || "Redirect Google"}</Label>
+        <Label>{browser.i18n.getMessage("redirectGoogle") || "Redirect Google & Bing"}</Label>
         <Checkbox
           checked={serviceOptions.redirectGoogle}
           onChange={e => {
