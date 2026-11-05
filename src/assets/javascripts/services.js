@@ -539,11 +539,6 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
     case "pinless":
       if (url.hostname == "i.pinimg.com") return `${randomInstance}/image?url=${encodeURIComponent(url.href)}`
       return `${randomInstance}${url.pathname}${url.search}`
-    case "laboratory": {
-      let path = url.pathname
-      if (path == "/") path = ""
-      return `${randomInstance}/${url.hostname}${path}${url.search}`
-    }
     case "quetre": {
       const regex = /([a-z]+)\.quora\.com/.exec(url.hostname)
       if (regex) {
@@ -1164,7 +1159,6 @@ const defaultInstances = {
   meme: ["https://mm.vern.cc"],
   waybackClassic: ["https://wayback-classic.net"],
   tent: ["https://tent.sny.sh"],
-  laboratory: ["https://lab.vern.cc"],
   binternet: ["https://bn.bloat.cat"],
   painterest: ["https://pt.bloat.cat"],
   pinless: ["https://pinterest.bunk.im"],

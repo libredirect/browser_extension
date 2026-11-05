@@ -867,29 +867,6 @@
       "imageType": "svgMono",
       "url": "https://github.com"
     },
-    "gitlab": {
-      "frontends": {
-        "laboratory": {
-          "name": "Laboratory",
-          "instanceList": true,
-          "url": "https://git.vitali64.duckdns.org/utils/laboratory.git/about/"
-        }
-      },
-      "targets": [
-        "^https?:\\/{2}gitlab\\.com\\/",
-        "^https?:\\/{2}gitlab\\.freedesktop\\.com\\/",
-        "^https?:\\/{2}gitlab\\.archlinux\\.com\\/"
-      ],
-      "name": "GitLab",
-      "options": {
-        "enabled": false,
-        "unsupportedUrls": "bypass",
-        "frontend": "laboratory",
-        "redirectOnlyInIncognito": false
-      },
-      "imageType": "svg",
-      "url": "https://gitlab.com/"
-    },
     "stackOverflow": {
       "frontends": {
         "anonymousOverflow": {
