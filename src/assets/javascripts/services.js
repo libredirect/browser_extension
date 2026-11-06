@@ -197,8 +197,10 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
         // https://www.google.com/maps/embed/v1/place?key=AIzaSyD4iE2xVSpkLLOXoyqT-RuPwURN3ddScAI&q=Eiffel+Tower,Paris+France
         const query = utils.getQuery(url)
         let { coordinate, boundingbox } = utils.addressToLatLng(query)
-        prefs.bbox = boundingbox
-        prefs.marker = coordinate
+        if (coordinate) {
+          prefs.bbox = boundingbox
+          prefs.marker = coordinate
+        }
         return `${randomInstance}/export/embed.html?${utils.prefsEncoded(prefs)}`
       }
 

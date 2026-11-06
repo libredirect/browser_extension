@@ -176,7 +176,11 @@ function addressToLatLng(address) {
     `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1`,
     false
   )
-  http.send()
+  try {
+    http.send()
+  } catch {
+    return {}
+  }
   if (http.status == 200) {
     const json = JSON.parse(http.responseText)[0]
     if (json) {
@@ -187,6 +191,7 @@ function addressToLatLng(address) {
     }
     return {}
   }
+  return {}
 }
 
 function getQuery(url) {
