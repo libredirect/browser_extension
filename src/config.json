@@ -544,7 +544,7 @@
         "pixivFe": {
           "name": "PixivFE",
           "instanceList": true,
-          "url": "https://codeberg.org/VnPower/pixivfe"
+          "url": "https://gitlab.com/pixivfe/PixivFE"
         },
         "liteXiv": {
           "name": "LiteXiv",
