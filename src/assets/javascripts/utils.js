@@ -197,7 +197,7 @@ function addressToLatLng(address) {
 function getQuery(url) {
   let query = ""
   if (url.searchParams.has("q")) query = url.searchParams.get("q")
-  else if (url.searchParams.has("query")) query = url.searchParams.has("query")
+  else if (url.searchParams.has("query")) query = url.searchParams.get("query")
   return query
 }
 function prefsEncoded(prefs) {
