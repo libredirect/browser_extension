@@ -48,7 +48,7 @@
   }
 
   function isCustomInstance(instance) {
-    if (redirects[selectedFrontend]) {
+    if (redirects && redirects[selectedFrontend]) {
       for (const network in redirects[selectedFrontend]) {
         if (redirects[selectedFrontend][network].includes(instance)) return false
       }
@@ -94,7 +94,7 @@
   let pinging = false
 </script>
 
-{#if serviceConf.frontends[selectedFrontend].instanceList && redirects && blacklist}
+{#if serviceConf.frontends[selectedFrontend].instanceList}
   <hr />
 
   <div>
@@ -129,7 +129,7 @@
         options.set(_options)
         autoPicking = false
       }}
-      disabled={autoPicking}
+      disabled={autoPicking || !redirects || !redirects[selectedFrontend]}
     >
       <AutoPickIcon class="margin margin_{document.body.dir}" />
       {browser.i18n.getMessage("autoPickInstance") || "Auto Pick Instance"}
@@ -193,7 +193,7 @@
       <hr />
     {/each}
 
-    {#if redirects !== "disabled" && blacklist !== "disabled"}
+    {#if redirects && blacklist && redirects !== "disabled" && blacklist !== "disabled"}
       {#if redirects[selectedFrontend] && redirects[selectedFrontend]["clearnet"]}
         {#each Object.entries(_config.networks) as [networkName, network]}
           {#if redirects[selectedFrontend] && redirects[selectedFrontend][networkName] && redirects[selectedFrontend][networkName].length > 0}
