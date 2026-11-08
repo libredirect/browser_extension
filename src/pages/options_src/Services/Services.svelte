@@ -215,7 +215,7 @@
 
     {#if selectedService == "twitter"}
       <Row>
-        <Label>{browser.i18n.getMessage("disableTwimg") || "Disable twimg.com redirects"}</Label>
+        <Label>{browser.i18n.getMessage("disableTwimg") || "Don't redirect twimg.com"}</Label>
         <Checkbox
           checked={serviceOptions.disableTwimg}
           onChange={e => {
