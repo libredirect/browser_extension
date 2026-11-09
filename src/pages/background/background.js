@@ -22,9 +22,13 @@ browser.runtime.onInstalled.addListener(async details => {
 // true to redirect, false to bypass
 let tabIdRedirects = {}
 
+let servicesReady = false
+servicesHelper.ready.then(() => (servicesReady = true))
+
 // true == Always redirect, false == Never redirect, null/undefined == follow options for services
 browser.webRequest.onBeforeRequest.addListener(
-  details => {
+  function onBeforeRequest(details) {
+    if (!servicesReady) return servicesHelper.ready.then(() => onBeforeRequest(details))
     const old_href = details.url
     const url = new URL(details.url)
     if (new RegExp(/^chrome-extension:\/{2}.*\/instances\/.*.json$/).test(url.href) && details.type == "xmlhttprequest")
