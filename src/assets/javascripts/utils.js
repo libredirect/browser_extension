@@ -134,7 +134,7 @@ function pingOnce(href) {
     let http = new XMLHttpRequest()
     http.timeout = 5000
     http.ontimeout = () => resolve(5000)
-    http.onerror = () => resolve()
+    http.onerror = () => resolve(5000)
     http.onreadystatechange = () => {
       if (http.readyState == 2) {
         if (http.status == 200) {
