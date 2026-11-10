@@ -67,7 +67,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
   switch (frontend) {
     case "soprano":
     case "mezzo": {
-      if (/^media1?\.tenor\.com$/.test(url.hostname)) {
+      if (/^media(?:1)?\.tenor\.com$/.test(url.hostname)) {
         if (frontend === "soprano") {
           return `${randomInstance}/proxy?url=${encodeURIComponent(url.href)}`
         }
