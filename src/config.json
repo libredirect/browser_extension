@@ -26,6 +26,16 @@
           "instanceList": true,
           "url": "https://invidious.io/"
         },
+        "vivid": {
+          "excludeTargets": [
+            1,
+            2
+          ],
+          "name": "Vivid",
+          "embeddable": true,
+          "instanceList": true,
+          "url": "https://github.com/TeamVivid/Vivid"
+        },
         "materialious": {
           "name": "Materialious",
           "embeddable": true,
