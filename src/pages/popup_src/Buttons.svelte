@@ -92,7 +92,7 @@
           const i = _options[frontend].findIndex(instance => utils.isOnInstance(url, instance))
           _options[frontend].splice(i, 1)
           options.set(_options)
-          const newUrl = await servicesHelper.switchInstance(url, service)
+          const newUrl = await servicesHelper.switchInstance(url, service, frontend)
           browser.tabs.update({ url: newUrl }, () => {
             window.close()
           })
@@ -113,7 +113,7 @@
           _options[frontend].splice(i, 1)
           options.set(_options)
           await autoPick()
-          browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) }, () => {
+          browser.tabs.update({ url: await servicesHelper.switchInstance(url, service, frontend) }, () => {
             window.close()
           })
         }}
@@ -129,7 +129,7 @@
         class={"interactive " + (autoPicking ? "disabled" : "")}
         on:click={async () => {
           await autoPick()
-          browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) }, () => {
+          browser.tabs.update({ url: await servicesHelper.switchInstance(url, service, frontend) }, () => {
             window.close()
           })
         }}

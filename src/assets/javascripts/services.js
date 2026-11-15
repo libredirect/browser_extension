@@ -938,18 +938,18 @@ function getVisitedInstances() {
 /**
  * @param {URL} url
  * @param {string} customService
+ * @param {string} customFrontend
  */
-async function findSwitchTargets(url, customService) {
+async function findSwitchTargets(url, customService, customFrontend) {
   const options = await utils.getOptions()
-  const services = customService ? [customService] : Object.keys((await utils.getConfig()).services)
+  let frontend
+  if (customService) frontend = customFrontend ?? options[customService].frontend
+  else frontend = (await computeServiceFrontend(url))?.frontend
+  if (!frontend) return
 
-  for (const service of services) {
-    const frontend = options[service].frontend
-    const instances = options[frontend] ?? []
-    const current = instances.find(instance => utils.isOnInstance(url, instance))
-    if (!customService && !current) continue
-    return { frontend, current, candidates: instances.filter(instance => instance != current) }
-  }
+  const instances = options[frontend] ?? []
+  const current = instances.find(instance => utils.isOnInstance(url, instance))
+  return { frontend, current, candidates: instances.filter(instance => instance != current) }
 }
 
 /**
@@ -963,9 +963,10 @@ async function canSwitchInstance(url) {
 /**
  * @param {URL} url
  * @param {string} customService
+ * @param {string} customFrontend
  */
-async function switchInstance(url, customService) {
-  const targets = await findSwitchTargets(url, customService)
+async function switchInstance(url, customService, customFrontend) {
+  const targets = await findSwitchTargets(url, customService, customFrontend)
   if (!targets) return
   const { frontend, current, candidates } = targets
   if (candidates.length == 0) {
