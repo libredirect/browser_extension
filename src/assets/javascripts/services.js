@@ -179,6 +179,7 @@ function rewrite(url, originUrl, frontend, randomInstance, type) {
       return `${randomInstance}/${url.search}`
     case "send":
     case "mozhi":
+    case "rens":
       return randomInstance
     case "libreTranslate":
       return `${randomInstance}/${url.search.replace("sl", "source").replace("tl", "target").replace("text", "q")}`
