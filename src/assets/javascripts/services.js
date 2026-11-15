@@ -10,7 +10,7 @@ async function init() {
   config = await utils.getConfig()
 }
 
-init()
+const ready = init()
 browser.storage.onChanged.addListener(init)
 
 function all(service, frontend, options, config) {
@@ -1346,6 +1346,7 @@ function isException(url) {
 }
 
 export default {
+  ready,
   redirect,
   redirectAsync,
   computeServiceFrontend,
