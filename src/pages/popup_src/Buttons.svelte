@@ -26,7 +26,7 @@
   })
 
   let url
-  let switchInstance
+  let canSwitchInstance
   let redirectToOriginal
   let redirect
   let frontend
@@ -34,7 +34,7 @@
   browser.tabs.query({ active: true, currentWindow: true }, async tabs => {
     if (tabs[0].url) {
       url = new URL(tabs[0].url)
-      servicesHelper.switchInstance(url).then(r => (switchInstance = r))
+      servicesHelper.canSwitchInstance(url).then(r => (canSwitchInstance = r))
       servicesHelper.reverse(url).then(r => (redirectToOriginal = r))
       servicesHelper.redirectAsync(url, "main_frame", null, null, false, true).then(r => (redirect = r))
       servicesHelper.computeServiceFrontend(url).then(r => ({ service, frontend } = r))
@@ -74,11 +74,11 @@
 
   {#if service && frontend}
     {#if _options[frontend].length > 1}
-      {#if switchInstance}
+      {#if canSwitchInstance}
         <Row
           class="interactive"
           on:click={async () =>
-            browser.tabs.update({ url: switchInstance }, () => {
+            browser.tabs.update({ url: await servicesHelper.switchInstance(url) }, () => {
               window.close()
             })}
         >
@@ -89,10 +89,10 @@
       <Row
         class="interactive"
         on:click={async () => {
-          const i = _options[frontend].findIndex(instance => url.href.startsWith(instance))
+          const i = _options[frontend].findIndex(instance => utils.isOnInstance(url, instance))
           _options[frontend].splice(i, 1)
           options.set(_options)
-          const newUrl = await servicesHelper.switchInstance(url, service)
+          const newUrl = await servicesHelper.switchInstance(url, service, frontend)
           browser.tabs.update({ url: newUrl }, () => {
             window.close()
           })
@@ -109,11 +109,11 @@
       <Row
         class={"interactive " + (autoPicking ? "disabled" : "")}
         on:click={async () => {
-          const i = _options[frontend].findIndex(instance => url.href.startsWith(instance))
+          const i = _options[frontend].findIndex(instance => utils.isOnInstance(url, instance))
           _options[frontend].splice(i, 1)
           options.set(_options)
           await autoPick()
-          browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) }, () => {
+          browser.tabs.update({ url: await servicesHelper.switchInstance(url, service, frontend) }, () => {
             window.close()
           })
         }}
@@ -129,7 +129,7 @@
         class={"interactive " + (autoPicking ? "disabled" : "")}
         on:click={async () => {
           await autoPick()
-          browser.tabs.update({ url: await servicesHelper.switchInstance(url, service) }, () => {
+          browser.tabs.update({ url: await servicesHelper.switchInstance(url, service, frontend) }, () => {
             window.close()
           })
         }}
@@ -164,7 +164,7 @@
     </Row>
   {/if}
 
-  {#if redirect || switchInstance || redirectToOriginal}
+  {#if redirect || canSwitchInstance || redirectToOriginal}
     <hr />
   {/if}
 

@@ -918,7 +918,7 @@ async function computeServiceFrontend(url) {
     } else {
       for (const frontend in config.services[service].frontends) {
         const instances = all(service, frontend, options, config)
-        const i = instances.findIndex(instance => url.href.startsWith(instance))
+        const i = instances.findIndex(instance => utils.isOnInstance(url, instance))
         if (i >= 0) {
           return { service, frontend }
         }
@@ -927,40 +927,71 @@ async function computeServiceFrontend(url) {
   }
 }
 
+// Cycling is a burst of clicks to get past a broken instance. Older history would shorten the next cycle
+// and let it land on an instance the user has just left.
+const VISITED_INSTANCES_TTL = 10 * 60 * 1000
+
+function getVisitedInstances() {
+  return new Promise(resolve => browser.storage.local.get("visitedInstances", r => resolve(r.visitedInstances ?? {})))
+}
+
 /**
  * @param {URL} url
  * @param {string} customService
+ * @param {string} customFrontend
  */
-function switchInstance(url, customService) {
-  return new Promise(async resolve => {
-    let options = await utils.getOptions()
-    let config = await utils.getConfig()
+async function findSwitchTargets(url, customService, customFrontend) {
+  const options = await utils.getOptions()
+  let frontend
+  if (customService) frontend = customFrontend ?? options[customService].frontend
+  else frontend = (await computeServiceFrontend(url))?.frontend
+  if (!frontend) return
 
-    const protocolHost = utils.protocolHost(url)
-    if (customService) {
-      const instancesList = options[options[customService].frontend]
-      if (instancesList !== undefined) {
-        const newInstance = utils.getNextInstance(url.origin, instancesList)
-        if (newInstance) {
-          return resolve(`${newInstance}${url.pathname}${url.search}`)
-        }
-      }
-    } else {
-      for (const service in config.services) {
-        let instancesList = options[options[service].frontend]
-        if (instancesList === undefined) continue
-        const index = instancesList.findIndex(instance => url.href.startsWith(instance))
-        if (index < 0) continue
-        instancesList.splice(index, 1)
-        if (instancesList.length === 0) return resolve()
-        const newInstance = utils.getNextInstance(url.origin, instancesList)
-        if (newInstance) {
-          return resolve(`${newInstance}${url.pathname}${url.search}`)
-        }
-      }
-    }
-    resolve()
-  })
+  const instances = options[frontend] ?? []
+  const current = instances.find(instance => utils.isOnInstance(url, instance))
+  return { frontend, current, candidates: instances.filter(instance => instance != current) }
+}
+
+/**
+ * @param {URL} url
+ */
+async function canSwitchInstance(url) {
+  const targets = await findSwitchTargets(url)
+  return targets !== undefined && targets.candidates.length > 0
+}
+
+/**
+ * @param {URL} url
+ * @param {string} customService
+ * @param {string} customFrontend
+ */
+async function switchInstance(url, customService, customFrontend) {
+  const targets = await findSwitchTargets(url, customService, customFrontend)
+  if (!targets) return
+  const { frontend, current, candidates } = targets
+  if (candidates.length == 0) {
+    if (customService && current) return url.href
+    return
+  }
+
+  const currentPath = current ? new URL(current).pathname.replace(/\/+$/, "") : ""
+  const pathname = url.pathname.slice(currentPath.length)
+
+  const visitedInstances = await getVisitedInstances()
+  const history = visitedInstances[frontend]
+  const isFresh = history && Date.now() - history.time < VISITED_INSTANCES_TTL
+  let visited = new Set(isFresh ? history.instances : [])
+  if (current) visited.add(current)
+  let unvisited = candidates.filter(instance => !visited.has(instance))
+  if (unvisited.length == 0) {
+    visited = new Set(current ? [current] : [])
+    unvisited = candidates
+  }
+  const newInstance = utils.getRandomInstance(unvisited)
+  visited.add(newInstance)
+  visitedInstances[frontend] = { instances: [...visited], time: Date.now() }
+  await new Promise(resolve => browser.storage.local.set({ visitedInstances }, resolve))
+  return `${newInstance}${pathname}${url.search}`
 }
 
 /**
@@ -973,7 +1004,7 @@ async function reverse(url) {
     let frontend = options[service].frontend
     if (options[frontend] == undefined) continue
     if (
-      options[frontend].findIndex(instance => url.href.startsWith(instance)) < 0 &&
+      options[frontend].findIndex(instance => utils.isOnInstance(url, instance)) < 0 &&
       !url.href.startsWith(`http://${frontend}.localhost:8080`)
     )
       continue
@@ -1354,5 +1385,6 @@ export default {
   processUpdate,
   copyRaw,
   switchInstance,
+  canSwitchInstance,
   isException,
 }
