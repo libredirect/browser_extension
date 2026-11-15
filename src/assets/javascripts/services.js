@@ -974,6 +974,9 @@ async function switchInstance(url, customService, customFrontend) {
     return
   }
 
+  const currentPath = current ? new URL(current).pathname.replace(/\/+$/, "") : ""
+  const pathname = url.pathname.slice(currentPath.length)
+
   const visitedInstances = await getVisitedInstances()
   const history = visitedInstances[frontend]
   const isFresh = history && Date.now() - history.time < VISITED_INSTANCES_TTL
@@ -988,7 +991,7 @@ async function switchInstance(url, customService, customFrontend) {
   visited.add(newInstance)
   visitedInstances[frontend] = { instances: [...visited], time: Date.now() }
   await new Promise(resolve => browser.storage.local.set({ visitedInstances }, resolve))
-  return `${newInstance}${url.pathname}${url.search}`
+  return `${newInstance}${pathname}${url.search}`
 }
 
 /**
