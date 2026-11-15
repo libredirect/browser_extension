@@ -9,18 +9,6 @@ function getRandomInstance(instances) {
 }
 
 /**
- * @param {string} currentInstanceUrl
- * @param {Array.<T>} instances
- * @returns {T}
- */
-function getNextInstance(currentInstanceUrl, instances) {
-  const currentInstanceIndex = instances.indexOf(currentInstanceUrl)
-  if (currentInstanceIndex === -1) return getRandomInstance(instances)
-  const nextInstanceIndex = (currentInstanceIndex + 1) % instances.length
-  return instances[nextInstanceIndex]
-}
-
-/**
  * @param {URL} url
  */
 function protocolHost(url) {
@@ -33,6 +21,16 @@ function protocolHost(url) {
   if (url.username && url.password) return `${url.protocol}//${url.username}:${url.password}@${url.host}${pathname}`
 
   return `${url.protocol}//${url.host}${pathname}`
+}
+
+/**
+ * @param {URL} url
+ * @param {string} instance
+ */
+function isOnInstance(url, instance) {
+  if (!url.href.startsWith(instance)) return false
+  const nextCharacter = url.href.charAt(instance.length)
+  return ["", "/", "?", "#"].includes(nextCharacter)
 }
 
 /**
@@ -247,7 +245,7 @@ export function randomInstances(clearnet, n) {
 
 async function autoPickInstance(clearnet, url) {
   if (url) {
-    const i = clearnet.findIndex(instance => url.href.startsWith(instance))
+    const i = clearnet.findIndex(instance => isOnInstance(url, instance))
     if (i >= 0) clearnet.splice(i, 1)
   }
   const random = randomInstances(clearnet, 5)
@@ -301,8 +299,8 @@ function cssVariables(options, window) {
 
 export default {
   getRandomInstance,
-  getNextInstance,
   protocolHost,
+  isOnInstance,
   getList,
   getBlacklist,
   getConfig,
