@@ -927,40 +927,67 @@ async function computeServiceFrontend(url) {
   }
 }
 
+// Cycling is a burst of clicks to get past a broken instance. Older history would shorten the next cycle
+// and let it land on an instance the user has just left.
+const VISITED_INSTANCES_TTL = 10 * 60 * 1000
+
+function getVisitedInstances() {
+  return new Promise(resolve => browser.storage.local.get("visitedInstances", r => resolve(r.visitedInstances ?? {})))
+}
+
 /**
  * @param {URL} url
  * @param {string} customService
  */
-function switchInstance(url, customService) {
-  return new Promise(async resolve => {
-    let options = await utils.getOptions()
-    let config = await utils.getConfig()
+async function findSwitchTargets(url, customService) {
+  const options = await utils.getOptions()
+  const services = customService ? [customService] : Object.keys((await utils.getConfig()).services)
 
-    const protocolHost = utils.protocolHost(url)
-    if (customService) {
-      const instancesList = options[options[customService].frontend]
-      if (instancesList !== undefined) {
-        const newInstance = utils.getNextInstance(url.origin, instancesList)
-        if (newInstance) {
-          return resolve(`${newInstance}${url.pathname}${url.search}`)
-        }
-      }
-    } else {
-      for (const service in config.services) {
-        let instancesList = options[options[service].frontend]
-        if (instancesList === undefined) continue
-        const index = instancesList.findIndex(instance => url.href.startsWith(instance))
-        if (index < 0) continue
-        instancesList.splice(index, 1)
-        if (instancesList.length === 0) return resolve()
-        const newInstance = utils.getNextInstance(url.origin, instancesList)
-        if (newInstance) {
-          return resolve(`${newInstance}${url.pathname}${url.search}`)
-        }
-      }
-    }
-    resolve()
-  })
+  for (const service of services) {
+    const frontend = options[service].frontend
+    const instances = options[frontend] ?? []
+    const current = instances.find(instance => url.href.startsWith(instance))
+    if (!customService && !current) continue
+    return { frontend, current, candidates: instances.filter(instance => instance != current) }
+  }
+}
+
+/**
+ * @param {URL} url
+ */
+async function canSwitchInstance(url) {
+  const targets = await findSwitchTargets(url)
+  return targets !== undefined && targets.candidates.length > 0
+}
+
+/**
+ * @param {URL} url
+ * @param {string} customService
+ */
+async function switchInstance(url, customService) {
+  const targets = await findSwitchTargets(url, customService)
+  if (!targets) return
+  const { frontend, current, candidates } = targets
+  if (candidates.length == 0) {
+    if (customService && current) return url.href
+    return
+  }
+
+  const visitedInstances = await getVisitedInstances()
+  const history = visitedInstances[frontend]
+  const isFresh = history && Date.now() - history.time < VISITED_INSTANCES_TTL
+  let visited = new Set(isFresh ? history.instances : [])
+  if (current) visited.add(current)
+  let unvisited = candidates.filter(instance => !visited.has(instance))
+  if (unvisited.length == 0) {
+    visited = new Set(current ? [current] : [])
+    unvisited = candidates
+  }
+  const newInstance = utils.getRandomInstance(unvisited)
+  visited.add(newInstance)
+  visitedInstances[frontend] = { instances: [...visited], time: Date.now() }
+  await new Promise(resolve => browser.storage.local.set({ visitedInstances }, resolve))
+  return `${newInstance}${url.pathname}${url.search}`
 }
 
 /**
@@ -1354,5 +1381,6 @@ export default {
   processUpdate,
   copyRaw,
   switchInstance,
+  canSwitchInstance,
   isException,
 }
