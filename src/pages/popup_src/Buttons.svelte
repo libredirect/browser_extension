@@ -89,7 +89,7 @@
       <Row
         class="interactive"
         on:click={async () => {
-          const i = _options[frontend].findIndex(instance => url.href.startsWith(instance))
+          const i = _options[frontend].findIndex(instance => utils.isOnInstance(url, instance))
           _options[frontend].splice(i, 1)
           options.set(_options)
           const newUrl = await servicesHelper.switchInstance(url, service)
@@ -109,7 +109,7 @@
       <Row
         class={"interactive " + (autoPicking ? "disabled" : "")}
         on:click={async () => {
-          const i = _options[frontend].findIndex(instance => url.href.startsWith(instance))
+          const i = _options[frontend].findIndex(instance => utils.isOnInstance(url, instance))
           _options[frontend].splice(i, 1)
           options.set(_options)
           await autoPick()

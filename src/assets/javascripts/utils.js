@@ -24,6 +24,16 @@ function protocolHost(url) {
 }
 
 /**
+ * @param {URL} url
+ * @param {string} instance
+ */
+function isOnInstance(url, instance) {
+  if (!url.href.startsWith(instance)) return false
+  const nextCharacter = url.href.charAt(instance.length)
+  return ["", "/", "?", "#"].includes(nextCharacter)
+}
+
+/**
  * @typedef FrontendInfo
  * @prop {boolean} instanceList
  * @prop {string} name
@@ -235,7 +245,7 @@ export function randomInstances(clearnet, n) {
 
 async function autoPickInstance(clearnet, url) {
   if (url) {
-    const i = clearnet.findIndex(instance => url.href.startsWith(instance))
+    const i = clearnet.findIndex(instance => isOnInstance(url, instance))
     if (i >= 0) clearnet.splice(i, 1)
   }
   const random = randomInstances(clearnet, 5)
@@ -290,6 +300,7 @@ function cssVariables(options, window) {
 export default {
   getRandomInstance,
   protocolHost,
+  isOnInstance,
   getList,
   getBlacklist,
   getConfig,

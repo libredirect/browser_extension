@@ -918,7 +918,7 @@ async function computeServiceFrontend(url) {
     } else {
       for (const frontend in config.services[service].frontends) {
         const instances = all(service, frontend, options, config)
-        const i = instances.findIndex(instance => url.href.startsWith(instance))
+        const i = instances.findIndex(instance => utils.isOnInstance(url, instance))
         if (i >= 0) {
           return { service, frontend }
         }
@@ -946,7 +946,7 @@ async function findSwitchTargets(url, customService) {
   for (const service of services) {
     const frontend = options[service].frontend
     const instances = options[frontend] ?? []
-    const current = instances.find(instance => url.href.startsWith(instance))
+    const current = instances.find(instance => utils.isOnInstance(url, instance))
     if (!customService && !current) continue
     return { frontend, current, candidates: instances.filter(instance => instance != current) }
   }
@@ -1000,7 +1000,7 @@ async function reverse(url) {
     let frontend = options[service].frontend
     if (options[frontend] == undefined) continue
     if (
-      options[frontend].findIndex(instance => url.href.startsWith(instance)) < 0 &&
+      options[frontend].findIndex(instance => utils.isOnInstance(url, instance)) < 0 &&
       !url.href.startsWith(`http://${frontend}.localhost:8080`)
     )
       continue
